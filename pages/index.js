@@ -42,7 +42,13 @@ const Home = () => {
             <Heading>Call a key contact</Heading>
             <FormGroup>
               <Label htmlFor="contact">Key contact's mobile number</Label>
-              <Hint>Their mobile number must be 11 digits in length.</Hint>
+              <Hint className="nhsuk-u-margin-bottom-2">
+                This must be a UK mobile number, like 07700 900 982.
+              </Hint>
+              <Hint>
+                It will be used to send your key contact a text message with a
+                unique link for them to join a video call with you.
+              </Hint>
 
               <Input
                 type="number"
