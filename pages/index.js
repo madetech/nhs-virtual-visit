@@ -11,7 +11,7 @@ import fetch from 'isomorphic-unfetch';
 
 const Home = () => {
   const [contactNumber, setContactNumber] = useState('');
-  
+
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
 
@@ -25,8 +25,13 @@ const Home = () => {
       }),
     });
 
-    const { callUrl } = await response.json();
-    window.location.href = callUrl;
+    const { callUrl, err } = await response.json();
+
+    if (callUrl) {
+      window.location.href = callUrl;
+    } else {
+      console.error(err);
+    }
   });
 
   return (
