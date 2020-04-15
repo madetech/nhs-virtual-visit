@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p $PORT"
+    "start": "next start -p $PORT",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
@@ -20,5 +22,11 @@
     "notifications-node-client": "^4.7.3",
     "react": "16.13.1",
     "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^25.3.0",
+    "jest-css-modules-transform": "^4.0.0"
   }
 }
