@@ -23,7 +23,11 @@ const Call = () => {
       parentNode: document.querySelector("#meet"),
       interfaceConfigOverwrite: {
         TOOLBAR_BUTTONS: ["microphone", "camera", "hangup"],
+        MOBILE_APP_PROMO: false,
       },
+      configOverwrite: {
+        disableDeepLinking: false
+      }
     };
 
     const api = new window.JitsiMeetExternalAPI(domain, options);
