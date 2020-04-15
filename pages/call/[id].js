@@ -5,7 +5,7 @@ import useScript from '../../src/hooks/useScript'
 
 const Call = () => {
   const {
-    query: { id },
+    query: { id, name },
   } = useRouter();
 
   const [libraryLoaded] = useScript('https://meet.jit.si/external_api.js')
@@ -27,7 +27,11 @@ const Call = () => {
     };
 
     const api = new window.JitsiMeetExternalAPI(domain, options);
-  }, [libraryLoaded]);
+
+    if (!!name) {
+      api.executeCommand('displayName', name);
+    }
+  }, [libraryLoaded, name]);
 
 
   if (!id) {
