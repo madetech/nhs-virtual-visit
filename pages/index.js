@@ -1,5 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import HintText from '../src/components/HintText';
+import Button from '../src/components/Button';
+import FormGroup from '../src/components/FormGroup';
+import { GridRow, GridColumn } from '../src/components/Grid';
+import Heading from '../src/components/Heading';
+import Hint from '../src/components/Hint';
+import Input from '../src/components/Input';
+import Label from '../src/components/Label';
 import Layout from '../src/components/Layout';
 import fetch from 'isomorphic-unfetch';
 
@@ -25,45 +31,30 @@ const Home = () => {
 
   return (
     <Layout>
-      <form
-        onSubmit={onSubmit}
-        style={{
-          textAlign: 'center',
-          paddingBottom: '30%'
-        }}
-      >
-        <h1 style={{paddingTop: '5%'}}>
-          Call a Key Contact
-        </h1>
-        <p>Enter the key contacts mobile number to begin a call</p>
+      <GridRow>
+        <GridColumn width="one-half">
+          <form onSubmit={onSubmit}>
+            <Heading>Call a key contact</Heading>
+            <FormGroup>
+              <Label htmlFor="contact">Key contact's mobile number</Label>
+              <Hint>Their mobile number must be 11 digits in length.</Hint>
 
-        <div className="nhsuk-form-group">
-          <label className="nhsuk-label" htmlFor="contactNumber">
-            Enter key contact's mobile number
-          </label>
-          <HintText>
-            A mobile phone number must be 11 digits in length.
-          </HintText>
-          <input
-            maxLength={11}
-            onChange={(event) => setContactNumber(event.target.value)}
-            className="nhsuk-input"
-            id="contactNumber"
-            name="contactNumber"
-            type="text"
-            style={{width: '25%'}}></input>
-          <br></br>
-          <br></br>
-          
-          <button
-            disabled={contactNumber.length !== 11}
-            className="nhsuk-button"
-            type="submit"
-          >
-            Call Key Contact
-          </button>
-        </div>
-      </form>
+              <Input
+                type="number"
+                maxLength={11}
+                className="nhsuk-u-font-size-32"
+                style={{ padding: '32px 16px!important' }}
+                onChange={(event) => setContactNumber(event.target.value)}
+                name="contact"
+              />
+              <Button className="nhsuk-u-margin-top-5">
+                Send invite
+              </Button>
+            </FormGroup>
+          </form>
+        </GridColumn>
+        <span style={{ clear: 'both', display: 'block' }}></span>
+      </GridRow>
     </Layout>
   )
 }
