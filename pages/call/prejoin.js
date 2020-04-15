@@ -26,7 +26,7 @@ const PreJoin = () => {
           <Heading>Joining video call</Heading>
           <Lead>You are about to be connected to a video call.</Lead>
           <GridRow>
-              <GridColumn width="one-half">
+              <GridColumn width="one-half" style={{ padding: '0' }}>
               <form onSubmit={onSubmit}>
                 <FormGroup>
                   <Label htmlFor="name">Your name</Label>
