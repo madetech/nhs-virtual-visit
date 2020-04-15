@@ -7,30 +7,62 @@ import Hint from "../src/components/Hint";
 import Input from "../src/components/Input";
 import Label from "../src/components/Label";
 import Layout from "../src/components/Layout";
+import ErrorSummary from "../src/components/ErrorSummary";
+import ErrorMessage from "../src/components/ErrorMessage";
 import fetch from "isomorphic-unfetch";
 
 const Home = () => {
   const [contactNumber, setContactNumber] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isValidForm, setIsValidForm] = useState(false);
+  const [isContactNumberError, setIsContactNumberError] = useState(false);
 
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
+    setIsSubmitted(true);
 
-    const response = await fetch("/api/calls", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
+    const phoneUtil = require("google-libphonenumber").PhoneNumberUtil.getInstance();
+
+    try {
+      const parsedCntactNumber = phoneUtil.parseAndKeepRawInput(
         contactNumber,
-      }),
-    });
+        "GB"
+      );
 
-    const { callUrl, err } = await response.json();
+      if (
+        phoneUtil.isValidNumber(parsedCntactNumber) &&
+        phoneUtil.getNumberType(parsedCntactNumber) == 1
+      ) {
+        setIsValidForm(true);
+        setIsContactNumberError(false);
+      } else {
+        setIsValidForm(false);
+        setIsContactNumberError(true);
+      }
+    } catch (error) {
+      setIsValidForm(false);
+      setIsContactNumberError(true);
+      console.log(error.message);
+    }
 
-    if (callUrl) {
-      window.location.href = callUrl;
-    } else {
-      console.error(err);
+    if (isValidForm) {
+      const response = await fetch("/api/calls", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          contactNumber,
+        }),
+      });
+
+      const { callUrl, err } = await response.json();
+
+      if (callUrl) {
+        window.location.href = callUrl;
+      } else {
+        console.error(err);
+      }
     }
   });
 
@@ -38,6 +70,7 @@ const Home = () => {
     <Layout>
       <GridRow>
         <GridColumn width="two-thirds">
+          {isSubmitted && !isValidForm && <ErrorSummary />}
           <form onSubmit={onSubmit}>
             <Heading>Call a key contact</Heading>
             <FormGroup>
@@ -49,16 +82,20 @@ const Home = () => {
                 It will be used to send your key contact a text message with a
                 unique link for them to join a video call with you.
               </Hint>
-
+              {isContactNumberError && <ErrorMessage />}
               <Input
                 type="number"
                 maxLength={11}
-                className="nhsuk-u-font-size-32 nhsuk-input--width-10"
+                className={
+                  isContactNumberError
+                    ? "nhsuk-input--error nhsuk-u-font-size-32 nhsuk-input--width-10"
+                    : "nhsuk-u-font-size-32 nhsuk-input--width-10"
+                }
                 style={{ padding: "32px 16px!important" }}
                 onChange={(event) => setContactNumber(event.target.value)}
                 name="contact"
               />
-              <br/>
+              <br />
               <Button className="nhsuk-u-margin-top-5">Send invite</Button>
             </FormGroup>
           </form>
