@@ -8,7 +8,7 @@ export default ({ body, method }, res) => {
   if (method === 'POST') {
     const callId = ids.generate();
     const callUrl = `http://localhost:3000/call/${callId}`;
-    
+
     notifier.notify(body.contactNumber, callUrl);
 
     res.statusCode = 201;
