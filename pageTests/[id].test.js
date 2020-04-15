@@ -1,13 +1,13 @@
 import React from "react";
 import { mount } from "enzyme";
-import Call from "./[id]";
+import Call from "../pages/[id]";
 import { RouterContext } from 'next/dist/next-server/lib/router-context'
 
 describe("call", () => {
   let spy;
   beforeEach(() => {
     spy = jest.fn();
-  
+
     window.JitsiMeetExternalAPI = spy;
   });
 
@@ -19,7 +19,7 @@ describe("call", () => {
         query: { id: "TestCallId" },
         asPath: "/calls/TestCallId",
       };
-  
+
       mount(
         <RouterContext.Provider value={router}>
           <Call />
@@ -37,7 +37,7 @@ describe("call", () => {
         })
       );
     });
-  
+
     it("uses the call id as the room name", () => {
       expect(spy).toHaveBeenCalledWith(
         expect.anything(),
@@ -56,13 +56,13 @@ describe("call", () => {
         query: { id: "" },
         asPath: "/calls",
       };
-  
+
       mount(
         <RouterContext.Provider value={router}>
           <Call />
         </RouterContext.Provider>
       );
-  
+
       expect(spy).not.toHaveBeenCalled();
     });
   })
