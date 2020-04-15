@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../src/components/Layout";
-import "./[id].scss";
 import useScript from '../../src/hooks/useScript'
 
 const Call = () => {
   const {
     query: { id },
   } = useRouter();
-  
+
   const [libraryLoaded] = useScript('https://meet.jit.si/external_api.js')
 
   useEffect(() => {
