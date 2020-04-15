@@ -37,7 +37,7 @@ const Home = () => {
   return (
     <Layout>
       <GridRow>
-        <GridColumn width="one-half">
+        <GridColumn width="two-thirds">
           <form onSubmit={onSubmit}>
             <Heading>Call a key contact</Heading>
             <FormGroup>
@@ -53,11 +53,12 @@ const Home = () => {
               <Input
                 type="number"
                 maxLength={11}
-                className="nhsuk-u-font-size-32"
+                className="nhsuk-u-font-size-32 nhsuk-input--width-10"
                 style={{ padding: "32px 16px!important" }}
                 onChange={(event) => setContactNumber(event.target.value)}
                 name="contact"
               />
+              <br/>
               <Button className="nhsuk-u-margin-top-5">Send invite</Button>
             </FormGroup>
           </form>
