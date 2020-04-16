@@ -1,7 +1,11 @@
 import cookie from "cookie";
 
 export default ({ requestCookie, tokens }) => {
-  const { token } = cookie.parse(requestCookie);
+  try {
+    const { token } = cookie.parse(requestCookie);
 
-  return token && tokens.validate(token);
+    return token && tokens.validate(token);
+  } catch (err) {
+    return false;
+  }
 };
