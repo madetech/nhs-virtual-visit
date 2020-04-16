@@ -1,4 +1,4 @@
-import retreiveScheduledCalls from "../../src/usecases/retreiveScheduledCalls";
+import retreiveVisits from "../../src/usecases/retreiveVisits";
 import pgp from "pg-promise";
 
 export default function ScheduledCalls({ scheduledCalls, error }) {
@@ -31,7 +31,7 @@ export const getServerSideProps = async () => {
     },
   };
 
-  const { scheduledCalls, error } = await retreiveScheduledCalls(container);
+  const { scheduledCalls, error } = await retreiveVisits(container);
 
   return { props: { scheduledCalls, error } };
 };
