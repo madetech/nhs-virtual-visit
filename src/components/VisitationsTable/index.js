@@ -3,7 +3,7 @@ import moment from "moment";
 
 const formatDate = (date) => moment(date).format("D MMMM YYYY, h.mma");
 
-const Visitations = ({ visitations }) => (
+const Visitations = ({ visitations, joinCall }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
       <caption className="nhsuk-table__caption">
@@ -27,12 +27,18 @@ const Visitations = ({ visitations }) => (
         {visitations.map((visitation) => (
           <tr className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{visitation.patientName}</td>
-            <td className="nhsuk-table__cell ">{visitation.recipientNumber}</td>
-            <td className="nhsuk-table__cell ">
+            <td className="nhsuk-table__cell">{visitation.recipientNumber}</td>
+            <td className="nhsuk-table__cell">
               {formatDate(visitation.callTime)}
             </td>
-            <td className="nhsuk-table__cell ">
-              <button className="nhsuk-button" type="submit">
+            <td className="nhsuk-table__cell">
+              <button
+                className="nhsuk-button"
+                type="submit"
+                onClick={() =>
+                  joinCall({ contactNumber: visitation.recipientNumber })
+                }
+              >
                 Join call
               </button>
             </td>
