@@ -12,6 +12,8 @@ import ErrorSummary from "../../../src/components/ErrorSummary";
 import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
 import fetch from "isomorphic-unfetch";
 import moment from "moment";
+import verifyToken from "../../../src/usecases/verifyToken";
+import TokenProvider from "../../../src/providers/TokenProvider";
 
 const isValidPhoneNumber = (input) => {
   const validator = PhoneNumberUtil.getInstance();
@@ -164,5 +166,9 @@ const Home = () => {
     </Layout>
   );
 };
+
+export const getServerSideProps = verifyToken(() => {}, {
+  tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+});
 
 export default Home;
