@@ -10,6 +10,8 @@ const notifier = new ConsoleNotifyProvider();
 const apiKey = process.env.API_KEY;
 const templateId = process.env.SMS_INITIAL_TEMPLATE_ID;
 
+const formatDate = (date) => moment(date).format("D MMMM YYYY, h.mma");
+
 const getValidationErrors = ({ patientName, contactNumber, callTime }) => {
   if (!patientName || patientName.length === 0) {
     return "patientName must be a string";
@@ -57,11 +59,11 @@ export default withContainer(async ({ body, method }, res, { container }) => {
     });
 
     await notifyClient.sendSms(templateId, body.contactNumber, {
-      personalisation: { call_time: moment(body.callTime).toString() },
+      personalisation: { call_time: formatDate(body.callTime) },
       reference: null,
     });
 
-    notifier.notify(body.contactNumber, moment(body.callTime).toString());
+    notifier.notify(body.contactNumber, formatDate(body.callTime));
 
     res.status(204);
     res.end();
