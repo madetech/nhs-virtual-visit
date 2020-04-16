@@ -52,8 +52,8 @@ const Call = ({ id, name }) => {
   );
 };
 
-export const getServerSideProps = ({ params }) => {
-  const { id, name } = params;
+export const getServerSideProps = ({ query }) => {
+  const { id, name } = query;
   return { props: { id, name } };
 };
 

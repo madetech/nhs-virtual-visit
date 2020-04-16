@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from "react";
-import Button from "../src/components/Button";
-import FormGroup from "../src/components/FormGroup";
-import { GridRow, GridColumn } from "../src/components/Grid";
-import Heading from "../src/components/Heading";
-import Hint from "../src/components/Hint";
-import Input from "../src/components/Input";
-import Label from "../src/components/Label";
-import Layout from "../src/components/Layout";
-import ErrorSummary from "../src/components/ErrorSummary";
+import Button from "../../../src/components/Button";
+import FormGroup from "../../../src/components/FormGroup";
+import { GridRow, GridColumn } from "../../../src/components/Grid";
+import Heading from "../../../src/components/Heading";
+import Hint from "../../../src/components/Hint";
+import Input from "../../../src/components/Input";
+import Label from "../../../src/components/Label";
+import Layout from "../../../src/components/Layout";
+import ErrorSummary from "../../../src/components/ErrorSummary";
 import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
 import fetch from "isomorphic-unfetch";
 
@@ -50,7 +50,7 @@ const Home = () => {
     setErrors(errors);
 
     if (errors.length === 0) {
-      const response = await fetch("/api/calls", {
+      const response = await fetch("/api/send-visitation-ready-notification", {
         method: "POST",
         headers: {
           "content-type": "application/json",

@@ -17,22 +17,23 @@ export default async ({ body, method }, res) => {
   }
 
   const callId = ids.generate();
-  const callUrl = `${origin}/call/prejoin?callId=${callId}`;
+  const waitingRoomUrl = `${origin}/visitors/waiting-room/${callId}`;
+  const visitationsUrl = `${origin}/visitations/${callId}?name=Ward`;
 
   var notifyClient = new NotifyClient(apiKey);
 
   try {
     await notifyClient.sendSms(templateId, body.contactNumber, {
-      personalisation: { call_url: callUrl },
+      personalisation: { call_url: waitingRoomUrl },
       reference: null,
     });
 
-    notifier.notify(body.contactNumber, callUrl);
+    notifier.notify(body.contactNumber, waitingRoomUrl);
 
     res.statusCode = 201;
-    res.end(JSON.stringify({ id: callId, callUrl }));
+    res.end(JSON.stringify({ id: callId, callUrl: visitationsUrl }));
   } catch (err) {
-    console.error({ err: err.error });
+    console.error(err);
     res.statusCode = 500;
     res.end(JSON.stringify({ err: err.error }));
   }
