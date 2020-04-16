@@ -1,4 +1,8 @@
 import retreiveVisits from "../../../src/usecases/retreiveVisits";
+import Layout from "../../../src/components/Layout";
+import Heading from "../../../src/components/Heading";
+import { GridRow, GridColumn } from "../../../src/components/Grid";
+import VisitationsTable from "../../../src/components/VisitationsTable";
 import pgp from "pg-promise";
 import verifyToken from "../../../src/usecases/verifyToken";
 import TokenProvider from "../../../src/providers/TokenProvider";
@@ -13,11 +17,14 @@ export default function WardVisits({ scheduledCalls, error }) {
     );
   }
   return (
-    <ul>
-      {scheduledCalls.map((scheduledCall) => (
-        <li key={scheduledCall.id}>{JSON.stringify(scheduledCall)}</li>
-      ))}
-    </ul>
+    <Layout title="Ward visitations">
+      <GridRow>
+        <GridColumn width="full-width">
+          <Heading>Ward visitations</Heading>
+          <VisitationsTable visitations={scheduledCalls} />
+        </GridColumn>
+      </GridRow>
+    </Layout>
   );
 }
 
