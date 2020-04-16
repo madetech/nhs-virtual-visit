@@ -109,12 +109,12 @@ const Home = () => {
   });
 
   return (
-    <Layout title="Call a key contact" hasErrors={errors.length != 0}>
+    <Layout title="Schedule a visitation" hasErrors={errors.length != 0}>
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
-            <Heading>Call a key contact</Heading>
+            <Heading>Schedule a visitation</Heading>
             <FormGroup>
               <Label htmlFor="contact">Key contact's mobile number</Label>
               <Hint className="nhsuk-u-margin-bottom-2">
