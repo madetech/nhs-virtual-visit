@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from "react";
+import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
+import fetch from "isomorphic-unfetch";
 import Button from "../../../src/components/Button";
 import FormGroup from "../../../src/components/FormGroup";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
@@ -8,8 +10,7 @@ import Input from "../../../src/components/Input";
 import Label from "../../../src/components/Label";
 import Layout from "../../../src/components/Layout";
 import ErrorSummary from "../../../src/components/ErrorSummary";
-import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
-import fetch from "isomorphic-unfetch";
+import withAuth from "../../../src/components/withAuth";
 
 const isValidPhoneNumber = (input) => {
   const validator = PhoneNumberUtil.getInstance();
@@ -108,4 +109,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withAuth(Home);
