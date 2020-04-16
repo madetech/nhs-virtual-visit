@@ -17,7 +17,7 @@ export default async ({ body, method }, res) => {
   }
 
   const callId = ids.generate();
-  const callUrl = `${origin}/call/prejoin?callId=${callId}`;
+  const callUrl = `${origin}/visitors/waiting-room/${callId}`;
 
   var notifyClient = new NotifyClient(apiKey);
 

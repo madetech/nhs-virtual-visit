@@ -1,16 +1,16 @@
 import React, { useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import Button from "../../src/components/Button";
-import FormGroup from "../../src/components/FormGroup";
-import { GridRow, GridColumn } from "../../src/components/Grid";
-import Heading from "../../src/components/Heading";
-import Hint from "../../src/components/Hint";
-import Input from "../../src/components/Input";
-import Label from "../../src/components/Label";
-import Layout from "../../src/components/Layout";
-import Lead from "../../src/components/Lead";
-import ErrorSummary from "../../src/components/ErrorSummary";
+import Button from "../../../src/components/Button";
+import FormGroup from "../../../src/components/FormGroup";
+import { GridRow, GridColumn } from "../../../src/components/Grid";
+import Heading from "../../../src/components/Heading";
+import Hint from "../../../src/components/Hint";
+import Input from "../../../src/components/Input";
+import Label from "../../../src/components/Label";
+import Layout from "../../../src/components/Layout";
+import Lead from "../../../src/components/Lead";
+import ErrorSummary from "../../../src/components/ErrorSummary";
 
 const PreJoin = () => {
   const router = useRouter();
@@ -35,7 +35,7 @@ const PreJoin = () => {
     setErrors(errors);
 
     if (errors.length === 0) {
-      router.push(`/call/${router.query.callId}?name=${name}`);
+      router.push(`/visitations/${router.query.id}?name=${name}`);
     }
   });
 
