@@ -4,6 +4,7 @@ import Heading from "../../../src/components/Heading";
 import ActionLink from "../../../src/components/ActionLink";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import VisitationsTable from "../../../src/components/VisitationsTable";
+import Text from "../../../src/components/Text";
 import pgp from "pg-promise";
 import verifyToken from "../../../src/usecases/verifyToken";
 import TokenProvider from "../../../src/providers/TokenProvider";
@@ -42,9 +43,9 @@ export default function WardVisits({ scheduledCalls, error, id }) {
         <GridRow>
           <GridColumn width="two-thirds">
             <Heading>Sorry, there is a problem with the service</Heading>
-            <p className="nhsuk-body">
+            <Text>
               We were unable to process your request, try again later.
-            </p>
+            </Text>
           </GridColumn>
         </GridRow>
       </Layout>
@@ -57,15 +58,22 @@ export default function WardVisits({ scheduledCalls, error, id }) {
         <GridColumn width="full-width">
           <Heading>Ward visitations</Heading>
           <h2 className="nhsuk-heading-l">Schedule a new visitation</h2>
-          <p className="nhsuk-body">
+          <Text>
             You'll need the mobile number of your patient's loved one in order
             to set up a visitation.
-          </p>
+          </Text>
           <ActionLink href={`/wards/${id}/schedule-visitation`}>
             Schedule visitation
           </ActionLink>
           <h2 className="nhsuk-heading-l">Pre-booked visitations</h2>
-          <VisitationsTable visitations={scheduledCalls} joinCall={joinCall} />
+          {scheduledCalls.length > 0 ? (
+            <VisitationsTable
+              visitations={scheduledCalls}
+              joinCall={joinCall}
+            />
+          ) : (
+            <Text>There are no upcoming visitations.</Text>
+          )}
         </GridColumn>
       </GridRow>
     </Layout>
