@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useRouter } from "next/router";
+import Head from 'next/head';
 import Button from "../../src/components/Button";
 import FormGroup from "../../src/components/FormGroup";
 import { GridRow, GridColumn } from "../../src/components/Grid";
@@ -40,10 +41,13 @@ const PreJoin = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>{(errors.length > 0) ? "Error: " : ""} Join a video call</title>
+      </Head>
       <GridRow>
         <GridColumn width="full">
           <ErrorSummary errors={errors} />
-          <Heading>Joining video call</Heading>
+          <Heading>Join a video call</Heading>
           <Lead>You are about to be connected to a video call.</Lead>
           <GridRow>
             <GridColumn width="one-half" style={{ padding: "0" }}>
