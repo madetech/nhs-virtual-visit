@@ -16,7 +16,6 @@ export default function WardVisits({ scheduledCalls, error, id }) {
   );
 
   const joinCall = async ({ contactNumber }) => {
-    console.log(contactNumber);
     const response = await fetch("/api/send-visitation-ready-notification", {
       method: "POST",
       headers: {
