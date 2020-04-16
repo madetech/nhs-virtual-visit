@@ -199,8 +199,14 @@ const Home = ({ id }) => {
   );
 };
 
-export const getServerSideProps = verifyToken(() => {}, {
-  tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-});
+export const getServerSideProps = verifyToken(
+  ({ query }) => {
+    const { id } = query;
+    return { props: { id } };
+  },
+  {
+    tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+  }
+);
 
 export default Home;
