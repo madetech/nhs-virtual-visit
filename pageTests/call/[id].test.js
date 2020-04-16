@@ -1,6 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
-import Call from "../pages/[id]";
+import { act } from 'react-dom/test-utils';
+import Call from "../../pages/call/[id]";
 import { RouterContext } from 'next/dist/next-server/lib/router-context'
 
 describe("call", () => {
@@ -13,17 +14,8 @@ describe("call", () => {
 
   describe('with a call id', () => {
     beforeEach(() => {
-      const router = {
-        pathname: "/calls/$id",
-        route: "/calls/$id",
-        query: { id: "TestCallId" },
-        asPath: "/calls/TestCallId",
-      };
-
       mount(
-        <RouterContext.Provider value={router}>
-          <Call />
-        </RouterContext.Provider>
+        <Call id="TestCallId" />
       );
     });
 
@@ -50,17 +42,8 @@ describe("call", () => {
 
   describe('without a call id', () => {
     it("shows an error page", () => {
-      const router = {
-        pathname: "/calls/$id",
-        route: "/calls/$id",
-        query: { id: "" },
-        asPath: "/calls",
-      };
-
       mount(
-        <RouterContext.Provider value={router}>
-          <Call />
-        </RouterContext.Provider>
+        <Call />
       );
 
       expect(spy).not.toHaveBeenCalled();
