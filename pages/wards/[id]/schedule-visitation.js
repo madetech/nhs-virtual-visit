@@ -2,6 +2,8 @@ import React, { useCallback, useState } from "react";
 import Button from "../../../src/components/Button";
 import FormGroup from "../../../src/components/FormGroup";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
+import ActionLink from "../../../src/components/ActionLink";
+import Text from "../../../src/components/Text";
 import Heading from "../../../src/components/Heading";
 import Hint from "../../../src/components/Hint";
 import Input from "../../../src/components/Input";
@@ -35,12 +37,13 @@ const isValidDate = ({ year, month, day, hour, min }) => {
   return parsed.isValid() && parsed.isAfter(moment());
 };
 
-const Home = () => {
+const Home = ({ id }) => {
   const [contactNumber, setContactNumber] = useState("");
   const [patientName, setPatientName] = useState("");
   const [callTime, setCallTime] = useState("");
 
   const [errors, setErrors] = useState([]);
+  const [success, setSuccess] = useState(false);
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
@@ -98,23 +101,50 @@ const Home = () => {
         }),
       });
 
-      const { callUrl, err } = await response.json();
+      const { success, err } = await response.json();
 
-      if (callUrl) {
-        window.location.href = callUrl;
+      if (success) {
+        setSuccess(true);
       } else {
         console.error(err);
       }
     }
   });
 
+  if (success) {
+    return (
+      <Layout title="Schedule a virtual visitation">
+        <GridRow>
+          <GridColumn width="two-thirds">
+            <Heading>Virtual visitation scheduled</Heading>
+
+            <Text>
+              Your virtual visitation has been scheduled and the key contact has
+              been sent an SMS with their scheduled time.
+            </Text>
+
+            <ActionLink href={`/wards/${id}/schedule-visitation`}>
+              Schedule another visitation
+            </ActionLink>
+            <ActionLink href={`/wards/${id}/visitations`}>
+              View visitations
+            </ActionLink>
+          </GridColumn>
+        </GridRow>
+      </Layout>
+    );
+  }
+
   return (
-    <Layout title="Schedule a visitation" hasErrors={errors.length != 0}>
+    <Layout
+      title="Schedule a virtual visitation"
+      hasErrors={errors.length != 0}
+    >
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
-            <Heading>Schedule a visitation</Heading>
+            <Heading>Schedule a virtual visitation</Heading>
             <FormGroup>
               <Label htmlFor="patient-name">What's the patients name?</Label>
               <Input
@@ -158,11 +188,12 @@ const Home = () => {
                 errorMessage="Enter a valid date"
               ></DateSelect>
               <br></br>
-              <Button className="nhsuk-u-margin-top-5">Send invite</Button>
+              <Button className="nhsuk-u-margin-top-5">
+                Schedule visitation
+              </Button>
             </FormGroup>
           </form>
         </GridColumn>
-        <span style={{ clear: "both", display: "block" }}></span>
       </GridRow>
     </Layout>
   );
