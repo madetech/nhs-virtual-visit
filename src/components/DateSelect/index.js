@@ -38,6 +38,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
           id="day"
           name="day"
           value={date.day}
+          autoComplete="off"
         />
       </div>
       <div class="nhsuk-date-input__item">
@@ -52,6 +53,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
             setDate({ ...date, month: parseInt(event.target.value) });
           }}
           value={date.month}
+          autoComplete="off"
         />
       </div>
       <div class="nhsuk-date-input__item">
@@ -66,6 +68,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
             setDate({ ...date, year: parseInt(event.target.value) });
           }}
           value={date.year}
+          autoComplete="off"
         />
       </div>
       <div class="nhsuk-date-input__item">
@@ -80,6 +83,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
             setDate({ ...date, hour: parseInt(event.target.value) });
           }}
           value={date.hour}
+          autoComplete="off"
         />
       </div>
       <div class="nhsuk-date-input__item">
@@ -94,6 +98,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
             setDate({ ...date, min: parseInt(event.target.value) });
           }}
           value={date.min}
+          autoComplete="off"
         />
       </div>
     </div>

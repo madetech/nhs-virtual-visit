@@ -134,6 +134,7 @@ const Home = () => {
                 style={{ padding: "32px 16px!important" }}
                 onChange={(event) => setContactNumber(event.target.value)}
                 name="contact"
+                autoComplete="off"
               />
               <Label htmlFor="patient-name">Patient name</Label>
               <Hint className="nhsuk-u-margin-bottom-2">
@@ -149,6 +150,7 @@ const Home = () => {
                 style={{ padding: "32px 16px!important" }}
                 onChange={(event) => setPatientName(event.target.value)}
                 name="patient-name"
+                autoComplete="off"
               />
               <DateSelect
                 onChange={(date) => setCallTime(date)}
