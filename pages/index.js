@@ -8,44 +8,47 @@ import Input from "../src/components/Input";
 import Label from "../src/components/Label";
 import Layout from "../src/components/Layout";
 import ErrorSummary from "../src/components/ErrorSummary";
-import ErrorMessage from "../src/components/ErrorMessage";
+import { PhoneNumberUtil, PhoneNumberType } from 'google-libphonenumber';
 import fetch from "isomorphic-unfetch";
+
+const isValidPhoneNumber = (input) => {
+  const validator = PhoneNumberUtil.getInstance();
+  const parsed = validator.parseAndKeepRawInput(input, "GB");
+  return (
+    validator.isValidNumber(parsed) &&
+    validator.getNumberType(parsed) === PhoneNumberType.MOBILE
+  );
+};
 
 const Home = () => {
   const [contactNumber, setContactNumber] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isValidForm, setIsValidForm] = useState(false);
-  const [isContactNumberError, setIsContactNumberError] = useState(false);
+  const [errors, setErrors] = useState([]);
+
+  const hasError = (field) => errors.find(error => error.id === `${field}-error`);
 
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
-    setIsSubmitted(true);
+    const errors = [];
 
-    const phoneUtil = require("google-libphonenumber").PhoneNumberUtil.getInstance();
+    const setContactNumberError = (errors) => {
+      errors.push({
+        id: 'contact-number-error',
+        message: 'Enter a UK mobile number'
+      });
+    };
 
     try {
-      const parsedCntactNumber = phoneUtil.parseAndKeepRawInput(
-        contactNumber,
-        "GB"
-      );
-
-      if (
-        phoneUtil.isValidNumber(parsedCntactNumber) &&
-        phoneUtil.getNumberType(parsedCntactNumber) == 1
-      ) {
-        setIsValidForm(true);
-        setIsContactNumberError(false);
-      } else {
-        setIsValidForm(false);
-        setIsContactNumberError(true);
+      if (!isValidPhoneNumber(contactNumber)) {
+        setContactNumberError(errors);
       }
     } catch (error) {
-      setIsValidForm(false);
-      setIsContactNumberError(true);
+      setContactNumberError(errors);
       console.log(error.message);
     }
 
-    if (isValidForm) {
+    setErrors(errors);
+
+    if (errors.length === 0) {
       const response = await fetch("/api/calls", {
         method: "POST",
         headers: {
@@ -70,7 +73,7 @@ const Home = () => {
     <Layout>
       <GridRow>
         <GridColumn width="two-thirds">
-          {isSubmitted && !isValidForm && <ErrorSummary />}
+          <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
             <Heading>Call a key contact</Heading>
             <FormGroup>
@@ -82,15 +85,13 @@ const Home = () => {
                 It will be used to send your key contact a text message with a
                 unique link for them to join a video call with you.
               </Hint>
-              {isContactNumberError && <ErrorMessage />}
               <Input
+                id="contact-number"
                 type="number"
                 maxLength={11}
-                className={
-                  isContactNumberError
-                    ? "nhsuk-input--error nhsuk-u-font-size-32 nhsuk-input--width-10"
-                    : "nhsuk-u-font-size-32 nhsuk-input--width-10"
-                }
+                hasError={hasError("contact-number")}
+                errorMessage="Enter a UK mobile number"
+                className="nhsuk-u-font-size-32 nhsuk-input--width-10"
                 style={{ padding: "32px 16px!important" }}
                 onChange={(event) => setContactNumber(event.target.value)}
                 name="contact"
