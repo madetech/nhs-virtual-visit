@@ -1,17 +1,17 @@
-import React, { useCallback, useState } from 'react';
-import fetch from 'isomorphic-unfetch';
-import Button from '../../src/components/Button';
-import ErrorSummary from '../../src/components/ErrorSummary';
-import FormGroup from '../../src/components/FormGroup';
-import { GridRow, GridColumn } from '../../src/components/Grid';
-import Heading from '../../src/components/Heading';
-import Hint from '../../src/components/Hint';
-import Input from '../../src/components/Input';
-import Label from '../../src/components/Label';
-import Layout from '../../src/components/Layout';
+import React, { useCallback, useState } from "react";
+import fetch from "isomorphic-unfetch";
+import Button from "../../src/components/Button";
+import ErrorSummary from "../../src/components/ErrorSummary";
+import FormGroup from "../../src/components/FormGroup";
+import { GridRow, GridColumn } from "../../src/components/Grid";
+import Heading from "../../src/components/Heading";
+import Hint from "../../src/components/Hint";
+import Input from "../../src/components/Input";
+import Label from "../../src/components/Label";
+import Layout from "../../src/components/Layout";
 
 const Login = () => {
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState("");
   const [errors, setErrors] = useState([]);
 
   const onSubmit = useCallback(async (event) => {
@@ -20,8 +20,8 @@ const Login = () => {
 
     if (!code) {
       errors.push({
-        id: 'code',
-        message: 'The code you entered was not recognised',
+        id: "code",
+        message: "The code you entered was not recognised",
       });
     }
 
@@ -33,13 +33,13 @@ const Login = () => {
           "content-type": "application/json",
         },
       });
-  
+
       if (response.status === 201) {
-        window.location.href = '/';
+        window.location.href = "/";
       } else {
         errors.push({
-          id: 'code',
-          message: 'The code you entered was not recognised',
+          id: "code",
+          message: "The code you entered was not recognised",
         });
       }
     }
@@ -50,7 +50,7 @@ const Login = () => {
   return (
     <Layout title="Log in" hasErrors={errors.length > 0}>
       <GridRow>
-        <GridColumn width="one-half" style={{ padding: '0' }}>
+        <GridColumn width="one-half" style={{ padding: "0" }}>
           <ErrorSummary errors={errors} />
           <Heading>Log in</Heading>
 
@@ -68,16 +68,14 @@ const Login = () => {
                 name="code"
               />
               <br />
-              <Button className="nhsuk-u-margin-top-5">
-                Log in
-              </Button>
+              <Button className="nhsuk-u-margin-top-5">Log in</Button>
             </FormGroup>
           </form>
         </GridColumn>
-        <span style={{ clear: 'both', display: 'block' }}></span>
+        <span style={{ clear: "both", display: "block" }}></span>
       </GridRow>
     </Layout>
-  )
-}
+  );
+};
 
 export default Login;

@@ -1,11 +1,11 @@
-import TokenProvider from '../../src/providers/TokenProvider';
+import TokenProvider from "../../src/providers/TokenProvider";
 
 const signingKey = process.env.JWT_SIGNING_KEY;
-const allowedCodes = process.env.ALLOWED_CODES.split(',');
+const allowedCodes = process.env.ALLOWED_CODES.split(",");
 const tokens = new TokenProvider(signingKey);
 
 export default ({ body: { code }, method }, res) => {
-  if (method !== 'POST') {
+  if (method !== "POST") {
     res.statusCode = 406;
     res.end();
     return;
@@ -18,5 +18,7 @@ export default ({ body: { code }, method }, res) => {
   }
 
   const token = tokens.generate(code);
-  res.writeHead(201, { 'Set-Cookie': `token=${token}; httpOnly; path=/` }).end();
-}
+  res
+    .writeHead(201, { "Set-Cookie": `token=${token}; httpOnly; path=/` })
+    .end();
+};
