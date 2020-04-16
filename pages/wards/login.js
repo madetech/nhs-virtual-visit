@@ -53,7 +53,7 @@ const Login = () => {
   return (
     <Layout title="Log in" hasErrors={errors.length > 0}>
       <GridRow>
-        <GridColumn width="one-half" style={{ padding: "0" }}>
+        <GridColumn width="one-half">
           <ErrorSummary errors={errors} />
           <Heading>Log in</Heading>
 
