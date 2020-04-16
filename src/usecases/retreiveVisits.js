@@ -5,8 +5,11 @@ export default async function retreiveVisits({ getDb }) {
 
     return {
       scheduledCalls: scheduledCalls.map((scheduledCall) => ({
-        ...scheduledCall,
-        call_time: scheduledCall.call_time.toISOString(),
+        id: scheduledCall.id,
+        patientName: scheduledCall.patient_name,
+        recipientNumber: scheduledCall.recipient_number,
+        callTime: scheduledCall.call_time.toISOString(),
+        callId: scheduledCall.call_id
       })),
       error: null,
     };

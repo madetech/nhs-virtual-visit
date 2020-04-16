@@ -29,8 +29,12 @@ describe("retreiveVisits", () => {
 
     expect(error).toBeNull();
     expect(scheduledCalls).toHaveLength(2);
-    expect(scheduledCalls[0]).toEqual(expect.objectContaining({ id: 1 }));
-    expect(scheduledCalls[1]).toEqual(expect.objectContaining({ id: 2 }));
+    expect(scheduledCalls[0]).toEqual(
+      expect.objectContaining({ id: 1, patientName: "Bob" })
+    );
+    expect(scheduledCalls[1]).toEqual(
+      expect.objectContaining({ id: 2, patientName: "Harry" })
+    );
   });
 
   it("returns an error object on db exception", async () => {
