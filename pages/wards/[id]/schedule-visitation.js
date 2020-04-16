@@ -116,13 +116,28 @@ const Home = () => {
           <form onSubmit={onSubmit}>
             <Heading>Schedule a visitation</Heading>
             <FormGroup>
-              <Label htmlFor="contact">Key contact's mobile number</Label>
+              <Label htmlFor="patient-name">What's the patients name?</Label>
+              <Input
+                id="patient-name"
+                type="text"
+                hasError={hasError("patient-name")}
+                errorMessage="Enter the patients name"
+                className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
+                style={{ padding: "32px 16px!important" }}
+                onChange={(event) => setPatientName(event.target.value)}
+                name="patient-name"
+                autoComplete="off"
+              />
+
+              <Label htmlFor="contact">
+                What's their key contacts mobile number?
+              </Label>
               <Hint className="nhsuk-u-margin-bottom-2">
                 This must be a UK mobile number, like 07700 900 982.
               </Hint>
               <Hint>
-                It will be used to send your key contact a text message with a
-                unique link for them to join a video call with you.
+                It will be used to send their key contact a text message with a
+                unique link for them to join a video call with the patient.
               </Hint>
               <Input
                 id="contact-number"
@@ -134,22 +149,6 @@ const Home = () => {
                 style={{ padding: "32px 16px!important" }}
                 onChange={(event) => setContactNumber(event.target.value)}
                 name="contact"
-                autoComplete="off"
-              />
-              <Label htmlFor="patient-name">Patient name</Label>
-              <Hint className="nhsuk-u-margin-bottom-2">
-                Enter the name of the patient
-              </Hint>
-              <Hint>This will help us identify who you are calling</Hint>
-              <Input
-                id="patient-name"
-                type="text"
-                hasError={hasError("patient-name")}
-                errorMessage="Enter the patients name"
-                className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
-                style={{ padding: "32px 16px!important" }}
-                onChange={(event) => setPatientName(event.target.value)}
-                name="patient-name"
                 autoComplete="off"
               />
               <DateSelect
