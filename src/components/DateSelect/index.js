@@ -29,12 +29,13 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
       <div class="nhsuk-date-input__item">
         <Label>Day</Label>
         <Input
+          style={{ padding: "32px 16px!important" }}
           type="number"
           hasError={hasError}
           onChange={(event) => {
             setDate({ ...date, day: parseInt(event.target.value) });
           }}
-          className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2"
+          className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-u-font-size-32 nhsuk-input--width-10"
           id="day"
           name="day"
           value={date.day}
@@ -44,9 +45,10 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
       <div class="nhsuk-date-input__item">
         <Label>Month</Label>
         <Input
+          style={{ padding: "32px 16px!important" }}
           type="number"
           hasError={hasError}
-          className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2"
+          className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-u-font-size-32 nhsuk-input--width-10"
           id="month"
           name="month"
           onChange={(event) => {
@@ -56,12 +58,13 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
           autoComplete="off"
         />
       </div>
-      <div class="nhsuk-date-input__item">
+      <div class="nhsuk-date-input__item nhsuk-u-padding-bottom-5">
         <Label>Year</Label>
         <Input
+          style={{ padding: "32px 16px!important" }}
           type="number"
           hasError={hasError}
-          className="nhsuk-input--width-4"
+          className="nhsuk-input--width-4 nhsuk-u-font-size-32 nhsuk-input--width-10"
           id="year"
           name="year"
           onChange={(event) => {
@@ -71,12 +74,14 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
           autoComplete="off"
         />
       </div>
+      <br></br>
       <div class="nhsuk-date-input__item">
         <Label>Hour</Label>
         <Input
+          style={{ padding: "32px 16px!important" }}
           type="number"
           hasError={hasError}
-          className="nhsuk-input--width-2"
+          className="nhsuk-input--width-2 nhsuk-u-font-size-32"
           id="hour"
           name="hour"
           onChange={(event) => {
@@ -87,11 +92,12 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
         />
       </div>
       <div class="nhsuk-date-input__item">
-        <Label>Min</Label>
+        <Label>Minutes</Label>
         <Input
+          style={{ padding: "32px 16px!important" }}
           type="number"
           hasError={hasError}
-          className="nhsuk-input--width-2"
+          className="nhsuk-input--width-2 nhsuk-u-font-size-32"
           id="min"
           name="min"
           onChange={(event) => {
