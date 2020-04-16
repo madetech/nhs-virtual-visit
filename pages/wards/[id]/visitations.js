@@ -56,9 +56,15 @@ export default function WardVisits({ scheduledCalls, error, id }) {
       <GridRow>
         <GridColumn width="full-width">
           <Heading>Ward visitations</Heading>
+          <h2 className="nhsuk-heading-l">Schedule a new visitation</h2>
+          <p className="nhsuk-body">
+            You'll need the mobile number of your patient's loved one in order
+            to set up a visitation.
+          </p>
           <ActionLink href={`/wards/${id}/schedule-visitation`}>
-            Schedule a visitation
+            Schedule visitation
           </ActionLink>
+          <h2 className="nhsuk-heading-l">Pre-booked visitations</h2>
           <VisitationsTable visitations={scheduledCalls} joinCall={joinCall} />
         </GridColumn>
       </GridRow>
