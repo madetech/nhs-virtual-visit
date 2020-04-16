@@ -1,5 +1,3 @@
-import RandomIdProvider from "../../src/providers/RandomIdProvider";
-
 const createVisitation = ({ getDb }) => async (visitation) => {
   const db = getDb();
 
