@@ -4,11 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start -p $PORT",
+    "format": "prettier --write '{pages,pageTests,src}/**/*.{js,css,md,yml}'",
+    "format:check": "prettier --check '{pages,pageTests,src}/**/*.{js,css,md,yml}'",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:ci": "jest"
+    "test:ci": "npm run format:check && jest",
+    "build": "next build",
+    "start": "next start -p $PORT"
   },
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
@@ -30,6 +32,7 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "jest": "^25.3.0",
-    "jest-css-modules-transform": "^4.0.0"
+    "jest-css-modules-transform": "^4.0.0",
+    "prettier": "^2.0.4"
   }
 }
