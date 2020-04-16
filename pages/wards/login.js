@@ -94,4 +94,6 @@ export const getServerSideProps = ({ req: { headers }, res }) => {
   if (token && token.ward) {
     res.writeHead(302, { Location: `/wards/${token.ward}/visitations` }).end();
   }
+
+  return { props: {} };
 };
