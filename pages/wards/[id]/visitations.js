@@ -1,14 +1,15 @@
 import retreiveVisitations from "../../../src/usecases/retreiveVisitations";
 import Layout from "../../../src/components/Layout";
 import Heading from "../../../src/components/Heading";
+import ActionLink from "../../../src/components/ActionLink";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import VisitationsTable from "../../../src/components/VisitationsTable";
 import pgp from "pg-promise";
 import verifyToken from "../../../src/usecases/verifyToken";
 import TokenProvider from "../../../src/providers/TokenProvider";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 
-export default function WardVisits({ scheduledCalls, error }) {
+export default function WardVisits({ scheduledCalls, error, id }) {
   const [userError, setUserError] = useState(
     error ? "Unable to display ward visitations" : null
   );
@@ -55,6 +56,9 @@ export default function WardVisits({ scheduledCalls, error }) {
       <GridRow>
         <GridColumn width="full-width">
           <Heading>Ward visitations</Heading>
+          <ActionLink href={`/wards/${id}/schedule-visitation`}>
+            Schedule a visitation
+          </ActionLink>
           <VisitationsTable visitations={scheduledCalls} joinCall={joinCall} />
         </GridColumn>
       </GridRow>
@@ -63,7 +67,7 @@ export default function WardVisits({ scheduledCalls, error }) {
 }
 
 export const getServerSideProps = verifyToken(
-  async () => {
+  async ({ query: { id } }) => {
     const container = {
       getDb() {
         return pgp()({
@@ -77,7 +81,7 @@ export const getServerSideProps = verifyToken(
 
     const { scheduledCalls, error } = await retreiveVisitations(container);
 
-    return { props: { scheduledCalls, error } };
+    return { props: { scheduledCalls, error, id } };
   },
   {
     tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
