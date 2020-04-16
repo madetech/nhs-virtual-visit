@@ -4,7 +4,7 @@ import ErrorMessage from "../ErrorMessage";
 
 const Input = ({ id, className, hasError, errorMessage, ...props }) => (
   <>
-    {hasError ? (
+    {hasError && errorMessage ? (
       <ErrorMessage id={`${id}-error`}>{errorMessage}</ErrorMessage>
     ) : null}
     <input
