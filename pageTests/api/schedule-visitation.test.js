@@ -42,7 +42,7 @@ describe("schedule-visitation", () => {
       }
     );
 
-    expect(res.status).toHaveBeenCalledWith(204);
+    expect(res.status).toHaveBeenCalledWith(201);
 
     expect(createVisitationSpy).toHaveBeenCalled();
 

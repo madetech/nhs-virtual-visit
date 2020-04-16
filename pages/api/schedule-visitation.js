@@ -37,6 +37,8 @@ export default withContainer(async ({ body, method }, res, { container }) => {
     return;
   }
 
+  res.setHeader("Content-Type", "application/json");
+
   const validationErrors = getValidationErrors(body);
   if (validationErrors) {
     res.status(400);
@@ -65,8 +67,8 @@ export default withContainer(async ({ body, method }, res, { container }) => {
 
     notifier.notify(body.contactNumber, formatDate(body.callTime));
 
-    res.status(204);
-    res.end();
+    res.status(201);
+    res.end(JSON.stringify({ success: true }));
   } catch (err) {
     console.error(err);
     res.status(500);
