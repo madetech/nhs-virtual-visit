@@ -2,6 +2,8 @@ import React, { useCallback, useState } from "react";
 import Button from "../../../src/components/Button";
 import FormGroup from "../../../src/components/FormGroup";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
+import ActionLink from "../../../src/components/ActionLink";
+import Text from "../../../src/components/Text";
 import Heading from "../../../src/components/Heading";
 import Hint from "../../../src/components/Hint";
 import Input from "../../../src/components/Input";
@@ -35,12 +37,13 @@ const isValidDate = ({ year, month, day, hour, min }) => {
   return parsed.isValid() && parsed.isAfter(moment());
 };
 
-const Home = () => {
+const Home = ({ id }) => {
   const [contactNumber, setContactNumber] = useState("");
   const [patientName, setPatientName] = useState("");
   const [callTime, setCallTime] = useState("");
 
   const [errors, setErrors] = useState([]);
+  const [success, setSuccess] = useState(false);
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
@@ -98,31 +101,73 @@ const Home = () => {
         }),
       });
 
-      const { callUrl, err } = await response.json();
+      const { success, err } = await response.json();
 
-      if (callUrl) {
-        window.location.href = callUrl;
+      if (success) {
+        setSuccess(true);
       } else {
         console.error(err);
       }
     }
   });
 
+  if (success) {
+    return (
+      <Layout title="Schedule a virtual visitation">
+        <GridRow>
+          <GridColumn width="two-thirds">
+            <Heading>Virtual visitation scheduled</Heading>
+
+            <Text>
+              Your virtual visitation has been scheduled and the key contact has
+              been sent an SMS with their scheduled time.
+            </Text>
+
+            <ActionLink href={`/wards/${id}/schedule-visitation`}>
+              Schedule another visitation
+            </ActionLink>
+            <ActionLink href={`/wards/${id}/visitations`}>
+              View visitations
+            </ActionLink>
+          </GridColumn>
+        </GridRow>
+      </Layout>
+    );
+  }
+
   return (
-    <Layout title="Schedule a visitation" hasErrors={errors.length != 0}>
+    <Layout
+      title="Schedule a virtual visitation"
+      hasErrors={errors.length != 0}
+    >
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
-            <Heading>Schedule a visitation</Heading>
+            <Heading>Schedule a virtual visitation</Heading>
             <FormGroup>
-              <Label htmlFor="contact">Key contact's mobile number</Label>
+              <Label htmlFor="patient-name">What's the patients name?</Label>
+              <Input
+                id="patient-name"
+                type="text"
+                hasError={hasError("patient-name")}
+                errorMessage="Enter the patients name"
+                className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
+                style={{ padding: "32px 16px!important" }}
+                onChange={(event) => setPatientName(event.target.value)}
+                name="patient-name"
+                autoComplete="off"
+              />
+
+              <Label htmlFor="contact">
+                What's their key contacts mobile number?
+              </Label>
               <Hint className="nhsuk-u-margin-bottom-2">
                 This must be a UK mobile number, like 07700 900 982.
               </Hint>
               <Hint>
-                It will be used to send your key contact a text message with a
-                unique link for them to join a video call with you.
+                It will be used to send their key contact a text message with a
+                unique link for them to join a video call with the patient.
               </Hint>
               <Input
                 id="contact-number"
@@ -136,22 +181,6 @@ const Home = () => {
                 name="contact"
                 autoComplete="off"
               />
-              <Label htmlFor="patient-name">Patient name</Label>
-              <Hint className="nhsuk-u-margin-bottom-2">
-                Enter the name of the patient
-              </Hint>
-              <Hint>This will help us identify who you are calling</Hint>
-              <Input
-                id="patient-name"
-                type="text"
-                hasError={hasError("patient-name")}
-                errorMessage="Enter the patients name"
-                className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
-                style={{ padding: "32px 16px!important" }}
-                onChange={(event) => setPatientName(event.target.value)}
-                name="patient-name"
-                autoComplete="off"
-              />
               <DateSelect
                 onChange={(date) => setCallTime(date)}
                 name="call-time"
@@ -159,11 +188,12 @@ const Home = () => {
                 errorMessage="Enter a valid date"
               ></DateSelect>
               <br></br>
-              <Button className="nhsuk-u-margin-top-5">Send invite</Button>
+              <Button className="nhsuk-u-margin-top-5">
+                Schedule visitation
+              </Button>
             </FormGroup>
           </form>
         </GridColumn>
-        <span style={{ clear: "both", display: "block" }}></span>
       </GridRow>
     </Layout>
   );
