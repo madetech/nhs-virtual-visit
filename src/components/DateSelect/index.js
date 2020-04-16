@@ -23,7 +23,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
         <Label>What is the date of their virtual visitation?</Label>
         <Hint>For example, 16 4 2020</Hint>
         {hasError ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
-        <div class="nhsuk-date-input__item">
+        <div className="nhsuk-date-input__item">
           <Label>Day</Label>
           <Input
             style={{ padding: "32px 16px!important" }}
@@ -39,7 +39,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
             autoComplete="off"
           />
         </div>
-        <div class="nhsuk-date-input__item">
+        <div className="nhsuk-date-input__item">
           <Label>Month</Label>
           <Input
             style={{ padding: "32px 16px!important" }}
@@ -55,7 +55,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
             autoComplete="off"
           />
         </div>
-        <div class="nhsuk-date-input__item nhsuk-u-padding-bottom-5">
+        <div className="nhsuk-date-input__item nhsuk-u-padding-bottom-5">
           <Label>Year</Label>
           <Input
             style={{ padding: "32px 16px!important" }}
@@ -75,7 +75,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
       <FormGroup>
         <Label>What is the time of their virtual visitation?</Label>
         <Hint>For example, 15 00</Hint>
-        <div class="nhsuk-date-input__item">
+        <div className="nhsuk-date-input__item">
           <Label>Hour</Label>
           <Input
             style={{ padding: "32px 16px!important" }}
@@ -91,7 +91,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
             autoComplete="off"
           />
         </div>
-        <div class="nhsuk-date-input__item">
+        <div className="nhsuk-date-input__item">
           <Label>Minutes</Label>
           <Input
             style={{ padding: "32px 16px!important" }}
