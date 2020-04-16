@@ -1,7 +1,5 @@
 import React from "react";
 
-const Lead = ({ children }) => (
-  <p className="nhsuk-lede-text app-lede-text">{children}</p>
-);
+const Lead = ({ children }) => <p className="nhsuk-body-l">{children}</p>;
 
 export default Lead;
