@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ErrorMessage = ({ children }) => (
-  <span id="call-key-contact-form-mobile-number-error" className="nhsuk-error-message">
-    <span className="nhsuk-u-visually-hidden">Error:</span> Enter a UK mobile number
+const ErrorMessage = ({ children, id }) => (
+  <span id={id} className="nhsuk-error-message">
+    <span className="nhsuk-u-visually-hidden">Error:</span> {children}
   </span>
 );
 
