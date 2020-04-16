@@ -14,7 +14,7 @@ export default function (callback, { tokens }) {
         return redirectToLogin();
       }
 
-      return callback(context);
+      return callback(context) ?? { props: {} };
     } catch (error) {
       return redirectToLogin();
     }

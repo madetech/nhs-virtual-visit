@@ -10,7 +10,8 @@ import Input from "../../../src/components/Input";
 import Label from "../../../src/components/Label";
 import Layout from "../../../src/components/Layout";
 import ErrorSummary from "../../../src/components/ErrorSummary";
-import withAuth from "../../../src/components/withAuth";
+import verifyToken from "../../../src/usecases/verifyToken";
+import TokenProvider from "../../../src/providers/TokenProvider";
 
 const isValidPhoneNumber = (input) => {
   const validator = PhoneNumberUtil.getInstance();
@@ -109,4 +110,8 @@ const Home = () => {
   );
 };
 
-export default withAuth(Home);
+export const getServerSideProps = verifyToken(() => {}, {
+  tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+});
+
+export default Home;
