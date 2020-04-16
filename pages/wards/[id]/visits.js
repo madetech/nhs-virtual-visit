@@ -1,7 +1,7 @@
-import retreiveVisits from "../../src/usecases/retreiveVisits";
+import retreiveVisits from "../../../src/usecases/retreiveVisits";
 import pgp from "pg-promise";
 
-export default function ScheduledCalls({ scheduledCalls, error }) {
+export default function WardVisits({ scheduledCalls, error }) {
   if (error) {
     return (
       <section>
