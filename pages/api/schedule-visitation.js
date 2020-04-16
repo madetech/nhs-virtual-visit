@@ -1,9 +1,8 @@
-import createVisitation from "../../src/usecases/createVisitation";
 import { NotifyClient } from "notifications-node-client";
 import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
 import moment from "moment";
-import pgp from "pg-promise";
+import withContainer from "../../src/middleware/withContainer";
 
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
@@ -29,16 +28,16 @@ const getValidationErrors = ({ patientName, contactNumber, callTime }) => {
   return null;
 };
 
-export default async ({ body, method }, res) => {
+export default withContainer(async ({ body, method }, res, { container }) => {
   if (method !== "POST") {
-    res.statusCode = 406;
+    res.status(406);
     res.end();
     return;
   }
 
   const validationErrors = getValidationErrors(body);
   if (validationErrors) {
-    res.statusCode = 400;
+    res.status(400);
     res.end(JSON.stringify({ err: validationErrors }));
     return;
   }
@@ -48,18 +47,9 @@ export default async ({ body, method }, res) => {
   try {
     const callId = ids.generate();
 
-    const container = {
-      getDb() {
-        return pgp()({
-          connectionString: process.env.URI,
-          ssl: {
-            rejectUnauthorized: false,
-          },
-        });
-      },
-    };
+    const createVisitation = container.getCreateVisitation();
 
-    await createVisitation(container, {
+    await createVisitation({
       patientName: body.patientName,
       contactNumber: body.contactNumber,
       callTime: moment(body.callTime).toISOString(),
@@ -73,11 +63,11 @@ export default async ({ body, method }, res) => {
 
     notifier.notify(body.contactNumber, moment(body.callTime).toString());
 
-    res.statusCode = 204;
+    res.status(204);
     res.end();
   } catch (err) {
     console.error(err);
-    res.statusCode = 500;
+    res.status(500);
     res.end(JSON.stringify({ err: err.error }));
   }
-};
+});

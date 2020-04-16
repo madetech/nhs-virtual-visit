@@ -18,7 +18,7 @@ describe("createVisitation", () => {
       callId: 12345,
     };
 
-    const resultingId = await createVisitation(container, request);
+    const resultingId = await createVisitation(container)(request);
 
     expect(resultingId).toEqual(10);
 
