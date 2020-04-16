@@ -50,7 +50,7 @@ const Home = () => {
     setErrors(errors);
 
     if (errors.length === 0) {
-      const response = await fetch("/api/calls", {
+      const response = await fetch("/api/send-visitation-ready-notification", {
         method: "POST",
         headers: {
           "content-type": "application/json",
