@@ -20,6 +20,7 @@
     "nhsuk-frontend": "^3.0.4",
     "node-sass": "^4.13.1",
     "notifications-node-client": "^4.7.3",
+    "pg-promise": "^10.5.0",
     "react": "16.13.1",
     "react-dom": "16.13.1"
   },
