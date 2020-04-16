@@ -1,8 +1,18 @@
 import React from 'react';
 import classnames from 'classnames';
+import ErrorMessage from '../ErrorMessage';
 
-const Input = ({ className, ...props }) => (
-  <input className={classnames("nhsuk-input", className)} {...props} />
+const Input = ({ id, className, hasError, errorMessage, ...props }) => (
+  <>
+    {hasError ? <ErrorMessage id={`${id}-error`}>{errorMessage}</ErrorMessage> : null}
+    <input className={
+      classnames(
+        {
+          "nhsuk-input--error": hasError,
+        }, "nhsuk-input", className)}
+      {...props}
+    />
+  </>
 );
 
 export default Input;
