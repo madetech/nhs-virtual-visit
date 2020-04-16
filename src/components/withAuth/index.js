@@ -7,7 +7,6 @@ const withAuth = (Component) => {
   Authenticated.getInitialProps = async (context) => {
     if (!process.browser) {
       const { token } = nookies.get(context);
-      console.log({ token });
       const tokens = new TokenProvider(process.env.JWT_SIGNING_KEY);
 
       if (!token || !tokens.validate(token)) {
@@ -23,8 +22,6 @@ const withAuth = (Component) => {
       const pageProps =
         Component.getInitialProps && (await Component.getInitialProps(context));
       return { ...pageProps };
-    } else {
-      console.log("NOT BROWSER");
     }
   };
 
