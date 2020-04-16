@@ -9,7 +9,7 @@ import Hint from "../../../src/components/Hint";
 import Input from "../../../src/components/Input";
 import Label from "../../../src/components/Label";
 import Layout from "../../../src/components/Layout";
-import Lead from "../../../src/components/Lead";
+import Text from "../../../src/components/Text";
 import ErrorSummary from "../../../src/components/ErrorSummary";
 
 const PreJoin = () => {
@@ -45,11 +45,13 @@ const PreJoin = () => {
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <Heading>Join your virtual visitation</Heading>
-          <Lead>You are about to be connected to your virtual visitation.</Lead>
+          <Text>
+            You're about to join a video call for your virtual visitation.
+          </Text>
           <form onSubmit={onSubmit}>
             <FormGroup>
-              <Label htmlFor="name">Your name</Label>
-              <Hint>We'll show this to everyone in the call.</Hint>
+              <Label htmlFor="name">What is your name?</Label>
+              <Hint>This will be displayed on the video call.</Hint>
               <Input
                 id="name"
                 type="text"
