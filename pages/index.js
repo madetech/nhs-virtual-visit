@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import Head from 'next/head';
 import Button from "../src/components/Button";
 import FormGroup from "../src/components/FormGroup";
 import { GridRow, GridColumn } from "../src/components/Grid";
@@ -71,6 +72,9 @@ const Home = () => {
 
   return (
     <Layout>
+      <Head>
+        <title>{(errors.length > 0) ? "Error: " : ""} Call a key contact</title>
+      </Head>
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
