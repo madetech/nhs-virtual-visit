@@ -40,10 +40,7 @@ const PreJoin = () => {
   });
 
   return (
-    <Layout>
-      <Head>
-        <title>{(errors.length > 0) ? "Error: " : ""} Join a video call</title>
-      </Head>
+    <Layout title="Join a video call" hasErrors={errors.length != 0}>
       <GridRow>
         <GridColumn width="full">
           <ErrorSummary errors={errors} />
