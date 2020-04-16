@@ -54,7 +54,7 @@ export default function WardVisits({ scheduledCalls, error, id }) {
   return (
     <Layout title="Ward visitations">
       <GridRow>
-        <GridColumn width="full-width">
+        <GridColumn width="full">
           <Heading>Ward visitations</Heading>
           <h2 className="nhsuk-heading-l">Schedule a new visitation</h2>
           <Text>
