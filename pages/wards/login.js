@@ -61,7 +61,7 @@ const Login = () => {
               <Hint>You'll have been given a ward code to use.</Hint>
               <Input
                 id="code"
-                type="number"
+                type="text"
                 hasError={errors[0]}
                 errorMessage={errors[0]?.message}
                 className="nhsuk-input--width-10"
