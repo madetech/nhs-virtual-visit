@@ -42,31 +42,25 @@ const PreJoin = () => {
   return (
     <Layout title="Join a video call" hasErrors={errors.length != 0}>
       <GridRow>
-        <GridColumn width="full">
+        <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <Heading>Join a video call</Heading>
           <Lead>You are about to be connected to a video call.</Lead>
-          <GridRow>
-            <GridColumn width="one-half" style={{ padding: "0" }}>
-              <form onSubmit={onSubmit}>
-                <FormGroup>
-                  <Label htmlFor="name">Your name</Label>
-                  <Hint>We'll show this to everyone in the call.</Hint>
-                  <Input
-                    id="name"
-                    type="text"
-                    onChange={(event) => setName(event.target.value)}
-                    hasError={hasError("name")}
-                    errorMessage={nameError}
-                    name="name"
-                  />
-                  <Button className="nhsuk-u-margin-top-5">
-                    Join video call
-                  </Button>
-                </FormGroup>
-              </form>
-            </GridColumn>
-          </GridRow>
+          <form onSubmit={onSubmit}>
+            <FormGroup>
+              <Label htmlFor="name">Your name</Label>
+              <Hint>We'll show this to everyone in the call.</Hint>
+              <Input
+                id="name"
+                type="text"
+                onChange={(event) => setName(event.target.value)}
+                hasError={hasError("name")}
+                errorMessage={nameError}
+                name="name"
+              />
+              <Button className="nhsuk-u-margin-top-5">Join video call</Button>
+            </FormGroup>
+          </form>
         </GridColumn>
         <span style={{ clear: "both", display: "block" }}></span>
       </GridRow>
