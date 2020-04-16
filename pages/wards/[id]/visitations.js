@@ -1,8 +1,4 @@
-import retreiveVisits from "../../../src/usecases/retreiveVisits";
-import Layout from "../../../src/components/Layout";
-import Heading from "../../../src/components/Heading";
-import { GridRow, GridColumn } from "../../../src/components/Grid";
-import VisitationsTable from "../../../src/components/VisitationsTable";
+import retreiveVisitations from "../../../src/usecases/retreiveVisitations";
 import pgp from "pg-promise";
 import verifyToken from "../../../src/usecases/verifyToken";
 import TokenProvider from "../../../src/providers/TokenProvider";
@@ -75,7 +71,7 @@ export const getServerSideProps = verifyToken(
       },
     };
 
-    const { scheduledCalls, error } = await retreiveVisits(container);
+    const { scheduledCalls, error } = await retreiveVisitations(container);
 
     return { props: { scheduledCalls, error } };
   },
