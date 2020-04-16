@@ -5,7 +5,7 @@ const GridRow = ({ children }) => (
 );
 
 const GridColumn = ({ children, width, ...others }) => (
-  <div className={`nhsuk-grid-column-full`} {...others}>
+  <div className={`nhsuk-grid-column-${width}`} {...others}>
     {children}
   </div>
 );
