@@ -20,5 +20,5 @@ export default ({ body: { code }, method }, res) => {
   const token = tokens.generate(code);
   res
     .writeHead(201, { "Set-Cookie": `token=${token}; httpOnly; path=/` })
-    .end();
+    .end(JSON.stringify({ wardId: code }));
 };

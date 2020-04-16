@@ -35,7 +35,8 @@ const Login = () => {
       });
 
       if (response.status === 201) {
-        window.location.href = "/";
+        const { wardId } = await response.json();
+        window.location.href = `/wards/${wardId}/visitations`;
       } else {
         errors.push({
           id: "code",
