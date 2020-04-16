@@ -1,5 +1,7 @@
 import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
 import RandomIdProvider from "../../src/providers/RandomIdProvider";
+import TokenProvider from "../../src/providers/TokenProvider";
+import { verifyTokenOrRedirect } from "../../src/usecases/verifyToken";
 import { NotifyClient } from "notifications-node-client";
 
 const ids = new RandomIdProvider();
@@ -9,7 +11,14 @@ const origin = process.env.ORIGIN;
 const apiKey = process.env.API_KEY;
 const templateId = process.env.TEMPLATE_ID;
 
-export default async ({ body, method }, res) => {
+export default async (req, res) => {
+  const { body, method } = req;
+  const tokens = new TokenProvider(process.env.JWT_SIGNING_KEY);
+
+  if (verifyTokenOrRedirect(req, res, { tokens }) !== true) {
+    return;
+  }
+
   if (method !== "POST") {
     res.statusCode = 406;
     res.end();

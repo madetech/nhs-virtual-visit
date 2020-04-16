@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from "react";
+import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
+import fetch from "isomorphic-unfetch";
 import Button from "../../../src/components/Button";
 import FormGroup from "../../../src/components/FormGroup";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
@@ -8,8 +10,8 @@ import Input from "../../../src/components/Input";
 import Label from "../../../src/components/Label";
 import Layout from "../../../src/components/Layout";
 import ErrorSummary from "../../../src/components/ErrorSummary";
-import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
-import fetch from "isomorphic-unfetch";
+import verifyToken from "../../../src/usecases/verifyToken";
+import TokenProvider from "../../../src/providers/TokenProvider";
 
 const isValidPhoneNumber = (input) => {
   const validator = PhoneNumberUtil.getInstance();
@@ -107,5 +109,9 @@ const Home = () => {
     </Layout>
   );
 };
+
+export const getServerSideProps = verifyToken(() => {}, {
+  tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+});
 
 export default Home;
