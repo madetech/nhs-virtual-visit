@@ -1,4 +1,8 @@
 import retreiveVisitations from "../../../src/usecases/retreiveVisitations";
+import Layout from "../../../src/components/Layout";
+import Heading from "../../../src/components/Heading";
+import { GridRow, GridColumn } from "../../../src/components/Grid";
+import VisitationsTable from "../../../src/components/VisitationsTable";
 import pgp from "pg-promise";
 import verifyToken from "../../../src/usecases/verifyToken";
 import TokenProvider from "../../../src/providers/TokenProvider";
