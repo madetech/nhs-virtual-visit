@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../src/components/Layout";
-import useScript from '../../src/hooks/useScript'
+import useScript from "../../src/hooks/useScript";
 
 const Call = ({ id, name }) => {
-  useScript('https://meet.jit.si/external_api.js');
+  useScript("https://meet.jit.si/external_api.js");
 
   useEffect(() => {
     if (!window.JitsiMeetExternalAPI) {
-      console.log('no lib')
+      console.log("no lib");
       return;
     }
 
     if (!id) {
-      console.log('no id')
+      console.log("no id");
       return;
     }
 
@@ -30,10 +30,9 @@ const Call = ({ id, name }) => {
     const api = new window.JitsiMeetExternalAPI(domain, options);
 
     if (!!name) {
-      api.executeCommand('displayName', name);
+      api.executeCommand("displayName", name);
     }
   });
-
 
   if (!id) {
     return (

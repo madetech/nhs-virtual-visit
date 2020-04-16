@@ -8,7 +8,7 @@ import Input from "../src/components/Input";
 import Label from "../src/components/Label";
 import Layout from "../src/components/Layout";
 import ErrorSummary from "../src/components/ErrorSummary";
-import { PhoneNumberUtil, PhoneNumberType } from 'google-libphonenumber';
+import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
 import fetch from "isomorphic-unfetch";
 
 const isValidPhoneNumber = (input) => {
@@ -24,7 +24,8 @@ const Home = () => {
   const [contactNumber, setContactNumber] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const hasError = (field) => errors.find(error => error.id === `${field}-error`);
+  const hasError = (field) =>
+    errors.find((error) => error.id === `${field}-error`);
 
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -32,8 +33,8 @@ const Home = () => {
 
     const setContactNumberError = (errors) => {
       errors.push({
-        id: 'contact-number-error',
-        message: 'Enter a UK mobile number'
+        id: "contact-number-error",
+        message: "Enter a UK mobile number",
       });
     };
 

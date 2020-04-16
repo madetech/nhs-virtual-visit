@@ -1,6 +1,6 @@
-import ConsoleNotifyProvider from '../../src/providers/ConsoleNotifyProvider';
-import RandomIdProvider from '../../src/providers/RandomIdProvider';
-import { NotifyClient } from 'notifications-node-client'
+import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
+import RandomIdProvider from "../../src/providers/RandomIdProvider";
+import { NotifyClient } from "notifications-node-client";
 
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
@@ -10,7 +10,7 @@ const apiKey = process.env.API_KEY;
 const templateId = process.env.TEMPLATE_ID;
 
 export default async ({ body, method }, res) => {
-  if (method !== 'POST') {
+  if (method !== "POST") {
     res.statusCode = 406;
     res.end();
     return;
@@ -23,9 +23,9 @@ export default async ({ body, method }, res) => {
 
   try {
     await notifyClient.sendSms(templateId, body.contactNumber, {
-      personalisation:{'call_url': callUrl},
-      reference: null
-    })
+      personalisation: { call_url: callUrl },
+      reference: null,
+    });
 
     notifier.notify(body.contactNumber, callUrl);
 
@@ -36,4 +36,4 @@ export default async ({ body, method }, res) => {
     res.statusCode = 500;
     res.end(JSON.stringify({ err: err.error }));
   }
-}
+};

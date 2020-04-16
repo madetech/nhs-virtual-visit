@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Label = ({ children, ...others }) => (
   <label className="nhsuk-label" {...others}>
