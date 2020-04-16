@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import Layout from "../../src/components/Layout";
 import useScript from '../../src/hooks/useScript'
 
-const Call = () => {
-  const {
-    query: { id, name },
-  } = useRouter();
-
-  const [libraryLoaded] = useScript('https://meet.jit.si/external_api.js')
+const Call = ({ id, name }) => {
+  useScript('https://meet.jit.si/external_api.js');
 
   useEffect(() => {
-    if (!libraryLoaded) {
+    if (!window.JitsiMeetExternalAPI) {
+      console.log('no lib')
+      return;
+    }
+
+    if (!id) {
+      console.log('no id')
       return;
     }
 
@@ -31,7 +32,7 @@ const Call = () => {
     if (!!name) {
       api.executeCommand('displayName', name);
     }
-  }, [libraryLoaded, name]);
+  });
 
 
   if (!id) {
@@ -50,6 +51,11 @@ const Call = () => {
       </main>
     </Layout>
   );
+};
+
+export const getServerSideProps = ({ params }) => {
+  const { id, name } = params;
+  return { props: { id, name } };
 };
 
 export default Call;
