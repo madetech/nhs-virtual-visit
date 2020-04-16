@@ -1,4 +1,4 @@
-import cookie from "cookie";
+import userIsAuthenticated from "./userIsAuthenticated";
 
 export default function (callback, container) {
   return function (context) {
@@ -16,9 +16,7 @@ export function verifyTokenOrRedirect(req, res, { tokens }) {
   };
 
   try {
-    const { token } = cookie.parse(req.headers.cookie);
-
-    if (!token || !tokens.validate(token)) {
+    if (!userIsAuthenticated({ requestCookie: req.headers.cookie, tokens })) {
       return redirectToLogin();
     }
 

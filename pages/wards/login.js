@@ -9,6 +9,8 @@ import Hint from "../../src/components/Hint";
 import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
+import userIsAuthenticated from "../../src/usecases/userIsAuthenticated";
+import TokenProvider from "../../src/providers/TokenProvider";
 
 const Login = () => {
   const [code, setCode] = useState("");
@@ -69,7 +71,9 @@ const Login = () => {
                 name="code"
               />
               <br />
-              <Button className="nhsuk-u-margin-top-5">Log in</Button>
+              <Button className="nhsuk-u-margin-top-5" type="submit">
+                Log in
+              </Button>
             </FormGroup>
           </form>
         </GridColumn>
@@ -80,3 +84,14 @@ const Login = () => {
 };
 
 export default Login;
+
+export const getServerSideProps = ({ req: { headers }, res }) => {
+  const token = userIsAuthenticated({
+    requestCookie: headers.cookie,
+    tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+  });
+
+  if (token && token.ward) {
+    res.writeHead(302, { Location: `/wards/${token.ward}/visitations` }).end();
+  }
+};
