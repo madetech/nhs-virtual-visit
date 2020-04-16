@@ -36,7 +36,10 @@ const Visitations = ({ visitations, joinCall }) => (
                 className="nhsuk-button"
                 type="submit"
                 onClick={() =>
-                  joinCall({ contactNumber: visitation.recipientNumber })
+                  joinCall({
+                    callId: visitation.callId,
+                    contactNumber: visitation.recipientNumber,
+                  })
                 }
               >
                 Join call
