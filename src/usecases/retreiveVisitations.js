@@ -8,7 +8,9 @@ export default async function retreiveVisitations({ getDb }) {
         id: scheduledCall.id,
         patientName: scheduledCall.patient_name,
         recipientNumber: scheduledCall.recipient_number,
-        callTime: scheduledCall.call_time.toISOString(),
+        callTime: scheduledCall.call_time
+          ? scheduledCall.call_time.toISOString()
+          : null,
         callId: scheduledCall.call_id,
       })),
       error: null,
