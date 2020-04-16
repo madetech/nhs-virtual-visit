@@ -56,7 +56,7 @@ export default withContainer(async ({ body, method }, res, { container }) => {
     await createVisitation({
       patientName: body.patientName,
       contactNumber: body.contactNumber,
-      callTime: moment(body.callTime).toISOString(),
+      callTime: body.callTime,
       callId: callId,
     });
 

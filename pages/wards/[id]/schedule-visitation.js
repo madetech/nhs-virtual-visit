@@ -97,7 +97,7 @@ const Home = ({ id }) => {
         body: JSON.stringify({
           contactNumber,
           patientName,
-          callTime,
+          callTime: moment(callTime).toISOString(),
         }),
       });
 
