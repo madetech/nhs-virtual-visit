@@ -32,8 +32,8 @@ const isValidName = (input) => {
   }
 };
 
-const isValidDate = ({ year, month, day, hour, min }) => {
-  const parsed = moment([year, month, day, hour, min]);
+const isValidDate = ({ year, month, day, hour, minute }) => {
+  const parsed = moment({ year, month, day, hour, minute });
   return parsed.isValid() && parsed.isAfter(moment());
 };
 
