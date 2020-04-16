@@ -40,12 +40,12 @@ const PreJoin = () => {
   });
 
   return (
-    <Layout title="Join a video call" hasErrors={errors.length != 0}>
+    <Layout title="Join your virtual visitation" hasErrors={errors.length != 0}>
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <Heading>Join a video call</Heading>
-          <Lead>You are about to be connected to a video call.</Lead>
+          <Heading>Join your virtual visitation</Heading>
+          <Lead>You are about to be connected to your virtual visitation.</Lead>
           <form onSubmit={onSubmit}>
             <FormGroup>
               <Label htmlFor="name">Your name</Label>
@@ -58,7 +58,9 @@ const PreJoin = () => {
                 errorMessage={nameError}
                 name="name"
               />
-              <Button className="nhsuk-u-margin-top-5">Join video call</Button>
+              <Button className="nhsuk-u-margin-top-5">
+                Join virtual visitation
+              </Button>
             </FormGroup>
           </form>
         </GridColumn>
