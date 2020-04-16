@@ -1,8 +1,8 @@
 import React from "react";
 import { mount } from "enzyme";
-import { act } from 'react-dom/test-utils';
+import { act } from "react-dom/test-utils";
 import Call from "../../pages/call/[id]";
-import { RouterContext } from 'next/dist/next-server/lib/router-context'
+import { RouterContext } from "next/dist/next-server/lib/router-context";
 
 describe("call", () => {
   let spy;
@@ -12,11 +12,9 @@ describe("call", () => {
     window.JitsiMeetExternalAPI = spy;
   });
 
-  describe('with a call id', () => {
+  describe("with a call id", () => {
     beforeEach(() => {
-      mount(
-        <Call id="TestCallId" />
-      );
+      mount(<Call id="TestCallId" />);
     });
 
     it("configures Jitsi toolbar buttons", () => {
@@ -38,15 +36,13 @@ describe("call", () => {
         })
       );
     });
-  })
+  });
 
-  describe('without a call id', () => {
+  describe("without a call id", () => {
     it("shows an error page", () => {
-      mount(
-        <Call />
-      );
+      mount(<Call />);
 
       expect(spy).not.toHaveBeenCalled();
     });
-  })
+  });
 });

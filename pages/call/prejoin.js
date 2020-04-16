@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useRouter } from "next/router";
-import Head from 'next/head';
+import Head from "next/head";
 import Button from "../../src/components/Button";
 import FormGroup from "../../src/components/FormGroup";
 import { GridRow, GridColumn } from "../../src/components/Grid";

@@ -1,5 +1,5 @@
-import React from 'react';
-import classnames from 'classnames';
+import React from "react";
+import classnames from "classnames";
 
 const Button = ({ children, className, type = "submit", ...others }) => (
   <button

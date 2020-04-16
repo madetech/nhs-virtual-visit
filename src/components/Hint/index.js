@@ -1,4 +1,6 @@
-import React from 'react';
+import React from "react";
 
-const HintText = ({ children }) => (<span className="nhsuk-hint">{children}</span>);
+const HintText = ({ children }) => (
+  <span className="nhsuk-hint">{children}</span>
+);
 export default HintText;
