@@ -37,6 +37,10 @@ You can run tests by running
 
 This will produce output that you can use to host a production copy of the app.
 
+## More documentation
+
+- [Glossary](docs/GLOSSARY.md) - types of users, vocabulary used in copy and descriptions of the intent for each page.
+
 ## Contacts
 
 - **Luke Morton** Director at [Made Tech](https://www.madetech.com) (luke@madetech.com)
