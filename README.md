@@ -11,14 +11,13 @@ For the video chat capabilities we use [Jitsi Meet](https://github.com/jitsi/jit
 ##Env Variables
 In order to run this app locally you will need to add these variables to your `.env` file.
 
-- `ALLOWED_CODES=`
-- `API_KEY=`
-- `DATABASE_URL=`
-- `JWT_SIGNING_KEY=`
-- `ORIGIN=`
-- `SMS_INITIAL_TEMPLATE_ID =`
-- `SMS_JOIN_TEMPLATE_ID=`
-- `URI=`
+- A list of allowed ward codes to allow users to login `ALLOWED_CODES=`
+- The API key to allow access to GovNotify `API_KEY=`
+- The URL for the Heroku database instance `DATABASE_URL=`
+- Used to sign the JWT `JWT_SIGNING_KEY=`
+- Defines the base URL `ORIGIN=`
+- The GovNotify template ID for the first text message `SMS_INITIAL_TEMPLATE_ID =`
+- The GovNotify template ID for the second text message `SMS_JOIN_TEMPLATE_ID=`
 
 ## Running the app locally
 
