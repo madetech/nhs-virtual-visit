@@ -196,6 +196,9 @@ const Home = ({ id }) => {
               <Button className="nhsuk-u-margin-top-5">
                 Schedule visitation
               </Button>
+              <p>
+                <a href={`/wards/${id}/visitations`}>Cancel</a>
+              </p>
             </FormGroup>
           </form>
         </GridColumn>
