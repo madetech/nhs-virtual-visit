@@ -32,8 +32,8 @@ const isValidName = (input) => {
   }
 };
 
-const isValidDate = ({ year, month, day, hour, min }) => {
-  const parsed = moment([year, month, day, hour, min]);
+const isValidDate = ({ year, month, day, hour, minute }) => {
+  const parsed = moment({ year, month, day, hour, minute });
   return parsed.isValid() && parsed.isAfter(moment());
 };
 
@@ -97,7 +97,8 @@ const Home = ({ id }) => {
         body: JSON.stringify({
           contactNumber,
           patientName,
-          callTime,
+          callTime: moment(callTime).toISOString(),
+          callTimeLocal: callTime,
         }),
       });
 
@@ -199,8 +200,14 @@ const Home = ({ id }) => {
   );
 };
 
-export const getServerSideProps = verifyToken(() => {}, {
-  tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-});
+export const getServerSideProps = verifyToken(
+  ({ query }) => {
+    const { id } = query;
+    return { props: { id } };
+  },
+  {
+    tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+  }
+);
 
 export default Home;

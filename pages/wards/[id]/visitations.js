@@ -15,13 +15,14 @@ export default function WardVisits({ scheduledCalls, error, id }) {
     error ? "Unable to display ward visitations" : null
   );
 
-  const joinCall = async ({ contactNumber }) => {
+  const joinCall = async ({ callId, contactNumber }) => {
     const response = await fetch("/api/send-visitation-ready-notification", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify({
+        callId,
         contactNumber,
       }),
     });

@@ -25,14 +25,15 @@ export default async (req, res) => {
     return;
   }
 
-  const callId = ids.generate();
+  const { callId, contactNumber } = body;
+  console.log(callId);
   const waitingRoomUrl = `${origin}/visitors/waiting-room/${callId}`;
   const visitationsUrl = `${origin}/visitations/${callId}?name=Ward`;
 
   var notifyClient = new NotifyClient(apiKey);
 
   try {
-    await notifyClient.sendSms(templateId, body.contactNumber, {
+    await notifyClient.sendSms(templateId, contactNumber, {
       personalisation: { call_url: waitingRoomUrl },
       reference: null,
     });
