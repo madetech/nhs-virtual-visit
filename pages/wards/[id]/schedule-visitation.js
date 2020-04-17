@@ -3,6 +3,7 @@ import Button from "../../../src/components/Button";
 import FormGroup from "../../../src/components/FormGroup";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import ActionLink from "../../../src/components/ActionLink";
+import BackLink from "../../../src/components/BackLink";
 import Text from "../../../src/components/Text";
 import Heading from "../../../src/components/Heading";
 import Hint from "../../../src/components/Hint";
@@ -142,6 +143,10 @@ const Home = ({ id }) => {
     >
       <GridRow>
         <GridColumn width="two-thirds">
+          <BackLink
+            href={`/wards/${id}/visitations`}
+            text="Go back to visitations"
+          />
           <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
             <Heading>Schedule a virtual visitation</Heading>
