@@ -8,7 +8,8 @@ For the SMS messaging we have used [GovNotify](https://www.notifications.service
 
 For the video chat capabilities we use [Jitsi Meet](https://github.com/jitsi/jitsi-meet/blob/master/doc/README.md) which allows for us to have a secure, simple and scalable video Conferences which we embedded within this web application.
 
-##Env Variables
+## Environment variables
+
 In order to run this app locally you will need to add these variables to your `.env` file.
 
 - A list of allowed ward codes to allow users to login `ALLOWED_CODES=`
@@ -22,18 +23,26 @@ In order to run this app locally you will need to add these variables to your `.
 ## Running the app locally
 
 You can run a local copy of the app by running
-`npm run dev`
+
+```
+npm run dev
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Running tests
 
 You can run tests by running
-`npm test`
+
+```
+npm test
+```
 
 ## Building a production version
 
-`npm run build`
+```
+npm run build
+```
 
 This will produce output that you can use to host a production copy of the app.
 
@@ -43,9 +52,9 @@ This will produce output that you can use to host a production copy of the app.
 
 ## Contacts
 
-- **Luke Morton** Director at [Made Tech](https://www.madetech.com) (luke@madetech.com)
-- **Jessica Nichols** Delivery Manager at [Made Tech](https://www.madetech.com) (jessica.nichols@madetech.com)
-- **Antony O'Neill** Senior Engineer at [Made Tech](https://www.madetech.com) (antony.oneill@madetech.com)
-- **Tom Davies** Senior Engineer at [Made Tech](https://www.madetech.com) (tom.davies@madetech.com)
-- **George Schena** Engineer at [Made Tech](https://www.madetech.com) (george@madetech.com)
-- **Wen Ting Wang** Engineer at [Made Tech](https://www.madetech.com) (wenting@madetech.com)
+- **Luke Morton** - Director at [Made Tech](https://www.madetech.com) (luke@madetech.com)
+- **Jessica Nichols** - Delivery Manager at [Made Tech](https://www.madetech.com) (jessica.nichols@madetech.com)
+- **Antony O'Neill** - Senior Engineer at [Made Tech](https://www.madetech.com) (antony.oneill@madetech.com)
+- **Tom Davies** - Senior Engineer at [Made Tech](https://www.madetech.com) (tom.davies@madetech.com)
+- **George Schena** - Engineer at [Made Tech](https://www.madetech.com) (george@madetech.com)
+- **Wen Ting Wang** - Engineer at [Made Tech](https://www.madetech.com) (wenting@madetech.com)
