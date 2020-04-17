@@ -35,7 +35,7 @@ const PreJoin = () => {
     setErrors(errors);
 
     if (errors.length === 0) {
-      router.push(`/visitations/${router.query.id}?name=${name}`);
+      window.location = `https://meet.jit.si/${router.query.id}`;
     }
   });
 
@@ -47,6 +47,11 @@ const PreJoin = () => {
           <Heading>Join your virtual visitation</Heading>
           <Text>
             You're about to join a video call for your virtual visitation.
+          </Text>
+          <Text>
+            Please enter your name below. When you click "Join virtual
+            visitation" you will be provided with instructions on how to join
+            the call.
           </Text>
           <form onSubmit={onSubmit}>
             <FormGroup>
