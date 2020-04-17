@@ -2,10 +2,6 @@
 
 ## Vocabulary
 
-### Visitors (noun)
-
-Users wanting to have a virtual visit with **Patients**.
-
 ### Ward Nurses (noun)
 
 Users who are caring for **Patients** and helping **Visitors** connect with Patients.
