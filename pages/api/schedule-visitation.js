@@ -57,6 +57,7 @@ export default withContainer(async ({ body, method }, res, { container }) => {
       patientName: body.patientName,
       contactNumber: body.contactNumber,
       callTime: body.callTime,
+      callTimeLocal: body.callTimeLocal,
       callId: callId,
     });
 
@@ -65,7 +66,7 @@ export default withContainer(async ({ body, method }, res, { container }) => {
       reference: null,
     });
 
-    notifier.notify(body.contactNumber, formatDate(body.callTime));
+    notifier.notify(body.contactNumber, formatDate(body.callTimeLocal));
 
     res.status(201);
     res.end(JSON.stringify({ success: true }));
