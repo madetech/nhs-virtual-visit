@@ -1,4 +1,4 @@
-# NHS Virtual Visitation
+# NHS Virtual Visit
 
 This application allows for patients in hospitals to be able to contact loved ones and or key contacts via a virtual visitation outside of hospital.
 
@@ -52,9 +52,9 @@ This will produce output that you can use to host a production copy of the app.
 
 ## Contacts
 
-- **Luke Morton** - Director at [Made Tech](https://www.madetech.com) (luke@madetech.com)
+- **Luke Morton** - CTO at [Made Tech](https://www.madetech.com) (luke@madetech.com)
 - **Jessica Nichols** - Delivery Manager at [Made Tech](https://www.madetech.com) (jessica.nichols@madetech.com)
-- **Antony O'Neill** - Senior Engineer at [Made Tech](https://www.madetech.com) (antony.oneill@madetech.com)
-- **Tom Davies** - Senior Engineer at [Made Tech](https://www.madetech.com) (tom.davies@madetech.com)
-- **George Schena** - Engineer at [Made Tech](https://www.madetech.com) (george@madetech.com)
-- **Wen Ting Wang** - Engineer at [Made Tech](https://www.madetech.com) (wenting@madetech.com)
+- **Antony O'Neill** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (antony.oneill@madetech.com)
+- **Tom Davies** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (tom.davies@madetech.com)
+- **George Schena** - Software Engineer at [Made Tech](https://www.madetech.com) (george@madetech.com)
+- **Wen Ting Wang** - Software Engineer at [Made Tech](https://www.madetech.com) (wenting@madetech.com)
