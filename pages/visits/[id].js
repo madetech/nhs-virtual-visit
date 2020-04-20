@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../src/components/Layout";
 import useScript from "../../src/hooks/useScript";
 
-const Call = ({ id, name }) => {
-  if (true /* Needs to check process.env.WHEREBY_SPIKE, not sure how */) {
+const Call = ({ id, name, wherebySpike }) => {
+  if (
+    wherebySpike /* Needs to check process.env.WHEREBY_SPIKE, not sure how */
+  ) {
     return (
       <Layout>
         <main>
@@ -64,7 +66,8 @@ const Call = ({ id, name }) => {
 
 export const getServerSideProps = ({ query }) => {
   const { id, name } = query;
-  return { props: { id, name } };
+  const wherebySpike = process.env.WHEREBY_SPIKE === "yes";
+  return { props: { id, name, wherebySpike } };
 };
 
 const Whereby = ({ id }) => (
