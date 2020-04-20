@@ -20,7 +20,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
   return (
     <>
       <FormGroup>
-        <Label>What is the date of their virtual visitation?</Label>
+        <Label>What is the date of their virtual visit?</Label>
         <Hint>For example, 16 4 2020</Hint>
         {hasError ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
         <div className="nhsuk-date-input__item">
@@ -73,7 +73,7 @@ const DateSelect = ({ onChange, hasError, errorMessage }) => {
         </div>
       </FormGroup>
       <FormGroup>
-        <Label>What is the time of their virtual visitation?</Label>
+        <Label>What is the time of their virtual visit?</Label>
         <Hint>For example, 15 00</Hint>
         <div className="nhsuk-date-input__item">
           <Label>Hour</Label>
