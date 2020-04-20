@@ -28,7 +28,7 @@ export default async (req, res) => {
   const { callId, contactNumber } = body;
   console.log(callId);
   const waitingRoomUrl = `${origin}/visitors/waiting-room/${callId}`;
-  const visitationsUrl = `${origin}/visitations/${callId}?name=Ward`;
+  const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
 
   var notifyClient = new NotifyClient(apiKey);
 
@@ -41,7 +41,7 @@ export default async (req, res) => {
     notifier.notify(body.contactNumber, waitingRoomUrl);
 
     res.statusCode = 201;
-    res.end(JSON.stringify({ id: callId, callUrl: visitationsUrl }));
+    res.end(JSON.stringify({ id: callId, callUrl: visitsUrl }));
   } catch (err) {
     console.error(err);
     res.statusCode = 500;
