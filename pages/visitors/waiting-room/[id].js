@@ -40,18 +40,15 @@ const PreJoin = () => {
   });
 
   return (
-    <Layout title="Join your virtual visitation" hasErrors={errors.length != 0}>
+    <Layout title="Join your virtual visit" hasErrors={errors.length != 0}>
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <Heading>Join your virtual visitation</Heading>
+          <Heading>Join your virtual visit</Heading>
+          <Text>You're about to join a video call for your virtual visit.</Text>
           <Text>
-            You're about to join a video call for your virtual visitation.
-          </Text>
-          <Text>
-            Please enter your name below. When you click "Join virtual
-            visitation" you will be provided with instructions on how to join
-            the call.
+            Please enter your name below. When you click "Join virtual visit"
+            you will be provided with instructions on how to join the call.
           </Text>
           <form onSubmit={onSubmit}>
             <FormGroup>
@@ -66,7 +63,7 @@ const PreJoin = () => {
                 name="name"
               />
               <Button className="nhsuk-u-margin-top-5">
-                Join virtual visitation
+                Join virtual visit
               </Button>
             </FormGroup>
           </form>

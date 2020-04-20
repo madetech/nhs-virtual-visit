@@ -6,9 +6,7 @@ const formatDate = (date) => moment(date).format("D MMMM YYYY, h.mma");
 const Visitations = ({ visitations, joinCall }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
-      <caption className="nhsuk-table__caption">
-        List of ward visitations
-      </caption>
+      <caption className="nhsuk-table__caption">List of ward visits</caption>
       <thead className="nhsuk-table__head">
         <tr className="nhsuk-table__row">
           <th className="nhsuk-table__header" scope="col">

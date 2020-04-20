@@ -114,21 +114,21 @@ const Home = ({ id }) => {
 
   if (success) {
     return (
-      <Layout title="Schedule a virtual visitation">
+      <Layout title="Schedule a virtual visit">
         <GridRow>
           <GridColumn width="two-thirds">
-            <Heading>Virtual visitation scheduled</Heading>
+            <Heading>Virtual visit scheduled</Heading>
 
             <Text>
-              Your virtual visitation has been scheduled and the key contact has
-              been sent an SMS with their scheduled time.
+              Your virtual visit has been scheduled and the key contact has been
+              sent an SMS with their scheduled time.
             </Text>
 
             <ActionLink href={`/wards/${id}/schedule-visitation`}>
-              Schedule another visitation
+              Schedule another visit
             </ActionLink>
             <ActionLink href={`/wards/${id}/visitations`}>
-              View visitations
+              View visits
             </ActionLink>
           </GridColumn>
         </GridRow>
@@ -137,15 +137,12 @@ const Home = ({ id }) => {
   }
 
   return (
-    <Layout
-      title="Schedule a virtual visitation"
-      hasErrors={errors.length != 0}
-    >
+    <Layout title="Schedule a virtual visit" hasErrors={errors.length != 0}>
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
-            <Heading>Schedule a virtual visitation</Heading>
+            <Heading>Schedule a virtual visit</Heading>
             <FormGroup>
               <Label htmlFor="patient-name">What's the patients name?</Label>
               <Input
@@ -189,9 +186,7 @@ const Home = ({ id }) => {
                 errorMessage="Enter a valid date"
               ></DateSelect>
               <br></br>
-              <Button className="nhsuk-u-margin-top-5">
-                Schedule visitation
-              </Button>
+              <Button className="nhsuk-u-margin-top-5">Schedule visit</Button>
             </FormGroup>
           </form>
         </GridColumn>

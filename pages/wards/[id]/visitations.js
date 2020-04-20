@@ -12,7 +12,7 @@ import { useState } from "react";
 
 export default function WardVisits({ scheduledCalls, error, id }) {
   const [userError, setUserError] = useState(
-    error ? "Unable to display ward visitations" : null
+    error ? "Unable to display ward visits" : null
   );
 
   const joinCall = async ({ callId, contactNumber }) => {
@@ -53,26 +53,26 @@ export default function WardVisits({ scheduledCalls, error, id }) {
   }
 
   return (
-    <Layout title="Ward visitations">
+    <Layout title="Ward visits">
       <GridRow>
         <GridColumn width="full">
-          <Heading>Ward visitations</Heading>
-          <h2 className="nhsuk-heading-l">Schedule a new visitation</h2>
+          <Heading>Ward visits</Heading>
+          <h2 className="nhsuk-heading-l">Schedule a new visit</h2>
           <Text>
             You'll need the mobile number of your patient's loved one in order
-            to set up a visitation.
+            to set up a visit.
           </Text>
           <ActionLink href={`/wards/${id}/schedule-visitation`}>
-            Schedule visitation
+            Schedule visit
           </ActionLink>
-          <h2 className="nhsuk-heading-l">Pre-booked visitations</h2>
+          <h2 className="nhsuk-heading-l">Pre-booked visits</h2>
           {scheduledCalls.length > 0 ? (
             <VisitationsTable
               visitations={scheduledCalls}
               joinCall={joinCall}
             />
           ) : (
-            <Text>There are no upcoming visitations.</Text>
+            <Text>There are no upcoming visits.</Text>
           )}
         </GridColumn>
       </GridRow>

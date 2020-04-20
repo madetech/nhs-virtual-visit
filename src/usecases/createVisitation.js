@@ -1,7 +1,7 @@
 const createVisitation = ({ getDb }) => async (visitation) => {
   const db = getDb();
 
-  console.log("Creating visitation for ", visitation);
+  console.log("Creating visit for ", visitation);
   return await db.one(
     `INSERT INTO scheduled_calls_table
       (id, patient_name, recipient_number, call_time, call_id)
