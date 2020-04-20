@@ -46,7 +46,7 @@ An alphanumeric string used by **Ward Staff** to securely access the app.
 
 **Ward Staff** schedule new **Visits**.
 
-### `/visitations/{visitationId}`
+### `/visits/{visitId}`
 
 **Patients** and **Visitors** unite and can see and hear one another in their **Visit**.
 
