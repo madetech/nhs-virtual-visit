@@ -1,9 +1,9 @@
-import retreiveVisitations from "../../../src/usecases/retreiveVisitations";
+import retrieveVisits from "../../../src/usecases/retrieveVisits";
 import Layout from "../../../src/components/Layout";
 import Heading from "../../../src/components/Heading";
 import ActionLink from "../../../src/components/ActionLink";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
-import VisitationsTable from "../../../src/components/VisitationsTable";
+import VisitsTable from "../../../src/components/VisitsTable";
 import Text from "../../../src/components/Text";
 import pgp from "pg-promise";
 import verifyToken from "../../../src/usecases/verifyToken";
@@ -16,7 +16,7 @@ export default function WardVisits({ scheduledCalls, error, id }) {
   );
 
   const joinCall = async ({ callId, contactNumber }) => {
-    const response = await fetch("/api/send-visitation-ready-notification", {
+    const response = await fetch("/api/send-visit-ready-notification", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -67,10 +67,7 @@ export default function WardVisits({ scheduledCalls, error, id }) {
           </ActionLink>
           <h2 className="nhsuk-heading-l">Pre-booked visits</h2>
           {scheduledCalls.length > 0 ? (
-            <VisitationsTable
-              visitations={scheduledCalls}
-              joinCall={joinCall}
-            />
+            <VisitsTable visits={scheduledCalls} joinCall={joinCall} />
           ) : (
             <Text>There are no upcoming visits.</Text>
           )}
@@ -93,7 +90,7 @@ export const getServerSideProps = verifyToken(
       },
     };
 
-    const { scheduledCalls, error } = await retreiveVisitations(container);
+    const { scheduledCalls, error } = await retrieveVisits(container);
 
     return { props: { scheduledCalls, error, id } };
   },

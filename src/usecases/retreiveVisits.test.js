@@ -1,6 +1,6 @@
-import retreiveVisitations from "./retreiveVisitations";
+import retreiveVisits from "./retreiveVisits";
 
-describe("retreiveVisitations", () => {
+describe("retreiveVisits", () => {
   it("returns a json object containing the calls", async () => {
     const container = {
       getDb() {
@@ -25,7 +25,7 @@ describe("retreiveVisitations", () => {
       },
     };
 
-    const { scheduledCalls, error } = await retreiveVisitations(container);
+    const { scheduledCalls, error } = await retreiveVisits(container);
 
     expect(error).toBeNull();
     expect(scheduledCalls).toHaveLength(2);
@@ -48,7 +48,7 @@ describe("retreiveVisitations", () => {
       },
     };
 
-    const { error } = await retreiveVisitations(container);
+    const { error } = await retreiveVisits(container);
     expect(error).toBeDefined();
   });
 });

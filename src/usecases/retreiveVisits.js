@@ -1,4 +1,4 @@
-export default async function retreiveVisitations({ getDb }) {
+export default async function retreiveVisits({ getDb }) {
   const db = getDb();
   try {
     const scheduledCalls = await db.any(
