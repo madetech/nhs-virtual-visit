@@ -127,9 +127,7 @@ const Home = ({ id }) => {
             <ActionLink href={`/wards/${id}/schedule-visitation`}>
               Schedule another visit
             </ActionLink>
-            <ActionLink href={`/wards/${id}/visitations`}>
-              View visits
-            </ActionLink>
+            <ActionLink href={`/wards/${id}/visits`}>View visits</ActionLink>
           </GridColumn>
         </GridRow>
       </Layout>

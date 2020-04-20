@@ -36,7 +36,7 @@ An alphanumeric string used by **Ward Staff** to securely access the app.
 
 **Ward Staff** enter their **Ward Code**, after which they're able to view scheduled **Visit** and schedule new ones.
 
-### `/wards/{wardId}/visitations`
+### `/wards/{wardId}/visits`
 
 **Ward Staff** view and join upcoming **Visit** for their **Ward**.
 
