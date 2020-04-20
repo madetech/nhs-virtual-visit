@@ -51,9 +51,9 @@ export default withContainer(async ({ body, method }, res, { container }) => {
   try {
     const callId = ids.generate();
 
-    const createVisitation = container.getCreateVisitation();
+    const createVisit = container.getCreateVisit();
 
-    await createVisitation({
+    await createVisit({
       patientName: body.patientName,
       contactNumber: body.contactNumber,
       callTime: body.callTime,

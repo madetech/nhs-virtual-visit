@@ -1,8 +1,8 @@
-import scheduleVisitation from "../../pages/api/schedule-visitation";
+import scheduleVisit from "../../pages/api/schedule-visit";
 
 jest.mock("notifications-node-client");
 
-describe("schedule-visitation", () => {
+describe("schedule-visit", () => {
   let req;
   let res;
   let container;
@@ -16,15 +16,15 @@ describe("schedule-visitation", () => {
       end: jest.fn(),
     };
     container = {
-      getCreateVisitation: jest.fn(),
+      getCreateVisit: jest.fn(),
       getDb: jest.fn(),
     };
   });
 
-  it("inserts a visitation if valid", async () => {
-    const createVisitationSpy = jest.fn();
+  it("inserts a visit if valid", async () => {
+    const createVisitSpy = jest.fn();
 
-    await scheduleVisitation(
+    await scheduleVisit(
       {
         method: "POST",
         body: {
@@ -37,16 +37,16 @@ describe("schedule-visitation", () => {
       {
         container: {
           ...container,
-          getCreateVisitation: () => createVisitationSpy,
+          getCreateVisit: () => createVisitSpy,
         },
       }
     );
 
     expect(res.status).toHaveBeenCalledWith(201);
 
-    expect(createVisitationSpy).toHaveBeenCalled();
+    expect(createVisitSpy).toHaveBeenCalled();
 
-    expect(createVisitationSpy).toHaveBeenCalledWith(
+    expect(createVisitSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         patientName: "Bob Smith",
         contactNumber: "07123456789",

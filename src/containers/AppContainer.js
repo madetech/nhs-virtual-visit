@@ -1,5 +1,5 @@
 import pgp from "pg-promise";
-import createVisitation from "../usecases/createVisitation";
+import createVisit from "../usecases/createVisit";
 
 export default class AppContainer {
   getDb() {
@@ -11,7 +11,7 @@ export default class AppContainer {
     });
   }
 
-  getCreateVisitation() {
-    return createVisitation(this);
+  getCreateVisit() {
+    return createVisit(this);
   }
 }

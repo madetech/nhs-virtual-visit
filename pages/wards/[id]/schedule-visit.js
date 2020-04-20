@@ -89,7 +89,7 @@ const Home = ({ id }) => {
     setErrors(errors);
 
     if (errors.length === 0) {
-      const response = await fetch("/api/schedule-visitation", {
+      const response = await fetch("/api/schedule-visit", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -124,7 +124,7 @@ const Home = ({ id }) => {
               sent an SMS with their scheduled time.
             </Text>
 
-            <ActionLink href={`/wards/${id}/schedule-visitation`}>
+            <ActionLink href={`/wards/${id}/schedule-visit`}>
               Schedule another visit
             </ActionLink>
             <ActionLink href={`/wards/${id}/visits`}>View visits</ActionLink>

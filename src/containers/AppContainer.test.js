@@ -11,7 +11,7 @@ describe("AppContainer", () => {
     expect(container.getDb()).toBeDefined();
   });
 
-  it("returns createVistiation", () => {
-    expect(container.getCreateVisitation).toBeDefined();
+  it("returns createVisit", () => {
+    expect(container.getCreateVisit).toBeDefined();
   });
 });

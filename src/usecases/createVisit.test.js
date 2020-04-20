@@ -1,7 +1,7 @@
-import createVisitation from "./createVisitation";
+import createVisit from "./createVisit";
 
-describe("createVisitation", () => {
-  it("creates a visitation in the db when valid", async () => {
+describe("createVisit", () => {
+  it("creates a visit in the db when valid", async () => {
     const oneSpy = jest.fn().mockReturnValue(10);
     const container = {
       getDb() {
@@ -18,7 +18,7 @@ describe("createVisitation", () => {
       callId: 12345,
     };
 
-    const resultingId = await createVisitation(container)(request);
+    const resultingId = await createVisit(container)(request);
 
     expect(resultingId).toEqual(10);
 
