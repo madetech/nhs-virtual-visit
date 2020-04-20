@@ -1,8 +1,11 @@
 import React from "react";
 import { mount } from "enzyme";
-import { act } from "react-dom/test-utils";
 import Call from "../../pages/visits/[id]";
-import { RouterContext } from "next/dist/next-server/lib/router-context";
+
+jest.mock("../../src/hooks/useScript", () => ({
+  __esModule: true,
+  default: () => [true, false],
+}));
 
 describe("call", () => {
   let spy;
