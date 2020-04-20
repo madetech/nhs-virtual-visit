@@ -35,7 +35,7 @@ const PreJoin = () => {
     setErrors(errors);
 
     if (errors.length === 0) {
-      window.location = `https://meet.jit.si/${router.query.id}`;
+      router.push(`/visitations/${router.query.id}?name=${name}`);
     }
   });
 

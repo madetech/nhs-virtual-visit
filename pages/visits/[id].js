@@ -3,10 +3,10 @@ import Layout from "../../src/components/Layout";
 import useScript from "../../src/hooks/useScript";
 
 const Call = ({ id, name }) => {
-  useScript("https://meet.jit.si/external_api.js");
+  const [jitsiLoaded, error] = useScript("https://meet.jit.si/external_api.js");
 
   useEffect(() => {
-    if (!window.JitsiMeetExternalAPI) {
+    if (!jitsiLoaded) {
       console.log("no lib");
       return;
     }
@@ -32,7 +32,7 @@ const Call = ({ id, name }) => {
     if (!!name) {
       api.executeCommand("displayName", name);
     }
-  });
+  }, [jitsiLoaded]);
 
   if (!id) {
     return (
