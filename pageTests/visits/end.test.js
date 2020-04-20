@@ -5,6 +5,7 @@ import EndOfVisit from "../../pages/visits/end";
 describe("end", () => {
   it("renders end of visit message", () => {
     const { getByText } = render(<EndOfVisit />);
+<<<<<<< HEAD
     const text = getByText(/visit has completed/i);
     expect(text).toBeInTheDocument();
   });
@@ -34,4 +35,9 @@ describe("end", () => {
       expect(text).not.toBeInTheDocument();
     });
   });
+=======
+    const text = getByText(/visit has ended/i);
+    expect(text).toBeInTheDocument();
+  });
+>>>>>>> Adds initial end of visit page
 });
