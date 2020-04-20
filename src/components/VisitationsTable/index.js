@@ -3,7 +3,7 @@ import moment from "moment";
 
 const formatDate = (date) => moment(date).format("D MMMM YYYY, h.mma");
 
-const Visitations = ({ visitations, joinCall }) => (
+const Visits = ({ visits, joinCall }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
       <caption className="nhsuk-table__caption">List of ward visits</caption>
@@ -22,21 +22,19 @@ const Visitations = ({ visitations, joinCall }) => (
         </tr>
       </thead>
       <tbody className="nhsuk-table__body">
-        {visitations.map((visitation) => (
+        {visits.map((visit) => (
           <tr className="nhsuk-table__row">
-            <td className="nhsuk-table__cell">{visitation.patientName}</td>
-            <td className="nhsuk-table__cell">{visitation.recipientNumber}</td>
-            <td className="nhsuk-table__cell">
-              {formatDate(visitation.callTime)}
-            </td>
+            <td className="nhsuk-table__cell">{visit.patientName}</td>
+            <td className="nhsuk-table__cell">{visit.recipientNumber}</td>
+            <td className="nhsuk-table__cell">{formatDate(visit.callTime)}</td>
             <td className="nhsuk-table__cell">
               <button
                 className="nhsuk-button"
                 type="submit"
                 onClick={() =>
                   joinCall({
-                    callId: visitation.callId,
-                    contactNumber: visitation.recipientNumber,
+                    callId: visit.callId,
+                    contactNumber: visit.recipientNumber,
                   })
                 }
               >
@@ -50,4 +48,4 @@ const Visitations = ({ visitations, joinCall }) => (
   </div>
 );
 
-export default Visitations;
+export default Visits;

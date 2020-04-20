@@ -50,6 +50,6 @@ An alphanumeric string used by **Ward Staff** to securely access the app.
 
 **Patients** and **Visitors** unite and can see and hear one another in their **Visit**.
 
-### `/visitors/waiting-room/{visitationId}`
+### `/visitors/waiting-room/{visitId}`
 
 **Visitors** have their expectations set for what is about to happen and enter their names, for confirmation by the **Ward Staff** before they hand over the device to the **Patient**.
