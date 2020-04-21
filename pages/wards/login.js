@@ -87,9 +87,8 @@ export default Login;
 
 export const getServerSideProps = ({ req: { headers }, res }) => {
   const token = userIsAuthenticated({
-    requestCookie: headers.cookie,
-    tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-  });
+    getTokenProvider: () => new TokenProvider(process.env.JWT_SIGNING_KEY),
+  })(headers.cookie);
 
   if (token && token.ward) {
     res.writeHead(302, { Location: `/wards/${token.ward}/visits` }).end();
