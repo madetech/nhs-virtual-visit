@@ -62,7 +62,10 @@ export default withContainer(async ({ body, method }, res, { container }) => {
     });
 
     await notifyClient.sendSms(templateId, body.contactNumber, {
-      personalisation: { call_time: formatDate(body.callTime) },
+      personalisation: {
+        call_time: formatDate(body.callTime),
+        ward_name: "Defoe Ward",
+      },
       reference: null,
     });
 
