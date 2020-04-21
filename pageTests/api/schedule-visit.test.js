@@ -58,7 +58,7 @@ describe("schedule-visit", () => {
 
   describe("Whereby", () => {
     beforeEach(() => {
-      process.env.WHEREBY_SPIKE = "yes";
+      process.env.ENABLE_WHEREBY = "yes";
       process.env.WHEREBY_API_KEY = "meow";
 
       fetch.mockReturnValue({
@@ -67,7 +67,7 @@ describe("schedule-visit", () => {
     });
 
     afterEach(() => {
-      process.env.WHEREBY_SPIKE = undefined;
+      process.env.ENABLE_WHEREBY = undefined;
       process.env.WHEREBY_API_KEY = undefined;
     });
 
