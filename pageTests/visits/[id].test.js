@@ -1,5 +1,5 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render } from "@testing-library/react";
 import Call from "../../pages/visits/[id]";
 
 jest.mock("../../src/hooks/useScript", () => ({
@@ -17,7 +17,7 @@ describe("call", () => {
 
   describe("with a call id", () => {
     beforeEach(() => {
-      mount(<Call id="TestCallId" />);
+      render(<Call id="TestCallId" />);
     });
 
     it("configures Jitsi toolbar buttons", () => {
@@ -43,7 +43,7 @@ describe("call", () => {
 
   describe("without a call id", () => {
     it("shows an error page", () => {
-      mount(<Call />);
+      render(<Call />);
 
       expect(spy).not.toHaveBeenCalled();
     });
