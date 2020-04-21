@@ -1,5 +1,7 @@
 import pgp from "pg-promise";
 import createVisit from "../usecases/createVisit";
+import userIsAuthenticated from "../usecases/userIsAuthenticated";
+import TokenProvider from "../providers/TokenProvider";
 
 export default class AppContainer {
   getDb() {
@@ -13,5 +15,13 @@ export default class AppContainer {
 
   getCreateVisit() {
     return createVisit(this);
+  }
+
+  getTokenProvider() {
+    return new TokenProvider(process.env.JWT_SIGNING_KEY);
+  }
+
+  getUserIsAuthenticated() {
+    return userIsAuthenticated(this);
   }
 }
