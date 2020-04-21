@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../src/components/Layout";
 import useScript from "../../src/hooks/useScript";
+import Router from "next/router";
 
 const Call = ({ id, name, enableWhereby }) => {
   if (enableWhereby) {
@@ -8,6 +9,15 @@ const Call = ({ id, name, enableWhereby }) => {
       <Layout>
         <main>
           <Whereby id={id} />
+          <button
+            className="nhsuk-button"
+            type="submit"
+            onClick={() => {
+              Router.push("/visits/end");
+            }}
+          >
+            End call
+          </button>
         </main>
       </Layout>
     );
@@ -42,6 +52,9 @@ const Call = ({ id, name, enableWhereby }) => {
 
       if (!!name) {
         api.executeCommand("displayName", name);
+        api.on("videoConferenceLeft", () => {
+          Router.push("/visits/end");
+        });
       }
     }, [jitsiLoaded]);
 
