@@ -1,5 +1,3 @@
-import "../src/global.scss";
-
 function LoginRedirect() {
   return <div></div>;
 }
