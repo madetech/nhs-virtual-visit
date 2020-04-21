@@ -3,6 +3,7 @@ import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import TokenProvider from "../../src/providers/TokenProvider";
 import { verifyTokenOrRedirect } from "../../src/usecases/verifyToken";
 import { NotifyClient } from "notifications-node-client";
+import fetch from "node-fetch";
 
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
@@ -25,8 +26,9 @@ export default async (req, res) => {
     return;
   }
 
-  const { callId, contactNumber } = body;
+  let { callId, contactNumber } = body;
   console.log(callId);
+
   const waitingRoomUrl = `${origin}/visitors/waiting-room/${callId}`;
   const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
 
