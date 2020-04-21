@@ -65,6 +65,7 @@ export default withContainer(async ({ body, method }, res, { container }) => {
       personalisation: {
         call_time: formatDate(body.callTime),
         ward_name: "Defoe Ward",
+        hospital_name: "Northwick Park Hospital",
       },
       reference: null,
     });
