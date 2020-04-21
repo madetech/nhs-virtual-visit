@@ -3,24 +3,29 @@ import retrieveVisits from "./retrieveVisits";
 describe("retrieveVisits", () => {
   it("returns a json object containing the calls", async () => {
     const container = {
-      getDb() {
+      getDb: () => {
         return {
-          any: jest.fn().mockReturnValue([
-            {
-              id: 1,
-              patient_name: "Bob",
-              call_time: new Date("2020-04-15T23:00:00.000Z"),
-              recipient_number: "07907095342",
-              call_id: "cb238rfv23cuv3",
-            },
-            {
-              id: 2,
-              patient_name: "Harry",
-              call_time: new Date("2020-04-15T23:00:00.000Z"),
-              recipient_number: "07907095342",
-              call_id: "cb238rfv23cuv3",
-            },
-          ]),
+          ScheduledCall: {
+            findAll: jest.fn().mockReturnValue([
+              {
+                id: 1,
+                patient_name: "Bob",
+                call_time: new Date("2020-04-15T23:00:00.000Z"),
+                recipient_number: "07907095342",
+                call_id: "cb238rfv23cuv3",
+              },
+              {
+                id: 2,
+                patient_name: "Harry",
+                call_time: new Date("2020-04-15T23:00:00.000Z"),
+                recipient_number: "07907095342",
+                call_id: "cb238rfv23cuv3",
+              },
+            ]),
+          },
+          Sequelize: {
+            literal: () => {},
+          },
         };
       },
     };

@@ -30,12 +30,28 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Testing
+
+### Setup test database
+
+Create test database
+
+```
+NODE_ENV=test TEST_DATABASE_URL= npx sequelize db:create
+```
+
+Run all migrations on the test database
+
+```
+NODE_ENV=test TEST_DATABASE_URL= npx sequelize db:migrate
+```
+
 ## Running tests
 
 You can run tests by running
 
 ```
-npm test
+TEST_DATABASE_URL= npm test
 ```
 
 ## Building a production version
