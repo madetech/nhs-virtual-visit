@@ -52,57 +52,67 @@ const getValidationErrors = ({ patientName, contactNumber, callTime }) => {
   return null;
 };
 
-export default withContainer(async ({ body, method }, res, { container }) => {
-  if (method !== "POST") {
-    res.status(406);
-    res.end();
-    return;
-  }
-
-  res.setHeader("Content-Type", "application/json");
-
-  const validationErrors = getValidationErrors(body);
-  if (validationErrors) {
-    res.status(400);
-    res.end(JSON.stringify({ err: validationErrors }));
-    return;
-  }
-
-  var notifyClient = new NotifyClient(apiKey);
-
-  try {
-    let callId = ids.generate();
-
-    if (process.env.ENABLE_WHEREBY == "yes") {
-      callId = await wherebyCallId(body.callTime);
+export default withContainer(
+  async ({ headers, body, method }, res, { container }) => {
+    if (method !== "POST") {
+      res.status(406);
+      res.end();
+      return;
     }
 
-    const createVisit = container.getCreateVisit();
+    const userIsAuthenticated = container.getUserIsAuthenticated();
 
-    await createVisit({
-      patientName: body.patientName,
-      contactNumber: body.contactNumber,
-      callTime: body.callTime,
-      callTimeLocal: body.callTimeLocal,
-      callId: callId,
-    });
+    if (!userIsAuthenticated(headers.cookie)) {
+      res.status(401);
+      res.end();
+      return;
+    }
 
-    await notifyClient.sendSms(templateId, body.contactNumber, {
-      personalisation: {
-        call_time: formatDate(body.callTime),
-        ward_name: "Defoe Ward",
-        hospital_name: "Northwick Park Hospital",
-      },
-      reference: null,
-    });
+    res.setHeader("Content-Type", "application/json");
 
-    notifier.notify(body.contactNumber, formatDate(body.callTimeLocal));
+    const validationErrors = getValidationErrors(body);
+    if (validationErrors) {
+      res.status(400);
+      res.end(JSON.stringify({ err: validationErrors }));
+      return;
+    }
 
-    res.status(201);
-    res.end(JSON.stringify({ success: true }));
-  } catch (err) {
-    console.error(err);
-    res.status(500);
-    res.end(JSON.stringify({ err: err.error }));
+    var notifyClient = new NotifyClient(apiKey);
+
+    try {
+      let callId = ids.generate();
+
+      if (process.env.ENABLE_WHEREBY == "yes") {
+        callId = await wherebyCallId(body.callTime);
+      }
+
+      const createVisit = container.getCreateVisit();
+
+      await createVisit({
+        patientName: body.patientName,
+        contactNumber: body.contactNumber,
+        callTime: body.callTime,
+        callTimeLocal: body.callTimeLocal,
+        callId: callId,
+      });
+
+      await notifyClient.sendSms(templateId, body.contactNumber, {
+        personalisation: {
+          call_time: formatDate(body.callTime),
+          ward_name: "Defoe Ward",
+          hospital_name: "Northwick Park Hospital",
+        },
+        reference: null,
+      });
+
+      notifier.notify(body.contactNumber, formatDate(body.callTimeLocal));
+
+      res.status(201);
+      res.end(JSON.stringify({ success: true }));
+    } catch (err) {
+      console.error(err);
+      res.status(500);
+      res.end(JSON.stringify({ err: err.error }));
+    }
   }
-});
+);
