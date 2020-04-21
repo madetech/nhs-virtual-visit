@@ -3,6 +3,7 @@ import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
 import moment from "moment";
 import withContainer from "../../src/middleware/withContainer";
+import fetch from "node-fetch";
 
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
