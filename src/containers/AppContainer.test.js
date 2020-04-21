@@ -12,6 +12,14 @@ describe("AppContainer", () => {
   });
 
   it("returns createVisit", () => {
-    expect(container.getCreateVisit).toBeDefined();
+    expect(container.getCreateVisit()).toBeDefined();
+  });
+
+  it("returns getTokenProvider", () => {
+    expect(container.getTokenProvider()).toBeDefined();
+  });
+
+  it("returns getUserIsAuthenticated", () => {
+    expect(container.getUserIsAuthenticated()).toBeDefined();
   });
 });
