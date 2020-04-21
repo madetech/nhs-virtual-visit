@@ -12,25 +12,6 @@ const origin = process.env.ORIGIN;
 const apiKey = process.env.API_KEY;
 const templateId = process.env.TEMPLATE_ID;
 
-const whereby = async () => {
-  const response = await fetch("https://api.whereby.dev/v1/meetings", {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${process.env.WHEREBY_API_KEY}`,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      startDate: "2020-04-20T10:00:00Z",
-      endDate: "2020-04-21T17:14:20Z",
-    }),
-  });
-
-  let jsonResponse = await response.json();
-  console.log(jsonResponse);
-  let roomUrl = new URL(jsonResponse.roomUrl);
-  return roomUrl.pathname.slice(1);
-};
-
 export default async (req, res) => {
   const { body, method } = req;
   const tokens = new TokenProvider(process.env.JWT_SIGNING_KEY);
@@ -47,11 +28,6 @@ export default async (req, res) => {
 
   let { callId, contactNumber } = body;
   console.log(callId);
-
-  if (process.env.WHEREBY_SPIKE) {
-    callId = await whereby();
-    console.log(callId);
-  }
 
   const waitingRoomUrl = `${origin}/visitors/waiting-room/${callId}`;
   const visitsUrl = `${origin}/visits/${callId}?name=Ward`;

@@ -3,9 +3,7 @@ import Layout from "../../src/components/Layout";
 import useScript from "../../src/hooks/useScript";
 
 const Call = ({ id, name, wherebySpike }) => {
-  if (
-    wherebySpike /* Needs to check process.env.WHEREBY_SPIKE, not sure how */
-  ) {
+  if (wherebySpike) {
     return (
       <Layout>
         <main>
@@ -14,7 +12,9 @@ const Call = ({ id, name, wherebySpike }) => {
       </Layout>
     );
   } else {
-    const [jitsiLoaded, error] = useScript("https://meet.jit.si/external_api.js");
+    const [jitsiLoaded, error] = useScript(
+      "https://meet.jit.si/external_api.js"
+    );
 
     useEffect(() => {
       if (!jitsiLoaded) {
@@ -43,7 +43,7 @@ const Call = ({ id, name, wherebySpike }) => {
       if (!!name) {
         api.executeCommand("displayName", name);
       }
-  }, [jitsiLoaded]);
+    }, [jitsiLoaded]);
 
     if (!id) {
       return (
