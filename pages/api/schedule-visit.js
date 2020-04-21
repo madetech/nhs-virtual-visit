@@ -10,7 +10,10 @@ const notifier = new ConsoleNotifyProvider();
 const apiKey = process.env.API_KEY;
 const templateId = process.env.SMS_INITIAL_TEMPLATE_ID;
 
-const wherebyCallId = async () => {
+const wherebyCallId = async (callTime) => {
+  let startTime = moment(callTime).subtract(30, "minutes").format();
+  let endTime = moment(callTime).add(2, "hours").format();
+
   const response = await fetch("https://api.whereby.dev/v1/meetings", {
     method: "POST",
     headers: {
@@ -18,13 +21,12 @@ const wherebyCallId = async () => {
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      startDate: "2020-04-20T10:00:00Z",
-      endDate: "2020-04-21T17:14:20Z",
+      startDate: startTime,
+      endDate: endTime,
     }),
   });
 
   let jsonResponse = await response.json();
-  console.log(jsonResponse);
   let roomUrl = new URL(jsonResponse.roomUrl);
   return roomUrl.pathname.slice(1);
 };
@@ -71,7 +73,7 @@ export default withContainer(async ({ body, method }, res, { container }) => {
     let callId = ids.generate();
 
     if (process.env.WHEREBY_SPIKE) {
-      callId = await wherebyCallId();
+      callId = await wherebyCallId(body.callTime);
     }
 
     const createVisit = container.getCreateVisit();
