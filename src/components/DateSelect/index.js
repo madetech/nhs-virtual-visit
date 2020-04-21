@@ -4,15 +4,18 @@ import Input from "../../../src/components/Input";
 import Label from "../../../src/components/Label";
 import ErrorMessage from "../ErrorMessage";
 import FormGroup from "../FormGroup";
+import moment from "moment";
 
 const DateSelect = ({ onChange, hasError, errorMessage }) => {
   const today = new Date();
+  var defaultDate = moment(today).add(10, "m").toDate();
+
   const [date, setDate] = useState({
-    year: today.getFullYear(),
-    month: today.getMonth(),
-    day: today.getDate(),
-    hour: today.getHours(),
-    minute: today.getMinutes() + 10,
+    year: defaultDate.getFullYear(),
+    month: defaultDate.getMonth(),
+    day: defaultDate.getDate(),
+    hour: defaultDate.getHours().toString().padStart(2, "0"),
+    minute: defaultDate.getMinutes().toString().padStart(2, "0"),
   });
 
   useEffect(() => onChange(date), [date]);
