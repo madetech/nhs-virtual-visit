@@ -1,10 +1,12 @@
 import cookie from "cookie";
 
-export default ({ requestCookie, tokens }) => {
+export default ({ getTokenProvider }) => (requestCookie) => {
+  const tokenProvider = getTokenProvider();
+
   try {
     const { token } = cookie.parse(requestCookie);
 
-    return token && tokens.validate(token);
+    return token && tokenProvider.validate(token);
   } catch (err) {
     return false;
   }
