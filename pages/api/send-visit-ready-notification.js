@@ -34,7 +34,7 @@ export default async (req, res) => {
 
   try {
     await notifyClient.sendSms(templateId, contactNumber, {
-      personalisation: { call_url: waitingRoomUrl },
+      personalisation: { call_url: waitingRoomUrl, ward_name: "Defoe Ward" },
       reference: null,
     });
 
