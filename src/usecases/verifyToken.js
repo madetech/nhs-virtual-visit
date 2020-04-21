@@ -16,7 +16,11 @@ export function verifyTokenOrRedirect(req, res, { tokens }) {
   };
 
   try {
-    if (!userIsAuthenticated({ requestCookie: req.headers.cookie, tokens })) {
+    if (
+      !userIsAuthenticated({ getTokenProvider: () => tokens })(
+        req.headers.cookie
+      )
+    ) {
       return redirectToLogin();
     }
 
