@@ -18,8 +18,11 @@ describe("schedule-visit", () => {
       end: jest.fn(),
     };
     container = {
-      getCreateVisit: jest.fn(),
-      getDb: jest.fn(),
+      getCreateVisit: jest.fn().mockReturnValue(() => {}),
+      getUserIsAuthenticated: jest
+        .fn()
+        .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
+      getDb: jest.fn().mockReturnValue(() => {}),
     };
   });
 
@@ -33,6 +36,9 @@ describe("schedule-visit", () => {
           patientName: "Bob Smith",
           contactNumber: "07123456789",
           callTime: "2020-04-05T10:10:10",
+        },
+        headers: {
+          cookie: "token=valid.token.value",
         },
       },
       res,
@@ -54,6 +60,33 @@ describe("schedule-visit", () => {
         contactNumber: "07123456789",
       })
     );
+  });
+
+  it("returns a 401 when there is no token provided", async () => {
+    const userIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
+
+    await scheduleVisit(
+      {
+        method: "POST",
+        body: {
+          patientName: "Bob Smith",
+          contactNumber: "07123456789",
+          callTime: "2020-04-05T10:10:10",
+        },
+        headers: {},
+      },
+      res,
+      {
+        container: {
+          ...container,
+          getUserIsAuthenticated: () => userIsAuthenticatedSpy,
+        },
+      }
+    );
+
+    expect(res.status).toHaveBeenCalledWith(401);
+
+    expect(userIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
   describe("Whereby", () => {
@@ -81,6 +114,9 @@ describe("schedule-visit", () => {
             patientName: "Bob Smith",
             contactNumber: "07123456789",
             callTime: "2020-04-05T10:10:10",
+          },
+          headers: {
+            cookie: "token=valid.token.value",
           },
         },
         res,
@@ -113,6 +149,9 @@ describe("schedule-visit", () => {
             patientName: "Bob Smith",
             contactNumber: "07123456789",
             callTime: "2020-04-05T10:10:10",
+          },
+          headers: {
+            cookie: "token=valid.token.value",
           },
         },
         res,
