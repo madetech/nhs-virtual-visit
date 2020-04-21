@@ -22,6 +22,22 @@ In order to run this app locally you will need to add these variables to your `.
 
 ## Running the app locally
 
+### Setup database
+
+Create a development database
+
+```
+npx sequelize db:create
+```
+
+Run all migrations on the development database
+
+```
+npx sequelize db:migrate
+```
+
+### Run the app
+
 You can run a local copy of the app by running
 
 ```
@@ -37,13 +53,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 Create test database
 
 ```
-NODE_ENV=test TEST_DATABASE_URL= npx sequelize db:create
+NODE_ENV=test npx sequelize db:create
 ```
 
 Run all migrations on the test database
 
 ```
-NODE_ENV=test TEST_DATABASE_URL= npx sequelize db:migrate
+NODE_ENV=test npx sequelize db:migrate
 ```
 
 ## Running tests
@@ -51,7 +67,7 @@ NODE_ENV=test TEST_DATABASE_URL= npx sequelize db:migrate
 You can run tests by running
 
 ```
-TEST_DATABASE_URL= npm test
+npm test
 ```
 
 ## Building a production version
