@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../src/components/Layout";
 import useScript from "../../src/hooks/useScript";
 
-const Call = ({ id, name, wherebySpike }) => {
-  if (wherebySpike) {
+const Call = ({ id, name, enableWhereby }) => {
+  if (enableWhereby) {
     return (
       <Layout>
         <main>
@@ -66,8 +66,8 @@ const Call = ({ id, name, wherebySpike }) => {
 
 export const getServerSideProps = ({ query }) => {
   const { id, name } = query;
-  const wherebySpike = process.env.WHEREBY_SPIKE === "yes";
-  return { props: { id, name, wherebySpike } };
+  const enableWhereby = process.env.ENABLE_WHEREBY === "yes";
+  return { props: { id, name, enableWhereby } };
 };
 
 const Whereby = ({ id }) => (

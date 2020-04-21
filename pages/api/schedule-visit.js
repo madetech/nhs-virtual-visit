@@ -73,7 +73,7 @@ export default withContainer(async ({ body, method }, res, { container }) => {
   try {
     let callId = ids.generate();
 
-    if (process.env.WHEREBY_SPIKE) {
+    if (process.env.ENABLE_WHEREBY == "yes") {
       callId = await wherebyCallId(body.callTime);
     }
 
