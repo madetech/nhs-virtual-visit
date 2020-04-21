@@ -1,12 +1,12 @@
 {
   "development": {
-    "use_env_variable": "DATABASE_URL",
-    "dialect": "postgres",
-    "operatorsAliases": false
+    "database": "nhs-virtual-visit-dev",
+    "host": "localhost",
+    "dialect": "postgres"
   },
   "test": {
-    "use_env_variable": "TEST_DATABASE_URL",
-    "dialect": "postgres",
-    "operatorsAliases": false
+    "database": "nhs-virtual-visit-test",
+    "host": "localhost",
+    "dialect": "postgres"
   }
 }
