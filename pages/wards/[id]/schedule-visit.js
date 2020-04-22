@@ -109,6 +109,12 @@ const CheckAnswers = ({ onSubmit, patientName, contactNumber, callTime }) => {
                 </dd>
               </div>
             </dl>
+            <h2 className="nhsuk-heading-l">Key contact's mobile number</h2>
+            <Text>
+              We recommend you double check the mobile number of the key contact
+              to ensure we setup the virtual visit with the correct person.
+              We'll send them a text message once you've scheduled the visit.
+            </Text>
             <Button className="nhsuk-u-margin-top-5">Schedule visit</Button>
           </form>
         </GridColumn>
@@ -268,7 +274,7 @@ const Home = ({ id }) => {
                 initialDate={callTime}
               ></DateSelect>
               <br></br>
-              <Button className="nhsuk-u-margin-top-5">Schedule visit</Button>
+              <Button className="nhsuk-u-margin-top-5">Continue</Button>
             </FormGroup>
           </form>
         </GridColumn>
