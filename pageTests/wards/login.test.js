@@ -1,9 +1,15 @@
 import { getServerSideProps } from "../../pages/wards/login";
-import TokenProvider from "../../src/providers/TokenProvider";
 
 describe("login", () => {
-  describe("prop provider", () => {
+  describe("getServerSideProps", () => {
+    const req = {
+      headers: {
+        cookie: "",
+      },
+    };
+
     let mockResponse;
+
     beforeEach(() => {
       mockResponse = {
         writeHead: jest.fn().mockReturnValue({ end: () => {} }),
@@ -11,28 +17,21 @@ describe("login", () => {
     });
 
     it("does not redirects not logged in", () => {
-      const req = {
-        headers: {
-          cookie: "",
-        },
+      const container = {
+        getUserIsAuthenticated: () => () => false,
       };
 
-      getServerSideProps({ req, res: mockResponse });
+      getServerSideProps({ req, res: mockResponse, container });
 
       expect(mockResponse.writeHead).not.toHaveBeenCalled();
     });
 
     it("redirects to the ward list page if logged in", () => {
-      process.env.JWT_SIGNING_KEY = "test-key";
-      const tokenProvider = new TokenProvider(process.env.JWT_SIGNING_KEY);
-      const token = tokenProvider.generate("my-test-ward");
-      const req = {
-        headers: {
-          cookie: `token=${token}`,
-        },
+      const container = {
+        getUserIsAuthenticated: () => () => ({ ward: "my-test-ward" }),
       };
 
-      getServerSideProps({ req, res: mockResponse });
+      getServerSideProps({ req, res: mockResponse, container });
 
       expect(mockResponse.writeHead).toHaveBeenCalledWith(
         302,
