@@ -50,5 +50,8 @@
     "*.{js,css,md,yml}": [
       "prettier --write"
     ]
+  },
+  "engines": {
+    "node": "12.16.x"
   }
 }
