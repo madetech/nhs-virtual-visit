@@ -62,7 +62,7 @@ const Home = ({ id }) => {
     const setPatientNameError = (errors) => {
       errors.push({
         id: "patient-name-error",
-        message: "Enter a patients name",
+        message: "Enter a patient's name",
       });
     };
 
@@ -142,12 +142,12 @@ const Home = ({ id }) => {
           <form onSubmit={onSubmit}>
             <Heading>Schedule a virtual visit</Heading>
             <FormGroup>
-              <Label htmlFor="patient-name">What's the patients name?</Label>
+              <Label htmlFor="patient-name">What is the patient's name?</Label>
               <Input
                 id="patient-name"
                 type="text"
                 hasError={hasError("patient-name")}
-                errorMessage="Enter the patients name"
+                errorMessage="Enter the patient's name"
                 className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
                 style={{ padding: "32px 16px!important" }}
                 onChange={(event) => setPatientName(event.target.value)}
@@ -156,7 +156,7 @@ const Home = ({ id }) => {
               />
 
               <Label htmlFor="contact">
-                What's their key contacts mobile number?
+                What is their key contact's mobile number?
               </Label>
               <Hint className="nhsuk-u-margin-bottom-2">
                 This must be a UK mobile number, like 07700 900 982.
