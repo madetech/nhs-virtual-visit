@@ -47,6 +47,6 @@ export default withContainer(async (req, res, { container }) => {
   } catch (err) {
     console.error(err);
     res.statusCode = 500;
-    res.end(JSON.stringify({ err: err.error }));
+    res.end(JSON.stringify({ err: "Failed to send visit ready notification" }));
   }
 });
