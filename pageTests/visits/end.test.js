@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import EndOfVisit from "../../pages/visits/end";
+import EndOfVisit, { getServerSideProps } from "../../pages/visits/end";
+import TokenProvider from "../../src/providers/TokenProvider";
 
 describe("end", () => {
   it("renders end of visit message", () => {
@@ -32,6 +33,36 @@ describe("end", () => {
       const { queryByText } = render(<EndOfVisit wardId="TEST" />);
       const text = queryByText(/Get further help and support/i);
       expect(text).not.toBeInTheDocument();
+    });
+  });
+
+  describe("getServerSideProps", () => {
+    it("provides the ward id if the user is authenticated", () => {
+      process.env.JWT_SIGNING_KEY = "test-key";
+      const tokenProvider = new TokenProvider(process.env.JWT_SIGNING_KEY);
+      const token = tokenProvider.generate("test-ward-id");
+
+      const req = {
+        headers: {
+          cookie: `token=${token}`,
+        },
+      };
+
+      const { props } = getServerSideProps({ req });
+
+      expect(props.wardId).toEqual("test-ward-id");
+    });
+
+    it("does not provides the ward id if the user is unauthenticated", () => {
+      const req = {
+        headers: {
+          cookie: "",
+        },
+      };
+
+      const { props } = getServerSideProps({ req });
+
+      expect(props.wardId).toBeNull();
     });
   });
 });
