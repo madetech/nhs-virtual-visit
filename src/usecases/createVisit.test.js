@@ -16,6 +16,7 @@ describe("createVisit", () => {
       contactNumber: "07123456789",
       callTime: new Date(),
       callId: 12345,
+      provider: "jitsi",
     };
 
     const resultingId = await createVisit(container)(request);
@@ -27,6 +28,7 @@ describe("createVisit", () => {
       request.contactNumber,
       request.callTime,
       request.callId,
+      request.provider,
     ]);
   });
 });

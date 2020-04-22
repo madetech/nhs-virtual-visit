@@ -61,6 +61,7 @@ describe("schedule-visit", () => {
       expect.objectContaining({
         patientName: "Bob Smith",
         contactNumber: "07123456789",
+        provider: "jitsi",
       })
     );
   });
@@ -175,6 +176,7 @@ describe("schedule-visit", () => {
           patientName: "Bob Smith",
           contactNumber: "07123456789",
           callId: "fakeUrl",
+          provider: "whereby",
         })
       );
     });
