@@ -110,7 +110,7 @@ export default withContainer(
     } catch (err) {
       console.error(err);
       res.status(500);
-      res.end(JSON.stringify({ err: err.error }));
+      res.end(JSON.stringify({ err: "Failed to schedule a visit" }));
     }
   }
 );
