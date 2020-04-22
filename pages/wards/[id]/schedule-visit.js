@@ -43,6 +43,7 @@ const Home = ({ id }) => {
   const [callTime, setCallTime] = useState("");
 
   const [errors, setErrors] = useState([]);
+  const [confirmation, setConfirmation] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const hasError = (field) =>
@@ -88,7 +89,7 @@ const Home = ({ id }) => {
 
     setErrors(errors);
 
-    if (errors.length === 0) {
+    const submitAnswers = async ({ contactNumber, patientName, callTime }) => {
       const response = await fetch("/api/schedule-visit", {
         method: "POST",
         headers: {
@@ -108,6 +109,14 @@ const Home = ({ id }) => {
         setSuccess(true);
       } else {
         console.error(err);
+      }
+    };
+
+    if (errors.length === 0) {
+      if (confirmation) {
+        submitAnswers({ contactNumber, patientName, callTime });
+      } else {
+        setConfirmation(true);
       }
     }
   });
@@ -134,6 +143,84 @@ const Home = ({ id }) => {
     );
   }
 
+  if (confirmation) {
+    return (
+      <Layout title="Check your answers before scheduling a visit">
+        <GridRow>
+          <GridColumn width="two-thirds">
+            <form onSubmit={onSubmit}>
+              <Heading>Check your answers before scheduling a visit</Heading>
+              <dl className="nhsuk-summary-list">
+                <div className="nhsuk-summary-list__row">
+                  <dt className="nhsuk-summary-list__key">Patient's name</dt>
+                  <dd className="nhsuk-summary-list__value">{patientName}</dd>
+                  <dd className="nhsuk-summary-list__actions">
+                    <a href="#" onClick={() => setConfirmation(false)}>
+                      Change
+                      <span className="nhsuk-u-visually-hidden">
+                        {" "}
+                        patient's name
+                      </span>
+                    </a>
+                  </dd>
+                </div>
+
+                <div className="nhsuk-summary-list__row">
+                  <dt className="nhsuk-summary-list__key">
+                    Key contact mobile number
+                  </dt>
+                  <dd className="nhsuk-summary-list__value">{contactNumber}</dd>
+                  <dd className="nhsuk-summary-list__actions">
+                    <a href="#" onClick={() => setConfirmation(false)}>
+                      Change
+                      <span className="nhsuk-u-visually-hidden">
+                        {" "}
+                        key contact number
+                      </span>
+                    </a>
+                  </dd>
+                </div>
+
+                <div className="nhsuk-summary-list__row">
+                  <dt className="nhsuk-summary-list__key">Date of call</dt>
+                  <dd className="nhsuk-summary-list__value">
+                    {moment(callTime).format("D MMMM YYYY")}
+                  </dd>
+                  <dd className="nhsuk-summary-list__actions">
+                    <a href="#" onClick={() => setConfirmation(false)}>
+                      Change
+                      <span className="nhsuk-u-visually-hidden">
+                        {" "}
+                        date of call
+                      </span>
+                    </a>
+                  </dd>
+                </div>
+
+                <div className="nhsuk-summary-list__row">
+                  <dt className="nhsuk-summary-list__key">Time of call</dt>
+                  <dd className="nhsuk-summary-list__value">
+                    {moment(callTime).format("hh:mma")}
+                  </dd>
+                  <dd className="nhsuk-summary-list__actions">
+                    <a href="#" onClick={() => setConfirmation(false)}>
+                      Change
+                      <span className="nhsuk-u-visually-hidden">
+                        {" "}
+                        date of call
+                      </span>
+                    </a>
+                  </dd>
+                </div>
+              </dl>
+              <Button className="nhsuk-u-margin-top-5">Schedule visit</Button>
+            </form>
+          </GridColumn>
+        </GridRow>
+      </Layout>
+    );
+  }
+
   return (
     <Layout title="Schedule a virtual visit" hasErrors={errors.length != 0}>
       <GridRow>
@@ -153,6 +240,7 @@ const Home = ({ id }) => {
                 onChange={(event) => setPatientName(event.target.value)}
                 name="patient-name"
                 autoComplete="off"
+                value={patientName || ""}
               />
 
               <Label htmlFor="contact">
@@ -174,6 +262,7 @@ const Home = ({ id }) => {
                 className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
                 style={{ padding: "32px 16px!important" }}
                 onChange={(event) => setContactNumber(event.target.value)}
+                value={contactNumber || ""}
                 name="contact"
                 autoComplete="off"
               />
@@ -182,6 +271,7 @@ const Home = ({ id }) => {
                 name="call-time"
                 hasError={hasError("call-time")}
                 errorMessage="Enter a valid date"
+                initialDate={callTime}
               ></DateSelect>
               <br></br>
               <Button className="nhsuk-u-margin-top-5">Schedule visit</Button>
