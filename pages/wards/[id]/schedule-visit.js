@@ -16,6 +16,7 @@ import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import verifyToken from "../../../src/usecases/verifyToken";
 import TokenProvider from "../../../src/providers/TokenProvider";
+import LabelHeader from "../../../src/components/LabelHeader";
 
 const isValidPhoneNumber = (input) => {
   const validator = PhoneNumberUtil.getInstance();
@@ -229,7 +230,9 @@ const Home = ({ id }) => {
           <form onSubmit={onSubmit}>
             <Heading>Schedule a virtual visit</Heading>
             <FormGroup>
-              <Label htmlFor="patient-name">What is the patient's name?</Label>
+              <LabelHeader htmlFor="patient-name">
+                What is the patient's name?
+              </LabelHeader>
               <Input
                 id="patient-name"
                 type="text"
@@ -243,9 +246,10 @@ const Home = ({ id }) => {
                 value={patientName || ""}
               />
 
-              <Label htmlFor="contact">
+              <LabelHeader htmlFor="contact">
                 What is their key contact's mobile number?
-              </Label>
+              </LabelHeader>
+
               <Hint className="nhsuk-u-margin-bottom-2">
                 This must be a UK mobile number, like 07700 900 982.
               </Hint>

@@ -5,6 +5,7 @@ import Label from "../../../src/components/Label";
 import ErrorMessage from "../ErrorMessage";
 import FormGroup from "../FormGroup";
 import moment from "moment";
+import LabelHeader from "../LabelHeader";
 
 const DateSelect = ({ onChange, hasError, errorMessage, initialDate }) => {
   const today = new Date();
@@ -32,7 +33,7 @@ const DateSelect = ({ onChange, hasError, errorMessage, initialDate }) => {
   return (
     <>
       <FormGroup>
-        <Label>What is the date of their virtual visit?</Label>
+        <LabelHeader>What is the date of their virtual visit?</LabelHeader>
         <Hint>For example, 16 4 2020</Hint>
         {hasError ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
         <div className="nhsuk-date-input__item">
