@@ -137,12 +137,19 @@ const Home = ({ id }) => {
   return (
     <Layout title="Schedule a virtual visit" hasErrors={errors.length != 0}>
       <GridRow>
-        <GridColumn width="two-thirds">
+        <GridColumn width="full">
           <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
             <Heading>Schedule a virtual visit</Heading>
             <FormGroup>
-              <Label htmlFor="patient-name">What is the patient's name?</Label>
+              <h1 class="nhsuk-label-wrapper">
+                <Label
+                  className="nhsuk-label nhsuk-label--l"
+                  htmlFor="patient-name"
+                >
+                  What is the patient's name?
+                </Label>
+              </h1>
               <Input
                 id="patient-name"
                 type="text"
@@ -154,10 +161,11 @@ const Home = ({ id }) => {
                 name="patient-name"
                 autoComplete="off"
               />
-
-              <Label htmlFor="contact">
-                What is their key contact's mobile number?
-              </Label>
+              <h1 class="nhsuk-label-wrapper">
+                <Label className="nhsuk-label nhsuk-label--l" htmlFor="contact">
+                  What is their key contact's mobile number?
+                </Label>
+              </h1>
               <Hint className="nhsuk-u-margin-bottom-2">
                 This must be a UK mobile number, like 07700 900 982.
               </Hint>
