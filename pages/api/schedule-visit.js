@@ -1,4 +1,3 @@
-import { NotifyClient } from "notifications-node-client";
 import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
 import moment from "moment";
@@ -8,7 +7,6 @@ import fetch from "node-fetch";
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
 
-const apiKey = process.env.API_KEY;
 const templateId = process.env.SMS_INITIAL_TEMPLATE_ID;
 
 const wherebyCallId = async (callTime) => {
@@ -77,8 +75,6 @@ export default withContainer(
       return;
     }
 
-    var notifyClient = new NotifyClient(apiKey);
-
     try {
       let callId = ids.generate();
 
@@ -95,6 +91,8 @@ export default withContainer(
         callTimeLocal: body.callTimeLocal,
         callId: callId,
       });
+
+      const notifyClient = container.getNotifyClient();
 
       await notifyClient.sendSms(templateId, body.contactNumber, {
         personalisation: {

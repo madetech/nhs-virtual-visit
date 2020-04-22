@@ -23,6 +23,9 @@ describe("schedule-visit", () => {
         .fn()
         .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
       getDb: jest.fn().mockReturnValue(() => {}),
+      getNotifyClient: () => {
+        return { sendSms: () => {} };
+      },
     };
   });
 
