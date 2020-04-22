@@ -88,6 +88,7 @@ export default withContainer(
         callTime: body.callTime,
         callTimeLocal: body.callTimeLocal,
         callId: callId,
+        provider: process.env.ENABLE_WHEREBY === "yes" ? "whereby" : "jitsi",
       });
 
       const sendTextMessage = container.getSendTextMessage();
