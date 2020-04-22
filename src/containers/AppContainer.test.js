@@ -4,7 +4,12 @@ describe("AppContainer", () => {
   let container;
 
   beforeEach(() => {
+    process.env.API_KEY = "notify-api-key-meow";
     container = new AppContainer();
+  });
+
+  afterEach(() => {
+    process.env.API_KEY = undefined;
   });
 
   it("returns getDb", () => {
@@ -21,5 +26,9 @@ describe("AppContainer", () => {
 
   it("returns getUserIsAuthenticated", () => {
     expect(container.getUserIsAuthenticated()).toBeDefined();
+  });
+
+  it("returns getNotifyClient", () => {
+    expect(container.getNotifyClient()).toBeDefined();
   });
 });

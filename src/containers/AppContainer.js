@@ -2,6 +2,7 @@ import pgp from "pg-promise";
 import createVisit from "../usecases/createVisit";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
+import { NotifyClient } from "notifications-node-client";
 
 export default class AppContainer {
   getDb() {
@@ -23,5 +24,11 @@ export default class AppContainer {
 
   getUserIsAuthenticated() {
     return userIsAuthenticated(this);
+  }
+
+  getNotifyClient() {
+    const apiKey = process.env.API_KEY;
+
+    return new NotifyClient(apiKey);
   }
 }
