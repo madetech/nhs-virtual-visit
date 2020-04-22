@@ -1,18 +1,14 @@
 import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
-import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import TokenProvider from "../../src/providers/TokenProvider";
 import { verifyTokenOrRedirect } from "../../src/usecases/verifyToken";
-import { NotifyClient } from "notifications-node-client";
-import fetch from "node-fetch";
+import withContainer from "../../src/middleware/withContainer";
 
-const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
 
 const origin = process.env.ORIGIN;
-const apiKey = process.env.API_KEY;
 const templateId = process.env.TEMPLATE_ID;
 
-export default async (req, res) => {
+export default withContainer(async (req, res, { container }) => {
   const { body, method } = req;
   const tokens = new TokenProvider(process.env.JWT_SIGNING_KEY);
 
@@ -32,7 +28,7 @@ export default async (req, res) => {
   const waitingRoomUrl = `${origin}/visitors/waiting-room/${callId}`;
   const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
 
-  var notifyClient = new NotifyClient(apiKey);
+  const notifyClient = container.getNotifyClient();
 
   try {
     await notifyClient.sendSms(templateId, contactNumber, {
@@ -53,4 +49,4 @@ export default async (req, res) => {
     res.statusCode = 500;
     res.end(JSON.stringify({ err: err.error }));
   }
-};
+});
