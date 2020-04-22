@@ -18,6 +18,7 @@ export default async function retrieveVisits({ getDb }) {
       error: null,
     };
   } catch (error) {
+    console.error(error);
     return {
       scheduledCalls: null,
       error: error.toString(),

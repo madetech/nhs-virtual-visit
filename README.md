@@ -26,6 +26,8 @@ Requires PostgreSQL 12
 
 ### Enable SSL in Postgres
 
+Check your postgres installation to see if SSL is already enabled.
+
 Within the data folder of your PostgreSQL installation (e.g. `~/Library/Application Support/Postgres/var-12`), generate an self-signed certificate (details here https://www.postgresql.org/docs/12/ssl-tcp.html#SSL-CERTIFICATE-CREATION).
 
 After generating the certificate, edit the postgresql.conf file in the data folder to enable ssl (`ssl = on`).
@@ -46,7 +48,7 @@ Load the current schema into the database
 cat db/schema.sql | psql nhs-virtual-visit-dev
 ```
 
-Add the database URI as an environment variable in `.env`
+Add the database URI as an environment variable in `.env`. On Linux you may need to provide a username and password.
 
 ```
 URI=postgresql://localhost/nhs-virtual-visit-dev
