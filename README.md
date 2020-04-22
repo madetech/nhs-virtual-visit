@@ -22,6 +22,36 @@ In order to run this app locally you will need to add these variables to your `.
 
 ## Running the app locally
 
+Requires PostgreSQL 12
+
+### Enable SSL in Postgres
+
+Within the data folder of your PostgreSQL installation (e.g. `~/Library/Application Support/Postgres/var-12`), generate an self-signed certificate (details here https://www.postgresql.org/docs/12/ssl-tcp.html#SSL-CERTIFICATE-CREATION).
+
+After generating the certificate, edit the postgresql.conf file in the data folder to enable ssl (`ssl = on`).
+
+Restart your PostgreSQL server and SSL will connections will be enabled
+
+### Setup the database
+
+Create the database
+
+```
+createdb nhs-virtual-visit-dev
+```
+
+Load the current schema into the database
+
+```
+cat db/schema.sql | psql nhs-virtual-visit-dev
+```
+
+Add the database URI as an environment variable in `.env`
+
+```
+URI=postgresql://localhost/nhs-virtual-visit-dev
+```
+
 You can run a local copy of the app by running
 
 ```
