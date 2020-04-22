@@ -38,7 +38,7 @@ const Visits = ({ visits, joinCall }) => (
                   })
                 }
               >
-                Join call
+                Start call
               </button>
             </td>
           </tr>
