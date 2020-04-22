@@ -53,13 +53,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 Create test database
 
 ```
-NODE_ENV=test npx sequelize db:create
+npx sequelize db:create --env test
 ```
 
 Run all migrations on the test database
 
 ```
-NODE_ENV=test npx sequelize db:migrate
+npx sequelize db:migrate --env test
 ```
 
 ## Running tests
