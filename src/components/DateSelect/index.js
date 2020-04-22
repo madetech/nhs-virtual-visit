@@ -6,17 +6,26 @@ import ErrorMessage from "../ErrorMessage";
 import FormGroup from "../FormGroup";
 import moment from "moment";
 
-const DateSelect = ({ onChange, hasError, errorMessage }) => {
+const DateSelect = ({ onChange, hasError, errorMessage, initialDate }) => {
   const today = new Date();
-  var defaultDate = moment(today).add(10, "m").toDate();
 
-  const [date, setDate] = useState({
-    year: defaultDate.getFullYear(),
-    month: defaultDate.getMonth(),
-    day: defaultDate.getDate(),
-    hour: defaultDate.getHours().toString().padStart(2, "0"),
-    minute: defaultDate.getMinutes().toString().padStart(2, "0"),
-  });
+  let date, setDate;
+
+  if (initialDate) {
+    [date, setDate] = useState(initialDate);
+  } else {
+    [date, setDate] = useState(() => {
+      let defaultDate = moment(today).add(10, "m").toDate();
+
+      return {
+        year: defaultDate.getFullYear(),
+        month: defaultDate.getMonth(),
+        day: defaultDate.getDate(),
+        hour: defaultDate.getHours().toString().padStart(2, "0"),
+        minute: defaultDate.getMinutes().toString().padStart(2, "0"),
+      };
+    });
+  }
 
   useEffect(() => onChange(date), [date]);
 
