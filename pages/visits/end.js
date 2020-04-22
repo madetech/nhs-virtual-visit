@@ -57,9 +57,9 @@ export default ({ wardId }) => (
 
 export const getServerSideProps = ({ req: { headers }, res }) => {
   const token = userIsAuthenticated({
-    requestCookie: headers.cookie,
-    tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-  });
+    getTokenProvider: () => new TokenProvider(process.env.JWT_SIGNING_KEY),
+  })(headers.cookie);
+  console.log(token);
 
   return { props: { wardId: token?.ward || null } };
 };
