@@ -33,10 +33,18 @@ const isValidName = (input) => {
     return input;
   }
 };
+const isValidDate = ({ year, month, day }) => {
+  const dateIsValid = moment({ year, month, day }).isValid();
+  const dateIsInThePast =
+    dateIsValid && moment({ year, month, day }).isBefore(moment(), "day");
+  return { dateIsValid, dateIsInThePast };
+};
 
-const isValidDate = ({ year, month, day, hour, minute }) => {
-  const parsed = moment({ year, month, day, hour, minute });
-  return parsed.isValid() && parsed.isAfter(moment());
+const isValidTime = ({ hour, minute }) => {
+  const timeIsValid = moment({ hour, minute }).isValid();
+  const timeIsInThePast =
+    timeIsValid && moment({ hour, minute }).isSameOrBefore(moment());
+  return { timeIsValid, timeIsInThePast };
 };
 
 const CheckAnswers = ({ onSubmit, patientName, contactNumber, callTime }) => {
@@ -126,7 +134,7 @@ const CheckAnswers = ({ onSubmit, patientName, contactNumber, callTime }) => {
 const Home = ({ id }) => {
   const [contactNumber, setContactNumber] = useState("");
   const [patientName, setPatientName] = useState("");
-  const [callTime, setCallTime] = useState("");
+  const [callDateTime, setCallDateTime] = useState("");
 
   const [errors, setErrors] = useState([]);
   const [confirmation, setConfirmation] = useState(false);
@@ -134,6 +142,11 @@ const Home = ({ id }) => {
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
+
+  const errorMessage = (field) => {
+    const error = errors.filter((error) => error.id === `${field}-error`);
+    return error.length === 1 ? error[0].message : "";
+  };
 
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -153,6 +166,34 @@ const Home = ({ id }) => {
       });
     };
 
+    const setInvalidDateError = (errors) => {
+      errors.push({
+        id: "call-date-error",
+        message: "Enter a valid date",
+      });
+    };
+
+    const setDateInThePastError = (errors) => {
+      errors.push({
+        id: "call-date-error",
+        message: "Enter a date that is today or in the future",
+      });
+    };
+
+    const setInvalidTimeError = (errors) => {
+      errors.push({
+        id: "call-time-error",
+        message: "Enter a valid time",
+      });
+    };
+
+    const setTimeInThePastError = (errors) => {
+      errors.push({
+        id: "call-time-error",
+        message: "Enter a time that is in the future",
+      });
+    };
+
     try {
       if (!isValidPhoneNumber(contactNumber)) {
         setContactNumberError(errors);
@@ -161,18 +202,21 @@ const Home = ({ id }) => {
       setContactNumberError(errors);
       console.log(error.message);
     }
-
     if (!isValidName(patientName)) {
       setPatientNameError(errors);
     }
-
-    if (!isValidDate(callTime)) {
-      errors.push({
-        id: "call-time-error",
-        message: "Enter a valid date",
-      });
+    if (!isValidDate(callDateTime).dateIsValid) {
+      setInvalidDateError(errors);
     }
-
+    if (isValidDate(callDateTime).dateIsInThePast) {
+      setDateInThePastError(errors);
+    }
+    if (!isValidTime(callDateTime).timeIsValid) {
+      setInvalidTimeError(errors);
+    }
+    if (isValidTime(callDateTime).timeIsInThePast) {
+      setTimeInThePastError(errors);
+    }
     setErrors(errors);
 
     const submitAnswers = async ({ contactNumber, patientName, callTime }) => {
@@ -200,7 +244,7 @@ const Home = ({ id }) => {
 
     if (errors.length === 0) {
       if (confirmation) {
-        submitAnswers({ contactNumber, patientName, callTime });
+        submitAnswers({ contactNumber, patientName, callTime: callDateTime });
       } else {
         setConfirmation(true);
       }
@@ -213,7 +257,7 @@ const Home = ({ id }) => {
         onSubmit={onSubmit}
         contactNumber={contactNumber}
         patientName={patientName}
-        callTime={callTime}
+        callTime={callDateTime}
       />
     );
   }
@@ -267,11 +311,17 @@ const Home = ({ id }) => {
                 autoComplete="off"
               />
               <DateSelect
-                onChange={(date) => setCallTime(date)}
-                name="call-time"
-                hasError={hasError("call-time")}
-                errorMessage="Enter a valid date"
-                initialDate={callTime}
+                onChange={(date) => setCallDateTime(date)}
+                name="call-datetime"
+                hasDateError={hasError("call-date")}
+                dateErrorMessage={
+                  hasError("call-date") && errorMessage("call-date")
+                }
+                hasTimeError={hasError("call-time")}
+                timeErrorMessage={
+                  hasError("call-time") && errorMessage("call-time")
+                }
+                initialDate={callDateTime}
               ></DateSelect>
               <br></br>
               <Button className="nhsuk-u-margin-top-5">Continue</Button>

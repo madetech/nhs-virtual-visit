@@ -7,7 +7,14 @@ import FormGroup from "../FormGroup";
 import moment from "moment";
 import LabelHeader from "../LabelHeader";
 
-const DateSelect = ({ onChange, hasError, errorMessage, initialDate }) => {
+const DateSelect = ({
+  onChange,
+  hasDateError,
+  dateErrorMessage,
+  hasTimeError,
+  timeErrorMessage,
+  initialDate,
+}) => {
   const today = new Date();
 
   let date, setDate;
@@ -35,13 +42,13 @@ const DateSelect = ({ onChange, hasError, errorMessage, initialDate }) => {
       <FormGroup>
         <LabelHeader>What is the date of their virtual visit?</LabelHeader>
         <Hint>For example, 16 4 2020</Hint>
-        {hasError ? <ErrorMessage>{errorMessage}</ErrorMessage> : null}
+        {hasDateError ? <ErrorMessage>{dateErrorMessage}</ErrorMessage> : null}
         <div className="nhsuk-date-input__item">
           <Label>Day</Label>
           <Input
             style={{ padding: "32px 16px!important" }}
             type="number"
-            hasError={hasError}
+            hasError={hasDateError}
             onChange={(event) => {
               setDate({ ...date, day: parseInt(event.target.value) });
             }}
@@ -57,7 +64,7 @@ const DateSelect = ({ onChange, hasError, errorMessage, initialDate }) => {
           <Input
             style={{ padding: "32px 16px!important" }}
             type="number"
-            hasError={hasError}
+            hasError={hasDateError}
             className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-u-font-size-32 nhsuk-input--width-10"
             id="month"
             name="month"
@@ -73,7 +80,7 @@ const DateSelect = ({ onChange, hasError, errorMessage, initialDate }) => {
           <Input
             style={{ padding: "32px 16px!important" }}
             type="number"
-            hasError={hasError}
+            hasError={hasDateError}
             className="nhsuk-input--width-4 nhsuk-u-font-size-32 nhsuk-input--width-10"
             id="year"
             name="year"
@@ -86,14 +93,15 @@ const DateSelect = ({ onChange, hasError, errorMessage, initialDate }) => {
         </div>
       </FormGroup>
       <FormGroup>
-        <Label>What is the time of their virtual visit?</Label>
+        <LabelHeader>What is the time of their virtual visit?</LabelHeader>
         <Hint>For example, 15 00</Hint>
+        {hasTimeError ? <ErrorMessage>{timeErrorMessage}</ErrorMessage> : null}
         <div className="nhsuk-date-input__item">
           <Label>Hour</Label>
           <Input
             style={{ padding: "32px 16px!important" }}
             type="number"
-            hasError={hasError}
+            hasError={hasTimeError}
             className="nhsuk-input--width-2 nhsuk-u-font-size-32"
             id="hour"
             name="hour"
@@ -109,7 +117,7 @@ const DateSelect = ({ onChange, hasError, errorMessage, initialDate }) => {
           <Input
             style={{ padding: "32px 16px!important" }}
             type="number"
-            hasError={hasError}
+            hasError={hasTimeError}
             className="nhsuk-input--width-2 nhsuk-u-font-size-32"
             id="minute"
             name="minute"
