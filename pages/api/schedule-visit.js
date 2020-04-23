@@ -28,7 +28,9 @@ const wherebyCallId = async (callTime) => {
   return roomUrl.pathname.slice(1);
 };
 
-const formatDate = (date) => moment(date).format("D MMMM YYYY, h.mma");
+const formatDateAndTime = (date) => moment(date).format("D MMMM YYYY, h.mma");
+const formatDate = (date) => moment(date).format("D MMMM YYYY");
+const formatTime = (date) => moment(date).format("h.mma");
 
 const getValidationErrors = ({ patientName, contactNumber, callTime }) => {
   if (!patientName || patientName.length === 0) {
@@ -98,7 +100,9 @@ export default withContainer(
         templateId,
         body.contactNumber,
         {
-          call_time: formatDate(body.callTime),
+          call_time: formatDateAndTime(body.callTime),
+          visit_date: formatDate(body.callTime),
+          visit_time: formatTime(body.callTime),
           ward_name: "Defoe Ward",
           hospital_name: "Northwick Park Hospital",
         },
@@ -106,7 +110,10 @@ export default withContainer(
       );
 
       if (response.success) {
-        notifier.notify(body.contactNumber, formatDate(body.callTimeLocal));
+        notifier.notify(
+          body.contactNumber,
+          formatDateAndTime(body.callTimeLocal)
+        );
 
         res.status(201);
         res.end(JSON.stringify({ success: true }));
