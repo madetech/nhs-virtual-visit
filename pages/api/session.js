@@ -18,7 +18,13 @@ export default ({ body: { code }, method }, res) => {
   }
 
   const token = tokens.generate(code);
+  const expiryHours = 2;
+  let expiry = new Date();
+  expiry.setTime(expiry.getTime() + expiryHours * 60 * 60 * 1000);
+
   res
-    .writeHead(201, { "Set-Cookie": `token=${token}; httpOnly; path=/` })
+    .writeHead(201, {
+      "Set-Cookie": `token=${token}; httpOnly; path=/; expires=${expiry}`,
+    })
     .end(JSON.stringify({ wardId: code }));
 };
