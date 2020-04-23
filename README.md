@@ -90,3 +90,7 @@ This will produce output that you can use to host a production copy of the app.
 - **Tom Davies** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (tom.davies@madetech.com)
 - **George Schena** - Software Engineer at [Made Tech](https://www.madetech.com) (george@madetech.com)
 - **Wen Ting Wang** - Software Engineer at [Made Tech](https://www.madetech.com) (wenting@madetech.com)
+
+## License
+
+MIT
