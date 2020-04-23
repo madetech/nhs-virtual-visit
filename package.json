@@ -2,6 +2,7 @@
   "name": "nhs-visit-app",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "format": "prettier --write '{pages,pageTests,src}/**/*.{js,css,md,yml}'",
