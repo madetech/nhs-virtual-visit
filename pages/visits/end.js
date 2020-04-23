@@ -3,7 +3,6 @@ import Layout from "../../src/components/Layout";
 import ActionLink from "../../src/components/ActionLink";
 import userIsAuthenticated from "../../src/usecases/userIsAuthenticated";
 import TokenProvider from "../../src/providers/TokenProvider";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 export default ({ wardId }) => (
   <Layout>
@@ -56,12 +55,11 @@ export default ({ wardId }) => (
   </Layout>
 );
 
-export const getServerSideProps = propsWithContainer(
-  ({ req: { headers }, container }) => {
-    const userIsAuthenticated = container.getUserIsAuthenticated();
+export const getServerSideProps = ({ req: { headers }, res }) => {
+  const token = userIsAuthenticated({
+    getTokenProvider: () => new TokenProvider(process.env.JWT_SIGNING_KEY),
+  })(headers.cookie);
+  console.log(token);
 
-    const token = userIsAuthenticated(headers.cookie);
-
-    return { props: { wardId: token?.ward || null } };
-  }
-);
+  return { props: { wardId: token?.ward || null } };
+};
