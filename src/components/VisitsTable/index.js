@@ -35,6 +35,7 @@ const Visits = ({ visits, joinCall }) => (
                   joinCall({
                     callId: visit.callId,
                     contactNumber: visit.recipientNumber,
+                    provider: visit.provider,
                   })
                 }
               >

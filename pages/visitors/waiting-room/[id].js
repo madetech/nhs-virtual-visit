@@ -35,7 +35,9 @@ const PreJoin = () => {
     setErrors(errors);
 
     if (errors.length === 0) {
-      router.push(`/visits/${router.query.id}?name=${name}`);
+      router.push(
+        `/visits/${router.query.id}?name=${name}&provider=${router.query.provider}`
+      );
     }
   });
 

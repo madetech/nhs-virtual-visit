@@ -22,11 +22,11 @@ export default withContainer(async (req, res, { container }) => {
     return;
   }
 
-  let { callId, contactNumber } = body;
+  let { callId, contactNumber, provider } = body;
   console.log(callId);
 
-  const waitingRoomUrl = `${origin}/visitors/waiting-room/${callId}`;
-  const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
+  const waitingRoomUrl = `${origin}/visitors/waiting-room/${callId}?provider=${provider}`;
+  const visitsUrl = `${origin}/visits/${callId}?name=Ward&provider=${provider}`;
 
   const notifyClient = container.getNotifyClient();
 

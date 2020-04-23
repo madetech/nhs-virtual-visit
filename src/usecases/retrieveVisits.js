@@ -14,6 +14,7 @@ export default async function retrieveVisits({ getDb }) {
           ? scheduledCall.call_time.toISOString()
           : null,
         callId: scheduledCall.call_id,
+        provider: scheduledCall.provider,
       })),
       error: null,
     };

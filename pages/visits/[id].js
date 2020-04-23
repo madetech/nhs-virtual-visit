@@ -3,8 +3,8 @@ import Layout from "../../src/components/Layout";
 import useScript from "../../src/hooks/useScript";
 import Router from "next/router";
 
-const Call = ({ id, name, enableWhereby }) => {
-  if (enableWhereby) {
+const Call = ({ id, name, provider }) => {
+  if (provider === "whereby") {
     return (
       <Layout>
         <main>
@@ -78,9 +78,8 @@ const Call = ({ id, name, enableWhereby }) => {
 };
 
 export const getServerSideProps = ({ query }) => {
-  const { id, name } = query;
-  const enableWhereby = process.env.ENABLE_WHEREBY === "yes";
-  return { props: { id, name, enableWhereby } };
+  const { id, name, provider } = query;
+  return { props: { id, name, provider } };
 };
 
 const Whereby = ({ id }) => (

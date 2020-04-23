@@ -15,7 +15,7 @@ export default function WardVisits({ scheduledCalls, error, id }) {
     error ? "Unable to display ward visits" : null
   );
 
-  const joinCall = async ({ callId, contactNumber }) => {
+  const joinCall = async ({ callId, contactNumber, provider }) => {
     const response = await fetch("/api/send-visit-ready-notification", {
       method: "POST",
       headers: {
@@ -24,6 +24,7 @@ export default function WardVisits({ scheduledCalls, error, id }) {
       body: JSON.stringify({
         callId,
         contactNumber,
+        provider,
       }),
     });
 
