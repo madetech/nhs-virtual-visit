@@ -82,6 +82,8 @@ describe("schedule-visit", () => {
         call_time: "5 April 2020, 10.10am",
         ward_name: "Defoe Ward",
         hospital_name: "Northwick Park Hospital",
+        visit_date: "5 April 2020",
+        visit_time: "10.10am",
       },
       null
     );
