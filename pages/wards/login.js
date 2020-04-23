@@ -11,6 +11,8 @@ import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import userIsAuthenticated from "../../src/usecases/userIsAuthenticated";
 import TokenProvider from "../../src/providers/TokenProvider";
+import AppContainer from "../../src/containers/AppContainer";
+import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 const Login = () => {
   const [code, setCode] = useState("");
@@ -85,14 +87,16 @@ const Login = () => {
 
 export default Login;
 
-export const getServerSideProps = ({ req: { headers }, res }) => {
-  const token = userIsAuthenticated({
-    getTokenProvider: () => new TokenProvider(process.env.JWT_SIGNING_KEY),
-  })(headers.cookie);
+export const getServerSideProps = propsWithContainer(
+  ({ req: { headers }, res, container }) => {
+    const userIsAuthenticated = container.getUserIsAuthenticated();
 
-  if (token && token.ward) {
-    res.writeHead(302, { Location: `/wards/${token.ward}/visits` }).end();
+    const token = userIsAuthenticated(headers.cookie);
+
+    if (token && token.ward) {
+      res.writeHead(302, { Location: `/wards/${token.ward}/visits` }).end();
+    }
+
+    return { props: {} };
   }
-
-  return { props: {} };
-};
+);
