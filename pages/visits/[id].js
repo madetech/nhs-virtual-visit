@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../src/components/Layout";
 import useScript from "../../src/hooks/useScript";
 import Router from "next/router";
+import propsWithContainer from "../../src/middleware/propsWithContainer";
+import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 
-const Call = ({ id, name, enableWhereby }) => {
-  if (enableWhereby) {
+const Call = ({ id, name, provider }) => {
+  if (provider === "whereby") {
     return (
       <Layout>
         <main>
@@ -77,11 +79,19 @@ const Call = ({ id, name, enableWhereby }) => {
   }
 };
 
-export const getServerSideProps = ({ query }) => {
-  const { id, name } = query;
-  const enableWhereby = process.env.ENABLE_WHEREBY === "yes";
-  return { props: { id, name, enableWhereby } };
-};
+export const getServerSideProps = propsWithContainer(
+  async ({ query, container }) => {
+    const { id, name } = query;
+    const callId = id;
+
+    const { scheduledCall, error } = await retrieveVisitByCallId(container)(
+      callId
+    );
+    const provider = scheduledCall.provider;
+
+    return { props: { id, name, provider } };
+  }
+);
 
 const Whereby = ({ id }) => (
   <iframe

@@ -12,6 +12,7 @@ describe("retrieveVisits", () => {
               call_time: new Date("2020-04-15T23:00:00.000Z"),
               recipient_number: "07907095342",
               call_id: "cb238rfv23cuv3",
+              provider: "whereby",
             },
             {
               id: 2,
@@ -19,6 +20,7 @@ describe("retrieveVisits", () => {
               call_time: new Date("2020-04-15T23:00:00.000Z"),
               recipient_number: "07907095342",
               call_id: "cb238rfv23cuv3",
+              provider: "jitsi",
             },
           ]),
         };
@@ -29,12 +31,22 @@ describe("retrieveVisits", () => {
 
     expect(error).toBeNull();
     expect(scheduledCalls).toHaveLength(2);
-    expect(scheduledCalls[0]).toEqual(
-      expect.objectContaining({ id: 1, patientName: "Bob" })
-    );
-    expect(scheduledCalls[1]).toEqual(
-      expect.objectContaining({ id: 2, patientName: "Harry" })
-    );
+    expect(scheduledCalls[0]).toEqual({
+      id: 1,
+      patientName: "Bob",
+      callTime: "2020-04-15T23:00:00.000Z",
+      recipientNumber: "07907095342",
+      callId: "cb238rfv23cuv3",
+      provider: "whereby",
+    });
+    expect(scheduledCalls[1]).toEqual({
+      id: 2,
+      patientName: "Harry",
+      callTime: "2020-04-15T23:00:00.000Z",
+      recipientNumber: "07907095342",
+      callId: "cb238rfv23cuv3",
+      provider: "jitsi",
+    });
   });
 
   it("returns an error object on db exception", async () => {
