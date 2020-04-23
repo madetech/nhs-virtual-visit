@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../../src/components/Layout";
+import Error from "next/error";
 import useScript from "../../src/hooks/useScript";
 import Router from "next/router";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 
-const Call = ({ id, name, provider }) => {
+const Call = ({ id, name, provider, error }) => {
+  if (error) {
+    return <Error />;
+  }
+
   if (provider === "whereby") {
     return (
       <Layout>
@@ -89,7 +94,7 @@ export const getServerSideProps = propsWithContainer(
     );
     const provider = scheduledCall.provider;
 
-    return { props: { id, name, provider } };
+    return { props: { id, name, provider, error } };
   }
 );
 

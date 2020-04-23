@@ -4,6 +4,7 @@ import Heading from "../../../src/components/Heading";
 import ActionLink from "../../../src/components/ActionLink";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import VisitsTable from "../../../src/components/VisitsTable";
+import Error from "next/error";
 import Text from "../../../src/components/Text";
 import pgp from "pg-promise";
 import verifyToken from "../../../src/usecases/verifyToken";
@@ -38,18 +39,7 @@ export default function WardVisits({ scheduledCalls, error, id }) {
   };
 
   if (userError) {
-    return (
-      <Layout title="Sorry, there is a problem with the service">
-        <GridRow>
-          <GridColumn width="two-thirds">
-            <Heading>Sorry, there is a problem with the service</Heading>
-            <Text>
-              We were unable to process your request, try again later.
-            </Text>
-          </GridColumn>
-        </GridRow>
-      </Layout>
-    );
+    return <Error />;
   }
 
   return (
