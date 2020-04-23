@@ -80,7 +80,7 @@ export default function WardVisits({ scheduledCalls, error, id }) {
 export const getServerSideProps = verifyToken(
   async ({ query: { id } }) => {
     const container = {
-      getDb() {
+      async getDb() {
         return pgp()({
           connectionString: process.env.URI,
           ssl: {

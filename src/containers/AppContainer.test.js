@@ -12,8 +12,8 @@ describe("AppContainer", () => {
     process.env.API_KEY = undefined;
   });
 
-  it("returns getDb", () => {
-    expect(container.getDb()).toBeDefined();
+  it("returns getDb", async () => {
+    expect(await container.getDb()).toBeDefined();
   });
 
   it("returns createVisit", () => {

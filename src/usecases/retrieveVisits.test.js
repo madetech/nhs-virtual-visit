@@ -3,7 +3,7 @@ import retrieveVisits from "./retrieveVisits";
 describe("retrieveVisits", () => {
   it("returns a json object containing the calls", async () => {
     const container = {
-      getDb() {
+      async getDb() {
         return {
           any: jest.fn().mockReturnValue([
             {
@@ -39,7 +39,7 @@ describe("retrieveVisits", () => {
 
   it("returns an error object on db exception", async () => {
     const container = {
-      getDb() {
+      async getDb() {
         return {
           any: jest.fn(() => {
             throw new Error("DB Error!");
