@@ -11,7 +11,8 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run: npm ci
+            - run: npm install
+            - run: npm rebuild node-sass
             - run: npm run test:ci
             - run: npm run build
 
