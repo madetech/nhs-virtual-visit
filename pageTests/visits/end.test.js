@@ -37,30 +37,28 @@ describe("end", () => {
   });
 
   describe("getServerSideProps", () => {
-    it("provides the ward id if the user is authenticated", () => {
-      process.env.JWT_SIGNING_KEY = "test-key";
-      const tokenProvider = new TokenProvider(process.env.JWT_SIGNING_KEY);
-      const token = tokenProvider.generate("test-ward-id");
+    const req = {
+      headers: {
+        cookie: "",
+      },
+    };
 
-      const req = {
-        headers: {
-          cookie: `token=${token}`,
-        },
+    it("provides the ward id if the user is authenticated", () => {
+      const container = {
+        getUserIsAuthenticated: () => () => ({ ward: "test-ward-id" }),
       };
 
-      const { props } = getServerSideProps({ req });
+      const { props } = getServerSideProps({ req, container });
 
       expect(props.wardId).toEqual("test-ward-id");
     });
 
     it("does not provides the ward id if the user is unauthenticated", () => {
-      const req = {
-        headers: {
-          cookie: "",
-        },
+      const container = {
+        getUserIsAuthenticated: () => () => false,
       };
 
-      const { props } = getServerSideProps({ req });
+      const { props } = getServerSideProps({ req, container });
 
       expect(props.wardId).toBeNull();
     });
