@@ -1,49 +1,52 @@
 import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
-import TokenProvider from "../../src/providers/TokenProvider";
-import { verifyTokenOrRedirect } from "../../src/usecases/verifyToken";
 import withContainer from "../../src/middleware/withContainer";
 
 const notifier = new ConsoleNotifyProvider();
 
-const origin = process.env.ORIGIN;
-const templateId = process.env.TEMPLATE_ID;
-
 export default withContainer(async (req, res, { container }) => {
   const { body, method } = req;
-  const tokens = new TokenProvider(process.env.JWT_SIGNING_KEY);
+  const tokenProvider = container.getTokenProvider();
+  const verifyTokenOrRedirect = container.getVerifyTokenOrRedirect();
 
-  if (verifyTokenOrRedirect(req, res, { tokens }) !== true) {
+  if (verifyTokenOrRedirect(req, res, { tokens: tokenProvider }) !== true) {
     return;
   }
 
   if (method !== "POST") {
-    res.statusCode = 406;
+    res.status(406);
     res.end();
     return;
   }
 
   let { callId, contactNumber } = body;
-  console.log(callId);
 
-  const waitingRoomUrl = `${origin}/visitors/waiting-room/${callId}`;
-  const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
+  const waitingRoomUrl = `${process.env.ORIGIN}/visitors/waiting-room/${callId}`;
+  const visitsUrl = `${process.env.ORIGIN}/visits/${callId}?name=Ward`;
 
-  const notifyClient = container.getNotifyClient();
+  const sendTextMessage = container.getSendTextMessage();
+  const templateId = process.env.TEMPLATE_ID;
 
   try {
-    await notifyClient.sendSms(templateId, contactNumber, {
-      personalisation: {
+    const response = await sendTextMessage(
+      templateId,
+      contactNumber,
+      {
         call_url: waitingRoomUrl,
         ward_name: "Defoe Ward",
         hospital_name: "Northwick Park Hospital",
       },
-      reference: null,
-    });
+      null
+    );
 
-    notifier.notify(body.contactNumber, waitingRoomUrl);
+    if (response.success) {
+      notifier.notify(body.contactNumber, waitingRoomUrl);
 
-    res.statusCode = 201;
-    res.end(JSON.stringify({ id: callId, callUrl: visitsUrl }));
+      res.status(201);
+      res.end(JSON.stringify({ id: callId, callUrl: visitsUrl }));
+    } else {
+      res.status(400);
+      res.end(JSON.stringify({ err: "Failed to schedule a visit" }));
+    }
   } catch (err) {
     console.error(err);
     res.statusCode = 500;
