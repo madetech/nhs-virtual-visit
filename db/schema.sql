@@ -45,6 +45,11 @@ ALTER SEQUENCE public.scheduled_calls_table_id_seq OWNED BY public.scheduled_cal
 --
 ALTER TABLE ONLY public.scheduled_calls_table ALTER COLUMN id SET DEFAULT nextval('public.scheduled_calls_table_id_seq'::regclass);
 --
+-- Name: scheduled_calls_table call_id_unique; Type: CONSTRAINT; Schema: public; Owner: -
+--
+ALTER TABLE ONLY public.scheduled_calls_table
+    ADD CONSTRAINT call_id_unique UNIQUE (call_id);
+--
 -- Name: scheduled_calls_table scheduled_calls_table_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 ALTER TABLE ONLY public.scheduled_calls_table
@@ -52,3 +57,4 @@ ALTER TABLE ONLY public.scheduled_calls_table
 --
 -- PostgreSQL database dump complete
 --
+
