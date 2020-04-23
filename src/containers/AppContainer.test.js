@@ -35,4 +35,8 @@ describe("AppContainer", () => {
   it("returns sendTextMessage", () => {
     expect(container.getSendTextMessage()).toBeDefined();
   });
+
+  it("returns verifyTokenOrRedirect", () => {
+    expect(container.getVerifyTokenOrRedirect()).toBeDefined();
+  });
 });
