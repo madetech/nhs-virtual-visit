@@ -5,10 +5,10 @@ import ActionLink from "../../../src/components/ActionLink";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import VisitsTable from "../../../src/components/VisitsTable";
 import Text from "../../../src/components/Text";
-import pgp from "pg-promise";
 import verifyToken from "../../../src/usecases/verifyToken";
 import TokenProvider from "../../../src/providers/TokenProvider";
 import { useState } from "react";
+import propsWithContainer from "../../../src/middleware/propsWithContainer";
 
 export default function WardVisits({ scheduledCalls, error, id }) {
   const [userError, setUserError] = useState(
@@ -77,24 +77,15 @@ export default function WardVisits({ scheduledCalls, error, id }) {
   );
 }
 
-export const getServerSideProps = verifyToken(
-  async ({ query: { id } }) => {
-    const container = {
-      async getDb() {
-        return pgp()({
-          connectionString: process.env.URI,
-          ssl: {
-            rejectUnauthorized: false,
-          },
-        });
-      },
-    };
+export const getServerSideProps = propsWithContainer(
+  verifyToken(
+    async ({ query: { id }, container }) => {
+      const { scheduledCalls, error } = await retrieveVisits(container);
 
-    const { scheduledCalls, error } = await retrieveVisits(container);
-
-    return { props: { scheduledCalls, error, id } };
-  },
-  {
-    tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-  }
+      return { props: { scheduledCalls, error, id } };
+    },
+    {
+      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+    }
+  )
 );
