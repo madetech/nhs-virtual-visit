@@ -31,4 +31,8 @@ describe("AppContainer", () => {
   it("returns getNotifyClient", () => {
     expect(container.getNotifyClient()).toBeDefined();
   });
+
+  it("returns sendTextMessage", () => {
+    expect(container.getSendTextMessage()).toBeDefined();
+  });
 });

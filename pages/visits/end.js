@@ -41,11 +41,6 @@ export default ({ wardId }) => (
             </div>
           </div>
           <h2>What happens next</h2>
-          <p>
-            To schedule another virtual visit, please contact the hospital
-            again.
-          </p>
-
           <ActionLink href={`https://www.lnwh.nhs.uk/support`}>
             Get further help and support
           </ActionLink>

@@ -1,5 +1,6 @@
 import pgp from "pg-promise";
 import createVisit from "../usecases/createVisit";
+import sendTextMessage from "../usecases/sendTextMessage";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
 import { NotifyClient } from "notifications-node-client";
@@ -30,5 +31,9 @@ export default class AppContainer {
     const apiKey = process.env.API_KEY;
 
     return new NotifyClient(apiKey);
+  }
+
+  getSendTextMessage() {
+    return sendTextMessage(this);
   }
 }

@@ -7,8 +7,6 @@ import fetch from "node-fetch";
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
 
-const templateId = process.env.SMS_INITIAL_TEMPLATE_ID;
-
 const wherebyCallId = async (callTime) => {
   let startTime = moment(callTime).subtract(30, "minutes").format();
   let endTime = moment(callTime).add(2, "hours").format();
@@ -93,21 +91,29 @@ export default withContainer(
         provider: process.env.ENABLE_WHEREBY === "yes" ? "whereby" : "jitsi",
       });
 
-      const notifyClient = container.getNotifyClient();
+      const sendTextMessage = container.getSendTextMessage();
+      const templateId = process.env.SMS_INITIAL_TEMPLATE_ID;
 
-      await notifyClient.sendSms(templateId, body.contactNumber, {
-        personalisation: {
+      const response = await sendTextMessage(
+        templateId,
+        body.contactNumber,
+        {
           call_time: formatDate(body.callTime),
           ward_name: "Defoe Ward",
           hospital_name: "Northwick Park Hospital",
         },
-        reference: null,
-      });
+        null
+      );
 
-      notifier.notify(body.contactNumber, formatDate(body.callTimeLocal));
+      if (response.success) {
+        notifier.notify(body.contactNumber, formatDate(body.callTimeLocal));
 
-      res.status(201);
-      res.end(JSON.stringify({ success: true }));
+        res.status(201);
+        res.end(JSON.stringify({ success: true }));
+      } else {
+        res.status(400);
+        res.end(JSON.stringify({ err: "Failed to schedule a visit" }));
+      }
     } catch (err) {
       console.error(err);
       res.status(500);
