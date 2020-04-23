@@ -7,12 +7,10 @@ const sendTextMessage = ({ getNotifyClient }) => async (
   const notifyClient = getNotifyClient();
 
   try {
-    await notifyClient.sendSms(
-      templateId,
-      phoneNumber,
-      personalisation,
-      reference
-    );
+    await notifyClient.sendSms(templateId, phoneNumber, {
+      personalisation: personalisation,
+      reference: reference,
+    });
 
     return { success: true, error: null };
   } catch (error) {

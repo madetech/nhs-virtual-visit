@@ -24,12 +24,10 @@ describe("sendTextMessage", () => {
       reference
     );
 
-    expect(sendSmsSpy).toHaveBeenCalledWith(
-      templateId,
-      phoneNumber,
-      personalisation,
-      reference
-    );
+    expect(sendSmsSpy).toHaveBeenCalledWith(templateId, phoneNumber, {
+      personalisation: personalisation,
+      reference: reference,
+    });
   });
 
   it("returns success if successfully sends a text message", async () => {
