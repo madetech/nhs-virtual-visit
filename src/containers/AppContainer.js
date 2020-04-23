@@ -3,6 +3,7 @@ import sendTextMessage from "../usecases/sendTextMessage";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
 import { NotifyClient } from "notifications-node-client";
+import { verifyTokenOrRedirect } from "../usecases/verifyToken";
 
 export default class AppContainer {
   async getDb() {
@@ -36,5 +37,9 @@ export default class AppContainer {
 
   getSendTextMessage() {
     return sendTextMessage(this);
+  }
+
+  getVerifyTokenOrRedirect() {
+    return verifyTokenOrRedirect;
   }
 }
