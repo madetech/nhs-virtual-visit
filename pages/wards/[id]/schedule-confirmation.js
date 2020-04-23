@@ -27,7 +27,7 @@ const ScheduleConfirmation = ({ id, patientName, contactNumber, callTime }) => {
         body: JSON.stringify({
           contactNumber,
           patientName,
-          callTime: moment(callTime).toISOString(),
+          callTime: moment(callTime).toISOString(true),
           callTimeLocal: callTime,
         }),
       });
