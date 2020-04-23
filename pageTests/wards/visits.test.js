@@ -1,12 +1,9 @@
 import { getServerSideProps } from "../../pages/wards/[id]/visits";
 
+// TODO: This needs to be moved once the verifyToken logic is in the container..
 jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
   token && { ward: "123" }
 );
-
-beforeAll(() => {
-  process.env.JWT_SIGNING_KEY = "test-key";
-});
 
 describe("ward/[id]/visits", () => {
   const anonymousReq = {
