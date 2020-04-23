@@ -1,4 +1,3 @@
-import pgp from "pg-promise";
 import createVisit from "../usecases/createVisit";
 import sendTextMessage from "../usecases/sendTextMessage";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
@@ -6,7 +5,9 @@ import TokenProvider from "../providers/TokenProvider";
 import { NotifyClient } from "notifications-node-client";
 
 export default class AppContainer {
-  getDb() {
+  async getDb() {
+    const { default: pgp } = await import("pg-promise");
+
     return pgp()({
       connectionString: process.env.URI,
       ssl: {

@@ -9,9 +9,6 @@ import Hint from "../../src/components/Hint";
 import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
-import userIsAuthenticated from "../../src/usecases/userIsAuthenticated";
-import TokenProvider from "../../src/providers/TokenProvider";
-import AppContainer from "../../src/containers/AppContainer";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 const Login = () => {
@@ -88,7 +85,7 @@ const Login = () => {
 export default Login;
 
 export const getServerSideProps = propsWithContainer(
-  ({ req: { headers }, res, container }) => {
+  async ({ req: { headers }, res, container }) => {
     const userIsAuthenticated = container.getUserIsAuthenticated();
 
     const token = userIsAuthenticated(headers.cookie);

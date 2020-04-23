@@ -33,7 +33,7 @@ describe("schedule-visit", () => {
       getUserIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
-      getDb: jest.fn().mockReturnValue(() => {}),
+      getDb: jest.fn().mockResolvedValue(() => {}),
       getSendTextMessage: () => () => ({ success: true, error: null }),
     };
     process.env.SMS_INITIAL_TEMPLATE_ID = "meow-woof-quack";

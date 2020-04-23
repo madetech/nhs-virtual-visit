@@ -4,7 +4,7 @@ describe("createVisit", () => {
   it("creates a visit in the db when valid", async () => {
     const oneSpy = jest.fn().mockReturnValue(10);
     const container = {
-      getDb() {
+      async getDb() {
         return {
           one: oneSpy,
         };

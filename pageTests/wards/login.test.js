@@ -16,22 +16,22 @@ describe("login", () => {
       };
     });
 
-    it("does not redirects not logged in", () => {
+    it("does not redirects not logged in", async () => {
       const container = {
         getUserIsAuthenticated: () => () => false,
       };
 
-      getServerSideProps({ req, res: mockResponse, container });
+      await getServerSideProps({ req, res: mockResponse, container });
 
       expect(mockResponse.writeHead).not.toHaveBeenCalled();
     });
 
-    it("redirects to the ward list page if logged in", () => {
+    it("redirects to the ward list page if logged in", async () => {
       const container = {
         getUserIsAuthenticated: () => () => ({ ward: "my-test-ward" }),
       };
 
-      getServerSideProps({ req, res: mockResponse, container });
+      await getServerSideProps({ req, res: mockResponse, container });
 
       expect(mockResponse.writeHead).toHaveBeenCalledWith(
         302,

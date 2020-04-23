@@ -1,8 +1,6 @@
 import React from "react";
 import Layout from "../../src/components/Layout";
 import ActionLink from "../../src/components/ActionLink";
-import userIsAuthenticated from "../../src/usecases/userIsAuthenticated";
-import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 export default ({ wardId }) => (

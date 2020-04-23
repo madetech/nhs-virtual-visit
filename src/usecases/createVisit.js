@@ -1,5 +1,5 @@
 const createVisit = ({ getDb }) => async (visit) => {
-  const db = getDb();
+  const db = await getDb();
 
   console.log("Creating visit for ", visit);
   return await db.one(
