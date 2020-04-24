@@ -4,6 +4,8 @@ import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Text from "../../../src/components/Text";
 import Heading from "../../../src/components/Heading";
 import Layout from "../../../src/components/Layout";
+import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
+import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import Router from "next/router";
@@ -17,8 +19,9 @@ const VisitStart = ({
   callDate,
   callTime,
   callId,
+  error,
 }) => {
-  const [userError, setUserError] = useState("");
+  const [userError, setUserError] = useState(error);
 
   const startCall = async ({ callId, contactNumber }) => {
     const response = await fetch("/api/send-visit-ready-notification", {
@@ -87,21 +90,29 @@ const VisitStart = ({
   );
 };
 
-export const getServerSideProps = ({ query }) => {
-  console.log("vs-query", query);
-  const { id, patientName, contactNumber, callDateTime, callId } = query;
-  const callTime = moment(callDateTime).format("h.mma");
-  const callDate = moment(callDateTime).format("D MMMM YYYY");
-  return {
-    props: {
-      id,
-      patientName,
-      contactNumber,
-      callTime,
-      callDate,
-      callId,
-    },
-  };
-};
+export const getServerSideProps = propsWithContainer(
+  async ({ query, container }) => {
+    console.log("vs-query", query);
+    const { id, callId } = query;
+
+    const { scheduledCall, error } = await retrieveVisitByCallId(container)(
+      callId
+    );
+
+    const callTime = moment(scheduledCall.callTime).format("h.mma");
+    const callDate = moment(scheduledCall.callTime).format("D MMMM YYYY");
+    return {
+      props: {
+        id,
+        patientName: scheduledCall.patientName,
+        contactNumber: scheduledCall.recipientNumber,
+        callTime,
+        callDate,
+        callId,
+        error,
+      },
+    };
+  }
+);
 
 export default VisitStart;
