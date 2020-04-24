@@ -1,9 +1,10 @@
 import React from "react";
 import moment from "moment";
+import Router from "next/router";
 
 const formatDate = (date) => moment(date).format("D MMMM YYYY, h.mma");
 
-const Visits = ({ visits, joinCall }) => (
+const Visits = ({ id, visits }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
       <caption className="nhsuk-table__caption">List of ward visits</caption>
@@ -13,7 +14,7 @@ const Visits = ({ visits, joinCall }) => (
             Patient name
           </th>
           <th className="nhsuk-table__header" scope="col">
-            Recipient mobile number
+            Key contact mobile number
           </th>
           <th className="nhsuk-table__header" scope="col">
             Call time
@@ -31,12 +32,16 @@ const Visits = ({ visits, joinCall }) => (
               <button
                 className="nhsuk-button"
                 type="submit"
-                onClick={() =>
-                  joinCall({
-                    callId: visit.callId,
-                    contactNumber: visit.recipientNumber,
-                  })
-                }
+                onClick={() => {
+                  const patientName = visit.patientName;
+                  const contactNumber = visit.recipientNumber;
+                  const callDateTime = visit.callTime;
+                  const callId = visit.callId;
+                  Router.push({
+                    pathname: `/wards/${id}/visit-start`,
+                    query: { patientName, contactNumber, callDateTime, callId },
+                  });
+                }}
               >
                 Start call
               </button>

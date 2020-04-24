@@ -57,7 +57,7 @@ export default function WardVisits({ scheduledCalls, error, id }) {
           </ActionLink>
           <h2 className="nhsuk-heading-l">Pre-booked visits</h2>
           {scheduledCalls.length > 0 ? (
-            <VisitsTable visits={scheduledCalls} joinCall={joinCall} />
+            <VisitsTable visits={scheduledCalls} id={id} />
           ) : (
             <Text>There are no upcoming visits.</Text>
           )}
