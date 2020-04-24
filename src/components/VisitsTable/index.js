@@ -14,6 +14,9 @@ const Visits = ({ id, visits }) => (
             Patient name
           </th>
           <th className="nhsuk-table__header" scope="col">
+            Key contact name
+          </th>
+          <th className="nhsuk-table__header" scope="col">
             Key contact mobile number
           </th>
           <th className="nhsuk-table__header" scope="col">
@@ -26,6 +29,7 @@ const Visits = ({ id, visits }) => (
         {visits.map((visit) => (
           <tr className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{visit.patientName}</td>
+            <td className="nhsuk-table__cell">{visit.recipientName}</td>
             <td className="nhsuk-table__cell">{visit.recipientNumber}</td>
             <td className="nhsuk-table__cell">{formatDate(visit.callTime)}</td>
             <td className="nhsuk-table__cell">
@@ -33,9 +37,6 @@ const Visits = ({ id, visits }) => (
                 className="nhsuk-button"
                 type="submit"
                 onClick={() => {
-                  const patientName = visit.patientName;
-                  const contactNumber = visit.recipientNumber;
-                  const callDateTime = visit.callTime;
                   const callId = visit.callId;
                   Router.push({
                     pathname: `/wards/${id}/visit-start`,
