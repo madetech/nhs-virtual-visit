@@ -180,7 +180,7 @@ const Home = ({
               />
 
               <LabelHeader htmlFor="contact-name">
-                What is their key contacts's name?
+                What is their key contact's name?
               </LabelHeader>
               <Input
                 id="contact-name"
