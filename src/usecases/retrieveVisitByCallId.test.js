@@ -11,6 +11,7 @@ describe("retrieveVisitByCallId", () => {
               patient_name: "Bob",
               call_time: new Date("2020-04-15T23:00:00.000Z"),
               recipient_number: "07907095342",
+              recipient_name: "John",
               call_id: "cb238rfv23cuv3",
               provider: "whereby",
             },
@@ -29,6 +30,7 @@ describe("retrieveVisitByCallId", () => {
       patientName: "Bob",
       callTime: "2020-04-15T23:00:00.000Z",
       recipientNumber: "07907095342",
+      recipientName: "John",
       callId: "cb238rfv23cuv3",
       provider: "whereby",
     });

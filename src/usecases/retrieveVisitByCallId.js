@@ -13,6 +13,7 @@ const retrieveVisitByCallId = ({ getDb }) => async (callId) => {
       scheduledCall: {
         id: scheduledCall.id,
         patientName: scheduledCall.patient_name,
+        recipientName: scheduledCall.recipient_name,
         recipientNumber: scheduledCall.recipient_number,
         callTime: scheduledCall.call_time
           ? scheduledCall.call_time.toISOString()
