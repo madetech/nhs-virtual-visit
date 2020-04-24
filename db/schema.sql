@@ -1,8 +1,6 @@
 --
 -- PostgreSQL database dump
 --
--- Dumped from database version 12.2 (Ubuntu 12.2-2.pgdg16.04+1)
--- Dumped by pg_dump version 12.1 (Debian 12.1-1.pgdg100+1)
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -24,6 +22,7 @@ CREATE TABLE public.scheduled_calls_table (
     call_time timestamp with time zone,
     recipient_number text,
     call_id text,
+    recipient_name character varying(255),
     provider character varying(255) DEFAULT 'jitsi'::character varying NOT NULL
 );
 --
