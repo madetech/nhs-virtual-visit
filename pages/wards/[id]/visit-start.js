@@ -13,11 +13,9 @@ import { useState } from "react";
 import Error from "next/error";
 
 const VisitStart = ({
-  id,
   patientName,
+  contactName,
   contactNumber,
-  callDate,
-  callTime,
   callId,
   error,
 }) => {
@@ -65,7 +63,10 @@ const VisitStart = ({
             details of the patient:
           </p>
           <ul>
-            <li>Key contact name</li>
+            <li>
+              Key contact name{contactName && ":"}{" "}
+              <strong>{contactName}</strong>
+            </li>
             <li>
               Patient name: <strong>{patientName}</strong>
             </li>
@@ -105,6 +106,7 @@ export const getServerSideProps = propsWithContainer(
       props: {
         id,
         patientName: scheduledCall.patientName,
+        contactName: scheduledCall.recipientName,
         contactNumber: scheduledCall.recipientNumber,
         callTime,
         callDate,
