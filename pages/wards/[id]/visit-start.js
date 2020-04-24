@@ -77,8 +77,8 @@ const VisitStart = ({
             type="submit"
             onClick={() =>
               startCall({
-                callId: id,
-                contactNumber: contactNumber,
+                callId,
+                contactNumber,
               })
             }
           >
