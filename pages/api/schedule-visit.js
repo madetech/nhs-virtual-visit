@@ -100,7 +100,6 @@ export default withContainer(
         templateId,
         body.contactNumber,
         {
-          call_time: formatDateAndTime(body.callTime),
           visit_date: formatDate(body.callTime),
           visit_time: formatTime(body.callTime),
           ward_name: "Defoe Ward",

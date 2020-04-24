@@ -79,7 +79,6 @@ describe("schedule-visit", () => {
       "meow-woof-quack",
       "07123456789",
       {
-        call_time: "5 April 2020, 10.10am",
         ward_name: "Defoe Ward",
         hospital_name: "Northwick Park Hospital",
         visit_date: "5 April 2020",
