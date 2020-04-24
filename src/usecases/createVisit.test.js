@@ -13,6 +13,7 @@ describe("createVisit", () => {
 
     const request = {
       patientName: "Bob Smith",
+      contactName: "John Smith",
       contactNumber: "07123456789",
       callTime: new Date(),
       callId: 12345,
@@ -26,6 +27,7 @@ describe("createVisit", () => {
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.patientName,
       request.contactNumber,
+      request.contactName,
       request.callTime,
       request.callId,
       request.provider,
