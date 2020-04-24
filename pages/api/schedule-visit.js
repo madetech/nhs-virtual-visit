@@ -32,7 +32,12 @@ const formatDateAndTime = (date) => moment(date).format("D MMMM YYYY, h.mma");
 const formatDate = (date) => moment(date).format("D MMMM YYYY");
 const formatTime = (date) => moment(date).format("h.mma");
 
-const getValidationErrors = ({ patientName, contactNumber, callTime }) => {
+const getValidationErrors = ({
+  patientName,
+  contactNumber,
+  contactName,
+  callTime,
+}) => {
   if (!patientName || patientName.length === 0) {
     return "patientName must be a string";
   }
@@ -40,6 +45,10 @@ const getValidationErrors = ({ patientName, contactNumber, callTime }) => {
   if (!contactNumber || contactNumber.length !== 11) {
     return "contactNumber must be a number with 11 digits";
   }
+
+  // if (!contactName || contactName.length === 0) {
+  //   return "contactName must be a string";
+  // }
 
   try {
     moment(callTime);
@@ -87,6 +96,7 @@ export default withContainer(
       await createVisit({
         patientName: body.patientName,
         contactNumber: body.contactNumber,
+        contactName: body.contactName,
         callTime: body.callTime,
         callTimeLocal: body.callTimeLocal,
         callId: callId,

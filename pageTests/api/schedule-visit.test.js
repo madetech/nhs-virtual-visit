@@ -16,6 +16,7 @@ describe("schedule-visit", () => {
       body: {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
+        contactName: "John Smith",
         callTime: "2020-04-05T10:10:10",
       },
       headers: {
@@ -58,6 +59,7 @@ describe("schedule-visit", () => {
       expect.objectContaining({
         patientName: "Bob Smith",
         contactNumber: "07123456789",
+        contactName: "John Smith",
         provider: "jitsi",
       })
     );
