@@ -8,6 +8,7 @@ import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import Router from "next/router";
 import { useState } from "react";
+import Error from "next/error";
 
 const VisitStart = ({
   id,
@@ -42,18 +43,7 @@ const VisitStart = ({
   };
 
   if (userError) {
-    return (
-      <Layout title="Sorry, there is a problem with the service">
-        <GridRow>
-          <GridColumn width="two-thirds">
-            <Heading>Sorry, there is a problem with the service</Heading>
-            <Text>
-              We were unable to process your request, try again later.
-            </Text>
-          </GridColumn>
-        </GridRow>
-      </Layout>
-    );
+    return <Error />;
   }
 
   return (
