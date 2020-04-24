@@ -25,6 +25,16 @@ This service allows ward staff to schedule a visit for a patient. Allowing face 
 1. The visitor confirms the information of the patient with the ward staff
 1. The visitor can now communicate face to face through the service with the patient
 
+# Previews
+
+| Ward Staff see list of visits                                            | Ward Staff start a visits                                           |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------- |
+| ![Ward Staff see list of visits](docs/images/WardStaff_VisitsScreen.png) | ![Ward Staff start a visits](docs/images/WardStaff_StartScreen.png) |
+
+| Visitor receives SMS notifications                                 | Visitor joins a visit                                         | Visitor ends a visit                                       |
+| ------------------------------------------------------------------ | ------------------------------------------------------------- | ---------------------------------------------------------- |
+| ![Visitor receives SMS notifications](docs/images/Visitor_SMS.jpg) | ![Visitor joins a visit](docs/images/Visitor_StartScreen.jpg) | ![Visitor ends a visit](docs/images/Visitor_EndScreen.jpg) |
+
 # Technology
 
 The service is currently hosted on [Heroku](https://www.heroku.com), and connects to a [postgres](https://www.postgresql.org) database also hosted on Heroku.
