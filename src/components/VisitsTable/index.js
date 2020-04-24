@@ -39,7 +39,7 @@ const Visits = ({ id, visits }) => (
                   const callId = visit.callId;
                   Router.push({
                     pathname: `/wards/${id}/visit-start`,
-                    query: { patientName, contactNumber, callDateTime, callId },
+                    query: { callId },
                   });
                 }}
               >
