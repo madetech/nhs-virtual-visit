@@ -93,4 +93,4 @@ This will produce output that you can use to host a production copy of the app.
 
 ## License
 
-MIT
+[MIT](LICENSE)
