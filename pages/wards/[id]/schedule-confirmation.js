@@ -8,17 +8,28 @@ import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import Router from "next/router";
 
-const ScheduleConfirmation = ({ id, patientName, contactNumber, callTime }) => {
+const ScheduleConfirmation = ({
+  id,
+  patientName,
+  contactName,
+  contactNumber,
+  callTime,
+}) => {
   const changeLink = () => {
     Router.push({
       pathname: `/wards/${id}/schedule-visit`,
-      query: { patientName, contactNumber, ...callTime },
+      query: { patientName, contactName, contactNumber, ...callTime },
     });
   };
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
 
-    const submitAnswers = async ({ contactNumber, patientName, callTime }) => {
+    const submitAnswers = async ({
+      contactName,
+      contactNumber,
+      patientName,
+      callTime,
+    }) => {
       const response = await fetch("/api/schedule-visit", {
         method: "POST",
         headers: {
@@ -27,6 +38,7 @@ const ScheduleConfirmation = ({ id, patientName, contactNumber, callTime }) => {
         body: JSON.stringify({
           contactNumber,
           patientName,
+          contactName,
           callTime: moment(callTime).toISOString(true),
           callTimeLocal: callTime,
         }),
@@ -41,7 +53,7 @@ const ScheduleConfirmation = ({ id, patientName, contactNumber, callTime }) => {
       }
     };
 
-    submitAnswers({ contactNumber, patientName, callTime });
+    submitAnswers({ contactNumber, contactName, patientName, callTime });
   });
 
   return (
@@ -60,6 +72,20 @@ const ScheduleConfirmation = ({ id, patientName, contactNumber, callTime }) => {
                     <span className="nhsuk-u-visually-hidden">
                       {" "}
                       patient's name
+                    </span>
+                  </a>
+                </dd>
+              </div>
+
+              <div className="nhsuk-summary-list__row">
+                <dt className="nhsuk-summary-list__key">Key contact name</dt>
+                <dd className="nhsuk-summary-list__value">{contactName}</dd>
+                <dd className="nhsuk-summary-list__actions">
+                  <a href="#" onClick={changeLink}>
+                    Change
+                    <span className="nhsuk-u-visually-hidden">
+                      {" "}
+                      key contact name
                     </span>
                   </a>
                 </dd>
@@ -130,6 +156,7 @@ const ScheduleConfirmation = ({ id, patientName, contactNumber, callTime }) => {
 export const getServerSideProps = ({ query }) => {
   const {
     patientName,
+    contactName,
     contactNumber,
     id,
     day,
@@ -144,6 +171,7 @@ export const getServerSideProps = ({ query }) => {
     props: {
       id,
       patientName,
+      contactName,
       contactNumber,
       callTime,
     },
