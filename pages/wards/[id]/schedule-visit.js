@@ -46,12 +46,14 @@ const isValidTime = ({ hour, minute }) => {
 const Home = ({
   id,
   initialPatientName,
+  initialContactName,
   initialContactNumber,
   initialCallDateTime,
 }) => {
   const [contactNumber, setContactNumber] = useState(
     initialContactNumber || ""
   );
+  const [contactName, setContactName] = useState(initialContactName || "");
   const [patientName, setPatientName] = useState(initialPatientName || "");
   const [callDateTime, setCallDateTime] = useState(initialCallDateTime || "");
 
@@ -80,6 +82,13 @@ const Home = ({
       errors.push({
         id: "patient-name-error",
         message: "Enter a patient's name",
+      });
+    };
+
+    const setContactNameError = (errors) => {
+      errors.push({
+        id: "contact-name-error",
+        message: "Enter a key contact's name",
       });
     };
 
@@ -122,6 +131,9 @@ const Home = ({
     if (!isValidName(patientName)) {
       setPatientNameError(errors);
     }
+    if (!isValidName(contactName)) {
+      setContactNameError(errors);
+    }
     if (!isValidDate(callDateTime).dateIsValid) {
       setInvalidDateError(errors);
     }
@@ -139,7 +151,7 @@ const Home = ({
     if (errors.length === 0) {
       Router.push({
         pathname: `/wards/${id}/schedule-confirmation`,
-        query: { patientName, contactNumber, ...callDateTime },
+        query: { patientName, contactNumber, contactName, ...callDateTime },
       });
     }
   });
@@ -165,6 +177,22 @@ const Home = ({
                 name="patient-name"
                 autoComplete="off"
                 value={patientName || ""}
+              />
+
+              <LabelHeader htmlFor="contact-name">
+                What is their key contacts's name?
+              </LabelHeader>
+              <Input
+                id="contact-name"
+                type="text"
+                hasError={hasError("contact-name")}
+                errorMessage="Enter the key contact's name"
+                className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
+                style={{ padding: "32px 16px!important" }}
+                onChange={(event) => setContactName(event.target.value)}
+                name="contact-name"
+                autoComplete="off"
+                value={contactName || ""}
               />
 
               <LabelHeader htmlFor="contact">
@@ -217,6 +245,7 @@ const Home = ({
 const queryContainsInitialData = (query) => {
   const initialDataKeys = [
     "patientName",
+    "contactName",
     "contactNumber",
     "day",
     "month",
@@ -236,6 +265,7 @@ export const getServerSideProps = verifyToken(
     if (queryContainsInitialData(query)) {
       const {
         patientName,
+        contactName,
         contactNumber,
         day,
         month,
@@ -248,6 +278,7 @@ export const getServerSideProps = verifyToken(
       props = {
         ...props,
         initialPatientName: patientName,
+        initialContactName: contactName,
         initialContactNumber: contactNumber,
         initialCallDateTime: callDateTime,
       };
