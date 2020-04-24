@@ -136,7 +136,7 @@ This will produce output that you can use to host a production copy of the app.
 
 - [Glossary](docs/GLOSSARY.md) - types of users, vocabulary used in copy and descriptions of the intent for each page.
 
-## Contacts
+## Contributors
 
 - **Luke Morton** - CTO at [Made Tech](https://www.madetech.com) (luke@madetech.com)
 - **Jessica Nichols** - Delivery Manager at [Made Tech](https://www.madetech.com) (jessica.nichols@madetech.com)
