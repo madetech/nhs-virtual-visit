@@ -62,11 +62,11 @@ const VisitStart = ({
             details of the patient:
           </p>
           <ul>
-            <li>Their name</li>
+            <li>Key contact name</li>
             <li>
               Patient name: <strong>{patientName}</strong>
             </li>
-            <li>Patient's date of birth (DoB)</li>
+            <li>Patient's date of birth</li>
           </ul>
 
           <button
@@ -79,13 +79,14 @@ const VisitStart = ({
               })
             }
           >
-            Continue
+            Start visit
           </button>
         </GridColumn>
       </GridRow>
     </Layout>
   );
 };
+
 export const getServerSideProps = ({ query }) => {
   console.log("vs-query", query);
   const { id, patientName, contactNumber, callDateTime, callId } = query;

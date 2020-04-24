@@ -43,7 +43,7 @@ const Visits = ({ id, visits }) => (
                   });
                 }}
               >
-                Start call
+                Start
               </button>
             </td>
           </tr>
