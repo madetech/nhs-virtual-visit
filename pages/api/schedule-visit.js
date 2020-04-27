@@ -3,6 +3,9 @@ import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
 import moment from "moment";
 import withContainer from "../../src/middleware/withContainer";
 import fetch from "node-fetch";
+import formatDateAndTime from "../../src/helpers/formatDateAndTime";
+import formatDate from "../../src/helpers/formatDate";
+import formatTime from "../../src/helpers/formatTime";
 
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
@@ -27,10 +30,6 @@ const wherebyCallId = async (callTime) => {
   let roomUrl = new URL(jsonResponse.roomUrl);
   return roomUrl.pathname.slice(1);
 };
-
-const formatDateAndTime = (date) => moment(date).format("D MMMM YYYY, h.mma");
-const formatDate = (date) => moment(date).format("D MMMM YYYY");
-const formatTime = (date) => moment(date).format("h.mma");
 
 const getValidationErrors = ({
   patientName,

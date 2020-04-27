@@ -1,8 +1,6 @@
 import React from "react";
-import moment from "moment";
 import Router from "next/router";
-
-const formatDate = (date) => moment(date).format("D MMMM YYYY, h.mma");
+import formatDateAndTime from "../../helpers/formatDateAndTime";
 
 const Visits = ({ id, visits }) => (
   <div className="nhsuk-table-responsive">
@@ -31,7 +29,9 @@ const Visits = ({ id, visits }) => (
             <td className="nhsuk-table__cell">{visit.patientName}</td>
             <td className="nhsuk-table__cell">{visit.recipientName}</td>
             <td className="nhsuk-table__cell">{visit.recipientNumber}</td>
-            <td className="nhsuk-table__cell">{formatDate(visit.callTime)}</td>
+            <td className="nhsuk-table__cell">
+              {formatDateAndTime(visit.callTime)}
+            </td>
             <td className="nhsuk-table__cell">
               <button
                 className="nhsuk-button"
