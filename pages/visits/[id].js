@@ -15,7 +15,7 @@ const Call = ({ id, name, provider, error }) => {
     return (
       <Layout>
         <main>
-          <Whereby id={id} />
+          <Whereby id={id} name={name} />
           <button
             className="nhsuk-button"
             type="submit"
@@ -98,14 +98,14 @@ export const getServerSideProps = propsWithContainer(
   }
 );
 
-const Whereby = ({ id }) => (
+const Whereby = ({ id, name }) => (
   <iframe
     style={{
       width: "100%",
       height: "calc(100vh - 135px)",
       border: 0,
     }}
-    src={`https://${process.env.WHEREBY_SUBDOMAIN}.whereby.com/${id}?embed&iframeSource=${process.env.WHEREBY_SUBDOMAIN}&background=off&displayName=Ward&screenshare=off&chat=off`}
+    src={`https://${process.env.WHEREBY_SUBDOMAIN}.whereby.com/${id}?embed&iframeSource=${process.env.WHEREBY_SUBDOMAIN}&background=off&displayName=${name}&screenshare=off&chat=off`}
     allow="camera; microphone; fullscreen; speaker"
   ></iframe>
 );
