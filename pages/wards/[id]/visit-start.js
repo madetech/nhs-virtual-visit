@@ -7,10 +7,11 @@ import Layout from "../../../src/components/Layout";
 import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import fetch from "isomorphic-unfetch";
-import moment from "moment";
 import Router from "next/router";
 import { useState } from "react";
 import Error from "next/error";
+import formatDate from "../../../src/helpers/formatDate";
+import formatTime from "../../../src/helpers/formatTime";
 
 const VisitStart = ({
   patientName,
@@ -100,8 +101,9 @@ export const getServerSideProps = propsWithContainer(
       callId
     );
 
-    const callTime = moment(scheduledCall.callTime).format("h.mma");
-    const callDate = moment(scheduledCall.callTime).format("D MMMM YYYY");
+    const callTime = formatTime(scheduledCall.callTime);
+    const callDate = formatDate(scheduledCall.callTime);
+
     return {
       props: {
         id,

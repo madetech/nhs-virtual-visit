@@ -7,6 +7,8 @@ import Layout from "../../../src/components/Layout";
 import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import Router from "next/router";
+import formatDate from "../../../src/helpers/formatDate";
+import formatTime from "../../../src/helpers/formatTime";
 
 const ScheduleConfirmation = ({
   id,
@@ -110,7 +112,7 @@ const ScheduleConfirmation = ({
               <div className="nhsuk-summary-list__row">
                 <dt className="nhsuk-summary-list__key">Date of call</dt>
                 <dd className="nhsuk-summary-list__value">
-                  {moment(callTime).format("D MMMM YYYY")}
+                  {formatDate(callTime)}
                 </dd>
                 <dd className="nhsuk-summary-list__actions">
                   <a href="#" onClick={changeLink}>
@@ -126,7 +128,7 @@ const ScheduleConfirmation = ({
               <div className="nhsuk-summary-list__row">
                 <dt className="nhsuk-summary-list__key">Time of call</dt>
                 <dd className="nhsuk-summary-list__value">
-                  {moment(callTime).format("hh:mma")}
+                  {formatTime(callTime)}
                 </dd>
                 <dd className="nhsuk-summary-list__actions">
                   <a href="#" onClick={changeLink}>
