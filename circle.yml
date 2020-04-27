@@ -3,6 +3,13 @@ orbs:
   cypress: cypress-io/cypress@1
   node: circleci/node@1.1.6
 
+executors:
+  base10-foo-bar:
+    docker:
+      - image: "cypress/base:10"
+    environment:
+      URI: postgres://circleci:super-secret@localhost/nhs_visit
+
 jobs:
   build-and-test:
     executor:
@@ -18,13 +25,6 @@ jobs:
 
 workflows:
   build:
-    docker:
-      - image: circleci/postgres:12
-        environment:
-          POSTGRES_USER: circleci
-          POSTGRES_PASSWORD: super-secret
-          POSTGRES_DB: nhs_visit
-
     jobs:
       - build-and-test
       - cypress/install:
