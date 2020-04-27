@@ -4,17 +4,11 @@ import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
 import { NotifyClient } from "notifications-node-client";
 import { verifyTokenOrRedirect } from "../usecases/verifyToken";
+import Database from "../gateways/Database";
 
 class AppContainer {
-  async getDb() {
-    const { default: pgp } = await import("pg-promise");
-
-    return pgp()({
-      connectionString: process.env.URI,
-      ssl: {
-        rejectUnauthorized: false,
-      },
-    });
+  getDb() {
+    return Database.getInstance();
   }
 
   getCreateVisit() {
