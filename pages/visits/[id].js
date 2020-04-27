@@ -6,7 +6,7 @@ import Router from "next/router";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 
-const Call = ({ id, name, provider, error }) => {
+const Call = ({ callId, name, provider, error }) => {
   if (error) {
     return <Error />;
   }
@@ -15,12 +15,12 @@ const Call = ({ id, name, provider, error }) => {
     return (
       <Layout>
         <main>
-          <Whereby id={id} name={name} />
+          <Whereby id={callId} name={name} />
           <button
             className="nhsuk-button"
             type="submit"
             onClick={() => {
-              Router.push("/visits/end");
+              Router.push(`/visits/end?callId=${callId}`);
             }}
           >
             End call
@@ -39,14 +39,14 @@ const Call = ({ id, name, provider, error }) => {
         return;
       }
 
-      if (!id) {
+      if (!callId) {
         console.log("no id");
         return;
       }
 
       const domain = "meet.jit.si";
       const options = {
-        roomName: id,
+        roomName: callId,
         width: "100%",
         height: "100%",
         parentNode: document.querySelector("#meet"),
@@ -60,12 +60,12 @@ const Call = ({ id, name, provider, error }) => {
       if (!!name) {
         api.executeCommand("displayName", name);
         api.on("videoConferenceLeft", () => {
-          Router.push("/visits/end");
+          Router.push(`/visits/end?callId=${callId}`);
         });
       }
     }, [jitsiLoaded]);
 
-    if (!id) {
+    if (!callId) {
       return (
         <Layout>
           <h1>No calling code provided</h1>
@@ -94,7 +94,7 @@ export const getServerSideProps = propsWithContainer(
     );
     const provider = scheduledCall.provider;
 
-    return { props: { id, name, provider, error } };
+    return { props: { callId, name, provider, error } };
   }
 );
 

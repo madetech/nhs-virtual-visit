@@ -3,7 +3,7 @@ import Layout from "../../src/components/Layout";
 import ActionLink from "../../src/components/ActionLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
-export default ({ wardId }) => (
+export default ({ wardId, callId }) => (
   <Layout>
     <div className="nhsuk-grid-row">
       {wardId && (
@@ -22,6 +22,11 @@ export default ({ wardId }) => (
           </div>
           <h2>What happens next</h2>
 
+          <ActionLink
+            href={`/wards/${wardId}/schedule-visit?rebookCallId=${callId}`}
+          >
+            Rebook another visit
+          </ActionLink>
           <ActionLink href={`/wards/${wardId}/visits`}>
             Return to scheduled visit list
           </ActionLink>
@@ -50,11 +55,11 @@ export default ({ wardId }) => (
 );
 
 export const getServerSideProps = propsWithContainer(
-  ({ req: { headers }, container }) => {
+  ({ req: { headers }, container, query }) => {
     const userIsAuthenticated = container.getUserIsAuthenticated();
 
     const token = userIsAuthenticated(headers.cookie);
 
-    return { props: { wardId: token?.ward || null } };
+    return { props: { wardId: token?.ward || null, callId: query.callId } };
   }
 );

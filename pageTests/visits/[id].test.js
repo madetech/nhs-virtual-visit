@@ -17,7 +17,7 @@ describe("call", () => {
 
   describe("with a call id", () => {
     beforeEach(() => {
-      render(<Call id="TestCallId" />);
+      render(<Call callId="TestCallId" />);
     });
 
     it("configures Jitsi toolbar buttons", () => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, queryByAttribute } from "@testing-library/react";
 import EndOfVisit, { getServerSideProps } from "../../pages/visits/end";
 import TokenProvider from "../../src/providers/TokenProvider";
 
@@ -34,6 +34,25 @@ describe("end", () => {
       const text = queryByText(/Get further help and support/i);
       expect(text).not.toBeInTheDocument();
     });
+    it("shows the correct rebook link", () => {
+      const { getByText } = render(
+        <EndOfVisit wardId="TEST" callId="TEST123" />
+      );
+      const text = getByText(/Rebook another visit/i);
+      expect(text).toBeInTheDocument();
+    });
+
+    it("contains the correct rebook link url", () => {
+      const { container } = render(
+        <EndOfVisit wardId="TEST" callId="TEST123" />
+      );
+      const getByHref = queryByAttribute.bind(null, "href");
+      const rebookLink = getByHref(
+        container,
+        "/wards/TEST/schedule-visit?rebookCallId=TEST123"
+      );
+      expect(rebookLink).toBeInTheDocument();
+    });
   });
 
   describe("getServerSideProps", () => {
@@ -42,13 +61,22 @@ describe("end", () => {
         cookie: "",
       },
     };
+    it("provides the call id", () => {
+      const container = {
+        getUserIsAuthenticated: () => () => ({ ward: "test-ward-id" }),
+      };
+      const query = { callId: "TEST123" };
+      const { props } = getServerSideProps({ req, container, query });
+      expect(props.callId).toEqual("TEST123");
+    });
 
     it("provides the ward id if the user is authenticated", () => {
       const container = {
         getUserIsAuthenticated: () => () => ({ ward: "test-ward-id" }),
       };
 
-      const { props } = getServerSideProps({ req, container });
+      const query = { callId: "TEST123" };
+      const { props } = getServerSideProps({ req, container, query });
 
       expect(props.wardId).toEqual("test-ward-id");
     });
@@ -57,8 +85,8 @@ describe("end", () => {
       const container = {
         getUserIsAuthenticated: () => () => false,
       };
-
-      const { props } = getServerSideProps({ req, container });
+      const query = { callId: "TEST123" };
+      const { props } = getServerSideProps({ req, container, query });
 
       expect(props.wardId).toBeNull();
     });
