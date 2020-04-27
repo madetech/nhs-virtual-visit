@@ -6,10 +6,11 @@ orbs:
 executors:
   base10-foo-bar:
     docker:
-      - image: "cypress/base:10"
+      - image: "cypress/base:12.16.1"
         environment:
           URI: postgres://circleci:super-secret@localhost/nhs_visit
-          ALLOWED_CODES: VALIDCODE
+          ALLOWED_CODES: TESTCODE,VALIDCODE
+          JWT_SIGNING_KEY: signing_key
       - image: circleci/postgres:12
         environment:
           POSTGRES_USER: circleci
@@ -39,8 +40,6 @@ workflows:
           executor: base10-foo-bar
           requires:
             - cypress/install
-          parallel: true # split all specs across machines
-          parallelism: 4 # use 4 CircleCI machines to finish quickly
           group: "all tests" # name this group "all tests" on the dashboard
           start: "npm run dev" # start server before running tests
           store_artifacts: true

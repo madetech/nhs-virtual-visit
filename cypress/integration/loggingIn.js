@@ -6,6 +6,8 @@ describe("Logging in", () => {
     cy.contains("The code you entered was not recognised").should(
       "not.be.visible"
     );
+    cy.log("Waiting...");
+    cy.wait(10000);
     cy.get("[data-qa='ward-visits']");
   });
 

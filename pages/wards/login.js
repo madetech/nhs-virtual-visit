@@ -11,7 +11,7 @@ import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
-const Login = () => {
+const Login = ({ x }) => {
   const [code, setCode] = useState("");
   const [errors, setErrors] = useState([]);
 
@@ -54,7 +54,7 @@ const Login = () => {
       <GridRow>
         <GridColumn width="one-half">
           <ErrorSummary errors={errors} />
-          <Heading>Log in</Heading>
+          <Heading>Log in {x}</Heading>
 
           <form onSubmit={onSubmit}>
             <FormGroup>
@@ -94,6 +94,6 @@ export const getServerSideProps = propsWithContainer(
       res.writeHead(302, { Location: `/wards/${token.ward}/visits` }).end();
     }
 
-    return { props: {} };
+    return { props: { x: process.env.ALLOWED_CODES } };
   }
 );
