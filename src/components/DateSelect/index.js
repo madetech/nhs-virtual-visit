@@ -46,7 +46,7 @@ const DateSelect = ({
         <div className="nhsuk-date-input__item">
           <Label>Day</Label>
           <Input
-            style={{ padding: "32px 16px!important" }}
+            style={{ padding: "16px!important", height: "64px" }}
             type="number"
             hasError={hasDateError}
             onChange={(event) => {
@@ -62,7 +62,7 @@ const DateSelect = ({
         <div className="nhsuk-date-input__item">
           <Label>Month</Label>
           <Input
-            style={{ padding: "32px 16px!important" }}
+            style={{ padding: "16px!important", height: "64px" }}
             type="number"
             hasError={hasDateError}
             className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-u-font-size-32 nhsuk-input--width-10"
@@ -78,7 +78,7 @@ const DateSelect = ({
         <div className="nhsuk-date-input__item nhsuk-u-padding-bottom-5">
           <Label>Year</Label>
           <Input
-            style={{ padding: "32px 16px!important" }}
+            style={{ padding: "16px!important", height: "64px" }}
             type="number"
             hasError={hasDateError}
             className="nhsuk-input--width-4 nhsuk-u-font-size-32 nhsuk-input--width-10"
@@ -99,7 +99,7 @@ const DateSelect = ({
         <div className="nhsuk-date-input__item">
           <Label>Hour</Label>
           <Input
-            style={{ padding: "32px 16px!important" }}
+            style={{ padding: "16px!important", height: "64px" }}
             type="number"
             hasError={hasTimeError}
             className="nhsuk-input--width-2 nhsuk-u-font-size-32"
@@ -115,7 +115,7 @@ const DateSelect = ({
         <div className="nhsuk-date-input__item">
           <Label>Minutes</Label>
           <Input
-            style={{ padding: "32px 16px!important" }}
+            style={{ padding: "16px!important", height: "64px" }}
             type="number"
             hasError={hasTimeError}
             className="nhsuk-input--width-2 nhsuk-u-font-size-32"
