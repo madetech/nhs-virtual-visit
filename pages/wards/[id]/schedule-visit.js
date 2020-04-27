@@ -14,6 +14,8 @@ import verifyToken from "../../../src/usecases/verifyToken";
 import TokenProvider from "../../../src/providers/TokenProvider";
 import LabelHeader from "../../../src/components/LabelHeader";
 import Router from "next/router";
+import propsWithContainer from "../../../src/middleware/propsWithContainer";
+import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
 
 const isValidPhoneNumber = (input) => {
   const validator = PhoneNumberUtil.getInstance();
@@ -258,36 +260,48 @@ const queryContainsInitialData = (query) => {
   return initialDataKeys.every((key) => queryKeys.includes(key));
 };
 
-export const getServerSideProps = verifyToken(
-  ({ query }) => {
-    const { id } = query;
-    let props = { id };
-    if (queryContainsInitialData(query)) {
-      const {
-        patientName,
-        contactName,
-        contactNumber,
-        day,
-        month,
-        year,
-        hour,
-        minute,
-      } = query;
-      const callDateTime = { day, month, year, hour, minute };
+export const getServerSideProps = propsWithContainer(
+  verifyToken(
+    async ({ query, container }) => {
+      const { id } = query;
+      let props = { id };
+      if (queryContainsInitialData(query)) {
+        const {
+          patientName,
+          contactName,
+          contactNumber,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+        } = query;
+        const callDateTime = { day, month, year, hour, minute };
 
-      props = {
-        ...props,
-        initialPatientName: patientName,
-        initialContactName: contactName,
-        initialContactNumber: contactNumber,
-        initialCallDateTime: callDateTime,
-      };
+        props = {
+          ...props,
+          initialPatientName: patientName,
+          initialContactName: contactName,
+          initialContactNumber: contactNumber,
+          initialCallDateTime: callDateTime,
+        };
+      } else if (query.rebook) {
+        const { scheduledCall, error } = await retrieveVisitByCallId(container)(
+          query.rebook
+        );
+        props = {
+          ...props,
+          initialPatientName: scheduledCall.patientName,
+          initialContactName: scheduledCall.recipientName,
+          initialContactNumber: scheduledCall.recipientNumber,
+        };
+      }
+      return { props };
+    },
+    {
+      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
     }
-    return { props };
-  },
-  {
-    tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-  }
+  )
 );
 
 export default Home;
