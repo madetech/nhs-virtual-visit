@@ -22,10 +22,11 @@ jobs:
             - run: npm rebuild node-sass
             - run: npm run test:ci
             - run: npm run build
-  e2e:
-    executor:
-      name: cypress/default
-    steps:
+
+workflows:
+  build:
+    jobs:
+      - build-and-test
       - cypress/install:
           build: "npm run build" # run a custom app build step
       - cypress/run:
@@ -36,9 +37,3 @@ jobs:
           parallelism: 4 # use 4 CircleCI machines to finish quickly
           group: "all tests" # name this group "all tests" on the dashboard
           start: "npm run dev" # start server before running tests
-
-workflows:
-  build:
-    jobs:
-      - build-and-test
-      - e2e
