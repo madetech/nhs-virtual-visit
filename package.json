@@ -11,7 +11,8 @@
     "test:watch": "jest --watch",
     "test:ci": "npm run format:check && jest",
     "build": "next build",
-    "start": "next start -p $PORT"
+    "start": "next start -p $PORT",
+    "cleandb": "node db/scripts/cleanup_scheduled_calls.js"
   },
   "dependencies": {
     "@zeit/next-sass": "^1.0.1",
