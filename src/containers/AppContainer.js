@@ -5,7 +5,7 @@ import TokenProvider from "../providers/TokenProvider";
 import { NotifyClient } from "notifications-node-client";
 import { verifyTokenOrRedirect } from "../usecases/verifyToken";
 
-export default class AppContainer {
+class AppContainer {
   async getDb() {
     const { default: pgp } = await import("pg-promise");
 
@@ -43,3 +43,18 @@ export default class AppContainer {
     return verifyTokenOrRedirect;
   }
 }
+
+export default (() => {
+  let instance;
+
+  return {
+    getInstance: () => {
+      if (!instance) {
+        instance = new AppContainer();
+        delete instance.constructor;
+      }
+
+      return instance;
+    },
+  };
+})();

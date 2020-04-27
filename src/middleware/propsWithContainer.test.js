@@ -1,6 +1,8 @@
 import propsWithContainer from "./propsWithContainer";
 
-jest.mock("../containers/AppContainer");
+jest.mock("../containers/AppContainer", () => ({
+  getInstance: () => "mockedAppContainerInstance",
+}));
 
 describe("propsWithContainer", () => {
   it("creates and inserts an app container into the context", (done) => {

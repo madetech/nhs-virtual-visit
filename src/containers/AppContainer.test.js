@@ -5,11 +5,21 @@ describe("AppContainer", () => {
 
   beforeEach(() => {
     process.env.API_KEY = "notify-api-key-meow";
-    container = new AppContainer();
+    container = AppContainer.getInstance();
   });
 
   afterEach(() => {
     process.env.API_KEY = undefined;
+  });
+
+  it("provides a singleton", () => {
+    const instance = AppContainer.getInstance();
+
+    expect(instance).toBeDefined();
+
+    const secondInstance = AppContainer.getInstance();
+
+    expect(instance).toEqual(secondInstance);
   });
 
   it("returns getDb", async () => {
