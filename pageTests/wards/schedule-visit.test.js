@@ -76,7 +76,7 @@ describe("ward/[id]/schedule-visit", () => {
         expect(props.id).toEqual("ward-id");
       });
     });
-    describe("with rebook parameter", () => {
+    describe("with rebookCallId parameter", () => {
       it("provides the visit records from the database", async () => {
         const container = {
           getDb: () =>
@@ -100,7 +100,7 @@ describe("ward/[id]/schedule-visit", () => {
           res,
           query: {
             id: "ward-id",
-            rebook: "cat-meow",
+            rebookCallId: "cat-meow",
           },
           container,
         });
