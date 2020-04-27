@@ -150,10 +150,14 @@ This will produce output that you can use to host a production copy of the app.
 
 - **Luke Morton** - CTO at [Made Tech](https://www.madetech.com) (luke@madetech.com)
 - **Jessica Nichols** - Delivery Manager at [Made Tech](https://www.madetech.com) (jessica.nichols@madetech.com)
-- **Antony O'Neill** - Lead Engineer at [Made Tech](https://www.madetech.com) (antony.oneill@madetech.com)
+- **Antony O'Neill** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (antony.oneill@madetech.com)
 - **Tom Davies** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (tom.davies@madetech.com)
+- **Jiv Dhaliwal** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (jiv.dhaliwal@madetech.com)
+- **Daniel Burnley** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (dan@madetech.com)
+- **Steve Knight** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (steve.knight@madetech.com)
 - **George Schena** - Software Engineer at [Made Tech](https://www.madetech.com) (george@madetech.com)
 - **Wen Ting Wang** - Software Engineer at [Made Tech](https://www.madetech.com) (wenting@madetech.com)
+- **Joshua-Luke Bevan** - Software Engineer at [Made Tech](https://www.madetech.com) (joshua.bevan@madetech.com)
 
 ## License
 
