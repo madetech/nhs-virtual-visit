@@ -31,18 +31,15 @@ const isValidName = (input) => {
     return input;
   }
 };
-const isValidDate = ({ year, month, day }) => {
+const isValidDate = ({ year, month, day, hour, minute }) => {
   const dateIsValid = moment({ year, month, day }).isValid();
   const dateIsInThePast =
     dateIsValid && moment({ year, month, day }).isBefore(moment(), "day");
-  return { dateIsValid, dateIsInThePast };
-};
-
-const isValidTime = ({ hour, minute }) => {
   const timeIsValid = moment({ hour, minute }).isValid();
   const timeIsInThePast =
-    timeIsValid && moment({ hour, minute }).isSameOrBefore(moment());
-  return { timeIsValid, timeIsInThePast };
+    timeIsValid &&
+    moment({ year, month, day, hour, minute }).isSameOrBefore(moment());
+  return { dateIsValid, dateIsInThePast, timeIsValid, timeIsInThePast };
 };
 
 const Home = ({
@@ -136,16 +133,19 @@ const Home = ({
     if (!isValidName(contactName)) {
       setContactNameError(errors);
     }
-    if (!isValidDate(callDateTime).dateIsValid) {
+
+    const dateValidation = isValidDate(callDateTime);
+
+    if (!dateValidation.dateIsValid) {
       setInvalidDateError(errors);
     }
-    if (isValidDate(callDateTime).dateIsInThePast) {
+    if (dateValidation.dateIsInThePast) {
       setDateInThePastError(errors);
     }
-    if (!isValidTime(callDateTime).timeIsValid) {
+    if (!dateValidation.timeIsValid) {
       setInvalidTimeError(errors);
     }
-    if (isValidTime(callDateTime).timeIsInThePast) {
+    if (dateValidation.timeIsInThePast) {
       setTimeInThePastError(errors);
     }
     setErrors(errors);
