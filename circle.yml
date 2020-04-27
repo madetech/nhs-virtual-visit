@@ -30,10 +30,9 @@ workflows:
       - cypress/install:
           build: "npm run build" # run a custom app build step
       - cypress/run:
+          executor: base10-foo-bar
           requires:
             - cypress/install
-          environment:
-            URI: postgres://circleci:super-secret@localhost/nhs_visit
           parallel: true # split all specs across machines
           parallelism: 4 # use 4 CircleCI machines to finish quickly
           group: "all tests" # name this group "all tests" on the dashboard
