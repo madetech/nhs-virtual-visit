@@ -1,0 +1,10 @@
+{
+  "env": {
+    "patientName": "Test Patient",
+    "contactNumber": "07123456789",
+    "validWard": "VALIDCODE",
+    "fakeWard": "FAKENHS",
+    "baseUrl": "http://localhost:3000"
+  },
+  "video": false
+}

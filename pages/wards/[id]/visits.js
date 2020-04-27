@@ -43,7 +43,7 @@ export default function WardVisits({ scheduledCalls, error, id }) {
   }
 
   return (
-    <Layout title="Ward visits">
+    <Layout title="Ward visits" data-qa="ward-visits">
       <GridRow>
         <GridColumn width="full">
           <Heading>Ward visits</Heading>

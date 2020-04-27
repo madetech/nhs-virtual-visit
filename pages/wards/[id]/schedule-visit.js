@@ -144,7 +144,11 @@ const Home = ({
     }
   });
   return (
-    <Layout title="Schedule a virtual visit" hasErrors={errors.length != 0}>
+    <Layout
+      title="Schedule a virtual visit"
+      hasErrors={errors.length != 0}
+      data-qa="schedule-visit"
+    >
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />

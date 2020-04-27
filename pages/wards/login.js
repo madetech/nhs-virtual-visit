@@ -50,7 +50,7 @@ const Login = () => {
   });
 
   return (
-    <Layout title="Log in" hasErrors={errors.length > 0}>
+    <Layout title="Log in" hasErrors={errors.length > 0} data-qa="login">
       <GridRow>
         <GridColumn width="one-half">
           <ErrorSummary errors={errors} />

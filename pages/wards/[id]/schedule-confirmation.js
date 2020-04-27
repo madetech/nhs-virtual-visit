@@ -45,7 +45,10 @@ const ScheduleConfirmation = ({ id, patientName, contactNumber, callTime }) => {
   });
 
   return (
-    <Layout title="Check your answers before scheduling a visit">
+    <Layout
+      title="Check your answers before scheduling a visit"
+      data-qa="schedule-confirmation"
+    >
       <GridRow>
         <GridColumn width="two-thirds">
           <form onSubmit={onSubmit}>
@@ -119,7 +122,12 @@ const ScheduleConfirmation = ({ id, patientName, contactNumber, callTime }) => {
               to ensure we setup the virtual visit with the correct person.
               We'll send them a text message once you've scheduled the visit.
             </Text>
-            <Button className="nhsuk-u-margin-top-5">Schedule visit</Button>
+            <Button
+              data-qa="scheduleVisitButton"
+              className="nhsuk-u-margin-top-5"
+            >
+              Schedule visit
+            </Button>
           </form>
         </GridColumn>
       </GridRow>
