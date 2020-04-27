@@ -2,7 +2,7 @@ export default async function retrieveVisits({ getDb }) {
   const db = await getDb();
   try {
     const scheduledCalls = await db.any(
-      "SELECT * FROM scheduled_calls_table WHERE call_time > NOW() - INTERVAL '30 minutes' ORDER BY call_time ASC"
+      "SELECT * FROM scheduled_calls_table WHERE call_time > NOW() - INTERVAL '4 hours' ORDER BY call_time ASC"
     );
 
     return {
