@@ -12,7 +12,7 @@ const notifier = new ConsoleNotifyProvider();
 
 const wherebyCallId = async (callTime) => {
   let startTime = moment(callTime).format();
-  let endTime = moment(callTime).add(2, "hours").format();
+  let endTime = moment(callTime).add(1, "years").format();
 
   const response = await fetch("https://api.whereby.dev/v1/meetings", {
     method: "POST",
