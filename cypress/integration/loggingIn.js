@@ -3,6 +3,7 @@ describe("Logging in", () => {
     cy.visit(Cypress.env("baseUrl"));
     cy.get("input").type(Cypress.env("validWard"));
     cy.get("button").contains("Log in").click();
+    cy.get("[data-qa='ward-visits']");
   });
 
   it("Given an invalid code, when a user enters this informtion, the user should see an error", () => {
