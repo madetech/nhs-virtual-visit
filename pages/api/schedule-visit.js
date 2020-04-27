@@ -11,7 +11,7 @@ const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
 
 const wherebyCallId = async (callTime) => {
-  let startTime = moment(callTime).subtract(30, "minutes").format();
+  let startTime = moment(callTime).format();
   let endTime = moment(callTime).add(2, "hours").format();
 
   const response = await fetch("https://api.whereby.dev/v1/meetings", {
