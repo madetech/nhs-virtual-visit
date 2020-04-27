@@ -7,8 +7,14 @@ executors:
   base10-foo-bar:
     docker:
       - image: "cypress/base:10"
-    environment:
-      URI: postgres://circleci:super-secret@localhost/nhs_visit
+        environment:
+          URI: postgres://circleci:super-secret@localhost/nhs_visit
+          ALLOWED_CODES: VALIDCODE
+      - image: circleci/postgres:12
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_PASSWORD: super-secret
+          POSTGRES_DB: nhs_visit
 
 jobs:
   build-and-test:
@@ -37,3 +43,4 @@ workflows:
           parallelism: 4 # use 4 CircleCI machines to finish quickly
           group: "all tests" # name this group "all tests" on the dashboard
           start: "npm run dev" # start server before running tests
+          store_artifacts: true

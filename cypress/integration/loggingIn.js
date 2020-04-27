@@ -3,6 +3,9 @@ describe("Logging in", () => {
     cy.visit(Cypress.env("baseUrl"));
     cy.get("input").type(Cypress.env("validWard"));
     cy.get("button").contains("Log in").click();
+    cy.contains("The code you entered was not recognised").should(
+      "not.be.visible"
+    );
     cy.get("[data-qa='ward-visits']");
   });
 
