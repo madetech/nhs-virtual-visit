@@ -174,7 +174,7 @@ const Home = ({
                 hasError={hasError("patient-name")}
                 errorMessage="Enter the patient's name"
                 className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
-                style={{ padding: "32px 16px!important" }}
+                style={{ padding: "16px!important", height: "64px" }}
                 onChange={(event) => setPatientName(event.target.value)}
                 name="patient-name"
                 autoComplete="off"
@@ -190,7 +190,7 @@ const Home = ({
                 hasError={hasError("contact-name")}
                 errorMessage="Enter the key contact's name"
                 className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
-                style={{ padding: "32px 16px!important" }}
+                style={{ padding: "16px!important", height: "64px" }}
                 onChange={(event) => setContactName(event.target.value)}
                 name="contact-name"
                 autoComplete="off"
@@ -215,7 +215,7 @@ const Home = ({
                 hasError={hasError("contact-number")}
                 errorMessage="Enter a UK mobile number"
                 className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
-                style={{ padding: "32px 16px!important" }}
+                style={{ padding: "16px!important", height: "64px" }}
                 onChange={(event) => setContactNumber(event.target.value)}
                 value={contactNumber || ""}
                 name="contact"
