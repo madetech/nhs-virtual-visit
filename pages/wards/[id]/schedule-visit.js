@@ -285,9 +285,9 @@ export const getServerSideProps = propsWithContainer(
           initialContactNumber: contactNumber,
           initialCallDateTime: callDateTime,
         };
-      } else if (query.rebook) {
+      } else if (query.rebookCallId) {
         const { scheduledCall, error } = await retrieveVisitByCallId(container)(
-          query.rebook
+          query.rebookCallId
         );
         props = {
           ...props,
