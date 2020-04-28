@@ -8,7 +8,7 @@ import Input from "../../../src/components/Input";
 import DateSelect from "../../../src/components/DateSelect";
 import Layout from "../../../src/components/Layout";
 import ErrorSummary from "../../../src/components/ErrorSummary";
-import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
+import validateMobileNumber from "../../../src/helpers/validateMobileNumber";
 import moment from "moment";
 import verifyToken from "../../../src/usecases/verifyToken";
 import TokenProvider from "../../../src/providers/TokenProvider";
@@ -16,15 +16,6 @@ import LabelHeader from "../../../src/components/LabelHeader";
 import Router from "next/router";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
-
-const isValidPhoneNumber = (input) => {
-  const validator = PhoneNumberUtil.getInstance();
-  const parsed = validator.parseAndKeepRawInput(input, "GB");
-  return (
-    validator.isValidNumber(parsed) &&
-    validator.getNumberType(parsed) === PhoneNumberType.MOBILE
-  );
-};
 
 const isValidName = (input) => {
   if (input.length !== 0) {
@@ -120,7 +111,7 @@ const Home = ({
     };
 
     try {
-      if (!isValidPhoneNumber(contactNumber)) {
+      if (!validateMobileNumber(contactNumber)) {
         setContactNumberError(errors);
       }
     } catch (error) {
@@ -202,7 +193,7 @@ const Home = ({
               </LabelHeader>
 
               <Hint className="nhsuk-u-margin-bottom-2">
-                This must be a UK mobile number, like 07700 900 982.
+                This must be a valid mobile number, like 07700 900 982.
               </Hint>
               <Hint>
                 It will be used to send their key contact a text message with a
@@ -210,10 +201,8 @@ const Home = ({
               </Hint>
               <Input
                 id="contact-number"
-                type="number"
-                maxLength={11}
                 hasError={hasError("contact-number")}
-                errorMessage="Enter a UK mobile number"
+                errorMessage="Enter a valid mobile number"
                 className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
                 style={{ padding: "16px!important", height: "64px" }}
                 onChange={(event) => setContactNumber(event.target.value)}
