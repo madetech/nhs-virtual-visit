@@ -1,7 +1,7 @@
 import { styles } from "./styles.scss";
 import Head from "next/head";
 
-const Layout = ({ title, hasErrors, children }) => (
+const Layout = ({ title, hasErrors, children, mainStyleOverride }) => (
   <>
     <Head>
       <title>
@@ -29,7 +29,11 @@ const Layout = ({ title, hasErrors, children }) => (
       </div>
     </header>
     <div className="nhsuk-width-container">
-      <main className="nhsuk-main-wrapper" id="maincontent">
+      <main
+        className="nhsuk-main-wrapper"
+        id="maincontent"
+        style={mainStyleOverride ? { paddingTop: "0" } : {}}
+      >
         {children}
       </main>
     </div>
