@@ -84,6 +84,12 @@ export default withContainer(
 
       const createVisit = container.getCreateVisit();
 
+      // Passing in null as we don't care about the ID just yet
+      const { ward, error } = await container.getWardById()(null);
+      if (error) {
+        throw error;
+      }
+
       await createVisit({
         patientName: body.patientName,
         contactNumber: body.contactNumber,
@@ -92,6 +98,7 @@ export default withContainer(
         callTimeLocal: body.callTimeLocal,
         callId: callId,
         provider: process.env.ENABLE_WHEREBY === "yes" ? "whereby" : "jitsi",
+        wardId: ward.id,
       });
 
       const sendTextMessage = container.getSendTextMessage();

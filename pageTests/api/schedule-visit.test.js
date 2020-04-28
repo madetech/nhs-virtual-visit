@@ -31,6 +31,9 @@ describe("schedule-visit", () => {
     };
     container = {
       getCreateVisit: jest.fn().mockReturnValue(() => {}),
+      getWardById: jest
+        .fn()
+        .mockReturnValue(() => ({ ward: { id: 1 }, error: null })),
       getUserIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
@@ -61,6 +64,7 @@ describe("schedule-visit", () => {
         contactNumber: "07123456789",
         contactName: "John Smith",
         provider: "jitsi",
+        wardId: 1,
       })
     );
   });
