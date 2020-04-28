@@ -6,6 +6,7 @@ import fetch from "node-fetch";
 import formatDateAndTime from "../../src/helpers/formatDateAndTime";
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
+import validateMobileNumber from "../../src/helpers/validateMobileNumber";
 
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
@@ -31,23 +32,14 @@ const wherebyCallId = async (callTime) => {
   return roomUrl.pathname.slice(1);
 };
 
-const getValidationErrors = ({
-  patientName,
-  contactNumber,
-  contactName,
-  callTime,
-}) => {
+const getValidationErrors = ({ patientName, contactNumber, callTime }) => {
   if (!patientName || patientName.length === 0) {
     return "patientName must be a string";
   }
 
-  if (!contactNumber || contactNumber.length !== 11) {
-    return "contactNumber must be a number with 11 digits";
+  if (!validateMobileNumber(contactNumber)) {
+    return "contactNumber must be a valid mobile number";
   }
-
-  // if (!contactName || contactName.length === 0) {
-  //   return "contactName must be a string";
-  // }
 
   try {
     moment(callTime);
