@@ -2,7 +2,7 @@ import React from "react";
 import Router from "next/router";
 import formatDateAndTime from "../../helpers/formatDateAndTime";
 
-const Visits = ({ id, visits }) => (
+const Visits = ({ wardId, visits }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
       <caption className="nhsuk-table__caption">List of ward visits</caption>
@@ -25,7 +25,7 @@ const Visits = ({ id, visits }) => (
       </thead>
       <tbody className="nhsuk-table__body">
         {visits.map((visit) => (
-          <tr className="nhsuk-table__row">
+          <tr key={visit.callId} className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{visit.patientName}</td>
             <td className="nhsuk-table__cell">{visit.recipientName}</td>
             <td className="nhsuk-table__cell">{visit.recipientNumber}</td>
@@ -45,6 +45,18 @@ const Visits = ({ id, visits }) => (
                 }}
               >
                 Start
+              </button>
+              <button
+                className="nhsuk-button nhsuk-button--secondary"
+                onClick={() => {
+                  const callId = visit.callId;
+                  Router.push({
+                    pathname: `/visit/delete-visit-confirmation`,
+                    query: { wardId, callId },
+                  });
+                }}
+              >
+                Delete
               </button>
             </td>
           </tr>
