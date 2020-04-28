@@ -13,7 +13,7 @@ const Call = ({ callId, name, provider, error }) => {
 
   if (provider === "whereby") {
     return (
-      <Layout>
+      <Layout mainStyleOverride>
         <main>
           <Whereby id={callId} name={name} />
           <button
@@ -102,7 +102,7 @@ const Whereby = ({ id, name }) => (
   <iframe
     style={{
       width: "100%",
-      height: "calc(100vh - 135px)",
+      height: "calc(100vh - 155px)",
       border: 0,
     }}
     src={`https://${process.env.WHEREBY_SUBDOMAIN}.whereby.com/${id}?embed&iframeSource=${process.env.WHEREBY_SUBDOMAIN}&background=off&displayName=${name}&screenshare=off&chat=off`}
