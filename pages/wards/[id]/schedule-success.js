@@ -20,9 +20,11 @@ const Success = ({ id }) => {
           </Text>
 
           <ActionLink href={`/wards/${id}/schedule-visit`}>
-            Schedule another visit
+            Schedule another virtual visit
           </ActionLink>
-          <ActionLink href={`/wards/${id}/visits`}>View visits</ActionLink>
+          <ActionLink href={`/wards/${id}/visits`}>
+            View virtual visits
+          </ActionLink>
         </GridColumn>
       </GridRow>
     </Layout>

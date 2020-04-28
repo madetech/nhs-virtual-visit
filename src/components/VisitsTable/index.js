@@ -20,7 +20,7 @@ const Visits = ({ wardId, visits }) => (
           <th className="nhsuk-table__header" scope="col">
             Call time
           </th>
-          <th className="nhsuk-table__header" scope="col"></th>
+          <th className="nhsuk-table__header" colspan="2" scope="col"></th>
         </tr>
       </thead>
       <tbody className="nhsuk-table__body">
@@ -39,24 +39,26 @@ const Visits = ({ wardId, visits }) => (
                 onClick={() => {
                   const callId = visit.callId;
                   Router.push({
-                    pathname: `/wards/${id}/visit-start`,
+                    pathname: `/wards/${wardId}/visit-start`,
                     query: { callId },
                   });
                 }}
               >
                 Start
               </button>
+            </td>
+            <td className="nhsuk-table__cell">
               <button
                 className="nhsuk-button nhsuk-button--secondary"
                 onClick={() => {
                   const callId = visit.callId;
                   Router.push({
-                    pathname: `/visit/delete-visit-confirmation`,
-                    query: { wardId, callId },
+                    pathname: `/wards/${wardId}/delete-visit-confirmation`,
+                    query: { callId },
                   });
                 }}
               >
-                Delete
+                Cancel
               </button>
             </td>
           </tr>
