@@ -6,20 +6,14 @@ const deleteVisitByCallId = ({ getDb }) => async (callId) => {
       `DELETE FROM scheduled_calls_table WHERE call_id = $1 LIMIT 1`,
       callId
     );
-
-    const result = results[0];
-    console.log("result", result);
-
     return {
-      result: {
-        success: true,
-      },
+      success: true,
       error: null,
     };
   } catch (error) {
     console.error(error);
     return {
-      result: null,
+      success: false,
       error: error.toString(),
     };
   }
