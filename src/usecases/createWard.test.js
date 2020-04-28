@@ -2,7 +2,7 @@ import createWard from "./createWard";
 
 describe("createWard", () => {
   it("creates a ward in the db when valid", async () => {
-    const oneSpy = jest.fn().mockReturnValue(10);
+    const oneSpy = jest.fn().mockReturnValue({ id: 10 });
     const container = {
       async getDb() {
         return {

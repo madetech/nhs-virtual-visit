@@ -3,7 +3,7 @@ const createWard = ({ getDb }) => async (ward) => {
 
   try {
     console.log("Creating ward for ", ward);
-    const wardId = await db.one(
+    const createdWard = await db.one(
       `INSERT INTO wards
         (id, name, hospital_name)
         VALUES (default, $1, $2)
@@ -13,7 +13,7 @@ const createWard = ({ getDb }) => async (ward) => {
     );
 
     return {
-      wardId: wardId,
+      wardId: createdWard.id,
       error: null,
     };
   } catch (error) {
