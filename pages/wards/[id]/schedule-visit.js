@@ -193,7 +193,8 @@ const Home = ({
               </LabelHeader>
 
               <Hint className="nhsuk-u-margin-bottom-2">
-                This must be a valid mobile number, like 07700 900 982.
+                This must be a valid mobile number, for example 07700 900 982 a
+                UK number, or +393123456789 for an international number
               </Hint>
               <Hint>
                 It will be used to send their key contact a text message with a
@@ -201,6 +202,7 @@ const Home = ({
               </Hint>
               <Input
                 id="contact-number"
+                type="tel"
                 hasError={hasError("contact-number")}
                 errorMessage="Enter a valid mobile number"
                 className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
