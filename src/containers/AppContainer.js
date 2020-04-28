@@ -1,4 +1,5 @@
 import createVisit from "../usecases/createVisit";
+import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
@@ -13,6 +14,10 @@ class AppContainer {
 
   getCreateVisit() {
     return createVisit(this);
+  }
+
+  getCreateWard() {
+    return createWard(this);
   }
 
   getTokenProvider() {
