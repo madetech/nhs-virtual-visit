@@ -6,6 +6,7 @@ import TokenProvider from "../providers/TokenProvider";
 import { NotifyClient } from "notifications-node-client";
 import { verifyTokenOrRedirect } from "../usecases/verifyToken";
 import Database from "../gateways/Database";
+import retrieveWardById from "../usecases/retrieveWardById";
 
 class AppContainer {
   getDb() {
@@ -18,6 +19,10 @@ class AppContainer {
 
   getCreateWard() {
     return createWard(this);
+  }
+
+  getWardById() {
+    return retrieveWardById(this);
   }
 
   getTokenProvider() {
