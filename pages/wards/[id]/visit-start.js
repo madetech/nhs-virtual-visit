@@ -94,7 +94,6 @@ const VisitStart = ({
 
 export const getServerSideProps = propsWithContainer(
   async ({ query, container }) => {
-    console.log("vs-query", query);
     const { id, callId } = query;
 
     const { scheduledCall, error } = await retrieveVisitByCallId(container)(

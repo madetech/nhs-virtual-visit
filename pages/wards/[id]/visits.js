@@ -11,7 +11,7 @@ import TokenProvider from "../../../src/providers/TokenProvider";
 import { useState } from "react";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 
-export default function WardVisits({ scheduledCalls, error, id }) {
+export default function WardVisits({ scheduledCalls, error, wardId }) {
   const [userError, setUserError] = useState(
     error ? "Unable to display ward visits" : null
   );
@@ -52,12 +52,12 @@ export default function WardVisits({ scheduledCalls, error, id }) {
             You'll need the mobile number of your patient's loved one in order
             to set up a visit.
           </Text>
-          <ActionLink href={`/wards/${id}/schedule-visit`}>
+          <ActionLink href={`/wards/${wardId}/schedule-visit`}>
             Schedule visit
           </ActionLink>
           <h2 className="nhsuk-heading-l">Pre-booked visits</h2>
           {scheduledCalls.length > 0 ? (
-            <VisitsTable visits={scheduledCalls} id={id} />
+            <VisitsTable visits={scheduledCalls} wardId={wardId} />
           ) : (
             <Text>There are no upcoming visits.</Text>
           )}
@@ -72,7 +72,7 @@ export const getServerSideProps = propsWithContainer(
     async ({ query: { id }, container }) => {
       const { scheduledCalls, error } = await retrieveVisits(container);
 
-      return { props: { scheduledCalls, error, id } };
+      return { props: { scheduledCalls, error, wardId: id } };
     },
     {
       tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
