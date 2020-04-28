@@ -8,12 +8,17 @@ import { verifyTokenOrRedirect } from "../usecases/verifyToken";
 export default class AppContainer {
   async getDb() {
     const { default: pgp } = await import("pg-promise");
-
+    let ssl = { rejectUnauthorized: false };
+    console.log(process.env.NODE_ENV);
+    if (
+      process.env.NODE_ENV === "development" ||
+      process.env.NODE_ENV === "test"
+    ) {
+      ssl = false;
+    }
     return pgp()({
       connectionString: process.env.URI,
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      ssl,
     });
   }
 

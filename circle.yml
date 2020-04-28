@@ -4,18 +4,20 @@ orbs:
   node: circleci/node@1.1.6
 
 executors:
-  base10-foo-bar:
+  postgres:
+    docker:
+      - image: "circleci/postgres:12"
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_PASSWORD: super-secret
+          POSTGRES_DB: nhs_visit
+  cypress:
     docker:
       - image: "cypress/base:12.16.1"
         environment:
           URI: postgres://circleci:super-secret@localhost/nhs_visit
           ALLOWED_CODES: TESTCODE,VALIDCODE
           JWT_SIGNING_KEY: signing_key
-      - image: circleci/postgres:12
-        environment:
-          POSTGRES_USER: circleci
-          POSTGRES_PASSWORD: super-secret
-          POSTGRES_DB: nhs_visit
 
 jobs:
   build-and-test:
@@ -37,7 +39,12 @@ workflows:
       - cypress/install:
           build: "npm run build" # run a custom app build step
       - cypress/run:
-          executor: base10-foo-bar
+          executor: postgres
+          requires:
+            - cypress/install
+          command: "psql nhs_visit < ~/db/schema.sql"
+      - cypress/run:
+          executor: cypress
           requires:
             - cypress/install
           group: "all tests" # name this group "all tests" on the dashboard
