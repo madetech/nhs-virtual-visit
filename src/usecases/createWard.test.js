@@ -16,9 +16,10 @@ describe("createWard", () => {
       hospitalName: "Test Hospital",
     };
 
-    const resultingId = await createWard(container)(request);
+    const { wardId, error } = await createWard(container)(request);
 
-    expect(resultingId).toEqual(10);
+    expect(wardId).toEqual(10);
+    expect(error).toBeNull();
 
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.name,
