@@ -59,11 +59,13 @@ const ScheduleConfirmation = ({
   });
 
   return (
-    <Layout title="Check your answers before scheduling a visit">
+    <Layout title="Check your answers before scheduling a virtual visit">
       <GridRow>
         <GridColumn width="two-thirds">
           <form onSubmit={onSubmit}>
-            <Heading>Check your answers before scheduling a visit</Heading>
+            <Heading>
+              Check your answers before scheduling a virtual visit
+            </Heading>
             <dl className="nhsuk-summary-list">
               <div className="nhsuk-summary-list__row">
                 <dt className="nhsuk-summary-list__key">Patient's name</dt>
@@ -80,14 +82,14 @@ const ScheduleConfirmation = ({
               </div>
 
               <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">Key contact name</dt>
+                <dt className="nhsuk-summary-list__key">Key contact's name</dt>
                 <dd className="nhsuk-summary-list__value">{contactName}</dd>
                 <dd className="nhsuk-summary-list__actions">
                   <a href="#" onClick={changeLink}>
                     Change
                     <span className="nhsuk-u-visually-hidden">
                       {" "}
-                      key contact name
+                      key contact's name
                     </span>
                   </a>
                 </dd>
@@ -95,7 +97,7 @@ const ScheduleConfirmation = ({
 
               <div className="nhsuk-summary-list__row">
                 <dt className="nhsuk-summary-list__key">
-                  Key contact mobile number
+                  Key contact's mobile number
                 </dt>
                 <dd className="nhsuk-summary-list__value">{contactNumber}</dd>
                 <dd className="nhsuk-summary-list__actions">
@@ -103,7 +105,7 @@ const ScheduleConfirmation = ({
                     Change
                     <span className="nhsuk-u-visually-hidden">
                       {" "}
-                      key contact number
+                      key contact's mobile number
                     </span>
                   </a>
                 </dd>
@@ -147,7 +149,9 @@ const ScheduleConfirmation = ({
               to ensure we setup the virtual visit with the correct person.
               We'll send them a text message once you've scheduled the visit.
             </Text>
-            <Button className="nhsuk-u-margin-top-5">Schedule visit</Button>
+            <Button className="nhsuk-u-margin-top-5">
+              Schedule virtual visit
+            </Button>
           </form>
         </GridColumn>
       </GridRow>
