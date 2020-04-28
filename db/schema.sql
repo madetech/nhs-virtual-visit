@@ -27,7 +27,8 @@ CREATE TABLE public.scheduled_calls_table (
     recipient_number text,
     call_id text,
     recipient_name character varying(255),
-    provider character varying(255) DEFAULT 'jitsi'::character varying NOT NULL
+    provider character varying(255) DEFAULT 'jitsi'::character varying NOT NULL,
+    ward_id integer
 );
 
 
@@ -118,6 +119,14 @@ ALTER TABLE ONLY public.scheduled_calls_table
 
 ALTER TABLE ONLY public.wards
     ADD CONSTRAINT wards_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: scheduled_calls_table scheduled_calls_table_ward_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.scheduled_calls_table
+    ADD CONSTRAINT scheduled_calls_table_ward_id_fkey FOREIGN KEY (ward_id) REFERENCES public.wards(id);
 
 
 --
