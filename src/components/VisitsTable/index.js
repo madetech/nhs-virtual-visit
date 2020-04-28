@@ -53,7 +53,7 @@ const Visits = ({ wardId, visits }) => (
                 onClick={() => {
                   const callId = visit.callId;
                   Router.push({
-                    pathname: `/wards/${wardId}/delete-visit-confirmation`,
+                    pathname: `/wards/${wardId}/cancel-visit-confirmation`,
                     query: { callId },
                   });
                 }}

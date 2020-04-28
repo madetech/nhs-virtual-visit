@@ -29,7 +29,7 @@ const deleteVisitConfirmation = ({
 
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
-    Router.push(`/wards/${wardId}/delete-visit-success?callId=${callId}`);
+    Router.push(`/wards/${wardId}/cancel-visit-success?callId=${callId}`);
   });
 
   if (hasError) {
