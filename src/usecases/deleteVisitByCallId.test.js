@@ -14,14 +14,12 @@ describe("deleteVisitByCallId", () => {
       },
     };
 
-    const { result, error } = await deleteVisitByCallId(container)(
+    const { success, error } = await deleteVisitByCallId(container)(
       "cb238rfv23cuv3"
     );
 
     expect(error).toBeNull();
-    expect(result).toEqual({
-      success: true,
-    });
+    expect(success).toEqual(true);
   });
 
   it("returns an error object on db exception", async () => {
@@ -35,7 +33,10 @@ describe("deleteVisitByCallId", () => {
       },
     };
 
-    const { error } = await deleteVisitByCallId(container)("cb238rfv23cuv3");
-    expect(error).toBeDefined();
+    const { success, error } = await deleteVisitByCallId(container)(
+      "cb238rfv23cuv3"
+    );
+    expect(error).toEqual("Error: DB Error!");
+    expect(success).toEqual(false);
   });
 });
