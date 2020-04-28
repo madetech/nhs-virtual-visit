@@ -10,7 +10,7 @@ executors:
         environment:
           POSTGRES_USER: circleci
           POSTGRES_PASSWORD: super-secret
-          POSTGRES_DB: nhs_visit
+          POSTGRES_DB: nhs-virtual-visit-test
   cypress:
     docker:
       - image: "cypress/base:12.16.1"
@@ -20,7 +20,7 @@ executors:
           JWT_SIGNING_KEY: signing_key
 
 jobs:
-  build-and-test:
+  build:
     executor:
       name: node/default
     steps:
@@ -29,24 +29,23 @@ jobs:
           steps:
             - run: npm install
             - run: npm rebuild node-sass
-            - run: npm run test:ci
             - run: npm run build
+  configure_database:
+    executor: postgres
+    steps:
+      - checkout
+      - run: "psql nhs-virtual-visit-test < ./db/schema.sql"
 
 workflows:
-  build:
+  build_and_test:
     jobs:
-      - build-and-test
-      - cypress/install:
-          build: "npm run build" # run a custom app build step
-      - cypress/run:
-          executor: postgres
-          requires:
-            - cypress/install
-          command: "psql nhs_visit < ~/db/schema.sql"
-      - cypress/run:
-          executor: cypress
-          requires:
-            - cypress/install
-          group: "all tests" # name this group "all tests" on the dashboard
-          start: "npm run dev" # start server before running tests
-          store_artifacts: true
+      - build
+      - configure_database
+      - cypress/install
+      - cypress/run
+        # executor: cypress
+        # requires:
+        #   - cypress/install
+        # group: "all tests" # name this group "all tests" on the dashboard
+        # start: "npm run dev" # start server before running tests
+        # store_artifacts: true
