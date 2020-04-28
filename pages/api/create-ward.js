@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     if (method !== "POST") {
-      res.status(406);
+      res.status(405);
       res.end();
       return;
     }

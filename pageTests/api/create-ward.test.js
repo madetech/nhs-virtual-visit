@@ -36,14 +36,14 @@ describe("create-ward", () => {
     };
   });
 
-  it("returns 406 if not POST method", async () => {
+  it("returns 405 if not POST method", async () => {
     validRequest.method = "GET";
 
     await createWard(validRequest, response, {
       container: container,
     });
 
-    expect(response.status).toHaveBeenCalledWith(406);
+    expect(response.status).toHaveBeenCalledWith(405);
   });
 
   it("returns a 401 if no token provided", async () => {
