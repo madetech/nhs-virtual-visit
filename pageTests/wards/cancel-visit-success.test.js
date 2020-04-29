@@ -81,9 +81,7 @@ describe("ward/cancel-visit-success", () => {
           container,
         });
         expect(res.writeHead).not.toHaveBeenCalled();
-        expect(props.wardId).toEqual("123");
         expect(props.callDate).toEqual("20 April 2020");
-        expect(props.callId).toEqual("Test-Call-Id");
         expect(props.patientName).toEqual("Fred Bloggs");
         expect(props.contactName).toEqual("John Doe");
         expect(props.contactNumber).toEqual("07001231234");

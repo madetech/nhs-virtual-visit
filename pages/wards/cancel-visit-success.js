@@ -17,8 +17,6 @@ import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 
 const deleteVisitSuccess = ({
-  wardId,
-  callId,
   patientName,
   contactName,
   contactNumber,
@@ -32,7 +30,7 @@ const deleteVisitSuccess = ({
 
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
-    Router.push(`/wards/${wardId}/visits`);
+    Router.push(`/wards/visits`);
   });
 
   if (hasError || hasDeleteError) {
@@ -84,7 +82,7 @@ const deleteVisitSuccess = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyToken(
-    async ({ query, container, authenticationToken }) => {
+    async ({ query, container }) => {
       const { callId } = query;
       let { scheduledCall, error } = await retrieveVisitByCallId(container)(
         callId
@@ -106,13 +104,11 @@ export const getServerSideProps = propsWithContainer(
       )(callId);
       return {
         props: {
-          wardId: authenticationToken.ward,
           patientName: scheduledCall.patientName,
           contactName: scheduledCall.recipientName,
           contactNumber: scheduledCall.recipientNumber,
           callTime,
           callDate,
-          callId,
           error,
           deleteError,
         },
