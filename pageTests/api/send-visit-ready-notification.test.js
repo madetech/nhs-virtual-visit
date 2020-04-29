@@ -12,7 +12,7 @@ describe("send-visit-ready-notification", () => {
   beforeEach(() => {
     sendTextMessageSpy = jest.fn(() => ({ success: true, error: null }));
     container = {
-      getUserIsAuthenticated: () => () => true,
+      getUserIsAuthenticated: () => () => "token",
       getSendTextMessage: () => sendTextMessageSpy,
     };
   });
