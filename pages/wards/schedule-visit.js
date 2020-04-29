@@ -143,7 +143,7 @@ const Home = ({
 
     if (errors.length === 0) {
       Router.push({
-        pathname: `/wards/${id}/schedule-confirmation`,
+        pathname: `/wards/schedule-confirmation`,
         query: { patientName, contactNumber, contactName, ...callDateTime },
       });
     }
