@@ -45,13 +45,12 @@ describe("ward/[id]/visits", () => {
       const { props } = await getServerSideProps({
         req: authenticatedReq,
         res,
-        query: {
-          id: "ward-id",
-        },
+        query: {},
         container,
       });
       expect(res.writeHead).not.toHaveBeenCalled();
 
+      expect(props.wardId).toEqual("123");
       expect(props.error).toBeNull();
       expect(props.scheduledCalls).toHaveLength(2);
       expect(props.scheduledCalls[0]).toMatchObject({
@@ -75,9 +74,7 @@ describe("ward/[id]/visits", () => {
       const { props } = await getServerSideProps({
         req: authenticatedReq,
         res,
-        query: {
-          id: "ward-id",
-        },
+        query: {},
         container,
       });
 
