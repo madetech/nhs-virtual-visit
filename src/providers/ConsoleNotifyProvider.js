@@ -1,6 +1,6 @@
 class ConsoleNotifyProvider {
-  notify(contactNumber, linkUrl) {
-    console.log(`[ConsoleNotifyProvider] ${contactNumber} -> ${linkUrl}`);
+  notify(linkUrl) {
+    console.log(`[ConsoleNotifyProvider] Link sent: ${linkUrl}`);
   }
 }
 
