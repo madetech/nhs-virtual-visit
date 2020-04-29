@@ -36,12 +36,10 @@ const Call = ({ callId, name, provider, error }) => {
 
     useEffect(() => {
       if (!jitsiLoaded) {
-        console.log("no lib");
         return;
       }
 
       if (!callId) {
-        console.log("no id");
         return;
       }
 

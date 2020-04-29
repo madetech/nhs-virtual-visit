@@ -116,7 +116,6 @@ const Home = ({
       }
     } catch (error) {
       setContactNumberError(errors);
-      console.log(error.message);
     }
     if (!isValidName(patientName)) {
       setPatientNameError(errors);
