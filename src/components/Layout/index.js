@@ -1,7 +1,13 @@
 import { styles } from "./styles.scss";
 import Head from "next/head";
 
-const Layout = ({ title, hasErrors, children, mainStyleOverride }) => (
+const Layout = ({
+  title,
+  hasErrors,
+  children,
+  backLink,
+  mainStyleOverride,
+}) => (
   <>
     <Head>
       <title>
@@ -35,6 +41,7 @@ const Layout = ({ title, hasErrors, children, mainStyleOverride }) => (
         style={mainStyleOverride ? { paddingTop: "0" } : {}}
       >
         {children}
+        {backLink}
       </main>
     </div>
   </>
