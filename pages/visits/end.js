@@ -25,7 +25,7 @@ export default ({ wardId, callId }) => (
           <ActionLink href={`/wards/schedule-visit?rebookCallId=${callId}`}>
             Rebook another visit
           </ActionLink>
-          <ActionLink href={`/wards/${wardId}/visits`}>
+          <ActionLink href={`/wards/visits`}>
             Return to scheduled visit list
           </ActionLink>
         </div>
