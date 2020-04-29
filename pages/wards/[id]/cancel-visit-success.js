@@ -84,8 +84,8 @@ const deleteVisitSuccess = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyToken(
-    async ({ query, container }) => {
-      const { id, callId } = query;
+    async ({ query, container, authenticationToken }) => {
+      const { callId } = query;
       let { scheduledCall, error } = await retrieveVisitByCallId(container)(
         callId
       );
@@ -106,7 +106,7 @@ export const getServerSideProps = propsWithContainer(
       )(callId);
       return {
         props: {
-          wardId: id,
+          wardId: authenticationToken.ward,
           patientName: scheduledCall.patientName,
           contactName: scheduledCall.recipientName,
           contactNumber: scheduledCall.recipientNumber,

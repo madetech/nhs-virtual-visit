@@ -46,9 +46,7 @@ describe("ward/[id]/cancel-visit-success", () => {
       const { props } = await getServerSideProps({
         req: authenticatedReq,
         res,
-        query: {
-          id: "ward-id",
-        },
+        query: {},
         container,
       });
 
@@ -78,12 +76,12 @@ describe("ward/[id]/cancel-visit-success", () => {
           req: authenticatedReq,
           res,
           query: {
-            id: "ward-id",
             callId: "Test-Call-Id",
           },
           container,
         });
         expect(res.writeHead).not.toHaveBeenCalled();
+        expect(props.wardId).toEqual("123");
         expect(props.callDate).toEqual("20 April 2020");
         expect(props.callId).toEqual("Test-Call-Id");
         expect(props.patientName).toEqual("Fred Bloggs");
