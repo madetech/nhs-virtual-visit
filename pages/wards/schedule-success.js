@@ -7,7 +7,7 @@ import Layout from "../../src/components/Layout";
 import verifyToken from "../../src/usecases/verifyToken";
 import TokenProvider from "../../src/providers/TokenProvider";
 
-const Success = ({ id }) => {
+const Success = () => {
   return (
     <Layout title="Virtual visit scheduled">
       <GridRow>
@@ -22,9 +22,7 @@ const Success = ({ id }) => {
           <ActionLink href={`/wards/schedule-visit`}>
             Schedule another virtual visit
           </ActionLink>
-          <ActionLink href={`/wards/${id}/visits`}>
-            View virtual visits
-          </ActionLink>
+          <ActionLink href={`/wards/visits`}>View virtual visits</ActionLink>
         </GridColumn>
       </GridRow>
     </Layout>
@@ -32,8 +30,8 @@ const Success = ({ id }) => {
 };
 
 export const getServerSideProps = verifyToken(
-  ({ query, authenticationToken }) => {
-    return { props: { id: authenticationToken.ward } };
+  () => {
+    return { props: {} };
   },
   {
     tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),

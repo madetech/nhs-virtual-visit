@@ -42,7 +42,7 @@ describe("wards/schedule-success", () => {
         query: {},
       });
 
-      expect(props.id).toEqual("123");
+      expect(props).toBeDefined();
     });
   });
 });
