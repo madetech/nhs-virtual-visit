@@ -2,7 +2,7 @@ import React from "react";
 import Router from "next/router";
 import formatDateAndTime from "../../helpers/formatDateAndTime";
 
-const Visits = ({ wardId, visits }) => (
+const Visits = ({ visits }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
       <caption className="nhsuk-table__caption">List of ward visits</caption>
@@ -39,7 +39,7 @@ const Visits = ({ wardId, visits }) => (
                 onClick={() => {
                   const callId = visit.callId;
                   Router.push({
-                    pathname: `/wards/${wardId}/visit-start`,
+                    pathname: `/wards/visit-start`,
                     query: { callId },
                   });
                 }}
