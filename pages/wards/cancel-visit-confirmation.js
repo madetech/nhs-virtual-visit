@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import Button from "../../src/components/Button";
 import { GridRow, GridColumn } from "../../src/components/Grid";
-import Text from "../../src/components/Text";
 import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
 import Router from "next/router";
@@ -16,7 +15,6 @@ import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 
 const deleteVisitConfirmation = ({
-  wardId,
   callId,
   patientName,
   contactName,
@@ -81,10 +79,7 @@ const deleteVisitConfirmation = ({
             </div>
             <Button>Confirm cancellation</Button>
             <div className="nhsuk-back-link">
-              <a
-                className="nhsuk-back-link__link"
-                href={`/wards/${wardId}/visits`}
-              >
+              <a className="nhsuk-back-link__link" href={`/wards/visits`}>
                 <svg
                   className="nhsuk-icon nhsuk-icon__chevron-left"
                   xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +120,6 @@ export const getServerSideProps = propsWithContainer(
 
       return {
         props: {
-          wardId: authenticationToken.ward,
           patientName: scheduledCall.patientName,
           contactName: scheduledCall.recipientName,
           contactNumber: scheduledCall.recipientNumber,
