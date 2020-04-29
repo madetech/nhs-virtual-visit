@@ -46,9 +46,7 @@ describe("ward/[id]/schedule-visit", () => {
       const { props } = await getServerSideProps({
         req: authenticatedReq,
         res,
-        query: {
-          id: "ward-id",
-        },
+        query: {},
         container,
       });
 
@@ -67,13 +65,11 @@ describe("ward/[id]/schedule-visit", () => {
         const { props } = await getServerSideProps({
           req: authenticatedReq,
           res,
-          query: {
-            id: "ward-id",
-          },
+          query: {},
           container,
         });
         expect(res.writeHead).not.toHaveBeenCalled();
-        expect(props.id).toEqual("ward-id");
+        expect(props.id).toEqual("123");
       });
     });
 
@@ -137,13 +133,12 @@ describe("ward/[id]/schedule-visit", () => {
           req: authenticatedReq,
           res,
           query: {
-            id: "ward-id",
             rebookCallId: "cat-meow",
           },
           container,
         });
         expect(res.writeHead).not.toHaveBeenCalled();
-        expect(props.id).toEqual("ward-id");
+        expect(props.id).toEqual("123");
         expect(props.initialPatientName).toEqual("Fred Bloggs");
         expect(props.initialContactName).toEqual("John Doe");
         expect(props.initialContactNumber).toEqual("07001231234");

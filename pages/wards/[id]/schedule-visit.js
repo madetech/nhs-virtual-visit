@@ -253,8 +253,8 @@ const queryContainsInitialData = (query) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyToken(
-    async ({ query, container }) => {
-      const { id } = query;
+    async ({ query, container, authenticationToken }) => {
+      const id = authenticationToken.ward;
       let props = { id };
       if (queryContainsInitialData(query)) {
         const {
