@@ -9,6 +9,8 @@ import moment from "moment";
 import Router from "next/router";
 import formatDate from "../../../src/helpers/formatDate";
 import formatTime from "../../../src/helpers/formatTime";
+import verifyToken from "../../../src/usecases/verifyToken";
+import TokenProvider from "../../../src/providers/TokenProvider";
 
 const ScheduleConfirmation = ({
   id,
@@ -159,29 +161,34 @@ const ScheduleConfirmation = ({
   );
 };
 
-export const getServerSideProps = ({ query }) => {
-  const {
-    patientName,
-    contactName,
-    contactNumber,
-    id,
-    day,
-    month,
-    year,
-    hour,
-    minute,
-  } = query;
-  const callTime = { day, month, year, hour, minute };
-
-  return {
-    props: {
-      id,
+export const getServerSideProps = verifyToken(
+  ({ query }) => {
+    const {
       patientName,
       contactName,
       contactNumber,
-      callTime,
-    },
-  };
-};
+      id,
+      day,
+      month,
+      year,
+      hour,
+      minute,
+    } = query;
+    const callTime = { day, month, year, hour, minute };
+
+    return {
+      props: {
+        id,
+        patientName,
+        contactName,
+        contactNumber,
+        callTime,
+      },
+    };
+  },
+  {
+    tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+  }
+);
 
 export default ScheduleConfirmation;
