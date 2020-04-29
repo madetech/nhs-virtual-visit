@@ -53,7 +53,7 @@ export default function WardVisits({ scheduledCalls, error, wardId }) {
             You'll need the mobile number of your patient's loved one in order
             to set up a virtual visit.
           </Text>
-          <ActionLink href={`/wards/${wardId}/schedule-visit`}>
+          <ActionLink href={`/wards/schedule-visit`}>
             Schedule virtual visit
           </ActionLink>
           <h2 className="nhsuk-heading-l">Pre-booked virtual visits</h2>
