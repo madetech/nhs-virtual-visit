@@ -22,7 +22,7 @@ export default withContainer(async (req, res, { container }) => {
 
   let { callId, contactNumber } = body;
 
-  const waitingRoomUrl = `${process.env.ORIGIN}/visitors/waiting-room/${callId}`;
+  const visitorsUrl = `${process.env.ORIGIN}/visitors/${callId}/start`;
   const visitsUrl = `${process.env.ORIGIN}/visits/${callId}?name=Ward`;
 
   const sendTextMessage = container.getSendTextMessage();
@@ -33,7 +33,7 @@ export default withContainer(async (req, res, { container }) => {
       templateId,
       contactNumber,
       {
-        call_url: waitingRoomUrl,
+        call_url: visitorsUrl,
         ward_name: "Defoe Ward",
         hospital_name: "Northwick Park Hospital",
       },
@@ -41,7 +41,7 @@ export default withContainer(async (req, res, { container }) => {
     );
 
     if (response.success) {
-      notifier.notify(body.contactNumber, waitingRoomUrl);
+      notifier.notify(body.contactNumber, visitorsUrl);
 
       res.status(201);
       res.end(JSON.stringify({ id: callId, callUrl: visitsUrl }));

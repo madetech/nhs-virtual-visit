@@ -78,7 +78,7 @@ describe("send-visit-ready-notification", () => {
         "meow-woof-quack",
         "07123456789",
         {
-          call_url: "http://localhost:3000/visitors/waiting-room/much-wow",
+          call_url: "http://localhost:3000/visitors/much-wow/start",
           ward_name: "Defoe Ward",
           hospital_name: "Northwick Park Hospital",
         },
