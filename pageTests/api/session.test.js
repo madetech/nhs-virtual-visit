@@ -71,4 +71,26 @@ describe("api/session", () => {
       });
     });
   });
+
+  describe("DELETE", () => {
+    describe("Given a logged in user", () => {
+      it("Clears the token and expires the cookie", () => {
+        const container = {};
+
+        let response = {
+          writeHead: jest.fn(),
+          end: jest.fn(),
+        };
+
+        session({ method: "DELETE", body: {} }, response, { container });
+
+        expect(response.writeHead).toHaveBeenCalledWith(
+          201,
+          expect.objectContaining({
+            "Set-Cookie": `token=''; httpOnly; path=/; expires=${new Date(0)}`,
+          })
+        );
+      });
+    });
+  });
 });
