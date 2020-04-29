@@ -59,7 +59,8 @@ ALTER SEQUENCE public.scheduled_calls_table_id_seq OWNED BY public.scheduled_cal
 CREATE TABLE public.wards (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
-    hospital_name character varying(255) NOT NULL
+    hospital_name character varying(255) NOT NULL,
+    code character varying(255)
 );
 
 
