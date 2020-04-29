@@ -8,7 +8,7 @@ export default withContainer(async (req, res, { container }) => {
   const cookie = req.headers.cookie;
   const userIsAuthenticated = container.getUserIsAuthenticated();
 
-  if (userIsAuthenticated(cookie) !== true) {
+  if (!userIsAuthenticated(cookie)) {
     res.status(401);
     res.end();
     return;
