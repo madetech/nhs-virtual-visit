@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { useRouter } from "next/router";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Layout from "../../../src/components/Layout";
 import Heading from "../../../src/components/Heading";
@@ -7,8 +8,11 @@ import Text from "../../../src/components/Text";
 import Button from "../../../src/components/Button";
 
 const Start = () => {
-  const onSubmit = useCallback(async (event) => {
+  const onClick = useCallback(async (event) => {
     event.preventDefault();
+
+    const router = useRouter();
+    router.push(`/visitors/${router.query.id}/name`);
   });
 
   return (
@@ -39,7 +43,7 @@ const Start = () => {
             visit.
           </Text>
 
-          <Button onSubmit={onSubmit}>Start now</Button>
+          <Button onClick={onClick}>Start now</Button>
         </GridColumn>
       </GridRow>
     </Layout>
