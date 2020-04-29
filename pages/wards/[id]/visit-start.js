@@ -1,14 +1,5 @@
-import queryString from "query-string";
+import redirectWithQuery from "../../../src/helpers/redirectWithQuery";
 
 export default () => null;
 
-export function getServerSideProps({ res, query }) {
-  const uri = queryString.stringifyUrl({
-    url: "/wards/visit-start",
-    query,
-  });
-  res.writeHead(301, {
-    Location: uri,
-  });
-  res.end();
-}
+export const getServerSideProps = redirectWithQuery("/wards/visit-start");

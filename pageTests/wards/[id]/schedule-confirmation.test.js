@@ -2,15 +2,18 @@ import { getServerSideProps } from "../../../pages/wards/[id]/schedule-confirmat
 
 describe("/wards/[id]/schedule-confirmation", () => {
   it("redirects to the /wards/schedule-confirmation page", () => {
+    const query = {
+      foo: "123",
+    };
     const res = {
       writeHead: jest.fn(),
       end: jest.fn(),
     };
 
-    getServerSideProps({ res });
+    getServerSideProps({ res, query });
 
     expect(res.writeHead).toHaveBeenCalledWith(301, {
-      Location: "/wards/schedule-confirmation",
+      Location: "/wards/schedule-confirmation?foo=123",
     });
   });
 });

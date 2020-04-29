@@ -1,8 +1,7 @@
+import redirectWithQuery from "../../../src/helpers/redirectWithQuery";
+
 export default () => null;
 
-export function getServerSideProps({ res }) {
-  res.writeHead(301, {
-    Location: "/wards/cancel-visit-confirmation",
-  });
-  res.end();
-}
+export const getServerSideProps = redirectWithQuery(
+  "/wards/cancel-visit-confirmation"
+);
