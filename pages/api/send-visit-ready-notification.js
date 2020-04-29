@@ -5,10 +5,12 @@ const notifier = new ConsoleNotifyProvider();
 
 export default withContainer(async (req, res, { container }) => {
   const { body, method } = req;
-  const tokenProvider = container.getTokenProvider();
-  const verifyTokenOrRedirect = container.getVerifyTokenOrRedirect();
+  const cookie = req.headers.cookie;
+  const userIsAuthenticated = container.getUserIsAuthenticated();
 
-  if (verifyTokenOrRedirect(req, res, { tokens: tokenProvider }) !== true) {
+  if (userIsAuthenticated(cookie) !== true) {
+    res.status(401);
+    res.end();
     return;
   }
 
