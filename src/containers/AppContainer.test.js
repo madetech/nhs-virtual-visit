@@ -46,10 +46,6 @@ describe("AppContainer", () => {
     expect(container.getSendTextMessage()).toBeDefined();
   });
 
-  it("returns verifyTokenOrRedirect", () => {
-    expect(container.getVerifyTokenOrRedirect()).toBeDefined();
-  });
-
   it("returns createWard", () => {
     expect(container.getCreateWard()).toBeDefined();
   });

@@ -42,10 +42,6 @@ class AppContainer {
   getSendTextMessage() {
     return sendTextMessage(this);
   }
-
-  getVerifyTokenOrRedirect() {
-    return verifyTokenOrRedirect;
-  }
 }
 
 export default (() => {
