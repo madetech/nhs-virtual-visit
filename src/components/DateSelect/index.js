@@ -41,7 +41,7 @@ const DateSelect = ({
     <>
       <FormGroup>
         <LabelHeader>What is the date of their virtual visit?</LabelHeader>
-        <Hint>For example, 16 4 2020</Hint>
+        <Hint>For example, 1&zwj;6&zwj; 4&zwj; 2&zwj;0&zwj;2&zwj;0</Hint>
         {hasDateError ? <ErrorMessage>{dateErrorMessage}</ErrorMessage> : null}
         <div className="nhsuk-date-input__item">
           <Label>Day</Label>
