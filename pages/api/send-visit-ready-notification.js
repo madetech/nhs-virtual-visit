@@ -29,13 +29,19 @@ export default withContainer(async (req, res, { container }) => {
   const templateId = process.env.TEMPLATE_ID;
 
   try {
+    // Passing in null as we don't care about the ID just yet
+    const { ward, error } = await container.getWardById()(null);
+    if (error) {
+      throw error;
+    }
+
     const response = await sendTextMessage(
       templateId,
       contactNumber,
       {
         call_url: visitorsUrl,
-        ward_name: "Defoe Ward",
-        hospital_name: "Northwick Park Hospital",
+        ward_name: ward.name,
+        hospital_name: ward.hospitalName,
       },
       null
     );
