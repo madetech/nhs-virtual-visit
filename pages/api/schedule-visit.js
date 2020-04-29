@@ -117,10 +117,7 @@ export default withContainer(
       );
 
       if (response.success) {
-        notifier.notify(
-          body.contactNumber,
-          formatDateAndTime(body.callTimeLocal)
-        );
+        notifier.notify(formatDateAndTime(body.callTimeLocal));
 
         res.status(201);
         res.end(JSON.stringify({ success: true }));

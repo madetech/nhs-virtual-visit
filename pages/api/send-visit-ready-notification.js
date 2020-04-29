@@ -47,7 +47,7 @@ export default withContainer(async (req, res, { container }) => {
     );
 
     if (response.success) {
-      notifier.notify(body.contactNumber, visitorsUrl);
+      notifier.notify(visitorsUrl);
 
       res.status(201);
       res.end(JSON.stringify({ id: callId, callUrl: visitsUrl }));
