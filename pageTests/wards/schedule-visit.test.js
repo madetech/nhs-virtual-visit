@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../pages/wards/[id]/schedule-visit";
+import { getServerSideProps } from "../../pages/wards/schedule-visit";
 
 // TODO: This needs to be moved once the verifyToken logic is in the container..
 jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
