@@ -76,6 +76,44 @@ describe("ward/[id]/schedule-visit", () => {
         expect(props.id).toEqual("ward-id");
       });
     });
+
+    describe("returning from schedule-confirmation", () => {
+      it("provides the form data from query params", async () => {
+        const query = {
+          patientName: "Patient Name",
+          contactName: "Visitor Name",
+          contactNumber: "07123456789",
+          day: "4",
+          month: "12",
+          year: "2020",
+          hour: "13",
+          minute: "44",
+        };
+
+        const { props } = await getServerSideProps({
+          req: authenticatedReq,
+          res,
+          query,
+          container: {},
+        });
+
+        expect(props).toMatchObject(
+          expect.objectContaining({
+            initialPatientName: query.patientName,
+            initialContactName: query.contactName,
+            initialContactNumber: query.contactNumber,
+            initialCallDateTime: {
+              day: query.day,
+              month: query.month,
+              year: query.year,
+              hour: query.hour,
+              minute: query.minute,
+            },
+          })
+        );
+      });
+    });
+
     describe("with rebookCallId parameter", () => {
       it("provides the visit records from the database", async () => {
         const container = {
