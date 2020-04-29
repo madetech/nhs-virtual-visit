@@ -13,6 +13,10 @@ import ErrorSummary from "../../../src/components/ErrorSummary";
 
 const Name = () => {
   const router = useRouter();
+
+  const backLink = (
+    <BackLink href={`/visitors/${router.query.id}/start`}>Go back</BackLink>
+  );
   const nameError = "Enter your name";
   const [name, setName] = useState("");
   const [errors, setErrors] = useState([]);
@@ -42,13 +46,10 @@ const Name = () => {
     <Layout
       title="What is your name? - Attend a virtual visit"
       hasErrors={errors.length != 0}
+      backLink={backLink}
     >
       <GridRow>
         <GridColumn width="two-thirds">
-          <BackLink href={`/visitors/${router.query.id}/start`}>
-            Go back
-          </BackLink>
-
           <ErrorSummary errors={errors} />
 
           <form onSubmit={onSubmit}>
