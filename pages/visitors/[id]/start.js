@@ -34,9 +34,12 @@ const Start = () => {
 
           <Text>
             During your virtual visit you <b>must not take screenshots</b>, as
-            this will break patient confidentiality. This virtual visit is not a
-            medical visit, medical questions may not be answered during this
-            visit.
+            this will break patient confidentiality.
+          </Text>
+
+          <Text>
+            Please be aware that this is not a medical visit and medical
+            questions may not be answered.
           </Text>
 
           <Button onClick={onClick}>Start now</Button>

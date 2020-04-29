@@ -8,6 +8,7 @@ import Router from "next/router";
 import verifyToken from "../../src/usecases/verifyToken";
 import TokenProvider from "../../src/providers/TokenProvider";
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
+import deleteVisitByCallId from "../../src/usecases/deleteVisitByCallId";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import { useState } from "react";
 import Error from "next/error";
@@ -15,7 +16,7 @@ import Error from "next/error";
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 
-const deleteVisitConfirmation = ({
+const deleteVisitSuccess = ({
   wardId,
   callId,
   patientName,
@@ -24,24 +25,27 @@ const deleteVisitConfirmation = ({
   callTime,
   callDate,
   error,
+  deleteError,
 }) => {
   const [hasError, setHasError] = useState(error);
+  const [hasDeleteError, setHasDeleteError] = useState(deleteError);
 
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
-    Router.push(`/wards/cancel-visit-success?callId=${callId}`);
+    Router.push(`/wards/${wardId}/visits`);
   });
 
-  if (hasError) {
+  if (hasError || hasDeleteError) {
     return <Error />;
   }
 
   return (
-    <Layout title="Confirm cancellation of virtual visit">
+    <Layout title="Virtual visit has been cancelled">
       <GridRow>
         <GridColumn width="full">
           <form onSubmit={onSubmit}>
-            <Heading>Confirm cancellation of virtual visit</Heading>
+            <Heading>Virtual visit has been cancelled</Heading>
+            <p>The following virtual visit has been successfully cancelled.</p>
             <dl className="nhsuk-summary-list">
               <div className="nhsuk-summary-list__row">
                 <dt className="nhsuk-summary-list__key">Patient's name</dt>
@@ -70,32 +74,7 @@ const deleteVisitConfirmation = ({
                 <dd className="nhsuk-summary-list__value">{callTime}</dd>
               </div>
             </dl>
-            <div className="nhsuk-warning-callout">
-              <h3 className="nhsuk-warning-callout__label">
-                Inform key contact
-              </h3>
-              <p>
-                It may be appropriate to inform the key contact why this virtual
-                visit is being cancelled.
-              </p>
-            </div>
-            <Button>Confirm cancellation</Button>
-            <div className="nhsuk-back-link">
-              <a
-                className="nhsuk-back-link__link"
-                href={`/wards/${wardId}/visits`}
-              >
-                <svg
-                  className="nhsuk-icon nhsuk-icon__chevron-left"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path d="M8.5 12c0-.3.1-.5.3-.7l5-5c.4-.4 1-.4 1.4 0s.4 1 0 1.4L10.9 12l4.3 4.3c.4.4.4 1 0 1.4s-1 .4-1.4 0l-5-5c-.2-.2-.3-.4-.3-.7z"></path>
-                </svg>
-                Return to virtual visits
-              </a>
-            </div>
+            <Button>Return to virtual visits</Button>
           </form>
         </GridColumn>
       </GridRow>
@@ -107,7 +86,6 @@ export const getServerSideProps = propsWithContainer(
   verifyToken(
     async ({ query, container, authenticationToken }) => {
       const { callId } = query;
-
       let { scheduledCall, error } = await retrieveVisitByCallId(container)(
         callId
       );
@@ -123,6 +101,9 @@ export const getServerSideProps = propsWithContainer(
       const callTime = formatTime(scheduledCall.callTime);
       const callDate = formatDate(scheduledCall.callTime);
 
+      let { success, error: deleteError } = await deleteVisitByCallId(
+        container
+      )(callId);
       return {
         props: {
           wardId: authenticationToken.ward,
@@ -133,6 +114,7 @@ export const getServerSideProps = propsWithContainer(
           callDate,
           callId,
           error,
+          deleteError,
         },
       };
     },
@@ -142,4 +124,4 @@ export const getServerSideProps = propsWithContainer(
   )
 );
 
-export default deleteVisitConfirmation;
+export default deleteVisitSuccess;

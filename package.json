@@ -9,7 +9,7 @@
     "format:check": "prettier --check '{pages,pageTests,src}/**/*.{js,css,md,yml}'",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:ci": "npm run format:check && jest",
+    "test:ci": "npm run format:check && jest --runInBand",
     "build": "next build",
     "start": "next start -p $PORT",
     "cleandb": "node db/scripts/cleanup_scheduled_calls.js"
