@@ -110,8 +110,8 @@ export default withContainer(
         {
           visit_date: formatDate(body.callTime),
           visit_time: formatTime(body.callTime),
-          ward_name: "Defoe Ward",
-          hospital_name: "Northwick Park Hospital",
+          ward_name: ward.name,
+          hospital_name: ward.hospitalName,
         },
         null
       );
