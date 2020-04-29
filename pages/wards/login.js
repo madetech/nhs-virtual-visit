@@ -36,8 +36,7 @@ const Login = () => {
       });
 
       if (response.status === 201) {
-        const { wardId } = await response.json();
-        window.location.href = `/wards/${wardId}/visits`;
+        window.location.href = `/wards/visits`;
       } else {
         errors.push({
           id: "code",
@@ -91,7 +90,7 @@ export const getServerSideProps = propsWithContainer(
     const token = userIsAuthenticated(headers.cookie);
 
     if (token && token.ward) {
-      res.writeHead(302, { Location: `/wards/${token.ward}/visits` }).end();
+      res.writeHead(307, { Location: `/wards/visits` }).end();
     }
 
     return { props: {} };

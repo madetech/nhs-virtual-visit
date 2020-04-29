@@ -34,8 +34,8 @@ describe("login", () => {
       await getServerSideProps({ req, res: mockResponse, container });
 
       expect(mockResponse.writeHead).toHaveBeenCalledWith(
-        302,
-        expect.objectContaining({ Location: `/wards/my-test-ward/visits` })
+        307,
+        expect.objectContaining({ Location: `/wards/visits` })
       );
     });
   });
