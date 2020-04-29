@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Layout from "../../../src/components/Layout";
@@ -8,12 +8,8 @@ import Text from "../../../src/components/Text";
 import Button from "../../../src/components/Button";
 
 const Start = () => {
-  const onClick = useCallback(async (event) => {
-    event.preventDefault();
-
-    const router = useRouter();
-    router.push(`/visitors/${router.query.id}/name`);
-  });
+  const router = useRouter();
+  const onClick = () => router.push(`/visitors/${router.query.id}/name`);
 
   return (
     <Layout title="Attend a virtual visit">
