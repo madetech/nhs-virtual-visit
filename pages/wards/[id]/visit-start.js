@@ -1,17 +1,16 @@
-import React, { useCallback } from "react";
-import Button from "../../../src/components/Button";
+import React from "react";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
-import Text from "../../../src/components/Text";
 import Heading from "../../../src/components/Heading";
 import Layout from "../../../src/components/Layout";
 import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import fetch from "isomorphic-unfetch";
-import Router from "next/router";
 import { useState } from "react";
 import Error from "next/error";
 import formatDate from "../../../src/helpers/formatDate";
 import formatTime from "../../../src/helpers/formatTime";
+import verifyToken from "../../../src/usecases/verifyToken";
+import TokenProvider from "../../../src/providers/TokenProvider";
 
 const VisitStart = ({
   patientName,
@@ -93,29 +92,33 @@ const VisitStart = ({
 };
 
 export const getServerSideProps = propsWithContainer(
-  async ({ query, container }) => {
-    const { id, callId } = query;
+  verifyToken(
+    async ({ query, container }) => {
+      const { callId } = query;
 
-    const { scheduledCall, error } = await retrieveVisitByCallId(container)(
-      callId
-    );
+      const { scheduledCall, error } = await retrieveVisitByCallId(container)(
+        callId
+      );
 
-    const callTime = formatTime(scheduledCall.callTime);
-    const callDate = formatDate(scheduledCall.callTime);
+      const callTime = formatTime(scheduledCall.callTime);
+      const callDate = formatDate(scheduledCall.callTime);
 
-    return {
-      props: {
-        id,
-        patientName: scheduledCall.patientName,
-        contactName: scheduledCall.recipientName,
-        contactNumber: scheduledCall.recipientNumber,
-        callTime,
-        callDate,
-        callId,
-        error,
-      },
-    };
-  }
+      return {
+        props: {
+          patientName: scheduledCall.patientName,
+          contactName: scheduledCall.recipientName,
+          contactNumber: scheduledCall.recipientNumber,
+          callTime,
+          callDate,
+          callId,
+          error,
+        },
+      };
+    },
+    {
+      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+    }
+  )
 );
 
 export default VisitStart;
