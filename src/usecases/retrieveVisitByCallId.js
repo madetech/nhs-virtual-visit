@@ -8,7 +8,6 @@ const retrieveVisitByCallId = ({ getDb }) => async (callId) => {
     );
 
     const scheduledCall = scheduledCalls[0];
-    console.log("Scheduled call", scheduledCall);
 
     return {
       scheduledCall: {
