@@ -7,8 +7,18 @@ describe("send-visit-ready-notification", () => {
     writeHead: jest.fn().mockReturnValue({ end: () => {} }),
   };
 
+  let container;
+  let sendTextMessageSpy;
+  beforeEach(() => {
+    sendTextMessageSpy = jest.fn(() => ({ success: true, error: null }));
+    container = {
+      getUserIsAuthenticated: () => () => true,
+      getSendTextMessage: () => sendTextMessageSpy,
+    };
+  });
+
   describe("when a token is not provided", () => {
-    it("checks if a token is provided and redirects", async () => {
+    it("checks if a token is provided and returns a 401 if invalid", async () => {
       const requestWithoutToken = {
         method: "POST",
         body: {
@@ -17,32 +27,19 @@ describe("send-visit-ready-notification", () => {
         },
         headers: {},
       };
-      const verifyTokenOrRedirectStub = jest.fn().mockReturnValue(false);
+
+      container.getUserIsAuthenticated = jest.fn(() => () => false);
 
       await sendVisitReadyNotification(requestWithoutToken, response, {
-        container: {
-          getTokenProvider: () => ({}),
-          getVerifyTokenOrRedirect: () => verifyTokenOrRedirectStub,
-        },
+        container,
       });
 
-      expect(verifyTokenOrRedirectStub).toHaveBeenCalledWith(
-        requestWithoutToken,
-        response,
-        {
-          tokens: {},
-        }
-      );
+      expect(response.status).toHaveBeenCalledWith(401);
     });
   });
 
   describe("when a token is provided", () => {
     let requestWithToken;
-    const verifyTokenOrRedirectStub = jest.fn().mockReturnValue(true);
-    let container = {
-      getTokenProvider: () => ({}),
-      getVerifyTokenOrRedirect: () => verifyTokenOrRedirectStub,
-    };
 
     beforeEach(() => {
       requestWithToken = {
@@ -66,23 +63,15 @@ describe("send-visit-ready-notification", () => {
       requestWithToken.method = "GET";
 
       await sendVisitReadyNotification(requestWithToken, response, {
-        container: container,
+        container,
       });
 
       expect(response.status).toHaveBeenCalledWith(406);
     });
 
     it("sends a text message", async () => {
-      const sendTextMessageSpy = jest
-        .fn()
-        .mockReturnValue({ success: true, error: null });
-
       await sendVisitReadyNotification(requestWithToken, response, {
-        container: {
-          getTokenProvider: () => ({}),
-          getVerifyTokenOrRedirect: () => verifyTokenOrRedirectStub,
-          getSendTextMessage: () => sendTextMessageSpy,
-        },
+        container,
       });
 
       expect(sendTextMessageSpy).toHaveBeenCalledWith(
