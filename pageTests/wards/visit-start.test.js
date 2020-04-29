@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../pages/wards/[id]/visit-start";
+import { getServerSideProps } from "../../pages/wards/visit-start";
 
 describe("visit-start", () => {
   const anonymousReq = {
