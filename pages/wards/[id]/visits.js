@@ -58,7 +58,7 @@ export default function WardVisits({ scheduledCalls, error, wardId }) {
           </ActionLink>
           <h2 className="nhsuk-heading-l">Pre-booked virtual visits</h2>
           {scheduledCalls.length > 0 ? (
-            <VisitsTable visits={scheduledCalls} wardId={wardId} />
+            <VisitsTable visits={scheduledCalls} />
           ) : (
             <Text>There are no upcoming virtual visits.</Text>
           )}

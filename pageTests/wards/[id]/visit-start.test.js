@@ -1,7 +1,7 @@
-import { getServerSideProps } from "../../../pages/wards/[id]/schedule-visit";
+import { getServerSideProps } from "../../../pages/wards/[id]/visit-start";
 
-describe("/wards/[id]/schedule-visit", () => {
-  it("redirects to the /wards/schedule-visit page", () => {
+describe("/wards/[id]/visit-start", () => {
+  it("redirects to the /wards/visit-start page", () => {
     const query = {
       foo: "123",
     };
@@ -13,7 +13,7 @@ describe("/wards/[id]/schedule-visit", () => {
     getServerSideProps({ res, query });
 
     expect(res.writeHead).toHaveBeenCalledWith(301, {
-      Location: "/wards/schedule-visit?foo=123",
+      Location: "/wards/visit-start?foo=123",
     });
   });
 });
