@@ -22,9 +22,7 @@ export default ({ wardId, callId }) => (
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink
-            href={`/wards/${wardId}/schedule-visit?rebookCallId=${callId}`}
-          >
+          <ActionLink href={`/wards/schedule-visit?rebookCallId=${callId}`}>
             Rebook another visit
           </ActionLink>
           <ActionLink href={`/wards/${wardId}/visits`}>

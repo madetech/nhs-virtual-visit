@@ -5,7 +5,7 @@ jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
   token && { ward: "123" }
 );
 
-describe("ward/[id]/schedule-visit", () => {
+describe("ward/schedule-visit", () => {
   const anonymousReq = {
     headers: {
       cookie: "",

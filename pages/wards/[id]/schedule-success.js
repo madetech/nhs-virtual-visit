@@ -19,7 +19,7 @@ const Success = ({ id }) => {
             sent an SMS with their scheduled time.
           </Text>
 
-          <ActionLink href={`/wards/${id}/schedule-visit`}>
+          <ActionLink href={`/wards/schedule-visit`}>
             Schedule another virtual visit
           </ActionLink>
           <ActionLink href={`/wards/${id}/visits`}>

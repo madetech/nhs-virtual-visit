@@ -1,6 +1,5 @@
 import scheduleVisit from "../../pages/api/schedule-visit";
 import fetch from "node-fetch";
-import { tryGetPreviewData } from "next/dist/next-server/server/api-utils";
 
 jest.mock("notifications-node-client");
 jest.mock("node-fetch");
