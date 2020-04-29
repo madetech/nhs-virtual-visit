@@ -32,9 +32,8 @@ const Success = ({ id }) => {
 };
 
 export const getServerSideProps = verifyToken(
-  ({ query }) => {
-    const { id } = query;
-    return { props: { id } };
+  ({ query, authenticationToken }) => {
+    return { props: { id: authenticationToken.ward } };
   },
   {
     tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
