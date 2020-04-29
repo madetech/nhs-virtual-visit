@@ -8,37 +8,10 @@ import Error from "next/error";
 import Text from "../../../src/components/Text";
 import verifyToken from "../../../src/usecases/verifyToken";
 import TokenProvider from "../../../src/providers/TokenProvider";
-import { useState } from "react";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 
 export default function WardVisits({ scheduledCalls, error, wardId }) {
-  const [userError, setUserError] = useState(
-    error ? "Unable to display ward visits" : null
-  );
-
-  const joinCall = async ({ callId, contactNumber }) => {
-    const response = await fetch("/api/send-visit-ready-notification", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        callId,
-        contactNumber,
-      }),
-    });
-
-    const { callUrl, err } = await response.json();
-
-    if (callUrl) {
-      window.location.href = callUrl;
-    } else {
-      setUserError("Unable to join video call");
-      console.error(err);
-    }
-  };
-
-  if (userError) {
+  if (error) {
     return <Error />;
   }
 
