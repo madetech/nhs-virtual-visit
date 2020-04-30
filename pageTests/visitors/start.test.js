@@ -11,17 +11,6 @@ jest.mock("../../src/hooks/useScript", () => ({
 describe("call", () => {
   let spy;
   let res;
-  const container = {
-    getDb: () =>
-      Promise.resolve({
-        any: () => [
-          {
-            id: 1,
-            call_password: "securePassword",
-          },
-        ],
-      }),
-  };
   beforeEach(() => {
     spy = jest.fn();
     res = {
@@ -52,7 +41,20 @@ describe("call", () => {
   });
 
   describe("getServerSideProps", () => {
-    it("returns a valid call id", async () => {
+    let getVerifyCallPasswordSpy;
+    let container;
+
+    beforeEach(() => {
+      getVerifyCallPasswordSpy = jest.fn((callId, password) => ({
+        validCallPassword: password === "securePassword",
+        error: null,
+      }));
+      container = {
+        getVerifyCallPassword: () => getVerifyCallPasswordSpy,
+      };
+    });
+
+    it("returns the call id when password is correct", async () => {
       const { props } = await getServerSideProps({
         query: {
           callPassword: "securePassword",
@@ -61,9 +63,13 @@ describe("call", () => {
         container,
         res,
       });
-      expect(res.writeHead).not.toHaveBeenCalled();
+      expect(getVerifyCallPasswordSpy).toHaveBeenCalledWith(
+        1,
+        "securePassword"
+      );
       expect(props.callId).toEqual(1);
     });
+
     it("given an invalid passcode, the user should be redirected", async () => {
       await getServerSideProps({
         query: {
@@ -73,6 +79,7 @@ describe("call", () => {
         container,
         res,
       });
+      expect(getVerifyCallPasswordSpy).toHaveBeenCalledWith(1, "fakeCode");
       expect(res.writeHead).toHaveBeenCalledWith(307, { Location: "/error" });
     });
   });
