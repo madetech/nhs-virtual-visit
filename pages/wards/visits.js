@@ -20,9 +20,9 @@ export default function WardVisits({ scheduledCalls, error, wardId }) {
       <GridRow>
         <GridColumn width="full">
           <Heading>
-            <span class="nhsuk-caption-l">
+            <span className="nhsuk-caption-l">
               Ward: {wardId}
-              <span class="nhsuk-u-visually-hidden">-</span>
+              <span className="nhsuk-u-visually-hidden">-</span>
             </span>
             Virtual visits
           </Heading>
