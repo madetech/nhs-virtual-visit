@@ -3,7 +3,7 @@ const verifyWardCode = ({ getDb }) => async (wardCode) => {
 
   try {
     const dbResponse = await db.any(
-      `SELECT code FROM wards WHERE code = $1 LIMIT 1`,
+      `SELECT id, code FROM wards WHERE code = $1 LIMIT 1`,
       [wardCode]
     );
 
