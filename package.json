@@ -4,14 +4,14 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
     "format": "prettier --write '{pages,pageTests,src}/**/*.{js,css,md,yml}'",
     "format:check": "prettier --check '{pages,pageTests,src}/**/*.{js,css,md,yml}'",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "npm run format:check && jest --runInBand",
     "build": "next build",
-    "start": "next start -p $PORT",
+    "dev": "NODE_ENV=development node server.js",
+    "start": "NODE_ENV=production node server.js",
     "cleandb": "node db/scripts/cleanup_scheduled_calls.js"
   },
   "dependencies": {
