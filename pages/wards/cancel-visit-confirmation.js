@@ -100,7 +100,7 @@ const deleteVisitConfirmation = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyToken(
-    async ({ query, container, authenticationToken }) => {
+    async ({ query, container }) => {
       const { callId } = query;
 
       let { scheduledCall, error } = await retrieveVisitByCallId(container)(
