@@ -69,7 +69,6 @@ describe("ward/schedule-visit", () => {
           container,
         });
         expect(res.writeHead).not.toHaveBeenCalled();
-        expect(props.id).toEqual("123");
       });
     });
 
@@ -138,7 +137,6 @@ describe("ward/schedule-visit", () => {
           container,
         });
         expect(res.writeHead).not.toHaveBeenCalled();
-        expect(props.id).toEqual("123");
         expect(props.initialPatientName).toEqual("Fred Bloggs");
         expect(props.initialContactName).toEqual("John Doe");
         expect(props.initialContactNumber).toEqual("07001231234");

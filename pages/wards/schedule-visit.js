@@ -34,7 +34,6 @@ const isValidDate = ({ year, month, day, hour, minute }) => {
 };
 
 const Home = ({
-  id,
   initialPatientName,
   initialContactName,
   initialContactNumber,
@@ -255,9 +254,8 @@ const queryContainsInitialData = (query) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyToken(
-    async ({ query, container, authenticationToken }) => {
-      const id = authenticationToken.ward;
-      let props = { id };
+    async ({ query, container }) => {
+      let props = {};
       if (queryContainsInitialData(query)) {
         const {
           patientName,
