@@ -51,7 +51,7 @@ const ScheduleConfirmation = ({
       const { success, err } = await response.json();
 
       if (success) {
-        Router.push(`/wards/${id}/schedule-success`);
+        Router.push(`/wards/schedule-success`);
       } else {
         console.error(err);
       }
