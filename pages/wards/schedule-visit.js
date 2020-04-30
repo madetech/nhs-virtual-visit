@@ -147,12 +147,12 @@ const Home = ({
     }
   });
   return (
-    <Layout title="Schedule a virtual visit" hasErrors={errors.length != 0}>
+    <Layout title="Book a virtual visit" hasErrors={errors.length != 0}>
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
-            <Heading>Schedule a virtual visit</Heading>
+            <Heading>Book a virtual visit</Heading>
             <FormGroup>
               <LabelHeader htmlFor="patient-name">
                 What is the patient's name?
