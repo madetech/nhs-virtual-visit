@@ -79,6 +79,7 @@ export default withContainer(
     try {
       let callId = ids.generate();
       let { wardId } = userIsAuthenticatedResponse;
+      let callPassword = ids.generate();
 
       if (process.env.ENABLE_WHEREBY == "yes") {
         callId = await wherebyCallId(body.callTime);
@@ -101,6 +102,7 @@ export default withContainer(
         callId: callId,
         provider: process.env.ENABLE_WHEREBY === "yes" ? "whereby" : "jitsi",
         wardId: ward.id,
+        callPassword: callPassword,
       });
 
       const sendTextMessage = container.getSendTextMessage();

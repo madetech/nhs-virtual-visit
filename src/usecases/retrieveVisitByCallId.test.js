@@ -14,6 +14,7 @@ describe("retrieveVisitByCallId", () => {
               recipient_name: "John",
               call_id: "cb238rfv23cuv3",
               provider: "whereby",
+              call_password: "securePassword",
             },
           ]),
         };
@@ -33,6 +34,7 @@ describe("retrieveVisitByCallId", () => {
       recipientName: "John",
       callId: "cb238rfv23cuv3",
       provider: "whereby",
+      callPassword: "securePassword",
     });
   });
 

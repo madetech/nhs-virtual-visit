@@ -1,7 +1,6 @@
 import React from "react";
 import { render, queryByAttribute } from "@testing-library/react";
 import EndOfVisit, { getServerSideProps } from "../../pages/visits/end";
-import TokenProvider from "../../src/providers/TokenProvider";
 
 describe("end", () => {
   it("renders end of visit message", () => {

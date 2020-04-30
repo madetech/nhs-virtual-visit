@@ -10,12 +10,20 @@ import LabelHeader from "../../../src/components/LabelHeader";
 import Text from "../../../src/components/Text";
 import BackLink from "../../../src/components/BackLink";
 import ErrorSummary from "../../../src/components/ErrorSummary";
+import propsWithContainer from "../../../src/middleware/propsWithContainer";
+import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
+import Error from "next/error";
 
-const Name = () => {
+const Name = ({ callId, error, queryPassword }) => {
   const router = useRouter();
+  if (error) {
+    return <Error />;
+  }
 
   const backLink = (
-    <BackLink href={`/visitors/${router.query.id}/start`}>Go back</BackLink>
+    <BackLink href={`/visitors/${callId}/start?callPassword=${queryPassword}`}>
+      Go back
+    </BackLink>
   );
   const nameError = "Enter your name";
   const [name, setName] = useState("");
@@ -90,5 +98,25 @@ const Name = () => {
     </Layout>
   );
 };
+
+export const getServerSideProps = propsWithContainer(
+  async ({ query, container, res }) => {
+    const { id, callPassword } = query;
+    const callId = id;
+    const queryPassword = callPassword ? callPassword : "";
+    const { scheduledCall, error } = await retrieveVisitByCallId(container)(
+      callId
+    );
+    const dbPassword = scheduledCall.callPassword;
+    if (dbPassword !== queryPassword && dbPassword !== "") {
+      res.writeHead(307, {
+        Location: "/error",
+      });
+      res.end();
+    }
+    console.log("name.js error", error);
+    return { props: { callId, error, queryPassword } };
+  }
+);
 
 export default Name;

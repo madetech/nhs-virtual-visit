@@ -28,7 +28,8 @@ CREATE TABLE public.scheduled_calls_table (
     call_id text,
     recipient_name character varying(255),
     provider character varying(255) DEFAULT 'jitsi'::character varying NOT NULL,
-    ward_id integer NOT NULL
+    ward_id integer NOT NULL,
+    call_password character varying(255) DEFAULT ''::character varying NOT NULL
 );
 
 
