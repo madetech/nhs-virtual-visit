@@ -1,6 +1,14 @@
 import session from "../../pages/api/session";
 
 describe("api/session", () => {
+  beforeEach(() => {
+    process.env.ADMIN_AUTH_CODES = "admin_code";
+  });
+
+  afterEach(() => {
+    process.env.ADMIN_AUTH_CODES = undefined;
+  });
+
   describe("Given incorrect method", () => {
     it("Returns a 406", async () => {
       let invalidRequest = { method: "GET", body: { code: "MEOW" } };
@@ -72,6 +80,50 @@ describe("api/session", () => {
         expect(tokenGeneratorSpy).toHaveBeenCalledWith({
           wardId: 10,
           wardCode: "MEOW",
+          admin: false,
+        });
+        expect(response.writeHead).toHaveBeenCalledWith(
+          201,
+          expect.objectContaining({
+            "Set-Cookie": expect.stringContaining("generatedToken"),
+          })
+        );
+      });
+    });
+
+    describe("Given a valid admin code", () => {
+      it("Returns the generated token in the response", async () => {
+        const validRequest = {
+          method: "POST",
+          body: {
+            code: "admin_code",
+          },
+        };
+
+        const response = {
+          writeHead: jest.fn(),
+          end: jest.fn(),
+        };
+
+        const verifyWardCodeSpy = jest.fn(async () => ({
+          validWardCode: false,
+          ward: {},
+        }));
+        const tokenGeneratorSpy = jest.fn(() => "generatedToken");
+
+        const container = {
+          getTokenProvider: jest.fn(() => ({
+            generate: tokenGeneratorSpy,
+          })),
+          getVerifyWardCode: () => verifyWardCodeSpy,
+        };
+
+        await session(validRequest, response, { container });
+
+        expect(tokenGeneratorSpy).toHaveBeenCalledWith({
+          wardId: undefined,
+          wardCode: undefined,
+          admin: true,
         });
         expect(response.writeHead).toHaveBeenCalledWith(
           201,

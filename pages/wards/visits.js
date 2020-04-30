@@ -55,7 +55,7 @@ export const getServerSideProps = propsWithContainer(
   verifyToken(
     async ({ authenticationToken, container }) => {
       const { wardId } = authenticationToken;
-      console.log(authenticationToken);
+
       const { scheduledCalls, error } = await container.getRetrieveVisits()({
         wardId,
       });

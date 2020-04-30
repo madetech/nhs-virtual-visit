@@ -6,7 +6,13 @@ export default ({ getTokenProvider }) => (requestCookie) => {
   try {
     const { token } = cookie.parse(requestCookie);
 
-    return token && tokenProvider.validate(token);
+    const validatedToken = tokenProvider.validate(token);
+
+    if (token && validatedToken.admin) {
+      return false;
+    }
+
+    return token && validatedToken;
   } catch (err) {
     return false;
   }
