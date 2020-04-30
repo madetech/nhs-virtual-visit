@@ -1,4 +1,4 @@
-import scheduleVisit from "../../pages/api/schedule-visit";
+import scheduleVisit from "../../pages/api/book-a-visit";
 import fetch from "node-fetch";
 
 jest.mock("notifications-node-client");
