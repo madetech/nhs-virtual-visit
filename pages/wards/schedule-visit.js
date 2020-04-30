@@ -109,18 +109,18 @@ const Home = ({
       });
     };
 
+    if (!isValidName(patientName)) {
+      setPatientNameError(errors);
+    }
+    if (!isValidName(contactName)) {
+      setContactNameError(errors);
+    }
     try {
       if (!validateMobileNumber(contactNumber)) {
         setContactNumberError(errors);
       }
     } catch (error) {
       setContactNumberError(errors);
-    }
-    if (!isValidName(patientName)) {
-      setPatientNameError(errors);
-    }
-    if (!isValidName(contactName)) {
-      setContactNameError(errors);
     }
 
     const dateValidation = isValidDate(callDateTime);
