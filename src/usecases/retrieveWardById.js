@@ -2,10 +2,10 @@ const retrieveWardById = ({ getDb }) => async (wardId) => {
   const db = await getDb();
   console.log("Retrieving ward for  ", wardId);
   try {
-    // Assuming there is only one Ward to choose from for now
-    const ward = await db.oneOrNone("SELECT * FROM wards LIMIT 1", wardId);
-
-    console.log("Ward: ", ward);
+    const ward = await db.oneOrNone(
+      "SELECT * FROM wards WHERE id = $1 LIMIT 1",
+      wardId
+    );
 
     return {
       ward: {
