@@ -141,7 +141,7 @@ const Home = ({
 
     if (errors.length === 0) {
       Router.push({
-        pathname: `/wards/schedule-confirmation`,
+        pathname: `/wards/book-a-visit-confirmation`,
         query: { patientName, contactNumber, contactName, ...callDateTime },
       });
     }
