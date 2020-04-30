@@ -43,6 +43,14 @@ describe("verifyCallPassword", () => {
       error: null,
     });
   });
+  it("returns false when the password is undefined", async () => {
+    const input = undefined;
+
+    expect(await verifyCallPassword(container)(1, input)).toEqual({
+      validCallPassword: false,
+      error: null,
+    });
+  });
   it("returns true when the call does not have a password", async () => {
     const input = "";
 

@@ -57,15 +57,13 @@ const Start = ({ callId, error, queryPassword }) => {
 
 export const getServerSideProps = propsWithContainer(
   async ({ query, container, res }) => {
-    const { id, callPassword } = query;
-    const callId = id;
-    const queryPassword = callPassword ? callPassword : "";
+    const { id: callId, callPassword } = query;
 
     const verifyCallPassword = container.getVerifyCallPassword();
 
     const { validCallPassword, error } = await verifyCallPassword(
       callId,
-      queryPassword
+      callPassword
     );
 
     if (!validCallPassword) {
@@ -76,7 +74,7 @@ export const getServerSideProps = propsWithContainer(
     }
     console.log("start.js error", error);
 
-    return { props: { callId, error, queryPassword } };
+    return { props: { callId, error, callPassword } };
   }
 );
 
