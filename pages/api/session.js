@@ -13,7 +13,8 @@ export default withContainer(
       }
 
       const tokens = container.getTokenProvider();
-      const token = tokens.generate(code);
+      const { ward } = verifyWardCodeResponse;
+      const token = tokens.generate({ wardId: ward.id, wardCode: ward.code });
       const expiryHours = 2;
       let expiry = new Date();
       expiry.setTime(expiry.getTime() + expiryHours * 60 * 60 * 1000);
