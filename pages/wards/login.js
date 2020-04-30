@@ -49,15 +49,18 @@ const Login = () => {
   });
 
   return (
-    <Layout title="Log in" hasErrors={errors.length > 0}>
+    <Layout
+      title="Log in to book a virtual visit"
+      hasErrors={errors.length > 0}
+    >
       <GridRow>
-        <GridColumn width="one-half">
+        <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <Heading>Log in</Heading>
+          <Heading>Log in to book a virtual visit</Heading>
 
           <form onSubmit={onSubmit}>
             <FormGroup>
-              <Label htmlFor="name">Ward code</Label>
+              <Label htmlFor="code">Ward code</Label>
               <Hint>You'll have been given a ward code to use.</Hint>
               <Input
                 id="code"
