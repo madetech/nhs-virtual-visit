@@ -60,23 +60,21 @@ const ScheduleConfirmation = ({
   });
 
   return (
-    <Layout title="Check your answers before scheduling a virtual visit">
+    <Layout title="Check your answers before booking a virtual visit">
       <GridRow>
         <GridColumn width="two-thirds">
           <form onSubmit={onSubmit}>
-            <Heading>
-              Check your answers before scheduling a virtual visit
-            </Heading>
+            <Heading>Check your answers before booking a virtual visit</Heading>
             <dl className="nhsuk-summary-list">
               <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">Patient's name</dt>
+                <dt className="nhsuk-summary-list__key">Patient name</dt>
                 <dd className="nhsuk-summary-list__value">{patientName}</dd>
                 <dd className="nhsuk-summary-list__actions">
                   <a href="#" onClick={changeLink}>
                     Change
                     <span className="nhsuk-u-visually-hidden">
                       {" "}
-                      patient's name
+                      patient name
                     </span>
                   </a>
                 </dd>
@@ -138,7 +136,7 @@ const ScheduleConfirmation = ({
                     Change
                     <span className="nhsuk-u-visually-hidden">
                       {" "}
-                      date of call
+                      time of call
                     </span>
                   </a>
                 </dd>
@@ -146,13 +144,11 @@ const ScheduleConfirmation = ({
             </dl>
             <h2 className="nhsuk-heading-l">Key contact's mobile number</h2>
             <Text>
-              We recommend you double check the mobile number of the key contact
-              to ensure we setup the virtual visit with the correct person.
-              We'll send them a text message once you've scheduled the visit.
+              Please double check the mobile number of the key contact to ensure
+              we set up the virtual visit with the correct person. A text
+              message will be sent to them once you've booked the visit.
             </Text>
-            <Button className="nhsuk-u-margin-top-5">
-              Schedule virtual visit
-            </Button>
+            <Button className="nhsuk-u-margin-top-5">Book virtual visit</Button>
           </form>
         </GridColumn>
       </GridRow>
