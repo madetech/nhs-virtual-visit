@@ -24,7 +24,9 @@ describe("api/session", () => {
         };
 
         const response = { statusCode: 0, end: jest.fn() };
-        const verifyWardCodeSpy = jest.fn(async () => ({ validWardCode: false }));
+        const verifyWardCodeSpy = jest.fn(async () => ({
+          validWardCode: false,
+        }));
         const container = {
           getVerifyWardCode: () => verifyWardCodeSpy,
         };
@@ -51,7 +53,9 @@ describe("api/session", () => {
           end: jest.fn(),
         };
 
-        const verifyWardCodeSpy = jest.fn(async () => ({ validWardCode: true }));
+        const verifyWardCodeSpy = jest.fn(async () => ({
+          validWardCode: true,
+        }));
         const container = {
           getTokenProvider: jest.fn(() => ({
             generate: jest.fn(() => "generatedToken"),
