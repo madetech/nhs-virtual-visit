@@ -79,6 +79,8 @@ ENABLE_WHEREBY=
 # Whereby API Credentials
 WHEREBY_API_KEY=
 WHEREBY_SUBDOMAIN=
+# Valid Admin Auth Codes
+ADMIN_AUTH_CODES=
 ```
 
 ### PostgreSQL 12
