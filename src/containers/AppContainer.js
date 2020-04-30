@@ -10,6 +10,7 @@ import Database from "../gateways/Database";
 import retrieveWardById from "../usecases/retrieveWardById";
 import verifyWardCode from "../usecases/verifyWardCode";
 import retrieveVisits from "../usecases/retrieveVisits";
+import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 
 class AppContainer {
   getDb() {
@@ -56,6 +57,10 @@ class AppContainer {
 
   getRetrieveVisits() {
     return retrieveVisits(this);
+  }
+
+  getRetrieveVisitByCallId() {
+    return retrieveVisitByCallId(this);
   }
 }
 

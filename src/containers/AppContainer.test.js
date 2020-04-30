@@ -49,4 +49,8 @@ describe("AppContainer", () => {
   it("returns createWard", () => {
     expect(container.getCreateWard()).toBeDefined();
   });
+
+  it("returns getRetrieveVisitByCallId", () => {
+    expect(container.getRetrieveVisitByCallId()).toBeDefined();
+  });
 });
