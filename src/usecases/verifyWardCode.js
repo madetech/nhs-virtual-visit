@@ -8,7 +8,13 @@ const verifyWardCode = ({ getDb }) => async (wardCode) => {
     );
 
     if (dbResponse.length > 0) {
-      return { validWardCode: true, error: null };
+      let [ward] = dbResponse;
+
+      return {
+        validWardCode: true,
+        ward: { id: ward.id, code: ward.code },
+        error: null,
+      };
     } else {
       return { validWardCode: false, error: null };
     }

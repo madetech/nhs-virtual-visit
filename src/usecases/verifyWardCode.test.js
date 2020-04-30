@@ -2,7 +2,7 @@ import verifyWardCode from "./verifyWardCode";
 
 describe("verifyWardCode", () => {
   describe("Given a matching ward code", () => {
-    it("Returns true", async () => {
+    it("Returns true with the matching ward ID", async () => {
       const container = {
         getDb: async () => ({
           any: jest.fn(async () => [
@@ -10,7 +10,7 @@ describe("verifyWardCode", () => {
               id: 1,
               name: "Ward name",
               hospital_name: "London Meowdical Hospital",
-              ward_code: "MEOW",
+              code: "MEOW",
             },
           ]),
         }),
@@ -18,6 +18,10 @@ describe("verifyWardCode", () => {
 
       let response = await verifyWardCode(container)("MEOW");
       expect(response.validWardCode).toEqual(true);
+      expect(response.ward).toEqual({
+        id: 1,
+        code: "MEOW",
+      });
     });
   });
 
