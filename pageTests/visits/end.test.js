@@ -26,7 +26,7 @@ describe("end", () => {
   describe("for a staff member", () => {
     it("has a link back to the ward visits page", () => {
       const { getByText } = render(<EndOfVisit wardId="TEST" />);
-      const text = getByText(/return to scheduled visit list/i);
+      const text = getByText(/return to virtual visits/i);
       expect(text).toBeInTheDocument();
     });
     it("does not show a link to the help and support page", () => {
@@ -38,7 +38,7 @@ describe("end", () => {
       const { getByText } = render(
         <EndOfVisit wardId="TEST" callId="TEST123" />
       );
-      const text = getByText(/Rebook another visit/i);
+      const text = getByText(/Rebook another virtual visit/i);
       expect(text).toBeInTheDocument();
     });
 
