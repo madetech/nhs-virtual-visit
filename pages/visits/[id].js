@@ -91,7 +91,10 @@ export const getServerSideProps = propsWithContainer(
     const userIsAuthenticated = container.getUserIsAuthenticated();
     const retrieveVisitByCallId = container.getRetrieveVisitByCallId();
 
-    const { validCallPassword } = verifyCallPassword(callId, callPassword);
+    const { validCallPassword } = await verifyCallPassword(
+      callId,
+      callPassword
+    );
     const authenticationToken = userIsAuthenticated(headers.cookie);
 
     if (validCallPassword || authenticationToken) {
