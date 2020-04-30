@@ -1,23 +1,23 @@
-import TokenProvider from "../../src/providers/TokenProvider";
 import withContainer from "../../src/middleware/withContainer";
 
 export default withContainer(
-  ({ body: { code }, method }, res, { container }) => {
-    const allowedCodes = process.env.ALLOWED_CODES.split(",");
-    const tokens = container.getTokenProvider();
-
+  async ({ body: { code }, method }, res, { container }) => {
     if (method !== "POST") {
       res.statusCode = 406;
       res.end();
       return;
     }
 
-    if (!allowedCodes.includes(code)) {
+    const verifyWardCode = container.getVerifyWardCode();
+    const verifyWardCodeResponse = await verifyWardCode(code);
+
+    if (!verifyWardCodeResponse.validWardCode) {
       res.statusCode = 401;
       res.end();
       return;
     }
 
+    const tokens = container.getTokenProvider();
     const token = tokens.generate(code);
     const expiryHours = 2;
     let expiry = new Date();
