@@ -60,7 +60,7 @@ CREATE TABLE public.wards (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     hospital_name character varying(255) NOT NULL,
-    code character varying(255)
+    code character varying(255) NOT NULL
 );
 
 
@@ -112,6 +112,14 @@ ALTER TABLE ONLY public.scheduled_calls_table
 
 ALTER TABLE ONLY public.scheduled_calls_table
     ADD CONSTRAINT scheduled_calls_table_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: wards wards_code_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.wards
+    ADD CONSTRAINT wards_code_key UNIQUE (code);
 
 
 --
