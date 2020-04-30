@@ -19,7 +19,7 @@ const Success = () => {
             a text message with their scheduled time.
           </Text>
 
-          <ActionLink href={`/wards/schedule-visit`}>
+          <ActionLink href={`/wards/book-a-visit`}>
             Book another virtual visit
           </ActionLink>
 

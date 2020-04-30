@@ -49,7 +49,7 @@ describe("end", () => {
       const getByHref = queryByAttribute.bind(null, "href");
       const rebookLink = getByHref(
         container,
-        "/wards/schedule-visit?rebookCallId=TEST123"
+        "/wards/book-a-visit?rebookCallId=TEST123"
       );
       expect(rebookLink).toBeInTheDocument();
     });

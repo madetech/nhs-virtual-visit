@@ -25,7 +25,7 @@ export default ({ wardId, callId }) => (
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/wards/schedule-visit?rebookCallId=${callId}`}>
+          <ActionLink href={`/wards/book-a-visit?rebookCallId=${callId}`}>
             Rebook another virtual visit
           </ActionLink>
 
