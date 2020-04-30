@@ -10,10 +10,10 @@ import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
 import Error from "next/error";
 
-const Start = ({ callId, error, queryPassword }) => {
+const Start = ({ callId, error, callPassword }) => {
   const router = useRouter();
   const onClick = () =>
-    router.push(`/visitors/${callId}/name?callPassword=${queryPassword}`);
+    router.push(`/visitors/${callId}/name?callPassword=${callPassword}`);
   if (error) {
     return <Error />;
   }

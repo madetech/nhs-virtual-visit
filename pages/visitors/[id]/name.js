@@ -14,14 +14,14 @@ import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
 import Error from "next/error";
 
-const Name = ({ callId, error, queryPassword }) => {
+const Name = ({ callId, error, callPassword }) => {
   const router = useRouter();
   if (error) {
     return <Error />;
   }
 
   const backLink = (
-    <BackLink href={`/visitors/${callId}/start?callPassword=${queryPassword}`}>
+    <BackLink href={`/visitors/${callId}/start?callPassword=${callPassword}`}>
       Go back
     </BackLink>
   );
@@ -46,7 +46,9 @@ const Name = ({ callId, error, queryPassword }) => {
     setErrors(errors);
 
     if (errors.length === 0) {
-      router.push(`/visits/${router.query.id}?name=${name}`);
+      router.push(
+        `/visits/${router.query.id}?name=${name}&callPassword=${callPassword}`
+      );
     }
   });
 
