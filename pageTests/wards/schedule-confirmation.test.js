@@ -13,11 +13,6 @@ describe("/wards/schedule-confirmation", () => {
       },
       query: {},
     };
-    const authenticatedReq = {
-      headers: {
-        cookie: "token=123",
-      },
-    };
     let res;
     beforeEach(() => {
       res = {
@@ -32,16 +27,6 @@ describe("/wards/schedule-confirmation", () => {
       expect(res.writeHead).toHaveBeenCalledWith(302, {
         Location: "/wards/login",
       });
-    });
-
-    it("retrieves the ward id from the authentication token", async () => {
-      const { props } = await getServerSideProps({
-        req: authenticatedReq,
-        res,
-        query: {},
-      });
-
-      expect(props.id).toEqual("123");
     });
   });
 });

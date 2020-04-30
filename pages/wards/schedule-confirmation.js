@@ -13,7 +13,6 @@ import verifyToken from "../../src/usecases/verifyToken";
 import TokenProvider from "../../src/providers/TokenProvider";
 
 const ScheduleConfirmation = ({
-  id,
   patientName,
   contactName,
   contactNumber,
@@ -162,7 +161,7 @@ const ScheduleConfirmation = ({
 };
 
 export const getServerSideProps = verifyToken(
-  ({ query, authenticationToken }) => {
+  ({ query }) => {
     const {
       patientName,
       contactName,
@@ -177,7 +176,6 @@ export const getServerSideProps = verifyToken(
 
     return {
       props: {
-        id: authenticationToken.ward,
         patientName,
         contactName,
         contactNumber,
