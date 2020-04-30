@@ -100,7 +100,7 @@ export const getServerSideProps = propsWithContainer(
         callId
       );
 
-      const callTime = formatTime(scheduledCall.callTime);
+      const callTime = formatTime(scheduledCall.callTime, "HH:mm");
       const callDate = formatDate(scheduledCall.callTime);
 
       return {
