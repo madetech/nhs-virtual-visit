@@ -19,17 +19,27 @@ export default function WardVisits({ scheduledCalls, error, wardId }) {
     <Layout title="Virtual visits">
       <GridRow>
         <GridColumn width="full">
-          <Heading>Virtual visits</Heading>
-          <h2 className="nhsuk-heading-l">Schedule a new virtual visit</h2>
-          <h3 className="nhsuk-heading-m">Ward: {wardId}</h3>
+          <Heading>
+            <span class="nhsuk-caption-l">
+              Ward: {wardId}
+              <span class="nhsuk-u-visually-hidden">-</span>
+            </span>
+            Virtual visits
+          </Heading>
+
+          <h2 className="nhsuk-heading-l">Book a virtual visit</h2>
+
           <Text>
-            You'll need the mobile number of your patient's loved one in order
+            You'll need the mobile number of your patient's key contact in order
             to set up a virtual visit.
           </Text>
+
           <ActionLink href={`/wards/schedule-visit`}>
-            Schedule virtual visit
+            Book a virtual visit
           </ActionLink>
+
           <h2 className="nhsuk-heading-l">Pre-booked virtual visits</h2>
+
           {scheduledCalls.length > 0 ? (
             <VisitsTable visits={scheduledCalls} />
           ) : (
