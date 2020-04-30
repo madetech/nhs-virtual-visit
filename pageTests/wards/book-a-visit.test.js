@@ -119,7 +119,7 @@ describe("ward/book-a-visit", () => {
                   id: 1,
                   patient_name: "Fred Bloggs",
                   recipient_name: "John Doe",
-                  recipient_number: "07001231234",
+                  recipient_number: "07700900900",
                   call_time: new Date(),
                   call_id: "Test",
                   provider: "Test",
@@ -139,7 +139,7 @@ describe("ward/book-a-visit", () => {
         expect(res.writeHead).not.toHaveBeenCalled();
         expect(props.initialPatientName).toEqual("Fred Bloggs");
         expect(props.initialContactName).toEqual("John Doe");
-        expect(props.initialContactNumber).toEqual("07001231234");
+        expect(props.initialContactNumber).toEqual("07700900900");
       });
     });
   });
