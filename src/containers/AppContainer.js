@@ -7,6 +7,7 @@ import { NotifyClient } from "notifications-node-client";
 import { verifyTokenOrRedirect } from "../usecases/verifyToken";
 import Database from "../gateways/Database";
 import retrieveWardById from "../usecases/retrieveWardById";
+import verifyWardCode from "../usecases/verifyWardCode";
 
 class AppContainer {
   getDb() {
@@ -41,6 +42,10 @@ class AppContainer {
 
   getSendTextMessage() {
     return sendTextMessage(this);
+  }
+
+  getVerifyWardCode() {
+    return verifyWardCode(this);
   }
 }
 
