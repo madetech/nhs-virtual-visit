@@ -8,7 +8,9 @@ export default withContainer(async (req, res, { container }) => {
   const cookie = req.headers.cookie;
   const userIsAuthenticated = container.getUserIsAuthenticated();
 
-  if (!userIsAuthenticated(cookie)) {
+  const authenticationToken = userIsAuthenticated(cookie);
+
+  if (!authenticationToken) {
     res.status(401);
     res.end();
     return;
@@ -33,8 +35,9 @@ export default withContainer(async (req, res, { container }) => {
   const templateId = process.env.SMS_JOIN_TEMPLATE_ID;
 
   try {
-    // Passing in null as we don't care about the ID just yet
-    const { ward, error } = await container.getWardById()(null);
+    const { ward, error } = await container.getWardById()(
+      authenticationToken.wardId
+    );
     if (error) {
       throw error;
     }
