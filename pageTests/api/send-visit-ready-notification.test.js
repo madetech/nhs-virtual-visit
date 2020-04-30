@@ -58,12 +58,12 @@ describe("send-visit-ready-notification", () => {
         },
         headers: { cookie: "token=valid.token.value" },
       };
-      process.env.TEMPLATE_ID = "meow-woof-quack";
+      process.env.SMS_JOIN_TEMPLATE_ID = "meow-woof-quack";
       process.env.ORIGIN = "http://localhost:3000";
     });
 
     afterEach(() => {
-      process.env.TEMPLATE_ID = undefined;
+      process.env.SMS_JOIN_TEMPLATE_ID = undefined;
       process.env.ORIGIN = undefined;
     });
 

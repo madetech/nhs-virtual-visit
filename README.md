@@ -70,7 +70,6 @@ URI=
 ORIGIN=
 # GovNotify Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
-TEMPLATE_ID=
 # GovNotify Join Template ID
 SMS_JOIN_TEMPLATE_ID=
 # Valid Ward Codes
