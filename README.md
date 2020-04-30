@@ -66,8 +66,6 @@ API_KEY=
 # Postgres Connection String
 DATABASE_URL=
 URI=
-# App hostname
-ORIGIN=
 # GovNotify Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
 # GovNotify Join Template ID

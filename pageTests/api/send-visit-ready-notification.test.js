@@ -56,15 +56,14 @@ describe("send-visit-ready-notification", () => {
           callId: "much-wow",
           contactNumber: "07123456789",
         },
-        headers: { cookie: "token=valid.token.value" },
+        protocol: "http",
+        headers: { host: "localhost:3000", cookie: "token=valid.token.value" },
       };
       process.env.SMS_JOIN_TEMPLATE_ID = "meow-woof-quack";
-      process.env.ORIGIN = "http://localhost:3000";
     });
 
     afterEach(() => {
       process.env.SMS_JOIN_TEMPLATE_ID = undefined;
-      process.env.ORIGIN = undefined;
     });
 
     it("returns 406 if not POST method", async () => {
