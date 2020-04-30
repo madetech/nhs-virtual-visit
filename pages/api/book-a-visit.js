@@ -59,8 +59,9 @@ export default withContainer(
     }
 
     const userIsAuthenticated = container.getUserIsAuthenticated();
+    const userIsAuthenticatedResponse = userIsAuthenticated(headers.cookie);
 
-    if (!userIsAuthenticated(headers.cookie)) {
+    if (!userIsAuthenticatedResponse) {
       res.status(401);
       res.end();
       return;
@@ -77,6 +78,7 @@ export default withContainer(
 
     try {
       let callId = ids.generate();
+      let { wardId } = userIsAuthenticatedResponse;
 
       if (process.env.ENABLE_WHEREBY == "yes") {
         callId = await wherebyCallId(body.callTime);
@@ -84,8 +86,8 @@ export default withContainer(
 
       const createVisit = container.getCreateVisit();
 
-      // Passing in null as we don't care about the ID just yet
-      const { ward, error } = await container.getWardById()(null);
+      const { ward, error } = await container.getWardById()(wardId);
+      console.log(ward);
       if (error) {
         throw error;
       }

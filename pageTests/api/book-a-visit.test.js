@@ -8,6 +8,20 @@ describe("schedule-visit", () => {
   let validRequest;
   let response;
   let container;
+  const validUserIsAuthenticatedSpy = jest.fn(() => ({
+    wardId: 10,
+    ward: "MEOW",
+  }));
+
+  const getWardByIdSpy = jest.fn(() => ({
+    ward: {
+      id: 10,
+      name: "Fake Ward",
+      hospitalName: "Fake Hospital",
+      code: "MEOW",
+    },
+    error: null,
+  }));
 
   beforeEach(() => {
     validRequest = {
@@ -30,17 +44,8 @@ describe("schedule-visit", () => {
     };
     container = {
       getCreateVisit: jest.fn().mockReturnValue(() => {}),
-      getWardById: jest.fn().mockReturnValue(() => ({
-        ward: {
-          id: 1,
-          name: "Defoe Ward",
-          hospitalName: "Northwick Park Hospital",
-        },
-        error: null,
-      })),
-      getUserIsAuthenticated: jest
-        .fn()
-        .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
+      getWardById: () => getWardByIdSpy,
+      getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
       getDb: jest.fn().mockResolvedValue(() => {}),
       getSendTextMessage: () => () => ({ success: true, error: null }),
     };
@@ -62,13 +67,14 @@ describe("schedule-visit", () => {
     });
 
     expect(response.status).toHaveBeenCalledWith(201);
+    expect(getWardByIdSpy).toHaveBeenCalledWith(10);
     expect(createVisitSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
         provider: "jitsi",
-        wardId: 1,
+        wardId: 10,
       })
     );
   });
@@ -89,8 +95,8 @@ describe("schedule-visit", () => {
       "meow-woof-quack",
       "07123456789",
       {
-        ward_name: "Defoe Ward",
-        hospital_name: "Northwick Park Hospital",
+        ward_name: "Fake Ward",
+        hospital_name: "Fake Hospital",
         visit_date: "5 April 2020",
         visit_time: "10:10am",
       },
