@@ -26,7 +26,7 @@ export default withContainer(async (req, res, { container }) => {
   const visitsUrl = `${process.env.ORIGIN}/visits/${callId}?name=Ward`;
 
   const sendTextMessage = container.getSendTextMessage();
-  const templateId = process.env.TEMPLATE_ID;
+  const templateId = process.env.SMS_JOIN_TEMPLATE_ID;
 
   try {
     // Passing in null as we don't care about the ID just yet
