@@ -53,4 +53,8 @@ describe("AppContainer", () => {
   it("returns getRetrieveVisitByCallId", () => {
     expect(container.getRetrieveVisitByCallId()).toBeDefined();
   });
+
+  it("returns verifyCallPassword", () => {
+    expect(container.getVerifyCallPassword()).toBeDefined();
+  });
 });
