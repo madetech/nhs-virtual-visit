@@ -14,6 +14,7 @@ describe("create-ward", () => {
       body: {
         name: "Seto Kaiba Ward",
         hospitalName: "Yugi Muto Hospital",
+        code: "YamiYugi",
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -30,7 +31,7 @@ describe("create-ward", () => {
       getCreateWard: jest.fn().mockReturnValue(() => {
         return { wardId: 1, error: null };
       }),
-      getUserIsAuthenticated: jest
+      getAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
     };
@@ -47,7 +48,7 @@ describe("create-ward", () => {
   });
 
   it("returns a 401 if no token provided", async () => {
-    const userIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
+    const adminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
 
     await createWard(
       {
@@ -59,13 +60,13 @@ describe("create-ward", () => {
       {
         container: {
           ...container,
-          getUserIsAuthenticated: () => userIsAuthenticatedSpy,
+          getAdminIsAuthenticated: () => adminIsAuthenticatedSpy,
         },
       }
     );
 
     expect(response.status).toHaveBeenCalledWith(401);
-    expect(userIsAuthenticatedSpy).toHaveBeenCalled();
+    expect(adminIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
   it("creates a new ward if valid", async () => {
@@ -85,6 +86,7 @@ describe("create-ward", () => {
       expect.objectContaining({
         name: "Seto Kaiba Ward",
         hospitalName: "Yugi Muto Hospital",
+        code: "YamiYugi",
       })
     );
   });
