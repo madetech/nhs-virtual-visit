@@ -14,6 +14,7 @@ describe("createWard", () => {
     const request = {
       name: "Defoe Ward",
       hospitalName: "Test Hospital",
+      code: "WardCode",
     };
 
     const { wardId, error } = await createWard(container)(request);
@@ -24,6 +25,7 @@ describe("createWard", () => {
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.name,
       request.hospitalName,
+      request.code,
     ]);
   });
 });
