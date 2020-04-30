@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import Button from "../../src/components/Button";
 import { GridRow, GridColumn } from "../../src/components/Grid";
-import Text from "../../src/components/Text";
 import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
 import Router from "next/router";
