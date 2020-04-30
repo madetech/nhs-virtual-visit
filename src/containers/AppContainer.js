@@ -8,6 +8,7 @@ import { verifyTokenOrRedirect } from "../usecases/verifyToken";
 import Database from "../gateways/Database";
 import retrieveWardById from "../usecases/retrieveWardById";
 import verifyWardCode from "../usecases/verifyWardCode";
+import retrieveVisits from "../usecases/retrieveVisits";
 
 class AppContainer {
   getDb() {
@@ -46,6 +47,10 @@ class AppContainer {
 
   getVerifyWardCode() {
     return verifyWardCode(this);
+  }
+
+  getRetrieveVisits() {
+    return retrieveVisits(this);
   }
 }
 

@@ -2,36 +2,41 @@ import retrieveVisits from "./retrieveVisits";
 
 describe("retrieveVisits", () => {
   it("returns a json object containing the calls", async () => {
+    const anySpy = jest.fn(() => [
+      {
+        id: 1,
+        patient_name: "Bob",
+        call_time: new Date("2020-04-15T23:00:00.000Z"),
+        recipient_number: "07907095342",
+        recipient_name: "",
+        call_id: "cb238rfv23cuv3",
+        provider: "whereby",
+      },
+      {
+        id: 2,
+        patient_name: "Harry",
+        call_time: new Date("2020-04-15T23:00:00.000Z"),
+        recipient_number: "07907095342",
+        recipient_name: "Bob",
+        call_id: "cb238rfv23cuv3",
+        provider: "jitsi",
+      },
+    ]);
+
     const container = {
       async getDb() {
         return {
-          any: jest.fn().mockReturnValue([
-            {
-              id: 1,
-              patient_name: "Bob",
-              call_time: new Date("2020-04-15T23:00:00.000Z"),
-              recipient_number: "07907095342",
-              recipient_name: "",
-              call_id: "cb238rfv23cuv3",
-              provider: "whereby",
-            },
-            {
-              id: 2,
-              patient_name: "Harry",
-              call_time: new Date("2020-04-15T23:00:00.000Z"),
-              recipient_number: "07907095342",
-              recipient_name: "Bob",
-              call_id: "cb238rfv23cuv3",
-              provider: "jitsi",
-            },
-          ]),
+          any: anySpy,
         };
       },
     };
 
-    const { scheduledCalls, error } = await retrieveVisits(container);
+    const { scheduledCalls, error } = await retrieveVisits(container)({
+      wardId: 1,
+    });
 
     expect(error).toBeNull();
+    expect(anySpy).toHaveBeenCalledWith(expect.anything(), [1]);
     expect(scheduledCalls).toHaveLength(2);
     expect(scheduledCalls[0]).toEqual({
       id: 1,
@@ -64,7 +69,7 @@ describe("retrieveVisits", () => {
       },
     };
 
-    const { error } = await retrieveVisits(container);
+    const { error } = await retrieveVisits(container)({ wardId: 1 });
     expect(error).toBeDefined();
   });
 });
