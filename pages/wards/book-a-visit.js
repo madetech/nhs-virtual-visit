@@ -196,7 +196,7 @@ const Home = ({
 
               <Hint className="nhsuk-u-margin-bottom-2">
                 This must be a valid mobile number. For example,
-                0&zwj;7&zwj;7&zwj;0&zwj;0 9&zwj;0&zwj;0 9&zwj;8&zwj;2 a UK
+                0&zwj;7&zwj;7&zwj;0&zwj;0 9&zwj;0&zwj;0&zwj;1&zwj;0&zwj;0 a UK
                 number, or
                 +3&zwj;9&zwj;3&zwj;1&zwj;2&zwj;3&zwj;4&zwj;5&zwj;6&zwj;7&zwj;8&zwj;9
                 for an international number.
