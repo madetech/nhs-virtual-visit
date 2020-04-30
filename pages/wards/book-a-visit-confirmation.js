@@ -33,7 +33,7 @@ const ScheduleConfirmation = ({
       patientName,
       callTime,
     }) => {
-      const response = await fetch("/api/schedule-visit", {
+      const response = await fetch("/api/book-a-visit", {
         method: "POST",
         headers: {
           "content-type": "application/json",
