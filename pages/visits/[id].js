@@ -84,16 +84,27 @@ const Call = ({ callId, name, provider, error }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  async ({ query, container }) => {
-    const { id, name } = query;
-    const callId = id;
+  async ({ req: { headers }, res, query, container }) => {
+    const { id: callId, name, callPassword } = query;
 
-    const { scheduledCall, error } = await retrieveVisitByCallId(container)(
-      callId
-    );
-    const provider = scheduledCall.provider;
+    const verifyCallPassword = container.getVerifyCallPassword();
+    const userIsAuthenticated = container.getUserIsAuthenticated();
+    const retrieveVisitByCallId = container.getRetrieveVisitByCallId();
 
-    return { props: { callId, name, provider, error } };
+    const { validCallPassword } = verifyCallPassword(callId, callPassword);
+    const authenticationToken = userIsAuthenticated(headers.cookie);
+
+    if (validCallPassword || authenticationToken) {
+      const { scheduledCall, error } = await retrieveVisitByCallId(callId);
+      const provider = scheduledCall.provider;
+
+      return { props: { callId, name, provider, error } };
+    } else {
+      res.writeHead(307, {
+        Location: "/error",
+      });
+      res.end();
+    }
   }
 );
 
