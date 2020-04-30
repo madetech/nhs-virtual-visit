@@ -2,6 +2,7 @@ import createVisit from "../usecases/createVisit";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
+import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
 import { NotifyClient } from "notifications-node-client";
 import { verifyTokenOrRedirect } from "../usecases/verifyToken";
@@ -33,6 +34,10 @@ class AppContainer {
 
   getUserIsAuthenticated() {
     return userIsAuthenticated(this);
+  }
+
+  getAdminIsAuthenticated() {
+    return adminIsAuthenticated(this);
   }
 
   getNotifyClient() {

@@ -89,10 +89,14 @@ export default Login;
 export const getServerSideProps = propsWithContainer(
   async ({ req: { headers }, res, container }) => {
     const userIsAuthenticated = container.getUserIsAuthenticated();
+    const userToken = userIsAuthenticated(headers.cookie);
 
-    const token = userIsAuthenticated(headers.cookie);
+    const adminIsAuthenticated = container.getAdminIsAuthenticated();
+    const adminToken = adminIsAuthenticated(headers.cookie);
 
-    if (token && token.ward) {
+    if (adminToken && adminToken.admin) {
+      res.writeHead(307, { Location: `/admin` }).end();
+    } else if (userToken && userToken.ward) {
       res.writeHead(307, { Location: `/wards/visits` }).end();
     }
 
