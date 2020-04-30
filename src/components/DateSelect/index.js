@@ -40,7 +40,9 @@ const DateSelect = ({
   return (
     <>
       <FormGroup>
-        <LabelHeader>What is the date of their virtual visit?</LabelHeader>
+        <Label className="nhsuk-label--l">
+          What is the date of their virtual visit?
+        </Label>
         <Hint>For example, 1&zwj;6&zwj; 4&zwj; 2&zwj;0&zwj;2&zwj;0</Hint>
         {hasDateError ? <ErrorMessage>{dateErrorMessage}</ErrorMessage> : null}
         <div className="nhsuk-date-input__item">
@@ -93,7 +95,9 @@ const DateSelect = ({
         </div>
       </FormGroup>
       <FormGroup>
-        <LabelHeader>What is the time of their virtual visit?</LabelHeader>
+        <Label className="nhsuk-label--l">
+          What is the time of their virtual visit?
+        </Label>
         <Hint>For example, 15 00</Hint>
         {hasTimeError ? <ErrorMessage>{timeErrorMessage}</ErrorMessage> : null}
         <div className="nhsuk-date-input__item">

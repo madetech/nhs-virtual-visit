@@ -12,7 +12,7 @@ import validateMobileNumber from "../../src/helpers/validateMobileNumber";
 import moment from "moment";
 import verifyToken from "../../src/usecases/verifyToken";
 import TokenProvider from "../../src/providers/TokenProvider";
-import LabelHeader from "../../src/components/LabelHeader";
+import Label from "../../src/components/Label";
 import Router from "next/router";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
@@ -154,9 +154,9 @@ const Home = ({
           <form onSubmit={onSubmit}>
             <Heading>Book a virtual visit</Heading>
             <FormGroup>
-              <LabelHeader htmlFor="patient-name">
+              <Label htmlFor="patient-name" className="nhsuk-label--l">
                 What is the patient's name?
-              </LabelHeader>
+              </Label>
               <Input
                 id="patient-name"
                 type="text"
@@ -170,9 +170,9 @@ const Home = ({
                 value={patientName || ""}
               />
 
-              <LabelHeader htmlFor="contact-name">
+              <Label htmlFor="contact-name" className="nhsuk-label--l">
                 What is the key contact's name?
-              </LabelHeader>
+              </Label>
               <Input
                 id="contact-name"
                 type="text"
@@ -186,9 +186,9 @@ const Home = ({
                 value={contactName || ""}
               />
 
-              <LabelHeader htmlFor="contact">
+              <Label htmlFor="contact" className="nhsuk-label--l">
                 What is their key contact's mobile number?
-              </LabelHeader>
+              </Label>
 
               <Hint className="nhsuk-u-margin-bottom-2">
                 This must be a valid mobile number. For example,
