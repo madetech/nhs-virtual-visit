@@ -6,11 +6,17 @@ import Heading from "../../../src/components/Heading";
 import Lead from "../../../src/components/Lead";
 import Text from "../../../src/components/Text";
 import Button from "../../../src/components/Button";
+import propsWithContainer from "../../../src/middleware/propsWithContainer";
+import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
+import Error from "next/error";
 
-const Start = () => {
+const Start = ({ callId, error, queryPassword }) => {
   const router = useRouter();
-  const onClick = () => router.push(`/visitors/${router.query.id}/name`);
-
+  const onClick = () =>
+    router.push(`/visitors/${callId}/name?callPassword=${queryPassword}`);
+  if (error) {
+    return <Error />;
+  }
   return (
     <Layout title="Attend a virtual visit">
       <GridRow>
@@ -48,5 +54,26 @@ const Start = () => {
     </Layout>
   );
 };
+
+export const getServerSideProps = propsWithContainer(
+  async ({ query, container, res }) => {
+    const { id, callPassword } = query;
+    const callId = id;
+    const queryPassword = callPassword ? callPassword : "";
+    const { scheduledCall, error } = await retrieveVisitByCallId(container)(
+      callId
+    );
+    const dbPassword = scheduledCall.callPassword;
+    if (dbPassword !== queryPassword && dbPassword !== "") {
+      res.writeHead(307, {
+        Location: "/error",
+      });
+      res.end();
+    }
+    console.log("start.js error", error);
+
+    return { props: { callId, error, queryPassword } };
+  }
+);
 
 export default Start;

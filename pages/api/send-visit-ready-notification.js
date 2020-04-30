@@ -22,13 +22,13 @@ export default withContainer(async (req, res, { container }) => {
     return;
   }
 
-  let { callId, contactNumber } = body;
+  let { callId, contactNumber, callPassword } = body;
 
   const protocol = req.protocol;
   const host = req.headers.host;
   const origin = `${protocol}://${host}`;
 
-  const visitorsUrl = `${origin}/visitors/${callId}/start`;
+  const visitorsUrl = `${origin}/visitors/${callId}/start?callPassword=${callPassword}`;
   const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
 
   const sendTextMessage = container.getSendTextMessage();

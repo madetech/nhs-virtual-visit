@@ -20,6 +20,7 @@ const retrieveVisitByCallId = ({ getDb }) => async (callId) => {
           : null,
         callId: scheduledCall.call_id,
         provider: scheduledCall.provider,
+        callPassword: scheduledCall.call_password,
       },
       error: null,
     };

@@ -55,6 +55,7 @@ describe("send-visit-ready-notification", () => {
         body: {
           callId: "much-wow",
           contactNumber: "07123456789",
+          callPassword: "securePassword",
         },
         protocol: "http",
         headers: { host: "localhost:3000", cookie: "token=valid.token.value" },
@@ -85,7 +86,8 @@ describe("send-visit-ready-notification", () => {
         "meow-woof-quack",
         "07123456789",
         {
-          call_url: "http://localhost:3000/visitors/much-wow/start",
+          call_url:
+            "http://localhost:3000/visitors/much-wow/start?callPassword=securePassword",
           ward_name: "Defoe Ward",
           hospital_name: "Northwick Park Hospital",
         },

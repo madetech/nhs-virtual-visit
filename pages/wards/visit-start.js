@@ -18,10 +18,11 @@ const VisitStart = ({
   contactNumber,
   callId,
   error,
+  callPassword,
 }) => {
   const [userError, setUserError] = useState(error);
 
-  const startCall = async ({ callId, contactNumber }) => {
+  const startCall = async ({ callId, contactNumber, callPassword }) => {
     const response = await fetch("/api/send-visit-ready-notification", {
       method: "POST",
       headers: {
@@ -30,6 +31,7 @@ const VisitStart = ({
       body: JSON.stringify({
         callId,
         contactNumber,
+        callPassword,
       }),
     });
 
@@ -78,6 +80,7 @@ const VisitStart = ({
               startCall({
                 callId,
                 contactNumber,
+                callPassword,
               })
             }
           >
@@ -110,6 +113,7 @@ export const getServerSideProps = propsWithContainer(
           callDate,
           callId,
           error,
+          callPassword: scheduledCall.callPassword,
         },
       };
     },

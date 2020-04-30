@@ -19,6 +19,7 @@ describe("createVisit", () => {
       callId: 12345,
       provider: "jitsi",
       wardId: 1,
+      callPassword: "securePassword",
     };
 
     const resultingId = await createVisit(container)(request);
@@ -33,6 +34,7 @@ describe("createVisit", () => {
       request.callId,
       request.provider,
       request.wardId,
+      request.callPassword,
     ]);
   });
 });
