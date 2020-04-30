@@ -1,3 +1,3 @@
 import moment from "moment";
 
-export default (time) => moment(time).format("h:mma");
+export default (time, timeFormat = "h:mma") => moment(time).format(timeFormat);
