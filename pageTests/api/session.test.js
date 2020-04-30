@@ -55,10 +55,13 @@ describe("api/session", () => {
 
         const verifyWardCodeSpy = jest.fn(async () => ({
           validWardCode: true,
+          ward: { id: 10, code: "MEOW" },
         }));
+        const tokenGeneratorSpy = jest.fn(() => "generatedToken");
+
         const container = {
           getTokenProvider: jest.fn(() => ({
-            generate: jest.fn(() => "generatedToken"),
+            generate: tokenGeneratorSpy,
           })),
           getVerifyWardCode: () => verifyWardCodeSpy,
         };
@@ -66,6 +69,10 @@ describe("api/session", () => {
         await session(validRequest, response, { container });
 
         expect(verifyWardCodeSpy).toHaveBeenCalledWith("MEOW");
+        expect(tokenGeneratorSpy).toHaveBeenCalledWith({
+          wardId: 10,
+          wardCode: "MEOW",
+        });
         expect(response.writeHead).toHaveBeenCalledWith(
           201,
           expect.objectContaining({
