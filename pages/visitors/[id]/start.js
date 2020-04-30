@@ -60,11 +60,15 @@ export const getServerSideProps = propsWithContainer(
     const { id, callPassword } = query;
     const callId = id;
     const queryPassword = callPassword ? callPassword : "";
-    const { scheduledCall, error } = await retrieveVisitByCallId(container)(
-      callId
+
+    const verifyCallPassword = container.getVerifyCallPassword();
+
+    const { validCallPassword, error } = await verifyCallPassword(
+      callId,
+      queryPassword
     );
-    const dbPassword = scheduledCall.callPassword;
-    if (dbPassword !== queryPassword && dbPassword !== "") {
+
+    if (!validCallPassword) {
       res.writeHead(307, {
         Location: "/error",
       });
