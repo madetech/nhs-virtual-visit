@@ -12,6 +12,7 @@ import verifyWardCode from "../usecases/verifyWardCode";
 import retrieveVisits from "../usecases/retrieveVisits";
 import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 import verifyCallPassword from "../usecases/verifyCallPassword";
+import retrieveWards from "../usecases/retrieveWards";
 
 class AppContainer {
   getDb = () => {
@@ -66,6 +67,10 @@ class AppContainer {
 
   getVerifyCallPassword = () => {
     return verifyCallPassword(this);
+  };
+
+  getRetrieveWards = () => {
+    return retrieveWards(this);
   };
 }
 
