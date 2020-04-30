@@ -48,7 +48,7 @@ const VisitStart = ({
   }
 
   return (
-    <Layout title="Before handing over to the patient">
+    <Layout title="Before handing over to the patient" renderLogout={true}>
       <GridRow>
         <GridColumn width="two-thirds">
           <Heading>Before handing over to the patient</Heading>

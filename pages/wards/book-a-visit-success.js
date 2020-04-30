@@ -9,7 +9,7 @@ import TokenProvider from "../../src/providers/TokenProvider";
 
 const Success = () => {
   return (
-    <Layout title="Virtual visit booked">
+    <Layout title="Virtual visit booked" renderLogout={true}>
       <GridRow>
         <GridColumn width="two-thirds">
           <Heading>Virtual visit booked</Heading>

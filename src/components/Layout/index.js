@@ -1,5 +1,6 @@
 import { styles } from "./styles.scss";
 import Head from "next/head";
+import LogoutButton from "../LogoutButton";
 
 const Layout = ({
   title,
@@ -7,6 +8,7 @@ const Layout = ({
   children,
   backLink,
   mainStyleOverride,
+  renderLogout = false,
 }) => (
   <>
     <Head>
@@ -31,6 +33,12 @@ const Layout = ({
             ></path>
             <image src="https://assets.nhs.uk/images/nhs-logo.png"></image>
           </svg>
+        </div>
+
+        <div className="nhsuk-header__content" id="content-header">
+          <div className="nhsuk-header__menu">
+            <LogoutButton renderLogout={renderLogout} />
+          </div>
         </div>
       </div>
     </header>

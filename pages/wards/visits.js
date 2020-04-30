@@ -16,7 +16,7 @@ export default function WardVisits({ scheduledCalls, error, wardId }) {
   }
 
   return (
-    <Layout title="Virtual visits">
+    <Layout title="Virtual visits" renderLogout={true}>
       <GridRow>
         <GridColumn width="full">
           <Heading>

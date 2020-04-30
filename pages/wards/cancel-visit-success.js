@@ -37,7 +37,7 @@ const deleteVisitSuccess = ({
   }
 
   return (
-    <Layout title="Virtual visit has been cancelled">
+    <Layout title="Virtual visit has been cancelled" renderLogout={true}>
       <GridRow>
         <GridColumn width="full">
           <form onSubmit={onSubmit}>
