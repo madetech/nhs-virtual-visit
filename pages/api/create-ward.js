@@ -9,9 +9,9 @@ export default withContainer(
       return;
     }
 
-    const userIsAuthenticated = container.getUserIsAuthenticated();
+    const adminIsAuthenticated = container.getAdminIsAuthenticated();
 
-    if (!userIsAuthenticated(headers.cookie)) {
+    if (!adminIsAuthenticated(headers.cookie)) {
       res.status(401);
       res.end();
       return;
@@ -36,6 +36,7 @@ export default withContainer(
     const { wardId, error } = await createWard({
       name: body.name,
       hospitalName: body.hospitalName,
+      code: body.code,
     });
 
     if (error) {
