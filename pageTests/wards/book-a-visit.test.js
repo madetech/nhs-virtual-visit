@@ -1,11 +1,11 @@
-import { getServerSideProps } from "../../pages/wards/schedule-visit";
+import { getServerSideProps } from "../../pages/wards/book-a-visit";
 
 // TODO: This needs to be moved once the verifyToken logic is in the container..
 jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
   token && { ward: "123" }
 );
 
-describe("ward/schedule-visit", () => {
+describe("ward/book-a-visit", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
