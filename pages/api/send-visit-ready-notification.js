@@ -22,8 +22,12 @@ export default withContainer(async (req, res, { container }) => {
 
   let { callId, contactNumber } = body;
 
-  const visitorsUrl = `${process.env.ORIGIN}/visitors/${callId}/start`;
-  const visitsUrl = `${process.env.ORIGIN}/visits/${callId}?name=Ward`;
+  const protocol = req.protocol;
+  const host = req.headers.host;
+  const origin = `${protocol}://${host}`;
+
+  const visitorsUrl = `${origin}/visitors/${callId}/start`;
+  const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
 
   const sendTextMessage = container.getSendTextMessage();
   const templateId = process.env.SMS_JOIN_TEMPLATE_ID;
