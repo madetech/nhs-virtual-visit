@@ -9,14 +9,14 @@ import TokenProvider from "../../src/providers/TokenProvider";
 
 const Success = () => {
   return (
-    <Layout title="Virtual visit scheduled">
+    <Layout title="Virtual visit booked">
       <GridRow>
         <GridColumn width="two-thirds">
-          <Heading>Virtual visit scheduled</Heading>
+          <Heading>Virtual visit booked</Heading>
 
           <Text>
-            Your virtual visit has been scheduled and the key contact has been
-            sent an SMS with their scheduled time.
+            Your virtual visit has been booked and the key contact has been sent
+            an SMS with their scheduled time.
           </Text>
 
           <ActionLink href={`/wards/schedule-visit`}>
