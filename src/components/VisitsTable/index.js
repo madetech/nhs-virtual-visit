@@ -20,7 +20,7 @@ const Visits = ({ visits }) => (
           <th className="nhsuk-table__header" scope="col">
             Call time
           </th>
-          <th className="nhsuk-table__header" colspan="2" scope="col"></th>
+          <th className="nhsuk-table__header" colSpan="2" scope="col"></th>
         </tr>
       </thead>
       <tbody className="nhsuk-table__body">
