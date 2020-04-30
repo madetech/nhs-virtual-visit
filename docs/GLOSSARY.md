@@ -42,9 +42,9 @@ An alphanumeric string used by **Ward Staff** to securely access the app.
 
 **Visits** are shown for 30 minutes after their scheduled start time - after 30 minutes has elapsed they are hidden from this page.
 
-### `/wards/schedule-visit`
+### `/wards/book-a-visit`
 
-**Ward Staff** schedule new **Visits**.
+**Ward Staff** book new **Visits**.
 
 ### `/visits/{visitId}`
 
