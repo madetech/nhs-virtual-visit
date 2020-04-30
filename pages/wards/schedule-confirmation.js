@@ -129,7 +129,7 @@ const ScheduleConfirmation = ({
               <div className="nhsuk-summary-list__row">
                 <dt className="nhsuk-summary-list__key">Time of call</dt>
                 <dd className="nhsuk-summary-list__value">
-                  {formatTime(callTime)}
+                  {formatTime(callTime, "HH:mm")}
                 </dd>
                 <dd className="nhsuk-summary-list__actions">
                   <a href="#" onClick={changeLink}>

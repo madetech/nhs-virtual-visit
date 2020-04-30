@@ -87,7 +87,7 @@ describe("ward/cancel-visit-confirmation", () => {
         expect(props.contactName).toEqual("John Doe");
         expect(props.contactNumber).toEqual("07001231234");
         expect(props.callDate).toEqual("20 April 2020");
-        expect(props.callTime).toEqual("5:20pm");
+        expect(props.callTime).toEqual("17:20");
       });
     });
   });

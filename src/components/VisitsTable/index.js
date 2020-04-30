@@ -30,7 +30,7 @@ const Visits = ({ visits }) => (
             <td className="nhsuk-table__cell">{visit.recipientName}</td>
             <td className="nhsuk-table__cell">{visit.recipientNumber}</td>
             <td className="nhsuk-table__cell">
-              {formatDateAndTime(visit.callTime)}
+              {formatDateAndTime(visit.callTime, "HH:mm")}
             </td>
             <td className="nhsuk-table__cell">
               <button
