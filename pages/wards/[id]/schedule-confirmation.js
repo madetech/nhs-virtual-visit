@@ -3,5 +3,5 @@ import redirectWithQuery from "../../../src/helpers/redirectWithQuery";
 export default () => null;
 
 export const getServerSideProps = redirectWithQuery(
-  "/wards/schedule-confirmation"
+  "/wards/book-a-visit-confirmation"
 );
