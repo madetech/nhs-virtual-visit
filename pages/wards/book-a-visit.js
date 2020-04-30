@@ -147,7 +147,11 @@ const Home = ({
     }
   });
   return (
-    <Layout title="Book a virtual visit" hasErrors={errors.length != 0}>
+    <Layout
+      title="Book a virtual visit"
+      hasErrors={errors.length != 0}
+      renderLogout={true}
+    >
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />

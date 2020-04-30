@@ -35,7 +35,7 @@ const deleteVisitConfirmation = ({
   }
 
   return (
-    <Layout title="Confirm cancellation of virtual visit">
+    <Layout title="Confirm cancellation of virtual visit" renderLogout={true}>
       <GridRow>
         <GridColumn width="full">
           <form onSubmit={onSubmit}>

@@ -60,7 +60,10 @@ const ScheduleConfirmation = ({
   });
 
   return (
-    <Layout title="Check your answers before booking a virtual visit">
+    <Layout
+      title="Check your answers before booking a virtual visit"
+      renderLogout={true}
+    >
       <GridRow>
         <GridColumn width="two-thirds">
           <form onSubmit={onSubmit}>
