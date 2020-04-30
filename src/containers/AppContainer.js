@@ -14,59 +14,59 @@ import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 import verifyCallPassword from "../usecases/verifyCallPassword";
 
 class AppContainer {
-  getDb() {
+  getDb = () => {
     return Database.getInstance();
-  }
+  };
 
-  getCreateVisit() {
+  getCreateVisit = () => {
     return createVisit(this);
-  }
+  };
 
-  getCreateWard() {
+  getCreateWard = () => {
     return createWard(this);
-  }
+  };
 
-  getWardById() {
+  getWardById = () => {
     return retrieveWardById(this);
-  }
+  };
 
-  getTokenProvider() {
+  getTokenProvider = () => {
     return new TokenProvider(process.env.JWT_SIGNING_KEY);
-  }
+  };
 
-  getUserIsAuthenticated() {
+  getUserIsAuthenticated = () => {
     return userIsAuthenticated(this);
-  }
+  };
 
-  getAdminIsAuthenticated() {
+  getAdminIsAuthenticated = () => {
     return adminIsAuthenticated(this);
-  }
+  };
 
-  getNotifyClient() {
+  getNotifyClient = () => {
     const apiKey = process.env.API_KEY;
 
     return new NotifyClient(apiKey);
-  }
+  };
 
-  getSendTextMessage() {
+  getSendTextMessage = () => {
     return sendTextMessage(this);
-  }
+  };
 
-  getVerifyWardCode() {
+  getVerifyWardCode = () => {
     return verifyWardCode(this);
-  }
+  };
 
-  getRetrieveVisits() {
+  getRetrieveVisits = () => {
     return retrieveVisits(this);
-  }
+  };
 
-  getRetrieveVisitByCallId() {
+  getRetrieveVisitByCallId = () => {
     return retrieveVisitByCallId(this);
-  }
+  };
 
-  getVerifyCallPassword() {
+  getVerifyCallPassword = () => {
     return verifyCallPassword(this);
-  }
+  };
 }
 
 export default (() => {
