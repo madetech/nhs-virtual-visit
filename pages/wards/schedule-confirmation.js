@@ -20,7 +20,7 @@ const ScheduleConfirmation = ({
 }) => {
   const changeLink = () => {
     Router.push({
-      pathname: `/wards/schedule-visit`,
+      pathname: `/wards/book-a-visit`,
       query: { patientName, contactName, contactNumber, ...callTime },
     });
   };

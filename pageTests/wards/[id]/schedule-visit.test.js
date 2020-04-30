@@ -13,7 +13,7 @@ describe("/wards/[id]/schedule-visit", () => {
     getServerSideProps({ res, query });
 
     expect(res.writeHead).toHaveBeenCalledWith(301, {
-      Location: "/wards/schedule-visit?foo=123",
+      Location: "/wards/book-a-visit?foo=123",
     });
   });
 });

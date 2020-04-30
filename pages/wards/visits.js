@@ -34,7 +34,7 @@ export default function WardVisits({ scheduledCalls, error, wardId }) {
             to set up a virtual visit.
           </Text>
 
-          <ActionLink href={`/wards/schedule-visit`}>
+          <ActionLink href={`/wards/book-a-visit`}>
             Book a virtual visit
           </ActionLink>
 
