@@ -1,8 +1,9 @@
-export default async function retrieveVisits({ getDb }) {
+const retrieveVisits = ({ getDb }) => async ({ wardId }) => {
   const db = await getDb();
   try {
     const scheduledCalls = await db.any(
-      "SELECT * FROM scheduled_calls_table WHERE call_time > NOW() - INTERVAL '12 hours' ORDER BY call_time ASC"
+      `SELECT * FROM scheduled_calls_table WHERE call_time > NOW() - INTERVAL '12 hours' AND ward_id = $1 ORDER BY call_time ASC`,
+      [wardId]
     );
 
     return {
@@ -26,4 +27,6 @@ export default async function retrieveVisits({ getDb }) {
       error: error.toString(),
     };
   }
-}
+};
+
+export default retrieveVisits;
