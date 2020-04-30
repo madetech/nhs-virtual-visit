@@ -1,3 +1,4 @@
 import moment from "moment";
 
-export default (time) => moment(time).format("D MMMM YYYY, h:mma");
+export default (time, timeFormat = "h:mma") =>
+  moment(time).format(`D MMMM YYYY, ${timeFormat}`);
