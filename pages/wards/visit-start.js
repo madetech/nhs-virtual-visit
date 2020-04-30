@@ -48,20 +48,18 @@ const VisitStart = ({
   }
 
   return (
-    <Layout title="Pre Call Checklist">
+    <Layout title="Before handing over to the patient">
       <GridRow>
         <GridColumn width="two-thirds">
-          <Heading>Virtual visit checklist</Heading>
-          <p>You have started a virtual visit.</p>
+          <Heading>Before handing over to the patient</Heading>
+
           <p>
-            The key contact will receive a text message with instructions on how
-            to join this visit.
+            The key contact has been sent a text message with instructions on
+            how to attend this visit.
           </p>
-          <p>
-            Before handing over to the patient, please confirm they are the
-            correct person. Please ask the key contact to confirm the following
-            details of the patient:
-          </p>
+
+          <p>Please ask the key contact to confirm the following details:</p>
+
           <ul>
             <li>
               Key contact name{contactName && ":"}{" "}
@@ -83,7 +81,7 @@ const VisitStart = ({
               })
             }
           >
-            Start visit
+            Attend visit
           </button>
         </GridColumn>
       </GridRow>
