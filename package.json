@@ -20,7 +20,7 @@
     "cookie": "^0.4.1",
     "dotenv-load": "^2.0.0",
     "express": "^4.17.1",
-    "google-libphonenumber": "^3.2.8",
+    "google-libphonenumber": "^3.2.9",
     "heroku-ssl-redirect": "0.0.4",
     "isomorphic-unfetch": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
