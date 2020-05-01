@@ -7,7 +7,7 @@ export default (() => {
         const { default: pgp } = await import("pg-promise");
 
         instance = pgp()({
-          connectionString: process.env.URI,
+          connectionString: process.env.DATABASE_URL,
           ssl: {
             rejectUnauthorized: false,
           },

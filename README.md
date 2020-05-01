@@ -65,7 +65,6 @@ In order to run this app locally you will need to add these variables to your `.
 API_KEY=
 # Postgres Connection String
 DATABASE_URL=
-URI=
 # GovNotify Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
 # GovNotify Join Template ID
@@ -105,11 +104,10 @@ Restart your PostgreSQL server and SSL will connections will be enabled
    ```bash
    cat db/schema.sql | psql nhs-virtual-visit-dev
    ```
-3. Add the database URI as an environment variable in `.env`. On Linux you may need to provide a username and password.
+3. Add the database URL as an environment variable in `.env`. On Linux you may need to provide a username and password.
    ```bash
-   cat <<<EOF > .env
-   DATABASE_URI=postgresql://localhost/nhs-virtual-visit-dev
-   URI=postgresql://localhost/nhs-virtual-visit-dev
+   cat <<<EOF >> .env
+   DATABASE_URL=postgresql://localhost/nhs-virtual-visit-dev
    EOF
    ```
 

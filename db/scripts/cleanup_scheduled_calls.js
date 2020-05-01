@@ -3,7 +3,7 @@ async function getDb() {
   dotenv.config();
 
   const pgp = require("pg-promise")({});
-  const connectionURL = process.env.URI;
+  const connectionURL = process.env.DATABASE_URL;
   return pgp({
     connectionString: connectionURL,
     ssl: { rejectUnauthorized: false },
