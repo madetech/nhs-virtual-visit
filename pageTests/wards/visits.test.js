@@ -34,13 +34,16 @@ describe("ward/visits", () => {
       });
     });
 
-    it("provides the visit records from the database", async () => {
-      const retrieveVisitsSpy = jest.fn(async () => ({
+    it("provides the visit and a ward record from the database", async () => {
+      const visitsSpy = jest.fn(async () => ({
         scheduledCalls: [{ id: 1 }, { id: 2 }],
+        ward: { id: 1 },
         error: null,
+        wardError: null,
       }));
       const container = {
-        getRetrieveVisits: () => retrieveVisitsSpy,
+        getRetrieveVisits: () => visitsSpy,
+        getWardById: () => visitsSpy,
       };
 
       const { props } = await getServerSideProps({
@@ -51,8 +54,7 @@ describe("ward/visits", () => {
       });
       expect(res.writeHead).not.toHaveBeenCalled();
 
-      expect(retrieveVisitsSpy).toHaveBeenCalledWith({ wardId: 1 });
-      expect(props.wardId).toEqual("123");
+      expect(visitsSpy).toHaveBeenCalledWith({ wardId: 1 });
       expect(props.error).toBeNull();
       expect(props.scheduledCalls).toHaveLength(2);
       expect(props.scheduledCalls[0]).toMatchObject({
@@ -61,6 +63,10 @@ describe("ward/visits", () => {
       expect(props.scheduledCalls[1]).toMatchObject({
         id: 2,
       });
+      expect(props.error).toBeNull();
+      expect(props.ward).toMatchObject({
+        id: 1,
+      });
     });
 
     it("provides an error if a db error occurs", async () => {
@@ -68,8 +74,13 @@ describe("ward/visits", () => {
         scheduledCalls: null,
         error: "Error",
       });
+      const getWardByIdStub = async () => ({
+        ward: null,
+        error: "Error",
+      });
       const container = {
         getRetrieveVisits: () => retrieveVisitsStub,
+        getWardById: () => getWardByIdStub,
       };
 
       const { props } = await getServerSideProps({
@@ -81,6 +92,8 @@ describe("ward/visits", () => {
 
       expect(props.scheduledCalls).toBeNull();
       expect(props.error).not.toBeNull();
+      expect(props.ward).toBeNull();
+      expect(props.wardError).not.toBeNull();
     });
   });
 });
