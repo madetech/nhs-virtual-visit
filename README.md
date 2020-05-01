@@ -101,17 +101,27 @@ Restart your PostgreSQL server and SSL will connections will be enabled
    ```bash
    createdb nhs-virtual-visit-dev
    ```
-1. Load the current schema into the database
+2. Load the current schema into the database
    ```bash
    cat db/schema.sql | psql nhs-virtual-visit-dev
    ```
-1. Add the database URI as an environment variable in `.env`. On Linux you may need to provide a username and password.
+3. Add the database URI as an environment variable in `.env`. On Linux you may need to provide a username and password.
    ```bash
    cat <<<EOF > .env
    DATABASE_URI=postgresql://localhost/nhs-virtual-visit-dev
    URI=postgresql://localhost/nhs-virtual-visit-dev
    EOF
    ```
+
+#### Seeding the database
+
+To seed your database with data to get going quickly, you can run the file under `db/seeds.sql` by doing the following:
+
+```bash
+cat db/seeds.sql | psql nhs-virtual-visit-dev
+```
+
+This will create two wards with codes `TEST1` and `TEST2`
 
 ## Running the service locally
 
