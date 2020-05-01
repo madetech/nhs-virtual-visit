@@ -24,7 +24,7 @@ export default withContainer(async (req, res, { container }) => {
 
   let { callId, contactNumber, callPassword } = body;
 
-  const protocol = req.protocol;
+  const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
   const host = req.headers.host;
   const origin = `${protocol}://${host}`;
 
