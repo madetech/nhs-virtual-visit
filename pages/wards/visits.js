@@ -1,4 +1,5 @@
 import retrieveVisits from "../../src/usecases/retrieveVisits";
+import retrieveWardById from "../../src/usecases/retrieveWardById";
 import Layout from "../../src/components/Layout";
 import Heading from "../../src/components/Heading";
 import ActionLink from "../../src/components/ActionLink";
@@ -10,8 +11,8 @@ import verifyToken from "../../src/usecases/verifyToken";
 import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
-export default function WardVisits({ scheduledCalls, error, wardId }) {
-  if (error) {
+export default function WardVisits({ scheduledCalls, ward, error, wardError }) {
+  if (error || wardError) {
     return <Error />;
   }
 
@@ -21,7 +22,7 @@ export default function WardVisits({ scheduledCalls, error, wardId }) {
         <GridColumn width="full">
           <Heading>
             <span className="nhsuk-caption-l">
-              Ward: {wardId}
+              Ward: {ward.name}
               <span className="nhsuk-u-visually-hidden">-</span>
             </span>
             Virtual visits
@@ -30,8 +31,8 @@ export default function WardVisits({ scheduledCalls, error, wardId }) {
           <h2 className="nhsuk-heading-l">Book a virtual visit</h2>
 
           <Text>
-            You'll need the mobile number of your patient's key contact in order
-            to set up a virtual visit.
+            You'll need the name and mobile number of your patient's key contact
+            in order to set up a virtual visit.
           </Text>
 
           <ActionLink href={`/wards/book-a-visit`}>
@@ -55,12 +56,12 @@ export const getServerSideProps = propsWithContainer(
   verifyToken(
     async ({ authenticationToken, container }) => {
       const { wardId } = authenticationToken;
-
-      const { scheduledCalls, error } = await container.getRetrieveVisits()({
+      let { scheduledCalls, error } = await container.getRetrieveVisits()({
         wardId,
       });
+      let { ward, error: wardError } = await container.getWardById()(wardId);
       return {
-        props: { scheduledCalls, error, wardId: authenticationToken.ward },
+        props: { scheduledCalls, ward, error, wardError },
       };
     },
     {
