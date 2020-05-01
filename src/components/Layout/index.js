@@ -9,11 +9,13 @@ const Layout = ({
   backLink,
   mainStyleOverride,
   renderLogout = false,
+  isBookService = true,
 }) => (
   <>
     <Head>
       <title>
-        {hasErrors ? "Error: " : ""} {title}
+        {hasErrors ? "Error: " : ""} {title} |{" "}
+        {isBookService ? "Book" : "Attend"} a virtual visit | LNWH
       </title>
     </Head>
     <header className="nhsuk-header" role="banner">
