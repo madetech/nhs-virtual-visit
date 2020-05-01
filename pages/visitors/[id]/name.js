@@ -57,6 +57,7 @@ const Name = ({ callId, error, callPassword }) => {
       title="What is your name? - Attend a virtual visit"
       hasErrors={errors.length != 0}
       backLink={backLink}
+      isBookService={false}
     >
       <GridRow>
         <GridColumn width="two-thirds">
