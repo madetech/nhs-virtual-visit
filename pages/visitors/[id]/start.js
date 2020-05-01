@@ -18,7 +18,7 @@ const Start = ({ callId, error, callPassword }) => {
     return <Error />;
   }
   return (
-    <Layout title="Attend a virtual visit">
+    <Layout title="Attend a virtual visit" isBookService={false}>
       <GridRow>
         <GridColumn width="two-thirds">
           <Heading>Attend a virtual visit</Heading>
