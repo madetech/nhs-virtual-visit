@@ -7,6 +7,7 @@ import WardsTable from "../src/components/WardsTable";
 import { GridRow, GridColumn } from "../src/components/Grid";
 import Heading from "../src/components/Heading";
 import ActionLink from "../src/components/ActionLink";
+import Text from "../src/components/Text";
 
 const Admin = ({ error, wards }) => {
   if (error) {
