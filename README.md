@@ -33,7 +33,7 @@ This service allows ward staff to schedule a visit for a patient. Allowing face 
 
 | Visitor receives SMS notifications                                 | Visitor joins a visit                                         | Visitor ends a visit                                       |
 | ------------------------------------------------------------------ | ------------------------------------------------------------- | ---------------------------------------------------------- |
-| ![Visitor receives SMS notifications](docs/images/Visitor_SMS.jpg) | ![Visitor joins a visit](docs/images/Visitor_StartScreen.jpg) | ![Visitor ends a visit](docs/images/Visitor_EndScreen.jpg) |
+| ![Visitor receives SMS notifications](docs/images/Visitor_SMS.png) | ![Visitor joins a visit](docs/images/Visitor_StartScreen.png) | ![Visitor ends a visit](docs/images/Visitor_EndScreen.png) |
 
 ## Technology
 
