@@ -95,6 +95,32 @@ describe("send-visit-ready-notification", () => {
       );
     });
 
+    describe("in a production environment", () => {
+      beforeEach(() => {
+        process.env.NODE_ENV = "production";
+      });
+      afterEach(() => {
+        process.env.NODE_ENV = "test";
+      });
+      it("sends a text message with https", async () => {
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container,
+        });
+
+        expect(sendTextMessageSpy).toHaveBeenCalledWith(
+          "meow-woof-quack",
+          "07123456789",
+          {
+            call_url:
+              "https://localhost:3000/visitors/much-wow/start?callPassword=securePassword",
+            ward_name: "Defoe Ward",
+            hospital_name: "Northwick Park Hospital",
+          },
+          null
+        );
+      });
+    });
+
     it("returns 201 if successfully sends a text message", async () => {
       const sendTextMessageStub = jest
         .fn()
