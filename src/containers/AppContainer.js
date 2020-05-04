@@ -1,11 +1,11 @@
+import Database from "../gateways/Database";
+import GovNotify from "../gateways/GovNotify";
 import createVisit from "../usecases/createVisit";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
-import { NotifyClient } from "notifications-node-client";
-import Database from "../gateways/Database";
 import retrieveWardById from "../usecases/retrieveWardById";
 import verifyWardCode from "../usecases/verifyWardCode";
 import retrieveVisits from "../usecases/retrieveVisits";
@@ -45,9 +45,7 @@ class AppContainer {
   };
 
   getNotifyClient = () => {
-    const apiKey = process.env.API_KEY;
-
-    return new NotifyClient(apiKey);
+    return GovNotify.getInstance();
   };
 
   getSendTextMessage = () => {
