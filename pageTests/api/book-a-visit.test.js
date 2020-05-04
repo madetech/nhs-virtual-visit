@@ -1,8 +1,13 @@
 import scheduleVisit from "../../pages/api/book-a-visit";
 import fetch from "node-fetch";
+import moment from "moment";
+import formatDate from "../../src/helpers/formatDate";
+import formatTime from "../../src/helpers/formatTime";
 
 jest.mock("notifications-node-client");
 jest.mock("node-fetch");
+
+const frozenTime = moment();
 
 describe("schedule-visit", () => {
   let validRequest;
@@ -34,7 +39,7 @@ describe("schedule-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
-        callTime: "2020-04-05T10:10:10",
+        callTime: frozenTime,
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -102,8 +107,8 @@ describe("schedule-visit", () => {
       {
         ward_name: "Fake Ward",
         hospital_name: "Fake Hospital",
-        visit_date: "5 April 2020",
-        visit_time: "10:10am",
+        visit_date: formatDate(frozenTime),
+        visit_time: formatTime(frozenTime),
       },
       null
     );
