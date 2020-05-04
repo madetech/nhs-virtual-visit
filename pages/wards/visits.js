@@ -11,8 +11,8 @@ import verifyToken from "../../src/usecases/verifyToken";
 import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
-export default function WardVisits({ scheduledCalls, ward, error, wardError }) {
-  if (error || wardError) {
+export default function WardVisits({ scheduledCalls, ward, error }) {
+  if (error) {
     return <Error />;
   }
 
@@ -59,9 +59,10 @@ export const getServerSideProps = propsWithContainer(
       let { scheduledCalls, error } = await container.getRetrieveVisits()({
         wardId,
       });
-      let { ward, error: wardError } = await container.getWardById()(wardId);
+      let ward;
+      ({ ward, error } = await container.getWardById()(wardId));
       return {
-        props: { scheduledCalls, ward, error, wardError },
+        props: { scheduledCalls, ward, error },
       };
     },
     {
