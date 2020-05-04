@@ -7,6 +7,7 @@ import formatDateAndTime from "../../src/helpers/formatDateAndTime";
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 import validateMobileNumber from "../../src/helpers/validateMobileNumber";
+import validateDateAndTime from "../../src/helpers/validateDateAndTime";
 
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
@@ -41,10 +42,10 @@ const getValidationErrors = ({ patientName, contactNumber, callTime }) => {
     return "contactNumber must be a valid mobile number";
   }
 
-  try {
-    moment(callTime);
-  } catch (err) {
-    return "callTime is not a valid date";
+  const { isValidDateTime, errorMessage } = validateDateAndTime(callTime);
+
+  if (!isValidDateTime) {
+    return errorMessage;
   }
 
   return null;

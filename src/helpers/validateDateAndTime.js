@@ -1,29 +1,34 @@
 import moment from "moment";
+import formatDateAndTime from "./formatDateAndTime";
+
+const yearsInFuture = 3;
+const secondsForAPIDelay = 60;
 
 export default (time) => {
   // allow for server side delay in network request
   let currentMomentServerSide = new moment();
-  currentMomentServerSide.subtract(60, "seconds");
+  currentMomentServerSide.subtract(secondsForAPIDelay, "seconds");
 
   let futureTimeLimit = new moment();
-  futureTimeLimit.add(3, "years");
+  futureTimeLimit.add(yearsInFuture, "years");
 
   let isValid = true;
   let errorMessage = "";
 
-  try {
-    moment(time);
-    if (!time.isAfter(currentMomentServerSide)) {
+  let validMoment = moment(time);
+  if (!validMoment.isValid()) {
+    errorMessage = "Please enter a valid date and time";
+    isValid = false;
+  } else {
+    if (!validMoment.isAfter(currentMomentServerSide)) {
       errorMessage = "Please enter a time in the future";
       isValid = false;
     }
-    if (!time.isBefore(futureTimeLimit)) {
+
+    if (!validMoment.isBefore(futureTimeLimit)) {
       errorMessage = "Please enter a time within the next three years";
       isValid = false;
     }
-  } catch (error) {
-    errorMessage = "Please enter a valid date and time";
-    isValid = false;
   }
 
   return { isValid, errorMessage };

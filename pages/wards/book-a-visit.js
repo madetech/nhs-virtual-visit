@@ -30,7 +30,15 @@ const isValidDate = ({ year, month, day, hour, minute }) => {
   const timeIsInThePast =
     timeIsValid &&
     moment({ year, month, day, hour, minute }).isSameOrBefore(moment());
-  return { dateIsValid, dateIsInThePast, timeIsValid, timeIsInThePast };
+  const dateIsTooFarInTheFuture =
+    timeIsValid && moment({ year }).isBefore(moment().add(3, "year"));
+  return {
+    dateIsValid,
+    dateIsInThePast,
+    timeIsValid,
+    timeIsInThePast,
+    dateIsTooFarInTheFuture,
+  };
 };
 
 const Home = ({
@@ -109,6 +117,13 @@ const Home = ({
       });
     };
 
+    const setIsTooInTheFuture = (errors) => {
+      errors.push({
+        id: "call-date-error",
+        message: "Please enter a time within the next three years",
+      });
+    };
+
     if (!isValidName(patientName)) {
       setPatientNameError(errors);
     }
@@ -136,6 +151,9 @@ const Home = ({
     }
     if (dateValidation.timeIsInThePast) {
       setTimeInThePastError(errors);
+    }
+    if (dateValidation.dateIsTooFarInTheFuture) {
+      setIsTooInTheFuture(errors);
     }
     setErrors(errors);
 
