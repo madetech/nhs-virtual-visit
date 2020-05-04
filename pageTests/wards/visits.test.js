@@ -37,13 +37,15 @@ describe("ward/visits", () => {
     it("provides the visit and a ward record from the database", async () => {
       const visitsSpy = jest.fn(async () => ({
         scheduledCalls: [{ id: 1 }, { id: 2 }],
+        error: null,
+      }));
+      const wardSpy = jest.fn(async () => ({
         ward: { id: 1 },
         error: null,
-        wardError: null,
       }));
       const container = {
         getRetrieveVisits: () => visitsSpy,
-        getWardById: () => visitsSpy,
+        getWardById: () => wardSpy,
       };
 
       const { props } = await getServerSideProps({
@@ -55,6 +57,7 @@ describe("ward/visits", () => {
       expect(res.writeHead).not.toHaveBeenCalled();
 
       expect(visitsSpy).toHaveBeenCalledWith({ wardId: 1 });
+      expect(wardSpy).toHaveBeenCalledWith(1);
       expect(props.error).toBeNull();
       expect(props.scheduledCalls).toHaveLength(2);
       expect(props.scheduledCalls[0]).toMatchObject({
@@ -91,9 +94,8 @@ describe("ward/visits", () => {
       });
 
       expect(props.scheduledCalls).toBeNull();
-      expect(props.error).not.toBeNull();
       expect(props.ward).toBeNull();
-      expect(props.wardError).not.toBeNull();
+      expect(props.error).not.toBeNull();
     });
   });
 });
