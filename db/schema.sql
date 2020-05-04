@@ -1,6 +1,10 @@
 --
 -- PostgreSQL database dump
 --
+
+-- Dumped from database version 12.1
+-- Dumped by pg_dump version 12.1
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -54,6 +58,38 @@ ALTER SEQUENCE public.scheduled_calls_table_id_seq OWNED BY public.scheduled_cal
 
 
 --
+-- Name: ward_visit_totals; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.ward_visit_totals (
+    id integer NOT NULL,
+    ward_id integer NOT NULL,
+    total_date date NOT NULL,
+    total integer NOT NULL
+);
+
+
+--
+-- Name: ward_visit_totals_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.ward_visit_totals_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: ward_visit_totals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.ward_visit_totals_id_seq OWNED BY public.ward_visit_totals.id;
+
+
+--
 -- Name: wards; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -93,6 +129,13 @@ ALTER TABLE ONLY public.scheduled_calls_table ALTER COLUMN id SET DEFAULT nextva
 
 
 --
+-- Name: ward_visit_totals id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ward_visit_totals ALTER COLUMN id SET DEFAULT nextval('public.ward_visit_totals_id_seq'::regclass);
+
+
+--
 -- Name: wards id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -113,6 +156,22 @@ ALTER TABLE ONLY public.scheduled_calls_table
 
 ALTER TABLE ONLY public.scheduled_calls_table
     ADD CONSTRAINT scheduled_calls_table_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ward_visit_totals unq_ward_date; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ward_visit_totals
+    ADD CONSTRAINT unq_ward_date UNIQUE (ward_id, total_date);
+
+
+--
+-- Name: ward_visit_totals ward_visit_totals_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ward_visit_totals
+    ADD CONSTRAINT ward_visit_totals_pkey PRIMARY KEY (id);
 
 
 --
@@ -137,6 +196,14 @@ ALTER TABLE ONLY public.wards
 
 ALTER TABLE ONLY public.scheduled_calls_table
     ADD CONSTRAINT scheduled_calls_table_ward_id_fkey FOREIGN KEY (ward_id) REFERENCES public.wards(id);
+
+
+--
+-- Name: ward_visit_totals ward_visit_totals_ward_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.ward_visit_totals
+    ADD CONSTRAINT ward_visit_totals_ward_id_fkey FOREIGN KEY (ward_id) REFERENCES public.wards(id);
 
 
 --
