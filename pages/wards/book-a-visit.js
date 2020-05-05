@@ -23,24 +23,6 @@ const isValidName = (input) => {
     return input;
   }
 };
-// const isValidDate = ({ year, month, day, hour, minute }) => {
-//   const dateIsValid = moment({ year, month, day }).isValid();
-//   const dateIsInThePast =
-//     dateIsValid && moment({ year, month, day }).isBefore(moment(), "day");
-//   const timeIsValid = moment({ hour, minute }).isValid();
-//   const timeIsInThePast =
-//     timeIsValid &&
-//     moment({ year, month, day, hour, minute }).isSameOrBefore(moment());
-//   const dateIsTooFarInTheFuture =
-//     timeIsValid && moment({ year }).isBefore(moment().add(3, "year"));
-//   return {
-//     dateIsValid,
-//     dateIsInThePast,
-//     timeIsValid,
-//     timeIsInThePast,
-//     dateIsTooFarInTheFuture,
-//   };
-// };
 
 const Home = ({
   initialPatientName,
