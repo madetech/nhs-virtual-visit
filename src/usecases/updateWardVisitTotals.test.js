@@ -1,7 +1,7 @@
 import updateWardVisitTotals from "./updateWardVisitTotals";
 
 describe("updateWardVisitTotals", () => {
-  const dateToInsert = new Date();
+  const dateToInsert = "2020-05-05T10:10:10";
 
   describe("given no value currently exists for the ward", () => {
     it("inserts a new value for the ward and date", async () => {
@@ -24,12 +24,12 @@ describe("updateWardVisitTotals", () => {
 
       expect(anySpy).toHaveBeenCalledWith(expect.stringContaining("SELECT"), [
         1,
-        dateToInsert.toISOString(),
+        dateToInsert,
       ]);
 
       expect(oneSpy).toHaveBeenCalledWith(expect.stringContaining("INSERT"), [
         1,
-        dateToInsert.toISOString(),
+        dateToInsert,
         1,
       ]);
 
@@ -59,7 +59,7 @@ describe("updateWardVisitTotals", () => {
       expect(anySpy).toHaveBeenCalled();
       expect(anySpy).toHaveBeenCalledWith(expect.stringContaining("SELECT"), [
         1,
-        dateToInsert.toISOString(),
+        dateToInsert,
       ]);
 
       expect(noneSpy).toHaveBeenCalledWith(expect.stringContaining("UPDATE"), [

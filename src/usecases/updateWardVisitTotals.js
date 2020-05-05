@@ -3,7 +3,7 @@ export default ({ getDb }) => async ({ wardId, date }) => {
     const db = await getDb();
     const res = await db.any(
       "SELECT id, ward_id, total FROM ward_visit_totals WHERE ward_id = $1 AND total_date = $2",
-      [wardId, date.toISOString()]
+      [wardId, date]
     );
 
     const [existingTotal] = res;
@@ -15,8 +15,8 @@ export default ({ getDb }) => async ({ wardId, date }) => {
       ]);
     } else {
       await db.one(
-        "INSERT INTO ward_visit_totals (ward_id, total_date, total) VALUES ($1, $2, $3)",
-        [wardId, date.toISOString(), 1]
+        "INSERT INTO ward_visit_totals (ward_id, total_date, total) VALUES ($1, $2, $3) RETURNING id",
+        [wardId, date, 1]
       );
     }
 
