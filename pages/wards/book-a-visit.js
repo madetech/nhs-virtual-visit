@@ -97,6 +97,13 @@ const Home = ({
       });
     };
 
+    const setTimeValidationError = (errorMessage) => {
+      errors.push({
+        id: "call-time-error",
+        message: errorMessage,
+      });
+    };
+
     if (!isValidName(patientName)) {
       setPatientNameError(errors);
     }
@@ -111,10 +118,15 @@ const Home = ({
       setContactNumberError(errors);
     }
 
-    const dateValidation = validateDateAndTime(callDateTime);
+    const { isValidDate, isValidTime, errorMessage } = validateDateAndTime(
+      callDateTime
+    );
 
-    if (!dateValidation.isValid) {
-      setDateValidationError(dateValidation.errorMessage);
+    if (!isValidDate) {
+      setDateValidationError(errorMessage);
+    }
+    if (!isValidTime) {
+      setTimeValidationError(errorMessage);
     }
 
     setErrors(errors);
