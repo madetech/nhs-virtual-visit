@@ -60,35 +60,17 @@ describe("schedule-visit", () => {
       getUpdateWardVisitTotals: () => updateWardVisitTotalsSpy,
     };
     process.env.SMS_INITIAL_TEMPLATE_ID = "meow-woof-quack";
+    process.env.ENABLE_WHEREBY = "yes";
+    process.env.WHEREBY_API_KEY = "meow";
+
+    fetch.mockReturnValue({
+      json: () => ({ roomUrl: "http://meow.cat/fakeUrl" }),
+    });
   });
 
   afterEach(() => {
     process.env.SMS_INITIAL_TEMPLATE_ID = undefined;
   });
-
-  it("inserts a visit if valid", async () => {
-    const createVisitSpy = jest.fn();
-
-    await scheduleVisit(validRequest, response, {
-      container: {
-        ...container,
-        getCreateVisit: () => createVisitSpy,
-      },
-    });
-
-    expect(response.status).toHaveBeenCalledWith(201);
-    expect(getWardByIdSpy).toHaveBeenCalledWith(10);
-    expect(createVisitSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        patientName: "Bob Smith",
-        contactNumber: "07123456789",
-        contactName: "John Smith",
-        provider: "jitsi",
-        wardId: 10,
-      })
-    );
-  });
-
   it("sends a text message", async () => {
     const sendTextMessageSpy = jest
       .fn()
@@ -182,20 +164,6 @@ describe("schedule-visit", () => {
   });
 
   describe("Whereby", () => {
-    beforeEach(() => {
-      process.env.ENABLE_WHEREBY = "yes";
-      process.env.WHEREBY_API_KEY = "meow";
-
-      fetch.mockReturnValue({
-        json: () => ({ roomUrl: "http://meow.cat/fakeUrl" }),
-      });
-    });
-
-    afterEach(() => {
-      process.env.ENABLE_WHEREBY = undefined;
-      process.env.WHEREBY_API_KEY = undefined;
-    });
-
     it("Provides the correct bearer token", async () => {
       const createVisitSpy = jest.fn();
 
@@ -235,6 +203,34 @@ describe("schedule-visit", () => {
           contactNumber: "07123456789",
           callId: "fakeUrl",
           provider: "whereby",
+        })
+      );
+    });
+  });
+  describe("jitsi", () => {
+    beforeEach(() => {
+      process.env.ENABLE_WHEREBY = "no";
+    });
+
+    it("inserts a visit if valid", async () => {
+      const createVisitSpy = jest.fn();
+
+      await scheduleVisit(validRequest, response, {
+        container: {
+          ...container,
+          getCreateVisit: () => createVisitSpy,
+        },
+      });
+
+      expect(response.status).toHaveBeenCalledWith(201);
+      expect(getWardByIdSpy).toHaveBeenCalledWith(10);
+      expect(createVisitSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          patientName: "Bob Smith",
+          contactNumber: "07123456789",
+          contactName: "John Smith",
+          provider: "jitsi",
+          wardId: 10,
         })
       );
     });
