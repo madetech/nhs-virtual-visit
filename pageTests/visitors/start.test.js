@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import Call from "../../pages/visitors/[id]/start";
-import Start, { getServerSideProps } from "../../pages/visitors/[id]/start";
+import { getServerSideProps } from "../../pages/visitors/[id]/start";
 
 jest.mock("../../src/hooks/useScript", () => ({
   __esModule: true,

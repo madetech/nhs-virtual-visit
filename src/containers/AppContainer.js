@@ -5,7 +5,6 @@ import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
 import { NotifyClient } from "notifications-node-client";
-import { verifyTokenOrRedirect } from "../usecases/verifyToken";
 import Database from "../gateways/Database";
 import retrieveWardById from "../usecases/retrieveWardById";
 import verifyWardCode from "../usecases/verifyWardCode";

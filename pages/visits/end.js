@@ -3,7 +3,7 @@ import Layout from "../../src/components/Layout";
 import ActionLink from "../../src/components/ActionLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
-export default ({ wardId, callId }) => (
+const End = ({ wardId, callId }) => (
   <Layout>
     <div className="nhsuk-grid-row">
       {wardId && (
@@ -72,3 +72,5 @@ export const getServerSideProps = propsWithContainer(
     return { props: { wardId: token?.ward || null, callId: query.callId } };
   }
 );
+
+export default End;

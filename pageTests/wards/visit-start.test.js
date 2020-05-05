@@ -6,12 +6,6 @@ describe("visit-start", () => {
       cookie: "",
     },
   };
-
-  const authenticatedReq = {
-    headers: {
-      cookie: "token=123",
-    },
-  };
   let res;
 
   beforeEach(() => {

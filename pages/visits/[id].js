@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Layout from "../../src/components/Layout";
 import Error from "next/error";
 import useScript from "../../src/hooks/useScript";
 import Router from "next/router";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 
 const Call = ({ callId, name, provider, error }) => {
   if (error) {
@@ -30,9 +29,7 @@ const Call = ({ callId, name, provider, error }) => {
       </Layout>
     );
   } else {
-    const [jitsiLoaded, error] = useScript(
-      "https://meet.jit.si/external_api.js"
-    );
+    const [jitsiLoaded] = useScript("https://meet.jit.si/external_api.js");
 
     useEffect(() => {
       if (!jitsiLoaded) {
@@ -56,7 +53,7 @@ const Call = ({ callId, name, provider, error }) => {
 
       const api = new window.JitsiMeetExternalAPI(domain, options);
 
-      if (!!name) {
+      if (name) {
         api.executeCommand("displayName", name);
         api.on("videoConferenceLeft", () => {
           Router.push(`/visits/end?callId=${callId}`);

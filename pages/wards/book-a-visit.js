@@ -9,7 +9,6 @@ import DateSelect from "../../src/components/DateSelect";
 import Layout from "../../src/components/Layout";
 import ErrorSummary from "../../src/components/ErrorSummary";
 import validateMobileNumber from "../../src/helpers/validateMobileNumber";
-import moment from "moment";
 import verifyToken from "../../src/usecases/verifyToken";
 import TokenProvider from "../../src/providers/TokenProvider";
 import Label from "../../src/components/Label";
@@ -133,7 +132,7 @@ const Home = ({
             <Heading>Book a virtual visit</Heading>
             <FormGroup>
               <Label htmlFor="patient-name" className="nhsuk-label--l">
-                What is the patient's name?
+                What is the patient&apos;s name?
               </Label>
               <Input
                 id="patient-name"
@@ -149,7 +148,7 @@ const Home = ({
               />
 
               <Label htmlFor="contact-name" className="nhsuk-label--l">
-                What is the key contact's name?
+                What is the key contact&apos;s name?
               </Label>
               <Input
                 id="contact-name"
@@ -165,7 +164,7 @@ const Home = ({
               />
 
               <Label htmlFor="contact" className="nhsuk-label--l">
-                What is their key contact's mobile number?
+                What is their key contact&apos;s mobile number?
               </Label>
 
               <Hint className="nhsuk-u-margin-bottom-2">
@@ -255,7 +254,7 @@ export const getServerSideProps = propsWithContainer(
           initialCallDateTime: callDateTime,
         };
       } else if (query.rebookCallId) {
-        const { scheduledCall, error } = await retrieveVisitByCallId(container)(
+        const { scheduledCall } = await retrieveVisitByCallId(container)(
           query.rebookCallId
         );
         props = {

@@ -1,7 +1,7 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import Call from "../../pages/visitors/[id]/name";
-import Start, { getServerSideProps } from "../../pages/visitors/[id]/name";
+import { getServerSideProps } from "../../pages/visitors/[id]/name";
 
 jest.mock("../../src/hooks/useScript", () => ({
   __esModule: true,
@@ -11,17 +11,6 @@ jest.mock("../../src/hooks/useScript", () => ({
 describe("call", () => {
   let spy;
   let res;
-  const container = {
-    getDb: () =>
-      Promise.resolve({
-        any: () => [
-          {
-            id: 1,
-            call_password: "securePassword",
-          },
-        ],
-      }),
-  };
   beforeEach(() => {
     spy = jest.fn();
     res = {

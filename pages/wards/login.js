@@ -61,7 +61,7 @@ const Login = () => {
           <form onSubmit={onSubmit}>
             <FormGroup>
               <Label htmlFor="code">Ward code</Label>
-              <Hint>You'll have been given a ward code to use.</Hint>
+              <Hint>You&apos;ll have been given a ward code to use.</Hint>
               <Input
                 id="code"
                 type="text"

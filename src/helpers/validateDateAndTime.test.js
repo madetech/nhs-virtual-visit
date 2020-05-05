@@ -3,7 +3,7 @@ import validateDateAndTime from "./validateDateAndTime";
 
 describe("validateDateAndTime", () => {
   it("accepts a valid date and time", () => {
-    const { isValidDate, isValidTime, _ } = validateDateAndTime(new moment());
+    const { isValidDate, isValidTime } = validateDateAndTime(new moment());
     expect(isValidDate).toBe(true);
     expect(isValidTime).toBe(true);
   });

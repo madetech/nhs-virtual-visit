@@ -6,7 +6,6 @@ import Heading from "../../src/components/Heading";
 import Input from "../../src/components/Input";
 import Layout from "../../src/components/Layout";
 import ErrorSummary from "../../src/components/ErrorSummary";
-import moment from "moment";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
 import TokenProvider from "../../src/providers/TokenProvider";
 import Label from "../../src/components/Label";
@@ -120,7 +119,7 @@ const Home = () => {
             <Heading>Add a ward</Heading>
             <FormGroup>
               <Label htmlFor="ward-name" className="nhsuk-label--l">
-                What is the ward's name?
+                What is the ward&apos;s name?
               </Label>
               <Input
                 id="ward-name"
@@ -136,7 +135,7 @@ const Home = () => {
               />
 
               <Label htmlFor="hospital-name" className="nhsuk-label--l">
-                What is the hospital's name?
+                What is the hospital&apos;s name?
               </Label>
               <Input
                 id="hospital-name"
