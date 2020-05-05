@@ -20,15 +20,9 @@ export class NotifyClient {
       (it) => it.templateId === templateId
     )[0];
 
-    const missingPersonalisation = [];
-
-    for (const key of template.personalisationKeys) {
-      if (!personalisation[key]) {
-        missingPersonalisation.push(key);
-      }
-    }
-
-    return missingPersonalisation;
+    return template.personalisationKeys.filter(
+      (key) => Object.keys(personalisation).indexOf(key) === -1
+    );
   };
 
   sendSms = jest.fn((templateId, mobileNumber, { personalisation }) => {
