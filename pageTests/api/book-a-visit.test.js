@@ -5,7 +5,6 @@ import moment from "moment";
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 
-jest.mock("notifications-node-client");
 jest.mock("node-fetch");
 
 const frozenTime = moment();
@@ -71,6 +70,7 @@ describe("/api/book-a-visit", () => {
   afterEach(() => {
     process.env.SMS_INITIAL_TEMPLATE_ID = undefined;
   });
+
   it("sends a text message", async () => {
     const sendTextMessageSpy = jest
       .fn()
