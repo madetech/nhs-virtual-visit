@@ -52,7 +52,8 @@
     "jest": "^26.0.1",
     "jest-css-modules-transform": "^4.0.0",
     "lint-staged": "^10.2.2",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "uuid-validate": "0.0.3"
   },
   "husky": {
     "hooks": {
