@@ -119,7 +119,7 @@ describe("schedule-visit", () => {
 
     expect(updateWardVisitTotalsSpy).toHaveBeenCalledWith({
       wardId: 10,
-      date: "2020-04-05T10:10:10",
+      date: frozenTime,
     });
   });
 
