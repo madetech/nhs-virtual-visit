@@ -59,16 +59,13 @@ describe("/api/book-a-visit", () => {
       getSendTextMessage: () => () => ({ success: true, error: null }),
       getUpdateWardVisitTotals: () => updateWardVisitTotalsSpy,
     };
+
     process.env.ENABLE_WHEREBY = "yes";
     process.env.WHEREBY_API_KEY = "meow";
 
     fetch.mockReturnValue({
       json: () => ({ roomUrl: "http://meow.cat/fakeUrl" }),
     });
-  });
-
-  afterEach(() => {
-    process.env.SMS_INITIAL_TEMPLATE_ID = undefined;
   });
 
   it("sends a text message", async () => {

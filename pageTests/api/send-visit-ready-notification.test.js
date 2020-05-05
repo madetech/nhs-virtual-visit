@@ -1,4 +1,5 @@
 import sendVisitReadyNotification from "../../pages/api/send-visit-ready-notification";
+import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
 
 describe("send-visit-ready-notification", () => {
   const response = {
@@ -60,11 +61,6 @@ describe("send-visit-ready-notification", () => {
         protocol: "http",
         headers: { host: "localhost:3000", cookie: "token=valid.token.value" },
       };
-      process.env.SMS_JOIN_TEMPLATE_ID = "meow-woof-quack";
-    });
-
-    afterEach(() => {
-      process.env.SMS_JOIN_TEMPLATE_ID = undefined;
     });
 
     it("returns 406 if not POST method", async () => {
@@ -83,7 +79,7 @@ describe("send-visit-ready-notification", () => {
       });
 
       expect(sendTextMessageSpy).toHaveBeenCalledWith(
-        "meow-woof-quack",
+        TemplateStore.secondText.templateId,
         "07123456789",
         {
           call_url:
@@ -108,7 +104,7 @@ describe("send-visit-ready-notification", () => {
         });
 
         expect(sendTextMessageSpy).toHaveBeenCalledWith(
-          "meow-woof-quack",
+          TemplateStore.secondText.templateId,
           "07123456789",
           {
             call_url:

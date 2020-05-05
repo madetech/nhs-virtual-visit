@@ -1,5 +1,6 @@
 import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
 import withContainer from "../../src/middleware/withContainer";
+import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
 
 const notifier = new ConsoleNotifyProvider();
 
@@ -32,7 +33,7 @@ export default withContainer(async (req, res, { container }) => {
   const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
 
   const sendTextMessage = container.getSendTextMessage();
-  const templateId = process.env.SMS_JOIN_TEMPLATE_ID;
+  const templateId = TemplateStore.secondText.templateId;
 
   try {
     const { ward, error } = await container.getWardById()(
