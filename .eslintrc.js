@@ -21,6 +21,7 @@ module.exports = {
   plugins: ["react"],
   rules: {
     "react/prop-types": 0,
+    "no-shadow": 1,
   },
   settings: {
     react: {
