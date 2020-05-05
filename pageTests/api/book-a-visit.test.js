@@ -1,4 +1,5 @@
-import scheduleVisit from "../../pages/api/book-a-visit";
+import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
+import bookAVisit from "../../pages/api/book-a-visit";
 import fetch from "node-fetch";
 import moment from "moment";
 import formatDate from "../../src/helpers/formatDate";
@@ -9,7 +10,7 @@ jest.mock("node-fetch");
 
 const frozenTime = moment();
 
-describe("schedule-visit", () => {
+describe("/api/book-a-visit", () => {
   let validRequest;
   let response;
   let container;
@@ -59,7 +60,6 @@ describe("schedule-visit", () => {
       getSendTextMessage: () => () => ({ success: true, error: null }),
       getUpdateWardVisitTotals: () => updateWardVisitTotalsSpy,
     };
-    process.env.SMS_INITIAL_TEMPLATE_ID = "meow-woof-quack";
     process.env.ENABLE_WHEREBY = "yes";
     process.env.WHEREBY_API_KEY = "meow";
 
@@ -76,7 +76,7 @@ describe("schedule-visit", () => {
       .fn()
       .mockReturnValue({ success: true, error: null });
 
-    await scheduleVisit(validRequest, response, {
+    await bookAVisit(validRequest, response, {
       container: {
         ...container,
         getSendTextMessage: () => sendTextMessageSpy,
@@ -84,7 +84,7 @@ describe("schedule-visit", () => {
     });
 
     expect(sendTextMessageSpy).toHaveBeenCalledWith(
-      "meow-woof-quack",
+      TemplateStore.firstText.templateId,
       "07123456789",
       {
         ward_name: "Fake Ward",
@@ -97,7 +97,7 @@ describe("schedule-visit", () => {
   });
 
   it("updates the ward visit totals", async () => {
-    await scheduleVisit(validRequest, response, { container });
+    await bookAVisit(validRequest, response, { container });
 
     expect(updateWardVisitTotalsSpy).toHaveBeenCalledWith({
       wardId: 10,
@@ -108,7 +108,7 @@ describe("schedule-visit", () => {
   it("returns a 401 when there is no token provided", async () => {
     const userIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
 
-    await scheduleVisit(
+    await bookAVisit(
       {
         method: "POST",
         body: {
@@ -137,7 +137,7 @@ describe("schedule-visit", () => {
         .fn()
         .mockReturnValue({ success: true, error: null });
 
-      await scheduleVisit(validRequest, response, {
+      await bookAVisit(validRequest, response, {
         container: {
           ...container,
           getSendTextMessage: () => sendTextMessageStub,
@@ -152,7 +152,7 @@ describe("schedule-visit", () => {
         .fn()
         .mockReturnValue({ success: false, error: "Error message" });
 
-      await scheduleVisit(validRequest, response, {
+      await bookAVisit(validRequest, response, {
         container: {
           ...container,
           getSendTextMessage: () => sendTextMessageStub,
@@ -167,7 +167,7 @@ describe("schedule-visit", () => {
     it("Provides the correct bearer token", async () => {
       const createVisitSpy = jest.fn();
 
-      await scheduleVisit(validRequest, response, {
+      await bookAVisit(validRequest, response, {
         container: {
           ...container,
           getCreateVisit: () => createVisitSpy,
@@ -188,7 +188,7 @@ describe("schedule-visit", () => {
     it("inserts a visit if valid", async () => {
       const createVisitSpy = jest.fn();
 
-      await scheduleVisit(validRequest, response, {
+      await bookAVisit(validRequest, response, {
         container: {
           ...container,
           getCreateVisit: () => createVisitSpy,
@@ -215,7 +215,7 @@ describe("schedule-visit", () => {
     it("inserts a visit if valid", async () => {
       const createVisitSpy = jest.fn();
 
-      await scheduleVisit(validRequest, response, {
+      await bookAVisit(validRequest, response, {
         container: {
           ...container,
           getCreateVisit: () => createVisitSpy,
