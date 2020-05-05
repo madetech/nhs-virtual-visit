@@ -42,9 +42,15 @@ const getValidationErrors = ({ patientName, contactNumber, callTime }) => {
     return "contactNumber must be a valid mobile number";
   }
 
-  const { isValidDateTime, errorMessage } = validateDateAndTime(callTime);
+  const { isValidTime, isValidDate, errorMessage } = validateDateAndTime(
+    callTime
+  );
 
-  if (!isValidDateTime) {
+  if (!isValidTime) {
+    return errorMessage;
+  }
+
+  if (!isValidDate) {
     return errorMessage;
   }
 
