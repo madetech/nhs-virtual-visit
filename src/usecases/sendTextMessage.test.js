@@ -1,22 +1,26 @@
+import { NotifyClient } from "notifications-node-client";
+import TemplateStore from "../gateways/GovNotify/TemplateStore";
 import sendTextMessage from "./sendTextMessage";
+import fillObjectWithStrings from "../testUtils/fillObjectWithStrings";
 
 describe("sendTextMessage", () => {
-  let sendSmsSpy;
+  const { templateId, personalisationKeys } = TemplateStore.firstText;
+  const personalisation = fillObjectWithStrings(personalisationKeys);
+
+  const phoneNumber = "07123456789";
+  const reference = "text-message-one";
+
+  let notifyClient;
   let container;
 
   beforeEach(() => {
-    sendSmsSpy = jest.fn();
+    notifyClient = new NotifyClient();
     container = {
-      getNotifyClient: () => ({ sendSms: sendSmsSpy }),
+      getNotifyClient: () => notifyClient,
     };
   });
 
   it("sends a text message", async () => {
-    const templateId = "meow-woof-quack";
-    const phoneNumber = "07123456789";
-    const personalisation = { name_of_doggo: "Moon Moon" };
-    const reference = "text-message-one";
-
     await sendTextMessage(container)(
       templateId,
       phoneNumber,
@@ -24,29 +28,34 @@ describe("sendTextMessage", () => {
       reference
     );
 
-    expect(sendSmsSpy).toHaveBeenCalledWith(templateId, phoneNumber, {
-      personalisation: personalisation,
-      reference: reference,
+    expect(notifyClient.sendSms).toHaveBeenCalledWith(templateId, phoneNumber, {
+      personalisation,
+      reference,
     });
   });
 
   it("returns success if successfully sends a text message", async () => {
-    const response = await sendTextMessage(container)("", "", {}, "");
+    const response = await sendTextMessage(container)(
+      templateId,
+      phoneNumber,
+      personalisation,
+      reference
+    );
 
     expect(response).toEqual({ success: true, error: null });
   });
 
   it("returns the error if Notify raises an error", async () => {
-    container = {
-      getNotifyClient: () => ({
-        sendSms: () => {
-          throw "Error message";
-        },
-      }),
-    };
+    const response = await sendTextMessage(container)(
+      "3b45757d-aaaa-4e33-ac7c-00674a70888d",
+      "",
+      {},
+      {}
+    );
 
-    const response = await sendTextMessage(container)("", "", {}, {});
-
-    expect(response).toEqual({ success: false, error: "Error message" });
+    expect(response).toEqual({
+      success: false,
+      error: "GovNotify error occurred: Template not found",
+    });
   });
 });
