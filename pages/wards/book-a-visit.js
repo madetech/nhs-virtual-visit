@@ -16,30 +16,31 @@ import Label from "../../src/components/Label";
 import Router from "next/router";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
+import validateDateAndTime from "../../src/helpers/validateDateAndTime";
 
 const isValidName = (input) => {
   if (input.length !== 0) {
     return input;
   }
 };
-const isValidDate = ({ year, month, day, hour, minute }) => {
-  const dateIsValid = moment({ year, month, day }).isValid();
-  const dateIsInThePast =
-    dateIsValid && moment({ year, month, day }).isBefore(moment(), "day");
-  const timeIsValid = moment({ hour, minute }).isValid();
-  const timeIsInThePast =
-    timeIsValid &&
-    moment({ year, month, day, hour, minute }).isSameOrBefore(moment());
-  const dateIsTooFarInTheFuture =
-    timeIsValid && moment({ year }).isBefore(moment().add(3, "year"));
-  return {
-    dateIsValid,
-    dateIsInThePast,
-    timeIsValid,
-    timeIsInThePast,
-    dateIsTooFarInTheFuture,
-  };
-};
+// const isValidDate = ({ year, month, day, hour, minute }) => {
+//   const dateIsValid = moment({ year, month, day }).isValid();
+//   const dateIsInThePast =
+//     dateIsValid && moment({ year, month, day }).isBefore(moment(), "day");
+//   const timeIsValid = moment({ hour, minute }).isValid();
+//   const timeIsInThePast =
+//     timeIsValid &&
+//     moment({ year, month, day, hour, minute }).isSameOrBefore(moment());
+//   const dateIsTooFarInTheFuture =
+//     timeIsValid && moment({ year }).isBefore(moment().add(3, "year"));
+//   return {
+//     dateIsValid,
+//     dateIsInThePast,
+//     timeIsValid,
+//     timeIsInThePast,
+//     dateIsTooFarInTheFuture,
+//   };
+// };
 
 const Home = ({
   initialPatientName,
@@ -89,38 +90,10 @@ const Home = ({
       });
     };
 
-    const setInvalidDateError = (errors) => {
+    const setDateValidationError = (errorMessage) => {
       errors.push({
         id: "call-date-error",
-        message: "Enter a valid date",
-      });
-    };
-
-    const setDateInThePastError = (errors) => {
-      errors.push({
-        id: "call-date-error",
-        message: "Enter a date that is today or in the future",
-      });
-    };
-
-    const setInvalidTimeError = (errors) => {
-      errors.push({
-        id: "call-time-error",
-        message: "Enter a valid time",
-      });
-    };
-
-    const setTimeInThePastError = (errors) => {
-      errors.push({
-        id: "call-time-error",
-        message: "Enter a time that is in the future",
-      });
-    };
-
-    const setIsTooInTheFuture = (errors) => {
-      errors.push({
-        id: "call-date-error",
-        message: "Please enter a time within the next three years",
+        message: errorMessage,
       });
     };
 
@@ -138,23 +111,12 @@ const Home = ({
       setContactNumberError(errors);
     }
 
-    const dateValidation = isValidDate(callDateTime);
+    const dateValidation = validateDateAndTime(callDateTime);
 
-    if (!dateValidation.dateIsValid) {
-      setInvalidDateError(errors);
+    if (!dateValidation.isValid) {
+      setDateValidationError(dateValidation.errorMessage);
     }
-    if (dateValidation.dateIsInThePast) {
-      setDateInThePastError(errors);
-    }
-    if (!dateValidation.timeIsValid) {
-      setInvalidTimeError(errors);
-    }
-    if (dateValidation.timeIsInThePast) {
-      setTimeInThePastError(errors);
-    }
-    if (dateValidation.dateIsTooFarInTheFuture) {
-      setIsTooInTheFuture(errors);
-    }
+
     setErrors(errors);
 
     if (errors.length === 0) {
