@@ -13,6 +13,10 @@ describe("schedule-visit", () => {
     ward: "MEOW",
   }));
 
+  const updateWardVisitTotalsSpy = jest.fn(() => {
+    success: true;
+  });
+
   const getWardByIdSpy = jest.fn(() => ({
     ward: {
       id: 10,
@@ -48,6 +52,7 @@ describe("schedule-visit", () => {
       getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
       getDb: jest.fn().mockResolvedValue(() => {}),
       getSendTextMessage: () => () => ({ success: true, error: null }),
+      getUpdateWardVisitTotals: () => updateWardVisitTotalsSpy,
     };
     process.env.SMS_INITIAL_TEMPLATE_ID = "meow-woof-quack";
   });
@@ -102,6 +107,15 @@ describe("schedule-visit", () => {
       },
       null
     );
+  });
+
+  it("updates the ward visit totals", async () => {
+    await scheduleVisit(validRequest, response, { container });
+
+    expect(updateWardVisitTotalsSpy).toHaveBeenCalledWith({
+      wardId: 10,
+      date: "2020-04-05T10:10:10",
+    });
   });
 
   it("returns a 401 when there is no token provided", async () => {

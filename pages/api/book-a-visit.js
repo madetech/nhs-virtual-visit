@@ -86,9 +86,9 @@ export default withContainer(
       }
 
       const createVisit = container.getCreateVisit();
+      const updateWardVisitTotals = container.getUpdateWardVisitTotals();
 
       const { ward, error } = await container.getWardById()(wardId);
-      console.log(ward);
       if (error) {
         throw error;
       }
@@ -104,6 +104,8 @@ export default withContainer(
         wardId: ward.id,
         callPassword: callPassword,
       });
+
+      await updateWardVisitTotals({ wardId: ward.id, date: body.callTime });
 
       const sendTextMessage = container.getSendTextMessage();
       const templateId = process.env.SMS_INITIAL_TEMPLATE_ID;
