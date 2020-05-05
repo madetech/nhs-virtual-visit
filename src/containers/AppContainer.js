@@ -13,6 +13,7 @@ import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 import verifyCallPassword from "../usecases/verifyCallPassword";
 import retrieveWards from "../usecases/retrieveWards";
 import updateWardVisitTotals from "../usecases/updateWardVisitTotals";
+import retrieveWardVisitTotals from "../usecases/retrieveWardVisitTotals";
 
 class AppContainer {
   getDb = () => {
@@ -75,6 +76,10 @@ class AppContainer {
 
   getUpdateWardVisitTotals = () => {
     return updateWardVisitTotals(this);
+  };
+
+  getRetrieveWardVisitTotals = () => {
+    return retrieveWardVisitTotals(this);
   };
 }
 
