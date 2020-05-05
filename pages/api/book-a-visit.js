@@ -8,6 +8,7 @@ import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 import validateMobileNumber from "../../src/helpers/validateMobileNumber";
 import validateDateAndTime from "../../src/helpers/validateDateAndTime";
+import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
 
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
@@ -115,7 +116,7 @@ export default withContainer(
       await updateWardVisitTotals({ wardId: ward.id, date: body.callTime });
 
       const sendTextMessage = container.getSendTextMessage();
-      const templateId = process.env.SMS_INITIAL_TEMPLATE_ID;
+      const templateId = TemplateStore.firstText.templateId;
 
       const response = await sendTextMessage(
         templateId,
