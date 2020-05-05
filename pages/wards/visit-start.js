@@ -70,7 +70,7 @@ const VisitStart = ({
             <li>
               Patient name: <strong>{patientName}</strong>
             </li>
-            <li>Patient's date of birth</li>
+            <li>Patient&apos;s date of birth</li>
           </ul>
 
           <button

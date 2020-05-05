@@ -11,7 +11,6 @@ import Text from "../../../src/components/Text";
 import BackLink from "../../../src/components/BackLink";
 import ErrorSummary from "../../../src/components/ErrorSummary";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
-import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
 import Error from "next/error";
 
 const Name = ({ callId, error, callPassword }) => {

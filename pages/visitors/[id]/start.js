@@ -7,7 +7,6 @@ import Lead from "../../../src/components/Lead";
 import Text from "../../../src/components/Text";
 import Button from "../../../src/components/Button";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
-import retrieveVisitByCallId from "../../../src/usecases/retrieveVisitByCallId";
 import Error from "next/error";
 
 const Start = ({ callId, error, callPassword }) => {
@@ -28,7 +27,9 @@ const Start = ({ callId, error, callPassword }) => {
             their visitor via virtual visits.
           </Lead>
 
-          <h2 className="nhsuk-heading-l">Confirm the patient's identity</h2>
+          <h2 className="nhsuk-heading-l">
+            Confirm the patient&apos;s identity
+          </h2>
 
           <Text>
             You must be ready to confirm the <b>patient name</b> and{" "}

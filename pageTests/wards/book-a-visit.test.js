@@ -62,7 +62,7 @@ describe("ward/book-a-visit", () => {
             }),
         };
 
-        const { props } = await getServerSideProps({
+        await getServerSideProps({
           req: authenticatedReq,
           res,
           query: {},

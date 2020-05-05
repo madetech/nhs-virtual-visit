@@ -7,7 +7,7 @@ describe("adminIsAuthenticated", () => {
   describe("valid admin token", () => {
     beforeEach(() => {
       tokenProvider = {
-        validate: jest.fn((token) => ({ admin: true })),
+        validate: jest.fn(() => ({ admin: true })),
       };
       container = {
         getTokenProvider: () => tokenProvider,
@@ -24,7 +24,7 @@ describe("adminIsAuthenticated", () => {
   describe("invalid admin token", () => {
     beforeEach(() => {
       tokenProvider = {
-        validate: jest.fn((token) => false),
+        validate: jest.fn(() => false),
       };
       container = {
         getTokenProvider: () => tokenProvider,
@@ -41,7 +41,7 @@ describe("adminIsAuthenticated", () => {
   describe("valid user token", () => {
     beforeEach(() => {
       tokenProvider = {
-        validate: jest.fn((token) => ({ admin: false })),
+        validate: jest.fn(() => ({ admin: false })),
       };
       container = {
         getTokenProvider: () => tokenProvider,
