@@ -5,7 +5,7 @@ import Head from "next/head";
 
 Sentry.init({
   enabled: process.env.ENABLE_SENTRY === "yes",
-  environment: process.env.NODE_ENV,
+  environment: process.env.APP_ENV || process.env.NODE_ENV,
   dsn: process.env.SENTRY_DSN,
 });
 
