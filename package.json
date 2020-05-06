@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write '{pages,pageTests,src}/**/*.{js,css,md,yml}'",
     "format:check": "prettier --check '{pages,pageTests,src}/**/*.{js,css,md,yml}'",
-    "lint": "eslint . --ext .js",
+    "eslint": "eslint . --ext .js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "npm run format:check && jest --runInBand",
