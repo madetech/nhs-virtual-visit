@@ -1,4 +1,4 @@
-import React from "react";
+import { styles } from "./styles.scss";
 import Head from "next/head";
 import LogoutButton from "../LogoutButton";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import Error from "next/error";
 import Layout from "../src/components/Layout";
 import propsWithContainer from "../src/middleware/propsWithContainer";

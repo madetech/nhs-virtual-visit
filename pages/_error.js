@@ -6,7 +6,7 @@ import React from "react";
 import Text from "../src/components/Text";
 import { GridRow, GridColumn } from "../src/components/Grid";
 
-const CustomError = ({ hasGetInitialPropsRun, err }) => {
+const CustomError = ({ statusCode, hasGetInitialPropsRun, err }) => {
   if (!hasGetInitialPropsRun && err) {
     // getInitialProps is not called in case of
     // https://github.com/zeit/next.js/issues/8592. As a workaround, we pass

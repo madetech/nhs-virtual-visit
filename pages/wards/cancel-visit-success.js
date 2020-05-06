@@ -9,7 +9,9 @@ import TokenProvider from "../../src/providers/TokenProvider";
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 import deleteVisitByCallId from "../../src/usecases/deleteVisitByCallId";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import { useState } from "react";
 import Error from "next/error";
+
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 
@@ -22,12 +24,15 @@ const deleteVisitSuccess = ({
   error,
   deleteError,
 }) => {
+  const [hasError, setHasError] = useState(error);
+  const [hasDeleteError, setHasDeleteError] = useState(deleteError);
+
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
     Router.push(`/wards/visits`);
   });
 
-  if (error || deleteError) {
+  if (hasError || hasDeleteError) {
     return <Error />;
   }
 
@@ -40,20 +45,18 @@ const deleteVisitSuccess = ({
             <p>The following virtual visit has been successfully cancelled.</p>
             <dl className="nhsuk-summary-list">
               <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">Patient&apos;s name</dt>
+                <dt className="nhsuk-summary-list__key">Patient's name</dt>
                 <dd className="nhsuk-summary-list__value">{patientName}</dd>
               </div>
 
               <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">
-                  Key contact&apos;s name
-                </dt>
+                <dt className="nhsuk-summary-list__key">Key contact's name</dt>
                 <dd className="nhsuk-summary-list__value">{contactName}</dd>
               </div>
 
               <div className="nhsuk-summary-list__row">
                 <dt className="nhsuk-summary-list__key">
-                  Key contact&apos;s mobile number
+                  Key contact's mobile number
                 </dt>
                 <dd className="nhsuk-summary-list__value">{contactNumber}</dd>
               </div>
@@ -95,7 +98,9 @@ export const getServerSideProps = propsWithContainer(
       const callTime = formatTime(scheduledCall.callTime, "HH:mm");
       const callDate = formatDate(scheduledCall.callTime);
 
-      let { error: deleteError } = await deleteVisitByCallId(container)(callId);
+      let { success, error: deleteError } = await deleteVisitByCallId(
+        container
+      )(callId);
       return {
         props: {
           patientName: scheduledCall.patientName,

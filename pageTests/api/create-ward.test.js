@@ -1,4 +1,5 @@
 import createWard from "../../pages/api/create-ward";
+import fetch from "node-fetch";
 
 jest.mock("node-fetch");
 

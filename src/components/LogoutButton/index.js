@@ -9,7 +9,7 @@ const LogoutButton = ({
   ...others
 }) => {
   const logout = async () => {
-    await fetch("/api/session", {
+    const response = await fetch("/api/session", {
       method: "DELETE",
     });
 

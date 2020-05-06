@@ -1,4 +1,3 @@
-import React from "react";
 import Layout from "../src/components/Layout";
 import { GridRow, GridColumn } from "../src/components/Grid";
 import Heading from "../src/components/Heading";

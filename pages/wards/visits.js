@@ -1,4 +1,5 @@
-import React from "react";
+import retrieveVisits from "../../src/usecases/retrieveVisits";
+import retrieveWardById from "../../src/usecases/retrieveWardById";
 import Layout from "../../src/components/Layout";
 import Heading from "../../src/components/Heading";
 import ActionLink from "../../src/components/ActionLink";
@@ -30,8 +31,8 @@ export default function WardVisits({ scheduledCalls, ward, error }) {
           <h2 className="nhsuk-heading-l">Book a virtual visit</h2>
 
           <Text>
-            You&apos;ll need the name and mobile number of your patient&apos;s
-            key contact in order to set up a virtual visit.
+            You'll need the name and mobile number of your patient's key contact
+            in order to set up a virtual visit.
           </Text>
 
           <ActionLink href={`/wards/book-a-visit`}>

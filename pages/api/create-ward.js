@@ -1,4 +1,5 @@
 import withContainer from "../../src/middleware/withContainer";
+import fetch from "node-fetch";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -32,7 +33,7 @@ export default withContainer(
 
     const createWard = container.getCreateWard();
 
-    const { error } = await createWard({
+    const { wardId, error } = await createWard({
       name: body.name,
       hospitalName: body.hospitalName,
       code: body.code,

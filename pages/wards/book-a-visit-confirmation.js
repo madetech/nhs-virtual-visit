@@ -84,16 +84,14 @@ const ScheduleConfirmation = ({
               </div>
 
               <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">
-                  Key contact&apos;s name
-                </dt>
+                <dt className="nhsuk-summary-list__key">Key contact's name</dt>
                 <dd className="nhsuk-summary-list__value">{contactName}</dd>
                 <dd className="nhsuk-summary-list__actions">
                   <a href="#" onClick={changeLink}>
                     Change
                     <span className="nhsuk-u-visually-hidden">
                       {" "}
-                      key contact&apos;s name
+                      key contact's name
                     </span>
                   </a>
                 </dd>
@@ -101,7 +99,7 @@ const ScheduleConfirmation = ({
 
               <div className="nhsuk-summary-list__row">
                 <dt className="nhsuk-summary-list__key">
-                  Key contact&apos;s mobile number
+                  Key contact's mobile number
                 </dt>
                 <dd className="nhsuk-summary-list__value">{contactNumber}</dd>
                 <dd className="nhsuk-summary-list__actions">
@@ -109,7 +107,7 @@ const ScheduleConfirmation = ({
                     Change
                     <span className="nhsuk-u-visually-hidden">
                       {" "}
-                      key contact&apos;s mobile number
+                      key contact's mobile number
                     </span>
                   </a>
                 </dd>
@@ -147,13 +145,11 @@ const ScheduleConfirmation = ({
                 </dd>
               </div>
             </dl>
-            <h2 className="nhsuk-heading-l">
-              Key contact&apos;s mobile number
-            </h2>
+            <h2 className="nhsuk-heading-l">Key contact's mobile number</h2>
             <Text>
               Please double check the mobile number of the key contact to ensure
               we set up the virtual visit with the correct person. A text
-              message will be sent to them once you&apos;ve booked the visit.
+              message will be sent to them once you've booked the visit.
             </Text>
             <Button className="nhsuk-u-margin-top-5">Book virtual visit</Button>
           </form>

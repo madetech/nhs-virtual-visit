@@ -18,9 +18,9 @@ describe("schedule-visit", () => {
     ward: "MEOW",
   }));
 
-  const updateWardVisitTotalsSpy = jest.fn(() => ({
-    success: true,
-  }));
+  const updateWardVisitTotalsSpy = jest.fn(() => {
+    success: true;
+  });
 
   const getWardByIdSpy = jest.fn(() => ({
     ward: {
