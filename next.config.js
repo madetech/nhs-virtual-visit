@@ -55,7 +55,7 @@ module.exports = withNextEnv(
           SENTRY_ORG &&
           SENTRY_PROJECT &&
           SENTRY_AUTH_TOKEN &&
-          (NODE_ENV === "production" || NODE_ENV === "staging")
+          NODE_ENV === "production"
         ) {
           config.plugins.push(
             new SentryWebpackPlugin({
