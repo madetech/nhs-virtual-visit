@@ -61,8 +61,7 @@
   },
   "lint-staged": {
     "*.{js,css,md,yml}": [
-      "prettier --write",
-      "eslint --fix --ext .js"
+      "prettier --write"
     ]
   },
   "engines": {
