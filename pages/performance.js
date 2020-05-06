@@ -1,3 +1,4 @@
+import React from "react";
 import verifyAdminToken from "../src/usecases/verifyAdminToken";
 import TokenProvider from "../src/providers/TokenProvider";
 import propsWithContainer from "../src/middleware/propsWithContainer";
@@ -6,7 +7,7 @@ import { GridRow, GridColumn } from "../src/components/Grid";
 import Heading from "../src/components/Heading";
 import Text from "../src/components/Text";
 
-export default ({ visitsScheduled }) => (
+const Performance = ({ visitsScheduled }) => (
   <Layout title="Virtual Visits performance dashboard">
     <GridRow>
       <GridColumn width="full">
@@ -32,3 +33,5 @@ export const getServerSideProps = propsWithContainer(
     }
   )
 );
+
+export default Performance;
