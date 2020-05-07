@@ -125,7 +125,7 @@ const Home = () => {
                 id="ward-name"
                 type="text"
                 hasError={hasError("ward-name")}
-                errorMessage="Enter the ward's name"
+                errorMessage={errorMessage("ward-name")}
                 className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
                 style={{ padding: "16px!important", height: "64px" }}
                 onChange={(event) => setWardName(event.target.value)}
@@ -141,7 +141,7 @@ const Home = () => {
                 id="hospital-name"
                 type="text"
                 hasError={hasError("hospital-name")}
-                errorMessage="Enter a hospital's name"
+                errorMessage={errorMessage("hospital-name")}
                 className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
                 style={{ padding: "16px!important", height: "64px" }}
                 onChange={(event) => setHospitalName(event.target.value)}
