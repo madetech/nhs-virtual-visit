@@ -32,7 +32,7 @@ export default withContainer(
 
     const createWard = container.getCreateWard();
 
-    const { error } = await createWard({
+    const { wardId, error } = await createWard({
       name: body.name,
       hospitalName: body.hospitalName,
       code: body.code,
@@ -43,7 +43,7 @@ export default withContainer(
       res.end();
     } else {
       res.status(201);
-      res.end();
+      res.end(JSON.stringify({ wardId: wardId }));
     }
   }
 );
