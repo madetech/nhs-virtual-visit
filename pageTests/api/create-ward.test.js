@@ -81,6 +81,7 @@ describe("create-ward", () => {
     });
 
     expect(response.status).toHaveBeenCalledWith(201);
+    expect(response.end).toHaveBeenCalledWith(JSON.stringify({ wardId: 123 }));
     expect(createWardSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         name: "Seto Kaiba Ward",
