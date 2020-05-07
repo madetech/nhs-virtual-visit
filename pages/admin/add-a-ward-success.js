@@ -12,7 +12,7 @@ const AddAWardSuccess = ({ error, name, hospitalName }) => {
   }
 
   return (
-    <Layout>
+    <Layout title={`${name} has been added`} renderLogout={true}>
       <div className="nhsuk-grid-row">
         <div className="nhsuk-grid-column-two-thirds">
           <div
