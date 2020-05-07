@@ -1,1 +1,41 @@
-@import 'node_modules/nhsuk-frontend/packages/nhsuk';
+@import "node_modules/nhsuk-frontend/packages/nhsuk";
+
+.nhsuk-panel__body {
+  font-weight: 400;
+  font-size: 20px;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  text-align: center;
+}
+@media (min-width: 40.0625em) {
+  .nhsuk-panel__body {
+    font-size: 24px;
+    font-size: 1.5rem;
+    line-height: 1.33333;
+  }
+}
+@media print {
+  .nhsuk-panel__body {
+    font-size: 18pt;
+    line-height: 1.15;
+  }
+}
+.nhsuk-panel__body strong {
+  font-weight: 600;
+  font-size: 24px;
+  font-size: 1.5rem;
+  line-height: 1.33333;
+}
+@media (min-width: 40.0625em) {
+  .nhsuk-panel__body strong {
+    font-size: 32px;
+    font-size: 2rem;
+    line-height: 1.25;
+  }
+}
+@media print {
+  .nhsuk-panel__body strong {
+    font-size: 24pt;
+    line-height: 1.05;
+  }
+}
