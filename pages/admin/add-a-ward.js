@@ -115,9 +115,13 @@ const Home = () => {
         });
 
         const status = response.status;
+        const { wardId } = await response.json();
 
         if (status == 201) {
-          Router.push(`/admin`);
+          Router.push({
+            pathname: "/admin/add-a-ward-success",
+            query: { wardId: wardId },
+          });
         } else {
           setUniqueWardCodeError(onSubmitErrors);
           setErrors(onSubmitErrors);
