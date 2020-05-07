@@ -22,6 +22,7 @@ const Home = () => {
   const [hospitalName, setHospitalName] = useState("");
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
+  const [wardCodeConfirmation, setWardCodeConfirmation] = useState("");
 
   const [errors, setErrors] = useState([]);
 
@@ -58,6 +59,20 @@ const Home = () => {
       });
     };
 
+    const setWardCodeConfirmationError = (errors) => {
+      errors.push({
+        id: "ward-code-confirmation-error",
+        message: "Confirm the ward code",
+      });
+    };
+
+    const setWardCodeConfirmationMismatchError = (errors) => {
+      errors.push({
+        id: "ward-code-confirmation-error",
+        message: "Ward code confirmation does not match",
+      });
+    };
+
     const setUniqueWardCodeError = (errors) => {
       errors.push({
         id: "ward-code-error",
@@ -73,6 +88,13 @@ const Home = () => {
     }
     if (!isValidName(wardCode)) {
       setWardCodeError(errors);
+    }
+    if (isValidName(wardCodeConfirmation)) {
+      if (wardCode !== wardCodeConfirmation) {
+        setWardCodeConfirmationMismatchError(errors);
+      }
+    } else {
+      setWardCodeConfirmationError(errors);
     }
 
     if (errors.length === 0) {
@@ -165,6 +187,28 @@ const Home = () => {
                 name="ward-code"
                 autoComplete="off"
                 value={wardCode || ""}
+              />
+
+              <Label
+                htmlFor="ward-code-confirmation"
+                className="nhsuk-label--l"
+              >
+                Confirm the ward code
+              </Label>
+
+              <Input
+                id="ward-code-confirmation"
+                type="text"
+                hasError={hasError("ward-code-confirmation")}
+                errorMessage={errorMessage("ward-code-confirmation")}
+                className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
+                style={{ padding: "16px!important", height: "64px" }}
+                onChange={(event) =>
+                  setWardCodeConfirmation(event.target.value)
+                }
+                name="ward-code-confirmation"
+                autoComplete="off"
+                value={wardCodeConfirmation || ""}
               />
 
               <br></br>
