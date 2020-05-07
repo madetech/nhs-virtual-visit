@@ -30,13 +30,13 @@ const Home = () => {
     errors.find((error) => error.id === `${field}-error`);
 
   const errorMessage = (field) => {
-    const error = errors.filter((error) => error.id === `${field}-error`);
+    const error = errors.filter((err) => err.id === `${field}-error`);
     return error.length === 1 ? error[0].message : "";
   };
 
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
-    const errors = [];
+    const onSubmitErrors = [];
 
     const setWardNameError = (errors) => {
       errors.push({
@@ -81,23 +81,23 @@ const Home = () => {
     };
 
     if (!isPresent(wardName)) {
-      setWardNameError(errors);
+      setWardNameError(onSubmitErrors);
     }
     if (!isPresent(hospitalName)) {
-      setHospitalNameError(errors);
+      setHospitalNameError(onSubmitErrors);
     }
     if (!isPresent(wardCode)) {
-      setWardCodeError(errors);
+      setWardCodeError(onSubmitErrors);
     }
     if (isPresent(wardCodeConfirmation)) {
       if (wardCode !== wardCodeConfirmation) {
-        setWardCodeConfirmationMismatchError(errors);
+        setWardCodeConfirmationMismatchError(onSubmitErrors);
       }
     } else {
-      setWardCodeConfirmationError(errors);
+      setWardCodeConfirmationError(onSubmitErrors);
     }
 
-    if (errors.length === 0) {
+    if (onSubmitErrors.length === 0) {
       const submitAnswers = async ({ wardName, hospitalName, wardCode }) => {
         let name = wardName;
         let code = wardCode;
@@ -119,14 +119,14 @@ const Home = () => {
         if (status == 201) {
           Router.push(`/admin`);
         } else {
-          setUniqueWardCodeError(errors);
-          setErrors(errors);
+          setUniqueWardCodeError(onSubmitErrors);
+          setErrors(onSubmitErrors);
         }
       };
 
       await submitAnswers({ wardName, hospitalName, wardCode });
     }
-    setErrors(errors);
+    setErrors(onSubmitErrors);
   });
   return (
     <Layout
