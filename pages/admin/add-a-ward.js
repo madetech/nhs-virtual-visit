@@ -40,14 +40,14 @@ const Home = () => {
     const setWardNameError = (errors) => {
       errors.push({
         id: "ward-name-error",
-        message: "Enter a ward's name",
+        message: "Enter a ward name",
       });
     };
 
     const setHospitalNameError = (errors) => {
       errors.push({
         id: "hospital-name-error",
-        message: "Enter a hospital's name",
+        message: "Enter a hospital name",
       });
     };
 
@@ -119,7 +119,7 @@ const Home = () => {
             <Heading>Add a ward</Heading>
             <FormGroup>
               <Label htmlFor="ward-name" className="nhsuk-label--l">
-                What is the ward&apos;s name?
+                What is the ward name?
               </Label>
               <Input
                 id="ward-name"
@@ -135,7 +135,7 @@ const Home = () => {
               />
 
               <Label htmlFor="hospital-name" className="nhsuk-label--l">
-                What is the hospital&apos;s name?
+                What is the hospital name?
               </Label>
               <Input
                 id="hospital-name"
@@ -151,7 +151,7 @@ const Home = () => {
               />
 
               <Label htmlFor="ward-code" className="nhsuk-label--l">
-                What is the ward code?
+                Create a ward code
               </Label>
 
               <Input
