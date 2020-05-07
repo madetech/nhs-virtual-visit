@@ -12,7 +12,7 @@ import Label from "../../src/components/Label";
 import Router from "next/router";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
-const isValidName = (input) => {
+const isPresent = (input) => {
   if (input.length !== 0) {
     return input;
   }
@@ -80,16 +80,16 @@ const Home = () => {
       });
     };
 
-    if (!isValidName(wardName)) {
+    if (!isPresent(wardName)) {
       setWardNameError(errors);
     }
-    if (!isValidName(hospitalName)) {
+    if (!isPresent(hospitalName)) {
       setHospitalNameError(errors);
     }
-    if (!isValidName(wardCode)) {
+    if (!isPresent(wardCode)) {
       setWardCodeError(errors);
     }
-    if (isValidName(wardCodeConfirmation)) {
+    if (isPresent(wardCodeConfirmation)) {
       if (wardCode !== wardCodeConfirmation) {
         setWardCodeConfirmationMismatchError(errors);
       }
