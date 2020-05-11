@@ -58,7 +58,7 @@ Requirements:
 
 ### `.env`
 
-In order to run this app locally you will need to add these variables to your `.env` file.
+In order to run this app locally you will need to create a `.env` file in the root of this project and add these variables to it.
 
 ```bash
 # GovNotify API Key
@@ -94,7 +94,7 @@ ENABLE_SENTRY=
 
 You may need to enable SSL on your local postgres server.
 
-Within the data folder of your PostgreSQL installation (e.g. `~/Library/Application Support/Postgres/var-12`), generate an self-signed certificate (details here https://www.postgresql.org/docs/12/ssl-tcp.html#SSL-CERTIFICATE-CREATION).
+Within the data folder of your PostgreSQL installation (e.g. `~/Library/Application Support/Postgres/var-12` or `/usr/local/var/postgres`), generate an self-signed certificate (details here https://www.postgresql.org/docs/12/ssl-tcp.html#SSL-CERTIFICATE-CREATION).
 
 After generating the certificate, edit the postgresql.conf file in the data folder to enable ssl (`ssl = on`).
 
