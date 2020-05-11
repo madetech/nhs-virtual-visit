@@ -7,10 +7,13 @@ const WardsTable = ({ wards }) => (
       <thead className="nhsuk-table__head">
         <tr className="nhsuk-table__row">
           <th className="nhsuk-table__header" scope="col">
-            Hospital Name
+            Hospital name
           </th>
           <th className="nhsuk-table__header" scope="col">
-            Ward Name
+            Ward name
+          </th>
+          <th className="nhsuk-table__header" scope="col">
+            Ward code
           </th>
         </tr>
       </thead>
@@ -19,6 +22,7 @@ const WardsTable = ({ wards }) => (
           <tr key={ward.callId} className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{ward.hospitalName}</td>
             <td className="nhsuk-table__cell">{ward.name}</td>
+            <td className="nhsuk-table__cell">{ward.code}</td>
           </tr>
         ))}
       </tbody>
