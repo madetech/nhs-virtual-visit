@@ -13,7 +13,7 @@ const isPresent = (input) => {
   }
 };
 
-const WardForm = ({ errors, setErrors }) => {
+const AddWardForm = ({ errors, setErrors }) => {
   const [hospitalName, setHospitalName] = useState("");
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
@@ -205,4 +205,4 @@ const WardForm = ({ errors, setErrors }) => {
   );
 };
 
-export default WardForm;
+export default AddWardForm;
