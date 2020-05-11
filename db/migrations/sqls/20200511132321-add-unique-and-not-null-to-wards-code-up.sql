@@ -1,0 +1,2 @@
+ALTER TABLE wards ALTER COLUMN code SET NOT NUll;
+ALTER TABLE wards ADD UNIQUE(code);
