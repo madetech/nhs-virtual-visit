@@ -4,7 +4,7 @@ import Layout from "../../src/components/Layout";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
 import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import WardForm from "../../src/components/WardForm";
+import AddWardForm from "../../src/components/AddWardForm";
 
 const AddAWard = () => {
   const [errors, setErrors] = useState([]);
@@ -17,7 +17,7 @@ const AddAWard = () => {
     >
       <GridRow>
         <GridColumn width="two-thirds">
-          <WardForm errors={errors} setErrors={setErrors} />
+          <AddWardForm errors={errors} setErrors={setErrors} />
         </GridColumn>
       </GridRow>
     </Layout>
