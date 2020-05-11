@@ -57,4 +57,8 @@ describe("AppContainer", () => {
   it("returns verifyCallPassword", () => {
     expect(container.getVerifyCallPassword()).toBeDefined();
   });
+
+  it("returns getUpdateWard", () => {
+    expect(container.getUpdateWard()).toBeDefined();
+  });
 });
