@@ -106,9 +106,9 @@ Restart your PostgreSQL server and SSL will connections will be enabled
    ```bash
    createdb nhs-virtual-visit-dev
    ```
-2. Load the current schema into the database
+2. Run all migrations
    ```bash
-   cat db/schema.sql | psql nhs-virtual-visit-dev
+   npm run dbmigrate up
    ```
 3. Add the database URL as an environment variable in `.env`. On Linux you may need to provide a username and password.
    ```bash
@@ -160,6 +160,34 @@ Old scheduled calls are deleted after 24 hours. You can cleanup the table by run
 
 ```bash
 npm run cleandb
+```
+
+## Applying database migrations
+
+Database migrations are managed with [db-migrate](https://github.com/db-migrate/node-db-migrate). To create a new migration
+
+```bash
+npm run dbmigrate create description-for-your-migration
+```
+
+This will create an up and down migration as sql files in `db/migrations/sqls` as well as a javascript file in `db/migrations` to run the sql files.
+
+Migrations are run with
+
+```bash
+npm run dbmigrate up
+```
+
+Migrations can be rolled back with
+
+```bash
+npm run dbmigrate down
+```
+
+You can do a dry-run to view the changes that will be applied without making any changes (for both up and down migrations)
+
+```bash
+npm run dbmigratedry up
 ```
 
 ## More documentation
