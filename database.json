@@ -1,0 +1,15 @@
+{
+  "development": {
+    "url": { "ENV": "DATABASE_URL" },
+    "ssl": {
+      "rejectUnauthorized": false
+    }
+  },
+  "production": {
+    "url": { "ENV": "DATABASE_URL" },
+    "ssl": {
+      "rejectUnauthorized": false
+    }
+  },
+  "sql-file": true
+}
