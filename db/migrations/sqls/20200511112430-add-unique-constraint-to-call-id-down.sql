@@ -1,0 +1,1 @@
+ALTER TABLE scheduled_calls_table DROP CONSTRAINT call_id_unique;

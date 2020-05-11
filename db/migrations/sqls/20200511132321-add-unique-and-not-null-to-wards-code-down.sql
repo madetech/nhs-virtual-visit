@@ -1,0 +1,2 @@
+ALTER TABLE wards DROP CONSTRAINT wards_code_key;
+ALTER TABLE wards ALTER COLUMN code DROP NOT NUll;

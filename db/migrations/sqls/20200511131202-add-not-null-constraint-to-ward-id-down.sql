@@ -1,0 +1,1 @@
+ALTER TABLE scheduled_calls_table ALTER COLUMN ward_id DROP NOT NUll;
