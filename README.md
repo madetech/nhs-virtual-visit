@@ -190,6 +190,12 @@ You can do a dry-run to view the changes that will be applied without making any
 npm run dbmigratedry up
 ```
 
+To update the `db/schema.sql` file:
+
+```bash
+pg_dump -d nhs-virtual-visit-dev -s > db/schema.sql
+```
+
 ## More documentation
 
 - [Glossary](docs/GLOSSARY.md) - types of users, vocabulary used in copy and descriptions of the intent for each page.
