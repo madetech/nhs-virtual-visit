@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.2
--- Dumped by pg_dump version 12.2
+-- Dumped from database version 12.1
+-- Dumped by pg_dump version 12.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -163,7 +163,8 @@ CREATE TABLE public.wards (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     hospital_name character varying(255) NOT NULL,
-    code character varying(255) NOT NULL
+    code character varying(255) NOT NULL,
+    trust_id integer
 );
 
 
@@ -308,6 +309,14 @@ ALTER TABLE ONLY public.scheduled_calls_table
 
 ALTER TABLE ONLY public.ward_visit_totals
     ADD CONSTRAINT ward_visit_totals_ward_id_fkey FOREIGN KEY (ward_id) REFERENCES public.wards(id);
+
+
+--
+-- Name: wards wards_trust_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.wards
+    ADD CONSTRAINT wards_trust_id_fkey FOREIGN KEY (trust_id) REFERENCES public.trusts(id);
 
 
 --
