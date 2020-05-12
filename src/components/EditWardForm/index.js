@@ -5,6 +5,7 @@ import Heading from "../Heading";
 import Input from "../Input";
 import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
+import Router from "next/router";
 
 const isPresent = (input) => {
   if (input.length !== 0) {
@@ -15,11 +16,13 @@ const isPresent = (input) => {
 const EditWardForm = ({
   errors,
   setErrors,
+  id,
   initialName,
   initialHospitalName,
 }) => {
-  const [hospitalName, setHospitalName] = useState(initialName);
-  const [wardName, setWardName] = useState(initialHospitalName);
+  const [wardName, setWardName] = useState(initialName);
+  const [hospitalName, setHospitalName] = useState(initialHospitalName);
+  let onSubmitErrors = [];
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
@@ -29,10 +32,35 @@ const EditWardForm = ({
     return error.length === 1 ? error[0].message : "";
   };
 
+  const submitAnswers = async () => {
+    let name = wardName;
+    const response = await fetch("/api/update-a-ward", {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        name,
+        hospitalName,
+      }),
+    });
+
+    const status = response.status;
+    const { wardId } = await response.json();
+    if (status == 201) {
+      Router.push({
+        pathname: "/admin/edit-a-ward-success",
+        query: { wardId: wardId },
+      });
+    } else {
+      setErrors(onSubmitErrors);
+    }
+  };
+
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
-    const onSubmitErrors = [];
-
+    onSubmitErrors = [];
     const setWardNameError = (errors) => {
       errors.push({
         id: "ward-name-error",
@@ -53,11 +81,9 @@ const EditWardForm = ({
     if (!isPresent(hospitalName)) {
       setHospitalNameError(onSubmitErrors);
     }
-
     if (onSubmitErrors.length === 0) {
-      console.log("Edit a ward");
+      await submitAnswers();
     }
-
     setErrors(onSubmitErrors);
   });
   return (
