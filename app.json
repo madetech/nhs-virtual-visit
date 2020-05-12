@@ -1,10 +1,10 @@
 {
   "environments": {
     "review": {
-      "addons": ["heroku-postgresql:hobby-dev"],
-      "scripts": {
-        "postdeploy": "npm run dbmigrate up"
-      }
+      "addons": ["heroku-postgresql:hobby-dev"]
     }
+  },
+  "scripts": {
+    "pr-postdeploy": "npm run dbmigrate up"
   }
 }
