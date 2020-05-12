@@ -7,10 +7,9 @@ import Layout from "../../src/components/Layout";
 import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import Router from "next/router";
-import formatDate from "../../src/helpers/formatDate";
-import formatTime from "../../src/helpers/formatTime";
 import verifyToken from "../../src/usecases/verifyToken";
 import TokenProvider from "../../src/providers/TokenProvider";
+import VisitSummaryList from "../../src/components/VisitSummaryList";
 
 const ScheduleConfirmation = ({
   patientName,
@@ -68,85 +67,16 @@ const ScheduleConfirmation = ({
         <GridColumn width="two-thirds">
           <form onSubmit={onSubmit}>
             <Heading>Check your answers before booking a virtual visit</Heading>
-            <dl className="nhsuk-summary-list">
-              <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">Patient name</dt>
-                <dd className="nhsuk-summary-list__value">{patientName}</dd>
-                <dd className="nhsuk-summary-list__actions">
-                  <a href="#" onClick={changeLink}>
-                    Change
-                    <span className="nhsuk-u-visually-hidden">
-                      {" "}
-                      patient name
-                    </span>
-                  </a>
-                </dd>
-              </div>
 
-              <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">
-                  Key contact&apos;s name
-                </dt>
-                <dd className="nhsuk-summary-list__value">{contactName}</dd>
-                <dd className="nhsuk-summary-list__actions">
-                  <a href="#" onClick={changeLink}>
-                    Change
-                    <span className="nhsuk-u-visually-hidden">
-                      {" "}
-                      key contact&apos;s name
-                    </span>
-                  </a>
-                </dd>
-              </div>
+            <VisitSummaryList
+              patientName={patientName}
+              visitorName={contactName}
+              visitorMobileNumber={contactNumber}
+              visitDateAndTime={callTime}
+              withActions={true}
+              actionLinkOnClick={changeLink}
+            ></VisitSummaryList>
 
-              <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">
-                  Key contact&apos;s mobile number
-                </dt>
-                <dd className="nhsuk-summary-list__value">{contactNumber}</dd>
-                <dd className="nhsuk-summary-list__actions">
-                  <a href="#" onClick={changeLink}>
-                    Change
-                    <span className="nhsuk-u-visually-hidden">
-                      {" "}
-                      key contact&apos;s mobile number
-                    </span>
-                  </a>
-                </dd>
-              </div>
-
-              <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">Date of call</dt>
-                <dd className="nhsuk-summary-list__value">
-                  {formatDate(callTime)}
-                </dd>
-                <dd className="nhsuk-summary-list__actions">
-                  <a href="#" onClick={changeLink}>
-                    Change
-                    <span className="nhsuk-u-visually-hidden">
-                      {" "}
-                      date of call
-                    </span>
-                  </a>
-                </dd>
-              </div>
-
-              <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">Time of call</dt>
-                <dd className="nhsuk-summary-list__value">
-                  {formatTime(callTime, "HH:mm")}
-                </dd>
-                <dd className="nhsuk-summary-list__actions">
-                  <a href="#" onClick={changeLink}>
-                    Change
-                    <span className="nhsuk-u-visually-hidden">
-                      {" "}
-                      time of call
-                    </span>
-                  </a>
-                </dd>
-              </div>
-            </dl>
             <h2 className="nhsuk-heading-l">
               Key contact&apos;s mobile number
             </h2>
