@@ -7,7 +7,7 @@ import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import EditWardForm from "../../src/components/EditWardForm";
 
-const EditAWard = ({ error, name, hospitalName }) => {
+const EditAWard = ({ error, id, name, hospitalName }) => {
   if (error) {
     return <Error />;
   }
@@ -25,6 +25,7 @@ const EditAWard = ({ error, name, hospitalName }) => {
           <EditWardForm
             errors={errors}
             setErrors={setErrors}
+            id={id}
             initialName={name}
             initialHospitalName={hospitalName}
           />
@@ -43,6 +44,7 @@ export const getServerSideProps = propsWithContainer(
       return {
         props: {
           error: error,
+          id: ward.id,
           name: ward.name,
           hospitalName: ward.hospitalName,
         },
