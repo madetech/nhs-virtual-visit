@@ -3,7 +3,7 @@
     "review": {
       "addons": ["heroku-postgresql:hobby-dev"],
       "scripts": {
-        "postdeploy": "npm run dbmigrate up"
+        "postdeploy": "npm run dbmigrate up && psql -f 'db/seeds.sql'"
       }
     }
   }
