@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.1
--- Dumped by pg_dump version 12.1
+-- Dumped from database version 12.2
+-- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -91,6 +91,39 @@ ALTER SEQUENCE public.scheduled_calls_table_id_seq OWNED BY public.scheduled_cal
 
 
 --
+-- Name: trusts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.trusts (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    admin_code character varying(255) NOT NULL
+);
+
+
+
+--
+-- Name: trusts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.trusts_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+
+--
+-- Name: trusts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.trusts_id_seq OWNED BY public.trusts.id;
+
+
+--
 -- Name: ward_visit_totals; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -169,6 +202,13 @@ ALTER TABLE ONLY public.scheduled_calls_table ALTER COLUMN id SET DEFAULT nextva
 
 
 --
+-- Name: trusts id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.trusts ALTER COLUMN id SET DEFAULT nextval('public.trusts_id_seq'::regclass);
+
+
+--
 -- Name: ward_visit_totals id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -204,6 +244,22 @@ ALTER TABLE ONLY public.migrations
 
 ALTER TABLE ONLY public.scheduled_calls_table
     ADD CONSTRAINT scheduled_calls_table_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: trusts trusts_admin_code_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.trusts
+    ADD CONSTRAINT trusts_admin_code_key UNIQUE (admin_code);
+
+
+--
+-- Name: trusts trusts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.trusts
+    ADD CONSTRAINT trusts_pkey PRIMARY KEY (id);
 
 
 --
