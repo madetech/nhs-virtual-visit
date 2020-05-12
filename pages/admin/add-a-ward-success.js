@@ -43,7 +43,6 @@ export const getServerSideProps = propsWithContainer(
     async ({ container, query }) => {
       const getWardById = container.getWardById();
       const { ward, error } = await getWardById(query.wardId);
-      console.log(ward);
 
       return {
         props: {
