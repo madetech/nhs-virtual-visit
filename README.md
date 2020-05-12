@@ -51,7 +51,7 @@ The following video chat capabilities are currently supported:
 Requirements:
 
 - PostgreSQL 12
-- Node LTS
+- Node LTS (Currently Node 12. There is a known issue with db-migrate and Node 14)
 - GovNotify API keys
 
 ## Environment Setup
