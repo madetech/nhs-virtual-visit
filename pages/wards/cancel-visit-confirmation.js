@@ -9,17 +9,15 @@ import TokenProvider from "../../src/providers/TokenProvider";
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Error from "next/error";
-
-import formatDate from "../../src/helpers/formatDate";
-import formatTime from "../../src/helpers/formatTime";
+import VisitSummaryList from "../../src/components/VisitSummaryList";
+import BackLink from "../../src/components/BackLink";
 
 const deleteVisitConfirmation = ({
   callId,
   patientName,
   contactName,
   contactNumber,
-  callTime,
-  callDate,
+  callDateAndTime,
   error,
 }) => {
   const onSubmit = useCallback(async (event) => {
@@ -35,38 +33,19 @@ const deleteVisitConfirmation = ({
     <Layout title="Confirm cancellation of virtual visit" renderLogout={true}>
       <GridRow>
         <GridColumn width="full">
+          <Heading>Confirm cancellation of virtual visit</Heading>
+        </GridColumn>
+      </GridRow>
+      <GridRow>
+        <GridColumn width="two-thirds">
           <form onSubmit={onSubmit}>
-            <Heading>Confirm cancellation of virtual visit</Heading>
-            <dl className="nhsuk-summary-list">
-              <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">Patient&apos;s name</dt>
-                <dd className="nhsuk-summary-list__value">{patientName}</dd>
-              </div>
+            <VisitSummaryList
+              patientName={patientName}
+              visitorName={contactName}
+              visitorMobileNumber={contactNumber}
+              visitDateAndTime={callDateAndTime}
+            ></VisitSummaryList>
 
-              <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">
-                  Key contact&apos;s name
-                </dt>
-                <dd className="nhsuk-summary-list__value">{contactName}</dd>
-              </div>
-
-              <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">
-                  Key contact&apos;s mobile number
-                </dt>
-                <dd className="nhsuk-summary-list__value">{contactNumber}</dd>
-              </div>
-
-              <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">Date of call</dt>
-                <dd className="nhsuk-summary-list__value">{callDate}</dd>
-              </div>
-
-              <div className="nhsuk-summary-list__row">
-                <dt className="nhsuk-summary-list__key">Time of call</dt>
-                <dd className="nhsuk-summary-list__value">{callTime}</dd>
-              </div>
-            </dl>
             <div className="nhsuk-warning-callout">
               <h3 className="nhsuk-warning-callout__label">
                 Inform key contact
@@ -76,20 +55,10 @@ const deleteVisitConfirmation = ({
                 visit is being cancelled.
               </p>
             </div>
+
             <Button>Confirm cancellation</Button>
-            <div className="nhsuk-back-link">
-              <a className="nhsuk-back-link__link" href={`/wards/visits`}>
-                <svg
-                  className="nhsuk-icon nhsuk-icon__chevron-left"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path d="M8.5 12c0-.3.1-.5.3-.7l5-5c.4-.4 1-.4 1.4 0s.4 1 0 1.4L10.9 12l4.3 4.3c.4.4.4 1 0 1.4s-1 .4-1.4 0l-5-5c-.2-.2-.3-.4-.3-.7z"></path>
-                </svg>
-                Return to virtual visits
-              </a>
-            </div>
+
+            <BackLink href="/wards/visits">Back to virtual visits</BackLink>
           </form>
         </GridColumn>
       </GridRow>
@@ -114,16 +83,12 @@ export const getServerSideProps = propsWithContainer(
         };
       }
 
-      const callTime = formatTime(scheduledCall.callTime, "HH:mm");
-      const callDate = formatDate(scheduledCall.callTime);
-
       return {
         props: {
           patientName: scheduledCall.patientName,
           contactName: scheduledCall.recipientName,
           contactNumber: scheduledCall.recipientNumber,
-          callTime,
-          callDate,
+          callDateAndTime: scheduledCall.callTime,
           callId,
           error,
         },
