@@ -85,6 +85,7 @@ describe("/admin/edit-a-ward", () => {
           container,
         });
 
+        expect(props.id).toEqual(1);
         expect(props.name).toEqual("Defoe Ward");
         expect(props.hospitalName).toEqual("Northwick Park Hospital");
       });

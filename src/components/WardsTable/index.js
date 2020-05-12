@@ -1,4 +1,5 @@
 import React from "react";
+import Router from "next/router";
 
 const WardsTable = ({ wards }) => (
   <div className="nhsuk-table-responsive">
@@ -15,6 +16,7 @@ const WardsTable = ({ wards }) => (
           <th className="nhsuk-table__header" scope="col">
             Ward code
           </th>
+          <th className="nhsuk-table__header" scope="col"></th>
         </tr>
       </thead>
       <tbody className="nhsuk-table__body">
@@ -23,6 +25,20 @@ const WardsTable = ({ wards }) => (
             <td className="nhsuk-table__cell">{ward.hospitalName}</td>
             <td className="nhsuk-table__cell">{ward.name}</td>
             <td className="nhsuk-table__cell">{ward.code}</td>
+            <td className="nhsuk-table__cell">
+              <button
+                className="nhsuk-button"
+                onClick={() => {
+                  const wardId = ward.id;
+                  Router.push({
+                    pathname: `/admin/edit-a-ward`,
+                    query: { wardId },
+                  });
+                }}
+              >
+                Edit
+              </button>
+            </td>
           </tr>
         ))}
       </tbody>
