@@ -1,8 +1,9 @@
-const retrieveWards = ({ getDb }) => async () => {
+const retrieveWards = ({ getDb }) => async (trustId) => {
   const db = await getDb();
   try {
     const wards = await db.any(
-      `SELECT * FROM wards ORDER BY hospital_name ASC, name ASC`
+      `SELECT * FROM wards WHERE trust_id = $1 ORDER BY hospital_name ASC, name ASC`,
+      [trustId]
     );
 
     return {
