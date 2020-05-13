@@ -3,14 +3,16 @@ import withContainer from "../../src/middleware/withContainer";
 export default withContainer(
   async ({ body: { code }, method }, res, { container }) => {
     if (method === "POST") {
-
       const verifyWardCode = container.getVerifyWardCode();
       const verifyWardCodeResponse = await verifyWardCode(code);
 
       const verifyTrustAdminCode = container.getVerifyTrustAdminCode();
       const verifyTrustAdminCodeResponse = await verifyTrustAdminCode(code);
 
-      if (!verifyTrustAdminCodeResponse.validTrustAdminCode && !verifyWardCodeResponse.validWardCode) {
+      if (
+        !verifyTrustAdminCodeResponse.validTrustAdminCode &&
+        !verifyWardCodeResponse.validWardCode
+      ) {
         res.statusCode = 401;
         res.end();
         return;

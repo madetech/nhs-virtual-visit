@@ -1,7 +1,6 @@
 import session from "../../pages/api/session";
 
 describe("api/session", () => {
-
   describe("Given incorrect method", () => {
     it("Returns a 406", async () => {
       let invalidRequest = { method: "GET", body: { code: "MEOW" } };
