@@ -8,6 +8,7 @@ import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
 import retrieveWardById from "../usecases/retrieveWardById";
 import verifyWardCode from "../usecases/verifyWardCode";
+import verifyTrustAdminCode from "../usecases/verifyTrustAdminCode";
 import retrieveVisits from "../usecases/retrieveVisits";
 import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 import verifyCallPassword from "../usecases/verifyCallPassword";
@@ -55,6 +56,10 @@ class AppContainer {
 
   getVerifyWardCode = () => {
     return verifyWardCode(this);
+  };
+
+  getVerifyTrustAdminCode = () => {
+    return verifyTrustAdminCode(this);
   };
 
   getRetrieveVisits = () => {
