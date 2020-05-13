@@ -35,8 +35,10 @@ const Admin = ({ error, wards }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyAdminToken(
-    async ({ container }) => {
-      const { wards, error } = await container.getRetrieveWards()();
+    async ({ container, authenticationToken }) => {
+      const { wards, error } = await container.getRetrieveWards()(
+        authenticationToken.trustId
+      );
 
       return {
         props: { wards: wards, error: error },
