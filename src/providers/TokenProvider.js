@@ -5,10 +5,14 @@ class TokenProvider {
     this.signingKey = signingKey;
   }
 
-  generate({ wardId, wardCode, admin }) {
-    return jwt.sign({ wardId, ward: wardCode, admin: admin }, this.signingKey, {
-      algorithm: "HS256",
-    });
+  generate({ wardId, wardCode, admin, trustId }) {
+    return jwt.sign(
+      { wardId, ward: wardCode, admin: admin, trustId: trustId },
+      this.signingKey,
+      {
+        algorithm: "HS256",
+      }
+    );
   }
 
   validate(token) {
