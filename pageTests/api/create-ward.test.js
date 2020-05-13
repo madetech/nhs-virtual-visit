@@ -32,7 +32,9 @@ describe("create-ward", () => {
       }),
       getAdminIsAuthenticated: jest
         .fn()
-        .mockReturnValue((cookie) => cookie === "token=valid.token.value" && {trustId: 1}),
+        .mockReturnValue(
+          (cookie) => cookie === "token=valid.token.value" && { trustId: 1 }
+        ),
     };
   });
 
