@@ -40,9 +40,12 @@ const AddAWardSuccess = ({ error, name, hospitalName }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyAdminToken(
-    async ({ container, query }) => {
+    async ({ container, query, authenticationToken }) => {
       const getWardById = container.getWardById();
-      const { ward, error } = await getWardById(query.wardId);
+      const { ward, error } = await getWardById(
+        query.wardId,
+        authenticationToken.trustId
+      );
 
       return {
         props: {
