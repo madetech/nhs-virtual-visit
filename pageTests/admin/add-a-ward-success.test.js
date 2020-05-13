@@ -2,7 +2,7 @@ import { getServerSideProps } from "../../pages/admin/add-a-ward-success";
 
 // TODO: This needs to be moved once the verifyToken logic is in the container..
 jest.mock("../../src/usecases/adminIsAuthenticated", () => () => (token) =>
-  token && { admin: true }
+  token && { admin: true, trustId: 1 }
 );
 
 const authenticatedReq = {
@@ -59,7 +59,7 @@ describe("/admin/add-a-ward-success", () => {
           container,
         });
 
-        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID");
+        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 1);
       });
 
       it("set a ward prop based on the retrieved ward", async () => {

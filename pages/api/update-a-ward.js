@@ -10,7 +10,9 @@ export default withContainer(
 
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
 
-    if (!adminIsAuthenticated(headers.cookie)) {
+    const adminToken = adminIsAuthenticated(headers.cookie);
+
+    if (!adminToken) {
       res.status(401);
       res.end();
       return;
@@ -39,6 +41,16 @@ export default withContainer(
     if (!body.hospitalName) {
       res.status(400);
       res.end(JSON.stringify({ err: "hospital name must be present" }));
+      return;
+    }
+
+    const retrieveWardById = container.getWardById();
+
+    const existingWard = await retrieveWardById(body.id, adminToken.trustId);
+
+    if (existingWard.error) {
+      res.status(400);
+      res.end(JSON.stringify({ err: "ward does not exist in current trust" }));
       return;
     }
 

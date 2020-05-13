@@ -14,11 +14,14 @@ describe("retrieveWardById", () => {
       },
     };
 
-    const { ward, error } = await retrieveWardById(container)(1);
+    const wardId = 1;
+    const trustId = 1;
+
+    const { ward, error } = await retrieveWardById(container)(wardId, trustId);
 
     expect(error).toBeNull();
     expect(ward).toEqual({
-      id: 1,
+      id: wardId,
       name: "Defoe Ward",
       hospitalName: "Test Hospital",
     });

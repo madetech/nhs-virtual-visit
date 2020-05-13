@@ -7,6 +7,10 @@ describe("update-a-ward", () => {
   let response;
   let container;
 
+  jest.mock("../../src/usecases/adminIsAuthenticated", () => () => (token) =>
+    token && { admin: true, trustId: 1 }
+  );
+
   beforeEach(() => {
     validRequest = {
       method: "PATCH",
@@ -32,6 +36,9 @@ describe("update-a-ward", () => {
       getAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
+      getWardById: jest.fn().mockReturnValue(() => {
+        return { error: null };
+      }),
     };
   });
 
@@ -268,6 +275,22 @@ describe("update-a-ward", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ err: "hospital name must be present" })
+    );
+  });
+
+  it("returns a 400 if ward does not exist in current trust", async () => {
+    await updateAWard(validRequest, response, {
+      container: {
+        ...container,
+        getWardById: jest.fn().mockReturnValue(() => {
+          return { error: "Error!" };
+        }),
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "ward does not exist in current trust" })
     );
   });
 });
