@@ -10,7 +10,8 @@ export default withContainer(
 
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
 
-    if (!adminIsAuthenticated(headers.cookie)) {
+    const adminAuthenticatedToken = adminIsAuthenticated(headers.cookie);
+    if (!adminAuthenticatedToken) {
       res.status(401);
       res.end();
       return;
@@ -36,6 +37,7 @@ export default withContainer(
       name: body.name,
       hospitalName: body.hospitalName,
       code: body.code,
+      trustId: adminAuthenticatedToken.trustId,
     });
 
     if (error) {

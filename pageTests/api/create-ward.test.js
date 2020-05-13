@@ -32,7 +32,7 @@ describe("create-ward", () => {
       }),
       getAdminIsAuthenticated: jest
         .fn()
-        .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
+        .mockReturnValue((cookie) => cookie === "token=valid.token.value" && {trustId: 1}),
     };
   });
 
@@ -87,6 +87,7 @@ describe("create-ward", () => {
         name: "Seto Kaiba Ward",
         hospitalName: "Yugi Muto Hospital",
         code: "YamiYugi",
+        trustId: 1,
       })
     );
   });
