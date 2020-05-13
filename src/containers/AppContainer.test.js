@@ -61,4 +61,12 @@ describe("AppContainer", () => {
   it("returns getUpdateWard", () => {
     expect(container.getUpdateWard()).toBeDefined();
   });
+
+  it("returns getVerifyWardCode", () => {
+    expect(container.getVerifyWardCode()).toBeDefined();
+  });
+
+  it("returns getVerifyTrustAdminCode", () => {
+    expect(container.getVerifyTrustAdminCode()).toBeDefined();
+  });
 });

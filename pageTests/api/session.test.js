@@ -1,13 +1,6 @@
 import session from "../../pages/api/session";
 
 describe("api/session", () => {
-  beforeEach(() => {
-    process.env.ADMIN_AUTH_CODES = "admin_code";
-  });
-
-  afterEach(() => {
-    process.env.ADMIN_AUTH_CODES = undefined;
-  });
 
   describe("Given incorrect method", () => {
     it("Returns a 406", async () => {
@@ -35,8 +28,12 @@ describe("api/session", () => {
         const verifyWardCodeSpy = jest.fn(async () => ({
           validWardCode: false,
         }));
+        const verifyTrustAdminCodeSpy = jest.fn(async () => ({
+          validTrustAdminCode: false,
+        }));
         const container = {
           getVerifyWardCode: () => verifyWardCodeSpy,
+          getVerifyTrustAdminCode: () => verifyTrustAdminCodeSpy,
         };
 
         await session(invalidRequest, response, { container });
@@ -65,6 +62,9 @@ describe("api/session", () => {
           validWardCode: true,
           ward: { id: 10, code: "MEOW" },
         }));
+        const verifyTrustAdminCodeSpy = jest.fn(async () => ({
+          validTrustAdminCode: false,
+        }));
         const tokenGeneratorSpy = jest.fn(() => "generatedToken");
 
         const container = {
@@ -72,6 +72,7 @@ describe("api/session", () => {
             generate: tokenGeneratorSpy,
           })),
           getVerifyWardCode: () => verifyWardCodeSpy,
+          getVerifyTrustAdminCode: () => verifyTrustAdminCodeSpy,
         };
 
         await session(validRequest, response, { container });
@@ -109,6 +110,13 @@ describe("api/session", () => {
           validWardCode: false,
           ward: {},
         }));
+
+        const verifyTrustAdminCodeSpy = jest.fn(async () => ({
+          validTrustAdminCode: true,
+          trust: { id: 1 },
+          error: null,
+        }));
+
         const tokenGeneratorSpy = jest.fn(() => "generatedToken");
 
         const container = {
@@ -116,14 +124,17 @@ describe("api/session", () => {
             generate: tokenGeneratorSpy,
           })),
           getVerifyWardCode: () => verifyWardCodeSpy,
+          getVerifyTrustAdminCode: () => verifyTrustAdminCodeSpy,
         };
 
         await session(validRequest, response, { container });
 
+        expect(verifyTrustAdminCodeSpy).toHaveBeenCalledWith("admin_code");
         expect(tokenGeneratorSpy).toHaveBeenCalledWith({
           wardId: undefined,
           wardCode: undefined,
           admin: true,
+          trustId: 1,
         });
         expect(response.writeHead).toHaveBeenCalledWith(
           201,
