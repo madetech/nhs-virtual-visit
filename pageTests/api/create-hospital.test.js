@@ -1,8 +1,8 @@
-import createWard from "../../pages/api/create-ward";
+import createHospital from "../../pages/api/create-hospital";
 
 jest.mock("node-fetch");
 
-describe("create-ward", () => {
+describe("create-hospital", () => {
   let validRequest;
   let response;
   let container;
@@ -11,9 +11,8 @@ describe("create-ward", () => {
     validRequest = {
       method: "POST",
       body: {
-        name: "Seto Kaiba Ward",
-        hospitalName: "Yugi Muto Hospital",
-        code: "YamiYugi",
+        name: "Yugi Muto Hospital",
+        trustId: "1",
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -27,21 +26,19 @@ describe("create-ward", () => {
       body: jest.fn(),
     };
     container = {
-      getCreateWard: jest.fn().mockReturnValue(() => {
-        return { wardId: 1, error: null };
+      getCreateHospital: jest.fn().mockReturnValue(() => {
+        return { hospitalId: 1, error: null };
       }),
       getAdminIsAuthenticated: jest
         .fn()
-        .mockReturnValue(
-          (cookie) => cookie === "token=valid.token.value" && { trustId: 1 }
-        ),
+        .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
     };
   });
 
   it("returns 405 if not POST method", async () => {
     validRequest.method = "GET";
 
-    await createWard(validRequest, response, {
+    await createHospital(validRequest, response, {
       container: container,
     });
 
@@ -51,7 +48,7 @@ describe("create-ward", () => {
   it("returns a 401 if no token provided", async () => {
     const adminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
 
-    await createWard(
+    await createHospital(
       {
         method: "POST",
         body: {},
@@ -71,38 +68,38 @@ describe("create-ward", () => {
   });
 
   it("creates a new ward if valid", async () => {
-    const createWardSpy = jest
+    const createHospitalSpy = jest
       .fn()
-      .mockReturnValue({ wardId: 123, error: null });
+      .mockReturnValue({ hospitalId: 123, error: null });
 
-    await createWard(validRequest, response, {
+    await createHospital(validRequest, response, {
       container: {
         ...container,
-        getCreateWard: () => createWardSpy,
+        getCreateHospital: () => createHospitalSpy,
       },
     });
 
     expect(response.status).toHaveBeenCalledWith(201);
-    expect(response.end).toHaveBeenCalledWith(JSON.stringify({ wardId: 123 }));
-    expect(createWardSpy).toHaveBeenCalledWith(
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ hospitalId: 123 })
+    );
+    expect(createHospitalSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        name: "Seto Kaiba Ward",
-        hospitalName: "Yugi Muto Hospital",
-        code: "YamiYugi",
-        trustId: 1,
+        name: "Yugi Muto Hospital",
+        trustId: "1",
       })
     );
   });
 
   it("returns a 400 status if errors", async () => {
-    const createWardStub = jest
+    const createHospitalStub = jest
       .fn()
-      .mockReturnValue({ wardId: 123, error: "Error message" });
+      .mockReturnValue({ hospitalId: 123, error: "Error message" });
 
-    await createWard(validRequest, response, {
+    await createHospital(validRequest, response, {
       container: {
         ...container,
-        getCreateWard: () => createWardStub,
+        getCreateHospital: () => createHospitalStub,
       },
     });
 
@@ -121,7 +118,7 @@ describe("create-ward", () => {
       },
     };
 
-    await createWard(invalidRequest, response, {
+    await createHospital(invalidRequest, response, {
       container: {
         ...container,
       },
@@ -144,7 +141,7 @@ describe("create-ward", () => {
       },
     };
 
-    await createWard(invalidRequest, response, {
+    await createHospital(invalidRequest, response, {
       container: {
         ...container,
       },
@@ -160,15 +157,14 @@ describe("create-ward", () => {
     const invalidRequest = {
       method: "POST",
       body: {
-        name: "Seto Kaiba Ward",
-        hospitalName: "",
+        name: "",
       },
       headers: {
         cookie: "token=valid.token.value",
       },
     };
 
-    await createWard(invalidRequest, response, {
+    await createHospital(invalidRequest, response, {
       container: {
         ...container,
       },
@@ -176,11 +172,11 @@ describe("create-ward", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "hospital name must be present" })
+      JSON.stringify({ err: "name must be present" })
     );
   });
 
-  it("returns a 400 if the hospital name is not provided", async () => {
+  it("returns a 400 if the trust ID is not provided", async () => {
     const invalidRequest = {
       method: "POST",
       body: {
@@ -191,7 +187,7 @@ describe("create-ward", () => {
       },
     };
 
-    await createWard(invalidRequest, response, {
+    await createHospital(invalidRequest, response, {
       container: {
         ...container,
       },
@@ -199,7 +195,7 @@ describe("create-ward", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "hospital name must be present" })
+      JSON.stringify({ err: "trust ID must be present" })
     );
   });
 });

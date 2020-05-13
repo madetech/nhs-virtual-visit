@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.1
--- Dumped by pg_dump version 12.1
+-- Dumped from database version 12.2
+-- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,6 +19,40 @@ SET row_security = off;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
+
+--
+-- Name: hospitals; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.hospitals (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    trust_id integer NOT NULL
+);
+
+
+
+
+--
+-- Name: hospitals_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.hospitals_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+
+--
+-- Name: hospitals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.hospitals_id_seq OWNED BY public.hospitals.id;
+
 
 --
 -- Name: migrations; Type: TABLE; Schema: public; Owner: -
@@ -189,6 +223,13 @@ ALTER SEQUENCE public.wards_id_seq OWNED BY public.wards.id;
 
 
 --
+-- Name: hospitals id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hospitals ALTER COLUMN id SET DEFAULT nextval('public.hospitals_id_seq'::regclass);
+
+
+--
 -- Name: migrations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -232,6 +273,14 @@ ALTER TABLE ONLY public.scheduled_calls_table
 
 
 --
+-- Name: hospitals hospitals_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hospitals
+    ADD CONSTRAINT hospitals_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: migrations migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -264,6 +313,14 @@ ALTER TABLE ONLY public.trusts
 
 
 --
+-- Name: hospitals unq_hospital_trust; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hospitals
+    ADD CONSTRAINT unq_hospital_trust UNIQUE (trust_id, name);
+
+
+--
 -- Name: ward_visit_totals unq_ward_date; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -293,6 +350,14 @@ ALTER TABLE ONLY public.wards
 
 ALTER TABLE ONLY public.wards
     ADD CONSTRAINT wards_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hospitals hospitals_trust_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.hospitals
+    ADD CONSTRAINT hospitals_trust_id_fkey FOREIGN KEY (trust_id) REFERENCES public.trusts(id);
 
 
 --

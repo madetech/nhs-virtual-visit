@@ -1,0 +1,1 @@
+ALTER TABLE wards ADD hospital_id int REFERENCES hospitals (id);

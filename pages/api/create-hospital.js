@@ -10,34 +10,31 @@ export default withContainer(
 
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
 
-    const adminAuthenticatedToken = adminIsAuthenticated(headers.cookie);
-    if (!adminAuthenticatedToken) {
+    if (!adminIsAuthenticated(headers.cookie)) {
       res.status(401);
       res.end();
       return;
     }
 
-    if (!body.name || body.name.length === 0) {
+    if (!body.name) {
       res.status(400);
       res.end(JSON.stringify({ err: "name must be present" }));
       return;
     }
 
-    if (!body.hospitalName || body.hospitalName.length === 0) {
+    if (!body.trustId) {
       res.status(400);
-      res.end(JSON.stringify({ err: "hospital name must be present" }));
+      res.end(JSON.stringify({ err: "trust ID must be present" }));
       return;
     }
 
     res.setHeader("Content-Type", "application/json");
 
-    const createWard = container.getCreateWard();
+    const createHospital = container.getCreateHospital();
 
-    const { wardId, error } = await createWard({
+    const { hospitalId, error } = await createHospital({
       name: body.name,
-      hospitalName: body.hospitalName,
-      code: body.code,
-      trustId: adminAuthenticatedToken.trustId,
+      trustId: body.trustId,
     });
 
     if (error) {
@@ -45,7 +42,7 @@ export default withContainer(
       res.end();
     } else {
       res.status(201);
-      res.end(JSON.stringify({ wardId: wardId }));
+      res.end(JSON.stringify({ hospitalId: hospitalId }));
     }
   }
 );

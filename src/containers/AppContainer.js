@@ -8,6 +8,7 @@ import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
 import retrieveWardById from "../usecases/retrieveWardById";
 import verifyWardCode from "../usecases/verifyWardCode";
+import verifyTrustAdminCode from "../usecases/verifyTrustAdminCode";
 import retrieveVisits from "../usecases/retrieveVisits";
 import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 import verifyCallPassword from "../usecases/verifyCallPassword";
@@ -15,6 +16,7 @@ import retrieveWards from "../usecases/retrieveWards";
 import updateWardVisitTotals from "../usecases/updateWardVisitTotals";
 import retrieveWardVisitTotals from "../usecases/retrieveWardVisitTotals";
 import updateWard from "../usecases/updateWard";
+import createHospital from "../usecases/createHospital";
 
 class AppContainer {
   getDb = () => {
@@ -57,6 +59,10 @@ class AppContainer {
     return verifyWardCode(this);
   };
 
+  getVerifyTrustAdminCode = () => {
+    return verifyTrustAdminCode(this);
+  };
+
   getRetrieveVisits = () => {
     return retrieveVisits(this);
   };
@@ -83,6 +89,10 @@ class AppContainer {
 
   getUpdateWard = () => {
     return updateWard(this);
+  };
+
+  getCreateHospital = () => {
+    return createHospital(this);
   };
 }
 

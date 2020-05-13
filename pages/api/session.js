@@ -3,13 +3,16 @@ import withContainer from "../../src/middleware/withContainer";
 export default withContainer(
   async ({ body: { code }, method }, res, { container }) => {
     if (method === "POST") {
-      const allowedAdminCodes = process.env.ADMIN_AUTH_CODES;
-      const isAdminCode = allowedAdminCodes.split(",").includes(code);
-
       const verifyWardCode = container.getVerifyWardCode();
       const verifyWardCodeResponse = await verifyWardCode(code);
 
-      if (!isAdminCode && !verifyWardCodeResponse.validWardCode) {
+      const verifyTrustAdminCode = container.getVerifyTrustAdminCode();
+      const verifyTrustAdminCodeResponse = await verifyTrustAdminCode(code);
+
+      if (
+        !verifyTrustAdminCodeResponse.validTrustAdminCode &&
+        !verifyWardCodeResponse.validWardCode
+      ) {
         res.statusCode = 401;
         res.end();
         return;
@@ -17,11 +20,12 @@ export default withContainer(
 
       let token = undefined;
       const tokens = container.getTokenProvider();
-      if (isAdminCode) {
+      if (verifyTrustAdminCodeResponse.validTrustAdminCode) {
         token = tokens.generate({
           wardId: undefined,
           wardCode: undefined,
           admin: true,
+          trustId: verifyTrustAdminCodeResponse.trust.id,
         });
       } else {
         const { ward } = verifyWardCodeResponse;
@@ -34,7 +38,7 @@ export default withContainer(
 
       const expiryHours = 2;
       let expiry = new Date();
-      if (isAdminCode) {
+      if (verifyTrustAdminCodeResponse.validTrustAdminCode) {
         expiry.setTime(expiry.getTime() + 1 * 60 * 60 * 1000);
       } else {
         expiry.setTime(expiry.getTime() + expiryHours * 60 * 60 * 1000);

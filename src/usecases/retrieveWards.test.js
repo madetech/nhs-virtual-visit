@@ -25,10 +25,17 @@ describe("retrieveWards", () => {
       },
     };
 
-    const { wards, error } = await retrieveWards(container)();
+    const trustId = 3;
+
+    const { wards, error } = await retrieveWards(container)(trustId);
 
     expect(error).toBeNull();
-    expect(anySpy).toHaveBeenCalledWith(expect.anything());
+    expect(
+      anySpy
+    ).toHaveBeenCalledWith(
+      "SELECT * FROM wards WHERE trust_id = $1 ORDER BY hospital_name ASC, name ASC",
+      [trustId]
+    );
     expect(wards).toHaveLength(2);
     expect(wards[0]).toEqual({
       id: 1,
