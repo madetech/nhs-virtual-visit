@@ -69,4 +69,8 @@ describe("AppContainer", () => {
   it("returns getVerifyTrustAdminCode", () => {
     expect(container.getVerifyTrustAdminCode()).toBeDefined();
   });
+
+  it("returns getRetrieveHospitalsByTrustId", () => {
+    expect(container.getRetrieveHospitalsByTrustId()).toBeDefined();
+  });
 });
