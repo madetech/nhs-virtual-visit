@@ -36,7 +36,7 @@ describe("update-a-ward", () => {
       getAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
-      getWardById: jest.fn().mockReturnValue(() => {
+      getRetrieveWardById: jest.fn().mockReturnValue(() => {
         return { error: null };
       }),
     };
@@ -282,7 +282,7 @@ describe("update-a-ward", () => {
     await updateAWard(validRequest, response, {
       container: {
         ...container,
-        getWardById: jest.fn().mockReturnValue(() => {
+        getRetrieveWardById: jest.fn().mockReturnValue(() => {
           return { error: "Error!" };
         }),
       },

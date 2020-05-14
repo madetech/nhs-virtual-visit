@@ -47,7 +47,7 @@ describe("/admin/edit-a-ward", () => {
         });
 
         const container = {
-          getWardById: () => retrieveWardByIdSpy,
+          getRetrieveWardById: () => retrieveWardByIdSpy,
         };
 
         await getServerSideProps({
@@ -73,7 +73,7 @@ describe("/admin/edit-a-ward", () => {
         });
 
         const container = {
-          getWardById: () => retrieveWardByIdSpy,
+          getRetrieveWardById: () => retrieveWardByIdSpy,
         };
 
         const { props } = await getServerSideProps({

@@ -36,7 +36,7 @@ export default withContainer(async (req, res, { container }) => {
   const templateId = TemplateStore.secondText.templateId;
 
   try {
-    const { ward, error } = await container.getWardById()(
+    const { ward, error } = await container.getRetrieveWardById()(
       authenticationToken.wardId
     );
     if (error) {

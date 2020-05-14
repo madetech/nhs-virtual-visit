@@ -44,7 +44,7 @@ export default withContainer(
       return;
     }
 
-    const retrieveWardById = container.getWardById();
+    const retrieveWardById = container.getRetrieveWardById();
 
     const existingWard = await retrieveWardById(body.id, adminToken.trustId);
 
