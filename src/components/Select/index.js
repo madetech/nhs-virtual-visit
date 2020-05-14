@@ -9,6 +9,7 @@ const Select = ({
   options,
   hasError,
   errorMessage,
+  defaultValue = "DEFAULT",
   ...props
 }) => (
   <>
@@ -16,7 +17,7 @@ const Select = ({
       <ErrorMessage id={`${id}-error`}>{errorMessage}</ErrorMessage>
     ) : null}
     <select
-      defaultValue={"DEFAULT"}
+      defaultValue={defaultValue}
       className={classnames(
         {
           "nhsuk-select--error": hasError,
