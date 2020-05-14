@@ -52,12 +52,12 @@ export const getServerSideProps = propsWithContainer(
         authenticationToken.trustId
       );
 
-      const trustName = trustResponse.trust ? trustResponse.trust.name : null;
+      // const trustName = trustResponse.trust ? trustResponse.trust.name : null;
 
       return {
         props: {
           wards: wardsResponse.wards,
-          trust: { name: trustName },
+          trust: { name: trustResponse.trust?.name },
           wardError: wardsResponse.error,
           trustError: trustResponse.error,
         },
