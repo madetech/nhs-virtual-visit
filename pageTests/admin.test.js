@@ -18,6 +18,21 @@ describe("admin", () => {
     },
   };
 
+  const wards = [
+    {
+      id: 1,
+      name: "Defoe Ward",
+      hospital_name: "Test Hospital",
+      code: "test_code",
+    },
+    {
+      id: 2,
+      name: "Willem Ward",
+      hospital_name: "Test Hospital 2",
+      code: "test_code_2",
+    },
+  ];
+
   let res;
 
   beforeEach(() => {
@@ -37,29 +52,101 @@ describe("admin", () => {
 
     it("retrieves wards", async () => {
       const getRetrieveWardsSpy = jest.fn(async () => ({
-        wards: [
-          {
-            id: 1,
-            name: "Defoe Ward",
-            hospital_name: "Test Hospital",
-            code: "test_code",
-          },
-          {
-            id: 2,
-            name: "Willem Ward",
-            hospital_name: "Test Hospital 2",
-            code: "test_code_2",
-          },
-        ],
+        wards: wards,
+        error: null,
+      }));
+      const retrieveTrustByIdSpy = jest.fn(async () => ({
+        trust: { name: "Doggo Trust" },
         error: null,
       }));
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
+        getRetrieveTrustById: () => retrieveTrustByIdSpy,
       };
 
-      await getServerSideProps({ req: authenticatedReq, res, container });
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
 
       expect(getRetrieveWardsSpy).toHaveBeenCalledWith(1);
+      expect(props.wards).toEqual(wards);
+      expect(props.wardError).toBeNull();
+    });
+
+    it("sets an error in props if ward error", async () => {
+      const getRetrieveWardsSpy = jest.fn(async () => ({
+        wards: null,
+        error: "Error!",
+      }));
+      const retrieveTrustByIdSpy = jest.fn(async () => ({
+        trust: { name: "Doggo Trust" },
+        error: null,
+      }));
+      const container = {
+        getRetrieveWards: () => getRetrieveWardsSpy,
+        getRetrieveTrustById: () => retrieveTrustByIdSpy,
+      };
+
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(props.wardError).toEqual("Error!");
+    });
+
+    it("retrieves the trust of the admin", async () => {
+      const trustId = 1;
+      const getRetrieveWardsSpy = jest.fn(async () => ({
+        error: null,
+      }));
+      const retrieveTrustByIdSpy = jest.fn(async () => ({
+        trust: {
+          id: trustId,
+          name: "Doggo Trust",
+        },
+        error: null,
+      }));
+      const container = {
+        getRetrieveWards: () => getRetrieveWardsSpy,
+        getRetrieveTrustById: () => retrieveTrustByIdSpy,
+      };
+
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(retrieveTrustByIdSpy).toHaveBeenCalledWith(trustId);
+      expect(props.trust).toEqual({ name: "Doggo Trust" });
+      expect(props.wardError).toBeNull();
+    });
+
+    it("sets an error in props if trust error", async () => {
+      const getRetrieveWardsSpy = jest.fn(async () => ({
+        wards: wards,
+        error: null,
+      }));
+      const retrieveTrustByIdSpy = jest.fn(async () => ({
+        trust: null,
+        error: "Error!",
+      }));
+      const container = {
+        getRetrieveWards: () => getRetrieveWardsSpy,
+        getRetrieveTrustById: () => retrieveTrustByIdSpy,
+      };
+
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(props.trustError).toEqual("Error!");
     });
   });
 });
