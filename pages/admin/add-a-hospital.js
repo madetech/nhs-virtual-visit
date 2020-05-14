@@ -66,9 +66,10 @@ const AddAHospital = ({ error, trustId }) => {
         const status = response.status;
 
         if (status == 201) {
-          await response.json();
+          const { hospitalId } = await response.json();
           Router.push({
-            pathname: "/admin",
+            pathname: "/admin/add-a-hospital-success",
+            query: { hospitalId: hospitalId },
           });
         } else if (status === 400) {
           const { err } = await response.json();

@@ -19,6 +19,7 @@ import updateWard from "../usecases/updateWard";
 import createHospital from "../usecases/createHospital";
 import retrieveHospitalsByTrustId from "../usecases/retrieveHospitalsByTrustId";
 import retrieveTrustById from "../usecases/retrieveTrustById";
+import retrieveHospitalById from "../usecases/retrieveHospitalById";
 
 class AppContainer {
   getDb = () => {
@@ -103,6 +104,10 @@ class AppContainer {
 
   getRetrieveTrustById = () => {
     return retrieveTrustById(this);
+  };
+
+  getRetrieveHospitalById = () => {
+    return retrieveHospitalById(this);
   };
 }
 
