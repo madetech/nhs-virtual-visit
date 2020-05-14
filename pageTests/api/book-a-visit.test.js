@@ -16,6 +16,7 @@ describe("/api/book-a-visit", () => {
   const validUserIsAuthenticatedSpy = jest.fn(() => ({
     wardId: 10,
     ward: "MEOW",
+    trustId: 1,
   }));
 
   const updateWardVisitTotalsSpy = jest.fn(() => ({
@@ -220,7 +221,7 @@ describe("/api/book-a-visit", () => {
       });
 
       expect(response.status).toHaveBeenCalledWith(201);
-      expect(getRetrieveWardByIdSpy).toHaveBeenCalledWith(10);
+      expect(getRetrieveWardByIdSpy).toHaveBeenCalledWith(10, 1);
       expect(createVisitSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           patientName: "Bob Smith",
