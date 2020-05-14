@@ -38,7 +38,7 @@ describe("retrieveWardById", () => {
       },
     };
 
-    const { error } = await retrieveWardById(container)(1);
+    const { error } = await retrieveWardById(container)(1, 1);
     expect(error).toBeDefined();
     expect(error).toEqual("Error: DB Error!");
   });

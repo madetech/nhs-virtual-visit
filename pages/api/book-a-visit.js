@@ -86,7 +86,7 @@ export default withContainer(
 
     try {
       let callId = ids.generate();
-      let { wardId } = userIsAuthenticatedResponse;
+      let { wardId, trustId } = userIsAuthenticatedResponse;
       let callPassword = ids.generate();
 
       if (process.env.ENABLE_WHEREBY == "yes") {
@@ -96,7 +96,7 @@ export default withContainer(
       const createVisit = container.getCreateVisit();
       const updateWardVisitTotals = container.getUpdateWardVisitTotals();
 
-      const { ward, error } = await container.getRetrieveWardById()(wardId);
+      const { ward, error } = await container.getRetrieveWardById()(wardId, trustId);
       if (error) {
         throw error;
       }
