@@ -59,7 +59,7 @@ describe("api/session", () => {
 
         const verifyWardCodeSpy = jest.fn(async () => ({
           validWardCode: true,
-          ward: { id: 10, code: "MEOW" },
+          ward: { id: 10, code: "MEOW", trustId: 1 },
         }));
         const verifyTrustAdminCodeSpy = jest.fn(async () => ({
           validTrustAdminCode: false,
@@ -81,6 +81,7 @@ describe("api/session", () => {
           wardId: 10,
           wardCode: "MEOW",
           admin: false,
+          trustId: 1,
         });
         expect(response.writeHead).toHaveBeenCalledWith(
           201,

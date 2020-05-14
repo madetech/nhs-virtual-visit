@@ -33,6 +33,7 @@ export default withContainer(
           wardId: ward.id,
           wardCode: ward.code,
           admin: false,
+          trustId: ward.trustId,
         });
       }
 

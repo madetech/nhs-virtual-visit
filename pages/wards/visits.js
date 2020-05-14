@@ -54,12 +54,15 @@ export default function WardVisits({ scheduledCalls, ward, error }) {
 export const getServerSideProps = propsWithContainer(
   verifyToken(
     async ({ authenticationToken, container }) => {
-      const { wardId } = authenticationToken;
+      const { wardId, trustId } = authenticationToken;
       let { scheduledCalls, error } = await container.getRetrieveVisits()({
         wardId,
       });
       let ward;
-      ({ ward, error } = await container.getWardById()(wardId));
+      ({ ward, error } = await container.getRetrieveWardById()(
+        wardId,
+        trustId
+      ));
       return {
         props: { scheduledCalls, ward, error },
       };

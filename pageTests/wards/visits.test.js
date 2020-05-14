@@ -2,7 +2,7 @@ import { getServerSideProps } from "../../pages/wards/visits";
 
 // TODO: This needs to be moved once the verifyToken logic is in the container..
 jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
-  token && { ward: "123", wardId: 1 }
+  token && { ward: "123", wardId: 1, trustId: 1 }
 );
 
 describe("ward/visits", () => {
@@ -40,12 +40,12 @@ describe("ward/visits", () => {
         error: null,
       }));
       const wardSpy = jest.fn(async () => ({
-        ward: { id: 1 },
+        ward: { id: 1, trustId: 1 },
         error: null,
       }));
       const container = {
         getRetrieveVisits: () => visitsSpy,
-        getWardById: () => wardSpy,
+        getRetrieveWardById: () => wardSpy,
       };
 
       const { props } = await getServerSideProps({
@@ -57,7 +57,7 @@ describe("ward/visits", () => {
       expect(res.writeHead).not.toHaveBeenCalled();
 
       expect(visitsSpy).toHaveBeenCalledWith({ wardId: 1 });
-      expect(wardSpy).toHaveBeenCalledWith(1);
+      expect(wardSpy).toHaveBeenCalledWith(1, 1);
       expect(props.error).toBeNull();
       expect(props.scheduledCalls).toHaveLength(2);
       expect(props.scheduledCalls[0]).toMatchObject({
@@ -77,13 +77,13 @@ describe("ward/visits", () => {
         scheduledCalls: null,
         error: "Error",
       });
-      const getWardByIdStub = async () => ({
+      const getRetrieveWardByIdStub = async () => ({
         ward: null,
         error: "Error",
       });
       const container = {
         getRetrieveVisits: () => retrieveVisitsStub,
-        getWardById: () => getWardByIdStub,
+        getRetrieveWardById: () => getRetrieveWardByIdStub,
       };
 
       const { props } = await getServerSideProps({
