@@ -2,7 +2,7 @@ import { getServerSideProps } from "../../pages/admin/edit-a-ward";
 
 // TODO: This needs to be moved once the verifyToken logic is in the container..
 jest.mock("../../src/usecases/adminIsAuthenticated", () => () => (token) =>
-  token && { admin: true, trustId: 1 }
+  token && { admin: true, trustId: 10 }
 );
 
 const authenticatedReq = {
@@ -48,6 +48,11 @@ describe("/admin/edit-a-ward", () => {
 
         const container = {
           getRetrieveWardById: () => retrieveWardByIdSpy,
+          getRetrieveHospitalsByTrustId: () =>
+            jest.fn().mockReturnValue({
+              hospitals: [],
+              error: null,
+            }),
         };
 
         await getServerSideProps({
@@ -59,7 +64,7 @@ describe("/admin/edit-a-ward", () => {
           container,
         });
 
-        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 1);
+        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 10);
       });
 
       it("set a ward prop based on the retrieved ward", async () => {
@@ -74,6 +79,11 @@ describe("/admin/edit-a-ward", () => {
 
         const container = {
           getRetrieveWardById: () => retrieveWardByIdSpy,
+          getRetrieveHospitalsByTrustId: () =>
+            jest.fn().mockReturnValue({
+              hospitals: [],
+              error: null,
+            }),
         };
 
         const { props } = await getServerSideProps({
