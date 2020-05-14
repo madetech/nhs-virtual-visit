@@ -30,6 +30,7 @@ const Admin = ({ wardError, trustError, wards, trust }) => {
             Ward admininistration
           </Heading>
           <ActionLink href={`/admin/add-a-ward`}>Add a ward</ActionLink>
+          <ActionLink href={`/admin/add-a-hospital`}>Add a hospital</ActionLink>
 
           {wards.length > 0 ? (
             <WardsTable wards={wards} />
