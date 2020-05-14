@@ -39,7 +39,7 @@ export default withContainer(
 
     if (error) {
       res.status(400);
-      res.end();
+      res.end(JSON.stringify({ err: "Hospital name already exists" }));
     } else {
       res.status(201);
       res.end(JSON.stringify({ hospitalId: hospitalId }));
