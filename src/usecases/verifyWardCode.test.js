@@ -11,6 +11,7 @@ describe("verifyWardCode", () => {
               name: "Ward name",
               hospital_name: "London Meowdical Hospital",
               code: "MEOW",
+              trust_id: 1,
             },
           ]),
         }),
@@ -21,6 +22,7 @@ describe("verifyWardCode", () => {
       expect(response.ward).toEqual({
         id: 1,
         code: "MEOW",
+        trustId: 1,
       });
     });
   });

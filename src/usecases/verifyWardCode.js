@@ -3,7 +3,7 @@ const verifyWardCode = ({ getDb }) => async (wardCode) => {
 
   try {
     const dbResponse = await db.any(
-      `SELECT id, code FROM wards WHERE code = $1 LIMIT 1`,
+      `SELECT id, code, trust_id FROM wards WHERE code = $1 LIMIT 1`,
       [wardCode]
     );
 
@@ -12,7 +12,7 @@ const verifyWardCode = ({ getDb }) => async (wardCode) => {
 
       return {
         validWardCode: true,
-        ward: { id: ward.id, code: ward.code },
+        ward: { id: ward.id, code: ward.code, trustId: ward.trust_id },
         error: null,
       };
     } else {
