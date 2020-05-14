@@ -13,9 +13,9 @@ class TokenProvider {
       {
         wardId,
         ward: wardCode,
-        admin: admin,
-        trustId: trustId,
-        version: version,
+        admin,
+        trustId,
+        version,
       },
       this.signingKey,
       {
