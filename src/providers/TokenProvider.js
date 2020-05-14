@@ -1,5 +1,7 @@
 import jwt from "jsonwebtoken";
 
+const version = 1;
+
 class TokenProvider {
   constructor(signingKey) {
     this.signingKey = signingKey;
@@ -7,7 +9,14 @@ class TokenProvider {
 
   generate({ wardId, wardCode, admin, trustId }) {
     return jwt.sign(
-      { wardId, ward: wardCode, admin: admin, trustId: trustId },
+      // If updating the token structure, update the version
+      {
+        wardId,
+        ward: wardCode,
+        admin: admin,
+        trustId: trustId,
+        version: version,
+      },
       this.signingKey,
       {
         algorithm: "HS256",
@@ -16,7 +25,15 @@ class TokenProvider {
   }
 
   validate(token) {
-    return jwt.verify(token, this.signingKey, { algorithms: ["HS256"] });
+    const decryptedToken = jwt.verify(token, this.signingKey, {
+      algorithms: ["HS256"],
+    });
+
+    if (decryptedToken.version != version) {
+      throw new Error("Invalid token version");
+    }
+
+    return decryptedToken;
   }
 }
 
