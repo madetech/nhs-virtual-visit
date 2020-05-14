@@ -10,16 +10,25 @@ import Heading from "../src/components/Heading";
 import ActionLink from "../src/components/ActionLink";
 import Text from "../src/components/Text";
 
-const Admin = ({ error, wards }) => {
-  if (error) {
+const Admin = ({ wardError, trustError, wards, trust }) => {
+  if (wardError || trustError) {
     return <Error />;
   }
 
   return (
-    <Layout title="Admin" renderLogout={true}>
+    <Layout
+      title={`Ward admininistration for ${trust.name}`}
+      renderLogout={true}
+    >
       <GridRow>
         <GridColumn width="full">
-          <Heading>Ward Administration</Heading>
+          <Heading>
+            <span className="nhsuk-caption-l">
+              {trust.name}
+              <span className="nhsuk-u-visually-hidden">-</span>
+            </span>
+            Ward admininistration
+          </Heading>
           <ActionLink href={`/admin/add-a-ward`}>Add a ward</ActionLink>
 
           {wards.length > 0 ? (
@@ -36,12 +45,22 @@ const Admin = ({ error, wards }) => {
 export const getServerSideProps = propsWithContainer(
   verifyAdminToken(
     async ({ container, authenticationToken }) => {
-      const { wards, error } = await container.getRetrieveWards()(
+      const wardsResponse = await container.getRetrieveWards()(
+        authenticationToken.trustId
+      );
+      const trustResponse = await container.getRetrieveTrustById()(
         authenticationToken.trustId
       );
 
+      // const trustName = trustResponse.trust ? trustResponse.trust.name : null;
+
       return {
-        props: { wards: wards, error: error },
+        props: {
+          wards: wardsResponse.wards,
+          trust: { name: trustResponse.trust?.name },
+          wardError: wardsResponse.error,
+          trustError: trustResponse.error,
+        },
       };
     },
     {

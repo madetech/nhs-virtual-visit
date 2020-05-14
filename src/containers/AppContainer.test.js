@@ -73,4 +73,8 @@ describe("AppContainer", () => {
   it("returns getRetrieveHospitalsByTrustId", () => {
     expect(container.getRetrieveHospitalsByTrustId()).toBeDefined();
   });
+
+  it("returns getRetrieveTrustById", () => {
+    expect(container.getRetrieveTrustById()).toBeDefined();
+  });
 });
