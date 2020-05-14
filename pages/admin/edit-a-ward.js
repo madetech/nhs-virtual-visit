@@ -7,7 +7,7 @@ import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import EditWardForm from "../../src/components/EditWardForm";
 
-const EditAWard = ({ error, id, name, hospitalName }) => {
+const EditAWard = ({ error, id, name, hospitalName, hospitals }) => {
   if (error) {
     return <Error />;
   }
@@ -28,6 +28,7 @@ const EditAWard = ({ error, id, name, hospitalName }) => {
             id={id}
             initialName={name}
             initialHospitalName={hospitalName}
+            hospitals={hospitals}
           />
         </GridColumn>
       </GridRow>
@@ -39,19 +40,33 @@ export const getServerSideProps = propsWithContainer(
   verifyAdminToken(
     async ({ container, query, authenticationToken }) => {
       const getRetrieveWardById = container.getRetrieveWardById();
-      const { ward, error } = await getRetrieveWardById(
+
+      let error = null;
+      const getRetrieveWardByIdResponse = await getRetrieveWardById(
         query.wardId,
         authenticationToken.trustId
       );
+      error = error || getRetrieveWardByIdResponse.error;
 
-      return {
-        props: {
-          error: error,
-          id: ward.id,
-          name: ward.name,
-          hospitalName: ward.hospitalName,
-        },
-      };
+      const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
+      const retrieveHospitalsResponse = await retrieveHospitalsByTrustId(
+        authenticationToken.trustId
+      );
+      error = error || retrieveHospitalsResponse.error;
+
+      if (error) {
+        return { props: { error: error } };
+      } else {
+        return {
+          props: {
+            error: error,
+            id: getRetrieveWardByIdResponse.ward.id,
+            name: getRetrieveWardByIdResponse.ward.name,
+            hospitalName: getRetrieveWardByIdResponse.ward.hospitalName,
+            hospitals: retrieveHospitalsResponse.hospitals,
+          },
+        };
+      }
     },
     {
       tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),

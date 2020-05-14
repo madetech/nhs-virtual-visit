@@ -6,6 +6,7 @@ import Input from "../Input";
 import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
 import Router from "next/router";
+import Select from "../../components/Select";
 
 const isPresent = (input) => {
   if (input.length !== 0) {
@@ -19,6 +20,7 @@ const EditWardForm = ({
   id,
   initialName,
   initialHospitalName,
+  hospitals,
 }) => {
   const [wardName, setWardName] = useState(initialName);
   const [hospitalName, setHospitalName] = useState(initialHospitalName);
@@ -71,7 +73,7 @@ const EditWardForm = ({
     const setHospitalNameError = (errors) => {
       errors.push({
         id: "hospital-name-error",
-        message: "Enter a hospital name",
+        message: "Select a hospital",
       });
     };
 
@@ -113,17 +115,23 @@ const EditWardForm = ({
           <Label htmlFor="hospital-name" className="nhsuk-label--l">
             What is the hospital name?
           </Label>
-          <Input
+          <Select
             id="hospital-name"
-            type="text"
+            className="nhsuk-input--width-10 nhsuk-u-width-one-half"
+            prompt="Choose a hospital"
+            options={hospitals}
+            onChange={(event) => {
+              setHospitalName(
+                event.target.options[event.target.selectedIndex].text
+              );
+            }}
             hasError={hasError("hospital-name")}
             errorMessage={errorMessage("hospital-name")}
-            className="nhsuk-u-font-size-32 nhsuk-input--width-10"
-            style={{ padding: "16px!important", height: "64px" }}
-            onChange={(event) => setHospitalName(event.target.value)}
-            name="hospital-name"
-            autoComplete="off"
-            value={hospitalName || ""}
+            defaultValue={
+              hospitals.find(
+                (hospital) => hospital.name === initialHospitalName
+              ).id
+            }
           />
         </FormGroup>
 
