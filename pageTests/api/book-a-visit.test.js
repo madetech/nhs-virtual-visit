@@ -22,7 +22,7 @@ describe("/api/book-a-visit", () => {
     success: true,
   }));
 
-  const getWardByIdSpy = jest.fn(() => ({
+  const getRetrieveWardByIdSpy = jest.fn(() => ({
     ward: {
       id: 10,
       name: "Fake Ward",
@@ -53,7 +53,7 @@ describe("/api/book-a-visit", () => {
     };
     container = {
       getCreateVisit: jest.fn().mockReturnValue(() => {}),
-      getWardById: () => getWardByIdSpy,
+      getRetrieveWardById: () => getRetrieveWardByIdSpy,
       getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
       getDb: jest.fn().mockResolvedValue(() => {}),
       getSendTextMessage: () => () => ({ success: true, error: null }),
@@ -220,7 +220,7 @@ describe("/api/book-a-visit", () => {
       });
 
       expect(response.status).toHaveBeenCalledWith(201);
-      expect(getWardByIdSpy).toHaveBeenCalledWith(10);
+      expect(getRetrieveWardByIdSpy).toHaveBeenCalledWith(10);
       expect(createVisitSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           patientName: "Bob Smith",

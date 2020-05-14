@@ -96,7 +96,7 @@ export default withContainer(
       const createVisit = container.getCreateVisit();
       const updateWardVisitTotals = container.getUpdateWardVisitTotals();
 
-      const { ward, error } = await container.getWardById()(wardId);
+      const { ward, error } = await container.getRetrieveWardById()(wardId);
       if (error) {
         throw error;
       }

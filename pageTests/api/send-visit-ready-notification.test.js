@@ -15,7 +15,7 @@ describe("send-visit-ready-notification", () => {
     container = {
       getUserIsAuthenticated: () => () => "token",
       getSendTextMessage: () => sendTextMessageSpy,
-      getWardById: jest.fn().mockReturnValue(() => ({
+      getRetrieveWardById: jest.fn().mockReturnValue(() => ({
         ward: {
           id: 1,
           name: "Defoe Ward",

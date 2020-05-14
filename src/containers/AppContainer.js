@@ -33,7 +33,7 @@ class AppContainer {
     return createWard(this);
   };
 
-  getWardById = () => {
+  getRetrieveWardById = () => {
     return retrieveWardById(this);
   };
 
