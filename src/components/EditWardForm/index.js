@@ -100,14 +100,16 @@ const EditWardForm = ({
             type="text"
             hasError={hasError("ward-name")}
             errorMessage={errorMessage("ward-name")}
-            className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
+            className="nhsuk-u-font-size-32 nhsuk-input--width-10"
             style={{ padding: "16px!important", height: "64px" }}
             onChange={(event) => setWardName(event.target.value)}
             name="ward-name"
             autoComplete="off"
             value={wardName || ""}
           />
+        </FormGroup>
 
+        <FormGroup>
           <Label htmlFor="hospital-name" className="nhsuk-label--l">
             What is the hospital name?
           </Label>
@@ -116,16 +118,16 @@ const EditWardForm = ({
             type="text"
             hasError={hasError("hospital-name")}
             errorMessage={errorMessage("hospital-name")}
-            className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
+            className="nhsuk-u-font-size-32 nhsuk-input--width-10"
             style={{ padding: "16px!important", height: "64px" }}
             onChange={(event) => setHospitalName(event.target.value)}
             name="hospital-name"
             autoComplete="off"
             value={hospitalName || ""}
           />
-          <br></br>
-          <Button className="nhsuk-u-margin-top-5">Edit ward</Button>
         </FormGroup>
+
+        <Button className="nhsuk-u-margin-top-5">Edit ward</Button>
       </form>
     </>
   );
