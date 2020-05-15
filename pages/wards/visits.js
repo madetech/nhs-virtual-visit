@@ -3,7 +3,7 @@ import Layout from "../../src/components/Layout";
 import Heading from "../../src/components/Heading";
 import ActionLink from "../../src/components/ActionLink";
 import { GridRow, GridColumn } from "../../src/components/Grid";
-import VisitsTable from "../../src/components/VisitsTable";
+import VisitsPanelList from "../../src/components/VisitsPanelList";
 import Error from "next/error";
 import Text from "../../src/components/Text";
 import verifyToken from "../../src/usecases/verifyToken";
@@ -41,7 +41,7 @@ export default function WardVisits({ scheduledCalls, ward, error }) {
           <h2 className="nhsuk-heading-l">Pre-booked virtual visits</h2>
 
           {scheduledCalls.length > 0 ? (
-            <VisitsTable visits={scheduledCalls} />
+            <VisitsPanelList visits={scheduledCalls} />
           ) : (
             <Text>There are no upcoming virtual visits.</Text>
           )}
