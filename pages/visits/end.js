@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "../../src/components/Layout";
 import ActionLink from "../../src/components/ActionLink";
+import AnchorLink from "../../src/components/AnchorLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 const End = ({ wardId, callId }) => (
@@ -30,9 +31,9 @@ const End = ({ wardId, callId }) => (
           </ActionLink>
 
           <p>
-            <a href={`/wards/visits`} className="nhsuk-link">
+            <AnchorLink href="/wards/visits">
               Return to virtual visits
-            </a>
+            </AnchorLink>
           </p>
         </div>
       )}
