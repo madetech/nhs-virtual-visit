@@ -29,6 +29,12 @@ export default withContainer(
       return;
     }
 
+    if (!body.hospitalId) {
+      res.status(400);
+      res.end(JSON.stringify({ err: "hospital id must be present" }));
+      return;
+    }
+
     res.setHeader("Content-Type", "application/json");
 
     const createWard = container.getCreateWard();
@@ -38,6 +44,7 @@ export default withContainer(
       hospitalName: body.hospitalName,
       code: body.code,
       trustId: adminAuthenticatedToken.trustId,
+      hospitalId: body.hospitalId,
     });
 
     if (error) {

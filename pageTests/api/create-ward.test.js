@@ -14,6 +14,7 @@ describe("create-ward", () => {
         name: "Seto Kaiba Ward",
         hospitalName: "Yugi Muto Hospital",
         code: "YamiYugi",
+        hospitalId: 1,
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -90,6 +91,7 @@ describe("create-ward", () => {
         hospitalName: "Yugi Muto Hospital",
         code: "YamiYugi",
         trustId: 1,
+        hospitalId: 1,
       })
     );
   });
@@ -200,6 +202,32 @@ describe("create-ward", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ err: "hospital name must be present" })
+    );
+  });
+
+  it("returns a 400 if a hospital id is not present", async () => {
+    const invalidRequest = {
+      method: "POST",
+      body: {
+        name: "Seto Kaiba Ward",
+        hospitalName: "Yugi Muto Hospital",
+        code: "YamiYugi",
+        hospitalId: "",
+      },
+      headers: {
+        cookie: "token=valid.token.value",
+      },
+    };
+
+    await createWard(invalidRequest, response, {
+      container: {
+        ...container,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "hospital id must be present" })
     );
   });
 });

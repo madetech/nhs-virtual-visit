@@ -44,6 +44,12 @@ export default withContainer(
       return;
     }
 
+    if (!body.hospitalId) {
+      res.status(400);
+      res.end(JSON.stringify({ err: "hospital id must be present" }));
+      return;
+    }
+
     const retrieveWardById = container.getRetrieveWardById();
 
     const existingWard = await retrieveWardById(body.id, adminToken.trustId);
@@ -60,6 +66,7 @@ export default withContainer(
       id: body.id,
       name: body.name,
       hospitalName: body.hospitalName,
+      hospitalId: body.hospitalId,
     });
 
     if (error) {
