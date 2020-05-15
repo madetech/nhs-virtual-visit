@@ -49,6 +49,7 @@ describe("updateWardVisitTotals", () => {
             none: noneSpy,
           };
         },
+        getSendVisitsMilestoneNotification: () => jest.fn(),
       };
 
       let response = await updateWardVisitTotals(container)({
@@ -67,6 +68,32 @@ describe("updateWardVisitTotals", () => {
         2,
       ]);
       expect(response.success).toEqual(true);
+    });
+
+    it("sends a visits milestone notification", async () => {
+      const anySpy = jest.fn(async () => [{ id: 10, wardId: 1, total: 1 }]);
+      const noneSpy = jest.fn(async () => {});
+      const sendVisitsMilestoneNotificationSpy = jest.fn();
+
+      const container = {
+        getDb: async () => {
+          return {
+            any: anySpy,
+            none: noneSpy,
+          };
+        },
+        getSendVisitsMilestoneNotification: () =>
+          sendVisitsMilestoneNotificationSpy,
+      };
+
+      await updateWardVisitTotals(container)({
+        wardId: 1,
+        date: dateToInsert,
+      });
+
+      expect(sendVisitsMilestoneNotificationSpy).toHaveBeenCalledWith({
+        numberOfVisits: 2,
+      });
     });
   });
 
