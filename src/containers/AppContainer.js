@@ -1,5 +1,6 @@
 import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
+import Slack from "../gateways/Slack";
 import createVisit from "../usecases/createVisit";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
@@ -108,6 +109,10 @@ class AppContainer {
 
   getRetrieveHospitalById = () => {
     return retrieveHospitalById(this);
+  };
+
+  getSlack = () => {
+    return new Slack(process.env.SLACK_API_KEY);
   };
 }
 

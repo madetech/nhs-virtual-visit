@@ -77,4 +77,8 @@ describe("AppContainer", () => {
   it("returns getRetrieveTrustById", () => {
     expect(container.getRetrieveTrustById()).toBeDefined();
   });
+
+  it("returns getSlack", () => {
+    expect(container.getSlack()).toBeDefined();
+  });
 });
