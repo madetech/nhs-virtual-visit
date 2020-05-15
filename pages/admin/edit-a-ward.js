@@ -7,7 +7,14 @@ import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import EditWardForm from "../../src/components/EditWardForm";
 
-const EditAWard = ({ error, id, name, hospitalName, hospitals }) => {
+const EditAWard = ({
+  error,
+  id,
+  name,
+  hospitalName,
+  hospitals,
+  hospitalId,
+}) => {
   if (error) {
     return <Error />;
   }
@@ -29,6 +36,7 @@ const EditAWard = ({ error, id, name, hospitalName, hospitals }) => {
             initialName={name}
             initialHospitalName={hospitalName}
             hospitals={hospitals}
+            initialHospitalId={hospitalId}
           />
         </GridColumn>
       </GridRow>
@@ -64,6 +72,9 @@ export const getServerSideProps = propsWithContainer(
             name: getRetrieveWardByIdResponse.ward.name,
             hospitalName: getRetrieveWardByIdResponse.ward.hospitalName,
             hospitals: retrieveHospitalsResponse.hospitals,
+            hospitalId: getRetrieveWardByIdResponse.hospitalId
+              ? getRetrieveWardByIdResponse.hospitalId
+              : null,
           },
         };
       }

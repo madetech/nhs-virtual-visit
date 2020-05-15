@@ -20,8 +20,15 @@ const EditWardForm = ({
   id,
   initialName,
   initialHospitalName,
+  initialHospitalId,
   hospitals,
 }) => {
+  const defaultHospitalId = hospitals.find(
+    (hospital) => hospital.name === initialHospitalName
+  ).id;
+  const [hospitalId, setHospitalId] = useState(
+    initialHospitalId ? initialHospitalId : defaultHospitalId
+  );
   const [wardName, setWardName] = useState(initialName);
   const [hospitalName, setHospitalName] = useState(initialHospitalName);
   let onSubmitErrors = [];
@@ -45,6 +52,7 @@ const EditWardForm = ({
         id,
         name,
         hospitalName,
+        hospitalId,
       }),
     });
 
@@ -88,6 +96,7 @@ const EditWardForm = ({
     }
     setErrors(onSubmitErrors);
   });
+
   return (
     <>
       <ErrorSummary errors={errors} />
@@ -121,17 +130,14 @@ const EditWardForm = ({
             prompt="Choose a hospital"
             options={hospitals}
             onChange={(event) => {
+              setHospitalId(event.target.value);
               setHospitalName(
                 event.target.options[event.target.selectedIndex].text
               );
             }}
             hasError={hasError("hospital-name")}
             errorMessage={errorMessage("hospital-name")}
-            defaultValue={
-              hospitals.find(
-                (hospital) => hospital.name === initialHospitalName
-              ).id
-            }
+            defaultValue={defaultHospitalId}
           />
         </FormGroup>
 

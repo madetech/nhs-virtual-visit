@@ -15,6 +15,7 @@ const isPresent = (input) => {
 };
 
 const AddWardForm = ({ errors, setErrors, hospitals }) => {
+  const [hospitalId, setHospitalId] = useState("");
   const [hospitalName, setHospitalName] = useState("");
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
@@ -105,6 +106,7 @@ const AddWardForm = ({ errors, setErrors, hospitals }) => {
             name,
             hospitalName,
             code,
+            hospitalId,
           }),
         });
 
@@ -158,6 +160,7 @@ const AddWardForm = ({ errors, setErrors, hospitals }) => {
             prompt="Choose a hospital"
             options={hospitals}
             onChange={(event) => {
+              setHospitalId(event.target.value);
               setHospitalName(
                 event.target.options[event.target.selectedIndex].text
               );
