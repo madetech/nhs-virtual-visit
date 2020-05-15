@@ -14,6 +14,7 @@ describe("updateWard", () => {
       id: 10,
       name: "Defoe Ward",
       hospitalName: "Test Hospital",
+      hospitalId: 1,
     };
     const { wardId, error } = await updateWard(container)(request);
     expect(wardId).toEqual(10);
@@ -21,6 +22,7 @@ describe("updateWard", () => {
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.name,
       request.hospitalName,
+      request.hospitalId,
       request.id,
     ]);
   });
