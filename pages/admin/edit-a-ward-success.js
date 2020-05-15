@@ -1,6 +1,7 @@
 import React from "react";
 import Error from "next/error";
 import Layout from "../../src/components/Layout";
+import AnchorLink from "../../src/components/AnchorLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import TokenProvider from "../../src/providers/TokenProvider";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
@@ -28,9 +29,7 @@ const EditAWardSuccess = ({ error, name, hospitalName }) => {
           <ActionLink href={`/admin/add-a-ward`}>Add a ward</ActionLink>
 
           <p>
-            <a href={`/admin`} className="nhsuk-link">
-              Return to ward administration
-            </a>
+            <AnchorLink href="/admin">Return to ward administration</AnchorLink>
           </p>
         </div>
       </div>
