@@ -21,6 +21,7 @@ import createHospital from "../usecases/createHospital";
 import retrieveHospitalsByTrustId from "../usecases/retrieveHospitalsByTrustId";
 import retrieveTrustById from "../usecases/retrieveTrustById";
 import retrieveHospitalById from "../usecases/retrieveHospitalById";
+import sendVisitsMilestoneNotification from "../usecases/sendVisitsMilestoneNotification";
 
 class AppContainer {
   getDb = () => {
@@ -113,6 +114,10 @@ class AppContainer {
 
   getSlack = () => {
     return new Slack(process.env.SLACK_API_KEY);
+  };
+
+  getSendVisitsMilestoneNotification = () => {
+    return sendVisitsMilestoneNotification(this);
   };
 }
 

@@ -81,4 +81,8 @@ describe("AppContainer", () => {
   it("returns getSlack", () => {
     expect(container.getSlack()).toBeDefined();
   });
+
+  it("returns getSendVisitsMilestoneNotification", () => {
+    expect(container.getSendVisitsMilestoneNotification()).toBeDefined();
+  });
 });
