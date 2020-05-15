@@ -1,0 +1,27 @@
+@import "node_modules/nhsuk-frontend/packages/nhsuk";
+
+.app-visit-card {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 1rem;
+  width: 100%;
+  border-bottom: 1px $nhsuk-border-color solid;
+
+  .app-visit-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .app-visit-card-beside {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}
