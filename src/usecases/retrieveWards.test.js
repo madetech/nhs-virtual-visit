@@ -15,6 +15,18 @@ describe("retrieveWards", () => {
         hospital_name: "Test Hospital 2",
         ward_code: "test_code_2",
       },
+      {
+        id: 3,
+        name: "Archived Ward",
+        hospital_name: "Test Hospital 2",
+        code: "test_code_2",
+      },
+      {
+        id: 3,
+        name: "Archived Ward",
+        hospital_name: "Test Hospital 2",
+        code: "test_code_2",
+      },
     ]);
 
     const container = {

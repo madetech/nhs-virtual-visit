@@ -47,32 +47,32 @@ describe("end", () => {
         cookie: "",
       },
     };
-    it("provides the call id", () => {
+    it("provides the call id", async () => {
       const container = {
         getUserIsAuthenticated: () => () => ({ ward: "test-ward-id" }),
       };
       const query = { callId: "TEST123" };
-      const { props } = getServerSideProps({ req, container, query });
+      const { props } = await getServerSideProps({ req, container, query });
       expect(props.callId).toEqual("TEST123");
     });
 
-    it("provides the ward id if the user is authenticated", () => {
+    it("provides the ward id if the user is authenticated", async () => {
       const container = {
         getUserIsAuthenticated: () => () => ({ ward: "test-ward-id" }),
       };
 
       const query = { callId: "TEST123" };
-      const { props } = getServerSideProps({ req, container, query });
+      const { props } = await getServerSideProps({ req, container, query });
 
       expect(props.wardId).toEqual("test-ward-id");
     });
 
-    it("does not provides the ward id if the user is unauthenticated", () => {
+    it("does not provides the ward id if the user is unauthenticated", async () => {
       const container = {
         getUserIsAuthenticated: () => () => false,
       };
       const query = { callId: "TEST123" };
-      const { props } = getServerSideProps({ req, container, query });
+      const { props } = await getServerSideProps({ req, container, query });
 
       expect(props.wardId).toBeNull();
     });

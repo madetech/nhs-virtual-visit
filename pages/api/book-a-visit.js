@@ -67,11 +67,13 @@ export default withContainer(
     }
 
     const userIsAuthenticated = container.getUserIsAuthenticated();
-    const userIsAuthenticatedResponse = userIsAuthenticated(headers.cookie);
+    const userIsAuthenticatedResponse = await userIsAuthenticated(
+      headers.cookie
+    );
 
     if (!userIsAuthenticatedResponse) {
       res.status(401);
-      res.end();
+      res.end(JSON.stringify({ err: "Unauthorized" }));
       return;
     }
 
@@ -139,7 +141,7 @@ export default withContainer(
         res.status(201);
         res.end(JSON.stringify({ success: true }));
       } else {
-        res.status(400);
+        res.status(500);
         res.end(JSON.stringify({ err: "Failed to schedule a visit" }));
       }
     } catch (err) {
