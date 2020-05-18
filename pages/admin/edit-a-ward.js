@@ -52,6 +52,8 @@ export const getServerSideProps = propsWithContainer(
       const retrieveHospitalsResponse = await retrieveHospitalsByTrustId(
         authenticationToken.trustId
       );
+
+      console.log(getRetrieveWardByIdResponse.ward);
       error = error || retrieveHospitalsResponse.error;
       if (error) {
         return { props: { error: error } };
