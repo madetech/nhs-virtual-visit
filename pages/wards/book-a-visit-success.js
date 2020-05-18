@@ -1,6 +1,7 @@
 import React from "react";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import ActionLink from "../../src/components/ActionLink";
+import AnchorLink from "../../src/components/AnchorLink";
 import Text from "../../src/components/Text";
 import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
@@ -24,9 +25,7 @@ const Success = () => {
           </ActionLink>
 
           <Text>
-            <a href={`/wards/visits`} className="nhsuk-link">
-              View virtual visits
-            </a>
+            <AnchorLink href="/wards/visits">View virtual visits</AnchorLink>
           </Text>
         </GridColumn>
       </GridRow>

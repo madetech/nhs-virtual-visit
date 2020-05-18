@@ -7,7 +7,7 @@ import TokenProvider from "../../src/providers/TokenProvider";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
 import ActionLink from "../../src/components/ActionLink";
 
-const AddAWardSuccess = ({ error, name, hospitalName }) => {
+const AddAHospitalSuccess = ({ error, name }) => {
   if (error) {
     return <Error />;
   }
@@ -21,12 +21,12 @@ const AddAWardSuccess = ({ error, name, hospitalName }) => {
             style={{ textAlign: "center" }}
           >
             <h1 className="nhsuk-panel__title">{name} has been added</h1>
-
-            <div className="nhsuk-panel__body">for {hospitalName}</div>
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/admin/add-a-ward`}>Add another ward</ActionLink>
+          <ActionLink href={`/admin/add-a-hospital`}>
+            Add another hospital
+          </ActionLink>
 
           <p>
             <AnchorLink href="/admin">Return to ward administration</AnchorLink>
@@ -40,19 +40,22 @@ const AddAWardSuccess = ({ error, name, hospitalName }) => {
 export const getServerSideProps = propsWithContainer(
   verifyAdminToken(
     async ({ container, query, authenticationToken }) => {
-      const getRetrieveWardById = container.getRetrieveWardById();
-      const { ward, error } = await getRetrieveWardById(
-        query.wardId,
+      const getRetrieveHospitalById = container.getRetrieveHospitalById();
+      const { hospital, error } = await getRetrieveHospitalById(
+        query.hospitalId,
         authenticationToken.trustId
       );
 
-      return {
-        props: {
-          error: error,
-          name: ward.name,
-          hospitalName: ward.hospitalName,
-        },
-      };
+      if (error) {
+        return { props: { error: error } };
+      } else {
+        return {
+          props: {
+            error: error,
+            name: hospital.name,
+          },
+        };
+      }
     },
     {
       tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
@@ -60,4 +63,4 @@ export const getServerSideProps = propsWithContainer(
   )
 );
 
-export default AddAWardSuccess;
+export default AddAHospitalSuccess;

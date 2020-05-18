@@ -18,6 +18,7 @@ describe("update-a-ward", () => {
         id: 123,
         name: "Joey Wheeler Ward",
         hospitalName: "Tristan Taylor Hospital",
+        hospitalId: 1,
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -93,6 +94,7 @@ describe("update-a-ward", () => {
         id: 123,
         name: "Joey Wheeler Ward",
         hospitalName: "Tristan Taylor Hospital",
+        hospitalId: 1,
       })
     );
   });
@@ -291,6 +293,34 @@ describe("update-a-ward", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ err: "ward does not exist in current trust" })
+    );
+  });
+
+  it("returns a 400 if a hospital id is not present", async () => {
+    const invalidRequest = {
+      method: "PATCH",
+      body: {
+        id: 123,
+        name: "Joey Wheeler Ward",
+        hospitalName: "TestHospital",
+        hospitalId: "",
+      },
+      headers: {
+        cookie: "token=valid.token.value",
+      },
+    };
+    await updateAWard(invalidRequest, response, {
+      container: {
+        ...container,
+        getRetrieveWardById: jest.fn().mockReturnValue(() => {
+          return { error: "Error!" };
+        }),
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "hospital id must be present" })
     );
   });
 });

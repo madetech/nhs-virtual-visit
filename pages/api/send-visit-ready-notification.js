@@ -37,7 +37,8 @@ export default withContainer(async (req, res, { container }) => {
 
   try {
     const { ward, error } = await container.getRetrieveWardById()(
-      authenticationToken.wardId
+      authenticationToken.wardId,
+      authenticationToken.trustId
     );
     if (error) {
       throw error;

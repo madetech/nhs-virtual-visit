@@ -1,29 +1,30 @@
-import retrieveWardById from "./retrieveWardById";
+import retrieveHospitalById from "./retrieveHospitalById";
 
-describe("retrieveWardById", () => {
+describe("retrieveHospitalById", () => {
   it("returns a json object containing the call", async () => {
     const container = {
       async getDb() {
         return {
           oneOrNone: jest.fn().mockReturnValue({
             id: 1,
-            name: "Defoe Ward",
-            hospital_name: "Test Hospital",
+            name: "Test Hospital",
           }),
         };
       },
     };
 
-    const wardId = 1;
+    const hospitalId = 1;
     const trustId = 1;
 
-    const { ward, error } = await retrieveWardById(container)(wardId, trustId);
+    const { hospital, error } = await retrieveHospitalById(container)(
+      hospitalId,
+      trustId
+    );
 
     expect(error).toBeNull();
-    expect(ward).toEqual({
-      id: wardId,
-      name: "Defoe Ward",
-      hospitalName: "Test Hospital",
+    expect(hospital).toEqual({
+      id: hospitalId,
+      name: "Test Hospital",
     });
   });
 
@@ -38,7 +39,7 @@ describe("retrieveWardById", () => {
       },
     };
 
-    const { error } = await retrieveWardById(container)(1, 1);
+    const { error } = await retrieveHospitalById(container)(1);
     expect(error).toBeDefined();
     expect(error).toEqual("Error: DB Error!");
   });

@@ -16,6 +16,7 @@ describe("createWard", () => {
       hospitalName: "Test Hospital",
       code: "WardCode",
       trustId: "1",
+      hospitalId: "1",
     };
 
     const { wardId, error } = await createWard(container)(request);
@@ -28,6 +29,7 @@ describe("createWard", () => {
       request.hospitalName,
       request.code,
       request.trustId,
+      request.hospitalId,
     ]);
   });
 });

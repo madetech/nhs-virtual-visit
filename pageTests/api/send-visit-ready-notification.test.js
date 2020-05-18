@@ -7,22 +7,28 @@ describe("send-visit-ready-notification", () => {
     end: jest.fn(),
     writeHead: jest.fn().mockReturnValue({ end: () => {} }),
   };
+  const validUserIsAuthenticatedSpy = jest.fn(() => ({
+    wardId: 10,
+    ward: "MEOW",
+    trustId: 1,
+  }));
+  const retrieveWardByIdSpy = jest.fn(() => ({
+    ward: {
+      id: 1,
+      name: "Defoe Ward",
+      hospitalName: "Northwick Park Hospital",
+    },
+    error: null,
+  }));
 
   let container;
   let sendTextMessageSpy;
   beforeEach(() => {
     sendTextMessageSpy = jest.fn(() => ({ success: true, error: null }));
     container = {
-      getUserIsAuthenticated: () => () => "token",
+      getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
       getSendTextMessage: () => sendTextMessageSpy,
-      getRetrieveWardById: jest.fn().mockReturnValue(() => ({
-        ward: {
-          id: 1,
-          name: "Defoe Ward",
-          hospitalName: "Northwick Park Hospital",
-        },
-        error: null,
-      })),
+      getRetrieveWardById: () => retrieveWardByIdSpy,
     };
   });
 
@@ -130,6 +136,7 @@ describe("send-visit-ready-notification", () => {
       });
 
       expect(response.status).toHaveBeenCalledWith(201);
+      expect(retrieveWardByIdSpy).toHaveBeenCalledWith(10, 1);
     });
 
     it("returns 400 if unable to send a text message", async () => {

@@ -4,7 +4,7 @@ export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     if (method !== "POST") {
       res.status(405);
-      res.end();
+      res.end(JSON.stringify({ err: "method not allowed" }));
       return;
     }
 
@@ -12,7 +12,7 @@ export default withContainer(
 
     if (!adminIsAuthenticated(headers.cookie)) {
       res.status(401);
-      res.end();
+      res.end(JSON.stringify({ err: "not authenticated" }));
       return;
     }
 
@@ -39,7 +39,7 @@ export default withContainer(
 
     if (error) {
       res.status(400);
-      res.end();
+      res.end(JSON.stringify({ err: "Hospital name already exists" }));
     } else {
       res.status(201);
       res.end(JSON.stringify({ hospitalId: hospitalId }));
