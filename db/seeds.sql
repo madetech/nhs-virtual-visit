@@ -6,3 +6,4 @@ INSERT INTO hospitals (name, trust_id) VALUES ('Test 2 Hospital', (SELECT id FRO
 INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward One', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST1', (SELECT id FROM trusts WHERE name='Test Trust'));
 INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital 2'), 'TEST2', (SELECT id FROM trusts WHERE name='Test Trust'));
 INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test 2 Ward One', (SELECT id FROM hospitals WHERE name='Test 2 Hospital'), 'TEST22', (SELECT id FROM trusts WHERE name='Test 2 Trust'));
+INSERT INTO wards (name, hospital_name, code, trust_id, archived_at) VALUES ('Archived Ward', 'Test Hospital', 'TESTARC', (SELECT id FROM trusts WHERE name='Test Trust'), CURRENT_TIMESTAMP);
