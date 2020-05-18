@@ -8,6 +8,7 @@
     "format:check": "prettier --check '{pages,pageTests,src}/**/*.{js,css,md,yml}'",
     "lint": "eslint . --ext .js",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:contract": "jest --config ./jest.contract.config.js",
     "test:contract:watch": "npm run test:contract -- --watch",
     "test:watch": "jest --watch",
