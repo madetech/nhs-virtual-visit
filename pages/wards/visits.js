@@ -4,16 +4,28 @@ import Heading from "../../src/components/Heading";
 import ActionLink from "../../src/components/ActionLink";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import VisitsPanelList from "../../src/components/VisitsPanelList";
+import VisitsTable from "../../src/components/VisitsTable";
 import Error from "next/error";
 import Text from "../../src/components/Text";
 import verifyToken from "../../src/usecases/verifyToken";
 import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
-export default function WardVisits({ scheduledCalls, ward, error }) {
+export default function WardVisits({
+  scheduledCalls,
+  ward,
+  error,
+  showAccordion,
+}) {
   if (error) {
     return <Error />;
   }
+
+  const tableContainer = showAccordion ? (
+    <VisitsPanelList visits={scheduledCalls} />
+  ) : (
+    <VisitsTable visits={scheduledCalls} />
+  );
 
   return (
     <Layout title="Virtual visits" renderLogout={true}>
@@ -41,7 +53,7 @@ export default function WardVisits({ scheduledCalls, ward, error }) {
           <h2 className="nhsuk-heading-l">Pre-booked virtual visits</h2>
 
           {scheduledCalls.length > 0 ? (
-            <VisitsPanelList visits={scheduledCalls} />
+            tableContainer
           ) : (
             <Text>There are no upcoming virtual visits.</Text>
           )}
