@@ -12,7 +12,7 @@ const Visits = ({ visits }) => (
       style={{ fontSize: "1.5rem" }}
       id="A"
     >
-      Upcoming visits
+      All visits
     </h3>
     <ul className="nhsuk-list-panel__list nhsuk-list-panel__list--with-label">
       {visits.map((visit) => (
