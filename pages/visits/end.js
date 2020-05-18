@@ -59,10 +59,10 @@ const End = ({ wardId, callId }) => (
 );
 
 export const getServerSideProps = propsWithContainer(
-  ({ req: { headers }, container, query }) => {
+  async ({ req: { headers }, container, query }) => {
     const userIsAuthenticated = container.getUserIsAuthenticated();
 
-    const token = userIsAuthenticated(headers.cookie);
+    const token = await userIsAuthenticated(headers.cookie);
 
     return { props: { wardId: token?.ward || null, callId: query.callId } };
   }
