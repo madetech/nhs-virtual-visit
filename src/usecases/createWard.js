@@ -1,15 +1,14 @@
 const createWard = ({ getDb }) => async (ward) => {
   const db = await getDb();
-
   try {
     console.log("Creating ward for ", ward);
     const createdWard = await db.one(
       `INSERT INTO wards
-        (id, name, hospital_name, code, trust_id, hospital_id)
-        VALUES (default, $1, $2, $3, $4, $5)
+        (id, name, code, trust_id, hospital_id)
+        VALUES (default, $1, $2, $3, $4)
         RETURNING id
       `,
-      [ward.name, ward.hospitalName, ward.code, ward.trustId, ward.hospitalId]
+      [ward.name, ward.code, ward.trustId, ward.hospitalId]
     );
 
     return {

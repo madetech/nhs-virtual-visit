@@ -13,7 +13,6 @@ describe("createWard", () => {
 
     const request = {
       name: "Defoe Ward",
-      hospitalName: "Test Hospital",
       code: "WardCode",
       trustId: "1",
       hospitalId: "1",
@@ -26,7 +25,6 @@ describe("createWard", () => {
 
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.name,
-      request.hospitalName,
       request.code,
       request.trustId,
       request.hospitalId,

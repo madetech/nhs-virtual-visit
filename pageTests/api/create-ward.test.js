@@ -12,7 +12,6 @@ describe("create-ward", () => {
       method: "POST",
       body: {
         name: "Seto Kaiba Ward",
-        hospitalName: "Yugi Muto Hospital",
         code: "YamiYugi",
         hospitalId: 1,
       },
@@ -88,7 +87,6 @@ describe("create-ward", () => {
     expect(createWardSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         name: "Seto Kaiba Ward",
-        hospitalName: "Yugi Muto Hospital",
         code: "YamiYugi",
         trustId: 1,
         hospitalId: 1,
@@ -155,53 +153,6 @@ describe("create-ward", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ err: "name must be present" })
-    );
-  });
-
-  it("returns a 400 if the hospital name is an empty string", async () => {
-    const invalidRequest = {
-      method: "POST",
-      body: {
-        name: "Seto Kaiba Ward",
-        hospitalName: "",
-      },
-      headers: {
-        cookie: "token=valid.token.value",
-      },
-    };
-
-    await createWard(invalidRequest, response, {
-      container: {
-        ...container,
-      },
-    });
-
-    expect(response.status).toHaveBeenCalledWith(400);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "hospital name must be present" })
-    );
-  });
-
-  it("returns a 400 if the hospital name is not provided", async () => {
-    const invalidRequest = {
-      method: "POST",
-      body: {
-        name: "Seto Kaiba Ward",
-      },
-      headers: {
-        cookie: "token=valid.token.value",
-      },
-    };
-
-    await createWard(invalidRequest, response, {
-      container: {
-        ...container,
-      },
-    });
-
-    expect(response.status).toHaveBeenCalledWith(400);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "hospital name must be present" })
     );
   });
 
