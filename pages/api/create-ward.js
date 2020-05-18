@@ -23,12 +23,6 @@ export default withContainer(
       return;
     }
 
-    if (!body.hospitalName || body.hospitalName.length === 0) {
-      res.status(400);
-      res.end(JSON.stringify({ err: "hospital name must be present" }));
-      return;
-    }
-
     if (!body.hospitalId) {
       res.status(400);
       res.end(JSON.stringify({ err: "hospital id must be present" }));
@@ -41,7 +35,6 @@ export default withContainer(
 
     const { wardId, error } = await createWard({
       name: body.name,
-      hospitalName: body.hospitalName,
       code: body.code,
       trustId: adminAuthenticatedToken.trustId,
       hospitalId: body.hospitalId,

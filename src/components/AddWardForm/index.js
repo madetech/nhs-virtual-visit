@@ -16,7 +16,6 @@ const isPresent = (input) => {
 
 const AddWardForm = ({ errors, setErrors, hospitals }) => {
   const [hospitalId, setHospitalId] = useState("");
-  const [hospitalName, setHospitalName] = useState("");
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
   const [wardCodeConfirmation, setWardCodeConfirmation] = useState("");
@@ -40,9 +39,9 @@ const AddWardForm = ({ errors, setErrors, hospitals }) => {
       });
     };
 
-    const setHospitalNameError = (errors) => {
+    const setHospitalIdError = (errors) => {
       errors.push({
-        id: "hospital-name-error",
+        id: "hospital-id-error",
         message: "Select a hospital",
       });
     };
@@ -78,8 +77,8 @@ const AddWardForm = ({ errors, setErrors, hospitals }) => {
     if (!isPresent(wardName)) {
       setWardNameError(onSubmitErrors);
     }
-    if (!isPresent(hospitalName)) {
-      setHospitalNameError(onSubmitErrors);
+    if (!isPresent(hospitalId)) {
+      setHospitalIdError(onSubmitErrors);
     }
     if (!isPresent(wardCode)) {
       setWardCodeError(onSubmitErrors);
@@ -93,7 +92,7 @@ const AddWardForm = ({ errors, setErrors, hospitals }) => {
     }
 
     if (onSubmitErrors.length === 0) {
-      const submitAnswers = async ({ wardName, hospitalName, wardCode }) => {
+      const submitAnswers = async ({ wardName, wardCode }) => {
         let name = wardName;
         let code = wardCode;
 
@@ -104,7 +103,6 @@ const AddWardForm = ({ errors, setErrors, hospitals }) => {
           },
           body: JSON.stringify({
             name,
-            hospitalName,
             code,
             hospitalId,
           }),
@@ -124,7 +122,7 @@ const AddWardForm = ({ errors, setErrors, hospitals }) => {
         }
       };
 
-      await submitAnswers({ wardName, hospitalName, wardCode });
+      await submitAnswers({ wardName, wardCode });
     }
     setErrors(onSubmitErrors);
   });
@@ -151,22 +149,19 @@ const AddWardForm = ({ errors, setErrors, hospitals }) => {
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="hospital-name" className="nhsuk-label--l">
+          <Label htmlFor="hospital-id" className="nhsuk-label--l">
             What is the hospital name?
           </Label>
           <Select
-            id="hospital-name"
+            id="hospital-id"
             className="nhsuk-input--width-10 nhsuk-u-width-one-half"
             prompt="Choose a hospital"
             options={hospitals}
             onChange={(event) => {
               setHospitalId(event.target.value);
-              setHospitalName(
-                event.target.options[event.target.selectedIndex].text
-              );
             }}
-            hasError={hasError("hospital-name")}
-            errorMessage={errorMessage("hospital-name")}
+            hasError={hasError("hospital-id")}
+            errorMessage={errorMessage("hospital-id")}
           />
         </FormGroup>
         <FormGroup>
