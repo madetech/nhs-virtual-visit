@@ -6,8 +6,8 @@ describe("retrieveWardById", () => {
       async getDb() {
         return {
           oneOrNone: jest.fn().mockReturnValue({
-            id: 1,
-            name: "Defoe Ward",
+            ward_id: 1,
+            ward_name: "Defoe Ward",
             hospital_name: "Test Hospital",
           }),
         };

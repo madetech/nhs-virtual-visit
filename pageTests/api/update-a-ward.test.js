@@ -231,7 +231,7 @@ describe("update-a-ward", () => {
     );
   });
 
-  it("returns a 400 if hospital name is not provided", async () => {
+  it("returns a 400 if hospital id is not provided", async () => {
     const invalidRequest = {
       method: "PATCH",
       body: {
@@ -251,32 +251,7 @@ describe("update-a-ward", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "hospital name must be present" })
-    );
-  });
-
-  it("returns a 400 if hospital name is an empty string", async () => {
-    const invalidRequest = {
-      method: "PATCH",
-      body: {
-        id: 123,
-        name: "Joey Wheeler Ward",
-        hospitalName: "",
-      },
-      headers: {
-        cookie: "token=valid.token.value",
-      },
-    };
-
-    await updateAWard(invalidRequest, response, {
-      container: {
-        ...container,
-      },
-    });
-
-    expect(response.status).toHaveBeenCalledWith(400);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "hospital name must be present" })
+      JSON.stringify({ err: "hospital id must be present" })
     );
   });
 

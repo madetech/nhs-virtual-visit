@@ -3,14 +3,15 @@ const retrieveWardById = ({ getDb }) => async (wardId, trustId) => {
   console.log("Retrieving ward for  ", wardId);
   try {
     const ward = await db.oneOrNone(
-      "SELECT * FROM wards WHERE id = $1 AND trust_id = $2 LIMIT 1",
+      "SELECT wards.id as ward_id, wards.name as ward_name, hospitals.id as hospital_id, hospitals.name as hospital_name FROM wards, hospitals WHERE wards.id = $1 AND wards.trust_id = $2 LIMIT 1",
       [wardId, trustId]
     );
 
     return {
       ward: {
-        id: ward.id,
-        name: ward.name,
+        id: ward.ward_id,
+        name: ward.ward_name,
+        hospitalId: ward.hospital_id,
         hospitalName: ward.hospital_name,
       },
       error: null,

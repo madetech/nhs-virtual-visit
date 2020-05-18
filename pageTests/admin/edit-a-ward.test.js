@@ -72,7 +72,7 @@ describe("/admin/edit-a-ward", () => {
           ward: {
             id: 1,
             name: "Defoe Ward",
-            hospitalName: "Northwick Park Hospital",
+            hospitalId: "1",
           },
           error: null,
         });
@@ -97,7 +97,7 @@ describe("/admin/edit-a-ward", () => {
 
         expect(props.id).toEqual(1);
         expect(props.name).toEqual("Defoe Ward");
-        expect(props.hospitalName).toEqual("Northwick Park Hospital");
+        expect(props.hospitalId).toEqual("1");
       });
     });
   });

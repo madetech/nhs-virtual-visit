@@ -7,14 +7,7 @@ import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import EditWardForm from "../../src/components/EditWardForm";
 
-const EditAWard = ({
-  error,
-  id,
-  name,
-  hospitalName,
-  hospitals,
-  hospitalId,
-}) => {
+const EditAWard = ({ error, id, name, hospitalId, hospitals }) => {
   if (error) {
     return <Error />;
   }
@@ -34,9 +27,8 @@ const EditAWard = ({
             setErrors={setErrors}
             id={id}
             initialName={name}
-            initialHospitalName={hospitalName}
-            hospitals={hospitals}
             initialHospitalId={hospitalId}
+            hospitals={hospitals}
           />
         </GridColumn>
       </GridRow>
@@ -61,7 +53,6 @@ export const getServerSideProps = propsWithContainer(
         authenticationToken.trustId
       );
       error = error || retrieveHospitalsResponse.error;
-
       if (error) {
         return { props: { error: error } };
       } else {
@@ -70,11 +61,8 @@ export const getServerSideProps = propsWithContainer(
             error: error,
             id: getRetrieveWardByIdResponse.ward.id,
             name: getRetrieveWardByIdResponse.ward.name,
-            hospitalName: getRetrieveWardByIdResponse.ward.hospitalName,
+            hospitalId: getRetrieveWardByIdResponse.ward.hospitalId,
             hospitals: retrieveHospitalsResponse.hospitals,
-            hospitalId: getRetrieveWardByIdResponse.hospitalId
-              ? getRetrieveWardByIdResponse.hospitalId
-              : null,
           },
         };
       }

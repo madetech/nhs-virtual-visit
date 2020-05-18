@@ -2,16 +2,16 @@ const retrieveWards = ({ getDb }) => async (trustId) => {
   const db = await getDb();
   try {
     const wards = await db.any(
-      `SELECT * FROM wards WHERE trust_id = $1 ORDER BY hospital_name ASC, name ASC`,
+      `SELECT id as ward_id, name as ward_name, (SELECT name from hospitals where wards.hospital_id = id) as hospital_name, wards.code as ward_code FROM wards WHERE wards.trust_id = 1 ORDER BY name ASC, name ASC`,
       [trustId]
     );
 
     return {
       wards: wards.map((ward) => ({
-        id: ward.id,
-        name: ward.name,
+        id: ward.ward_id,
+        name: ward.ward_name,
         hospitalName: ward.hospital_name,
-        code: ward.code,
+        code: ward.ward_code,
       })),
       error: null,
     };
