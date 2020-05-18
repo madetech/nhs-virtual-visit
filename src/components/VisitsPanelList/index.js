@@ -3,6 +3,7 @@ import "./styles.scss";
 import Router from "next/router";
 import formatDateAndTime from "../../helpers/formatDateAndTime";
 import VisitSummaryList from "../VisitSummaryList";
+import { GridRow, GridColumn } from "../Grid";
 
 const Visits = ({ visits }) => (
   <div className="nhsuk-list-panel nhsuk-u-margin-0">
@@ -40,13 +41,17 @@ const Visits = ({ visits }) => (
                   id="nhsuk-details__text0"
                   aria-hidden="true"
                 >
-                  <VisitSummaryList
-                    patientName={visit.patientName}
-                    visitorName={visit.recipientName}
-                    visitorMobileNumber={visit.recipientNumber}
-                    visitDateAndTime={visit.callTime}
-                    withActions={false}
-                  ></VisitSummaryList>
+                  <GridRow>
+                    <GridColumn width="two-thirds">
+                      <VisitSummaryList
+                        patientName={visit.patientName}
+                        visitorName={visit.recipientName}
+                        visitorMobileNumber={visit.recipientNumber}
+                        visitDateAndTime={visit.callTime}
+                        withActions={false}
+                      ></VisitSummaryList>
+                    </GridColumn>
+                  </GridRow>
 
                   <button
                     className="nhsuk-button nhsuk-u-margin-right-5 nhsuk-u-margin-bottom-4"
