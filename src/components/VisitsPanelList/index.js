@@ -5,14 +5,14 @@ import formatDateAndTime from "../../helpers/formatDateAndTime";
 import VisitSummaryList from "../VisitSummaryList";
 import { GridRow, GridColumn } from "../Grid";
 
-const Visits = ({ visits }) => (
+const VisitPanelList = ({ visits, title }) => (
   <div className="nhsuk-list-panel nhsuk-u-margin-0">
     <h3
       className="nhsuk-list-panel__label"
       style={{ fontSize: "1.5rem" }}
       id="A"
     >
-      All visits
+      {title}
     </h3>
     <ul className="nhsuk-list-panel__list nhsuk-list-panel__list--with-label">
       {visits.map((visit) => (
@@ -88,4 +88,23 @@ const Visits = ({ visits }) => (
     </ul>
   </div>
 );
-export default Visits;
+
+const VisitsPanelList = ({ visits }) => {
+  const today = visits.filter(
+    (visit) => moment().diff(visit.callTime, "days") === 0
+  );
+
+  const upcoming = visits.filter(
+    (visit) => moment().diff(visit.callTime, "days") < 0
+  );
+
+  return (
+    <>
+      {VisitPanelList({ visits: today, title: "Today" })}
+      <br />
+      {VisitPanelList({ visits: upcoming, title: "Upcoming" })}
+    </>
+  );
+};
+
+export default VisitsPanelList;
