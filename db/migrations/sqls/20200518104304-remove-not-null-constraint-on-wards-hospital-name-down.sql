@@ -1,0 +1,1 @@
+ALTER TABLE wards ALTER COLUMN hospital_name SET NOT NULL;

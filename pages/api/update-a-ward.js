@@ -21,7 +21,7 @@ export default withContainer(
     if (!body) {
       res.status(400);
       res.end(
-        JSON.stringify({ err: "id, name and hospital name must be present" })
+        JSON.stringify({ err: "id, name and hospital id must be present" })
       );
       return;
     }
@@ -35,12 +35,6 @@ export default withContainer(
     if (!body.name) {
       res.status(400);
       res.end(JSON.stringify({ err: "name must be present" }));
-      return;
-    }
-
-    if (!body.hospitalName) {
-      res.status(400);
-      res.end(JSON.stringify({ err: "hospital name must be present" }));
       return;
     }
 

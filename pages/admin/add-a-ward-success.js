@@ -45,7 +45,6 @@ export const getServerSideProps = propsWithContainer(
         query.wardId,
         authenticationToken.trustId
       );
-
       return {
         props: {
           error: error,

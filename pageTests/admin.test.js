@@ -22,13 +22,13 @@ describe("admin", () => {
     {
       id: 1,
       name: "Defoe Ward",
-      hospital_name: "Test Hospital",
+      hosptial_id: 1,
       code: "test_code",
     },
     {
       id: 2,
       name: "Willem Ward",
-      hospital_name: "Test Hospital 2",
+      hosptial_id: 1,
       code: "test_code_2",
     },
   ];
