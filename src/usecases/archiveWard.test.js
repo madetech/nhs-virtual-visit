@@ -1,7 +1,7 @@
-import deleteWard from "./deleteWard";
 import moment from "moment";
+import archiveWard from "./archiveWard";
 
-describe("deleteWard", () => {
+describe("archiveWard", () => {
   let container;
   let resultSpy = jest.fn().mockReturnValue({ rowCount: 1 });
 
@@ -30,7 +30,7 @@ describe("deleteWard", () => {
 
   it("returns success if a valid request and delete was successful", async () => {
     const timeBefore = moment();
-    await expect(deleteWard(container)(1, 1)).resolves.toEqual({
+    await expect(archiveWard(container)(1, 1)).resolves.toEqual({
       success: true,
       error: null,
     });
@@ -46,7 +46,7 @@ describe("deleteWard", () => {
   it("returns an error if ward cannot be removed from db", async () => {
     resultSpy.mockResolvedValueOnce({}).mockRejectedValueOnce({ error: true });
 
-    return expect(deleteWard(container)(1, 1)).resolves.toEqual({
+    return expect(archiveWard(container)(1, 1)).resolves.toEqual({
       success: false,
       error: "Failed to remove ward",
     });
@@ -55,21 +55,21 @@ describe("deleteWard", () => {
   it("returns an error if visits cannot be removed from db", async () => {
     resultSpy.mockRejectedValueOnce({ error: true });
 
-    return expect(deleteWard(container)(1, 1)).resolves.toEqual({
+    return expect(archiveWard(container)(1, 1)).resolves.toEqual({
       success: false,
       error: "Failed to remove visits",
     });
   });
 
   it("returns an error if the ward does not exist", () => {
-    return expect(deleteWard(container)(999, 1)).resolves.toEqual({
+    return expect(archiveWard(container)(999, 1)).resolves.toEqual({
       success: false,
       error: "Ward does not exist",
     });
   });
 
   it("returns an error if the ward exists within another trust", () => {
-    return expect(deleteWard(container)(1, 999)).resolves.toEqual({
+    return expect(archiveWard(container)(1, 999)).resolves.toEqual({
       success: false,
       error: "Ward does not exist",
     });
