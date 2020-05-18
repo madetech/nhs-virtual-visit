@@ -97,5 +97,21 @@ describe("ward/visits", () => {
       expect(props.ward).toBeNull();
       expect(props.error).not.toBeNull();
     });
+
+    it("passes a feature flag query param to the props", async () => {
+      const container = {
+        getRetrieveVisits: () => jest.fn().mockReturnValue({}),
+        getRetrieveWardById: () => jest.fn().mockReturnValue({}),
+      };
+
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        query: { showAccordion: "1" },
+        container,
+      });
+
+      expect(props.showAccordion).toEqual(true);
+    });
   });
 });
