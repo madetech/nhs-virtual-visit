@@ -4,6 +4,8 @@ import Router from "next/router";
 import formatDateAndTime from "../../helpers/formatDateAndTime";
 import VisitSummaryList from "../VisitSummaryList";
 import { GridRow, GridColumn } from "../Grid";
+import filterTodaysVisits from "../../helpers/filterTodaysVisits";
+import filterUpcomingVisits from "../../helpers/filterUpcomingVisits";
 
 const VisitPanelList = ({ visits, title }) => (
   <div className="nhsuk-list-panel nhsuk-u-margin-0">
@@ -90,13 +92,8 @@ const VisitPanelList = ({ visits, title }) => (
 );
 
 const VisitsPanelList = ({ visits }) => {
-  const today = visits.filter(
-    (visit) => moment().diff(visit.callTime, "days") === 0
-  );
-
-  const upcoming = visits.filter(
-    (visit) => moment().diff(visit.callTime, "days") < 0
-  );
+  const today = filterTodaysVisits(visits);
+  const upcoming = filterUpcomingVisits(visits);
 
   return (
     <>
