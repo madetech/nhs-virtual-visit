@@ -1,6 +1,6 @@
 import moment from "moment";
 
-const deleteWard = ({ getRetrieveWardById, getDb }) => async (
+const archiveWard = ({ getRetrieveWardById, getDb }) => async (
   wardId,
   trustId
 ) => {
@@ -33,8 +33,7 @@ const deleteWard = ({ getRetrieveWardById, getDb }) => async (
   try {
     await db.result(
       `UPDATE wards
-        SET archived_date
-         $2
+        SET archived_at = $2
         WHERE id = $1
     `,
       [wardId, moment().toISOString()]
@@ -49,4 +48,4 @@ const deleteWard = ({ getRetrieveWardById, getDb }) => async (
 
   return { success: true, error: null };
 };
-export default deleteWard;
+export default archiveWard;
