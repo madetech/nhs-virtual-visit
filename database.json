@@ -1,4 +1,7 @@
 {
+  "test": {
+    "url": { "ENV": "TEST_DATABASE_URL" }
+  },
   "development": {
     "url": { "ENV": "DATABASE_URL" }
   },
