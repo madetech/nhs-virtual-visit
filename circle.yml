@@ -22,7 +22,7 @@ jobs:
           POSTGRES_USER: root
           POSTGRES_PASSWORD:
           POSTGRES_DB: nhs-virtual-visit-test
-        image: "circleci/postgres:12.2"
+          image: "circleci/postgres:12.2"
     environment:
       NODE_ENV: test
       TEST_DATABASE_URL: postgresql://root@localhost/nhs-virtual-visit-test
