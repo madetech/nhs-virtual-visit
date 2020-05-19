@@ -31,15 +31,7 @@ const retrieveWards = ({ getDb }) => async (trustId) => {
         id: ward.ward_id,
         name: ward.ward_name,
         hospitalName: ward.hospital_name,
-<<<<<<< HEAD
         code: ward.ward_code,
-=======
-        code: ward.code,
-<<<<<<< HEAD
-        archivedAt: ward.archived_at_string,
->>>>>>> Update retrieveWards to return archived_at
-=======
->>>>>>> Only return non-archived wards from retrieve wards
       })),
       error: null,
     };

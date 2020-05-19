@@ -49,7 +49,6 @@ export const getServerSideProps = propsWithContainer(
       const wardsResponse = await container.getRetrieveWards()(
         authenticationToken.trustId
       );
-      console.log(wardsResponse);
       const trustResponse = await container.getRetrieveTrustById()(
         authenticationToken.trustId
       );
