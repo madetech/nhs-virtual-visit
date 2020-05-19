@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./styles.scss";
 import Router from "next/router";
 import formatDateAndTime from "../../helpers/formatDateAndTime";
@@ -6,29 +6,7 @@ import VisitSummaryList from "../VisitSummaryList";
 import { GridRow, GridColumn } from "../Grid";
 import filterTodaysVisits from "../../helpers/filterTodaysVisits";
 import filterUpcomingVisits from "../../helpers/filterUpcomingVisits";
-import moment from "moment";
-
-const Beside = ({ callDateAndTime }) => {
-  const [timeFromNow, setTimeFromNow] = useState(
-    moment(callDateAndTime).fromNow()
-  );
-
-  useEffect(() => {
-    const oneMinute = 6000;
-    const interval = setInterval(() => {
-      setTimeFromNow(moment(callDateAndTime).fromNow());
-    }, oneMinute);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="app-visit-card-beside">
-      <p>
-        <b>{timeFromNow}</b>
-      </p>
-    </div>
-  );
-};
+import TimeFromNow from "../TimeFromNow";
 
 const VisitPanelList = ({ visits, title }) => {
   if (visits.length != 0) {
@@ -109,7 +87,13 @@ const VisitPanelList = ({ visits, title }) => {
                     </div>
                   </details>
                 </div>
-                <Beside callDateAndTime={visit.callTime} />
+                <div className="app-visit-card-beside">
+                  <p>
+                    <b>
+                      <TimeFromNow dateAndTime={visit.callTime} />
+                    </b>
+                  </p>
+                </div>
               </div>
             </li>
           ))}
