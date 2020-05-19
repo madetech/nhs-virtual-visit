@@ -63,7 +63,7 @@ const Call = ({ callId, name, provider, error }) => {
 
     if (!callId) {
       return (
-        <Layout>
+        <Layout title="No calling code provided" isBookService={false}>
           <h1>No calling code provided</h1>
           <p>Please use the link provided in the message you received.</p>
         </Layout>
@@ -71,7 +71,7 @@ const Call = ({ callId, name, provider, error }) => {
     }
 
     return (
-      <Layout>
+      <Layout title="Virtual visit" isBookService={false}>
         <main>
           <div id="meet"></div>
         </main>

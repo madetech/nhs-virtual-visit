@@ -5,7 +5,7 @@ import AnchorLink from "../../src/components/AnchorLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 const End = ({ wardId, callId }) => (
-  <Layout>
+  <Layout title="Your virtual visit has completed" isBookService={false}>
     <div className="nhsuk-grid-row">
       {wardId && (
         <div className="nhsuk-grid-column-two-thirds">
