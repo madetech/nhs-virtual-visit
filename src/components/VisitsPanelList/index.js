@@ -116,6 +116,8 @@ const VisitPanelList = ({ visits, title }) => {
         </ul>
       </div>
     );
+  } else {
+    return null;
   }
 };
 
@@ -125,9 +127,9 @@ const VisitsPanelList = ({ visits }) => {
 
   return (
     <>
-      {VisitPanelList({ visits: today, title: "Today" })}
+      <VisitPanelList visits={today} title="Today" />
       <br />
-      {VisitPanelList({ visits: upcoming, title: "Upcoming" })}
+      <VisitPanelList visits={upcoming} title="Upcoming" />
     </>
   );
 };
