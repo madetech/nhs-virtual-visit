@@ -6,6 +6,7 @@ import VisitSummaryList from "../VisitSummaryList";
 import { GridRow, GridColumn } from "../Grid";
 import filterTodaysVisits from "../../helpers/filterTodaysVisits";
 import filterUpcomingVisits from "../../helpers/filterUpcomingVisits";
+import TimeFromNow from "../TimeFromNow";
 
 const VisitPanelList = ({ visits, title }) => {
   if (visits.length != 0) {
@@ -86,12 +87,21 @@ const VisitPanelList = ({ visits, title }) => {
                     </div>
                   </details>
                 </div>
+                <div className="app-visit-card-beside">
+                  <p>
+                    <b>
+                      <TimeFromNow dateAndTime={visit.callTime} />
+                    </b>
+                  </p>
+                </div>
               </div>
             </li>
           ))}
         </ul>
       </div>
     );
+  } else {
+    return null;
   }
 };
 
@@ -101,9 +111,9 @@ const VisitsPanelList = ({ visits }) => {
 
   return (
     <>
-      {VisitPanelList({ visits: today, title: "Today" })}
+      <VisitPanelList visits={today} title="Today" />
       <br />
-      {VisitPanelList({ visits: upcoming, title: "Upcoming" })}
+      <VisitPanelList visits={upcoming} title="Upcoming" />
     </>
   );
 };
