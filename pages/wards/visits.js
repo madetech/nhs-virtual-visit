@@ -8,7 +8,6 @@ import VisitsTable from "../../src/components/VisitsTable";
 import Error from "next/error";
 import Text from "../../src/components/Text";
 import verifyToken from "../../src/usecases/verifyToken";
-import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 export default function WardVisits({
@@ -64,25 +63,17 @@ export default function WardVisits({
 }
 
 export const getServerSideProps = propsWithContainer(
-  verifyToken(
-    async ({ authenticationToken, container, query }) => {
-      const { wardId, trustId } = authenticationToken;
-      let { scheduledCalls, error } = await container.getRetrieveVisits()({
-        wardId,
-      });
-      let ward;
-      ({ ward, error } = await container.getRetrieveWardById()(
-        wardId,
-        trustId
-      ));
-      const showAccordion = Boolean(query.showAccordion);
+  verifyToken(async ({ authenticationToken, container, query }) => {
+    const { wardId, trustId } = authenticationToken;
+    let { scheduledCalls, error } = await container.getRetrieveVisits()({
+      wardId,
+    });
+    let ward;
+    ({ ward, error } = await container.getRetrieveWardById()(wardId, trustId));
+    const showAccordion = Boolean(query.showAccordion);
 
-      return {
-        props: { scheduledCalls, ward, error, showAccordion: showAccordion },
-      };
-    },
-    {
-      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-    }
-  )
+    return {
+      props: { scheduledCalls, ward, error, showAccordion: showAccordion },
+    };
+  })
 );
