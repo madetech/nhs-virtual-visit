@@ -10,6 +10,10 @@ export default (() => {
           connectionString: process.env.DATABASE_URL,
         };
 
+        if (process.env.NODE_ENV === "test") {
+          options.connectionString = process.env.TEST_DATABASE_URL;
+        }
+
         if (process.env.NODE_ENV === "production") {
           options.ssl = { rejectUnauthorized: false };
         }
