@@ -10,7 +10,6 @@ import Error from "next/error";
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 import verifyToken from "../../src/usecases/verifyToken";
-import TokenProvider from "../../src/providers/TokenProvider";
 
 const VisitStart = ({
   patientName,
@@ -93,34 +92,29 @@ const VisitStart = ({
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyToken(
-    async ({ query, container }) => {
-      const { callId } = query;
+  verifyToken(async ({ query, container }) => {
+    const { callId } = query;
 
-      const { scheduledCall, error } = await retrieveVisitByCallId(container)(
-        callId
-      );
+    const { scheduledCall, error } = await retrieveVisitByCallId(container)(
+      callId
+    );
 
-      const callTime = formatTime(scheduledCall.callTime, "HH:mm");
-      const callDate = formatDate(scheduledCall.callTime);
+    const callTime = formatTime(scheduledCall.callTime, "HH:mm");
+    const callDate = formatDate(scheduledCall.callTime);
 
-      return {
-        props: {
-          patientName: scheduledCall.patientName,
-          contactName: scheduledCall.recipientName,
-          contactNumber: scheduledCall.recipientNumber,
-          callTime,
-          callDate,
-          callId,
-          error,
-          callPassword: scheduledCall.callPassword,
-        },
-      };
-    },
-    {
-      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-    }
-  )
+    return {
+      props: {
+        patientName: scheduledCall.patientName,
+        contactName: scheduledCall.recipientName,
+        contactNumber: scheduledCall.recipientNumber,
+        callTime,
+        callDate,
+        callId,
+        error,
+        callPassword: scheduledCall.callPassword,
+      },
+    };
+  })
 );
 
 export default VisitStart;
