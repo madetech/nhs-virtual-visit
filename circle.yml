@@ -4,7 +4,7 @@ orbs:
   node: circleci/node@1.1.6
 
 jobs:
-  build-and-test:
+  build:
     executor:
       name: node/default
     steps:
@@ -13,10 +13,32 @@ jobs:
           steps:
             - run: npm install
             - run: npm rebuild node-sass
-            - run: npm run test:ci
             - run: npm run build
+  test:
+    docker:
+      - image: circleci/node:12
+      - environment:
+          NODE_ENV: test
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD:
+          POSTGRES_DB: nhs-virtual-visit-test
+        image: "circleci/postgres:12.2"
+    environment:
+      NODE_ENV: test
+      TEST_DATABASE_URL: postgresql://root@localhost/nhs-virtual-visit-test
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm rebuild node-sass
+      - run: npm run dbmigratetest up
+      - run: npm run test:ci
 
 workflows:
   build-and-test:
     jobs:
-      - build-and-test
+      - build
+      - test

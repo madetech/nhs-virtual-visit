@@ -18,6 +18,7 @@
     "start": "NODE_ENV=production node server.js",
     "cleandb": "node db/scripts/cleanup_scheduled_calls.js",
     "dbmigrate": "db-migrate --migrations-dir 'db/migrations/'",
+    "dbmigratetest": "db-migrate --migrations-dir 'db/migrations/' -e test",
     "dbmigratedry": "db-migrate --dry-run --migrations-dir 'db/migrations/'"
   },
   "dependencies": {

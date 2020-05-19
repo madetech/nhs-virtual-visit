@@ -1,9 +1,9 @@
 {
+  "test": {
+    "url": { "ENV": "TEST_DATABASE_URL" }
+  },
   "development": {
-    "url": { "ENV": "DATABASE_URL" },
-    "ssl": {
-      "rejectUnauthorized": false
-    }
+    "url": { "ENV": "DATABASE_URL" }
   },
   "production": {
     "url": { "ENV": "DATABASE_URL" },
