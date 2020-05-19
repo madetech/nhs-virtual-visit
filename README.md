@@ -65,6 +65,8 @@ In order to run this app locally you will need to create a `.env` file in the ro
 API_KEY=
 # Postgres Connection String
 DATABASE_URL=
+# Postgres Connection String for the test database
+TEST_DATABASE_URL=
 # GovNotify Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
 # GovNotify Join Template ID
@@ -143,6 +145,14 @@ You can run tests by running
 ```bash
 npm run test
 ```
+
+Contract tests can be run with
+
+```bash
+npm run test:contract
+```
+
+Note: A test database is required to run contract tests. You can quickly set one up using `bin/setup_test_db.sh`
 
 ## Building a production version
 
