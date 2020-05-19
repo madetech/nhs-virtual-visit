@@ -25,7 +25,7 @@ describe("visit-start", () => {
       const container = {
         getTokenProvider: () => tokenProvider,
       };
-      console.log(container);
+
       await getServerSideProps({ req: anonymousReq, res, container });
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {
