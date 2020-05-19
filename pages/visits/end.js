@@ -52,12 +52,6 @@ const End = ({ wardId, callId }) => (
               <p>Your personal data will be removed within 24 hours.</p>
             </div>
           </div>
-
-          <h2>What happens next</h2>
-
-          <ActionLink href={`https://www.lnwh.nhs.uk/support`}>
-            Get further help and support
-          </ActionLink>
         </div>
       )}
     </div>
