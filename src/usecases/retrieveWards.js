@@ -8,10 +8,11 @@ const retrieveWards = ({ getDb }) => async (trustId) => {
         (
           SELECT
             name
-          from
+          FROM
             hospitals
-          where
+          WHERE
             wards.hospital_id = id
+            AND trust_id = $1
         ) as hospital_name,
         wards.code as ward_code
       FROM
