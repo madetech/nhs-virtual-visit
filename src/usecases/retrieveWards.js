@@ -19,6 +19,8 @@ const retrieveWards = ({ getDb }) => async (trustId) => {
         wards
       WHERE
         wards.trust_id = $1
+      AND
+        wards.archived_at IS NULL
       ORDER BY
         name ASC,
         name ASC
