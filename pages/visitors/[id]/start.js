@@ -22,9 +22,8 @@ const Start = ({ callId, error, callPassword }) => {
         <GridColumn width="two-thirds">
           <Heading>Attend a virtual visit</Heading>
           <Lead>
-            Attend a virtual visit is a new service for the London North West
-            University Healthcare Trust being trialled to connect patients with
-            their visitor via virtual visits.
+            Attend a virtual visit is a new service being trialled to connect
+            patients with their visitor via virtual visits.
           </Lead>
 
           <h2 className="nhsuk-heading-l">
