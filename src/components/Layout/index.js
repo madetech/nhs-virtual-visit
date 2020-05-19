@@ -16,7 +16,7 @@ const Layout = ({
     <Head>
       <title>
         {hasErrors ? "Error: " : ""} {title} |{" "}
-        {isBookService ? "Book" : "Attend"} a virtual visit | LNWH
+        {isBookService ? "Book" : "Attend"} a virtual visit
       </title>
     </Head>
     <a className="nhsuk-skip-link" href="#maincontent">
