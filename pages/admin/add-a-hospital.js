@@ -3,7 +3,7 @@ import ErrorSummary from "../../src/components/ErrorSummary";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Layout from "../../src/components/Layout";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
-import TokenProvider from "../../src/providers/TokenProvider";
+
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Error from "next/error";
 import FormGroup from "../../src/components/FormGroup";
@@ -124,19 +124,14 @@ const AddAHospital = ({ error, trustId }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(
-    async ({ authenticationToken }) => {
-      const trustId = authenticationToken.trustId;
-      return {
-        props: {
-          trustId,
-        },
-      };
-    },
-    {
-      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-    }
-  )
+  verifyAdminToken(async ({ authenticationToken }) => {
+    const trustId = authenticationToken.trustId;
+    return {
+      props: {
+        trustId,
+      },
+    };
+  })
 );
 
 export default AddAHospital;

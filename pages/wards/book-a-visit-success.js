@@ -6,7 +6,7 @@ import Text from "../../src/components/Text";
 import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
 import verifyToken from "../../src/usecases/verifyToken";
-import TokenProvider from "../../src/providers/TokenProvider";
+import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 const Success = () => {
   return (
@@ -33,13 +33,10 @@ const Success = () => {
   );
 };
 
-export const getServerSideProps = verifyToken(
-  () => {
+export const getServerSideProps = propsWithContainer(
+  verifyToken(() => {
     return { props: {} };
-  },
-  {
-    tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-  }
+  })
 );
 
 export default Success;

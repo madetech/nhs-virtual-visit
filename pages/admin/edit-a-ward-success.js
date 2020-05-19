@@ -3,7 +3,6 @@ import Error from "next/error";
 import Layout from "../../src/components/Layout";
 import AnchorLink from "../../src/components/AnchorLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import TokenProvider from "../../src/providers/TokenProvider";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
 import ActionLink from "../../src/components/ActionLink";
 
@@ -38,26 +37,21 @@ const EditAWardSuccess = ({ error, name, hospitalName }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(
-    async ({ container, query, authenticationToken }) => {
-      const getRetrieveWardById = container.getRetrieveWardById();
-      const { ward, error } = await getRetrieveWardById(
-        query.wardId,
-        authenticationToken.trustId
-      );
+  verifyAdminToken(async ({ container, query, authenticationToken }) => {
+    const getRetrieveWardById = container.getRetrieveWardById();
+    const { ward, error } = await getRetrieveWardById(
+      query.wardId,
+      authenticationToken.trustId
+    );
 
-      return {
-        props: {
-          error: error,
-          name: ward.name,
-          hospitalName: ward.hospitalName,
-        },
-      };
-    },
-    {
-      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-    }
-  )
+    return {
+      props: {
+        error: error,
+        name: ward.name,
+        hospitalName: ward.hospitalName,
+      },
+    };
+  })
 );
 
 export default EditAWardSuccess;

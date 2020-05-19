@@ -2,7 +2,6 @@ import React from "react";
 import Error from "next/error";
 import Layout from "../src/components/Layout";
 import propsWithContainer from "../src/middleware/propsWithContainer";
-import TokenProvider from "../src/providers/TokenProvider";
 import verifyAdminToken from "../src/usecases/verifyAdminToken";
 import WardsTable from "../src/components/WardsTable";
 import { GridRow, GridColumn } from "../src/components/Grid";
@@ -44,30 +43,25 @@ const Admin = ({ wardError, trustError, wards, trust }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(
-    async ({ container, authenticationToken }) => {
-      const wardsResponse = await container.getRetrieveWards()(
-        authenticationToken.trustId
-      );
-      const trustResponse = await container.getRetrieveTrustById()(
-        authenticationToken.trustId
-      );
+  verifyAdminToken(async ({ container, authenticationToken }) => {
+    const wardsResponse = await container.getRetrieveWards()(
+      authenticationToken.trustId
+    );
+    const trustResponse = await container.getRetrieveTrustById()(
+      authenticationToken.trustId
+    );
 
-      // const trustName = trustResponse.trust ? trustResponse.trust.name : null;
+    // const trustName = trustResponse.trust ? trustResponse.trust.name : null;
 
-      return {
-        props: {
-          wards: wardsResponse.wards,
-          trust: { name: trustResponse.trust?.name },
-          wardError: wardsResponse.error,
-          trustError: trustResponse.error,
-        },
-      };
-    },
-    {
-      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-    }
-  )
+    return {
+      props: {
+        wards: wardsResponse.wards,
+        trust: { name: trustResponse.trust?.name },
+        wardError: wardsResponse.error,
+        trustError: trustResponse.error,
+      },
+    };
+  })
 );
 
 export default Admin;

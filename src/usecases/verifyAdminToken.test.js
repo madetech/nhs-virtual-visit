@@ -18,26 +18,33 @@ describe("verifyAdminToken", () => {
     const authenticationToken = {
       admin: true,
     };
+    const tokenProvider = {
+      validate: jest.fn(() => authenticationToken),
+    };
     const container = {
-      tokens: {
-        validate: jest.fn(() => authenticationToken),
-      },
+      getTokenProvider: () => tokenProvider,
     };
 
-    const result = verifyAdminToken(callback, container)({ req, res });
-    expect(callback).toHaveBeenCalledWith({ req, res, authenticationToken });
+    const result = verifyAdminToken(callback)({ req, res, container });
+    expect(callback).toHaveBeenCalledWith({
+      req,
+      res,
+      container,
+      authenticationToken,
+    });
     expect(result).toBe(expectedProps);
   });
 
   it("redirects if the token is not valid", async () => {
     const callback = jest.fn();
+    const tokenProvider = {
+      validate: jest.fn(() => false),
+    };
     const container = {
-      tokens: {
-        validate: jest.fn(() => false),
-      },
+      getTokenProvider: () => tokenProvider,
     };
 
-    verifyAdminToken(callback, container)({ req, res });
+    verifyAdminToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
       Location: "/wards/login",
     });
@@ -45,14 +52,15 @@ describe("verifyAdminToken", () => {
 
   it("redirects if there are no cookies", async () => {
     const callback = jest.fn();
+    const tokenProvider = {
+      validate: jest.fn(() => false),
+    };
     const container = {
-      tokens: {
-        validate: jest.fn(() => false),
-      },
+      getTokenProvider: () => tokenProvider,
     };
     req.headers.cookie = "";
 
-    verifyAdminToken(callback, container)({ req, res });
+    verifyAdminToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
       Location: "/wards/login",
     });
