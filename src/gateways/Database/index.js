@@ -6,12 +6,15 @@ export default (() => {
       if (!instance) {
         const { default: pgp } = await import("pg-promise");
 
-        instance = pgp()({
+        let options = {
           connectionString: process.env.DATABASE_URL,
-          ssl: {
-            rejectUnauthorized: false,
-          },
-        });
+        };
+
+        if (process.env.NODE_ENV === "production") {
+          options.ssl = { rejectUnauthorized: false };
+        }
+
+        instance = pgp()(options);
         delete instance.constructor;
       }
 
