@@ -1,6 +1,5 @@
 import React from "react";
 import verifyAdminToken from "../src/usecases/verifyAdminToken";
-import TokenProvider from "../src/providers/TokenProvider";
 import propsWithContainer from "../src/middleware/propsWithContainer";
 import Layout from "../src/components/Layout";
 import { GridRow, GridColumn } from "../src/components/Grid";
@@ -19,19 +18,14 @@ const Performance = ({ visitsScheduled }) => (
 );
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(
-    async ({ container }) => {
-      const retrieveWardVisitTotals = container.getRetrieveWardVisitTotals();
-      const wardVisitTotals = await retrieveWardVisitTotals();
+  verifyAdminToken(async ({ container }) => {
+    const retrieveWardVisitTotals = container.getRetrieveWardVisitTotals();
+    const wardVisitTotals = await retrieveWardVisitTotals();
 
-      return {
-        props: { visitsScheduled: wardVisitTotals.total },
-      };
-    },
-    {
-      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-    }
-  )
+    return {
+      props: { visitsScheduled: wardVisitTotals.total },
+    };
+  })
 );
 
 export default Performance;

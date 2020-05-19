@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Layout from "../../src/components/Layout";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
-import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import AddWardForm from "../../src/components/AddWardForm";
 import Error from "next/error";
@@ -33,23 +32,18 @@ const AddAWard = ({ hospitals, error }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(
-    async ({ container, authenticationToken }) => {
-      const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
-      const { hospitals, error } = await retrieveHospitalsByTrustId(
-        authenticationToken.trustId
-      );
-      return {
-        props: {
-          error,
-          hospitals,
-        },
-      };
-    },
-    {
-      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-    }
-  )
+  verifyAdminToken(async ({ container, authenticationToken }) => {
+    const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
+    const { hospitals, error } = await retrieveHospitalsByTrustId(
+      authenticationToken.trustId
+    );
+    return {
+      props: {
+        error,
+        hospitals,
+      },
+    };
+  })
 );
 
 export default AddAWard;
