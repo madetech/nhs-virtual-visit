@@ -89,3 +89,9 @@ For local development, the DB must trust local connections.
    ```
 
 You should now be able to continue the steps in detailed in the [README](README.md#setup-the-database)
+
+## References
+
+- [How To Install PostgreSQL on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-postgresql-on-ubuntu-20-04-quickstart)
+- [PostgreSQL - createuser](https://www.postgresql.org/docs/12/app-createuser.html)
+- [Configure PostgreSQL to allow remote connection](https://blog.bigbinary.com/2016/01/23/configure-postgresql-to-allow-remote-connection.html)
