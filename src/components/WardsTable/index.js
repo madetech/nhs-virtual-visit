@@ -17,6 +17,7 @@ const WardsTable = ({ wards }) => (
             Ward code
           </th>
           <th className="nhsuk-table__header" scope="col"></th>
+          <th className="nhsuk-table__header" scope="col"></th>
         </tr>
       </thead>
       <tbody className="nhsuk-table__body">
@@ -37,6 +38,20 @@ const WardsTable = ({ wards }) => (
                 }}
               >
                 Edit
+              </button>
+            </td>
+            <td className="nhsuk-table__cell">
+              <button
+                className="nhsuk-button nhsuk-button--secondary"
+                onClick={() => {
+                  const wardId = ward.id;
+                  Router.push({
+                    pathname: `/admin/archive-a-ward-confirmation`,
+                    query: { wardId },
+                  });
+                }}
+              >
+                Delete
               </button>
             </td>
           </tr>
