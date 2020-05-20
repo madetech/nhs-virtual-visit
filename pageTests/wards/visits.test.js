@@ -99,8 +99,9 @@ describe("ward/visits", () => {
     });
 
     it("passes a feature flag query param to the props", async () => {
+      const retrieveSpy = jest.fn().mockReturnValue({});
       const container = {
-        getRetrieveVisits: () => jest.fn().mockReturnValue({}),
+        getRetrieveVisits: () => retrieveSpy,
         getRetrieveWardById: () => jest.fn().mockReturnValue({}),
       };
 
@@ -112,6 +113,10 @@ describe("ward/visits", () => {
       });
 
       expect(props.showAccordion).toEqual(true);
+      expect(retrieveSpy).toHaveBeenCalledWith({
+        wardId: 1,
+        withInterval: false,
+      });
     });
   });
 });
