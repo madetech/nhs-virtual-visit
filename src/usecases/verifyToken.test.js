@@ -23,9 +23,10 @@ describe("verifyToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      getRetrieveWardById: () => jest.fn().mockReturnValue({ error: null }),
     };
 
-    const result = verifyToken(callback)({ req, res, container });
+    const result = await verifyToken(callback)({ req, res, container });
     expect(callback).toHaveBeenCalledWith({
       req,
       res,
@@ -42,9 +43,10 @@ describe("verifyToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      getRetrieveWardById: () => jest.fn().mockReturnValue({ error: null }),
     };
 
-    verifyToken(callback)({ req, res, container });
+    await verifyToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
       Location: "/wards/login",
     });
@@ -57,10 +59,11 @@ describe("verifyToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      getRetrieveWardById: () => jest.fn().mockReturnValue({ error: null }),
     };
     req.headers.cookie = "";
 
-    verifyToken(callback)({ req, res, container });
+    await verifyToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
       Location: "/wards/login",
     });

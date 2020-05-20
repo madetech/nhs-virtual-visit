@@ -16,17 +16,34 @@ describe("userIsAuthenticated", () => {
     };
     container = {
       getTokenProvider: () => tokenProvider,
+      getRetrieveWardById: () => jest.fn().mockReturnValue({ error: null }),
     };
   });
 
-  it("returns the payload of the token when it is valid", () => {
-    expect(userIsAuthenticated(container)("token=valid.token")).toEqual(
+  it("returns the payload of the token when it is valid", async () => {
+    expect(await userIsAuthenticated(container)("token=valid.token")).toEqual(
       "valid.token"
     );
   });
 
-  it("returns false when the token is invalid", () => {
-    expect(userIsAuthenticated(container)("token=invalid.token")).toEqual(
+  it("returns false when the token is invalid", async () => {
+    expect(await userIsAuthenticated(container)("token=invalid.token")).toEqual(
+      false
+    );
+  });
+
+  it("returns false when the ward is not present", async () => {
+    container.getRetrieveWardById = () =>
+      jest.fn().mockReturnValue({ error: "ERROR!" });
+    expect(await userIsAuthenticated(container)("token=valid.token")).toEqual(
+      false
+    );
+  });
+
+  it("returns false when the ward is not present", async () => {
+    container.getRetrieveWardById = () =>
+      jest.fn().mockReturnValue({ error: "ERROR!" });
+    expect(await userIsAuthenticated(container)("token=valid.token")).toEqual(
       false
     );
   });

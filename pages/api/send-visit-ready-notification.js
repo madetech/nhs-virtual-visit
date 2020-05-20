@@ -9,7 +9,7 @@ export default withContainer(async (req, res, { container }) => {
   const cookie = req.headers.cookie;
   const userIsAuthenticated = container.getUserIsAuthenticated();
 
-  const authenticationToken = userIsAuthenticated(cookie);
+  const authenticationToken = await userIsAuthenticated(cookie);
 
   if (!authenticationToken) {
     res.status(401);

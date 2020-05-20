@@ -4,7 +4,7 @@ import TokenProvider from "./TokenProvider";
 describe("TokenProvider", () => {
   it("should verify a valid token", () => {
     jwt.verify = jest.fn().mockReturnValue({
-      version: 1,
+      version: "2",
       wardId: 1,
       ward: "123",
       admin: false,
@@ -15,12 +15,12 @@ describe("TokenProvider", () => {
 
     const token = tokenProvider.validate("token");
 
-    expect(token.version).toEqual(1);
+    expect(token.version).toEqual("2");
   });
 
   it("should reject a token with an invalid version", () => {
     jwt.verify = jest.fn().mockReturnValue({
-      version: 2,
+      version: 1,
       wardId: 1,
       ward: "123",
       admin: false,

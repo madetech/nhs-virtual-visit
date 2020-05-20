@@ -5,7 +5,7 @@ describe("retrieveWardById", () => {
     const container = {
       async getDb() {
         return {
-          oneOrNone: jest.fn().mockReturnValue({
+          one: jest.fn().mockReturnValue({
             ward_id: 1,
             ward_name: "Defoe Ward",
             hospital_name: "Test Hospital",
@@ -31,7 +31,7 @@ describe("retrieveWardById", () => {
     const container = {
       async getDb() {
         return {
-          oneOrNone: jest.fn(() => {
+          one: jest.fn(() => {
             throw new Error("DB Error!");
           }),
         };

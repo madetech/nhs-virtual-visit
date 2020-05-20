@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-const version = 1;
+const version = "2";
 
 class TokenProvider {
   constructor(signingKey) {
@@ -29,7 +29,7 @@ class TokenProvider {
       algorithms: ["HS256"],
     });
 
-    if (decryptedToken.version != version) {
+    if (decryptedToken.version !== version) {
       throw new Error("Invalid token version");
     }
 

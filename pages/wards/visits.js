@@ -1,14 +1,14 @@
 import React from "react";
 import Layout from "../../src/components/Layout";
-import Heading from "../../src/components/Heading";
+import HeadingWithTime from "../../src/components/HeadingWithTime";
 import ActionLink from "../../src/components/ActionLink";
 import { GridRow, GridColumn } from "../../src/components/Grid";
-import VisitsPanelList from "../../src/components/VisitsPanelList";
 import VisitsTable from "../../src/components/VisitsTable";
 import Error from "next/error";
 import Text from "../../src/components/Text";
 import verifyToken from "../../src/usecases/verifyToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import AccordionVisits from "../../src/components/AccordionVisits";
 
 export default function WardVisits({
   scheduledCalls,
@@ -21,7 +21,7 @@ export default function WardVisits({
   }
 
   const tableContainer = showAccordion ? (
-    <VisitsPanelList visits={scheduledCalls} />
+    <AccordionVisits visits={scheduledCalls} />
   ) : (
     <VisitsTable visits={scheduledCalls} />
   );
@@ -30,13 +30,13 @@ export default function WardVisits({
     <Layout title="Virtual visits" renderLogout={true}>
       <GridRow>
         <GridColumn width="full">
-          <Heading>
+          <HeadingWithTime>
             <span className="nhsuk-caption-l">
               Ward: {ward.name}
               <span className="nhsuk-u-visually-hidden">-</span>
             </span>
             Virtual visits
-          </Heading>
+          </HeadingWithTime>
 
           <h2 className="nhsuk-heading-l">Book a virtual visit</h2>
 
@@ -65,12 +65,15 @@ export default function WardVisits({
 export const getServerSideProps = propsWithContainer(
   verifyToken(async ({ authenticationToken, container, query }) => {
     const { wardId, trustId } = authenticationToken;
+    const showAccordion = Boolean(query.showAccordion);
+    const withInterval = !showAccordion;
+
     let { scheduledCalls, error } = await container.getRetrieveVisits()({
       wardId,
+      withInterval: withInterval,
     });
     let ward;
     ({ ward, error } = await container.getRetrieveWardById()(wardId, trustId));
-    const showAccordion = Boolean(query.showAccordion);
 
     return {
       props: { scheduledCalls, ward, error, showAccordion: showAccordion },

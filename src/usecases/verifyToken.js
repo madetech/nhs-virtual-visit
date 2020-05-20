@@ -1,10 +1,10 @@
 import userIsAuthenticated from "./userIsAuthenticated";
 
 export default function (callback) {
-  return function (context) {
+  return async function (context) {
     const { req, res, container } = context;
 
-    const authenticationToken = userIsAuthenticated(container)(
+    const authenticationToken = await userIsAuthenticated(container)(
       req.headers.cookie
     );
 

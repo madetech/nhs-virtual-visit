@@ -4,11 +4,10 @@ import Router from "next/router";
 import formatDateAndTime from "../../helpers/formatDateAndTime";
 import VisitSummaryList from "../VisitSummaryList";
 import { GridRow, GridColumn } from "../Grid";
-import filterTodaysVisits from "../../helpers/filterTodaysVisits";
-import filterUpcomingVisits from "../../helpers/filterUpcomingVisits";
 import TimeFromNow from "../TimeFromNow";
+import Text from "../Text";
 
-const VisitPanelList = ({ visits, title }) => {
+const VisitsPanelList = ({ visits, title, showButtons }) => {
   if (visits.length != 0) {
     return (
       <div className="nhsuk-list-panel nhsuk-u-margin-0">
@@ -58,32 +57,36 @@ const VisitPanelList = ({ visits, title }) => {
                         </GridColumn>
                       </GridRow>
 
-                      <button
-                        className="nhsuk-button nhsuk-u-margin-right-5 nhsuk-u-margin-bottom-4"
-                        type="submit"
-                        onClick={() => {
-                          const callId = visit.callId;
-                          Router.push({
-                            pathname: `/wards/visit-start`,
-                            query: { callId },
-                          });
-                        }}
-                      >
-                        Start
-                      </button>
+                      {showButtons && (
+                        <>
+                          <button
+                            className="nhsuk-button nhsuk-u-margin-right-5 nhsuk-u-margin-bottom-4"
+                            type="submit"
+                            onClick={() => {
+                              const callId = visit.callId;
+                              Router.push({
+                                pathname: `/wards/visit-start`,
+                                query: { callId },
+                              });
+                            }}
+                          >
+                            Start
+                          </button>
 
-                      <button
-                        className="nhsuk-button nhsuk-button--secondary"
-                        onClick={() => {
-                          const callId = visit.callId;
-                          Router.push({
-                            pathname: `/wards/cancel-visit-confirmation`,
-                            query: { callId },
-                          });
-                        }}
-                      >
-                        Cancel
-                      </button>
+                          <button
+                            className="nhsuk-button nhsuk-button--secondary"
+                            onClick={() => {
+                              const callId = visit.callId;
+                              Router.push({
+                                pathname: `/wards/cancel-visit-confirmation`,
+                                query: { callId },
+                              });
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      )}
                     </div>
                   </details>
                 </div>
@@ -101,21 +104,29 @@ const VisitPanelList = ({ visits, title }) => {
       </div>
     );
   } else {
-    return null;
+    return (
+      <div className="nhsuk-list-panel nhsuk-u-margin-0">
+        <h3
+          className="nhsuk-list-panel__label"
+          style={{ fontSize: "1.5rem" }}
+          id="A"
+        >
+          {title}
+        </h3>
+        <ul className="nhsuk-list-panel__list nhsuk-list-panel__list--with-label">
+          <li className="nhsuk-list-panel__item">
+            <div className="app-visit-card">
+              <div className="app-visit-card-body">
+                <Text className="nhsuk-u-margin-bottom-0">
+                  There are no virtual visits.
+                </Text>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    );
   }
-};
-
-const VisitsPanelList = ({ visits }) => {
-  const today = filterTodaysVisits(visits);
-  const upcoming = filterUpcomingVisits(visits);
-
-  return (
-    <>
-      <VisitPanelList visits={today} title="Today" />
-      <br />
-      <VisitPanelList visits={upcoming} title="Upcoming" />
-    </>
-  );
 };
 
 export default VisitsPanelList;

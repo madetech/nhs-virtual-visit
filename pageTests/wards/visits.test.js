@@ -56,7 +56,7 @@ describe("ward/visits", () => {
       });
       expect(res.writeHead).not.toHaveBeenCalled();
 
-      expect(visitsSpy).toHaveBeenCalledWith({ wardId: 1 });
+      expect(visitsSpy).toHaveBeenCalledWith({ wardId: 1, withInterval: true });
       expect(wardSpy).toHaveBeenCalledWith(1, 1);
       expect(props.error).toBeNull();
       expect(props.scheduledCalls).toHaveLength(2);
@@ -99,8 +99,9 @@ describe("ward/visits", () => {
     });
 
     it("passes a feature flag query param to the props", async () => {
+      const retrieveSpy = jest.fn().mockReturnValue({});
       const container = {
-        getRetrieveVisits: () => jest.fn().mockReturnValue({}),
+        getRetrieveVisits: () => retrieveSpy,
         getRetrieveWardById: () => jest.fn().mockReturnValue({}),
       };
 
@@ -112,6 +113,10 @@ describe("ward/visits", () => {
       });
 
       expect(props.showAccordion).toEqual(true);
+      expect(retrieveSpy).toHaveBeenCalledWith({
+        wardId: 1,
+        withInterval: false,
+      });
     });
   });
 });
