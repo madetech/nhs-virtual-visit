@@ -90,6 +90,8 @@ ENABLE_SENTRY=
 
 ### PostgreSQL 12
 
+If you are installing a local instance of PostgreSQL on Ubuntu, see the steps in the separate [guide.](UBUNTU2004-PG12.md)
+
 #### Enable SSL in Postgres
 
 You may need to enable SSL on your local postgres server.
