@@ -11,6 +11,7 @@ import verifyToken from "../../src/usecases/verifyToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import filterTodaysVisits from "../../src/helpers/filterTodaysVisits";
 import filterUpcomingVisits from "../../src/helpers/filterUpcomingVisits";
+import filterPastVisits from "../../src/helpers/filterPastVisits";
 
 export default function WardVisits({
   scheduledCalls,
@@ -31,7 +32,11 @@ export default function WardVisits({
     <div className="nhsuk-grid-row">
       <div className="nhsuk-grid-column-one-quarter">
         <ul className="nhsuk-list">
-          <li>
+          <li
+            className={
+              visitsPanelListTitle == "Today" ? "nhsuk-u-font-weight-bold" : ""
+            }
+          >
             <a
               href="#"
               onClick={() => {
@@ -51,6 +56,17 @@ export default function WardVisits({
               }}
             >
               Upcoming
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onClick={() => {
+                setDisplayedVisits(filterPastVisits(scheduledCalls));
+                setVisitsPanelListTitle("Past");
+              }}
+            >
+              Past
             </a>
           </li>
         </ul>
