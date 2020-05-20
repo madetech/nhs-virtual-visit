@@ -40,9 +40,11 @@ describe("userIsAuthenticated", () => {
     );
   });
 
-  it("returns false when the ward is not present", () => {
+  it("returns false when the ward is not present", async () => {
     container.getRetrieveWardById = () =>
       jest.fn().mockReturnValue({ error: "ERROR!" });
-    expect(userIsAuthenticated(container)("token=valid.token")).toEqual(false);
+    expect(await userIsAuthenticated(container)("token=valid.token")).toEqual(
+      false
+    );
   });
 });
