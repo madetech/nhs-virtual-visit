@@ -10,6 +10,7 @@ import Text from "../../src/components/Text";
 import verifyToken from "../../src/usecases/verifyToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import filterTodaysVisits from "../../src/helpers/filterTodaysVisits";
+import filterUpcomingVisits from "../../src/helpers/filterUpcomingVisits";
 
 export default function WardVisits({
   scheduledCalls,
@@ -21,10 +22,47 @@ export default function WardVisits({
     return <Error />;
   }
 
-  const [displayedVisits] = useState(filterTodaysVisits(scheduledCalls));
+  const [displayedVisits, setDisplayedVisits] = useState(
+    filterTodaysVisits(scheduledCalls)
+  );
+  const [visitsPanelListTitle, setVisitsPanelListTitle] = useState("Today");
 
   const tableContainer = showAccordion ? (
-    <VisitsPanelList visits={displayedVisits} title="Today" />
+    <div className="nhsuk-grid-row">
+      <div className="nhsuk-grid-column-one-quarter">
+        <ul className="nhsuk-list">
+          <li>
+            <a
+              href="#"
+              onClick={() => {
+                setDisplayedVisits(filterTodaysVisits(scheduledCalls));
+                setVisitsPanelListTitle("Today");
+              }}
+            >
+              Today
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onClick={() => {
+                setDisplayedVisits(filterUpcomingVisits(scheduledCalls));
+                setVisitsPanelListTitle("Upcoming");
+              }}
+            >
+              Upcoming
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div className="nhsuk-grid-column-three-quarters">
+        <VisitsPanelList
+          visits={displayedVisits}
+          title={visitsPanelListTitle}
+        />
+      </div>
+    </div>
   ) : (
     <VisitsTable visits={scheduledCalls} />
   );
