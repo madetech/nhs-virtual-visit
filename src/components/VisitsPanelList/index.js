@@ -5,6 +5,7 @@ import formatDateAndTime from "../../helpers/formatDateAndTime";
 import VisitSummaryList from "../VisitSummaryList";
 import { GridRow, GridColumn } from "../Grid";
 import TimeFromNow from "../TimeFromNow";
+import Text from "../Text";
 
 const VisitsPanelList = ({ visits, title }) => {
   if (visits.length != 0) {
@@ -99,7 +100,28 @@ const VisitsPanelList = ({ visits, title }) => {
       </div>
     );
   } else {
-    return null;
+    return (
+      <div className="nhsuk-list-panel nhsuk-u-margin-0">
+        <h3
+          className="nhsuk-list-panel__label"
+          style={{ fontSize: "1.5rem" }}
+          id="A"
+        >
+          {title}
+        </h3>
+        <ul className="nhsuk-list-panel__list nhsuk-list-panel__list--with-label">
+          <li className="nhsuk-list-panel__item">
+            <div className="app-visit-card">
+              <div className="app-visit-card-body">
+                <Text className="nhsuk-u-margin-bottom-0">
+                  There are no virtual visits.
+                </Text>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    );
   }
 };
 
