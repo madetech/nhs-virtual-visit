@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../../src/components/Layout";
-import Heading from "../../src/components/Heading";
+import HeadingWithTime from "../../src/components/HeadingWithTime";
 import ActionLink from "../../src/components/ActionLink";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import VisitsTable from "../../src/components/VisitsTable";
@@ -30,13 +30,13 @@ export default function WardVisits({
     <Layout title="Virtual visits" renderLogout={true}>
       <GridRow>
         <GridColumn width="full">
-          <Heading>
+          <HeadingWithTime>
             <span className="nhsuk-caption-l">
               Ward: {ward.name}
               <span className="nhsuk-u-visually-hidden">-</span>
             </span>
             Virtual visits
-          </Heading>
+          </HeadingWithTime>
 
           <h2 className="nhsuk-heading-l">Book a virtual visit</h2>
 
