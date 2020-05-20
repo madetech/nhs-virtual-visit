@@ -30,7 +30,13 @@ const AccordionVisits = ({ visits }) => {
               Today
             </a>
           </li>
-          <li>
+          <li
+            className={
+              visitsPanelListTitle == "Upcoming"
+                ? "nhsuk-u-font-weight-bold"
+                : ""
+            }
+          >
             <a
               href="#"
               onClick={() => {
@@ -41,7 +47,11 @@ const AccordionVisits = ({ visits }) => {
               Upcoming
             </a>
           </li>
-          <li>
+          <li
+            className={
+              visitsPanelListTitle == "Past" ? "nhsuk-u-font-weight-bold" : ""
+            }
+          >
             <a
               href="#"
               onClick={() => {
