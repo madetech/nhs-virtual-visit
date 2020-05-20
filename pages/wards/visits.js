@@ -67,6 +67,7 @@ export const getServerSideProps = propsWithContainer(
     const { wardId, trustId } = authenticationToken;
     let { scheduledCalls, error } = await container.getRetrieveVisits()({
       wardId,
+      withInterval: true,
     });
     let ward;
     ({ ward, error } = await container.getRetrieveWardById()(wardId, trustId));
