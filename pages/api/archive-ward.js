@@ -27,14 +27,14 @@ export default withContainer(
 
     const archiveWard = container.getArchiveWard();
 
-    const { success, error } = await archiveWard({
-      wardId: body.wardId,
-      trustId: adminAuthenticatedToken.trustId,
-    });
+    const { success, error } = await archiveWard(
+      body.wardId,
+      adminAuthenticatedToken.trustId
+    );
 
     if (error) {
       res.status(400);
-      res.end();
+      res.end(JSON.stringify("Could not delete ward"));
     } else {
       res.status(200);
       res.end(JSON.stringify(success));

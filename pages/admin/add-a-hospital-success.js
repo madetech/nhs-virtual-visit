@@ -4,7 +4,6 @@ import Layout from "../../src/components/Layout";
 import AnchorLink from "../../src/components/AnchorLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
-import ActionLink from "../../src/components/ActionLink";
 
 const AddAHospitalSuccess = ({ error, name }) => {
   if (error) {
@@ -21,12 +20,6 @@ const AddAHospitalSuccess = ({ error, name }) => {
           >
             <h1 className="nhsuk-panel__title">{name} has been added</h1>
           </div>
-          <h2>What happens next</h2>
-
-          <ActionLink href={`/admin/add-a-hospital`}>
-            Add another hospital
-          </ActionLink>
-
           <p>
             <AnchorLink href="/admin">Return to ward administration</AnchorLink>
           </p>

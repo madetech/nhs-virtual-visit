@@ -83,10 +83,7 @@ describe("archive-ward", () => {
 
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.end).toHaveBeenCalledWith(JSON.stringify(true));
-    expect(archiveWardSpy).toHaveBeenCalledWith({
-      wardId: "1",
-      trustId: "1",
-    });
+    expect(archiveWardSpy).toHaveBeenCalledWith("1", "1");
   });
 
   it("returns a 400 status if errors", async () => {

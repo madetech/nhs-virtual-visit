@@ -6,7 +6,7 @@ const archiveWard = ({ getRetrieveWardById, getDb }) => async (
 ) => {
   const retrieveWardById = getRetrieveWardById();
 
-  const retrieveResult = retrieveWardById(wardId, trustId);
+  const retrieveResult = await retrieveWardById(wardId, trustId);
 
   if (!retrieveResult.ward) {
     return { success: false, error: "Ward does not exist" };
