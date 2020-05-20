@@ -3,7 +3,6 @@ import Error from "next/error";
 import Layout from "../../src/components/Layout";
 import AnchorLink from "../../src/components/AnchorLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import TokenProvider from "../../src/providers/TokenProvider";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
 import ActionLink from "../../src/components/ActionLink";
 
@@ -38,29 +37,24 @@ const AddAHospitalSuccess = ({ error, name }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(
-    async ({ container, query, authenticationToken }) => {
-      const getRetrieveHospitalById = container.getRetrieveHospitalById();
-      const { hospital, error } = await getRetrieveHospitalById(
-        query.hospitalId,
-        authenticationToken.trustId
-      );
+  verifyAdminToken(async ({ container, query, authenticationToken }) => {
+    const getRetrieveHospitalById = container.getRetrieveHospitalById();
+    const { hospital, error } = await getRetrieveHospitalById(
+      query.hospitalId,
+      authenticationToken.trustId
+    );
 
-      if (error) {
-        return { props: { error: error } };
-      } else {
-        return {
-          props: {
-            error: error,
-            name: hospital.name,
-          },
-        };
-      }
-    },
-    {
-      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+    if (error) {
+      return { props: { error: error } };
+    } else {
+      return {
+        props: {
+          error: error,
+          name: hospital.name,
+        },
+      };
     }
-  )
+  })
 );
 
 export default AddAHospitalSuccess;

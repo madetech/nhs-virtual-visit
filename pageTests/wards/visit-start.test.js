@@ -16,7 +16,17 @@ describe("visit-start", () => {
 
   describe("getServerSideProps", () => {
     it("redirects to login page if not authenticated", async () => {
-      await getServerSideProps({ req: anonymousReq, res });
+      const authenticationToken = {
+        foo: true,
+      };
+      const tokenProvider = {
+        validate: jest.fn(() => authenticationToken),
+      };
+      const container = {
+        getTokenProvider: () => tokenProvider,
+      };
+
+      await getServerSideProps({ req: anonymousReq, res, container });
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {
         Location: "/wards/login",

@@ -8,8 +8,8 @@ import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import Router from "next/router";
 import verifyToken from "../../src/usecases/verifyToken";
-import TokenProvider from "../../src/providers/TokenProvider";
 import VisitSummaryList from "../../src/components/VisitSummaryList";
+import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 const ScheduleConfirmation = ({
   patientName,
@@ -93,8 +93,8 @@ const ScheduleConfirmation = ({
   );
 };
 
-export const getServerSideProps = verifyToken(
-  ({ query }) => {
+export const getServerSideProps = propsWithContainer(
+  verifyToken(({ query }) => {
     const {
       patientName,
       contactName,
@@ -115,10 +115,7 @@ export const getServerSideProps = verifyToken(
         callTime,
       },
     };
-  },
-  {
-    tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
-  }
+  })
 );
 
 export default ScheduleConfirmation;

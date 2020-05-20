@@ -3,7 +3,6 @@ import Error from "next/error";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Layout from "../../src/components/Layout";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
-import TokenProvider from "../../src/providers/TokenProvider";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import EditWardForm from "../../src/components/EditWardForm";
 
@@ -37,41 +36,36 @@ const EditAWard = ({ error, id, name, hospitalId, hospitals }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(
-    async ({ container, query, authenticationToken }) => {
-      const getRetrieveWardById = container.getRetrieveWardById();
+  verifyAdminToken(async ({ container, query, authenticationToken }) => {
+    const getRetrieveWardById = container.getRetrieveWardById();
 
-      let error = null;
-      const getRetrieveWardByIdResponse = await getRetrieveWardById(
-        query.wardId,
-        authenticationToken.trustId
-      );
-      error = error || getRetrieveWardByIdResponse.error;
+    let error = null;
+    const getRetrieveWardByIdResponse = await getRetrieveWardById(
+      query.wardId,
+      authenticationToken.trustId
+    );
+    error = error || getRetrieveWardByIdResponse.error;
 
-      const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
-      const retrieveHospitalsResponse = await retrieveHospitalsByTrustId(
-        authenticationToken.trustId
-      );
+    const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
+    const retrieveHospitalsResponse = await retrieveHospitalsByTrustId(
+      authenticationToken.trustId
+    );
 
-      error = error || retrieveHospitalsResponse.error;
-      if (error) {
-        return { props: { error: error } };
-      } else {
-        return {
-          props: {
-            error: error,
-            id: getRetrieveWardByIdResponse.ward.id,
-            name: getRetrieveWardByIdResponse.ward.name,
-            hospitalId: getRetrieveWardByIdResponse.ward.hospitalId,
-            hospitals: retrieveHospitalsResponse.hospitals,
-          },
-        };
-      }
-    },
-    {
-      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
+    error = error || retrieveHospitalsResponse.error;
+    if (error) {
+      return { props: { error: error } };
+    } else {
+      return {
+        props: {
+          error: error,
+          id: getRetrieveWardByIdResponse.ward.id,
+          name: getRetrieveWardByIdResponse.ward.name,
+          hospitalId: getRetrieveWardByIdResponse.ward.hospitalId,
+          hospitals: retrieveHospitalsResponse.hospitals,
+        },
+      };
     }
-  )
+  })
 );
 
 export default EditAWard;

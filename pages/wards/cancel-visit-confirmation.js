@@ -5,7 +5,6 @@ import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
 import Router from "next/router";
 import verifyToken from "../../src/usecases/verifyToken";
-import TokenProvider from "../../src/providers/TokenProvider";
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Error from "next/error";
@@ -67,37 +66,32 @@ const deleteVisitConfirmation = ({
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyToken(
-    async ({ query, container }) => {
-      const { callId } = query;
+  verifyToken(async ({ query, container }) => {
+    const { callId } = query;
 
-      let { scheduledCall, error } = await retrieveVisitByCallId(container)(
-        callId
-      );
-      if (error && !scheduledCall) {
-        scheduledCall = {
-          patientName: "",
-          recipientName: "",
-          recipientNumber: "",
-          callTime: "",
-        };
-      }
-
-      return {
-        props: {
-          patientName: scheduledCall.patientName,
-          contactName: scheduledCall.recipientName,
-          contactNumber: scheduledCall.recipientNumber,
-          callDateAndTime: scheduledCall.callTime,
-          callId,
-          error,
-        },
+    let { scheduledCall, error } = await retrieveVisitByCallId(container)(
+      callId
+    );
+    if (error && !scheduledCall) {
+      scheduledCall = {
+        patientName: "",
+        recipientName: "",
+        recipientNumber: "",
+        callTime: "",
       };
-    },
-    {
-      tokens: new TokenProvider(process.env.JWT_SIGNING_KEY),
     }
-  )
+
+    return {
+      props: {
+        patientName: scheduledCall.patientName,
+        contactName: scheduledCall.recipientName,
+        contactNumber: scheduledCall.recipientNumber,
+        callDateAndTime: scheduledCall.callTime,
+        callId,
+        error,
+      },
+    };
+  })
 );
 
 export default deleteVisitConfirmation;
