@@ -141,7 +141,7 @@ export default withContainer(
         res.status(201);
         res.end(JSON.stringify({ success: true }));
       } else {
-        res.status(500);
+        res.status(400);
         res.end(JSON.stringify({ err: "Failed to schedule a visit" }));
       }
     } catch (err) {
