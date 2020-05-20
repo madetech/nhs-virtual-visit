@@ -10,6 +10,7 @@ const AccordionVisits = ({ visits }) => {
     filterTodaysVisits(visits)
   );
   const [visitsPanelListTitle, setVisitsPanelListTitle] = useState("Today");
+  const [showButtons, setShowButtons] = useState(true);
 
   return (
     <div className="nhsuk-grid-row">
@@ -25,6 +26,7 @@ const AccordionVisits = ({ visits }) => {
               onClick={() => {
                 setDisplayedVisits(filterTodaysVisits(visits));
                 setVisitsPanelListTitle("Today");
+                setShowButtons(true);
               }}
             >
               Today
@@ -42,6 +44,7 @@ const AccordionVisits = ({ visits }) => {
               onClick={() => {
                 setDisplayedVisits(filterUpcomingVisits(visits));
                 setVisitsPanelListTitle("Upcoming");
+                setShowButtons(true);
               }}
             >
               Upcoming
@@ -57,6 +60,7 @@ const AccordionVisits = ({ visits }) => {
               onClick={() => {
                 setDisplayedVisits(filterPastVisits(visits));
                 setVisitsPanelListTitle("Past");
+                setShowButtons(false);
               }}
             >
               Past
@@ -69,6 +73,7 @@ const AccordionVisits = ({ visits }) => {
         <VisitsPanelList
           visits={displayedVisits}
           title={visitsPanelListTitle}
+          showButtons={showButtons}
         />
       </div>
     </div>

@@ -7,7 +7,7 @@ import { GridRow, GridColumn } from "../Grid";
 import TimeFromNow from "../TimeFromNow";
 import Text from "../Text";
 
-const VisitsPanelList = ({ visits, title }) => {
+const VisitsPanelList = ({ visits, title, showButtons }) => {
   if (visits.length != 0) {
     return (
       <div className="nhsuk-list-panel nhsuk-u-margin-0">
@@ -57,32 +57,36 @@ const VisitsPanelList = ({ visits, title }) => {
                         </GridColumn>
                       </GridRow>
 
-                      <button
-                        className="nhsuk-button nhsuk-u-margin-right-5 nhsuk-u-margin-bottom-4"
-                        type="submit"
-                        onClick={() => {
-                          const callId = visit.callId;
-                          Router.push({
-                            pathname: `/wards/visit-start`,
-                            query: { callId },
-                          });
-                        }}
-                      >
-                        Start
-                      </button>
+                      {showButtons && (
+                        <>
+                          <button
+                            className="nhsuk-button nhsuk-u-margin-right-5 nhsuk-u-margin-bottom-4"
+                            type="submit"
+                            onClick={() => {
+                              const callId = visit.callId;
+                              Router.push({
+                                pathname: `/wards/visit-start`,
+                                query: { callId },
+                              });
+                            }}
+                          >
+                            Start
+                          </button>
 
-                      <button
-                        className="nhsuk-button nhsuk-button--secondary"
-                        onClick={() => {
-                          const callId = visit.callId;
-                          Router.push({
-                            pathname: `/wards/cancel-visit-confirmation`,
-                            query: { callId },
-                          });
-                        }}
-                      >
-                        Cancel
-                      </button>
+                          <button
+                            className="nhsuk-button nhsuk-button--secondary"
+                            onClick={() => {
+                              const callId = visit.callId;
+                              Router.push({
+                                pathname: `/wards/cancel-visit-confirmation`,
+                                query: { callId },
+                              });
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      )}
                     </div>
                   </details>
                 </div>
