@@ -56,7 +56,7 @@ describe("ward/visits", () => {
       });
       expect(res.writeHead).not.toHaveBeenCalled();
 
-      expect(visitsSpy).toHaveBeenCalledWith({ wardId: 1 });
+      expect(visitsSpy).toHaveBeenCalledWith({ wardId: 1, withInterval: true });
       expect(wardSpy).toHaveBeenCalledWith(1, 1);
       expect(props.error).toBeNull();
       expect(props.scheduledCalls).toHaveLength(2);

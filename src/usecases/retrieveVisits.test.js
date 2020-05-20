@@ -58,6 +58,54 @@ describe("retrieveVisits", () => {
     });
   });
 
+  it("returns a query with a 12 hour interval when withInterval is true", async () => {
+    const anySpy = jest.fn(() => []);
+
+    const container = {
+      async getDb() {
+        return {
+          any: anySpy,
+        };
+      },
+    };
+
+    await retrieveVisits(container)({
+      wardId: 1,
+      withInterval: true,
+    });
+
+    expect(
+      anySpy
+    ).toHaveBeenCalledWith(
+      "SELECT * FROM scheduled_calls_table WHERE call_time > NOW() - INTERVAL '12 hours' AND ward_id = $1 ORDER BY call_time ASC",
+      [1]
+    );
+  });
+
+  it("returns a query with a 12 hour interval when withInterval is false", async () => {
+    const anySpy = jest.fn(() => []);
+
+    const container = {
+      async getDb() {
+        return {
+          any: anySpy,
+        };
+      },
+    };
+
+    await retrieveVisits(container)({
+      wardId: 1,
+      withInterval: false,
+    });
+
+    expect(
+      anySpy
+    ).toHaveBeenCalledWith(
+      "SELECT * FROM scheduled_calls_table WHERE ward_id = $1 ORDER BY call_time ASC",
+      [1]
+    );
+  });
+
   it("returns an error object on db exception", async () => {
     const container = {
       async getDb() {
