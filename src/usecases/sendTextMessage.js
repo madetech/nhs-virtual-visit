@@ -14,7 +14,6 @@ const sendTextMessage = ({ getNotifyClient }) => async (
 
     return { success: true, error: null };
   } catch (error) {
-    console.log(error);
     return {
       success: false,
       error: `GovNotify error occurred: ${error?.error?.errors[0]?.message}`,
