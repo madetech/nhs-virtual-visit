@@ -7,25 +7,28 @@ describe("visit-start", () => {
     },
   };
   let res;
+  let authenticationToken;
+  let tokenProvider;
+  let container;
 
   beforeEach(() => {
     res = {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
     };
+    authenticationToken = {
+      foo: true,
+    };
+    tokenProvider = {
+      validate: jest.fn(() => authenticationToken),
+    };
+    container = {
+      getTokenProvider: () => tokenProvider,
+      getRetrieveWardById: () => jest.fn().mockReturnValue({ error: null }),
+    };
   });
 
   describe("getServerSideProps", () => {
     it("redirects to login page if not authenticated", async () => {
-      const authenticationToken = {
-        foo: true,
-      };
-      const tokenProvider = {
-        validate: jest.fn(() => authenticationToken),
-      };
-      const container = {
-        getTokenProvider: () => tokenProvider,
-      };
-
       await getServerSideProps({ req: anonymousReq, res, container });
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {

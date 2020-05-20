@@ -67,11 +67,13 @@ export default withContainer(
     }
 
     const userIsAuthenticated = container.getUserIsAuthenticated();
-    const userIsAuthenticatedResponse = userIsAuthenticated(headers.cookie);
+    const userIsAuthenticatedResponse = await userIsAuthenticated(
+      headers.cookie
+    );
 
     if (!userIsAuthenticatedResponse) {
       res.status(401);
-      res.end();
+      res.end(JSON.stringify({ err: "Unauthorized" }));
       return;
     }
 

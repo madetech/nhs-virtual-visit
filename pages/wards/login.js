@@ -89,7 +89,7 @@ export default Login;
 export const getServerSideProps = propsWithContainer(
   async ({ req: { headers }, res, container }) => {
     const userIsAuthenticated = container.getUserIsAuthenticated();
-    const userToken = userIsAuthenticated(headers.cookie);
+    const userToken = await userIsAuthenticated(headers.cookie);
 
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
     const adminToken = adminIsAuthenticated(headers.cookie);
