@@ -17,9 +17,12 @@
     "dev": "NODE_ENV=development node server.js",
     "start": "NODE_ENV=production node server.js",
     "cleandb": "node db/scripts/cleanup_scheduled_calls.js",
+    "db:seed": "node db/scripts/seed_database.js",
     "dbmigrate": "db-migrate --migrations-dir 'db/migrations/'",
     "dbmigratetest": "db-migrate --migrations-dir 'db/migrations/' -e test",
-    "dbmigratedry": "db-migrate --dry-run --migrations-dir 'db/migrations/'"
+    "dbmigratedry": "db-migrate --dry-run --migrations-dir 'db/migrations/'",
+    "cypress:open": "cypress open",
+    "e2e": "cypress run --headless"
   },
   "dependencies": {
     "@sentry/browser": "^5.15.5",
@@ -55,7 +58,9 @@
     "@testing-library/jest-dom": "^5.8.0",
     "@testing-library/react": "^10.0.4",
     "babel-eslint": "^10.1.0",
+    "cypress": "^4.5.0",
     "eslint": "^7.1.0",
+    "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-react": "^7.20.0",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
