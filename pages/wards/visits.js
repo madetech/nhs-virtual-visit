@@ -65,13 +65,15 @@ export default function WardVisits({
 export const getServerSideProps = propsWithContainer(
   verifyToken(async ({ authenticationToken, container, query }) => {
     const { wardId, trustId } = authenticationToken;
+    const showAccordion = Boolean(query.showAccordion);
+    const withInterval = !showAccordion;
+
     let { scheduledCalls, error } = await container.getRetrieveVisits()({
       wardId,
-      withInterval: true,
+      withInterval: withInterval,
     });
     let ward;
     ({ ward, error } = await container.getRetrieveWardById()(wardId, trustId));
-    const showAccordion = Boolean(query.showAccordion);
 
     return {
       props: { scheduledCalls, ward, error, showAccordion: showAccordion },
