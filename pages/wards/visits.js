@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../src/components/Layout";
 import Heading from "../../src/components/Heading";
 import ActionLink from "../../src/components/ActionLink";
@@ -9,6 +9,7 @@ import Error from "next/error";
 import Text from "../../src/components/Text";
 import verifyToken from "../../src/usecases/verifyToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import filterTodaysVisits from "../../src/helpers/filterTodaysVisits";
 
 export default function WardVisits({
   scheduledCalls,
@@ -20,8 +21,10 @@ export default function WardVisits({
     return <Error />;
   }
 
+  const [displayedVisits] = useState(filterTodaysVisits(scheduledCalls));
+
   const tableContainer = showAccordion ? (
-    <VisitsPanelList visits={scheduledCalls} />
+    <VisitsPanelList visits={displayedVisits} title="Today" />
   ) : (
     <VisitsTable visits={scheduledCalls} />
   );

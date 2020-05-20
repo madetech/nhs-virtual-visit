@@ -4,11 +4,9 @@ import Router from "next/router";
 import formatDateAndTime from "../../helpers/formatDateAndTime";
 import VisitSummaryList from "../VisitSummaryList";
 import { GridRow, GridColumn } from "../Grid";
-import filterTodaysVisits from "../../helpers/filterTodaysVisits";
-import filterUpcomingVisits from "../../helpers/filterUpcomingVisits";
 import TimeFromNow from "../TimeFromNow";
 
-const VisitPanelList = ({ visits, title }) => {
+const VisitsPanelList = ({ visits, title }) => {
   if (visits.length != 0) {
     return (
       <div className="nhsuk-list-panel nhsuk-u-margin-0">
@@ -103,19 +101,6 @@ const VisitPanelList = ({ visits, title }) => {
   } else {
     return null;
   }
-};
-
-const VisitsPanelList = ({ visits }) => {
-  const today = filterTodaysVisits(visits);
-  const upcoming = filterUpcomingVisits(visits);
-
-  return (
-    <>
-      <VisitPanelList visits={today} title="Today" />
-      <br />
-      <VisitPanelList visits={upcoming} title="Upcoming" />
-    </>
-  );
 };
 
 export default VisitsPanelList;
