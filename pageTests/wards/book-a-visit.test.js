@@ -152,6 +152,70 @@ describe("ward/book-a-visit", () => {
         expect(props.initialContactName).toEqual("John Doe");
         expect(props.initialContactNumber).toEqual("07700900900");
       });
+
+      it("defaults the re-booking date 1 day after the original", async () => {
+        const originalBookingDate = new Date(2020, 1, 1);
+        const container = {
+          getDb: () =>
+            Promise.resolve({
+              any: () => [
+                {
+                  id: 1,
+                  patient_name: "Fred Bloggs",
+                  recipient_name: "John Doe",
+                  recipient_number: "07700900900",
+                  call_time: originalBookingDate,
+                  call_id: "Test",
+                  provider: "Test",
+                },
+              ],
+            }),
+        };
+
+        const { props } = await getServerSideProps({
+          req: authenticatedReq,
+          res,
+          query: {
+            rebookCallId: "cat-meow",
+          },
+          container,
+        });
+        expect(res.writeHead).not.toHaveBeenCalled();
+        expect(props.initialCallDateTime.day).toEqual(2);
+      });
+
+      it("rolls around to the following year", async () => {
+        const originalBookingDate = new Date(2020, 12, 31);
+        const container = {
+          getDb: () =>
+            Promise.resolve({
+              any: () => [
+                {
+                  id: 1,
+                  patient_name: "Fred Bloggs",
+                  recipient_name: "John Doe",
+                  recipient_number: "07700900900",
+                  call_time: originalBookingDate,
+                  call_id: "Test",
+                  provider: "Test",
+                },
+              ],
+            }),
+        };
+
+        const { props } = await getServerSideProps({
+          req: authenticatedReq,
+          res,
+          query: {
+            rebookCallId: "cat-meow",
+          },
+          container,
+        });
+        expect(res.writeHead).not.toHaveBeenCalled();
+        expect(props.initialCallDateTime.year).toEqual(2021);
+        expect(props.initialCallDateTime.month).toEqual(1);
+        expect(props.initialCallDateTime.day).toEqual(1);
+      });
     });
   });
 });
