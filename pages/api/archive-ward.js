@@ -8,10 +8,12 @@ export default withContainer(
       return;
     }
 
-    const adminIsAuthenticated = container.getAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
 
-    const adminAuthenticatedToken = adminIsAuthenticated(headers.cookie);
-    if (!adminAuthenticatedToken) {
+    const trustAdminAuthenticatedToken = trustAdminIsAuthenticated(
+      headers.cookie
+    );
+    if (!trustAdminAuthenticatedToken) {
       res.status(401);
       res.end();
       return;
@@ -29,7 +31,7 @@ export default withContainer(
 
     const { success, error } = await archiveWard(
       body.wardId,
-      adminAuthenticatedToken.trustId
+      trustAdminAuthenticatedToken.trustId
     );
 
     if (error) {

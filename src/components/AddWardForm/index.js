@@ -113,7 +113,7 @@ const AddWardForm = ({ errors, setErrors, hospitals }) => {
 
         if (status == 201) {
           Router.push({
-            pathname: "/admin/add-a-ward-success",
+            pathname: "/trust-admin/add-a-ward-success",
             query: { wardId: wardId },
           });
         } else {

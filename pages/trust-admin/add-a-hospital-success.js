@@ -3,7 +3,7 @@ import Error from "next/error";
 import Layout from "../../src/components/Layout";
 import AnchorLink from "../../src/components/AnchorLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import verifyAdminToken from "../../src/usecases/verifyAdminToken";
+import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import ActionLink from "../../src/components/ActionLink";
 
 const AddAHospitalSuccess = ({ error, name }) => {
@@ -23,12 +23,14 @@ const AddAHospitalSuccess = ({ error, name }) => {
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/admin/add-a-hospital`}>
+          <ActionLink href={`/trust-admin/add-a-hospital`}>
             Add another hospital
           </ActionLink>
 
           <p>
-            <AnchorLink href="/admin">Return to ward administration</AnchorLink>
+            <AnchorLink href="/trust-admin">
+              Return to ward administration
+            </AnchorLink>
           </p>
         </div>
       </div>
@@ -37,7 +39,7 @@ const AddAHospitalSuccess = ({ error, name }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ container, query, authenticationToken }) => {
+  verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
     const getRetrieveHospitalById = container.getRetrieveHospitalById();
     const { hospital, error } = await getRetrieveHospitalById(
       query.hospitalId,

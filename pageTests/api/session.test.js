@@ -92,12 +92,12 @@ describe("api/session", () => {
       });
     });
 
-    describe("Given a valid admin code", () => {
+    describe("Given a valid trust admin code", () => {
       it("Returns the generated token in the response", async () => {
         const validRequest = {
           method: "POST",
           body: {
-            code: "admin_code",
+            code: "trust_admin_code",
           },
         };
 
@@ -129,7 +129,9 @@ describe("api/session", () => {
 
         await session(validRequest, response, { container });
 
-        expect(verifyTrustAdminCodeSpy).toHaveBeenCalledWith("admin_code");
+        expect(verifyTrustAdminCodeSpy).toHaveBeenCalledWith(
+          "trust_admin_code"
+        );
         expect(tokenGeneratorSpy).toHaveBeenCalledWith({
           wardId: undefined,
           wardCode: undefined,

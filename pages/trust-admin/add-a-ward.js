@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Layout from "../../src/components/Layout";
-import verifyAdminToken from "../../src/usecases/verifyAdminToken";
+import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import AddWardForm from "../../src/components/AddWardForm";
 import Error from "next/error";
@@ -32,7 +32,7 @@ const AddAWard = ({ hospitals, error }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ container, authenticationToken }) => {
+  verifyTrustAdminToken(async ({ container, authenticationToken }) => {
     const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
     const { hospitals, error } = await retrieveHospitalsByTrustId(
       authenticationToken.trustId
