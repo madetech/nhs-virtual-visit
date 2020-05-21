@@ -7,13 +7,12 @@ class TokenProvider {
     this.signingKey = signingKey;
   }
 
-  generate({ wardId, wardCode, admin, trustId, type }) {
+  generate({ wardId, wardCode, trustId, type }) {
     return jwt.sign(
       // If updating the token structure, update the version
       {
         wardId,
         ward: wardCode,
-        admin,
         trustId,
         version,
         type,

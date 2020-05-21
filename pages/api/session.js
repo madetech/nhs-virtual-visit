@@ -24,7 +24,6 @@ export default withContainer(
         token = tokens.generate({
           wardId: undefined,
           wardCode: undefined,
-          admin: true,
           trustId: verifyTrustAdminCodeResponse.trust.id,
           type: "trustAdmin",
         });
@@ -33,7 +32,6 @@ export default withContainer(
         token = tokens.generate({
           wardId: ward.id,
           wardCode: ward.code,
-          admin: false,
           trustId: ward.trustId,
           type: "wardStaff",
         });
