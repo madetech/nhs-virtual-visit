@@ -7,7 +7,7 @@ describe("adminIsAuthenticated", () => {
   describe("valid admin token", () => {
     beforeEach(() => {
       tokenProvider = {
-        validate: jest.fn(() => ({ admin: true })),
+        validate: jest.fn(() => ({ type: "trustAdmin" })),
       };
       container = {
         getTokenProvider: () => tokenProvider,
@@ -16,7 +16,7 @@ describe("adminIsAuthenticated", () => {
 
     it("returns the payload of the token when it is valid", () => {
       expect(adminIsAuthenticated(container)("token=valid.token")).toEqual({
-        admin: true,
+        type: "trustAdmin",
       });
     });
   });
@@ -41,7 +41,7 @@ describe("adminIsAuthenticated", () => {
   describe("valid user token", () => {
     beforeEach(() => {
       tokenProvider = {
-        validate: jest.fn(() => ({ admin: false })),
+        validate: jest.fn(() => ({ type: "wardStaff" })),
       };
       container = {
         getTokenProvider: () => tokenProvider,

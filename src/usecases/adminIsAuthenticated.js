@@ -8,7 +8,7 @@ export default ({ getTokenProvider }) => (requestCookie) => {
 
     const validatedToken = tokenProvider.validate(token);
 
-    if (token && !validatedToken.admin) {
+    if (token && validatedToken.type !== "trustAdmin") {
       return false;
     }
 
