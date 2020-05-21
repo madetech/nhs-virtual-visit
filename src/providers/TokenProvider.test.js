@@ -4,18 +4,19 @@ import TokenProvider from "./TokenProvider";
 describe("TokenProvider", () => {
   it("should verify a valid token", () => {
     jwt.verify = jest.fn().mockReturnValue({
-      version: "2",
+      version: "3",
       wardId: 1,
       ward: "123",
       admin: false,
       trustId: 2,
+      type: "wardStaff",
     });
 
     const tokenProvider = new TokenProvider();
 
     const token = tokenProvider.validate("token");
 
-    expect(token.version).toEqual("2");
+    expect(token.version).toEqual("3");
   });
 
   it("should reject a token with an invalid version", () => {
