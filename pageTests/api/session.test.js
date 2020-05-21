@@ -33,6 +33,8 @@ describe("api/session", () => {
         const container = {
           getVerifyWardCode: () => verifyWardCodeSpy,
           getVerifyTrustAdminCode: () => verifyTrustAdminCodeSpy,
+          getVerifyAdminCode: () =>
+            jest.fn().mockReturnValue({ validAdminCode: false }),
         };
 
         await session(invalidRequest, response, { container });
@@ -72,6 +74,8 @@ describe("api/session", () => {
           })),
           getVerifyWardCode: () => verifyWardCodeSpy,
           getVerifyTrustAdminCode: () => verifyTrustAdminCodeSpy,
+          getVerifyAdminCode: () =>
+            jest.fn().mockReturnValue({ validAdminCode: false }),
         };
 
         await session(validRequest, response, { container });
@@ -125,6 +129,8 @@ describe("api/session", () => {
           })),
           getVerifyWardCode: () => verifyWardCodeSpy,
           getVerifyTrustAdminCode: () => verifyTrustAdminCodeSpy,
+          getVerifyAdminCode: () =>
+            jest.fn().mockReturnValue({ validAdminCode: false }),
         };
 
         await session(validRequest, response, { container });
@@ -137,6 +143,59 @@ describe("api/session", () => {
           wardCode: undefined,
           trustId: 1,
           type: "trustAdmin",
+        });
+        expect(response.writeHead).toHaveBeenCalledWith(
+          201,
+          expect.objectContaining({
+            "Set-Cookie": expect.stringContaining("generatedToken"),
+          })
+        );
+      });
+    });
+
+    describe("Given a valid admin code", () => {
+      it("Returns the generated token in the response", async () => {
+        const validRequest = {
+          method: "POST",
+          body: {
+            code: "admin_code",
+          },
+        };
+
+        const response = {
+          writeHead: jest.fn(),
+          end: jest.fn(),
+        };
+
+        const verifyAdminCodeSpy = jest
+          .fn()
+          .mockReturnValue({ validAdminCode: true });
+
+        const tokenGeneratorSpy = jest.fn(() => "generatedToken");
+
+        const container = {
+          getTokenProvider: jest.fn(() => ({
+            generate: tokenGeneratorSpy,
+          })),
+          getVerifyWardCode: () =>
+            jest.fn(async () => ({
+              validWardCode: false,
+            })),
+          getVerifyTrustAdminCode: () =>
+            jest.fn(async () => ({
+              validTrustAdminCode: false,
+            })),
+          getVerifyAdminCode: () => verifyAdminCodeSpy,
+        };
+
+        await session(validRequest, response, { container });
+
+        expect(verifyAdminCodeSpy).toHaveBeenCalledWith("admin_code");
+        expect(tokenGeneratorSpy).toHaveBeenCalledWith({
+          wardId: undefined,
+          wardCode: undefined,
+          trustId: undefined,
+          type: "admin",
         });
         expect(response.writeHead).toHaveBeenCalledWith(
           201,
