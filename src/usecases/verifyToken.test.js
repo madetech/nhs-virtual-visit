@@ -16,7 +16,7 @@ describe("verifyToken", () => {
     const expectedProps = { a: 1 };
     const callback = jest.fn(() => expectedProps);
     const authenticationToken = {
-      foo: true,
+      type: "wardStaff",
     };
     const tokenProvider = {
       validate: jest.fn(() => authenticationToken),
