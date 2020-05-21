@@ -220,6 +220,7 @@ pg_dump -d nhs-virtual-visit-dev -s > db/schema.sql
 - **George Schena** - Software Engineer at [Made Tech](https://www.madetech.com) (george@madetech.com)
 - **Wen Ting Wang** - Software Engineer at [Made Tech](https://www.madetech.com) (wenting@madetech.com)
 - **Joshua-Luke Bevan** - Software Engineer at [Made Tech](https://www.madetech.com) (joshua.bevan@madetech.com)
+- **Stephen Thomson** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (stephen.thomson@madetech.com)
 
 ## License
 
