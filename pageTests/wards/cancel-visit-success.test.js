@@ -85,8 +85,6 @@ describe("ward/cancel-visit-success", () => {
         });
         expect(res.writeHead).not.toHaveBeenCalled();
         expect(props.patientName).toEqual("Fred Bloggs");
-        expect(props.contactName).toEqual("John Doe");
-        expect(props.contactNumber).toEqual("07700900900");
         expect(props.callDateAndTime).toEqual("2020-04-15T23:00:00.000Z");
       });
     });
