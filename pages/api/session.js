@@ -1,4 +1,5 @@
 import withContainer from "../../src/middleware/withContainer";
+const { WARD_STAFF, TRUST_ADMIN } = require("../../src/helpers/tokenTypes");
 
 export default withContainer(
   async ({ body: { code }, method }, res, { container }) => {
@@ -25,7 +26,7 @@ export default withContainer(
           wardId: undefined,
           wardCode: undefined,
           trustId: verifyTrustAdminCodeResponse.trust.id,
-          type: "trustAdmin",
+          type: TRUST_ADMIN,
         });
       } else {
         const { ward } = verifyWardCodeResponse;
@@ -33,7 +34,7 @@ export default withContainer(
           wardId: ward.id,
           wardCode: ward.code,
           trustId: ward.trustId,
-          type: "wardStaff",
+          type: WARD_STAFF,
         });
       }
 
