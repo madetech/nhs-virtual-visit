@@ -3,7 +3,7 @@ const verifyTrustAdminCode = ({ getDb }) => async (trustAdminCode) => {
 
   try {
     const dbResponse = await db.any(
-      `SELECT id FROM trusts WHERE trustAdmin_code = $1 LIMIT 1`,
+      `SELECT id FROM trusts WHERE admin_code = $1 LIMIT 1`,
       [trustAdminCode]
     );
 
