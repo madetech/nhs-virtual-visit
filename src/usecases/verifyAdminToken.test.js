@@ -16,7 +16,7 @@ describe("verifyAdminToken", () => {
     const expectedProps = { a: 1 };
     const callback = jest.fn(() => expectedProps);
     const authenticationToken = {
-      admin: true,
+      type: "trustAdmin",
     };
     const tokenProvider = {
       validate: jest.fn(() => authenticationToken),
