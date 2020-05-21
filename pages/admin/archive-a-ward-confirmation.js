@@ -9,7 +9,6 @@ import Heading from "../../src/components/Heading";
 import Button from "../../src/components/Button";
 import BackLink from "../../src/components/BackLink";
 import Router from "next/router";
-import ErrorSummary from "../../src/components/ErrorSummary";
 
 const ArchiveAWardConfirmation = ({
   error,
@@ -18,11 +17,11 @@ const ArchiveAWardConfirmation = ({
   hospitalName,
   trustId,
 }) => {
-  if (error) {
+  const [hasError, setHasError] = useState(error);
+
+  if (hasError) {
     return <Error />;
   }
-
-  const [errors, setErrors] = useState([]);
 
   const wardSummaryList = [
     { key: "Name", value: name },
@@ -31,7 +30,6 @@ const ArchiveAWardConfirmation = ({
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    let onSubmitErrors = [];
     const response = await fetch("/api/archive-ward", {
       method: "DELETE",
       headers: {
@@ -49,12 +47,7 @@ const ArchiveAWardConfirmation = ({
         `/admin/archive-a-ward-success?name=${name}&hospitalName=${hospitalName}`
       );
     } else {
-      onSubmitErrors.push({
-        id: 0,
-        message:
-          "There is a problem deleting this ward, please try again later",
-      });
-      setErrors(onSubmitErrors);
+      setHasError(true);
     }
   };
 
@@ -63,7 +56,6 @@ const ArchiveAWardConfirmation = ({
       title="Are you sure you want to delete this ward?"
       renderLogout={true}
     >
-      <ErrorSummary errors={errors} />
       <GridRow>
         <GridColumn width="full">
           <Heading>Are you sure you want to delete this ward?</Heading>
