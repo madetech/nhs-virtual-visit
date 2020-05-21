@@ -31,7 +31,7 @@ const Admin = ({ wardError, trustError, wards, trust }) => {
           {wards.length > 0 ? (
             <WardsTable wards={wards} />
           ) : (
-            <Text>There are no upcoming virtual visits.</Text>
+            <Text>There are no wards.</Text>
           )}
         </GridColumn>
       </GridRow>
