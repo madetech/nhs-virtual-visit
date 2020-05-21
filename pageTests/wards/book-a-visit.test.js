@@ -13,6 +13,8 @@ describe("ward/book-a-visit", () => {
     },
   };
   let res;
+  let container;
+  let originalBookingDate;
 
   const tokenProvider = {
     validate: jest.fn(() => ({ type: "wardStaff", wardId: 123 })),
@@ -21,6 +23,26 @@ describe("ward/book-a-visit", () => {
   beforeEach(() => {
     res = {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
+    };
+    originalBookingDate = new Date();
+    container = {
+      getDb: () =>
+        Promise.resolve({
+          any: () => [
+            {
+              id: 1,
+              patient_name: "Fred Bloggs",
+              recipient_name: "John Doe",
+              recipient_number: "07700900900",
+              call_time: originalBookingDate,
+              call_id: "Test",
+              provider: "Test",
+            },
+          ],
+        }),
+      getTokenProvider: () => tokenProvider,
+      getRetrieveWardById: () => jest.fn().mockReturnValue({}),
+      getUserIsAuthenticated: () => (token) => token && { ward: "123" },
     };
   });
 
@@ -34,16 +56,12 @@ describe("ward/book-a-visit", () => {
     });
 
     it("provides an error if a db error occurs", async () => {
-      const container = {
-        getDb: () =>
-          Promise.resolve({
-            any: () => {
-              throw new Error("Some DB Error");
-            },
-          }),
-        getTokenProvider: () => tokenProvider,
-        getRetrieveWardById: () => jest.fn().mockReturnValue({}),
-      };
+      container.getDb = () =>
+        Promise.resolve({
+          any: () => {
+            throw new Error("Some DB Error");
+          },
+        });
 
       const { props } = await getServerSideProps({
         req: authenticatedReq,
@@ -57,14 +75,10 @@ describe("ward/book-a-visit", () => {
 
     describe("with no extra parameters", () => {
       it("provides the visit records from the database", async () => {
-        const container = {
-          getDb: () =>
-            Promise.resolve({
-              any: () => [{ id: 1 }, { id: 2 }],
-            }),
-          getTokenProvider: () => tokenProvider,
-          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
-        };
+        container.getDb = () =>
+          Promise.resolve({
+            any: () => [{ id: 1 }, { id: 2 }],
+          });
 
         await getServerSideProps({
           req: authenticatedReq,
@@ -87,11 +101,6 @@ describe("ward/book-a-visit", () => {
           year: "2020",
           hour: "13",
           minute: "44",
-        };
-
-        const container = {
-          getTokenProvider: () => tokenProvider,
-          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
         };
 
         const { props } = await getServerSideProps({
@@ -119,27 +128,8 @@ describe("ward/book-a-visit", () => {
     });
 
     describe("with rebookCallId parameter", () => {
-      it("provides the visit records from the database", async () => {
-        const container = {
-          getDb: () =>
-            Promise.resolve({
-              any: () => [
-                {
-                  id: 1,
-                  patient_name: "Fred Bloggs",
-                  recipient_name: "John Doe",
-                  recipient_number: "07700900900",
-                  call_time: new Date(),
-                  call_id: "Test",
-                  provider: "Test",
-                },
-              ],
-            }),
-          getTokenProvider: () => tokenProvider,
-          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
-        };
-
-        const { props } = await getServerSideProps({
+      const getServerSidePropsWithQuery = () => {
+        return getServerSideProps({
           req: authenticatedReq,
           res,
           query: {
@@ -147,10 +137,33 @@ describe("ward/book-a-visit", () => {
           },
           container,
         });
+      };
+
+      it("provides the visit records from the database", async () => {
+        const { props } = await getServerSidePropsWithQuery();
+
         expect(res.writeHead).not.toHaveBeenCalled();
         expect(props.initialPatientName).toEqual("Fred Bloggs");
         expect(props.initialContactName).toEqual("John Doe");
         expect(props.initialContactNumber).toEqual("07700900900");
+      });
+
+      it("defaults the re-booking date 1 day after the original", async () => {
+        originalBookingDate = new Date(2020, 1, 1);
+        const { props } = await getServerSidePropsWithQuery();
+
+        expect(res.writeHead).not.toHaveBeenCalled();
+        expect(props.initialCallDateTime.day).toEqual(2);
+      });
+
+      it("rolls around to the following year", async () => {
+        originalBookingDate = new Date(2020, 12, 31);
+        const { props } = await getServerSidePropsWithQuery();
+
+        expect(res.writeHead).not.toHaveBeenCalled();
+        expect(props.initialCallDateTime.year).toEqual(2021);
+        expect(props.initialCallDateTime.month).toEqual(1);
+        expect(props.initialCallDateTime.day).toEqual(1);
       });
     });
   });
