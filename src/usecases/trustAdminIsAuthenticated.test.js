@@ -1,10 +1,10 @@
-import adminIsAuthenticated from "./adminIsAuthenticated";
+import trustAdminIsAuthenticated from "./trustAdminIsAuthenticated";
 
-describe("adminIsAuthenticated", () => {
+describe("trustAdminIsAuthenticated", () => {
   let tokenProvider;
   let container;
 
-  describe("valid admin token", () => {
+  describe("valid trustAdmin token", () => {
     beforeEach(() => {
       tokenProvider = {
         validate: jest.fn(() => ({ type: "trustAdmin" })),
@@ -15,13 +15,15 @@ describe("adminIsAuthenticated", () => {
     });
 
     it("returns the payload of the token when it is valid", () => {
-      expect(adminIsAuthenticated(container)("token=valid.token")).toEqual({
-        type: "trustAdmin",
-      });
+      expect(trustAdminIsAuthenticated(container)("token=valid.token")).toEqual(
+        {
+          type: "trustAdmin",
+        }
+      );
     });
   });
 
-  describe("invalid admin token", () => {
+  describe("invalid trustAdmin token", () => {
     beforeEach(() => {
       tokenProvider = {
         validate: jest.fn(() => false),
@@ -32,7 +34,7 @@ describe("adminIsAuthenticated", () => {
     });
 
     it("returns the payload of the token when it is valid", () => {
-      expect(adminIsAuthenticated(container)("token=valid.token")).toEqual(
+      expect(trustAdminIsAuthenticated(container)("token=valid.token")).toEqual(
         false
       );
     });
@@ -49,7 +51,7 @@ describe("adminIsAuthenticated", () => {
     });
 
     it("returns the payload of the token when it is valid", () => {
-      expect(adminIsAuthenticated(container)("token=valid.token")).toEqual(
+      expect(trustAdminIsAuthenticated(container)("token=valid.token")).toEqual(
         false
       );
     });

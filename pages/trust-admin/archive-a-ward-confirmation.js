@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Error from "next/error";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Layout from "../../src/components/Layout";
-import verifyAdminToken from "../../src/usecases/verifyAdminToken";
+import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import SummaryList from "../../src/components/SummaryList";
 import Heading from "../../src/components/Heading";
@@ -44,7 +44,7 @@ const ArchiveAWardConfirmation = ({
     });
     if (response.status === 200) {
       Router.push(
-        `/admin/archive-a-ward-success?name=${name}&hospitalName=${hospitalName}`
+        `/trust-admin/archive-a-ward-success?name=${name}&hospitalName=${hospitalName}`
       );
     } else {
       setHasError(true);
@@ -71,7 +71,7 @@ const ArchiveAWardConfirmation = ({
             <p>All booked visits for this ward will be cancelled.</p>
 
             <Button>Yes, delete this ward</Button>
-            <BackLink href="/admin">Back to ward administration</BackLink>
+            <BackLink href="/trust-admin">Back to ward administration</BackLink>
           </form>
         </GridColumn>
       </GridRow>
@@ -80,7 +80,7 @@ const ArchiveAWardConfirmation = ({
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ container, query, authenticationToken }) => {
+  verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
     const getRetrieveWardById = container.getRetrieveWardById();
 
     const { ward, error } = await getRetrieveWardById(

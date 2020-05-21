@@ -32,7 +32,7 @@ const WardsTable = ({ wards }) => (
                 onClick={() => {
                   const wardId = ward.id;
                   Router.push({
-                    pathname: `/admin/edit-a-ward`,
+                    pathname: `/trust-admin/edit-a-ward`,
                     query: { wardId },
                   });
                 }}
@@ -46,7 +46,7 @@ const WardsTable = ({ wards }) => (
                 onClick={() => {
                   const wardId = ward.id;
                   Router.push({
-                    pathname: `/admin/archive-a-ward-confirmation`,
+                    pathname: `/trust-admin/archive-a-ward-confirmation`,
                     query: { wardId },
                   });
                 }}

@@ -7,8 +7,9 @@ describe("update-a-ward", () => {
   let response;
   let container;
 
-  jest.mock("../../src/usecases/adminIsAuthenticated", () => () => (token) =>
-    token && { admin: true, trustId: 1 }
+  jest.mock(
+    "../../src/usecases/trustAdminIsAuthenticated",
+    () => () => (token) => token && { admin: true, trustId: 1 }
   );
 
   beforeEach(() => {
@@ -34,7 +35,7 @@ describe("update-a-ward", () => {
       getUpdateWard: jest.fn().mockReturnValue(() => {
         return { wardId: 123, error: null };
       }),
-      getAdminIsAuthenticated: jest
+      getTrustAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
       getRetrieveWardById: jest.fn().mockReturnValue(() => {
@@ -54,7 +55,7 @@ describe("update-a-ward", () => {
   });
 
   it("returns a 401 if no token provided", async () => {
-    const adminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
+    const trustAdminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
 
     await updateAWard(
       {
@@ -66,13 +67,13 @@ describe("update-a-ward", () => {
       {
         container: {
           ...container,
-          getAdminIsAuthenticated: () => adminIsAuthenticatedSpy,
+          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
         },
       }
     );
 
     expect(response.status).toHaveBeenCalledWith(401);
-    expect(adminIsAuthenticatedSpy).toHaveBeenCalled();
+    expect(trustAdminIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
   it("updates a ward if valid", async () => {

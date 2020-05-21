@@ -3,32 +3,36 @@ import Error from "next/error";
 import Layout from "../../src/components/Layout";
 import AnchorLink from "../../src/components/AnchorLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import verifyAdminToken from "../../src/usecases/verifyAdminToken";
+import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import ActionLink from "../../src/components/ActionLink";
 
-const EditAWardSuccess = ({ error, name, hospitalName }) => {
+const AddAWardSuccess = ({ error, name, hospitalName }) => {
   if (error) {
     return <Error />;
   }
 
   return (
-    <Layout title={`${name} has been updated`} renderLogout={true}>
+    <Layout title={`${name} has been added`} renderLogout={true}>
       <div className="nhsuk-grid-row">
         <div className="nhsuk-grid-column-two-thirds">
           <div
             className="nhsuk-panel nhsuk-panel--confirmation nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4"
             style={{ textAlign: "center" }}
           >
-            <h1 className="nhsuk-panel__title">{name} has been updated</h1>
+            <h1 className="nhsuk-panel__title">{name} has been added</h1>
 
             <div className="nhsuk-panel__body">for {hospitalName}</div>
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/admin/add-a-ward`}>Add a ward</ActionLink>
+          <ActionLink href={`/trust-admin/add-a-ward`}>
+            Add another ward
+          </ActionLink>
 
           <p>
-            <AnchorLink href="/admin">Return to ward administration</AnchorLink>
+            <AnchorLink href="/trust-admin">
+              Return to ward administration
+            </AnchorLink>
           </p>
         </div>
       </div>
@@ -37,13 +41,12 @@ const EditAWardSuccess = ({ error, name, hospitalName }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ container, query, authenticationToken }) => {
+  verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
     const getRetrieveWardById = container.getRetrieveWardById();
     const { ward, error } = await getRetrieveWardById(
       query.wardId,
       authenticationToken.trustId
     );
-
     return {
       props: {
         error: error,
@@ -54,4 +57,4 @@ export const getServerSideProps = propsWithContainer(
   })
 );
 
-export default EditAWardSuccess;
+export default AddAWardSuccess;

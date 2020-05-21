@@ -1,6 +1,6 @@
-import { getServerSideProps } from "../pages/admin";
+import { getServerSideProps } from "../pages/trust-admin";
 
-describe("admin", () => {
+describe("trust-admin", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
@@ -99,7 +99,7 @@ describe("admin", () => {
       expect(props.wardError).toEqual("Error!");
     });
 
-    it("retrieves the trust of the admin", async () => {
+    it("retrieves the trust of the trustAdmin", async () => {
       const trustId = 1;
       const getRetrieveWardsSpy = jest.fn(async () => ({
         error: null,

@@ -2,20 +2,20 @@ import React from "react";
 import Error from "next/error";
 import Layout from "../src/components/Layout";
 import propsWithContainer from "../src/middleware/propsWithContainer";
-import verifyAdminToken from "../src/usecases/verifyAdminToken";
+import verifyTrustAdminToken from "../src/usecases/verifyTrustAdminToken";
 import WardsTable from "../src/components/WardsTable";
 import { GridRow, GridColumn } from "../src/components/Grid";
 import Heading from "../src/components/Heading";
 import ActionLink from "../src/components/ActionLink";
 import Text from "../src/components/Text";
 
-const Admin = ({ wardError, trustError, wards, trust }) => {
+const TrustAdmin = ({ wardError, trustError, wards, trust }) => {
   if (wardError || trustError) {
     return <Error />;
   }
 
   return (
-    <Layout title={`Ward administration for ${trust.name}`} renderLogout={true}>
+    <Layout title={`Ward Administration for ${trust.name}`} renderLogout={true}>
       <GridRow>
         <GridColumn width="full">
           <Heading>
@@ -23,10 +23,12 @@ const Admin = ({ wardError, trustError, wards, trust }) => {
               {trust.name}
               <span className="nhsuk-u-visually-hidden">-</span>
             </span>
-            Ward administration
+            Ward Administration
           </Heading>
-          <ActionLink href={`/admin/add-a-ward`}>Add a ward</ActionLink>
-          <ActionLink href={`/admin/add-a-hospital`}>Add a hospital</ActionLink>
+          <ActionLink href={`/trust-admin/add-a-ward`}>Add a ward</ActionLink>
+          <ActionLink href={`/trust-admin/add-a-hospital`}>
+            Add a hospital
+          </ActionLink>
 
           {wards.length > 0 ? (
             <WardsTable wards={wards} />
@@ -40,7 +42,7 @@ const Admin = ({ wardError, trustError, wards, trust }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ container, authenticationToken }) => {
+  verifyTrustAdminToken(async ({ container, authenticationToken }) => {
     const wardsResponse = await container.getRetrieveWards()(
       authenticationToken.trustId
     );
@@ -61,4 +63,4 @@ export const getServerSideProps = propsWithContainer(
   })
 );
 
-export default Admin;
+export default TrustAdmin;

@@ -1,5 +1,5 @@
 import React from "react";
-import verifyAdminToken from "../src/usecases/verifyAdminToken";
+import verifyTrustAdminToken from "../src/usecases/verifyTrustAdminToken";
 import propsWithContainer from "../src/middleware/propsWithContainer";
 import Layout from "../src/components/Layout";
 import { GridRow, GridColumn } from "../src/components/Grid";
@@ -18,7 +18,7 @@ const Performance = ({ visitsScheduled }) => (
 );
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ container }) => {
+  verifyTrustAdminToken(async ({ container }) => {
     const retrieveWardVisitTotals = container.getRetrieveWardVisitTotals();
     const wardVisitTotals = await retrieveWardVisitTotals();
 

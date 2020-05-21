@@ -4,7 +4,7 @@ import createVisit from "../usecases/createVisit";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
-import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
+import trustAdminIsAuthenticated from "../usecases/trustAdminIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
 import retrieveWardById from "../usecases/retrieveWardById";
 import verifyWardCode from "../usecases/verifyWardCode";
@@ -47,8 +47,8 @@ class AppContainer {
     return userIsAuthenticated(this);
   };
 
-  getAdminIsAuthenticated = () => {
-    return adminIsAuthenticated(this);
+  getTrustAdminIsAuthenticated = () => {
+    return trustAdminIsAuthenticated(this);
   };
 
   getNotifyClient = () => {

@@ -1,6 +1,6 @@
-import { getServerSideProps } from "../../pages/admin/archive-a-ward-confirmation";
+import { getServerSideProps } from "../../pages/trust-admin/archive-a-ward-success";
 
-describe("/admin/archive-a-ward-confirmation", () => {
+describe("/trust-admin/archive-a-ward-success", () => {
   const anonymousReq = {
     headers: {
       cookie: "",

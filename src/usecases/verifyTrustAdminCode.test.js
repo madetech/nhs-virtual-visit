@@ -1,7 +1,7 @@
 import verifyTrustAdminCode from "./verifyTrustAdminCode";
 
 describe("verifyTrustAdminCode", () => {
-  describe("Given a matching trust admin code", () => {
+  describe("Given a matching trust trustAdmin code", () => {
     it("Returns true with the matching trust ID", async () => {
       const container = {
         getDb: async () => ({
@@ -23,7 +23,7 @@ describe("verifyTrustAdminCode", () => {
     });
   });
 
-  describe("Given a non matching trust admin code", () => {
+  describe("Given a non matching trust trustAdmin code", () => {
     it("Returns false", async () => {
       const container = {
         getDb: async () => ({
