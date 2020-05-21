@@ -46,7 +46,7 @@ Note that SSL is configured by default.
    $ psql
 
    postgres=# \conninfo
-   You are connected to database "postgres" as user "postgres" via socket in "/var/run/postgresql" at port "5432".
+   You are connected to database "<YOUR_LINUX_USERNAME>" as user "<YOUR_LINUX_USERNAME>" via socket in "/var/run/postgresql" at port "5432".
    postgres=# \q
    ```
 
