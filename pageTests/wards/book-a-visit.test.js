@@ -1,5 +1,10 @@
 import { getServerSideProps } from "../../pages/wards/book-a-visit";
 
+// TODO: This needs to be moved once the verifyToken logic is in the container..
+jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
+  token && { ward: "123" }
+);
+
 describe("ward/book-a-visit", () => {
   const anonymousReq = {
     headers: {
@@ -13,6 +18,8 @@ describe("ward/book-a-visit", () => {
     },
   };
   let res;
+  let container;
+  let originalBookingDate;
 
   const tokenProvider = {
     validate: jest.fn(() => ({ type: "wardStaff", wardId: 123 })),
@@ -21,6 +28,23 @@ describe("ward/book-a-visit", () => {
   beforeEach(() => {
     res = {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
+    };
+    originalBookingDate = new Date();
+    container = {
+      getDb: () =>
+        Promise.resolve({
+          any: () => [
+            {
+              id: 1,
+              patient_name: "Fred Bloggs",
+              recipient_name: "John Doe",
+              recipient_number: "07700900900",
+              call_time: originalBookingDate,
+              call_id: "Test",
+              provider: "Test",
+            },
+          ],
+        }),
     };
   });
 
@@ -98,7 +122,7 @@ describe("ward/book-a-visit", () => {
           req: authenticatedReq,
           res,
           query,
-          container: container,
+          container: {},
         });
 
         expect(props).toMatchObject(
@@ -119,27 +143,8 @@ describe("ward/book-a-visit", () => {
     });
 
     describe("with rebookCallId parameter", () => {
-      it("provides the visit records from the database", async () => {
-        const container = {
-          getDb: () =>
-            Promise.resolve({
-              any: () => [
-                {
-                  id: 1,
-                  patient_name: "Fred Bloggs",
-                  recipient_name: "John Doe",
-                  recipient_number: "07700900900",
-                  call_time: new Date(),
-                  call_id: "Test",
-                  provider: "Test",
-                },
-              ],
-            }),
-          getTokenProvider: () => tokenProvider,
-          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
-        };
-
-        const { props } = await getServerSideProps({
+      const getServerSidePropsWithQuery = () => {
+        return getServerSideProps({
           req: authenticatedReq,
           res,
           query: {
@@ -147,6 +152,11 @@ describe("ward/book-a-visit", () => {
           },
           container,
         });
+      };
+
+      it("provides the visit records from the database", async () => {
+        const { props } = await getServerSidePropsWithQuery();
+
         expect(res.writeHead).not.toHaveBeenCalled();
         expect(props.initialPatientName).toEqual("Fred Bloggs");
         expect(props.initialContactName).toEqual("John Doe");
@@ -154,63 +164,17 @@ describe("ward/book-a-visit", () => {
       });
 
       it("defaults the re-booking date 1 day after the original", async () => {
-        const originalBookingDate = new Date(2020, 1, 1);
-        const container = {
-          getDb: () =>
-            Promise.resolve({
-              any: () => [
-                {
-                  id: 1,
-                  patient_name: "Fred Bloggs",
-                  recipient_name: "John Doe",
-                  recipient_number: "07700900900",
-                  call_time: originalBookingDate,
-                  call_id: "Test",
-                  provider: "Test",
-                },
-              ],
-            }),
-        };
+        originalBookingDate = new Date(2020, 1, 1);
+        const { props } = await getServerSidePropsWithQuery();
 
-        const { props } = await getServerSideProps({
-          req: authenticatedReq,
-          res,
-          query: {
-            rebookCallId: "cat-meow",
-          },
-          container,
-        });
         expect(res.writeHead).not.toHaveBeenCalled();
         expect(props.initialCallDateTime.day).toEqual(2);
       });
 
       it("rolls around to the following year", async () => {
-        const originalBookingDate = new Date(2020, 12, 31);
-        const container = {
-          getDb: () =>
-            Promise.resolve({
-              any: () => [
-                {
-                  id: 1,
-                  patient_name: "Fred Bloggs",
-                  recipient_name: "John Doe",
-                  recipient_number: "07700900900",
-                  call_time: originalBookingDate,
-                  call_id: "Test",
-                  provider: "Test",
-                },
-              ],
-            }),
-        };
+        originalBookingDate = new Date(2020, 12, 31);
+        const { props } = await getServerSidePropsWithQuery();
 
-        const { props } = await getServerSideProps({
-          req: authenticatedReq,
-          res,
-          query: {
-            rebookCallId: "cat-meow",
-          },
-          container,
-        });
         expect(res.writeHead).not.toHaveBeenCalled();
         expect(props.initialCallDateTime.year).toEqual(2021);
         expect(props.initialCallDateTime.month).toEqual(1);
