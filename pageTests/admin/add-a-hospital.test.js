@@ -1,10 +1,5 @@
 import { getServerSideProps } from "../../pages/admin/add-a-hospital";
 
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../../src/usecases/adminIsAuthenticated", () => () => (token) =>
-  token && { admin: true, trustId: 1 }
-);
-
 describe("/admin/add-a-hospital", () => {
   const anonymousReq = {
     headers: {

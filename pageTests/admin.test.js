@@ -1,10 +1,5 @@
 import { getServerSideProps } from "../pages/admin";
 
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../src/usecases/adminIsAuthenticated", () => () => (token) =>
-  token && { admin: true, trustId: 1 }
-);
-
 describe("admin", () => {
   const anonymousReq = {
     headers: {
@@ -35,6 +30,10 @@ describe("admin", () => {
 
   let res;
 
+  const tokenProvider = {
+    validate: jest.fn(() => ({ type: "trustAdmin", trustId: 1 })),
+  };
+
   beforeEach(() => {
     res = {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
@@ -62,6 +61,7 @@ describe("admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({
@@ -87,6 +87,7 @@ describe("admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({
@@ -113,6 +114,7 @@ describe("admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({
@@ -138,6 +140,7 @@ describe("admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({
