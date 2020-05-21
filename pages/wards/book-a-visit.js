@@ -255,11 +255,24 @@ export const getServerSideProps = propsWithContainer(
       const { scheduledCall } = await retrieveVisitByCallId(container)(
         query.rebookCallId
       );
+
+      let proposedCallDateTime = new Date(scheduledCall.callTime);
+      proposedCallDateTime.setDate(proposedCallDateTime.getDate() + 1);
+
+      const nextCallDateTime = {
+        day: proposedCallDateTime.getDate(),
+        month: proposedCallDateTime.getMonth(),
+        year: proposedCallDateTime.getFullYear(),
+        hour: proposedCallDateTime.getHours(),
+        minute: proposedCallDateTime.getMinutes(),
+      };
+
       props = {
         ...props,
         initialPatientName: scheduledCall.patientName,
         initialContactName: scheduledCall.recipientName,
         initialContactNumber: scheduledCall.recipientNumber,
+        initialCallDateTime: nextCallDateTime,
       };
     }
     return { props };
