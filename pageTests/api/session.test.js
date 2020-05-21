@@ -80,7 +80,6 @@ describe("api/session", () => {
         expect(tokenGeneratorSpy).toHaveBeenCalledWith({
           wardId: 10,
           wardCode: "MEOW",
-          admin: false,
           trustId: 1,
           type: "wardStaff",
         });
@@ -134,7 +133,6 @@ describe("api/session", () => {
         expect(tokenGeneratorSpy).toHaveBeenCalledWith({
           wardId: undefined,
           wardCode: undefined,
-          admin: true,
           trustId: 1,
           type: "trustAdmin",
         });
