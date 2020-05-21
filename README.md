@@ -90,6 +90,8 @@ ENABLE_SENTRY=
 
 ### PostgreSQL 12
 
+If you are installing a local instance of PostgreSQL on Ubuntu, see the steps in the separate [guide.](UBUNTU2004-PG12.md)
+
 #### Enable SSL in Postgres
 
 You may need to enable SSL on your local postgres server.
@@ -221,6 +223,7 @@ pg_dump -d nhs-virtual-visit-dev -s > db/schema.sql
 - **Wen Ting Wang** - Software Engineer at [Made Tech](https://www.madetech.com) (wenting@madetech.com)
 - **Joshua-Luke Bevan** - Software Engineer at [Made Tech](https://www.madetech.com) (joshua.bevan@madetech.com)
 - **Stephen Thomson** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (stephen.thomson@madetech.com)
+- **Neil Kidd** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (neil.kidd@madetech.com)
 
 ## License
 
