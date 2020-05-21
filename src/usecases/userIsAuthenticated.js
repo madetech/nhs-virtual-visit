@@ -20,7 +20,7 @@ export default ({ getTokenProvider, getRetrieveWardById }) => async (
       return false;
     }
 
-    if (token && validatedToken.admin) {
+    if (token && validatedToken.type !== "wardStaff") {
       return false;
     }
 
