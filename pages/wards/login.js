@@ -94,7 +94,7 @@ export const getServerSideProps = propsWithContainer(
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
     const adminToken = adminIsAuthenticated(headers.cookie);
 
-    if (adminToken && adminToken.admin) {
+    if (adminToken) {
       res.writeHead(307, { Location: `/admin` }).end();
     } else if (userToken && userToken.ward) {
       res.writeHead(307, { Location: `/wards/visits` }).end();
