@@ -29,7 +29,7 @@ const EditAWardSuccess = ({ error, name, hospitalName }) => {
 
           <p>
             <AnchorLink href="/trust-admin">
-              Return to ward trustAdministration
+              Return to ward administration
             </AnchorLink>
           </p>
         </div>
