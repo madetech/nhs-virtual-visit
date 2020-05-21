@@ -91,11 +91,11 @@ export const getServerSideProps = propsWithContainer(
     const userIsAuthenticated = container.getUserIsAuthenticated();
     const userToken = await userIsAuthenticated(headers.cookie);
 
-    const adminIsAuthenticated = container.getAdminIsAuthenticated();
-    const adminToken = adminIsAuthenticated(headers.cookie);
+    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
+    const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
 
-    if (adminToken && adminToken.admin) {
-      res.writeHead(307, { Location: `/admin` }).end();
+    if (trustAdminToken) {
+      res.writeHead(307, { Location: `/trust-admin` }).end();
     } else if (userToken && userToken.ward) {
       res.writeHead(307, { Location: `/wards/visits` }).end();
     }

@@ -55,7 +55,7 @@ const EditWardForm = ({
     const { wardId } = await response.json();
     if (status == 201) {
       Router.push({
-        pathname: "/admin/edit-a-ward-success",
+        pathname: "/trust-admin/edit-a-ward-success",
         query: { wardId: wardId },
       });
     } else {

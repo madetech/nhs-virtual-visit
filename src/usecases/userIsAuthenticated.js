@@ -1,5 +1,7 @@
 import cookie from "cookie";
 
+const { WARD_STAFF } = require("../helpers/tokenTypes");
+
 export default ({ getTokenProvider, getRetrieveWardById }) => async (
   requestCookie
 ) => {
@@ -20,7 +22,7 @@ export default ({ getTokenProvider, getRetrieveWardById }) => async (
       return false;
     }
 
-    if (token && validatedToken.admin) {
+    if (token && validatedToken.type !== WARD_STAFF) {
       return false;
     }
 

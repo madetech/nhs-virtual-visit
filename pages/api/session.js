@@ -1,4 +1,5 @@
 import withContainer from "../../src/middleware/withContainer";
+const { WARD_STAFF, TRUST_ADMIN } = require("../../src/helpers/tokenTypes");
 
 export default withContainer(
   async ({ body: { code }, method }, res, { container }) => {
@@ -24,16 +25,16 @@ export default withContainer(
         token = tokens.generate({
           wardId: undefined,
           wardCode: undefined,
-          admin: true,
           trustId: verifyTrustAdminCodeResponse.trust.id,
+          type: TRUST_ADMIN,
         });
       } else {
         const { ward } = verifyWardCodeResponse;
         token = tokens.generate({
           wardId: ward.id,
           wardCode: ward.code,
-          admin: false,
           trustId: ward.trustId,
+          type: WARD_STAFF,
         });
       }
 

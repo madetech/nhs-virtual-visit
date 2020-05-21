@@ -1,9 +1,4 @@
-import { getServerSideProps } from "../../pages/admin/edit-a-ward";
-
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../../src/usecases/adminIsAuthenticated", () => () => (token) =>
-  token && { admin: true, trustId: 10 }
-);
+import { getServerSideProps } from "../../pages/trust-admin/edit-a-ward-success";
 
 const authenticatedReq = {
   headers: {
@@ -11,7 +6,7 @@ const authenticatedReq = {
   },
 };
 
-describe("/admin/edit-a-ward", () => {
+describe("/trust-admin/edit-a-ward-success", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
@@ -19,6 +14,10 @@ describe("/admin/edit-a-ward", () => {
   };
 
   let res;
+
+  const tokenProvider = {
+    validate: jest.fn(() => ({ type: "trustAdmin", trustId: 1 })),
+  };
 
   beforeEach(() => {
     res = {
@@ -48,11 +47,7 @@ describe("/admin/edit-a-ward", () => {
 
         const container = {
           getRetrieveWardById: () => retrieveWardByIdSpy,
-          getRetrieveHospitalsByTrustId: () =>
-            jest.fn().mockReturnValue({
-              hospitals: [],
-              error: null,
-            }),
+          getTokenProvider: () => tokenProvider,
         };
 
         await getServerSideProps({
@@ -64,7 +59,7 @@ describe("/admin/edit-a-ward", () => {
           container,
         });
 
-        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 10);
+        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 1);
       });
 
       it("set a ward prop based on the retrieved ward", async () => {
@@ -72,18 +67,14 @@ describe("/admin/edit-a-ward", () => {
           ward: {
             id: 1,
             name: "Defoe Ward",
-            hospitalId: "1",
+            hospitalName: "Northwick Park Hospital",
           },
           error: null,
         });
 
         const container = {
           getRetrieveWardById: () => retrieveWardByIdSpy,
-          getRetrieveHospitalsByTrustId: () =>
-            jest.fn().mockReturnValue({
-              hospitals: [],
-              error: null,
-            }),
+          getTokenProvider: () => tokenProvider,
         };
 
         const { props } = await getServerSideProps({
@@ -95,9 +86,8 @@ describe("/admin/edit-a-ward", () => {
           container,
         });
 
-        expect(props.id).toEqual(1);
         expect(props.name).toEqual("Defoe Ward");
-        expect(props.hospitalId).toEqual("1");
+        expect(props.hospitalName).toEqual("Northwick Park Hospital");
       });
     });
   });

@@ -1,10 +1,5 @@
 import { getServerSideProps } from "../../pages/wards/visits";
 
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
-  token && { ward: "123", wardId: 1, trustId: 1 }
-);
-
 describe("ward/visits", () => {
   const anonymousReq = {
     headers: {
@@ -18,6 +13,10 @@ describe("ward/visits", () => {
     },
   };
   let res;
+
+  const tokenProvider = {
+    validate: jest.fn(() => ({ type: "wardStaff", wardId: 1, trustId: 1 })),
+  };
 
   beforeEach(() => {
     res = {
@@ -46,6 +45,7 @@ describe("ward/visits", () => {
       const container = {
         getRetrieveVisits: () => visitsSpy,
         getRetrieveWardById: () => wardSpy,
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({
@@ -77,13 +77,10 @@ describe("ward/visits", () => {
         scheduledCalls: null,
         error: "Error",
       });
-      const getRetrieveWardByIdStub = async () => ({
-        ward: null,
-        error: "Error",
-      });
       const container = {
         getRetrieveVisits: () => retrieveVisitsStub,
-        getRetrieveWardById: () => getRetrieveWardByIdStub,
+        getRetrieveWardById: () => jest.fn().mockReturnValue({}),
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({
@@ -94,7 +91,6 @@ describe("ward/visits", () => {
       });
 
       expect(props.scheduledCalls).toBeNull();
-      expect(props.ward).toBeNull();
       expect(props.error).not.toBeNull();
     });
 
@@ -103,6 +99,7 @@ describe("ward/visits", () => {
       const container = {
         getRetrieveVisits: () => retrieveSpy,
         getRetrieveWardById: () => jest.fn().mockReturnValue({}),
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({

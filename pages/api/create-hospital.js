@@ -8,9 +8,9 @@ export default withContainer(
       return;
     }
 
-    const adminIsAuthenticated = container.getAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
 
-    if (!adminIsAuthenticated(headers.cookie)) {
+    if (!trustAdminIsAuthenticated(headers.cookie)) {
       res.status(401);
       res.end(JSON.stringify({ err: "not authenticated" }));
       return;

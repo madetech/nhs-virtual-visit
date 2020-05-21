@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Error from "next/error";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Layout from "../../src/components/Layout";
-import verifyAdminToken from "../../src/usecases/verifyAdminToken";
+import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import EditWardForm from "../../src/components/EditWardForm";
 
@@ -36,7 +36,7 @@ const EditAWard = ({ error, id, name, hospitalId, hospitals }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ container, query, authenticationToken }) => {
+  verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
     const getRetrieveWardById = container.getRetrieveWardById();
 
     let error = null;

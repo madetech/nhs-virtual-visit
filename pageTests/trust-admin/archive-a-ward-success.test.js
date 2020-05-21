@@ -1,11 +1,6 @@
-import { getServerSideProps } from "../../pages/admin/add-a-hospital";
+import { getServerSideProps } from "../../pages/trust-admin/archive-a-ward-success";
 
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../../src/usecases/adminIsAuthenticated", () => () => (token) =>
-  token && { admin: true, trustId: 1 }
-);
-
-describe("/admin/add-a-hospital", () => {
+describe("/trust-admin/archive-a-ward-success", () => {
   const anonymousReq = {
     headers: {
       cookie: "",

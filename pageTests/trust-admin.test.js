@@ -1,11 +1,6 @@
-import { getServerSideProps } from "../pages/admin";
+import { getServerSideProps } from "../pages/trust-admin";
 
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../src/usecases/adminIsAuthenticated", () => () => (token) =>
-  token && { admin: true, trustId: 1 }
-);
-
-describe("admin", () => {
+describe("trust-admin", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
@@ -35,6 +30,10 @@ describe("admin", () => {
 
   let res;
 
+  const tokenProvider = {
+    validate: jest.fn(() => ({ type: "trustAdmin", trustId: 1 })),
+  };
+
   beforeEach(() => {
     res = {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
@@ -62,6 +61,7 @@ describe("admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({
@@ -87,6 +87,7 @@ describe("admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({
@@ -98,7 +99,7 @@ describe("admin", () => {
       expect(props.wardError).toEqual("Error!");
     });
 
-    it("retrieves the trust of the admin", async () => {
+    it("retrieves the trust of the trustAdmin", async () => {
       const trustId = 1;
       const getRetrieveWardsSpy = jest.fn(async () => ({
         error: null,
@@ -113,6 +114,7 @@ describe("admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({
@@ -138,6 +140,7 @@ describe("admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getTokenProvider: () => tokenProvider,
       };
 
       const { props } = await getServerSideProps({

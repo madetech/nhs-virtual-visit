@@ -29,7 +29,7 @@ describe("archive-ward", () => {
       getArchiveWard: jest.fn().mockReturnValue(() => {
         return { success: true, error: null };
       }),
-      getAdminIsAuthenticated: jest
+      getTrustAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue(
           (cookie) => cookie === "token=valid.token.value" && { trustId: "1" }
@@ -47,8 +47,8 @@ describe("archive-ward", () => {
     expect(response.status).toHaveBeenCalledWith(405);
   });
 
-  it("returns a 401 if not admin", async () => {
-    const adminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
+  it("returns a 401 if not a trust admin", async () => {
+    const trustAdminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
 
     await archiveWard(
       {
@@ -60,13 +60,13 @@ describe("archive-ward", () => {
       {
         container: {
           ...container,
-          getAdminIsAuthenticated: () => adminIsAuthenticatedSpy,
+          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
         },
       }
     );
 
     expect(response.status).toHaveBeenCalledWith(401);
-    expect(adminIsAuthenticatedSpy).toHaveBeenCalled();
+    expect(trustAdminIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
   it("archives a ward if valid", async () => {

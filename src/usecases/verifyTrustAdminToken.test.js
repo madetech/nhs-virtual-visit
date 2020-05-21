@@ -1,6 +1,6 @@
-import verifyAdminToken from "./verifyAdminToken";
+import verifyTrustAdminToken from "./verifyTrustAdminToken";
 
-describe("verifyAdminToken", () => {
+describe("verifyTrustAdminToken", () => {
   const req = {
     headers: {
       cookie: "token=sample.token.value",
@@ -16,7 +16,7 @@ describe("verifyAdminToken", () => {
     const expectedProps = { a: 1 };
     const callback = jest.fn(() => expectedProps);
     const authenticationToken = {
-      admin: true,
+      type: "trustAdmin",
     };
     const tokenProvider = {
       validate: jest.fn(() => authenticationToken),
@@ -25,7 +25,7 @@ describe("verifyAdminToken", () => {
       getTokenProvider: () => tokenProvider,
     };
 
-    const result = verifyAdminToken(callback)({ req, res, container });
+    const result = verifyTrustAdminToken(callback)({ req, res, container });
     expect(callback).toHaveBeenCalledWith({
       req,
       res,
@@ -44,7 +44,7 @@ describe("verifyAdminToken", () => {
       getTokenProvider: () => tokenProvider,
     };
 
-    verifyAdminToken(callback)({ req, res, container });
+    verifyTrustAdminToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
       Location: "/wards/login",
     });
@@ -60,7 +60,7 @@ describe("verifyAdminToken", () => {
     };
     req.headers.cookie = "";
 
-    verifyAdminToken(callback)({ req, res, container });
+    verifyTrustAdminToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
       Location: "/wards/login",
     });

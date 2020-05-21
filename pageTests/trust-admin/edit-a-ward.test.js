@@ -1,9 +1,4 @@
-import { getServerSideProps } from "../../pages/admin/add-a-ward-success";
-
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../../src/usecases/adminIsAuthenticated", () => () => (token) =>
-  token && { admin: true, trustId: 1 }
-);
+import { getServerSideProps } from "../../pages/trust-admin/edit-a-ward";
 
 const authenticatedReq = {
   headers: {
@@ -11,7 +6,7 @@ const authenticatedReq = {
   },
 };
 
-describe("/admin/add-a-ward-success", () => {
+describe("/trust-admin/edit-a-ward", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
@@ -19,6 +14,10 @@ describe("/admin/add-a-ward-success", () => {
   };
 
   let res;
+
+  const tokenProvider = {
+    validate: jest.fn(() => ({ type: "trustAdmin", trustId: 10 })),
+  };
 
   beforeEach(() => {
     res = {
@@ -48,6 +47,12 @@ describe("/admin/add-a-ward-success", () => {
 
         const container = {
           getRetrieveWardById: () => retrieveWardByIdSpy,
+          getRetrieveHospitalsByTrustId: () =>
+            jest.fn().mockReturnValue({
+              hospitals: [],
+              error: null,
+            }),
+          getTokenProvider: () => tokenProvider,
         };
 
         await getServerSideProps({
@@ -59,7 +64,7 @@ describe("/admin/add-a-ward-success", () => {
           container,
         });
 
-        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 1);
+        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 10);
       });
 
       it("set a ward prop based on the retrieved ward", async () => {
@@ -67,13 +72,19 @@ describe("/admin/add-a-ward-success", () => {
           ward: {
             id: 1,
             name: "Defoe Ward",
-            hospitalName: "Northwick Park Hospital",
+            hospitalId: "1",
           },
           error: null,
         });
 
         const container = {
           getRetrieveWardById: () => retrieveWardByIdSpy,
+          getRetrieveHospitalsByTrustId: () =>
+            jest.fn().mockReturnValue({
+              hospitals: [],
+              error: null,
+            }),
+          getTokenProvider: () => tokenProvider,
         };
 
         const { props } = await getServerSideProps({
@@ -85,8 +96,9 @@ describe("/admin/add-a-ward-success", () => {
           container,
         });
 
+        expect(props.id).toEqual(1);
         expect(props.name).toEqual("Defoe Ward");
-        expect(props.hospitalName).toEqual("Northwick Park Hospital");
+        expect(props.hospitalId).toEqual("1");
       });
     });
   });

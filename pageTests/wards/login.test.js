@@ -19,7 +19,7 @@ describe("login", () => {
     it("does not redirect if not logged in", async () => {
       const container = {
         getUserIsAuthenticated: () => () => false,
-        getAdminIsAuthenticated: () => () => false,
+        getTrustAdminIsAuthenticated: () => () => false,
       };
 
       await getServerSideProps({ req, res: mockResponse, container });
@@ -30,7 +30,7 @@ describe("login", () => {
     it("redirects to the ward list page if user logged in", async () => {
       const container = {
         getUserIsAuthenticated: () => () => ({ ward: "my-test-ward" }),
-        getAdminIsAuthenticated: () => () => false,
+        getTrustAdminIsAuthenticated: () => () => false,
       };
 
       await getServerSideProps({ req, res: mockResponse, container });
@@ -41,17 +41,17 @@ describe("login", () => {
       );
     });
 
-    it("redirects to the admin index page if admin logged in", async () => {
+    it("redirects to the trust admin index page if trust admin logged in", async () => {
       const container = {
         getUserIsAuthenticated: () => () => false,
-        getAdminIsAuthenticated: () => () => ({ admin: true }),
+        getTrustAdminIsAuthenticated: () => () => ({ type: "trustAdmin" }),
       };
 
       await getServerSideProps({ req, res: mockResponse, container });
 
       expect(mockResponse.writeHead).toHaveBeenCalledWith(
         307,
-        expect.objectContaining({ Location: `/admin` })
+        expect.objectContaining({ Location: `/trust-admin` })
       );
     });
   });
