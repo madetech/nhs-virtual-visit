@@ -60,7 +60,7 @@ const AccordionVisits = ({ visits }) => {
               onClick={() => {
                 setDisplayedVisits(filterPastVisits(visits));
                 setVisitsPanelListTitle("Past");
-                setShowButtons(false);
+                setShowButtons(true);
               }}
             >
               Past
