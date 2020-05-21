@@ -7,7 +7,6 @@ describe("TokenProvider", () => {
       version: "3",
       wardId: 1,
       ward: "123",
-      admin: false,
       trustId: 2,
       type: "wardStaff",
     });
@@ -24,8 +23,8 @@ describe("TokenProvider", () => {
       version: 1,
       wardId: 1,
       ward: "123",
-      admin: false,
       trustId: 2,
+      type: "wardStaff",
     });
 
     const tokenProvider = new TokenProvider();
