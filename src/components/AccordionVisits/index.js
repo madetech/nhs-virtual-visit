@@ -52,18 +52,20 @@ const AccordionVisits = ({ visits }) => {
           </li>
           <li
             className={
-              visitsPanelListTitle == "Past" ? "nhsuk-u-font-weight-bold" : ""
+              visitsPanelListTitle == "Past 12 hours"
+                ? "nhsuk-u-font-weight-bold"
+                : ""
             }
           >
             <a
               href="#"
               onClick={() => {
                 setDisplayedVisits(filterPastVisits(visits));
-                setVisitsPanelListTitle("Past");
+                setVisitsPanelListTitle("Past 12 hours");
                 setShowButtons(true);
               }}
             >
-              Past
+              Past 12 hours
             </a>
           </li>
         </ul>
