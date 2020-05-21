@@ -7,11 +7,6 @@ describe("update-a-ward", () => {
   let response;
   let container;
 
-  jest.mock(
-    "../../src/usecases/trustAdminIsAuthenticated",
-    () => () => (token) => token && { admin: true, trustId: 1 }
-  );
-
   beforeEach(() => {
     validRequest = {
       method: "PATCH",
@@ -41,6 +36,9 @@ describe("update-a-ward", () => {
       getRetrieveWardById: jest.fn().mockReturnValue(() => {
         return { error: null };
       }),
+      getTokenProvider: jest
+        .fn()
+        .mockReturnValue({ type: "trustAdmin", trustId: 1 }),
     };
   });
 
