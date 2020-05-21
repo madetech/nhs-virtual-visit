@@ -1,10 +1,5 @@
 import { getServerSideProps } from "../../pages/wards/cancel-visit-success";
 
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
-  token && { ward: "123" }
-);
-
 describe("ward/cancel-visit-success", () => {
   const anonymousReq = {
     headers: {
@@ -18,6 +13,10 @@ describe("ward/cancel-visit-success", () => {
     },
   };
   let res;
+
+  const tokenProvider = {
+    validate: jest.fn(() => ({ type: "wardStaff", wardId: 123 })),
+  };
 
   beforeEach(() => {
     res = {
@@ -41,6 +40,8 @@ describe("ward/cancel-visit-success", () => {
               throw new Error("Some DB Error");
             },
           }),
+        getTokenProvider: () => tokenProvider,
+        getRetrieveWardById: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({
@@ -70,6 +71,8 @@ describe("ward/cancel-visit-success", () => {
                 },
               ],
             }),
+          getTokenProvider: () => tokenProvider,
+          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
         };
 
         const { props } = await getServerSideProps({

@@ -1,10 +1,5 @@
 import { getServerSideProps } from "../../pages/wards/book-a-visit";
 
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
-  token && { ward: "123" }
-);
-
 describe("ward/book-a-visit", () => {
   const anonymousReq = {
     headers: {
@@ -18,6 +13,10 @@ describe("ward/book-a-visit", () => {
     },
   };
   let res;
+
+  const tokenProvider = {
+    validate: jest.fn(() => ({ type: "wardStaff", wardId: 123 })),
+  };
 
   beforeEach(() => {
     res = {
@@ -33,6 +32,7 @@ describe("ward/book-a-visit", () => {
         Location: "/wards/login",
       });
     });
+
     it("provides an error if a db error occurs", async () => {
       const container = {
         getDb: () =>
@@ -41,6 +41,8 @@ describe("ward/book-a-visit", () => {
               throw new Error("Some DB Error");
             },
           }),
+        getTokenProvider: () => tokenProvider,
+        getRetrieveWardById: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({
@@ -60,6 +62,8 @@ describe("ward/book-a-visit", () => {
             Promise.resolve({
               any: () => [{ id: 1 }, { id: 2 }],
             }),
+          getTokenProvider: () => tokenProvider,
+          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
         };
 
         await getServerSideProps({
@@ -85,11 +89,16 @@ describe("ward/book-a-visit", () => {
           minute: "44",
         };
 
+        const container = {
+          getTokenProvider: () => tokenProvider,
+          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
+        };
+
         const { props } = await getServerSideProps({
           req: authenticatedReq,
           res,
           query,
-          container: {},
+          container: container,
         });
 
         expect(props).toMatchObject(
@@ -126,6 +135,8 @@ describe("ward/book-a-visit", () => {
                 },
               ],
             }),
+          getTokenProvider: () => tokenProvider,
+          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
         };
 
         const { props } = await getServerSideProps({

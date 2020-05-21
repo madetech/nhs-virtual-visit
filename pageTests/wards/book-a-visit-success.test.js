@@ -1,9 +1,4 @@
 import { getServerSideProps } from "../../pages/wards/book-a-visit-success";
-//
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
-  token && { ward: "123" }
-);
 
 describe("wards/book-a-visit-success", () => {
   const anonymousReq = {
@@ -19,6 +14,10 @@ describe("wards/book-a-visit-success", () => {
   };
 
   let res;
+
+  const tokenProvider = {
+    validate: jest.fn(() => ({ type: "wardStaff", wardId: 123, trustId: 10 })),
+  };
 
   beforeEach(() => {
     res = {
@@ -36,13 +35,22 @@ describe("wards/book-a-visit-success", () => {
     });
 
     it("retrieves the ward id from the authentication token", async () => {
+      const getRetrieveWardByIdSpy = jest.fn().mockReturnValue({});
+
+      const container = {
+        getRetrieveWardById: () => getRetrieveWardByIdSpy,
+        getTokenProvider: () => tokenProvider,
+      };
+
       const { props } = await getServerSideProps({
         req: authenticatedReq,
         res,
         query: {},
+        container: container,
       });
 
       expect(props).toBeDefined();
+      expect(getRetrieveWardByIdSpy).toBeCalledWith(123, 10);
     });
   });
 });

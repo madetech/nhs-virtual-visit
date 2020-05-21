@@ -1,10 +1,5 @@
 import { getServerSideProps } from "../pages/performance";
 
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../src/usecases/adminIsAuthenticated", () => () => (token) =>
-  token && { admin: true }
-);
-
 describe("/performance", () => {
   const anonymousReq = {
     headers: {
@@ -37,8 +32,12 @@ describe("/performance", () => {
 
     it("Provides the current visit totals as props", async () => {
       const wardVisitTotalSpy = jest.fn(() => ({ total: 30 }));
+      const tokenProvider = {
+        validate: jest.fn(() => ({ type: "trustAdmin" })),
+      };
       const container = {
         getRetrieveWardVisitTotals: () => wardVisitTotalSpy,
+        getTokenProvider: () => tokenProvider,
       };
       const { props } = await getServerSideProps({
         req: authenticatedReq,

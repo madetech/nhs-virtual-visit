@@ -1,10 +1,5 @@
 import { getServerSideProps } from "../../pages/admin/edit-a-ward";
 
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../../src/usecases/adminIsAuthenticated", () => () => (token) =>
-  token && { admin: true, trustId: 10 }
-);
-
 const authenticatedReq = {
   headers: {
     cookie: "token=123",
@@ -19,6 +14,10 @@ describe("/admin/edit-a-ward", () => {
   };
 
   let res;
+
+  const tokenProvider = {
+    validate: jest.fn(() => ({ type: "trustAdmin", trustId: 10 })),
+  };
 
   beforeEach(() => {
     res = {
@@ -53,6 +52,7 @@ describe("/admin/edit-a-ward", () => {
               hospitals: [],
               error: null,
             }),
+          getTokenProvider: () => tokenProvider,
         };
 
         await getServerSideProps({
@@ -84,6 +84,7 @@ describe("/admin/edit-a-ward", () => {
               hospitals: [],
               error: null,
             }),
+          getTokenProvider: () => tokenProvider,
         };
 
         const { props } = await getServerSideProps({
