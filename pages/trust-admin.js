@@ -15,7 +15,7 @@ const TrustAdmin = ({ wardError, trustError, wards, trust }) => {
   }
 
   return (
-    <Layout title={`Ward Administration for ${trust.name}`} renderLogout={true}>
+    <Layout title={`Ward administration for ${trust.name}`} renderLogout={true}>
       <GridRow>
         <GridColumn width="full">
           <Heading>
@@ -23,7 +23,7 @@ const TrustAdmin = ({ wardError, trustError, wards, trust }) => {
               {trust.name}
               <span className="nhsuk-u-visually-hidden">-</span>
             </span>
-            Ward Administration
+            Ward administration
           </Heading>
           <ActionLink href={`/trust-admin/add-a-ward`}>Add a ward</ActionLink>
           <ActionLink href={`/trust-admin/add-a-hospital`}>
