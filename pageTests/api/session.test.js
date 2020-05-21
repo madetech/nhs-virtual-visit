@@ -82,6 +82,7 @@ describe("api/session", () => {
           wardCode: "MEOW",
           admin: false,
           trustId: 1,
+          type: "wardStaff",
         });
         expect(response.writeHead).toHaveBeenCalledWith(
           201,
@@ -135,6 +136,7 @@ describe("api/session", () => {
           wardCode: undefined,
           admin: true,
           trustId: 1,
+          type: "trustAdmin",
         });
         expect(response.writeHead).toHaveBeenCalledWith(
           201,

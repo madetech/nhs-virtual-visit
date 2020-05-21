@@ -26,6 +26,7 @@ export default withContainer(
           wardCode: undefined,
           admin: true,
           trustId: verifyTrustAdminCodeResponse.trust.id,
+          type: "trustAdmin",
         });
       } else {
         const { ward } = verifyWardCodeResponse;
@@ -34,6 +35,7 @@ export default withContainer(
           wardCode: ward.code,
           admin: false,
           trustId: ward.trustId,
+          type: "wardStaff",
         });
       }
 

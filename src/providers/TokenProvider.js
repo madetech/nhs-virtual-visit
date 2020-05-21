@@ -1,13 +1,13 @@
 import jwt from "jsonwebtoken";
 
-const version = "2";
+const version = "3";
 
 class TokenProvider {
   constructor(signingKey) {
     this.signingKey = signingKey;
   }
 
-  generate({ wardId, wardCode, admin, trustId }) {
+  generate({ wardId, wardCode, admin, trustId, type }) {
     return jwt.sign(
       // If updating the token structure, update the version
       {
@@ -16,6 +16,7 @@ class TokenProvider {
         admin,
         trustId,
         version,
+        type,
       },
       this.signingKey,
       {
