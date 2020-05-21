@@ -29,10 +29,13 @@ const deleteVisitConfirmation = ({
   }
 
   return (
-    <Layout title="Confirm cancellation of virtual visit" renderLogout={true}>
+    <Layout
+      title="Are you sure you want to cancel this visit?"
+      renderLogout={true}
+    >
       <GridRow>
         <GridColumn width="full">
-          <Heading>Confirm cancellation of virtual visit</Heading>
+          <Heading>Are you sure you want to cancel this visit?</Heading>
         </GridColumn>
       </GridRow>
       <GridRow>
@@ -55,7 +58,7 @@ const deleteVisitConfirmation = ({
               </p>
             </div>
 
-            <Button>Confirm cancellation</Button>
+            <Button>Yes, cancel this visit</Button>
 
             <BackLink href="/wards/visits">Back to virtual visits</BackLink>
           </form>
