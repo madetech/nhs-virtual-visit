@@ -30,7 +30,7 @@ describe("create-ward", () => {
       getCreateWard: jest.fn().mockReturnValue(() => {
         return { wardId: 1, error: null };
       }),
-      getAdminIsAuthenticated: jest
+      getTrustAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue(
           (cookie) => cookie === "token=valid.token.value" && { trustId: 1 }
@@ -49,7 +49,7 @@ describe("create-ward", () => {
   });
 
   it("returns a 401 if no token provided", async () => {
-    const adminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
+    const trustAdminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
 
     await createWard(
       {
@@ -61,13 +61,13 @@ describe("create-ward", () => {
       {
         container: {
           ...container,
-          getAdminIsAuthenticated: () => adminIsAuthenticatedSpy,
+          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
         },
       }
     );
 
     expect(response.status).toHaveBeenCalledWith(401);
-    expect(adminIsAuthenticatedSpy).toHaveBeenCalled();
+    expect(trustAdminIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
   it("creates a new ward if valid", async () => {

@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../pages/admin/add-a-ward-success";
+import { getServerSideProps } from "../../pages/trust-admin/add-a-hospital-success";
 
 const authenticatedReq = {
   headers: {
@@ -6,7 +6,11 @@ const authenticatedReq = {
   },
 };
 
-describe("/admin/add-a-ward-success", () => {
+const tokenProvider = {
+  validate: jest.fn(() => ({ type: "trustAdmin", trustId: 1 })),
+};
+
+describe("/trust-admin/add-a-hospital-success", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
@@ -14,10 +18,6 @@ describe("/admin/add-a-ward-success", () => {
   };
 
   let res;
-
-  const tokenProvider = {
-    validate: jest.fn(() => ({ type: "trustAdmin", trustId: 1 })),
-  };
 
   beforeEach(() => {
     res = {
@@ -34,19 +34,18 @@ describe("/admin/add-a-ward-success", () => {
       });
     });
 
-    describe("with wardId parameter", () => {
-      it("retrieves a ward by the wardId parameter", async () => {
-        const retrieveWardByIdSpy = jest.fn().mockReturnValue({
-          ward: {
+    describe("with hospitalId parameter", () => {
+      it("retrieves a hospital by the hospitalId parameter", async () => {
+        const retrieveHospitalByIdSpy = jest.fn().mockReturnValue({
+          hospital: {
             id: 1,
-            name: "Defoe Ward",
-            hospitalName: "Northwick Park Hospital",
+            name: "Northwick Park Hospital",
           },
           error: null,
         });
 
         const container = {
-          getRetrieveWardById: () => retrieveWardByIdSpy,
+          getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
           getTokenProvider: () => tokenProvider,
         };
 
@@ -54,26 +53,25 @@ describe("/admin/add-a-ward-success", () => {
           req: authenticatedReq,
           res,
           query: {
-            wardId: "ward ID",
+            hospitalId: "hospital ID",
           },
           container,
         });
 
-        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 1);
+        expect(retrieveHospitalByIdSpy).toHaveBeenCalledWith("hospital ID", 1);
       });
 
-      it("set a ward prop based on the retrieved ward", async () => {
-        const retrieveWardByIdSpy = jest.fn().mockReturnValue({
-          ward: {
+      it("set a hospital prop based on the retrieved hospital", async () => {
+        const retrieveHospitalByIdSpy = jest.fn().mockReturnValue({
+          hospital: {
             id: 1,
-            name: "Defoe Ward",
-            hospitalName: "Northwick Park Hospital",
+            name: "Northwick Park Hospital",
           },
           error: null,
         });
 
         const container = {
-          getRetrieveWardById: () => retrieveWardByIdSpy,
+          getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
           getTokenProvider: () => tokenProvider,
         };
 
@@ -81,13 +79,12 @@ describe("/admin/add-a-ward-success", () => {
           req: authenticatedReq,
           res,
           query: {
-            wardId: "1",
+            hospitalId: "hospital ID",
           },
           container,
         });
 
-        expect(props.name).toEqual("Defoe Ward");
-        expect(props.hospitalName).toEqual("Northwick Park Hospital");
+        expect(props.name).toEqual("Northwick Park Hospital");
       });
     });
   });

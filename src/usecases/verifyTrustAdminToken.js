@@ -1,10 +1,10 @@
-import adminIsAuthenticated from "./adminIsAuthenticated";
+import trustAdminIsAuthenticated from "./trustAdminIsAuthenticated";
 
 export default function (callback) {
   return function (context) {
     const { req, res, container } = context;
 
-    const authenticationToken = adminIsAuthenticated(container)(
+    const authenticationToken = trustAdminIsAuthenticated(container)(
       req.headers.cookie
     );
 

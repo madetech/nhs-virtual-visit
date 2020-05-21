@@ -29,7 +29,7 @@ describe("create-hospital", () => {
       getCreateHospital: jest.fn().mockReturnValue(() => {
         return { hospitalId: 1, error: null };
       }),
-      getAdminIsAuthenticated: jest
+      getTrustAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
     };
@@ -46,7 +46,7 @@ describe("create-hospital", () => {
   });
 
   it("returns a 401 if no token provided", async () => {
-    const adminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
+    const trustAdminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
 
     await createHospital(
       {
@@ -58,13 +58,13 @@ describe("create-hospital", () => {
       {
         container: {
           ...container,
-          getAdminIsAuthenticated: () => adminIsAuthenticatedSpy,
+          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
         },
       }
     );
 
     expect(response.status).toHaveBeenCalledWith(401);
-    expect(adminIsAuthenticatedSpy).toHaveBeenCalled();
+    expect(trustAdminIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
   it("creates a new ward if valid", async () => {

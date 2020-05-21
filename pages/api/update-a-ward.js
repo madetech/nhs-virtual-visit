@@ -8,11 +8,11 @@ export default withContainer(
       return;
     }
 
-    const adminIsAuthenticated = container.getAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
 
-    const adminToken = adminIsAuthenticated(headers.cookie);
+    const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
 
-    if (!adminToken) {
+    if (!trustAdminToken) {
       res.status(401);
       res.end();
       return;
@@ -46,7 +46,10 @@ export default withContainer(
 
     const retrieveWardById = container.getRetrieveWardById();
 
-    const existingWard = await retrieveWardById(body.id, adminToken.trustId);
+    const existingWard = await retrieveWardById(
+      body.id,
+      trustAdminToken.trustId
+    );
 
     if (existingWard.error) {
       res.status(400);

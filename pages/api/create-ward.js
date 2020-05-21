@@ -8,10 +8,12 @@ export default withContainer(
       return;
     }
 
-    const adminIsAuthenticated = container.getAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
 
-    const adminAuthenticatedToken = adminIsAuthenticated(headers.cookie);
-    if (!adminAuthenticatedToken) {
+    const trustAdminAuthenticatedToken = trustAdminIsAuthenticated(
+      headers.cookie
+    );
+    if (!trustAdminAuthenticatedToken) {
       res.status(401);
       res.end();
       return;
@@ -36,7 +38,7 @@ export default withContainer(
     const { wardId, error } = await createWard({
       name: body.name,
       code: body.code,
-      trustId: adminAuthenticatedToken.trustId,
+      trustId: trustAdminAuthenticatedToken.trustId,
       hospitalId: body.hospitalId,
     });
 

@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import ErrorSummary from "../../src/components/ErrorSummary";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Layout from "../../src/components/Layout";
-import verifyAdminToken from "../../src/usecases/verifyAdminToken";
+import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Error from "next/error";
@@ -68,7 +68,7 @@ const AddAHospital = ({ error, trustId }) => {
         if (status == 201) {
           const { hospitalId } = await response.json();
           Router.push({
-            pathname: "/admin/add-a-hospital-success",
+            pathname: "/trust-admin/add-a-hospital-success",
             query: { hospitalId: hospitalId },
           });
         } else if (status === 400) {
@@ -124,7 +124,7 @@ const AddAHospital = ({ error, trustId }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ authenticationToken }) => {
+  verifyTrustAdminToken(async ({ authenticationToken }) => {
     const trustId = authenticationToken.trustId;
     return {
       props: {

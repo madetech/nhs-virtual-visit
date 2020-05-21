@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import verifyAdminToken from "../../src/usecases/verifyAdminToken";
+import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import AnchorLink from "../../src/components/AnchorLink";
 
 const archiveAWardSuccess = ({ name, hospitalName }) => {
@@ -18,7 +18,9 @@ const archiveAWardSuccess = ({ name, hospitalName }) => {
             <div className="nhsuk-panel__body">for {hospitalName}</div>
           </div>
           <p>
-            <AnchorLink href="/admin">Return to ward administration</AnchorLink>
+            <AnchorLink href="/trust-admin">
+              Return to ward administration
+            </AnchorLink>
           </p>
         </div>
       </div>
@@ -27,7 +29,7 @@ const archiveAWardSuccess = ({ name, hospitalName }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ query }) => {
+  verifyTrustAdminToken(async ({ query }) => {
     console.log(query);
     return {
       props: { name: query.name, hospitalName: query.hospitalName },
