@@ -45,6 +45,8 @@ describe("ward/book-a-visit", () => {
             },
           ],
         }),
+      getTokenProvider: () => tokenProvider,
+      getRetrieveWardById: () => jest.fn().mockReturnValue({}),
     };
   });
 
@@ -65,8 +67,6 @@ describe("ward/book-a-visit", () => {
               throw new Error("Some DB Error");
             },
           }),
-        getTokenProvider: () => tokenProvider,
-        getRetrieveWardById: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({
@@ -81,14 +81,10 @@ describe("ward/book-a-visit", () => {
 
     describe("with no extra parameters", () => {
       it("provides the visit records from the database", async () => {
-        const container = {
-          getDb: () =>
-            Promise.resolve({
-              any: () => [{ id: 1 }, { id: 2 }],
-            }),
-          getTokenProvider: () => tokenProvider,
-          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
-        };
+        container.getDb = () =>
+          Promise.resolve({
+            any: () => [{ id: 1 }, { id: 2 }],
+          });
 
         await getServerSideProps({
           req: authenticatedReq,
@@ -111,11 +107,6 @@ describe("ward/book-a-visit", () => {
           year: "2020",
           hour: "13",
           minute: "44",
-        };
-
-        const container = {
-          getTokenProvider: () => tokenProvider,
-          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
         };
 
         const { props } = await getServerSideProps({
