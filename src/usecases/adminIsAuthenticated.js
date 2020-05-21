@@ -1,5 +1,7 @@
 import cookie from "cookie";
 
+const { TRUST_ADMIN } = require("../helpers/tokenTypes");
+
 export default ({ getTokenProvider }) => (requestCookie) => {
   const tokenProvider = getTokenProvider();
 
@@ -8,7 +10,7 @@ export default ({ getTokenProvider }) => (requestCookie) => {
 
     const validatedToken = tokenProvider.validate(token);
 
-    if (token && validatedToken.type !== "trustAdmin") {
+    if (token && validatedToken.type !== TRUST_ADMIN) {
       return false;
     }
 
