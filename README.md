@@ -228,5 +228,3 @@ pg_dump -d nhs-virtual-visit-dev -s > db/schema.sql
 ## License
 
 [MIT](LICENSE)
-
-x
