@@ -1,10 +1,5 @@
 import { getServerSideProps } from "../../pages/wards/book-a-visit";
 
-// TODO: This needs to be moved once the verifyToken logic is in the container..
-jest.mock("../../src/usecases/userIsAuthenticated", () => () => (token) =>
-  token && { ward: "123" }
-);
-
 describe("ward/book-a-visit", () => {
   const anonymousReq = {
     headers: {
@@ -47,6 +42,7 @@ describe("ward/book-a-visit", () => {
         }),
       getTokenProvider: () => tokenProvider,
       getRetrieveWardById: () => jest.fn().mockReturnValue({}),
+      getUserIsAuthenticated: () => (token) => token && { ward: "123" },
     };
   });
 
@@ -60,14 +56,12 @@ describe("ward/book-a-visit", () => {
     });
 
     it("provides an error if a db error occurs", async () => {
-      const container = {
-        getDb: () =>
-          Promise.resolve({
-            any: () => {
-              throw new Error("Some DB Error");
-            },
-          }),
-      };
+      container.getDb = () =>
+        Promise.resolve({
+          any: () => {
+            throw new Error("Some DB Error");
+          },
+        });
 
       const { props } = await getServerSideProps({
         req: authenticatedReq,
@@ -113,7 +107,7 @@ describe("ward/book-a-visit", () => {
           req: authenticatedReq,
           res,
           query,
-          container: {},
+          container: container,
         });
 
         expect(props).toMatchObject(
