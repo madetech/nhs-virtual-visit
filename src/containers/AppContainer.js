@@ -5,10 +5,12 @@ import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import trustAdminIsAuthenticated from "../usecases/trustAdminIsAuthenticated";
+import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
 import retrieveWardById from "../usecases/retrieveWardById";
 import verifyWardCode from "../usecases/verifyWardCode";
 import verifyTrustAdminCode from "../usecases/verifyTrustAdminCode";
+import verifyAdminCode from "../usecases/verifyAdminCode";
 import retrieveVisits from "../usecases/retrieveVisits";
 import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 import verifyCallPassword from "../usecases/verifyCallPassword";
@@ -51,6 +53,10 @@ class AppContainer {
     return trustAdminIsAuthenticated(this);
   };
 
+  getAdminIsAuthenticated = () => {
+    return adminIsAuthenticated(this);
+  };
+
   getNotifyClient = () => {
     return GovNotify.getInstance();
   };
@@ -65,6 +71,10 @@ class AppContainer {
 
   getVerifyTrustAdminCode = () => {
     return verifyTrustAdminCode(this);
+  };
+
+  getVerifyAdminCode = () => {
+    return verifyAdminCode(this);
   };
 
   getRetrieveVisits = () => {

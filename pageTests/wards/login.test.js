@@ -20,6 +20,7 @@ describe("login", () => {
       const container = {
         getUserIsAuthenticated: () => () => false,
         getTrustAdminIsAuthenticated: () => () => false,
+        getAdminIsAuthenticated: () => () => false,
       };
 
       await getServerSideProps({ req, res: mockResponse, container });
@@ -31,6 +32,7 @@ describe("login", () => {
       const container = {
         getUserIsAuthenticated: () => () => ({ ward: "my-test-ward" }),
         getTrustAdminIsAuthenticated: () => () => false,
+        getAdminIsAuthenticated: () => () => false,
       };
 
       await getServerSideProps({ req, res: mockResponse, container });
@@ -45,6 +47,7 @@ describe("login", () => {
       const container = {
         getUserIsAuthenticated: () => () => false,
         getTrustAdminIsAuthenticated: () => () => ({ type: "trustAdmin" }),
+        getAdminIsAuthenticated: () => () => false,
       };
 
       await getServerSideProps({ req, res: mockResponse, container });
@@ -52,6 +55,21 @@ describe("login", () => {
       expect(mockResponse.writeHead).toHaveBeenCalledWith(
         307,
         expect.objectContaining({ Location: `/trust-admin` })
+      );
+    });
+
+    it("redirects to the admin index page if admin logged in", async () => {
+      const container = {
+        getUserIsAuthenticated: () => () => false,
+        getTrustAdminIsAuthenticated: () => () => false,
+        getAdminIsAuthenticated: () => () => ({ type: "admin" }),
+      };
+
+      await getServerSideProps({ req, res: mockResponse, container });
+
+      expect(mockResponse.writeHead).toHaveBeenCalledWith(
+        307,
+        expect.objectContaining({ Location: `/admin` })
       );
     });
   });
