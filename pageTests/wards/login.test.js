@@ -44,7 +44,7 @@ describe("login", () => {
     it("redirects to the trust admin index page if trust admin logged in", async () => {
       const container = {
         getUserIsAuthenticated: () => () => false,
-        getTrustAdminIsAuthenticated: () => () => ({ admin: true }),
+        getTrustAdminIsAuthenticated: () => () => ({ type: "trustAdmin" }),
       };
 
       await getServerSideProps({ req, res: mockResponse, container });
