@@ -64,13 +64,7 @@ const ArchiveAWardConfirmation = ({
               list={wardSummaryList}
               withActions={false}
             ></SummaryList>
-            <div className="nhsuk-warning-callout">
-              <h3 className="nhsuk-warning-callout__label">Info</h3>
-              <p>
-                It is import to know when deleting this ward that all associated
-                calls will also be deleted
-              </p>
-            </div>
+            <p>All booked visits for this ward will be cancelled.</p>
 
             <Button>Yes, delete this ward</Button>
             <BackLink href="/admin">Back to ward administration</BackLink>
