@@ -4,6 +4,7 @@ import truncateAllTables from "../testUtils/truncateAllTables";
 
 describe("createTrust contract tests", () => {
   const container = AppContainer.getInstance();
+  const retrieveTrustById = container.getRetrieveTrustById();
 
   beforeEach(async () => {
     await truncateAllTables(container);
@@ -24,7 +25,12 @@ describe("createTrust contract tests", () => {
 
     const { trustId, error } = await createTrust(container)(request);
 
-    expect(trustId).not.toBeNull();
+    const { trust } = await retrieveTrustById(trustId);
+
+    expect(trust).toEqual({
+      id: trustId,
+      name: request.name,
+    });
 
     expect(error).toBeNull();
   });
