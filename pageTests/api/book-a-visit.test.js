@@ -13,6 +13,8 @@ describe("/api/book-a-visit", () => {
   let validRequest;
   let response;
   let container;
+  let createVisitSpy;
+
   const validUserIsAuthenticatedSpy = jest.fn(() => ({
     wardId: 10,
     ward: "MEOW",
@@ -34,6 +36,7 @@ describe("/api/book-a-visit", () => {
   }));
 
   beforeEach(() => {
+    createVisitSpy = jest.fn();
     validRequest = {
       method: "POST",
       body: {
@@ -53,7 +56,7 @@ describe("/api/book-a-visit", () => {
       end: jest.fn(),
     };
     container = {
-      getCreateVisit: jest.fn().mockReturnValue(() => {}),
+      getCreateVisit: () => createVisitSpy,
       getRetrieveWardById: () => getRetrieveWardByIdSpy,
       getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
       getDb: jest.fn().mockResolvedValue(() => {}),
@@ -129,6 +132,21 @@ describe("/api/book-a-visit", () => {
     expect(userIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
+  it("inserts a visit if valid", async () => {
+    await bookAVisit(validRequest, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(201);
+    expect(createVisitSpy).toHaveBeenCalled();
+    expect(createVisitSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        patientName: "Bob Smith",
+        contactNumber: "07123456789",
+        callId: "fakeUrl",
+        provider: "whereby",
+      })
+    );
+  });
+
   describe("when sending a text message", () => {
     it("returns a 201 status if successful", async () => {
       const sendTextMessageStub = jest
@@ -182,29 +200,8 @@ describe("/api/book-a-visit", () => {
         })
       );
     });
-
-    it("inserts a visit if valid", async () => {
-      const createVisitSpy = jest.fn();
-
-      await bookAVisit(validRequest, response, {
-        container: {
-          ...container,
-          getCreateVisit: () => createVisitSpy,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(201);
-      expect(createVisitSpy).toHaveBeenCalled();
-      expect(createVisitSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          patientName: "Bob Smith",
-          contactNumber: "07123456789",
-          callId: "fakeUrl",
-          provider: "whereby",
-        })
-      );
-    });
   });
+
   describe("jitsi", () => {
     beforeEach(() => {
       process.env.ENABLE_WHEREBY = "no";
