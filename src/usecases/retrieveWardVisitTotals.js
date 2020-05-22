@@ -3,7 +3,20 @@ const calculateTotalNumberOfVisits = (visitsByWard) =>
 
 const getVisitsByWard = async (db) => {
   const queryResult = await db.any(
-    "SELECT wards.hospital_name, wards.name, SUM(totals.total) AS total_visits FROM ward_visit_totals AS totals JOIN wards ON wards.id = totals.ward_id GROUP BY wards.hospital_name, wards.name"
+    `SELECT
+      wards.name,
+      SUM(totals.total) AS total_visits,
+      (
+        SELECT
+          name
+        FROM
+          hospitals
+        WHERE
+          id = wards.hospital_id
+      ) as hospital_name,
+      wards.hospital_id as hospital_id
+    FROM ward_visit_totals AS totals JOIN wards ON wards.id = totals.ward_id
+    GROUP BY wards.hospital_id, wards.name`
   );
 
   return queryResult.map(({ hospital_name, total_visits, name }) => ({

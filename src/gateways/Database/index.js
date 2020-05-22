@@ -14,7 +14,7 @@ export default (() => {
           options.connectionString = process.env.TEST_DATABASE_URL;
         }
 
-        if (process.env.NODE_ENV === "production") {
+        if (process.env.NODE_ENV !== "test") {
           options.ssl = { rejectUnauthorized: false };
         }
 
