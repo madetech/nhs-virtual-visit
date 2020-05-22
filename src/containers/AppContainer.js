@@ -23,6 +23,8 @@ import retrieveHospitalsByTrustId from "../usecases/retrieveHospitalsByTrustId";
 import retrieveTrustById from "../usecases/retrieveTrustById";
 import retrieveHospitalById from "../usecases/retrieveHospitalById";
 import archiveWard from "../usecases/archiveWard";
+import validateEmailAddress from "../usecases/validateEmailAddress";
+import validateMobileNumber from "../usecases/validateMobileNumber";
 
 class AppContainer {
   getDb = () => {
@@ -123,6 +125,14 @@ class AppContainer {
 
   getArchiveWard = () => {
     return archiveWard(this);
+  };
+
+  getValidateEmailAddress = () => {
+    return validateEmailAddress(this);
+  };
+
+  getValidateMobileNumber = () => {
+    return validateMobileNumber(this);
   };
 }
 
