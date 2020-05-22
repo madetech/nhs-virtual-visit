@@ -1,7 +1,7 @@
-import createHospital from "./createHospital";
+import createTrust from "./createTrust";
 
-describe("createHospital", () => {
-  it("creates a hospital in the db when valid", async () => {
+describe("createTrust", () => {
+  it("creates a Trust in the db when valid", async () => {
     const oneSpy = jest.fn().mockReturnValue({ id: 1 });
     const container = {
       async getDb() {
@@ -12,16 +12,16 @@ describe("createHospital", () => {
     };
 
     const request = {
-      name: "Defoe Hospital",
-      trustId: 2,
+      name: "Defoe Trust",
+      adminCode: "adminCode",
     };
 
-    const { hospitalId, error } = await createHospital(container)(request);
-    expect(hospitalId).toEqual(1);
+    const { trustId, error } = await createTrust(container)(request);
+    expect(trustId).toEqual(1);
     expect(error).toBeNull();
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
-      "Defoe Hospital",
-      2,
+      "Defoe Trust",
+      "adminCode",
     ]);
   });
 
@@ -36,8 +36,8 @@ describe("createHospital", () => {
       },
     };
 
-    const { hospitalId, error } = await createHospital(container)("");
+    const { trustId, error } = await createTrust(container)("");
     expect(error).toEqual("Error: DB Error!");
-    expect(hospitalId).toBeNull();
+    expect(trustId).toBeNull();
   });
 });
