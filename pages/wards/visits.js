@@ -3,29 +3,16 @@ import Layout from "../../src/components/Layout";
 import HeadingWithTime from "../../src/components/HeadingWithTime";
 import ActionLink from "../../src/components/ActionLink";
 import { GridRow, GridColumn } from "../../src/components/Grid";
-import VisitsTable from "../../src/components/VisitsTable";
 import Error from "next/error";
 import Text from "../../src/components/Text";
 import verifyToken from "../../src/usecases/verifyToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import AccordionVisits from "../../src/components/AccordionVisits";
 
-export default function WardVisits({
-  scheduledCalls,
-  ward,
-  error,
-  showAccordion,
-}) {
+export default function WardVisits({ scheduledCalls, ward, error }) {
   if (error) {
     return <Error />;
   }
-
-  const tableContainer = showAccordion ? (
-    <AccordionVisits visits={scheduledCalls} />
-  ) : (
-    <VisitsTable visits={scheduledCalls} />
-  );
-
   return (
     <Layout title="Virtual visits" renderLogout={true}>
       <GridRow>
@@ -52,7 +39,7 @@ export default function WardVisits({
           <h2 className="nhsuk-heading-l">Pre-booked virtual visits</h2>
 
           {scheduledCalls.length > 0 ? (
-            tableContainer
+            <AccordionVisits visits={scheduledCalls} />
           ) : (
             <Text>There are no upcoming virtual visits.</Text>
           )}
@@ -63,20 +50,17 @@ export default function WardVisits({
 }
 
 export const getServerSideProps = propsWithContainer(
-  verifyToken(async ({ authenticationToken, container, query }) => {
+  verifyToken(async ({ authenticationToken, container }) => {
     const { wardId, trustId } = authenticationToken;
-    const showAccordion = Boolean(query.showAccordion);
-    const withInterval = !showAccordion;
 
     let { scheduledCalls, error } = await container.getRetrieveVisits()({
       wardId,
-      withInterval: withInterval,
     });
     let ward;
     ({ ward, error } = await container.getRetrieveWardById()(wardId, trustId));
 
     return {
-      props: { scheduledCalls, ward, error, showAccordion: showAccordion },
+      props: { scheduledCalls, ward, error },
     };
   })
 );
