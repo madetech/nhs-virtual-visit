@@ -6,7 +6,6 @@ import fetch from "node-fetch";
 import formatDateAndTime from "../../src/helpers/formatDateAndTime";
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
-import validateMobileNumber from "../../src/helpers/validateMobileNumber";
 import validateDateAndTime from "../../src/helpers/validateDateAndTime";
 import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
 
@@ -34,13 +33,31 @@ const wherebyCallId = async (callTime) => {
   return roomUrl.pathname.slice(1);
 };
 
-const getValidationErrors = ({ patientName, contactNumber, callTime }) => {
-  if (!patientName || patientName.length === 0) {
+const isFieldAbsent = (field) => {
+  return !field || field.length === 0;
+};
+
+const getValidationErrors = (
+  container,
+  { patientName, contactEmail, contactNumber, callTime }
+) => {
+  const validateMobileNumber = container.getValidateMobileNumber();
+  const validateEmailAddress = container.getValidateEmailAddress();
+
+  if (isFieldAbsent(patientName)) {
     return "patientName must be a string";
   }
 
-  if (!validateMobileNumber(contactNumber)) {
+  if (isFieldAbsent(contactEmail) && isFieldAbsent(contactNumber)) {
+    return "contactNumber or contactEmail must be present";
+  }
+
+  if (!isFieldAbsent(contactNumber) && !validateMobileNumber(contactNumber)) {
     return "contactNumber must be a valid mobile number";
+  }
+
+  if (!isFieldAbsent(contactEmail) && !validateEmailAddress(contactEmail)) {
+    return "contactEmail must be a valid email address";
   }
 
   const { isValidTime, isValidDate, errorMessage } = validateDateAndTime(
@@ -78,8 +95,7 @@ export default withContainer(
     }
 
     res.setHeader("Content-Type", "application/json");
-
-    const validationErrors = getValidationErrors(body);
+    const validationErrors = getValidationErrors(container, body);
     if (validationErrors) {
       res.status(400);
       res.end(JSON.stringify({ err: validationErrors }));
@@ -108,6 +124,7 @@ export default withContainer(
 
       await createVisit({
         patientName: body.patientName,
+        contactEmail: body.contactEmail,
         contactNumber: body.contactNumber,
         contactName: body.contactName,
         callTime: body.callTime,

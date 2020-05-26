@@ -1,5 +1,9 @@
 import withContainer from "../../src/middleware/withContainer";
-const { WARD_STAFF, TRUST_ADMIN } = require("../../src/helpers/tokenTypes");
+const {
+  WARD_STAFF,
+  TRUST_ADMIN,
+  ADMIN,
+} = require("../../src/helpers/tokenTypes");
 
 export default withContainer(
   async ({ body: { code }, method }, res, { container }) => {
@@ -10,9 +14,13 @@ export default withContainer(
       const verifyTrustAdminCode = container.getVerifyTrustAdminCode();
       const verifyTrustAdminCodeResponse = await verifyTrustAdminCode(code);
 
+      const verifyAdminCode = container.getVerifyAdminCode();
+      const verifyAdminCodeResponse = await verifyAdminCode(code);
+
       if (
         !verifyTrustAdminCodeResponse.validTrustAdminCode &&
-        !verifyWardCodeResponse.validWardCode
+        !verifyWardCodeResponse.validWardCode &&
+        !verifyAdminCodeResponse.validAdminCode
       ) {
         res.statusCode = 401;
         res.end();
@@ -28,7 +36,7 @@ export default withContainer(
           trustId: verifyTrustAdminCodeResponse.trust.id,
           type: TRUST_ADMIN,
         });
-      } else {
+      } else if (verifyWardCodeResponse.validWardCode) {
         const { ward } = verifyWardCodeResponse;
         token = tokens.generate({
           wardId: ward.id,
@@ -36,11 +44,21 @@ export default withContainer(
           trustId: ward.trustId,
           type: WARD_STAFF,
         });
+      } else if (verifyAdminCodeResponse.validAdminCode) {
+        token = tokens.generate({
+          wardId: undefined,
+          wardCode: undefined,
+          trustId: undefined,
+          type: ADMIN,
+        });
       }
 
       const expiryHours = 2;
       let expiry = new Date();
-      if (verifyTrustAdminCodeResponse.validTrustAdminCode) {
+      if (
+        verifyTrustAdminCodeResponse.validTrustAdminCode ||
+        verifyAdminCodeResponse.validAdminCode
+      ) {
         expiry.setTime(expiry.getTime() + 1 * 60 * 60 * 1000);
       } else {
         expiry.setTime(expiry.getTime() + expiryHours * 60 * 60 * 1000);
