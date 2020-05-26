@@ -110,6 +110,28 @@ describe(
   })
 );
 
+describe(
+  "GovNotify contract email tests",
+  contractTestClient(({ client }) => {
+    const { templateId, personalisationKeys } = TemplateStore.firstEmail;
+
+    const personalisation = fillObjectWithStrings(personalisationKeys);
+
+    const validEmailAddress = "simulate-delivered@notifications.service.gov.uk";
+
+    xdescribe("sendEmail", () => {
+      it("Can successfully send an Email", async () => {
+        const result = await client.sendEmail(templateId, validEmailAddress, {
+          personalisation,
+        });
+
+        expect(result).toBeDefined;
+        expect(result.response).toBeDefined;
+      });
+    });
+  })
+);
+
 const buildError = ({ error, message }) => ({
   error: {
     errors: [
