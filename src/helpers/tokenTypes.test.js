@@ -8,4 +8,8 @@ describe("tokenTypes", () => {
   it("returns the trustAdmin token type", () => {
     expect(tokenTypes.TRUST_ADMIN).toEqual("trustAdmin");
   });
+
+  it("returns the admin token type", () => {
+    expect(tokenTypes.ADMIN).toEqual("admin");
+  });
 });
