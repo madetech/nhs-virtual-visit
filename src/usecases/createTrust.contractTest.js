@@ -12,9 +12,6 @@ describe("createTrust contract tests", () => {
 
   afterEach(async () => {
     await truncateAllTables(container);
-
-    const db = await container.getDb();
-    db.$pool.end();
   });
 
   it("creates a trust in the db when valid", async () => {
