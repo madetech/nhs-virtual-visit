@@ -119,7 +119,8 @@ describe(
 
     const validEmailAddress = "simulate-delivered@notifications.service.gov.uk";
 
-    xdescribe("sendEmail", () => {
+    // WIP, NK
+    describe.skip("sendEmail", () => {
       it("Can successfully send an Email", async () => {
         const result = await client.sendEmail(templateId, validEmailAddress, {
           personalisation,
