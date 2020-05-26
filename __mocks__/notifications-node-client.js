@@ -69,4 +69,6 @@ export class NotifyClient {
       id: "test-sms-return-response-id",
     });
   });
+
+  sendEmail = jest.fn(() => {});
 }
