@@ -8,7 +8,7 @@ describe("sendEmail", () => {
   const personalisation = fillObjectWithStrings(personalisationKeys);
 
   const emailAddress = "test@example.com";
-  const reference = "text-email-one";
+  const reference = "email-one-reference";
 
   let notifyClient;
   let container;
@@ -20,7 +20,7 @@ describe("sendEmail", () => {
     };
   });
 
-  it("sends a text message", async () => {
+  it("sends an email message", async () => {
     await sendEmail(container)(
       templateId,
       emailAddress,
