@@ -1,4 +1,4 @@
-CREATE TABLE tokens (
+CREATE TABLE refresh_tokens (
   id serial PRIMARY KEY,
-  token_value varchar(255) NOT NULL UNIQUE
+  value varchar(255) NOT NULL UNIQUE
 );
