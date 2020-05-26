@@ -37,4 +37,29 @@ describe("sendEmail", () => {
       }
     );
   });
+
+  it("returns success if it successfully sends an email", async () => {
+    const response = await sendEmail(container)(
+      templateId,
+      emailAddress,
+      personalisation,
+      reference
+    );
+
+    expect(response).toEqual({ success: true, error: null });
+  });
+
+  it("returns the error if GovNotify raises an error", async () => {
+    const response = await sendEmail(container)(
+      "3b45757d-aaaa-4e33-ac7c-00674a70888d",
+      "",
+      {},
+      {}
+    );
+
+    expect(response).toEqual({
+      success: false,
+      error: "GovNotify error occurred: Template not found",
+    });
+  });
 });

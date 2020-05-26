@@ -70,5 +70,16 @@ export class NotifyClient {
     });
   });
 
-  sendEmail = jest.fn(() => {});
+  sendEmail = jest.fn((templateId) => {
+    if (
+      Object.values(TemplateStore).findIndex(
+        (it) => it.templateId === templateId
+      ) === -1
+    ) {
+      return this._rejectWithError({
+        error: "BadRequestError",
+        message: "Template not found",
+      });
+    }
+  });
 }
