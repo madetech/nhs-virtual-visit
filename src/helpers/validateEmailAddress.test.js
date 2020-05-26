@@ -1,8 +1,11 @@
 import validateEmailAddress from "./validateEmailAddress";
 
 describe("validateEmailAddress", () => {
-  it("accepts an email address", () => {
-    const actual = validateEmailAddress("hello@goodbye.com");
-    expect(actual).toEqual(true);
+  it("accepts a valid email address", () => {
+    expect(validateEmailAddress("hello@goodbye.com")).toEqual(true);
+  });
+
+  it("reject and invalid email address", () => {
+    expect(validateEmailAddress("INVALID_EMAIL")).toEqual(false);
   });
 });
