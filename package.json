@@ -32,7 +32,6 @@
     "db-migrate": "^0.11.11",
     "db-migrate-pg": "^1.2.1",
     "dotenv-load": "^2.0.0",
-    "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "google-libphonenumber": "^3.2.9",
     "heroku-ssl-redirect": "0.0.4",
