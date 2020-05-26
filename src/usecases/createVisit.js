@@ -3,13 +3,14 @@ const createVisit = ({ getDb }) => async (visit) => {
 
   return await db.one(
     `INSERT INTO scheduled_calls_table
-      (id, patient_name, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password)
-      VALUES (default, $1, $2, $3, $4, $5, $6, $7, $8)
+      (id, patient_name, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password)
+      VALUES (default, $1, $2, $3, $4, $5, $6, $7, $8, $9)
       RETURNING id
     `,
     [
       visit.patientName,
-      visit.contactNumber,
+      visit.contactEmail || "",
+      visit.contactNumber || "",
       visit.contactName || "",
       visit.callTime,
       visit.callId,
