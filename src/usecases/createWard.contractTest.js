@@ -1,18 +1,9 @@
 import createWard from "./createWard";
 import AppContainer from "../containers/AppContainer";
-import truncateAllTables from "../testUtils/truncateAllTables";
 import setupTrust from "../testUtils/setupTrust";
 
 describe("createWard contract tests", () => {
   const container = AppContainer.getInstance();
-
-  beforeEach(async () => {
-    await truncateAllTables(container);
-  });
-
-  afterEach(async () => {
-    await truncateAllTables(container);
-  });
 
   it("creates a ward in the db when valid", async () => {
     const trust = await setupTrust(container)({
