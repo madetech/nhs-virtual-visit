@@ -10,9 +10,11 @@ jest.mock("node-fetch");
 const frozenTime = moment();
 
 describe("/api/book-a-visit", () => {
-  let validRequest;
+  let request;
   let response;
   let container;
+  let createVisitSpy;
+
   const validUserIsAuthenticatedSpy = jest.fn(() => ({
     wardId: 10,
     ward: "MEOW",
@@ -34,7 +36,8 @@ describe("/api/book-a-visit", () => {
   }));
 
   beforeEach(() => {
-    validRequest = {
+    createVisitSpy = jest.fn();
+    request = {
       method: "POST",
       body: {
         patientName: "Bob Smith",
@@ -53,12 +56,14 @@ describe("/api/book-a-visit", () => {
       end: jest.fn(),
     };
     container = {
-      getCreateVisit: jest.fn().mockReturnValue(() => {}),
+      getCreateVisit: () => createVisitSpy,
       getRetrieveWardById: () => getRetrieveWardByIdSpy,
       getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
       getDb: jest.fn().mockResolvedValue(() => {}),
       getSendTextMessage: () => () => ({ success: true, error: null }),
       getUpdateWardVisitTotals: () => updateWardVisitTotalsSpy,
+      getValidateMobileNumber: () => () => true,
+      getValidateEmailAddress: () => () => true,
     };
 
     process.env.ENABLE_WHEREBY = "yes";
@@ -74,7 +79,7 @@ describe("/api/book-a-visit", () => {
       .fn()
       .mockReturnValue({ success: true, error: null });
 
-    await bookAVisit(validRequest, response, {
+    await bookAVisit(request, response, {
       container: {
         ...container,
         getSendTextMessage: () => sendTextMessageSpy,
@@ -95,7 +100,7 @@ describe("/api/book-a-visit", () => {
   });
 
   it("updates the ward visit totals", async () => {
-    await bookAVisit(validRequest, response, { container });
+    await bookAVisit(request, response, { container });
 
     expect(updateWardVisitTotalsSpy).toHaveBeenCalledWith({
       wardId: 10,
@@ -129,13 +134,106 @@ describe("/api/book-a-visit", () => {
     expect(userIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
+  it("inserts a visit if valid with a mobile number", async () => {
+    await bookAVisit(request, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(201);
+    expect(createVisitSpy).toHaveBeenCalled();
+    expect(createVisitSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        patientName: "Bob Smith",
+        contactNumber: "07123456789",
+        callId: "fakeUrl",
+        provider: "whereby",
+      })
+    );
+  });
+
+  it("inserts a visit if valid with an email address", async () => {
+    request.body = {
+      patientName: "Bob Smith",
+      contactEmail: "john.smith@madetech.com",
+      contactName: "John Smith",
+      callTime: frozenTime,
+    };
+    await bookAVisit(request, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(201);
+    expect(createVisitSpy).toHaveBeenCalled();
+    expect(createVisitSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        patientName: "Bob Smith",
+        contactEmail: "john.smith@madetech.com",
+        callId: "fakeUrl",
+        provider: "whereby",
+      })
+    );
+  });
+
+  it("rejects if email is invalid", async () => {
+    request.body = {
+      patientName: "Bob Smith",
+      contactEmail: "INVALID_EMAIL",
+      contactName: "John Smith",
+      callTime: frozenTime,
+    };
+    await bookAVisit(request, response, {
+      container: {
+        ...container,
+        getValidateEmailAddress: () => () => false,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(createVisitSpy).not.toHaveBeenCalled();
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "contactEmail must be a valid email address" })
+    );
+  });
+
+  it("inserts rejects if phone number is invalid", async () => {
+    request.body = {
+      patientName: "Bob Smith",
+      contactNumber: "INVALID_NUMBER",
+      contactName: "John Smith",
+      callTime: frozenTime,
+    };
+    await bookAVisit(request, response, {
+      container: {
+        ...container,
+        getValidateMobileNumber: () => () => false,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(createVisitSpy).not.toHaveBeenCalled();
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "contactNumber must be a valid mobile number" })
+    );
+  });
+
+  it("inserts rejects if neither email nor phone number are present", async () => {
+    request.body = {
+      patientName: "Bob Smith",
+      contactName: "John Smith",
+      callTime: frozenTime,
+    };
+    await bookAVisit(request, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(createVisitSpy).not.toHaveBeenCalled();
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "contactNumber or contactEmail must be present" })
+    );
+  });
+
   describe("when sending a text message", () => {
     it("returns a 201 status if successful", async () => {
       const sendTextMessageStub = jest
         .fn()
         .mockReturnValue({ success: true, error: null });
 
-      await bookAVisit(validRequest, response, {
+      await bookAVisit(request, response, {
         container: {
           ...container,
           getSendTextMessage: () => sendTextMessageStub,
@@ -150,7 +248,7 @@ describe("/api/book-a-visit", () => {
         .fn()
         .mockReturnValue({ success: false, error: "Error message" });
 
-      await bookAVisit(validRequest, response, {
+      await bookAVisit(request, response, {
         container: {
           ...container,
           getSendTextMessage: () => sendTextMessageStub,
@@ -163,9 +261,7 @@ describe("/api/book-a-visit", () => {
 
   describe("Whereby", () => {
     it("Provides the correct bearer token", async () => {
-      const createVisitSpy = jest.fn();
-
-      await bookAVisit(validRequest, response, {
+      await bookAVisit(request, response, {
         container: {
           ...container,
           getCreateVisit: () => createVisitSpy,
@@ -182,53 +278,27 @@ describe("/api/book-a-visit", () => {
         })
       );
     });
+  });
 
-    it("inserts a visit if valid", async () => {
-      const createVisitSpy = jest.fn();
+  describe("Select provider", () => {
+    it("Uses jitsi when whereby is not enabled", async () => {
+      process.env.ENABLE_WHEREBY = "no";
+      await bookAVisit(request, response, { container });
 
-      await bookAVisit(validRequest, response, {
-        container: {
-          ...container,
-          getCreateVisit: () => createVisitSpy,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(201);
-      expect(createVisitSpy).toHaveBeenCalled();
       expect(createVisitSpy).toHaveBeenCalledWith(
         expect.objectContaining({
-          patientName: "Bob Smith",
-          contactNumber: "07123456789",
-          callId: "fakeUrl",
-          provider: "whereby",
+          provider: "jitsi",
         })
       );
     });
-  });
-  describe("jitsi", () => {
-    beforeEach(() => {
-      process.env.ENABLE_WHEREBY = "no";
-    });
 
-    it("inserts a visit if valid", async () => {
-      const createVisitSpy = jest.fn();
+    it("Uses whereby when enabled", async () => {
+      process.env.ENABLE_WHEREBY = "yes";
+      await bookAVisit(request, response, { container });
 
-      await bookAVisit(validRequest, response, {
-        container: {
-          ...container,
-          getCreateVisit: () => createVisitSpy,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(201);
-      expect(getRetrieveWardByIdSpy).toHaveBeenCalledWith(10, 1);
       expect(createVisitSpy).toHaveBeenCalledWith(
         expect.objectContaining({
-          patientName: "Bob Smith",
-          contactNumber: "07123456789",
-          contactName: "John Smith",
-          provider: "jitsi",
-          wardId: 10,
+          provider: "whereby",
         })
       );
     });

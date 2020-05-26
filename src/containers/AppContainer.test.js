@@ -77,4 +77,12 @@ describe("AppContainer", () => {
   it("returns getRetrieveTrustById", () => {
     expect(container.getRetrieveTrustById()).toBeDefined();
   });
+
+  it("returns getValidateEmailAddress", () => {
+    expect(container.getValidateEmailAddress()).toBeDefined();
+  });
+
+  it("returns getValidateMobileNumber", () => {
+    expect(container.getValidateMobileNumber()).toBeDefined();
+  });
 });

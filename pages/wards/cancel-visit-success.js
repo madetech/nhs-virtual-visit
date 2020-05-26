@@ -1,52 +1,55 @@
-import React, { useCallback } from "react";
-import Button from "../../src/components/Button";
-import { GridRow, GridColumn } from "../../src/components/Grid";
-import Heading from "../../src/components/Heading";
+import React from "react";
 import Layout from "../../src/components/Layout";
-import Router from "next/router";
+import ActionLink from "../../src/components/ActionLink";
+import AnchorLink from "../../src/components/AnchorLink";
 import verifyToken from "../../src/usecases/verifyToken";
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 import deleteVisitByCallId from "../../src/usecases/deleteVisitByCallId";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Error from "next/error";
-import VisitSummaryList from "../../src/components/VisitSummaryList";
+import formatDateAndTime from "../../src/helpers/formatDateAndTime";
 
 const deleteVisitSuccess = ({
   patientName,
-  contactName,
-  contactNumber,
   callDateAndTime,
   error,
   deleteError,
 }) => {
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
-    Router.push(`/wards/visits`);
-  });
-
   if (error || deleteError) {
     return <Error />;
   }
 
   return (
-    <Layout title="Virtual visit has been cancelled" renderLogout={true}>
-      <GridRow>
-        <GridColumn width="full">
-          <form onSubmit={onSubmit}>
-            <Heading>Virtual visit has been cancelled</Heading>
-            <p>The following virtual visit has been successfully cancelled.</p>
+    <Layout title="Virtual visit cancelled" renderLogout={true}>
+      <div className="nhsuk-grid-row">
+        <div className="nhsuk-grid-column-two-thirds">
+          <div
+            className="nhsuk-panel nhsuk-panel--confirmation nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4"
+            style={{ textAlign: "center" }}
+          >
+            <h1 className="nhsuk-panel__title nhsuk-u-margin-bottom-4">
+              Virtual visit cancelled
+            </h1>
 
-            <VisitSummaryList
-              patientName={patientName}
-              visitorName={contactName}
-              visitorMobileNumber={contactNumber}
-              visitDateAndTime={callDateAndTime}
-            ></VisitSummaryList>
+            <div className="nhsuk-panel__body">
+              for {patientName} on
+              <br />
+              <strong>{formatDateAndTime(callDateAndTime, "HH:mm")}</strong>
+            </div>
+          </div>
+          <h2>What happens next</h2>
 
-            <Button>Return to virtual visits</Button>
-          </form>
-        </GridColumn>
-      </GridRow>
+          <ActionLink href={`/admin/add-a-ward`}>
+            Book a virtual visit
+          </ActionLink>
+
+          <p>
+            <AnchorLink href="/wards/visits">
+              Return to virtual visits
+            </AnchorLink>
+          </p>
+        </div>
+      </div>
     </Layout>
   );
 };
@@ -60,8 +63,6 @@ export const getServerSideProps = propsWithContainer(
     if (error && !scheduledCall) {
       scheduledCall = {
         patientName: "",
-        recipientName: "",
-        recipientNumber: "",
         callTime: "",
       };
     }
@@ -70,8 +71,6 @@ export const getServerSideProps = propsWithContainer(
     return {
       props: {
         patientName: scheduledCall.patientName,
-        contactName: scheduledCall.recipientName,
-        contactNumber: scheduledCall.recipientNumber,
         callDateAndTime: scheduledCall.callTime,
         error,
         deleteError,
