@@ -29,7 +29,7 @@ This service allows ward staff to schedule a visit for a patient. Allowing face 
 
 | Ward Staff see list of visits                                            | Ward Staff start a visits                                           |
 | ------------------------------------------------------------------------ | ------------------------------------------------------------------- |
-| ![Ward Staff see list of visits](docs/images/WardStaff_VisitsScreen.png) | ![Ward Staff start a visits](docs/images/WardStaff_StartScreen.png) |
+| ![Ward Staff see list of visits sorted by Today, Upcoming, and Past 12 hours](docs/images/WardStaff_Overview.png) | ![Ward Staff start a visits](docs/images/WardStaff_StartScreen.png) |
 
 | Visitor receives SMS notifications                                 | Visitor joins a visit                                         | Visitor ends a visit                                       |
 | ------------------------------------------------------------------ | ------------------------------------------------------------- | ---------------------------------------------------------- |
@@ -67,10 +67,14 @@ API_KEY=
 DATABASE_URL=
 # Postgres Connection String for the test database
 TEST_DATABASE_URL=
-# GovNotify Initial Template ID
+# GovNotify SMS Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
-# GovNotify Join Template ID
+# GovNotify SMS Join Template ID
 SMS_JOIN_TEMPLATE_ID=
+# GovNotify Email Initial Template ID
+EMAIL_INITIAL_TEMPLATE_ID=
+# GovNotify Email Join Template ID
+EMAIL_JOIN_TEMPLATE_ID=
 # Valid Ward Codes
 ALLOWED_CODES=
 # Signing key for JWT tokens
