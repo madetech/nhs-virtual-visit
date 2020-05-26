@@ -53,7 +53,7 @@ export default withContainer(
         });
       }
 
-      const expiryHours = 2;
+      const expiryHours = 14;
       let expiry = new Date();
       if (
         verifyTrustAdminCodeResponse.validTrustAdminCode ||
