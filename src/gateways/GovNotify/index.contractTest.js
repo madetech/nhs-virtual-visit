@@ -29,7 +29,7 @@ const contractTestClient = (testCallback) => () => {
 };
 
 describe(
-  "GovNotify contract tests",
+  "GovNotify contract sms tests",
   contractTestClient(({ client }) => {
     const { templateId, personalisationKeys } = TemplateStore.firstText;
 
