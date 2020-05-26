@@ -67,10 +67,14 @@ API_KEY=
 DATABASE_URL=
 # Postgres Connection String for the test database
 TEST_DATABASE_URL=
-# GovNotify Initial Template ID
+# GovNotify SMS Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
-# GovNotify Join Template ID
+# GovNotify SMS Join Template ID
 SMS_JOIN_TEMPLATE_ID=
+# GovNotify Email Initial Template ID
+EMAIL_INITIAL_TEMPLATE_ID=
+# GovNotify Email Join Template ID
+EMAIL_JOIN_TEMPLATE_ID=
 # Valid Ward Codes
 ALLOWED_CODES=
 # Signing key for JWT tokens
