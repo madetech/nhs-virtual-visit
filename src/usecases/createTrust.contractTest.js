@@ -22,4 +22,23 @@ describe("createTrust contract tests", () => {
 
     expect(error).toBeNull();
   });
+
+  it("returns an error if the admin_code is not unique", async () => {
+    await createTrust(container)({
+      name: "Test Trust",
+      adminCode: "adminCode",
+    });
+
+    const request = {
+      name: "Test Trust 2",
+      adminCode: "adminCode",
+    };
+
+    const { trustId, error } = await createTrust(container)(request);
+
+    expect(trustId).toBeNull();
+    expect(error.toString()).toEqual(
+      'error: duplicate key value violates unique constraint "trusts_admin_code_key"'
+    );
+  });
 });
