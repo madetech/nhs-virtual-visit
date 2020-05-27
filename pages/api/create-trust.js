@@ -17,8 +17,14 @@ export default withContainer(
     }
 
     if (!body.name) {
-      res.status(400);
+      res.status(409);
       res.end(JSON.stringify({ err: "name must be present" }));
+      return;
+    }
+
+    if (!body.adminCode) {
+      res.status(409);
+      res.end(JSON.stringify({ err: "admin code must be present" }));
       return;
     }
 
@@ -28,11 +34,12 @@ export default withContainer(
 
     const { trustId, error } = await createTrust({
       name: body.name,
+      adminCode: body.adminCode,
     });
 
     if (error) {
       res.status(409);
-      res.end(JSON.stringify({ err: "Trust name already exists" }));
+      res.end(JSON.stringify({ err: "Admin code already exists" }));
     } else {
       res.status(201);
       res.end(JSON.stringify({ trustId: trustId }));
