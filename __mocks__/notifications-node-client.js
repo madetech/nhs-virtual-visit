@@ -70,7 +70,7 @@ export class NotifyClient {
     });
   });
 
-  sendEmail = jest.fn((templateId) => {
+  sendEmail = jest.fn((templateId, emailAddress, { personalisation }) => {
     if (!uuidValidate(templateId)) {
       return this._rejectWithError({
         error: "ValidationError",
@@ -86,6 +86,27 @@ export class NotifyClient {
       return this._rejectWithError({
         error: "BadRequestError",
         message: "Template not found",
+      });
+    }
+
+    const missingPersonalisation = this._validatePersonalisation(
+      templateId,
+      personalisation
+    );
+
+    if (missingPersonalisation.length) {
+      return this._rejectWithError({
+        error: "BadRequestError",
+        message: `Missing personalisation: ${missingPersonalisation.join(
+          ", "
+        )}`,
+      });
+    }
+
+    if (emailAddress.length <= 3) {
+      return this._rejectWithError({
+        error: "ValidationError",
+        message: "email_address Not a valid email address",
       });
     }
 
