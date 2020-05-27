@@ -27,6 +27,7 @@ import archiveWard from "../usecases/archiveWard";
 import validateEmailAddress from "../usecases/validateEmailAddress";
 import validateMobileNumber from "../usecases/validateMobileNumber";
 import createTrust from "../usecases/createTrust";
+import retrieveTrusts from "../usecases/retrieveTrusts";
 
 class AppContainer {
   getDb = () => {
@@ -143,6 +144,10 @@ class AppContainer {
 
   getCreateTrust = () => {
     return createTrust(this);
+  };
+
+  getRetrieveTrusts = () => {
+    return retrieveTrusts(this);
   };
 }
 
