@@ -71,6 +71,13 @@ export class NotifyClient {
   });
 
   sendEmail = jest.fn((templateId) => {
+    if (!uuidValidate(templateId)) {
+      return this._rejectWithError({
+        error: "ValidationError",
+        message: "template_id is not a valid UUID",
+      });
+    }
+
     if (
       Object.values(TemplateStore).findIndex(
         (it) => it.templateId === templateId
