@@ -137,22 +137,47 @@ export default withContainer(
 
       await updateWardVisitTotals({ wardId: ward.id, date: body.callTime });
 
-      const sendTextMessage = container.getSendTextMessage();
-      const templateId = TemplateStore.firstText.templateId;
+      let sendTextMessageResponse;
+      if (body.contactNumber) {
+        const sendTextMessage = container.getSendTextMessage();
+        const textMessageTemplateId = TemplateStore.firstText.templateId;
 
-      const response = await sendTextMessage(
-        templateId,
-        body.contactNumber,
-        {
-          visit_date: formatDate(body.callTime),
-          visit_time: formatTime(body.callTime),
-          ward_name: ward.name,
-          hospital_name: ward.hospitalName,
-        },
-        null
-      );
+        sendTextMessageResponse = await sendTextMessage(
+          textMessageTemplateId,
+          body.contactNumber,
+          {
+            visit_date: formatDate(body.callTime),
+            visit_time: formatTime(body.callTime),
+            ward_name: ward.name,
+            hospital_name: ward.hospitalName,
+          },
+          null
+        );
+      }
 
-      if (response.success) {
+      let sendEmailResponse;
+      if (body.contactEmail) {
+        const sendEmail = container.getSendEmail();
+        const emailTemplateId = TemplateStore.firstEmail.templateId;
+
+        sendEmailResponse = await sendEmail(
+          emailTemplateId,
+          body.contactEmail,
+          {
+            visit_date: formatDate(body.callTime),
+            visit_time: formatTime(body.callTime),
+            ward_name: ward.name,
+            hospital_name: ward.hospitalName,
+          },
+          null
+        );
+      }
+
+      if (
+        (sendTextMessageResponse?.success && sendEmailResponse?.success) ||
+        (sendTextMessageResponse?.success && !sendEmailResponse) ||
+        (sendEmailResponse?.success && !sendTextMessageResponse)
+      ) {
         notifier.notify(formatDateAndTime(body.callTimeLocal));
 
         res.status(201);
