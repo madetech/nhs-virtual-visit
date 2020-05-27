@@ -81,5 +81,7 @@ export class NotifyClient {
         message: "Template not found",
       });
     }
+
+    return Promise.resolve({});
   });
 }
