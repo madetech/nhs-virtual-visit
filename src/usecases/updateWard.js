@@ -4,13 +4,12 @@ export default ({ getDb }) => async (ward) => {
     const updatedWard = await db.one(
       `UPDATE wards
       SET name = $1,
-          hospital_name = $2,
-          hospital_id = $3
+          hospital_id = $2
       WHERE
-          id = $4
+          id = $3
       RETURNING id
           `,
-      [ward.name, ward.hospitalName, ward.hospitalId, ward.id]
+      [ward.name, ward.hospitalId, ward.id]
     );
     return {
       wardId: updatedWard.id,
