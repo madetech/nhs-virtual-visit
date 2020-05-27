@@ -121,13 +121,13 @@ describe(
 
     describe("sendEmail", () => {
       it("can successfully send an Email", async () => {
-        console.log(personalisation);
         const result = await client.sendEmail(templateId, validEmailAddress, {
           personalisation,
         });
 
         expect(result).toBeDefined;
         expect(result.response).toBeDefined;
+        expect(result.id).toBeDefined;
       });
 
       it("rejects when templateId is an invalid UUID", async () => {
