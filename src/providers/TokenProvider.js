@@ -20,6 +20,7 @@ class TokenProvider {
       this.signingKey,
       {
         algorithm: "HS256",
+        expiresIn: "14h",
       }
     );
   }
