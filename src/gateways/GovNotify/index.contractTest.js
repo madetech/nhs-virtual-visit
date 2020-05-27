@@ -128,6 +128,36 @@ describe(
         expect(result).toBeDefined;
         expect(result.response).toBeDefined;
       });
+
+      it("rejects when templateId is an invalid UUID", async () => {
+        await expect(
+          client.sendEmail("", validEmailAddress, {
+            personalisation: {},
+          })
+        ).rejects.toMatchObject(
+          buildError({
+            error: "ValidationError",
+            message: "template_id is not a valid UUID",
+          })
+        );
+      });
+
+      it("rejects when templateId does not match a template", async () => {
+        await expect(
+          client.sendEmail(
+            "3b45757d-aaaa-4e33-ac7c-00674a70888d",
+            validEmailAddress,
+            {
+              personalisation: {},
+            }
+          )
+        ).rejects.toMatchObject(
+          buildError({
+            error: "BadRequestError",
+            message: "Template not found",
+          })
+        );
+      });
     });
   })
 );
