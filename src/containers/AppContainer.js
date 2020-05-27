@@ -25,6 +25,7 @@ import retrieveHospitalById from "../usecases/retrieveHospitalById";
 import archiveWard from "../usecases/archiveWard";
 import validateEmailAddress from "../usecases/validateEmailAddress";
 import validateMobileNumber from "../usecases/validateMobileNumber";
+import createTrust from "../usecases/createTrust";
 
 class AppContainer {
   getDb = () => {
@@ -133,6 +134,10 @@ class AppContainer {
 
   getValidateMobileNumber = () => {
     return validateMobileNumber(this);
+  };
+
+  getCreateTrust = () => {
+    return createTrust(this);
   };
 }
 
