@@ -12,6 +12,7 @@ describe("create-trust", () => {
       method: "POST",
       body: {
         name: "Test Trust",
+        adminCode: "admincode",
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -83,6 +84,7 @@ describe("create-trust", () => {
     expect(createTrustSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         name: "Test Trust",
+        adminCode: "admincode",
       })
     );
   });
@@ -101,58 +103,11 @@ describe("create-trust", () => {
 
     expect(response.status).toHaveBeenCalledWith(409);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "Trust name already exists" })
+      JSON.stringify({ err: "Admin code already exists" })
     );
   });
 
-  it("returns a 400 if the name is an empty string", async () => {
-    const invalidRequest = {
-      method: "POST",
-      body: {
-        name: "",
-        trustName: "Yugi Muto Trust",
-      },
-      headers: {
-        cookie: "token=valid.token.value",
-      },
-    };
-
-    await createTrust(invalidRequest, response, {
-      container: {
-        ...container,
-      },
-    });
-
-    expect(response.status).toHaveBeenCalledWith(400);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "name must be present" })
-    );
-  });
-
-  it("returns a 400 if the name is not provided", async () => {
-    const invalidRequest = {
-      method: "POST",
-      body: {
-        trustName: "Yugi Muto Trust",
-      },
-      headers: {
-        cookie: "token=valid.token.value",
-      },
-    };
-
-    await createTrust(invalidRequest, response, {
-      container: {
-        ...container,
-      },
-    });
-
-    expect(response.status).toHaveBeenCalledWith(400);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "name must be present" })
-    );
-  });
-
-  it("returns a 400 if the trust name is an empty string", async () => {
+  it("returns a 409 if the name is an empty string", async () => {
     const invalidRequest = {
       method: "POST",
       body: {
@@ -169,9 +124,77 @@ describe("create-trust", () => {
       },
     });
 
-    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.status).toHaveBeenCalledWith(409);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ err: "name must be present" })
+    );
+  });
+
+  it("returns a 409 if the name is not provided", async () => {
+    const invalidRequest = {
+      method: "POST",
+      body: {},
+      headers: {
+        cookie: "token=valid.token.value",
+      },
+    };
+
+    await createTrust(invalidRequest, response, {
+      container: {
+        ...container,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(409);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "name must be present" })
+    );
+  });
+
+  it("returns a 409 if the admin code is not provided", async () => {
+    const invalidRequest = {
+      method: "POST",
+      body: {
+        name: "Test Trust",
+      },
+      headers: {
+        cookie: "token=valid.token.value",
+      },
+    };
+
+    await createTrust(invalidRequest, response, {
+      container: {
+        ...container,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(409);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "admin code must be present" })
+    );
+  });
+
+  it("returns a 409 if the admin code is an empty string", async () => {
+    const invalidRequest = {
+      method: "POST",
+      body: {
+        name: "Test Trust",
+        adminCode: "",
+      },
+      headers: {
+        cookie: "token=valid.token.value",
+      },
+    };
+
+    await createTrust(invalidRequest, response, {
+      container: {
+        ...container,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(409);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "admin code must be present" })
     );
   });
 });
