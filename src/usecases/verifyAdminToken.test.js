@@ -1,5 +1,4 @@
 import verifyAdminToken from "./verifyAdminToken";
-import moment from "moment";
 
 describe("verifyAdminToken", () => {
   const req = {
@@ -66,37 +65,5 @@ describe("verifyAdminToken", () => {
     expect(res.writeHead).toHaveBeenCalledWith(302, {
       Location: "/wards/login",
     });
-  });
-
-  it("sets a new token if the old one is expiring", async () => {
-    const req = {
-      headers: {
-        cookie: "token=sample.token.value",
-      },
-    };
-
-    const callback = jest.fn();
-    const authenticationToken = {
-      type: "admin",
-      exp: moment().add(5, "minutes").unix(),
-    };
-
-    const tokenProvider = {
-      validate: jest.fn(() => authenticationToken),
-      generate: jest.fn(() => "encodedToken"),
-    };
-    const container = {
-      getTokenProvider: () => tokenProvider,
-    };
-
-    verifyAdminToken(callback)({ req, res, container });
-    expect(callback).toHaveBeenCalledWith(
-      expect.objectContaining({
-        authenticationToken: authenticationToken,
-      })
-    );
-    expect(res.setHeader).toHaveBeenCalledWith("Set-Cookie", [
-      `token=encodedToken; httpOnly; path=/;`,
-    ]);
   });
 });

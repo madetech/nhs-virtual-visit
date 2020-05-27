@@ -1,5 +1,5 @@
 import adminIsAuthenticated from "./adminIsAuthenticated";
-import moment from "moment";
+import refreshToken from "./refreshToken";
 
 export default function (callback) {
   return function (context) {
@@ -10,34 +10,27 @@ export default function (callback) {
     );
 
     if (authenticationToken) {
-      const expiresAt = new Date(authenticationToken.exp * 1000);
-      if (
-        moment(moment()).isBetween(
-          moment(expiresAt).subtract(3, "hours"),
-          expiresAt
-        )
-      ) {
-        const tokenProvider = container.getTokenProvider();
-        const refreshedEncToken = tokenProvider.generate({
-          wardId: authenticationToken.wardId,
-          wardCode: authenticationToken.wardCode,
-          trustId: authenticationToken.trustId,
-          type: authenticationToken.type,
-        });
+      const {
+        refreshedToken,
+        refreshedEncodedToken,
+        isTokenRefreshed,
+      } = refreshToken(container)(authenticationToken);
+
+      if (isTokenRefreshed) {
         res.setHeader("Set-Cookie", [
-          `token=${refreshedEncToken}; httpOnly; path=/;`,
+          `token=${refreshedEncodedToken}; httpOnly; path=/;`,
         ]);
-
-        const refreshedToken = tokenProvider.validate(refreshedEncToken);
-
         return (
           callback({ ...context, authenticationToken: refreshedToken }) ?? {
             props: {},
           }
         );
-      } else {
-        return callback({ ...context, authenticationToken }) ?? { props: {} };
       }
+      return (
+        callback({ ...context, authenticationToken }) ?? {
+          props: {},
+        }
+      );
     } else {
       res.writeHead(302, { Location: "/wards/login" }).end();
     }
