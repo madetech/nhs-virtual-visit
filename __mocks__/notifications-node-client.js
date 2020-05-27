@@ -1,5 +1,6 @@
 import uuidValidate from "uuid-validate";
 import TemplateStore from "../src/gateways/GovNotify/TemplateStore";
+import validateEmailAddress from "../src/helpers/validateEmailAddress";
 
 export class NotifyClient {
   _rejectWithError = ({ error, message }) => {
@@ -91,7 +92,7 @@ export class NotifyClient {
       return requestValidationError;
     }
 
-    if (emailAddress.length <= 3) {
+    if (!validateEmailAddress(emailAddress)) {
       return this._rejectWithError({
         error: "ValidationError",
         message: "email_address Not a valid email address",
