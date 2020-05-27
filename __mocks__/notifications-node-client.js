@@ -110,6 +110,8 @@ export class NotifyClient {
       });
     }
 
-    return Promise.resolve({});
+    return Promise.resolve({
+      id: "740e5834-3a29-46b4-9a6f-16142fde533a",
+    });
   });
 }
