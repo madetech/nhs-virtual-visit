@@ -106,10 +106,10 @@ const AddATrust = () => {
         const status = response.status;
 
         if (status == 201) {
-          await response.json();
+          const { trustId } = await response.json();
           Router.push({
-            pathname: "/admin",
-            query: {},
+            pathname: "/admin/add-a-trust-success",
+            query: { trustId: trustId },
           });
         } else if (status === 409) {
           const { err } = await response.json();
