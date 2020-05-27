@@ -15,6 +15,40 @@ export class NotifyClient {
     });
   };
 
+  _validateRequest = (templateId, personalisation) => {
+    if (!uuidValidate(templateId)) {
+      return this._rejectWithError({
+        error: "ValidationError",
+        message: "template_id is not a valid UUID",
+      });
+    }
+
+    if (
+      Object.values(TemplateStore).findIndex(
+        (it) => it.templateId === templateId
+      ) === -1
+    ) {
+      return this._rejectWithError({
+        error: "BadRequestError",
+        message: "Template not found",
+      });
+    }
+
+    const missingPersonalisation = this._validatePersonalisation(
+      templateId,
+      personalisation
+    );
+
+    if (missingPersonalisation.length) {
+      return this._rejectWithError({
+        error: "BadRequestError",
+        message: `Missing personalisation: ${missingPersonalisation.join(
+          ", "
+        )}`,
+      });
+    }
+  };
+
   _validatePersonalisation = (templateId, personalisation) => {
     const template = Object.values(TemplateStore).filter(
       (it) => it.templateId === templateId
@@ -26,22 +60,13 @@ export class NotifyClient {
   };
 
   sendSms = jest.fn((templateId, mobileNumber, { personalisation }) => {
-    if (!uuidValidate(templateId)) {
-      return this._rejectWithError({
-        error: "ValidationError",
-        message: "template_id is not a valid UUID",
-      });
-    }
+    const requestValidationError = this._validateRequest(
+      templateId,
+      personalisation
+    );
 
-    if (
-      Object.values(TemplateStore).findIndex(
-        (it) => it.templateId === templateId
-      ) === -1
-    ) {
-      return this._rejectWithError({
-        error: "BadRequestError",
-        message: "Template not found",
-      });
+    if (requestValidationError) {
+      return requestValidationError;
     }
 
     if (mobileNumber.length !== 11) {
@@ -51,56 +76,19 @@ export class NotifyClient {
       });
     }
 
-    const missingPersonalisation = this._validatePersonalisation(
-      templateId,
-      personalisation
-    );
-
-    if (missingPersonalisation.length) {
-      return this._rejectWithError({
-        error: "BadRequestError",
-        message: `Missing personalisation: ${missingPersonalisation.join(
-          ", "
-        )}`,
-      });
-    }
-
     return Promise.resolve({
       id: "test-sms-return-response-id",
     });
   });
 
   sendEmail = jest.fn((templateId, emailAddress, { personalisation }) => {
-    if (!uuidValidate(templateId)) {
-      return this._rejectWithError({
-        error: "ValidationError",
-        message: "template_id is not a valid UUID",
-      });
-    }
-
-    if (
-      Object.values(TemplateStore).findIndex(
-        (it) => it.templateId === templateId
-      ) === -1
-    ) {
-      return this._rejectWithError({
-        error: "BadRequestError",
-        message: "Template not found",
-      });
-    }
-
-    const missingPersonalisation = this._validatePersonalisation(
+    const requestValidationError = this._validateRequest(
       templateId,
       personalisation
     );
 
-    if (missingPersonalisation.length) {
-      return this._rejectWithError({
-        error: "BadRequestError",
-        message: `Missing personalisation: ${missingPersonalisation.join(
-          ", "
-        )}`,
-      });
+    if (requestValidationError) {
+      return requestValidationError;
     }
 
     if (emailAddress.length <= 3) {
