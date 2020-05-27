@@ -4,6 +4,7 @@ import propsWithContainer from "../src/middleware/propsWithContainer";
 import verifyAdminToken from "../src/usecases/verifyAdminToken";
 import { GridRow, GridColumn } from "../src/components/Grid";
 import Heading from "../src/components/Heading";
+import ActionLink from "../src/components/ActionLink";
 
 const Admin = () => {
   return (
@@ -11,6 +12,7 @@ const Admin = () => {
       <GridRow>
         <GridColumn width="full">
           <Heading>Site administration</Heading>
+          <ActionLink href={`/admin/add-a-trust`}>Add a trust</ActionLink>
         </GridColumn>
       </GridRow>
     </Layout>
