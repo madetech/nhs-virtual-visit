@@ -120,7 +120,8 @@ describe(
     const validEmailAddress = "simulate-delivered@notifications.service.gov.uk";
 
     describe("sendEmail", () => {
-      it("Can successfully send an Email", async () => {
+      it("can successfully send an Email", async () => {
+        console.log(personalisation);
         const result = await client.sendEmail(templateId, validEmailAddress, {
           personalisation,
         });
@@ -158,6 +159,36 @@ describe(
           })
         );
       });
+    });
+
+    it("rejects when personalisation values are missing", async () => {
+      await expect(
+        client.sendEmail(templateId, validEmailAddress, {
+          personalisation: {
+            hospital_name: "Test Hopsital",
+          },
+        })
+      ).rejects.toMatchObject(
+        buildError({
+          error: "BadRequestError",
+          message: expect.stringMatching(
+            /Missing personalisation: ward_name, visit_date, visit_time/
+          ),
+        })
+      );
+    });
+
+    it("rejects an invalid email address", async () => {
+      await expect(
+        client.sendEmail(templateId, "@", {
+          personalisation,
+        })
+      ).rejects.toMatchObject(
+        buildError({
+          error: "ValidationError",
+          message: "email_address Not a valid email address",
+        })
+      );
     });
   })
 );
