@@ -3,7 +3,6 @@ import "./styles.scss";
 import Router from "next/router";
 import formatDateAndTime from "../../helpers/formatDateAndTime";
 import VisitSummaryList from "../VisitSummaryList";
-import { GridRow, GridColumn } from "../Grid";
 import TimeFromNow from "../TimeFromNow";
 import Text from "../Text";
 
@@ -45,17 +44,14 @@ const VisitsPanelList = ({ visits, title, showButtons }) => {
                       id="nhsuk-details__text0"
                       aria-hidden="true"
                     >
-                      <GridRow>
-                        <GridColumn width="two-thirds">
-                          <VisitSummaryList
-                            patientName={visit.patientName}
-                            visitorName={visit.recipientName}
-                            visitorMobileNumber={visit.recipientNumber}
-                            visitDateAndTime={visit.callTime}
-                            withActions={false}
-                          ></VisitSummaryList>
-                        </GridColumn>
-                      </GridRow>
+                      <VisitSummaryList
+                        patientName={visit.patientName}
+                        visitorName={visit.recipientName}
+                        visitorMobileNumber={visit.recipientNumber}
+                        visitorEmailAddress={visit.recipientEmail}
+                        visitDateAndTime={visit.callTime}
+                        withActions={false}
+                      ></VisitSummaryList>
 
                       {showButtons && (
                         <>

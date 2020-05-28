@@ -7,6 +7,7 @@ const VisitSummaryList = ({
   patientName,
   visitorName,
   visitorMobileNumber,
+  visitorEmailAddress,
   visitDateAndTime,
   withActions = false,
   actionLinkOnClick = null,
@@ -26,9 +27,15 @@ const VisitSummaryList = ({
     },
     {
       key: "Key contact mobile number",
-      value: visitorMobileNumber,
+      value: visitorMobileNumber || "N/A",
       actionLinkOnClick: actionLinkOnClick,
       hiddenActionText: "key contact mobile number",
+    },
+    {
+      key: "Key contact email address",
+      value: visitorEmailAddress || "N/A",
+      actionLinkOnClick: actionLinkOnClick,
+      hiddenActionText: "key contact email address",
     },
     {
       key: "Date of visit",
