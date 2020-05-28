@@ -1,6 +1,6 @@
 describe("Logging in", () => {
   describe("Given a valid ward code", () => {
-    beforeEach(() => {
+    before(() => {
       // reset and seed the database
       cy.exec(
         "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
