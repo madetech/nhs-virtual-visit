@@ -3,7 +3,6 @@ import Button from "../../src/components/Button";
 import FormGroup from "../../src/components/FormGroup";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Heading from "../../src/components/Heading";
-import Hint from "../../src/components/Hint";
 import Input from "../../src/components/Input";
 import DateSelect from "../../src/components/DateSelect";
 import Layout from "../../src/components/Layout";
@@ -11,10 +10,11 @@ import ErrorSummary from "../../src/components/ErrorSummary";
 import validateMobileNumber from "../../src/helpers/validateMobileNumber";
 import verifyToken from "../../src/usecases/verifyToken";
 import Label from "../../src/components/Label";
+import VisitorContactDetailsInput from "../../src/components/VisitorContactDetailsInput";
 import Router from "next/router";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 import validateDateAndTime from "../../src/helpers/validateDateAndTime";
+import validateEmailAddress from "../../src/helpers/validateEmailAddress";
 
 const isValidName = (input) => {
   if (input.length !== 0) {
@@ -22,15 +22,23 @@ const isValidName = (input) => {
   }
 };
 
-const Home = ({
+const BookAVisit = ({
   initialPatientName,
   initialContactName,
   initialContactNumber,
+  initialContactEmail,
   initialCallDateTime,
 }) => {
+  const [textMessageIsChecked, setTextMessageIsChecked] = useState(
+    initialContactNumber?.length > 0 || false
+  );
+  const [emailIsChecked, setEmailIsChecked] = useState(
+    initialContactEmail?.length > 0 || false
+  );
   const [contactNumber, setContactNumber] = useState(
     initialContactNumber || ""
   );
+  const [contactEmail, setContactEmail] = useState(initialContactEmail || "");
   const [contactName, setContactName] = useState(initialContactName || "");
   const [patientName, setPatientName] = useState(initialPatientName || "");
   const [callDateTime, setCallDateTime] = useState(initialCallDateTime || "");
@@ -52,7 +60,21 @@ const Home = ({
     const setContactNumberError = (errors) => {
       errors.push({
         id: "contact-number-error",
-        message: "Enter a UK mobile number",
+        message: "Enter a valid mobile number",
+      });
+    };
+
+    const setContactEmailError = (errors) => {
+      errors.push({
+        id: "contact-email-error",
+        message: "Enter a valid email address",
+      });
+    };
+
+    const setContactMethodUncheckedError = (errors) => {
+      errors.push({
+        id: "contact-method-error",
+        message: "Select how the key contact wants to be notified",
       });
     };
 
@@ -90,12 +112,20 @@ const Home = ({
     if (!isValidName(contactName)) {
       setContactNameError(errors);
     }
+
+    if (!textMessageIsChecked && !emailIsChecked) {
+      setContactMethodUncheckedError(errors);
+    }
     try {
-      if (!validateMobileNumber(contactNumber)) {
+      if (textMessageIsChecked && !validateMobileNumber(contactNumber)) {
         setContactNumberError(errors);
       }
     } catch (error) {
       setContactNumberError(errors);
+    }
+
+    if (emailIsChecked && !validateEmailAddress(contactEmail)) {
+      setContactEmailError(errors);
     }
 
     const { isValidDate, isValidTime, errorMessage } = validateDateAndTime(
@@ -112,9 +142,21 @@ const Home = ({
     setErrors(errors);
 
     if (errors.length === 0) {
+      let query = {
+        patientName,
+        contactName,
+        ...callDateTime,
+      };
+
+      if (textMessageIsChecked && contactNumber) {
+        query.contactNumber = contactNumber;
+      }
+      if (emailIsChecked && contactEmail) {
+        query.contactEmail = contactEmail;
+      }
       Router.push({
         pathname: `/wards/book-a-visit-confirmation`,
-        query: { patientName, contactNumber, contactName, ...callDateTime },
+        query,
       });
     }
   });
@@ -162,33 +204,20 @@ const Home = ({
                 value={contactName || ""}
               />
 
-              <Label htmlFor="contact" className="nhsuk-label--l">
-                What is their key contact&apos;s mobile number?
-              </Label>
-
-              <Hint className="nhsuk-u-margin-bottom-2">
-                This must be a valid mobile number. For example,
-                0&zwj;7&zwj;7&zwj;0&zwj;0 9&zwj;0&zwj;0&zwj;1&zwj;0&zwj;0 a UK
-                number, or
-                +3&zwj;9&zwj;3&zwj;1&zwj;2&zwj;3&zwj;4&zwj;5&zwj;6&zwj;7&zwj;8&zwj;9
-                for an international number.
-              </Hint>
-              <Hint>
-                It will be used to send their key contact a text message with a
-                unique link for them to attend the video call.
-              </Hint>
-              <Input
-                id="contact-number"
-                type="tel"
-                hasError={hasError("contact-number")}
-                errorMessage="Enter a valid mobile number"
-                className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
-                style={{ padding: "16px!important", height: "64px" }}
-                onChange={(event) => setContactNumber(event.target.value)}
-                value={contactNumber || ""}
-                name="contact"
-                autoComplete="off"
+              <VisitorContactDetailsInput
+                textMessageIsChecked={textMessageIsChecked}
+                setTextMessageIsChecked={setTextMessageIsChecked}
+                emailIsChecked={emailIsChecked}
+                setEmailIsChecked={setEmailIsChecked}
+                hasContactMethodUncheckedError={hasError("contact-method")}
+                hasContactNumberError={hasError("contact-number")}
+                contactNumber={contactNumber}
+                setContactNumber={setContactNumber}
+                hasContactEmailError={hasError("contact-email")}
+                contactEmail={contactEmail}
+                setContactEmail={setContactEmail}
               />
+
               <DateSelect
                 onChange={(date) => setCallDateTime(date)}
                 name="call-datetime"
@@ -217,6 +246,7 @@ const queryContainsInitialData = (query) => {
     "patientName",
     "contactName",
     "contactNumber",
+    "contactEmail",
     "day",
     "month",
     "year",
@@ -236,6 +266,7 @@ export const getServerSideProps = propsWithContainer(
         patientName,
         contactName,
         contactNumber,
+        contactEmail,
         day,
         month,
         year,
@@ -249,12 +280,12 @@ export const getServerSideProps = propsWithContainer(
         initialPatientName: patientName,
         initialContactName: contactName,
         initialContactNumber: contactNumber,
+        initialContactEmail: contactEmail,
         initialCallDateTime: callDateTime,
       };
     } else if (query.rebookCallId) {
-      const { scheduledCall } = await retrieveVisitByCallId(container)(
-        query.rebookCallId
-      );
+      const retrieveVisitByCallId = container.getRetrieveVisitByCallId();
+      const { scheduledCall } = await retrieveVisitByCallId(query.rebookCallId);
 
       let proposedCallDateTime = new Date(scheduledCall.callTime);
       proposedCallDateTime.setDate(proposedCallDateTime.getDate() + 1);
@@ -272,6 +303,7 @@ export const getServerSideProps = propsWithContainer(
         initialPatientName: scheduledCall.patientName,
         initialContactName: scheduledCall.recipientName,
         initialContactNumber: scheduledCall.recipientNumber,
+        initialContactEmail: scheduledCall.recipientEmail,
         initialCallDateTime: nextCallDateTime,
       };
     }
@@ -279,4 +311,4 @@ export const getServerSideProps = propsWithContainer(
   })
 );
 
-export default Home;
+export default BookAVisit;
