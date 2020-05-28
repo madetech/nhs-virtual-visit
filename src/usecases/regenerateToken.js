@@ -18,6 +18,10 @@ export default ({ getTokenProvider }) => (token) => {
       isTokenRegenerated: true,
     };
   } else {
-    return { isTokenRegenerated: false };
+    return {
+      regeneratedToken: null,
+      regeneratedEncodedToken: null,
+      isTokenRegenerated: false,
+    };
   }
 };
