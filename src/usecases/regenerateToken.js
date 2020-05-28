@@ -1,7 +1,7 @@
 import moment from "moment";
 
 export default ({ getTokenProvider }) => (token) => {
-  const expiresAt = new Date(token.exp * 1000);
+  const expiresAt = moment.unix(token.exp);
   if (
     moment(moment()).isBetween(
       moment(expiresAt).subtract(3, "hours"),
