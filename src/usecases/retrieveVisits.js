@@ -11,6 +11,7 @@ const retrieveVisits = ({ getDb }) => async ({ wardId }) => {
         patientName: scheduledCall.patient_name,
         recipientName: scheduledCall.recipient_name,
         recipientNumber: scheduledCall.recipient_number,
+        recipientEmail: scheduledCall.recipient_email,
         callTime: scheduledCall.call_time
           ? scheduledCall.call_time.toISOString()
           : null,
