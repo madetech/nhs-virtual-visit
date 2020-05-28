@@ -14,6 +14,7 @@ const TrustAdmin = ({
   wardError,
   trustError,
   wards,
+  hospitals,
   trust,
   visitsScheduled,
 }) => {
@@ -36,6 +37,12 @@ const TrustAdmin = ({
             <GridColumn className="nhsuk-u-padding-bottom-3" width="one-third">
               <NumberTile number={visitsScheduled} label="booked visits" />
             </GridColumn>
+            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-third">
+              <NumberTile number={hospitals.length} label="hospitals" />
+            </GridColumn>
+            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-third">
+              <NumberTile number={wards.length} label="wards" />
+            </GridColumn>
           </GridRow>
           <ActionLink href={`/trust-admin/add-a-ward`}>Add a ward</ActionLink>
           <ActionLink href={`/trust-admin/add-a-hospital`}>
@@ -57,6 +64,9 @@ export const getServerSideProps = propsWithContainer(
     const wardsResponse = await container.getRetrieveWards()(
       authenticationToken.trustId
     );
+    const hospitalsResponse = await container.getRetrieveHospitalsByTrustId()(
+      authenticationToken.trustId
+    );
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
@@ -67,6 +77,7 @@ export const getServerSideProps = propsWithContainer(
     return {
       props: {
         wards: wardsResponse.wards,
+        hospitals: hospitalsResponse.hospitals,
         trust: { name: trustResponse.trust?.name },
         wardError: wardsResponse.error,
         trustError: trustResponse.error,
