@@ -1,5 +1,4 @@
 import adminIsAuthenticated from "./adminIsAuthenticated";
-import regenerateToken from "./regenerateToken";
 
 export default function (callback) {
   return function (context) {
@@ -14,7 +13,7 @@ export default function (callback) {
         regeneratedToken,
         regeneratedEncodedToken,
         isTokenRegenerated,
-      } = regenerateToken(container)(authenticationToken);
+      } = container.getRegenerateToken()(authenticationToken);
 
       if (isTokenRegenerated) {
         res.setHeader("Set-Cookie", [

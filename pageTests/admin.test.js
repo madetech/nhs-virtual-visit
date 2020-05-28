@@ -55,6 +55,7 @@ describe("admin", () => {
       const container = {
         getRetrieveTrusts: () => getRetrieveTrustsSpy,
         getTokenProvider: () => tokenProvider,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({
@@ -76,6 +77,7 @@ describe("admin", () => {
       const container = {
         getRetrieveTrusts: () => getRetrieveTrustsSpy,
         getTokenProvider: () => tokenProvider,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({
