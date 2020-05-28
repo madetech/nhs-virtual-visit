@@ -2,10 +2,10 @@ import regenerateToken from "./regenerateToken";
 import moment from "moment";
 
 describe("regenerateToken", () => {
-  it("it doesn't refresh the token if outside the refresh timeframe", () => {
+  it("doesn't refresh the token when now is before the expiry window", () => {
     const authenticationToken = {
       type: "admin",
-      exp: moment().subtract(4, "hours").unix(),
+      exp: moment().add(24, "hours").unix(), // expires in 24 hours
     };
 
     const tokenProvider = {
@@ -26,7 +26,31 @@ describe("regenerateToken", () => {
     expect(regeneratedEncodedToken).toBeUndefined;
   });
 
-  it("it returns a new token if within the refresh timeframe", () => {
+  it("doesn't refresh the token when now is after the expiry window", () => {
+    const authenticationToken = {
+      type: "admin",
+      exp: moment().subtract(4, "hours").unix(), // expired 4 hours ago
+    };
+
+    const tokenProvider = {
+      validate: jest.fn(() => authenticationToken),
+      generate: jest.fn(() => "encodedToken"),
+    };
+    const container = {
+      getTokenProvider: () => tokenProvider,
+    };
+    const {
+      regeneratedToken,
+      regeneratedEncodedToken,
+      isTokenRegenerated,
+    } = regenerateToken(container)(authenticationToken);
+
+    expect(isTokenRegenerated).toEqual(false);
+    expect(regeneratedToken).toBeUndefined;
+    expect(regeneratedEncodedToken).toBeUndefined;
+  });
+
+  it("returns a new token if now is within the expiry window", () => {
     const authenticationToken = {
       type: "admin",
       exp: moment().add(10, "minutes").unix(),
