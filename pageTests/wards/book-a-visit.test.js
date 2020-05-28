@@ -1,4 +1,7 @@
+import React from "react";
+import BookAVisit from "../../pages/wards/book-a-visit";
 import { getServerSideProps } from "../../pages/wards/book-a-visit";
+import { render, screen, fireEvent } from "@testing-library/react";
 
 describe("ward/book-a-visit", () => {
   const anonymousReq = {
@@ -26,23 +29,22 @@ describe("ward/book-a-visit", () => {
     };
     originalBookingDate = new Date();
     container = {
-      getDb: () =>
-        Promise.resolve({
-          any: () => [
-            {
-              id: 1,
-              patient_name: "Fred Bloggs",
-              recipient_name: "John Doe",
-              recipient_number: "07700900900",
-              call_time: originalBookingDate,
-              call_id: "Test",
-              provider: "Test",
-            },
-          ],
-        }),
       getTokenProvider: () => tokenProvider,
       getRetrieveWardById: () => jest.fn().mockReturnValue({}),
       getUserIsAuthenticated: () => (token) => token && { ward: "123" },
+      getRetrieveVisitByCallId: () => () => ({
+        scheduledCall: {
+          id: 1,
+          patientName: "Fred Bloggs",
+          recipientName: "John Doe",
+          recipientNumber: "07700900900",
+          recipientEmail: "john@doe.com",
+          callTime: originalBookingDate,
+          call_id: "Test",
+          provider: "Test",
+        },
+        error: null,
+      }),
     };
   });
 
@@ -96,6 +98,7 @@ describe("ward/book-a-visit", () => {
           patientName: "Patient Name",
           contactName: "Visitor Name",
           contactNumber: "07123456789",
+          contactEmail: "leslie@knope.com",
           day: "4",
           month: "12",
           year: "2020",
@@ -115,6 +118,7 @@ describe("ward/book-a-visit", () => {
             initialPatientName: query.patientName,
             initialContactName: query.contactName,
             initialContactNumber: query.contactNumber,
+            initialContactEmail: query.contactEmail,
             initialCallDateTime: {
               day: query.day,
               month: query.month,
@@ -146,6 +150,7 @@ describe("ward/book-a-visit", () => {
         expect(props.initialPatientName).toEqual("Fred Bloggs");
         expect(props.initialContactName).toEqual("John Doe");
         expect(props.initialContactNumber).toEqual("07700900900");
+        expect(props.initialContactEmail).toEqual("john@doe.com");
       });
 
       it("defaults the re-booking date 1 day after the original", async () => {
@@ -165,6 +170,28 @@ describe("ward/book-a-visit", () => {
         expect(props.initialCallDateTime.month).toEqual(1);
         expect(props.initialCallDateTime.day).toEqual(1);
       });
+    });
+  });
+
+  describe("BookAVisit", () => {
+    it("reveals the phone number input when text message is clicked", () => {
+      render(<BookAVisit />);
+
+      expect(screen.getByText(/Mobile phone number/)).not.toBeVisible();
+
+      fireEvent.click(screen.getByLabelText(/Text message/));
+
+      expect(screen.getByText(/Mobile phone number/)).toBeVisible();
+    });
+
+    it("reveals the email address input when email is clicked", () => {
+      render(<BookAVisit />);
+
+      expect(screen.getByText(/Email address/)).not.toBeVisible();
+
+      fireEvent.click(screen.getByLabelText(/Email/));
+
+      expect(screen.getByText(/Email address/)).toBeVisible();
     });
   });
 });
