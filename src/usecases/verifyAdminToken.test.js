@@ -1,16 +1,15 @@
 import verifyAdminToken from "./verifyAdminToken";
 
 describe("verifyAdminToken", () => {
-  const req = {
-    headers: {
-      cookie: "token=sample.token.value",
-    },
-  };
-
   const res = {
     writeHead: jest.fn(() => res),
     end: jest.fn(),
     setHeader: jest.fn(),
+  };
+  const req = {
+    headers: {
+      cookie: "token=sample.token.value",
+    },
   };
 
   it("calls the supplied callback if the token is valid", async () => {
@@ -54,6 +53,12 @@ describe("verifyAdminToken", () => {
   });
 
   it("redirects if there are no cookies", async () => {
+    const noCookieReq = {
+      headers: {
+        cookie: "",
+      },
+    };
+
     const callback = jest.fn();
     const tokenProvider = {
       validate: jest.fn(() => false),
@@ -62,11 +67,44 @@ describe("verifyAdminToken", () => {
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
-    req.headers.cookie = "";
 
-    verifyAdminToken(callback)({ req, res, container });
+    verifyAdminToken(callback)({ req: noCookieReq, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
       Location: "/wards/login",
     });
+  });
+
+  it("updates the cookie if the token is regenerated", () => {
+    const callback = jest.fn();
+    const authenticationToken = {
+      type: "admin",
+    };
+    const tokenProvider = {
+      validate: jest.fn(() => authenticationToken),
+    };
+
+    const regeneratedToken = { type: "admin", test: "1" };
+
+    const container = {
+      getTokenProvider: () => tokenProvider,
+      getRegenerateToken: () =>
+        jest.fn().mockReturnValue({
+          isTokenRegenerated: true,
+          regeneratedEncodedToken: "encodedToken",
+          regeneratedToken: regeneratedToken,
+        }),
+    };
+
+    verifyAdminToken(callback)({ req, res, container });
+
+    expect(res.setHeader).toHaveBeenCalledWith("Set-Cookie", [
+      "token=encodedToken; httpOnly; path=/;",
+    ]);
+
+    expect(callback).toHaveBeenCalledWith(
+      expect.objectContaining({
+        authenticationToken: regeneratedToken,
+      })
+    );
   });
 });
