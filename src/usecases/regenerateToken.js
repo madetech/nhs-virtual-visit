@@ -2,12 +2,7 @@ import moment from "moment";
 
 export default ({ getTokenProvider }) => (token) => {
   const expiresAt = moment.unix(token.exp);
-  if (
-    moment(moment()).isBetween(
-      moment(expiresAt).subtract(3, "hours"),
-      expiresAt
-    )
-  ) {
+  if (moment().isBetween(moment(expiresAt).subtract(3, "hours"), expiresAt)) {
     const tokenProvider = getTokenProvider();
     const regeneratedEncodedToken = tokenProvider.generate({
       wardId: token.wardId,
