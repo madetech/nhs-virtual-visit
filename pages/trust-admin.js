@@ -8,8 +8,15 @@ import { GridRow, GridColumn } from "../src/components/Grid";
 import Heading from "../src/components/Heading";
 import ActionLink from "../src/components/ActionLink";
 import Text from "../src/components/Text";
+import NumberTile from "../src/components/NumberTile";
 
-const TrustAdmin = ({ wardError, trustError, wards, trust }) => {
+const TrustAdmin = ({
+  wardError,
+  trustError,
+  wards,
+  trust,
+  visitsScheduled,
+}) => {
   if (wardError || trustError) {
     return <Error />;
   }
@@ -25,11 +32,15 @@ const TrustAdmin = ({ wardError, trustError, wards, trust }) => {
             </span>
             Ward administration
           </Heading>
+          <GridRow className="nhsuk-u-padding-bottom-3">
+            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-third">
+              <NumberTile number={visitsScheduled} label="booked visits" />
+            </GridColumn>
+          </GridRow>
           <ActionLink href={`/trust-admin/add-a-ward`}>Add a ward</ActionLink>
           <ActionLink href={`/trust-admin/add-a-hospital`}>
             Add a hospital
           </ActionLink>
-
           {wards.length > 0 ? (
             <WardsTable wards={wards} />
           ) : (
@@ -50,7 +61,8 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId
     );
 
-    // const trustName = trustResponse.trust ? trustResponse.trust.name : null;
+    const retrieveWardVisitTotals = container.getRetrieveWardVisitTotals();
+    const { total } = await retrieveWardVisitTotals();
 
     return {
       props: {
@@ -58,6 +70,7 @@ export const getServerSideProps = propsWithContainer(
         trust: { name: trustResponse.trust?.name },
         wardError: wardsResponse.error,
         trustError: trustResponse.error,
+        visitsScheduled: total,
       },
     };
   })

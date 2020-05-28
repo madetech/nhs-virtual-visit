@@ -1,11 +1,15 @@
 import React from "react";
+import classnames from "classnames";
 
-const GridRow = ({ children }) => (
-  <div className="nhsuk-grid-row">{children}</div>
+const GridRow = ({ children, className }) => (
+  <div className={classnames("nhsuk-grid-row", className)}>{children}</div>
 );
 
-const GridColumn = ({ children, width, ...others }) => (
-  <div className={`nhsuk-grid-column-${width}`} {...others}>
+const GridColumn = ({ children, className, width, ...others }) => (
+  <div
+    className={classnames(`nhsuk-grid-column-${width}`, className)}
+    {...others}
+  >
     {children}
   </div>
 );
