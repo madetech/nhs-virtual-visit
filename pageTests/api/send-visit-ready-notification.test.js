@@ -23,11 +23,15 @@ describe("send-visit-ready-notification", () => {
 
   let container;
   let sendTextMessageSpy;
+  let sendEmailSpy;
+
   beforeEach(() => {
     sendTextMessageSpy = jest.fn(() => ({ success: true, error: null }));
+    sendEmailSpy = jest.fn(() => ({ success: true, error: null }));
     container = {
       getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
       getSendTextMessage: () => sendTextMessageSpy,
+      getSendEmail: () => sendEmailSpy,
       getRetrieveWardById: () => retrieveWardByIdSpy,
     };
   });
@@ -62,6 +66,7 @@ describe("send-visit-ready-notification", () => {
         body: {
           callId: "much-wow",
           contactNumber: "07123456789",
+          contactEmail: "leslie@knope.com",
           callPassword: "securePassword",
         },
         protocol: "http",
@@ -80,9 +85,22 @@ describe("send-visit-ready-notification", () => {
     });
 
     describe("when a phone number is provided", () => {
+      beforeEach(() => {
+        requestWithToken.body = {
+          callId: "much-wow",
+          contactNumber: "07123456789",
+          callPassword: "securePassword",
+        };
+      });
+
       it("sends a text message", async () => {
+        sendEmailSpy = jest.fn();
+
         await sendVisitReadyNotification(requestWithToken, response, {
-          container,
+          container: {
+            ...container,
+            getSendEmail: () => sendEmailSpy,
+          },
         });
 
         expect(sendTextMessageSpy).toHaveBeenCalledWith(
@@ -96,6 +114,7 @@ describe("send-visit-ready-notification", () => {
           },
           null
         );
+        expect(sendEmailSpy).not.toHaveBeenCalled();
       });
 
       it("returns 201 if successfully sends a text message", async () => {
@@ -130,13 +149,121 @@ describe("send-visit-ready-notification", () => {
       });
     });
 
+    describe("when an email address is provided", () => {
+      beforeEach(() => {
+        requestWithToken.body = {
+          callId: "much-wow",
+          contactEmail: "leslie@knope.com",
+          callPassword: "securePassword",
+        };
+      });
+
+      it("sends an email", async () => {
+        sendTextMessageSpy = jest.fn();
+
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container: {
+            ...container,
+            getSendTextMessage: () => sendTextMessageSpy,
+          },
+        });
+
+        expect(sendEmailSpy).toHaveBeenCalledWith(
+          TemplateStore.secondEmail.templateId,
+          "leslie@knope.com",
+          {
+            call_url:
+              "http://localhost:3000/visitors/much-wow/start?callPassword=securePassword",
+            ward_name: "Defoe Ward",
+            hospital_name: "Northwick Park Hospital",
+          },
+          null
+        );
+        expect(sendTextMessageSpy).not.toHaveBeenCalled();
+      });
+
+      it("returns 201 if successfully sends an email", async () => {
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container,
+        });
+
+        expect(response.status).toHaveBeenCalledWith(201);
+      });
+
+      it("returns 400 if unable to send an email", async () => {
+        const sendEmailStub = jest
+          .fn()
+          .mockReturnValue({ success: false, error: "Error message" });
+
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container: {
+            ...container,
+            getSendEmail: () => sendEmailStub,
+          },
+        });
+
+        expect(response.status).toHaveBeenCalledWith(400);
+      });
+    });
+
+    describe("when a phone number and an email address is provided", () => {
+      it("sends a text message and an email", async () => {
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container,
+        });
+
+        expect(sendEmailSpy).toHaveBeenCalled();
+        expect(sendTextMessageSpy).toHaveBeenCalled();
+      });
+
+      it("returns 201 if successfully sends an text message and email", async () => {
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container,
+        });
+
+        expect(response.status).toHaveBeenCalledWith(201);
+      });
+
+      it("returns 400 if unable to send a text message", async () => {
+        const sendTextMessageStub = jest
+          .fn()
+          .mockReturnValue({ success: false, error: "Error message" });
+
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container: {
+            ...container,
+            getSendTextMessage: () => sendTextMessageStub,
+          },
+        });
+
+        expect(response.status).toHaveBeenCalledWith(400);
+      });
+
+      it("returns 400 if unable to send an email", async () => {
+        const sendEmailStub = jest
+          .fn()
+          .mockReturnValue({ success: false, error: "Error message" });
+
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container: {
+            ...container,
+            getSendEmail: () => sendEmailStub,
+          },
+        });
+
+        expect(response.status).toHaveBeenCalledWith(400);
+      });
+    });
+
     describe("in a production environment", () => {
       beforeEach(() => {
         process.env.NODE_ENV = "production";
       });
+
       afterEach(() => {
         process.env.NODE_ENV = "test";
       });
+
       it("sends a text message with https", async () => {
         await sendVisitReadyNotification(requestWithToken, response, {
           container,

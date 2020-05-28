@@ -23,7 +23,7 @@ export default withContainer(async (req, res, { container }) => {
     return;
   }
 
-  let { callId, contactNumber, callPassword } = body;
+  let { callId, contactNumber, contactEmail, callPassword } = body;
 
   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
   const host = req.headers.host;
@@ -33,7 +33,10 @@ export default withContainer(async (req, res, { container }) => {
   const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
 
   const sendTextMessage = container.getSendTextMessage();
-  const templateId = TemplateStore.secondText.templateId;
+  const secondTextTemplateId = TemplateStore.secondText.templateId;
+
+  const sendEmail = container.getSendEmail();
+  const secondEmailTemplateId = TemplateStore.secondEmail.templateId;
 
   try {
     const { ward, error } = await container.getRetrieveWardById()(
@@ -44,25 +47,48 @@ export default withContainer(async (req, res, { container }) => {
       throw error;
     }
 
-    const response = await sendTextMessage(
-      templateId,
-      contactNumber,
-      {
-        call_url: visitorsUrl,
-        ward_name: ward.name,
-        hospital_name: ward.hospitalName,
-      },
-      null
-    );
+    let sendTextMessageResponse;
+    if (contactNumber) {
+      sendTextMessageResponse = await sendTextMessage(
+        secondTextTemplateId,
+        contactNumber,
+        {
+          call_url: visitorsUrl,
+          ward_name: ward.name,
+          hospital_name: ward.hospitalName,
+        },
+        null
+      );
+    }
 
-    if (response.success) {
+    let sendEmailResponse;
+    if (contactEmail) {
+      sendEmailResponse = await sendEmail(
+        secondEmailTemplateId,
+        contactEmail,
+        {
+          call_url: visitorsUrl,
+          ward_name: ward.name,
+          hospital_name: ward.hospitalName,
+        },
+        null
+      );
+    }
+
+    if (
+      (sendTextMessageResponse?.success && sendEmailResponse?.success) ||
+      (sendTextMessageResponse?.success && !sendEmailResponse) ||
+      (sendEmailResponse?.success && !sendTextMessageResponse)
+    ) {
       notifier.notify(visitorsUrl);
 
       res.status(201);
       res.end(JSON.stringify({ id: callId, callUrl: visitsUrl }));
     } else {
       res.status(400);
-      res.end(JSON.stringify({ err: "Failed to schedule a visit" }));
+      res.end(
+        JSON.stringify({ err: "Failed to send visit ready notification" })
+      );
     }
   } catch (err) {
     console.error(err);
