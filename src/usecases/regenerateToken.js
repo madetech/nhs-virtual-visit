@@ -9,16 +9,20 @@ export default ({ getTokenProvider }) => (token) => {
     )
   ) {
     const tokenProvider = getTokenProvider();
-    const refreshedEncodedToken = tokenProvider.generate({
+    const regeneratedEncodedToken = tokenProvider.generate({
       wardId: token.wardId,
       wardCode: token.wardCode,
       trustId: token.trustId,
       type: token.type,
     });
 
-    const refreshedToken = tokenProvider.validate(refreshedEncodedToken);
-    return { refreshedToken, refreshedEncodedToken, isTokenRefreshed: true };
+    const regeneratedToken = tokenProvider.validate(regeneratedEncodedToken);
+    return {
+      regeneratedToken,
+      regeneratedEncodedToken,
+      isTokenRegenerated: true,
+    };
   } else {
-    return { isTokenRefreshed: false };
+    return { isTokenRegenerated: false };
   }
 };

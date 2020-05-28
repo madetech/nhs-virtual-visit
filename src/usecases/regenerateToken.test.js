@@ -1,7 +1,7 @@
-import refreshToken from "./refreshToken";
+import regenerateToken from "./regenerateToken";
 import moment from "moment";
 
-describe("verifyAdminToken", () => {
+describe("regenerateToken", () => {
   it("it doesn't refresh the token if outside the refresh timeframe", () => {
     const authenticationToken = {
       type: "admin",
@@ -16,14 +16,14 @@ describe("verifyAdminToken", () => {
       getTokenProvider: () => tokenProvider,
     };
     const {
-      refreshedToken,
-      refreshedEncodedToken,
-      isTokenRefreshed,
-    } = refreshToken(container)(authenticationToken);
+      regeneratedToken,
+      regeneratedEncodedToken,
+      isTokenRegenerated,
+    } = regenerateToken(container)(authenticationToken);
 
-    expect(isTokenRefreshed).toEqual(false);
-    expect(refreshedToken).toBeUndefined;
-    expect(refreshedEncodedToken).toBeUndefined;
+    expect(isTokenRegenerated).toEqual(false);
+    expect(regeneratedToken).toBeUndefined;
+    expect(regeneratedEncodedToken).toBeUndefined;
   });
 
   it("it returns a new token if within the refresh timeframe", () => {
@@ -40,13 +40,13 @@ describe("verifyAdminToken", () => {
       getTokenProvider: () => tokenProvider,
     };
     const {
-      refreshedToken,
-      refreshedEncodedToken,
-      isTokenRefreshed,
-    } = refreshToken(container)(authenticationToken);
+      regeneratedToken,
+      regeneratedEncodedToken,
+      isTokenRegenerated,
+    } = regenerateToken(container)(authenticationToken);
 
-    expect(isTokenRefreshed).toEqual(true);
-    expect(refreshedToken).toEqual(authenticationToken);
-    expect(refreshedEncodedToken).toBe("newEncodedToken");
+    expect(isTokenRegenerated).toEqual(true);
+    expect(regeneratedToken).toEqual(authenticationToken);
+    expect(regeneratedEncodedToken).toBe("newEncodedToken");
   });
 });

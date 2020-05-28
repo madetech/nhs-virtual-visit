@@ -1,5 +1,5 @@
 import adminIsAuthenticated from "./adminIsAuthenticated";
-import refreshToken from "./refreshToken";
+import regenerateToken from "./regenerateToken";
 
 export default function (callback) {
   return function (context) {
@@ -11,17 +11,17 @@ export default function (callback) {
 
     if (authenticationToken) {
       const {
-        refreshedToken,
-        refreshedEncodedToken,
-        isTokenRefreshed,
-      } = refreshToken(container)(authenticationToken);
+        regeneratedToken,
+        regeneratedEncodedToken,
+        isTokenRegenerated,
+      } = regenerateToken(container)(authenticationToken);
 
-      if (isTokenRefreshed) {
+      if (isTokenRegenerated) {
         res.setHeader("Set-Cookie", [
-          `token=${refreshedEncodedToken}; httpOnly; path=/;`,
+          `token=${regeneratedEncodedToken}; httpOnly; path=/;`,
         ]);
         return (
-          callback({ ...context, authenticationToken: refreshedToken }) ?? {
+          callback({ ...context, authenticationToken: regeneratedToken }) ?? {
             props: {},
           }
         );
