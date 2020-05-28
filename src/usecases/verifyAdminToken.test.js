@@ -24,6 +24,7 @@ describe("verifyAdminToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
 
     const result = verifyAdminToken(callback)({ req, res, container });
@@ -43,6 +44,7 @@ describe("verifyAdminToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
 
     verifyAdminToken(callback)({ req, res, container });
@@ -58,6 +60,7 @@ describe("verifyAdminToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
     req.headers.cookie = "";
 

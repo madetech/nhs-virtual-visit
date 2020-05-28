@@ -47,6 +47,7 @@ describe("/admin/add-a-trust-success", () => {
         const container = {
           getRetrieveTrustById: () => retrieveTrustByIdSpy,
           getTokenProvider: () => tokenProvider,
+          getRegenerateToken: () => jest.fn().mockReturnValue({}),
         };
 
         await getServerSideProps({
@@ -73,6 +74,7 @@ describe("/admin/add-a-trust-success", () => {
         const container = {
           getRetrieveTrustById: () => retrieveTrustByIdSpy,
           getTokenProvider: () => tokenProvider,
+          getRegenerateToken: () => jest.fn().mockReturnValue({}),
         };
 
         const { props } = await getServerSideProps({

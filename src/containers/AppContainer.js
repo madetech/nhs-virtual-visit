@@ -28,6 +28,7 @@ import validateEmailAddress from "../usecases/validateEmailAddress";
 import validateMobileNumber from "../usecases/validateMobileNumber";
 import createTrust from "../usecases/createTrust";
 import retrieveTrusts from "../usecases/retrieveTrusts";
+import regenerateToken from "../usecases/regenerateToken";
 
 class AppContainer {
   getDb = () => {
@@ -148,6 +149,10 @@ class AppContainer {
 
   getRetrieveTrusts = () => {
     return retrieveTrusts(this);
+  };
+
+  getRegenerateToken = () => {
+    return regenerateToken(this);
   };
 }
 
