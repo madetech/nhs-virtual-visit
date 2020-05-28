@@ -15,35 +15,45 @@ const ScheduleConfirmation = ({
   patientName,
   contactName,
   contactNumber,
+  contactEmail,
   callTime,
 }) => {
   const changeLink = () => {
     Router.push({
       pathname: `/wards/book-a-visit`,
-      query: { patientName, contactName, contactNumber, ...callTime },
+      query: {
+        patientName,
+        contactName,
+        contactNumber,
+        contactEmail,
+        ...callTime,
+      },
     });
   };
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
 
-    const submitAnswers = async ({
-      contactName,
-      contactNumber,
-      patientName,
-      callTime,
-    }) => {
+    const submitAnswers = async () => {
+      let body = {
+        patientName,
+        contactName,
+        callTime: moment(callTime).toISOString(true),
+        callTimeLocal: callTime,
+      };
+
+      if (contactNumber) {
+        body.contactNumber = contactNumber;
+      }
+      if (contactEmail) {
+        body.contactEmail = contactEmail;
+      }
+
       const response = await fetch("/api/book-a-visit", {
         method: "POST",
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({
-          contactNumber,
-          patientName,
-          contactName,
-          callTime: moment(callTime).toISOString(true),
-          callTimeLocal: callTime,
-        }),
+        body: JSON.stringify(body),
       });
 
       const { success, err } = await response.json();
@@ -55,7 +65,13 @@ const ScheduleConfirmation = ({
       }
     };
 
-    submitAnswers({ contactNumber, contactName, patientName, callTime });
+    submitAnswers({
+      contactNumber,
+      contactName,
+      patientName,
+      callTime,
+      contactEmail,
+    });
   });
 
   return (
@@ -72,6 +88,7 @@ const ScheduleConfirmation = ({
               patientName={patientName}
               visitorName={contactName}
               visitorMobileNumber={contactNumber}
+              visitorEmailAddress={contactEmail}
               visitDateAndTime={callTime}
               withActions={true}
               actionLinkOnClick={changeLink}
@@ -99,6 +116,7 @@ export const getServerSideProps = propsWithContainer(
       patientName,
       contactName,
       contactNumber,
+      contactEmail,
       day,
       month,
       year,
@@ -111,7 +129,8 @@ export const getServerSideProps = propsWithContainer(
       props: {
         patientName,
         contactName,
-        contactNumber,
+        contactNumber: contactNumber || null,
+        contactEmail: contactEmail || null,
         callTime,
       },
     };
