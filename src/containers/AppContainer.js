@@ -3,6 +3,7 @@ import GovNotify from "../gateways/GovNotify";
 import createVisit from "../usecases/createVisit";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
+import sendEmail from "../usecases/sendEmail";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import trustAdminIsAuthenticated from "../usecases/trustAdminIsAuthenticated";
 import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
@@ -67,6 +68,10 @@ class AppContainer {
 
   getSendTextMessage = () => {
     return sendTextMessage(this);
+  };
+
+  getSendEmail = () => {
+    return sendEmail(this);
   };
 
   getVerifyWardCode = () => {

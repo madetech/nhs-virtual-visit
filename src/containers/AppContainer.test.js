@@ -46,6 +46,10 @@ describe("AppContainer", () => {
     expect(container.getSendTextMessage()).toBeDefined();
   });
 
+  it("returns sendEmail", () => {
+    expect(container.getSendEmail()).toBeDefined();
+  });
+
   it("returns createWard", () => {
     expect(container.getCreateWard()).toBeDefined();
   });
