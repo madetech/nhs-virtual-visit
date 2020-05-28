@@ -79,22 +79,55 @@ describe("send-visit-ready-notification", () => {
       expect(response.status).toHaveBeenCalledWith(406);
     });
 
-    it("sends a text message", async () => {
-      await sendVisitReadyNotification(requestWithToken, response, {
-        container,
+    describe("when a phone number is provided", () => {
+      it("sends a text message", async () => {
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container,
+        });
+
+        expect(sendTextMessageSpy).toHaveBeenCalledWith(
+          TemplateStore.secondText.templateId,
+          "07123456789",
+          {
+            call_url:
+              "http://localhost:3000/visitors/much-wow/start?callPassword=securePassword",
+            ward_name: "Defoe Ward",
+            hospital_name: "Northwick Park Hospital",
+          },
+          null
+        );
       });
 
-      expect(sendTextMessageSpy).toHaveBeenCalledWith(
-        TemplateStore.secondText.templateId,
-        "07123456789",
-        {
-          call_url:
-            "http://localhost:3000/visitors/much-wow/start?callPassword=securePassword",
-          ward_name: "Defoe Ward",
-          hospital_name: "Northwick Park Hospital",
-        },
-        null
-      );
+      it("returns 201 if successfully sends a text message", async () => {
+        const sendTextMessageStub = jest
+          .fn()
+          .mockReturnValue({ success: true, error: null });
+
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container: {
+            ...container,
+            getSendTextMessage: () => sendTextMessageStub,
+          },
+        });
+
+        expect(response.status).toHaveBeenCalledWith(201);
+        expect(retrieveWardByIdSpy).toHaveBeenCalledWith(10, 1);
+      });
+
+      it("returns 400 if unable to send a text message", async () => {
+        const sendTextMessageStub = jest
+          .fn()
+          .mockReturnValue({ success: false, error: "Error message" });
+
+        await sendVisitReadyNotification(requestWithToken, response, {
+          container: {
+            ...container,
+            getSendTextMessage: () => sendTextMessageStub,
+          },
+        });
+
+        expect(response.status).toHaveBeenCalledWith(400);
+      });
     });
 
     describe("in a production environment", () => {
@@ -121,37 +154,6 @@ describe("send-visit-ready-notification", () => {
           null
         );
       });
-    });
-
-    it("returns 201 if successfully sends a text message", async () => {
-      const sendTextMessageStub = jest
-        .fn()
-        .mockReturnValue({ success: true, error: null });
-
-      await sendVisitReadyNotification(requestWithToken, response, {
-        container: {
-          ...container,
-          getSendTextMessage: () => sendTextMessageStub,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(201);
-      expect(retrieveWardByIdSpy).toHaveBeenCalledWith(10, 1);
-    });
-
-    it("returns 400 if unable to send a text message", async () => {
-      const sendTextMessageStub = jest
-        .fn()
-        .mockReturnValue({ success: false, error: "Error message" });
-
-      await sendVisitReadyNotification(requestWithToken, response, {
-        container: {
-          ...container,
-          getSendTextMessage: () => sendTextMessageStub,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(400);
     });
   });
 });
