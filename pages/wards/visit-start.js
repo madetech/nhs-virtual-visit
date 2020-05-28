@@ -15,13 +15,14 @@ const VisitStart = ({
   patientName,
   contactName,
   contactNumber,
+  contactEmail,
   callId,
   error,
   callPassword,
 }) => {
   const [userError, setUserError] = useState(error);
 
-  const startCall = async ({ callId, contactNumber, callPassword }) => {
+  const startCall = async () => {
     const response = await fetch("/api/send-visit-ready-notification", {
       method: "POST",
       headers: {
@@ -30,6 +31,7 @@ const VisitStart = ({
       body: JSON.stringify({
         callId,
         contactNumber,
+        contactEmail,
         callPassword,
       }),
     });
@@ -107,6 +109,7 @@ export const getServerSideProps = propsWithContainer(
         patientName: scheduledCall.patientName,
         contactName: scheduledCall.recipientName,
         contactNumber: scheduledCall.recipientNumber,
+        contactEmail: scheduledCall.recipientEmail,
         callTime,
         callDate,
         callId,
