@@ -61,6 +61,8 @@ describe("trust-admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getRetrieveWardVisitTotals: () =>
+          jest.fn().mockReturnValue({ total: 0 }),
         getTokenProvider: () => tokenProvider,
       };
 
@@ -75,6 +77,32 @@ describe("trust-admin", () => {
       expect(props.wardError).toBeNull();
     });
 
+    it("retrieves ward visit totals", async () => {
+      const getRetrieveWardsSpy = jest.fn(async () => ({
+        wards: wards,
+        error: null,
+      }));
+      const retrieveTrustByIdSpy = jest.fn(async () => ({
+        trust: { name: "Doggo Trust" },
+        error: null,
+      }));
+      const container = {
+        getRetrieveWards: () => getRetrieveWardsSpy,
+        getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getRetrieveWardVisitTotals: () =>
+          jest.fn().mockReturnValue({ total: 5 }),
+        getTokenProvider: () => tokenProvider,
+      };
+
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(props.visitsScheduled).toEqual(5);
+    });
+
     it("sets an error in props if ward error", async () => {
       const getRetrieveWardsSpy = jest.fn(async () => ({
         wards: null,
@@ -87,6 +115,8 @@ describe("trust-admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getRetrieveWardVisitTotals: () =>
+          jest.fn().mockReturnValue({ total: 0 }),
         getTokenProvider: () => tokenProvider,
       };
 
@@ -114,6 +144,8 @@ describe("trust-admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getRetrieveWardVisitTotals: () =>
+          jest.fn().mockReturnValue({ total: 0 }),
         getTokenProvider: () => tokenProvider,
       };
 
@@ -140,6 +172,8 @@ describe("trust-admin", () => {
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getRetrieveWardVisitTotals: () =>
+          jest.fn().mockReturnValue({ total: 0 }),
         getTokenProvider: () => tokenProvider,
       };
 
