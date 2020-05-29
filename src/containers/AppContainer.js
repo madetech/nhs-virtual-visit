@@ -29,6 +29,7 @@ import validateMobileNumber from "../usecases/validateMobileNumber";
 import createTrust from "../usecases/createTrust";
 import retrieveTrusts from "../usecases/retrieveTrusts";
 import regenerateToken from "../usecases/regenerateToken";
+import retrieveWardsByHospitalId from "../usecases/retrieveWardsByHospitalId";
 
 class AppContainer {
   getDb = () => {
@@ -153,6 +154,10 @@ class AppContainer {
 
   getRegenerateToken = () => {
     return regenerateToken(this);
+  };
+
+  getRetrieveWardsByHospitalId = () => {
+    return retrieveWardsByHospitalId(this);
   };
 }
 
