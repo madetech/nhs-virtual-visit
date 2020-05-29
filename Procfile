@@ -1,1 +1,1 @@
-release: npm run dbmigrate up
+release: npm run dbmigrate up -- -e production
