@@ -2,6 +2,23 @@ version: 2.1
 
 orbs:
   node: circleci/node@1.1.6
+  cypress: cypress-io/cypress@1.16.1
+
+executors:
+  pg-cypress:
+    docker:
+      - image: cypress/base:12.16.1
+      - image: "circleci/postgres:12.2"
+        environment:
+          NODE_ENV: test
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD:
+          POSTGRES_DB: nhs-virtual-visit-test
+    environment:
+      NODE_ENV: test
+      TEST_DATABASE_URL: postgresql://root@localhost/nhs-virtual-visit-test
+      DATABASE_URL: postgresql://root@localhost/nhs-virtual-visit-test
+      JWT_SIGNING_KEY: UdGgQx0pGBV0yvM6Chxp6h/cIFLwuYy/2XDR/1lQX5CpcFWnA==
 
 jobs:
   build:
@@ -42,3 +59,34 @@ workflows:
     jobs:
       - build
       - test
+  linux-build:
+    jobs:
+      # checks out code and installs dependencies once
+      - cypress/install:
+          name: "Linux install"
+          # and builds the app using this command
+          build: "npm run build"
+          post-steps:
+            # show Cypress cache folder and binary versions
+            # to check if we are caching previous binary versions
+            - run: npx cypress cache path
+            - run: npx cypress cache list
+            - run: npx cypress info
+
+      # runs on 1 machine
+      # and records on Cypress Dashboard
+      - cypress/run:
+          executor: pg-cypress
+          name: "1 machine"
+          # job will use workspace with code and dependencies
+          # installed by the "install" job
+          requires:
+            - Linux install
+          record: false
+          parallel: false # load balance all tests
+          parallelism: 1 # across 3 machines
+          group: "1x-electron on CircleCI" # name this group
+          post-install:
+            - run: npm run dbmigratetest up
+          start: "npm run dev" # start server before running tests
+          store_artifacts: true
