@@ -104,6 +104,8 @@ export const getServerSideProps = propsWithContainer(
         Location: "/error",
       });
       res.end();
+
+      return { props: {} };
     }
   }
 );
