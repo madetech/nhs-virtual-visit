@@ -9,6 +9,8 @@ export function getServerSideProps({ res }) {
     Location: "/wards/login",
   });
   res.end();
+
+  return { props: {} };
 }
 
 export default LoginRedirect;

@@ -203,11 +203,7 @@ const AddATrust = () => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async () => {
-    return {
-      props: {},
-    };
-  })
+  verifyAdminToken(() => ({ props: {} }))
 );
 
 export default AddATrust;
