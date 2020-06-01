@@ -19,6 +19,7 @@ const LogoutButton = ({
   if (renderLogout) {
     return (
       <button
+        data-testid="logout-button"
         type={type}
         className={classnames("nhsuk-button nhsuk-button--reverse", className)}
         onClick={logout}

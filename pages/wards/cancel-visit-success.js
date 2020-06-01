@@ -20,7 +20,10 @@ const deleteVisitSuccess = ({
   }
 
   return (
-    <Layout title="Virtual visit cancelled" renderLogout={true}>
+    <Layout
+      title="Virtual visit cancelled"
+      showNavigationBarForType="wardStaff"
+    >
       <div className="nhsuk-grid-row">
         <div className="nhsuk-grid-column-two-thirds">
           <div

@@ -164,7 +164,7 @@ const BookAVisit = ({
     <Layout
       title="Book a virtual visit"
       hasErrors={errors.length != 0}
-      renderLogout={true}
+      showNavigationBarForType="wardStaff"
     >
       <GridRow>
         <GridColumn width="two-thirds">
