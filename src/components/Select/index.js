@@ -2,6 +2,8 @@ import React from "react";
 import classnames from "classnames";
 import ErrorMessage from "../ErrorMessage";
 
+const DEFAULT_VALUE = "DEFAULT";
+
 const Select = ({
   id,
   className,
@@ -9,33 +11,36 @@ const Select = ({
   options,
   hasError,
   errorMessage,
-  defaultValue = "DEFAULT",
+  defaultValue,
   ...props
-}) => (
-  <>
-    {hasError && errorMessage ? (
-      <ErrorMessage id={`${id}-error`}>{errorMessage}</ErrorMessage>
-    ) : null}
-    <select
-      defaultValue={defaultValue}
-      className={classnames(
-        {
-          "nhsuk-select--error": hasError,
-        },
-        "nhsuk-select",
-        className
-      )}
-      {...props}
-    >
-      <option value="DEFAULT" disabled>
-        {prompt}
-      </option>
-      {options.map((option) => (
-        <option key={option.id} value={option.id}>
-          {option.name}
+}) => {
+  return (
+    <>
+      {hasError && errorMessage ? (
+        <ErrorMessage id={`${id}-error`}>{errorMessage}</ErrorMessage>
+      ) : null}
+      <select
+        defaultValue={defaultValue || DEFAULT_VALUE}
+        className={classnames(
+          {
+            "nhsuk-select--error": hasError,
+          },
+          "nhsuk-select",
+          className
+        )}
+        {...props}
+      >
+        <option value="DEFAULT" disabled>
+          {prompt}
         </option>
-      ))}
-    </select>
-  </>
-);
+        {options.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.name}
+          </option>
+        ))}
+      </select>
+    </>
+  );
+};
+
 export default Select;
