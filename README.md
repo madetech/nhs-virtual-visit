@@ -2,38 +2,37 @@
 
 This service allows ward staff to schedule a visit for a patient. Allowing face to face visits for visitors who are unable to visit in person.
 
+It includes an administration panel which provides self-service functionality for adding new Trusts, Hospitals, and Wards.
+
 ## User flows
 
 ### Scheduling a visit
 
 1. Ward staff makes contact with a visitor of a patient
 2. A date and time is agreed and the ward staff schedules the visit
-3. The visitor is sent an SMS notification confirming the date and time of the visit
+3. The visitor is sent an SMS or email notification confirming the date and time of the visit
 
 ### Starting a visit
 
 1. Ward staff can see a list of visits booked for patients on their ward
 1. At the time of a visit, the ward staff will see a reminder of the visit details
 1. The ward staff prepares the patient to start the visit
-1. An SMS notification with a unique link is sent to the visitor to join the visit
+1. An SMS or email notification with a unique link is sent to the visitor to join the visit
 1. The ward staff waits for the visitor to join, and checks some basic details before handing over to the patient
 
 ### Joining a visit
 
-1. The visitor will receive an SMS with a unique link
+1. The visitor will receive an SMS or email with a unique link
 1. Following the link will prompt the visitor to enter their name
 1. The visitor confirms the information of the patient with the ward staff
 1. The visitor can now communicate face to face through the service with the patient
 
 ## Previews
 
-| Ward Staff see list of visits                                            | Ward Staff start a visits                                           |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------------- |
-| ![Ward Staff see list of visits sorted by Today, Upcoming, and Past 12 hours](docs/images/WardStaff_Overview.png) | ![Ward Staff start a visits](docs/images/WardStaff_StartScreen.png) |
-
-| Visitor receives SMS notifications                                 | Visitor joins a visit                                         | Visitor ends a visit                                       |
-| ------------------------------------------------------------------ | ------------------------------------------------------------- | ---------------------------------------------------------- |
-| ![Visitor receives SMS notifications](docs/images/Visitor_SMS.png) | ![Visitor joins a visit](docs/images/Visitor_StartScreen.png) | ![Visitor ends a visit](docs/images/Visitor_EndScreen.png) |
+| ![Trust Admin can add new hospitals and wards](docs/images/TrustAdmin_01_AddNew.png)            | ![Trust Admin can edit and delete hospitals and wards](docs/images/TrustAdmin_02_ManageExisting.png) |
+| ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| ![Ward Staff can book a virtual visit via email or SMS](docs/images/WardStaff_01_BookVisit.png) | ![Ward Staff can start a virtual visit](docs/images/WardStaff_02_StartVisit.png)                     |
+| ![Key Contact can join a virtual visit](docs/images/KeyContact_01_JoinVisit.png)                | ![Ward Staff can reschedule a virtual visit afterwards](docs/images/WardStaff_03_RebookVisit.png)    |
 
 ## Technology
 
