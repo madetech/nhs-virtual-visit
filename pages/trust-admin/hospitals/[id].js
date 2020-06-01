@@ -25,6 +25,7 @@ const ShowHospital = ({ hospital, wards, error }) => {
             onClick={() => {
               Router.push({
                 pathname: `/trust-admin/add-a-ward`,
+                query: { hospitalId: hospital.id },
               });
             }}
           >

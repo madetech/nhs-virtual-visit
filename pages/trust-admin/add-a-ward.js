@@ -6,7 +6,7 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 import AddWardForm from "../../src/components/AddWardForm";
 import Error from "next/error";
 
-const AddAWard = ({ hospitals, error }) => {
+const AddAWard = ({ hospitals, error, hospitalId }) => {
   if (error) {
     return <Error />;
   }
@@ -24,6 +24,7 @@ const AddAWard = ({ hospitals, error }) => {
             errors={errors}
             setErrors={setErrors}
             hospitals={hospitals}
+            defaultHospitalId={hospitalId}
           />
         </GridColumn>
       </GridRow>
@@ -32,15 +33,18 @@ const AddAWard = ({ hospitals, error }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyTrustAdminToken(async ({ container, authenticationToken }) => {
+  verifyTrustAdminToken(async ({ container, authenticationToken, query }) => {
     const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
     const { hospitals, error } = await retrieveHospitalsByTrustId(
       authenticationToken.trustId
     );
+    const hospitalId = query.hospitalId || null;
+
     return {
       props: {
         error,
         hospitals,
+        hospitalId,
       },
     };
   })
