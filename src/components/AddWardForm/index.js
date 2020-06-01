@@ -14,7 +14,7 @@ const isPresent = (input) => {
   }
 };
 
-const AddWardForm = ({ errors, setErrors, hospitals }) => {
+const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
   const [hospitalId, setHospitalId] = useState("");
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
@@ -162,6 +162,7 @@ const AddWardForm = ({ errors, setErrors, hospitals }) => {
             }}
             hasError={hasError("hospital-id")}
             errorMessage={errorMessage("hospital-id")}
+            defaultValue={defaultHospitalId}
           />
         </FormGroup>
         <FormGroup>
