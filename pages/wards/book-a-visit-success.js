@@ -10,7 +10,7 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 const Success = () => {
   return (
-    <Layout title="Virtual visit booked" renderLogout={true}>
+    <Layout title="Virtual visit booked" showNavigationBarForType="wardStaff">
       <GridRow>
         <GridColumn width="two-thirds">
           <Heading>Virtual visit booked</Heading>
