@@ -1,8 +1,9 @@
 import React from "react";
 import Error from "next/error";
+import Router from "next/router";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
-import ActionLink from "../../../src/components/ActionLink";
+import Button from "../../../src/components/Button";
 import Heading from "../../../src/components/Heading";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Layout from "../../../src/components/Layout";
@@ -18,8 +19,17 @@ const ShowHospital = ({ hospital, wards, error }) => {
       <GridRow>
         <GridColumn width="full">
           <Heading>{hospital.name}</Heading>
-          <ActionLink href={`/trust-admin/add-a-ward`}>Add a ward</ActionLink>
           <WardsTable wards={wards} />
+          <Button
+            className="nhsuk-button"
+            onClick={() => {
+              Router.push({
+                pathname: `/trust-admin/add-a-ward`,
+              });
+            }}
+          >
+            Add a ward
+          </Button>
         </GridColumn>
       </GridRow>
     </Layout>
