@@ -9,8 +9,8 @@ It includes an administration panel which provides self-service functionality fo
 ### Scheduling a visit
 
 1. Ward staff makes contact with a visitor of a patient
-2. A date and time is agreed and the ward staff schedules the visit
-3. The visitor is sent an SMS or email notification confirming the date and time of the visit
+1. A date and time is agreed and the ward staff schedules the visit
+1. The visitor is sent an SMS or email notification confirming the date and time of the visit
 
 ### Starting a visit
 
