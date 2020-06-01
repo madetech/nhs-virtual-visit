@@ -70,9 +70,9 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-
-    const retrieveWardVisitTotals = container.getRetrieveWardVisitTotals();
-    const { total } = await retrieveWardVisitTotals();
+    const retrieveWardVisitTotals = await container.getRetrieveWardVisitTotals()(
+      authenticationToken.trustId
+    );
 
     return {
       props: {
@@ -81,7 +81,7 @@ export const getServerSideProps = propsWithContainer(
         trust: { name: trustResponse.trust?.name },
         wardError: wardsResponse.error,
         trustError: trustResponse.error,
-        visitsScheduled: total,
+        visitsScheduled: retrieveWardVisitTotals.total,
       },
     };
   })

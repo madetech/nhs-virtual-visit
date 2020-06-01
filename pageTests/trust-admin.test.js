@@ -125,6 +125,7 @@ describe("trust-admin", () => {
     });
 
     it("retrieves ward visit totals", async () => {
+      const trustId = 1;
       const getRetrieveWardsSpy = jest.fn(async () => ({
         wards: wards,
         error: null,
@@ -133,6 +134,9 @@ describe("trust-admin", () => {
         trust: { name: "Doggo Trust" },
         error: null,
       }));
+      const retrieveWardVisitTotalsSpy = jest
+        .fn()
+        .mockReturnValue({ total: 5 });
       const container = {
         getRetrieveWards: () => getRetrieveWardsSpy,
         getRetrieveTrustById: () => retrieveTrustByIdSpy,
@@ -143,8 +147,7 @@ describe("trust-admin", () => {
               { id: 2, name: "2" },
             ],
           }),
-        getRetrieveWardVisitTotals: () =>
-          jest.fn().mockReturnValue({ total: 5 }),
+        getRetrieveWardVisitTotals: () => retrieveWardVisitTotalsSpy,
         getTokenProvider: () => tokenProvider,
       };
 
@@ -154,6 +157,7 @@ describe("trust-admin", () => {
         container,
       });
 
+      expect(retrieveWardVisitTotalsSpy).toHaveBeenCalledWith(trustId);
       expect(props.visitsScheduled).toEqual(5);
     });
 
