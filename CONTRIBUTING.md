@@ -16,7 +16,7 @@ We try to follow Clean Architecture patterns to ensure our code is clean and con
 
 ## Testing
 
-We believe in Test Driven Development. This ensures we keep a high code coverage metric, and forces us to understand the crux of the problem that we're trying to solve. TDD may slow us down, but in the long run we end up with a more stable, maintainable solution.
+We believe in Test Driven Development (TDD). This ensures we keep a high code coverage metric, and forces us to understand the crux of the problem that we're trying to solve. TDD may slow us down, but in the long run we end up with a more stable, maintainable solution.
 
 We may reject PRs that have a lack of testing.
 
