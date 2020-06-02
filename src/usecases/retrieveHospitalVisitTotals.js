@@ -15,7 +15,7 @@ export default ({ getDb }) => async (trustId) => {
   let response = {};
 
   queryResult.map(({ hospital_id, total_visits }) => {
-    response[hospital_id] = total_visits;
+    response[hospital_id] = parseInt(total_visits);
   });
 
   return response;
