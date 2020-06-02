@@ -77,7 +77,7 @@ describe("retrieveHospitalVisitTotals contract tests", () => {
     const totals = await container.getRetrieveHospitalVisitTotals()(trustId);
 
     expect(Object.keys(totals).length).toEqual(2);
-    expect(totals[hospitalId]).toEqual("5");
-    expect(totals[hospital2Id]).toEqual("2");
+    expect(totals[hospitalId]).toEqual(5);
+    expect(totals[hospital2Id]).toEqual(2);
   });
 });
