@@ -49,6 +49,7 @@ describe("trust-admin/hospitals/[id]", () => {
       const container = {
         getRetrieveWardsByHospitalId: () => wardsSpy,
         getRetrieveHospitalById: () => hospitalSpy,
+        getRetrieveHospitalVisitTotals: () => jest.fn().mockReturnValue({}),
         getTokenProvider: () => tokenProvider,
       };
 
