@@ -17,7 +17,8 @@ const getVisitsByWard = async (db, trustId) => {
     wards.hospital_id as hospital_id,
     wards.trust_id as trust_id
     FROM ward_visit_totals AS totals JOIN wards ON wards.id = totals.ward_id AND ($1 IS NULL OR wards.trust_id = $1)
-    GROUP BY wards.trust_id, wards.hospital_id, wards.name`,
+    GROUP BY wards.trust_id, wards.hospital_id, wards.name
+    ORDER BY wards.name`,
     [trustId]
   );
 
