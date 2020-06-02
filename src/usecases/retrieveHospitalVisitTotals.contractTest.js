@@ -80,4 +80,14 @@ describe("retrieveHospitalVisitTotals contract tests", () => {
     expect(totals[hospitalId]).toEqual(5);
     expect(totals[hospital2Id]).toEqual(2);
   });
+
+  it("returns an empty object if no trustId is provided", async () => {
+    const totals = await container.getRetrieveHospitalVisitTotals()();
+    expect(totals).toEqual({});
+  });
+
+  it("returns an empty object if the trustId does not exist", async () => {
+    const totals = await container.getRetrieveHospitalVisitTotals()(12);
+    expect(totals).toEqual({});
+  });
 });
