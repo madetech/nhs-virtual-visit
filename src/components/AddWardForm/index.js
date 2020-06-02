@@ -15,7 +15,7 @@ const isPresent = (input) => {
 };
 
 const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
-  const [hospitalId, setHospitalId] = useState("");
+  const [hospitalId, setHospitalId] = useState(defaultHospitalId);
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
   const [wardCodeConfirmation, setWardCodeConfirmation] = useState("");

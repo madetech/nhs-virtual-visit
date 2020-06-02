@@ -1,4 +1,7 @@
+import React from "react";
 import { getServerSideProps } from "../../pages/trust-admin/add-a-ward";
+import AddAWard from "../../pages/trust-admin/add-a-ward";
+import { render, screen, fireEvent } from "@testing-library/react";
 
 describe("/trust-admin/add-a-ward", () => {
   const anonymousReq = {
@@ -22,6 +25,24 @@ describe("/trust-admin/add-a-ward", () => {
       expect(res.writeHead).toHaveBeenCalledWith(302, {
         Location: "/wards/login",
       });
+    });
+  });
+
+  describe("AddAWard", () => {
+    it("does not throw a hospital error when default select hospital option", () => {
+      render(
+        <AddAWard
+          hospitals={[
+            { id: "1", name: "Adora Hospital" },
+            { id: "2", name: "Catra Hospital" },
+          ]}
+          hospitalId={1}
+        />
+      );
+
+      fireEvent.click(screen.getByText("Add ward"));
+
+      expect(screen.queryAllByText(/Select a hospital/)).toEqual([]);
     });
   });
 });
