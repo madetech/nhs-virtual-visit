@@ -18,6 +18,7 @@ const deleteVisitConfirmation = ({
   contactNumber,
   callDateAndTime,
   error,
+  showNavigationBar,
 }) => {
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -33,7 +34,7 @@ const deleteVisitConfirmation = ({
       title="Are you sure you want to cancel this visit?"
       showNavigationBarForType="wardStaff"
       renderLogout={true}
-      showNavigationBar={true}
+      showNavigationBar={showNavigationBar}
     >
       <GridRow>
         <GridColumn width="full">
@@ -86,6 +87,8 @@ export const getServerSideProps = propsWithContainer(
       };
     }
 
+    const showNavigationBar = process.env.SHOW_NAVIGATION_BAR === "yes";
+
     return {
       props: {
         patientName: scheduledCall.patientName,
@@ -94,6 +97,7 @@ export const getServerSideProps = propsWithContainer(
         callDateAndTime: scheduledCall.callTime,
         callId,
         error,
+        showNavigationBar,
       },
     };
   })

@@ -7,13 +7,13 @@ import Layout from "../../src/components/Layout";
 import verifyToken from "../../src/usecases/verifyToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
-const BookAVisitStart = () => {
+const BookAVisitStart = ({ showNavigationBar }) => {
   return (
     <Layout
       title="Before booking a virtual visit"
       showNavigationBarForType="wardStaff"
       renderLogout={true}
-      showNavigationBar={true}
+      showNavigationBar={showNavigationBar}
     >
       <GridRow>
         <GridColumn width="two-thirds">
@@ -39,7 +39,9 @@ const BookAVisitStart = () => {
 
 export const getServerSideProps = propsWithContainer(
   verifyToken(() => {
-    return { props: {} };
+    const showNavigationBar = process.env.SHOW_NAVIGATION_BAR === "yes";
+
+    return { props: { showNavigationBar } };
   })
 );
 

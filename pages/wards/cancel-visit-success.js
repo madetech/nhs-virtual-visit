@@ -14,6 +14,7 @@ const deleteVisitSuccess = ({
   callDateAndTime,
   error,
   deleteError,
+  showNavigationBar,
 }) => {
   if (error || deleteError) {
     return <Error />;
@@ -24,7 +25,7 @@ const deleteVisitSuccess = ({
       title="Virtual visit cancelled"
       showNavigationBarForType="wardStaff"
       renderLogout={true}
-      showNavigationBar={true}
+      showNavigationBar={showNavigationBar}
     >
       <div className="nhsuk-grid-row">
         <div className="nhsuk-grid-column-two-thirds">
@@ -73,12 +74,16 @@ export const getServerSideProps = propsWithContainer(
     }
 
     let { error: deleteError } = await deleteVisitByCallId(container)(callId);
+
+    const showNavigationBar = process.env.SHOW_NAVIGATION_BAR === "yes";
+
     return {
       props: {
         patientName: scheduledCall.patientName,
         callDateAndTime: scheduledCall.callTime,
         error,
         deleteError,
+        showNavigationBar,
       },
     };
   })

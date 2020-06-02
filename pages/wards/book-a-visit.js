@@ -28,6 +28,7 @@ const BookAVisit = ({
   initialContactNumber,
   initialContactEmail,
   initialCallDateTime,
+  showNavigationBar,
 }) => {
   const [textMessageIsChecked, setTextMessageIsChecked] = useState(
     initialContactNumber?.length > 0 || false
@@ -166,7 +167,7 @@ const BookAVisit = ({
       hasErrors={errors.length != 0}
       showNavigationBarForType="wardStaff"
       renderLogout={true}
-      showNavigationBar={true}
+      showNavigationBar={showNavigationBar}
     >
       <GridRow>
         <GridColumn width="two-thirds">
@@ -262,7 +263,9 @@ const queryContainsInitialData = (query) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyToken(async ({ query, container }) => {
-    let props = {};
+    const showNavigationBar = process.env.SHOW_NAVIGATION_BAR === "yes";
+
+    let props = { showNavigationBar };
     if (queryContainsInitialData(query)) {
       const {
         patientName,
@@ -309,6 +312,7 @@ export const getServerSideProps = propsWithContainer(
         initialCallDateTime: nextCallDateTime,
       };
     }
+
     return { props };
   })
 );
