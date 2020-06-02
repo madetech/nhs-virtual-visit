@@ -12,11 +12,11 @@ export default ({ getDb }) => async (trustId) => {
     GROUP BY hospitals.id`,
     [trustId]
   );
+  let response = {};
 
-  return {
-    byHospital: queryResult.map(({ hospital_id, total_visits }) => ({
-      hospitalId: hospital_id,
-      totalVisits: parseInt(total_visits),
-    })),
-  };
+  queryResult.map(({ hospital_id, total_visits }) => {
+    response[hospital_id] = total_visits;
+  });
+
+  return response;
 };

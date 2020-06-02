@@ -74,13 +74,10 @@ describe("retrieveHospitalVisitTotals contract tests", () => {
       date: date2.toISOString(),
     });
 
-    const { byHospital } = await container.getRetrieveHospitalVisitTotals()(
-      trustId
-    );
+    const totals = await container.getRetrieveHospitalVisitTotals()(trustId);
 
-    expect(byHospital).toEqual([
-      { hospitalId: hospitalId, totalVisits: 5 },
-      { hospitalId: hospital2Id, totalVisits: 2 },
-    ]);
+    expect(Object.keys(totals).length).toEqual(2);
+    expect(totals[hospitalId]).toEqual("5");
+    expect(totals[hospital2Id]).toEqual("2");
   });
 });
