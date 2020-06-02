@@ -78,6 +78,8 @@ const ScheduleConfirmation = ({
     <Layout
       title="Check your answers before booking a virtual visit"
       showNavigationBarForType="wardStaff"
+      renderLogout={true}
+      showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="two-thirds">

@@ -54,6 +54,8 @@ const VisitStart = ({
     <Layout
       title="Before handing over to the patient"
       showNavigationBarForType="wardStaff"
+      renderLogout={true}
+      showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="two-thirds">

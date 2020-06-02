@@ -13,7 +13,12 @@ export default function WardVisits({ scheduledCalls, ward, error }) {
     return <Error />;
   }
   return (
-    <Layout title="Virtual visits" showNavigationBarForType="wardStaff">
+    <Layout
+      title="Virtual visits"
+      showNavigationBarForType="wardStaff"
+      renderLogout={true}
+      showNavigationBar={true}
+    >
       <GridRow>
         <GridColumn width="full">
           <HeadingWithTime>

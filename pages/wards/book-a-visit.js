@@ -165,6 +165,8 @@ const BookAVisit = ({
       title="Book a virtual visit"
       hasErrors={errors.length != 0}
       showNavigationBarForType="wardStaff"
+      renderLogout={true}
+      showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="two-thirds">
