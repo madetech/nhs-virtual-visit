@@ -14,6 +14,14 @@ Users who are joining virtual **Visits** to see and hear from **Patients**.
 
 **Visitors** and **Patients** attend virtual visits by video call arranged and facilitated by **Ward Staff**. **Visits** have a scheduled time when they will occur.
 
+### Trusts (noun)
+
+An organisation comprised of many **Hospitals**.
+
+### Hospitals (noun)
+
+An institution providing medical and surgical treatment and nursing care for sick or injured people. **Patients** stay in beds on **Wards**.
+
 ### Wards (noun)
 
 Where care is delivered by **Ward Staff**.
@@ -26,30 +34,10 @@ Users being cared for in Wards by **Ward Staff**.
 
 Used when scheduling **Visits** for a particular time.
 
+### Trust Admins (noun)
+
+Users who have overall responsibility for administering the Book A Virtual Visit service for their **Trust**.
+
 ### Ward code (noun)
 
 An alphanumeric string used by **Ward Staff** to securely access the app.
-
-## Pages
-
-### `/wards/login`
-
-**Ward Staff** enter their **Ward Code**, after which they're able to view scheduled **Visit** and schedule new ones.
-
-### `/wards/visits`
-
-**Ward Staff** view and join upcoming **Visit** for their **Ward**.
-
-**Visits** are shown for 30 minutes after their scheduled start time - after 30 minutes has elapsed they are hidden from this page.
-
-### `/wards/book-a-visit`
-
-**Ward Staff** book new **Visits**.
-
-### `/visits/{visitId}`
-
-**Patients** and **Visitors** unite and can see and hear one another in their **Visit**.
-
-### `/visitors/waiting-room/{visitId}`
-
-**Visitors** have their expectations set for what is about to happen and enter their names, for confirmation by the **Ward Staff** before they hand over the device to the **Patient**.
