@@ -4,7 +4,7 @@ describe("retrieveHospitalVisitTotals contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns the total number of visits for each hospital", async () => {
-    const { trustId } = await container.getCreateTrust(container)({
+    const { trustId } = await container.getCreateTrust()({
       name: "Test Trust",
       adminCode: "TEST",
     });
