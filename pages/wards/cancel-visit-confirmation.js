@@ -32,6 +32,8 @@ const deleteVisitConfirmation = ({
     <Layout
       title="Are you sure you want to cancel this visit?"
       showNavigationBarForType="wardStaff"
+      renderLogout={true}
+      showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="full">

@@ -14,6 +14,7 @@ const Layout = ({
   renderLogout = false,
   isBookService = true,
   showNavigationBarForType,
+  showNavigationBar = false,
 }) => {
   useEffect(() => {
     MenuToggle();
@@ -52,7 +53,7 @@ const Layout = ({
 
           <div className="nhsuk-header__content" id="content-header">
             <div className="nhsuk-header__menu">
-              {showNavigationBarForType && (
+              {showNavigationBar && showNavigationBarForType && (
                 <button
                   className="nhsuk-header__menu-toggle"
                   id="toggle-menu"
@@ -64,11 +65,15 @@ const Layout = ({
                 </button>
               )}
 
-              {renderLogout && <LogoutButton renderLogout={renderLogout} />}
+              {!showNavigationBar && renderLogout && (
+                <LogoutButton renderLogout={renderLogout} />
+              )}
             </div>
           </div>
         </div>
-        {showNavigationBarForType === "wardStaff" && <WardsNavigationBar />}
+        {showNavigationBar && showNavigationBarForType === "wardStaff" && (
+          <WardsNavigationBar />
+        )}
       </header>
       <div className="nhsuk-width-container">
         <main

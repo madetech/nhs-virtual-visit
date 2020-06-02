@@ -12,6 +12,8 @@ const BookAVisitStart = () => {
     <Layout
       title="Before booking a virtual visit"
       showNavigationBarForType="wardStaff"
+      renderLogout={true}
+      showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="two-thirds">
