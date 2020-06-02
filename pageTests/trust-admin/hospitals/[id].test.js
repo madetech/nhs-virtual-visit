@@ -14,8 +14,10 @@ describe("trust-admin/hospitals/[id]", () => {
   };
   let res;
 
+  const trustId = 1;
+
   const tokenProvider = {
-    validate: jest.fn(() => ({ type: "trustAdmin", trustId: 1 })),
+    validate: jest.fn(() => ({ type: "trustAdmin", trustId: trustId })),
   };
 
   beforeEach(() => {
@@ -46,10 +48,12 @@ describe("trust-admin/hospitals/[id]", () => {
         error: null,
       }));
 
+      const visitTotalsSpy = jest.fn().mockReturnValue({ 1: 10, 2: 3 });
+
       const container = {
         getRetrieveWardsByHospitalId: () => wardsSpy,
         getRetrieveHospitalById: () => hospitalSpy,
-        getRetrieveHospitalVisitTotals: () => jest.fn().mockReturnValue({}),
+        getRetrieveHospitalVisitTotals: () => visitTotalsSpy,
         getTokenProvider: () => tokenProvider,
       };
 
@@ -60,7 +64,8 @@ describe("trust-admin/hospitals/[id]", () => {
         container,
       });
 
-      expect(hospitalSpy).toHaveBeenCalledWith(hospitalId, 1);
+      expect(hospitalSpy).toHaveBeenCalledWith(hospitalId, trustId);
+      expect(visitTotalsSpy).toHaveBeenCalledWith(trustId);
       expect(props.wards).toEqual([{ id: 1 }, { id: 2 }]);
       expect(props.hospital).toEqual({ name: "Test Hospital" });
     });
