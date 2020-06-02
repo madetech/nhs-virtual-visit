@@ -47,13 +47,13 @@ The following video chat capabilities are currently supported:
 - [Whereby](https://whereby.com/information/product-api/)
 - [Jitsi Meet](https://github.com/jitsi/jitsi-meet/blob/master/doc/README.md)
 
-## Contributing
-
-Please take a look at our separate [Contributing Guide](./CONTRIBUTING.md).
-
 ## Development
 
 Please read our separate [Development Guide](./docs/development/README.md).
+
+## Contributing
+
+Please take a look at our separate [Contributing Guide](./CONTRIBUTING.md).
 
 ## More documentation
 
