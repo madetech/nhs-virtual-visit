@@ -7,8 +7,14 @@ import Text from "../../src/components/Text";
 import verifyToken from "../../src/usecases/verifyToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import AccordionVisits from "../../src/components/AccordionVisits";
+import ActionLink from "../../src/components/ActionLink";
 
-export default function WardVisits({ scheduledCalls, ward, error }) {
+export default function WardVisits({
+  scheduledCalls,
+  ward,
+  error,
+  showNavigationBar = true,
+}) {
   if (error) {
     return <Error />;
   }
@@ -17,7 +23,7 @@ export default function WardVisits({ scheduledCalls, ward, error }) {
       title="Virtual visits"
       showNavigationBarForType="wardStaff"
       renderLogout={true}
-      showNavigationBar={true}
+      showNavigationBar={showNavigationBar}
     >
       <GridRow>
         <GridColumn width="full">
@@ -28,7 +34,22 @@ export default function WardVisits({ scheduledCalls, ward, error }) {
             </span>
             Virtual visits
           </HeadingWithTime>
+          {!showNavigationBar && (
+            <>
+              <h2 className="nhsuk-heading-l">Book a virtual visit</h2>
 
+              <Text>
+                You&apos;ll need the name and mobile number of your
+                patient&apos;s key contact in order to set up a virtual visit.
+              </Text>
+
+              <ActionLink href={`/wards/book-a-visit`}>
+                Book a virtual visit
+              </ActionLink>
+
+              <h2 className="nhsuk-heading-l">Pre-booked virtual visits</h2>
+            </>
+          )}
           {scheduledCalls.length > 0 ? (
             <AccordionVisits visits={scheduledCalls} />
           ) : (
