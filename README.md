@@ -29,6 +29,8 @@ It includes an administration panel which provides self-service functionality fo
 
 ## Previews
 
+<!-- To update the screenshots, please see the overview slide deck https://docs.google.com/presentation/d/1KaHYSZzcdFJ1oOCZdiPfZCXv9uAEOeE8EvkIjD-mId8/edit -->
+
 | ![Trust Admin can add new hospitals and wards](docs/images/TrustAdmin_01_AddNew.png)            | ![Trust Admin can edit and delete hospitals and wards](docs/images/TrustAdmin_02_ManageExisting.png) |
 | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | ![Ward Staff can book a virtual visit via email or SMS](docs/images/WardStaff_01_BookVisit.png) | ![Ward Staff can start a virtual visit](docs/images/WardStaff_02_StartVisit.png)                     |
