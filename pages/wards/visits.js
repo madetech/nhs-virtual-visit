@@ -13,7 +13,7 @@ export default function WardVisits({
   scheduledCalls,
   ward,
   error,
-  showNavigationBar = true,
+  showNavigationBar,
 }) {
   if (error) {
     return <Error />;
@@ -71,8 +71,10 @@ export const getServerSideProps = propsWithContainer(
     let ward;
     ({ ward, error } = await container.getRetrieveWardById()(wardId, trustId));
 
+    const showNavigationBar = process.env.SHOW_NAVIGATION_BAR === "yes";
+
     return {
-      props: { scheduledCalls, ward, error },
+      props: { scheduledCalls, ward, error, showNavigationBar },
     };
   })
 );
