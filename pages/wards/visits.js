@@ -50,11 +50,7 @@ export default function WardVisits({
               <h2 className="nhsuk-heading-l">Pre-booked virtual visits</h2>
             </>
           )}
-          {scheduledCalls.length > 0 ? (
-            <AccordionVisits visits={scheduledCalls} />
-          ) : (
-            <Text>There are no upcoming virtual visits.</Text>
-          )}
+          <AccordionVisits visits={scheduledCalls} />
         </GridColumn>
       </GridRow>
     </Layout>
