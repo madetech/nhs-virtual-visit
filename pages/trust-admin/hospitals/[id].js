@@ -9,6 +9,7 @@ import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Layout from "../../../src/components/Layout";
 import WardsTable from "../../../src/components/WardsTable";
 import NumberTile from "../../../src/components/NumberTile";
+import Panel from "../../../src/components/Panel";
 
 const ShowHospital = ({
   hospital,
@@ -38,15 +39,15 @@ const ShowHospital = ({
 
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
-              <NumberTile
-                label={`${mostVisitedWard.wardName} (${mostVisitedWard.total_visits})`}
-                number="Most booked visits"
+              <Panel
+                title="Most booked visits"
+                body={`${mostVisitedWard.wardName} (${mostVisitedWard.total_visits})`}
               />
             </GridColumn>
             <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
-              <NumberTile
-                label={`${leastVisitedWard.wardName} (${leastVisitedWard.total_visits})`}
-                number="Least booked visits"
+              <Panel
+                title="Least booked visits"
+                body={`${leastVisitedWard.wardName} (${leastVisitedWard.total_visits})`}
               />
             </GridColumn>
           </GridRow>
