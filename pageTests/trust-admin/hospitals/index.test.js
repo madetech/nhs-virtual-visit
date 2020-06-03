@@ -32,6 +32,11 @@ describe("trust-admin/hospitals", () => {
     error: null,
   }));
 
+  const retrieveHospitalVisitTotalsStub = jest.fn(async () => ({
+    "1": 5,
+    "2": 10,
+  }));
+
   let res, container;
 
   beforeEach(() => {
@@ -41,6 +46,7 @@ describe("trust-admin/hospitals", () => {
     container = {
       getRetrieveTrustById: () => retrieveTrustByIdSuccessStub,
       getRetrieveHospitalsByTrustId: () => retrieveHospitalsByTrustIdSuccessSpy,
+      getRetrieveHospitalVisitTotals: () => retrieveHospitalVisitTotalsStub,
       getTokenProvider: () => tokenProvider,
     };
   });
@@ -114,6 +120,20 @@ describe("trust-admin/hospitals", () => {
       });
 
       expect(props.trustError).toEqual("Error!");
+    });
+
+    it("retrieves the number of booked visits for the trust's hospitals", async () => {
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(retrieveHospitalVisitTotalsStub).toHaveBeenCalledWith(trustId);
+      expect(props.hospitals).toEqual([
+        { id: 1, name: "1", bookedVisits: 5 },
+        { id: 2, name: "2", bookedVisits: 10 },
+      ]);
     });
   });
 });
