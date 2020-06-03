@@ -42,7 +42,8 @@ const TrustAdmin = ({ hospitals, hospitalError, trust, trustError }) => {
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, authenticationToken }) => {
     const hospitalsResponse = await container.getRetrieveHospitalsByTrustId()(
-      authenticationToken.trustId
+      authenticationToken.trustId,
+      { withWards: true }
     );
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
