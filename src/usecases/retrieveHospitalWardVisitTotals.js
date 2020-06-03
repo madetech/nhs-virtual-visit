@@ -13,7 +13,7 @@ export default ({ getDb }) => async (hospitalId) => {
     [hospitalId]
   );
 
-  let wards = [];
+  let wards = {};
 
   queryResult.map(({ ward_id, total_visits }) => {
     wards[ward_id] = parseInt(total_visits);
