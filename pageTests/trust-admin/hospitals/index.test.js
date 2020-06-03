@@ -26,8 +26,8 @@ describe("trust-admin/hospitals", () => {
 
   const retrieveHospitalsByTrustIdSuccessSpy = jest.fn(async () => ({
     hospitals: [
-      { id: 1, name: "1" },
-      { id: 2, name: "2" },
+      { id: 1, name: "1", wards: [{ id: 1, name: "Ward 1" }] },
+      { id: 2, name: "2", wards: [{ id: 2, name: "Ward 2" }] },
     ],
     error: null,
   }));
@@ -67,6 +67,10 @@ describe("trust-admin/hospitals", () => {
         container,
       });
 
+      expect(retrieveHospitalsByTrustIdSuccessSpy).toHaveBeenCalledWith(
+        trustId,
+        { withWards: true }
+      );
       expect(props.hospitals.length).toEqual(2);
       expect(props.hospitals[0].id).toEqual(1);
       expect(props.hospitals[1].name).toEqual("2");
@@ -131,8 +135,18 @@ describe("trust-admin/hospitals", () => {
 
       expect(retrieveHospitalVisitTotalsStub).toHaveBeenCalledWith(trustId);
       expect(props.hospitals).toEqual([
-        { id: 1, name: "1", bookedVisits: 5 },
-        { id: 2, name: "2", bookedVisits: 10 },
+        {
+          id: 1,
+          name: "1",
+          bookedVisits: 5,
+          wards: [{ id: 1, name: "Ward 1" }],
+        },
+        {
+          id: 2,
+          name: "2",
+          bookedVisits: 10,
+          wards: [{ id: 2, name: "Ward 2" }],
+        },
       ]);
     });
   });
