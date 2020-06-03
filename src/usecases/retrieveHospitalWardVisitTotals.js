@@ -19,13 +19,12 @@ export default ({ getDb }) => async (hospitalId) => {
     wards[ward_id] = parseInt(total_visits);
   });
 
-  const mostVisitedResult = queryResult.sort(
+  const sortedResults = queryResult.sort(
     (a, b) => b.total_visits - a.total_visits
-  )[0];
+  );
 
-  const leastVisitedResult = queryResult.sort(
-    (a, b) => b.total_visits - a.total_visits
-  )[queryResult.length - 1];
+  const mostVisitedResult = sortedResults[0];
+  const leastVisitedResult = sortedResults[sortedResults.length - 1];
 
   const mostVisited = mostVisitedResult
     ? {
