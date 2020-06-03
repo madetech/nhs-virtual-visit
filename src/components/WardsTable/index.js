@@ -1,7 +1,7 @@
 import React from "react";
 import AnchorLink from "../AnchorLink";
 
-const WardsTable = ({ wards }) => (
+const WardsTable = ({ wards, wardVisitTotals }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
       <caption className="nhsuk-table__caption">List of wards</caption>
@@ -16,6 +16,11 @@ const WardsTable = ({ wards }) => (
           <th className="nhsuk-table__header" scope="col">
             Ward code
           </th>
+          {wardVisitTotals && (
+            <th className="nhsuk-table__header" scope="col">
+              Booked visits
+            </th>
+          )}
           <th className="nhsuk-table__header" scope="col"></th>
           <th className="nhsuk-table__header" scope="col"></th>
         </tr>
@@ -26,6 +31,9 @@ const WardsTable = ({ wards }) => (
             <td className="nhsuk-table__cell">{ward.hospitalName}</td>
             <td className="nhsuk-table__cell">{ward.name}</td>
             <td className="nhsuk-table__cell">{ward.code}</td>
+            {wardVisitTotals && (
+              <td className="nhsuk-table__cell">{wardVisitTotals[ward.id]}</td>
+            )}
             <td className="nhsuk-table__cell">
               <AnchorLink href={`/trust-admin/edit-a-ward?wardId=${ward.id}`}>
                 Edit

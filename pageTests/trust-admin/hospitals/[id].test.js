@@ -51,6 +51,7 @@ describe("trust-admin/hospitals/[id]", () => {
       const visitTotalsSpy = jest.fn().mockReturnValue({ 1: 10, 2: 3 });
 
       const hospitalWardTotalsSpy = jest.fn().mockReturnValue({
+        wards: { 1: 10, 2: 5 },
         mostVisited: { wardName: "Most Visited", total_visits: 10 },
         leastVisited: { wardName: "Least Visited", total_visits: 5 },
       });
@@ -84,6 +85,7 @@ describe("trust-admin/hospitals/[id]", () => {
         wardName: "Least Visited",
         total_visits: 5,
       });
+      expect(props.wardVisitTotals).toEqual({ 1: 10, 2: 5 });
     });
   });
 });
