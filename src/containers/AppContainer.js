@@ -31,6 +31,7 @@ import retrieveTrusts from "../usecases/retrieveTrusts";
 import regenerateToken from "../usecases/regenerateToken";
 import retrieveWardsByHospitalId from "../usecases/retrieveWardsByHospitalId";
 import retrieveHospitalVisitTotals from "../usecases/retrieveHospitalVisitTotals";
+import retrieveHospitalWardVisitTotals from "../usecases/retrieveHospitalWardVisitTotals";
 
 class AppContainer {
   getDb = () => {
@@ -163,6 +164,10 @@ class AppContainer {
 
   getRetrieveHospitalVisitTotals = () => {
     return retrieveHospitalVisitTotals(this);
+  };
+
+  getRetrieveHospitalWardVisitTotals = () => {
+    return retrieveHospitalWardVisitTotals(this);
   };
 }
 
