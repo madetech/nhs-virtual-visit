@@ -29,22 +29,34 @@ const ShowHospital = ({
         <GridColumn width="full">
           <Heading>{hospital.name}</Heading>
           <GridRow className="nhsuk-u-padding-bottom-3">
-            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
               <NumberTile number={totalBookedVisits} label="booked visits" />
             </GridColumn>
-            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
               <NumberTile number={wards.length} label="wards" />
             </GridColumn>
           </GridRow>
 
           <GridRow className="nhsuk-u-padding-bottom-3">
-            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
               <Panel
                 title="Most booked visits"
                 body={`${mostVisitedWard.wardName} (${mostVisitedWard.total_visits})`}
               />
             </GridColumn>
-            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
               <Panel
                 title="Least booked visits"
                 body={`${leastVisitedWard.wardName} (${leastVisitedWard.total_visits})`}
