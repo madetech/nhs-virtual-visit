@@ -31,6 +31,68 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
     expect(error).toBeNull();
   });
 
+  it("returns all the hospitals with their wards for a trust ", async () => {
+    const { trustId } = await container.getCreateTrust()({
+      name: "Test Trust",
+      adminCode: "TEST",
+    });
+
+    const { hospitalId } = await container.getCreateHospital()({
+      name: "Test Hospital",
+      trustId: trustId,
+    });
+
+    const { hospitalId: hospital2Id } = await container.getCreateHospital()({
+      name: "Test Hospital 2",
+      trustId: trustId,
+    });
+
+    const { wardId: ward1Id } = await container.getCreateWard()({
+      name: "Test Ward 1",
+      code: "wardCode1",
+      hospitalId: hospitalId,
+      trustId: trustId,
+    });
+
+    const { wardId: ward2Id } = await container.getCreateWard()({
+      name: "Test Ward 2",
+      code: "wardCode2",
+      hospitalId: hospitalId,
+      trustId: trustId,
+    });
+
+    const { wardId: ward3Id } = await container.getCreateWard()({
+      name: "Test Ward 3",
+      code: "wardCode3",
+      hospitalId: hospital2Id,
+      trustId: trustId,
+    });
+
+    const {
+      hospitals,
+      error,
+    } = await container.getRetrieveHospitalsByTrustId()(trustId, {
+      withWards: true,
+    });
+
+    expect(hospitals).toEqual([
+      {
+        id: hospitalId,
+        name: "Test Hospital",
+        wards: [
+          { id: ward1Id, name: "Test Ward 1" },
+          { id: ward2Id, name: "Test Ward 2" },
+        ],
+      },
+      {
+        id: hospital2Id,
+        name: "Test Hospital 2",
+        wards: [{ id: ward3Id, name: "Test Ward 3" }],
+      },
+    ]);
+    expect(error).toBeNull();
+  });
+
   it("returns an error if no trustId is provided", async () => {
     const { error } = await container.getRetrieveHospitalsByTrustId()();
 
