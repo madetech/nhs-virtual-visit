@@ -18,6 +18,7 @@ const ShowHospital = ({
   totalBookedVisits,
   mostVisitedWard,
   leastVisitedWard,
+  wardVisitTotals,
 }) => {
   if (error) {
     return <Error err={error} />;
@@ -63,7 +64,7 @@ const ShowHospital = ({
               />
             </GridColumn>
           </GridRow>
-          <WardsTable wards={wards} />
+          <WardsTable wards={wards} wardVisitTotals={wardVisitTotals} />
           <Button
             className="nhsuk-button"
             onClick={() => {
@@ -103,6 +104,7 @@ export const getServerSideProps = propsWithContainer(
     const totalBookedVisits = visitTotals[hospital.id] || 0;
 
     const {
+      wards: wardVisitTotals,
       mostVisited: mostVisitedWard,
       leastVisited: leastVisitedWard,
     } = await container.getRetrieveHospitalWardVisitTotals()(hospital.id);
@@ -115,6 +117,7 @@ export const getServerSideProps = propsWithContainer(
         totalBookedVisits,
         mostVisitedWard,
         leastVisitedWard,
+        wardVisitTotals,
       },
     };
   })
