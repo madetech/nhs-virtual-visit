@@ -92,7 +92,7 @@ describe("retrieveHospitalWardVisitTotals contract tests", () => {
   it("returns an empty object if no hospitalId is provided", async () => {
     const response = await container.getRetrieveHospitalWardVisitTotals()();
     expect(response).toEqual({
-      wards: [],
+      wards: {},
       mostVisited: { wardName: "", total_visits: 0 },
       leastVisited: { wardName: "", total_visits: 0 },
     });
@@ -101,7 +101,7 @@ describe("retrieveHospitalWardVisitTotals contract tests", () => {
   it("returns an empty object if the hospitalId does not exist", async () => {
     const response = await container.getRetrieveHospitalWardVisitTotals()(12);
     expect(response).toEqual({
-      wards: [],
+      wards: {},
       mostVisited: { wardName: "", total_visits: 0 },
       leastVisited: { wardName: "", total_visits: 0 },
     });
