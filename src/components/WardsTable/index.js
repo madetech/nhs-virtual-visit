@@ -1,5 +1,5 @@
 import React from "react";
-import Router from "next/router";
+import AnchorLink from "../AnchorLink";
 
 const WardsTable = ({ wards }) => (
   <div className="nhsuk-table-responsive">
@@ -27,32 +27,16 @@ const WardsTable = ({ wards }) => (
             <td className="nhsuk-table__cell">{ward.name}</td>
             <td className="nhsuk-table__cell">{ward.code}</td>
             <td className="nhsuk-table__cell">
-              <button
-                className="nhsuk-button"
-                onClick={() => {
-                  const wardId = ward.id;
-                  Router.push({
-                    pathname: `/trust-admin/edit-a-ward`,
-                    query: { wardId },
-                  });
-                }}
-              >
+              <AnchorLink href={`/trust-admin/edit-a-ward?wardId=${ward.id}`}>
                 Edit
-              </button>
+              </AnchorLink>
             </td>
             <td className="nhsuk-table__cell">
-              <button
-                className="nhsuk-button nhsuk-button--secondary"
-                onClick={() => {
-                  const wardId = ward.id;
-                  Router.push({
-                    pathname: `/trust-admin/archive-a-ward-confirmation`,
-                    query: { wardId },
-                  });
-                }}
+              <AnchorLink
+                href={`/trust-admin/archive-a-ward-confirmation?wardId=${ward.id}`}
               >
                 Delete
-              </button>
+              </AnchorLink>
             </td>
           </tr>
         ))}
