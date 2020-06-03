@@ -10,7 +10,14 @@ import Layout from "../../../src/components/Layout";
 import WardsTable from "../../../src/components/WardsTable";
 import NumberTile from "../../../src/components/NumberTile";
 
-const ShowHospital = ({ hospital, wards, error, totalBookedVisits }) => {
+const ShowHospital = ({
+  hospital,
+  wards,
+  error,
+  totalBookedVisits,
+  mostVisitedWard,
+  leastVisitedWard,
+}) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -26,6 +33,21 @@ const ShowHospital = ({ hospital, wards, error, totalBookedVisits }) => {
             </GridColumn>
             <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
               <NumberTile number={wards.length} label="wards" />
+            </GridColumn>
+          </GridRow>
+
+          <GridRow className="nhsuk-u-padding-bottom-3">
+            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
+              <NumberTile
+                label={`${mostVisitedWard.wardName} (${mostVisitedWard.total_visits})`}
+                number="Most booked visits"
+              />
+            </GridColumn>
+            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
+              <NumberTile
+                label={`${leastVisitedWard.wardName} (${leastVisitedWard.total_visits})`}
+                number="Least booked visits"
+              />
             </GridColumn>
           </GridRow>
           <WardsTable wards={wards} />
@@ -67,12 +89,19 @@ export const getServerSideProps = propsWithContainer(
 
     const totalBookedVisits = visitTotals[hospital.id] || 0;
 
+    const {
+      mostVisited: mostVisitedWard,
+      leastVisited: leastVisitedWard,
+    } = await container.getRetrieveHospitalWardVisitTotals()(hospital.id);
+
     return {
       props: {
         hospital,
         wards,
         error: hospitalError || wardsError,
         totalBookedVisits,
+        mostVisitedWard,
+        leastVisitedWard,
       },
     };
   })
