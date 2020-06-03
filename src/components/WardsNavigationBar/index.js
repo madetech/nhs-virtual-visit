@@ -12,7 +12,7 @@ const logout = async () => {
 const WardsNavigationBar = () => {
   const links = [
     {
-      text: "Virtual visits",
+      text: "Home",
       href: "/wards/visits",
     },
     {
