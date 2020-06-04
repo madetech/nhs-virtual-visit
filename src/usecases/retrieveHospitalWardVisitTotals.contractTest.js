@@ -35,6 +35,13 @@ describe("retrieveHospitalWardVisitTotals contract tests", () => {
       trustId: trustId,
     });
 
+    const { wardId: ward4Id } = await container.getCreateWard()({
+      name: "Test Ward 4",
+      code: "wardCode4",
+      hospitalId: hospitalId,
+      trustId: trustId,
+    });
+
     const date1 = new Date("2020-06-01 13:00");
     const date2 = new Date("2020-06-02 13:00");
 
@@ -68,24 +75,27 @@ describe("retrieveHospitalWardVisitTotals contract tests", () => {
       date: date2.toISOString(),
     });
 
+    // 0 visits for Ward 4
+
     const {
       wards,
       mostVisited,
       leastVisited,
     } = await container.getRetrieveHospitalWardVisitTotals()(hospitalId);
 
-    expect(Object.keys(wards).length).toEqual(3);
+    expect(Object.keys(wards).length).toEqual(4);
     expect(wards[ward1Id]).toEqual(3);
     expect(wards[ward2Id]).toEqual(1);
     expect(wards[ward3Id]).toEqual(2);
+    expect(wards[ward4Id]).toEqual(0);
 
     expect(mostVisited).toEqual({
       wardName: "Test Ward 1",
       totalVisits: 3,
     });
     expect(leastVisited).toEqual({
-      wardName: "Test Ward 2",
-      totalVisits: 1,
+      wardName: "Test Ward 4",
+      totalVisits: 0,
     });
   });
 
