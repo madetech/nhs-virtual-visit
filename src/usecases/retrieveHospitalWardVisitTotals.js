@@ -8,7 +8,7 @@ export default ({ getDb }) => async (hospitalId) => {
       COALESCE(SUM(totals.total),0) AS total_visits
     FROM wards
     LEFT JOIN ward_visit_totals AS totals ON wards.id = totals.ward_id
-    WHERE wards.hospital_id = $1
+    WHERE wards.hospital_id = $1 AND wards.archived_at IS NULL
     GROUP BY wards.id`,
     [hospitalId]
   );
