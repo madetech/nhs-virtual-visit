@@ -27,7 +27,11 @@ const HospitalsTable = ({ hospitals }) => (
             <td className="nhsuk-table__cell">{hospital.bookedVisits}</td>
             <td className="nhsuk-table__cell" style={{ textAlign: "center" }}>
               <AnchorLink href={`/trust-admin/hospitals/${hospital.id}`}>
-                View
+                View{" "}
+                <span className="nhsuk-u-visually-hidden">
+                  {" "}
+                  {hospital.name}
+                </span>
               </AnchorLink>
             </td>
           </tr>
