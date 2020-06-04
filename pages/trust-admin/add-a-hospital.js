@@ -12,6 +12,7 @@ import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Button from "../../src/components/Button";
 import Router from "next/router";
+import { TRUST_ADMIN } from "../../src/helpers/userTypes";
 
 const AddAHospital = ({ error, trustId }) => {
   if (error) {
@@ -92,6 +93,8 @@ const AddAHospital = ({ error, trustId }) => {
       title="Add a Hospital"
       hasErrors={errors.length != 0}
       renderLogout={true}
+      showNavigationBar={true}
+      showNavigationBarForType={TRUST_ADMIN}
     >
       <GridRow>
         <GridColumn width="two-thirds">

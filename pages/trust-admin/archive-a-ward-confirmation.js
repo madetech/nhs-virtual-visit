@@ -9,6 +9,7 @@ import Heading from "../../src/components/Heading";
 import Button from "../../src/components/Button";
 import BackLink from "../../src/components/BackLink";
 import Router from "next/router";
+import { TRUST_ADMIN } from "../../src/helpers/userTypes";
 
 const ArchiveAWardConfirmation = ({
   error,
@@ -55,6 +56,8 @@ const ArchiveAWardConfirmation = ({
     <Layout
       title="Are you sure you want to delete this ward?"
       renderLogout={true}
+      showNavigationBar={true}
+      showNavigationBarForType={TRUST_ADMIN}
     >
       <GridRow>
         <GridColumn width="full">

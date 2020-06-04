@@ -5,6 +5,7 @@ import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import AddWardForm from "../../src/components/AddWardForm";
 import Error from "next/error";
+import { TRUST_ADMIN } from "../../src/helpers/userTypes";
 
 const AddAWard = ({ hospitals, error, hospitalId }) => {
   if (error) {
@@ -17,6 +18,8 @@ const AddAWard = ({ hospitals, error, hospitalId }) => {
       title="Add a ward"
       hasErrors={errors.length != 0}
       renderLogout={true}
+      showNavigationBar={true}
+      showNavigationBarForType={TRUST_ADMIN}
     >
       <GridRow>
         <GridColumn width="two-thirds">

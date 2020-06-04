@@ -5,6 +5,7 @@ import Layout from "../../src/components/Layout";
 import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import EditWardForm from "../../src/components/EditWardForm";
+import { TRUST_ADMIN } from "../../src/helpers/userTypes";
 
 const EditAWard = ({ error, id, name, hospitalId, hospitals }) => {
   if (error) {
@@ -18,6 +19,8 @@ const EditAWard = ({ error, id, name, hospitalId, hospitals }) => {
       title="Edit a ward"
       hasErrors={errors.length != 0}
       renderLogout={true}
+      showNavigationBar={true}
+      showNavigationBarForType={TRUST_ADMIN}
     >
       <GridRow>
         <GridColumn width="two-thirds">

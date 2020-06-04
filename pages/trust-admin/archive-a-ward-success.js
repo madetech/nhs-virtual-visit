@@ -3,10 +3,16 @@ import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import AnchorLink from "../../src/components/AnchorLink";
+import { TRUST_ADMIN } from "../../src/helpers/userTypes";
 
 const archiveAWardSuccess = ({ name, hospitalName }) => {
   return (
-    <Layout title={`${name} has been deleted`} renderLogout={true}>
+    <Layout
+      title={`${name} has been deleted`}
+      renderLogout={true}
+      showNavigationBar={true}
+      showNavigationBarForType={TRUST_ADMIN}
+    >
       <div className="nhsuk-grid-row">
         <div className="nhsuk-grid-column-two-thirds">
           <div

@@ -8,6 +8,7 @@ import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Heading from "../../../src/components/Heading";
 import ActionLink from "../../../src/components/ActionLink";
 import Text from "../../../src/components/Text";
+import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const TrustAdmin = ({ hospitals, hospitalError, trust, trustError }) => {
   if (hospitalError || trustError) {
@@ -15,7 +16,12 @@ const TrustAdmin = ({ hospitals, hospitalError, trust, trustError }) => {
   }
 
   return (
-    <Layout title={`Hospitals for ${trust.name}`} renderLogout={true}>
+    <Layout
+      title={`Hospitals for ${trust.name}`}
+      renderLogout={true}
+      showNavigationBar={true}
+      showNavigationBarForType={TRUST_ADMIN}
+    >
       <GridRow>
         <GridColumn width="full">
           <Heading>

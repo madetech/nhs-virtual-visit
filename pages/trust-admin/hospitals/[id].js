@@ -10,6 +10,7 @@ import Layout from "../../../src/components/Layout";
 import WardsTable from "../../../src/components/WardsTable";
 import NumberTile from "../../../src/components/NumberTile";
 import Panel from "../../../src/components/Panel";
+import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const ShowHospital = ({
   hospital,
@@ -25,7 +26,12 @@ const ShowHospital = ({
   }
 
   return (
-    <Layout title={hospital.name} renderLogout={true}>
+    <Layout
+      title={hospital.name}
+      renderLogout={true}
+      showNavigationBar={true}
+      showNavigationBarForType={TRUST_ADMIN}
+    >
       <GridRow>
         <GridColumn width="full">
           <Heading>{hospital.name}</Heading>
