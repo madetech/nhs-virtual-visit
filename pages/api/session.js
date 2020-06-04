@@ -1,9 +1,5 @@
 import withContainer from "../../src/middleware/withContainer";
-const {
-  WARD_STAFF,
-  TRUST_ADMIN,
-  ADMIN,
-} = require("../../src/helpers/tokenTypes");
+import { WARD_STAFF, TRUST_ADMIN, ADMIN } from "../../src/helpers/tokenTypes";
 
 export default withContainer(
   async ({ body: { code }, method }, res, { container }) => {

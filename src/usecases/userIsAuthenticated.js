@@ -1,6 +1,5 @@
 import cookie from "cookie";
-
-const { WARD_STAFF } = require("../helpers/tokenTypes");
+import { WARD_STAFF } from "../helpers/tokenTypes";
 
 export default ({ getTokenProvider, getRetrieveWardById }) => async (
   requestCookie
