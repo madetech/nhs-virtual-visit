@@ -42,6 +42,15 @@ describe("retrieveHospitalWardVisitTotals contract tests", () => {
       trustId: trustId,
     });
 
+    const { wardId: ward5Id } = await container.getCreateWard()({
+      name: "Test Ward 5",
+      code: "wardCode5",
+      hospitalId: hospitalId,
+      trustId: trustId,
+    });
+
+    await container.getArchiveWard()(ward5Id, trustId);
+
     const date1 = new Date("2020-06-01 13:00");
     const date2 = new Date("2020-06-02 13:00");
 
