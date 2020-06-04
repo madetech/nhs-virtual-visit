@@ -1,5 +1,5 @@
 import cookie from "cookie";
-import { TRUST_ADMIN } from "../helpers/tokenTypes";
+import { TRUST_ADMIN } from "../helpers/userTypes";
 
 export default ({ getTokenProvider }) => (requestCookie) => {
   const tokenProvider = getTokenProvider();
