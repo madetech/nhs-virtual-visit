@@ -3,6 +3,8 @@
     "patientName": "Test Patient",
     "contactNumber": "07123456789",
     "validWard": "TEST1",
+    "validTrustAdminCode": "admin",
+    "validAdminCode": "super",
     "fakeWard": "FAKENHS",
     "baseUrl": "http://localhost:3000"
   },
