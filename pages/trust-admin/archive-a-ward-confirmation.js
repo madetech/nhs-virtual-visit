@@ -74,7 +74,7 @@ const ArchiveAWardConfirmation = ({
             <p>All booked visits for this ward will be cancelled.</p>
 
             <Button>Yes, delete this ward</Button>
-            <BackLink href="/trust-admin">Back to ward administration</BackLink>
+            <BackLink href="/trust-admin">Back to trust dashboard</BackLink>
           </form>
         </GridColumn>
       </GridRow>

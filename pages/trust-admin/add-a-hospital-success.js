@@ -35,7 +35,7 @@ const AddAHospitalSuccess = ({ error, name }) => {
 
           <p>
             <AnchorLink href="/trust-admin">
-              Return to ward administration
+              Return to trust dashboard
             </AnchorLink>
           </p>
         </div>

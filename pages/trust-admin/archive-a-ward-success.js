@@ -25,7 +25,7 @@ const archiveAWardSuccess = ({ name, hospitalName }) => {
           </div>
           <p>
             <AnchorLink href="/trust-admin">
-              Return to ward administration
+              Return to trust dashboard
             </AnchorLink>
           </p>
         </div>
