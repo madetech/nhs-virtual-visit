@@ -1,15 +1,15 @@
-import tokenTypes from "./tokenTypes";
+import { WARD_STAFF, TRUST_ADMIN, ADMIN } from "./tokenTypes";
 
 describe("tokenTypes", () => {
   it("returns the wardStaff token type", () => {
-    expect(tokenTypes.WARD_STAFF).toEqual("wardStaff");
+    expect(WARD_STAFF).toEqual("wardStaff");
   });
 
   it("returns the trustAdmin token type", () => {
-    expect(tokenTypes.TRUST_ADMIN).toEqual("trustAdmin");
+    expect(TRUST_ADMIN).toEqual("trustAdmin");
   });
 
   it("returns the admin token type", () => {
-    expect(tokenTypes.ADMIN).toEqual("admin");
+    expect(ADMIN).toEqual("admin");
   });
 });
