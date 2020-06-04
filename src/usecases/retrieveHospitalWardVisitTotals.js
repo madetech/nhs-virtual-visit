@@ -19,24 +19,25 @@ export default ({ getDb }) => async (hospitalId) => {
     wards[ward_id] = parseInt(total_visits);
   });
 
-  const sortedResults = queryResult.sort(
+  const sortedByTotalVisitsDescending = queryResult.sort(
     (a, b) => b.total_visits - a.total_visits
   );
 
-  const mostVisitedResult = sortedResults[0];
-  const leastVisitedResult = sortedResults[sortedResults.length - 1];
+  const mostVisitedWard = sortedByTotalVisitsDescending[0];
+  const leastVisitedWard =
+    sortedByTotalVisitsDescending[sortedByTotalVisitsDescending.length - 1];
 
-  const mostVisited = mostVisitedResult
+  const mostVisited = mostVisitedWard
     ? {
-        wardName: mostVisitedResult.ward_name,
-        totalVisits: parseInt(mostVisitedResult.total_visits),
+        wardName: mostVisitedWard.ward_name,
+        totalVisits: parseInt(mostVisitedWard.total_visits),
       }
     : { wardName: "", totalVisits: 0 };
 
-  const leastVisited = leastVisitedResult
+  const leastVisited = leastVisitedWard
     ? {
-        wardName: leastVisitedResult.ward_name,
-        totalVisits: parseInt(leastVisitedResult.total_visits),
+        wardName: leastVisitedWard.ward_name,
+        totalVisits: parseInt(leastVisitedWard.total_visits),
       }
     : { wardName: "", totalVisits: 0 };
 
