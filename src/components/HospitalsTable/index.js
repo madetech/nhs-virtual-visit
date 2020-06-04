@@ -16,7 +16,10 @@ const HospitalsTable = ({ hospitals }) => (
           <th className="nhsuk-table__header" scope="col">
             Booked visits
           </th>
-          <th className="nhsuk-table__header" scope="col"></th>
+          <th className="nhsuk-table__header" scope="col">
+            {" "}
+            <span className="nhsuk-u-visually-hidden">Actions</span>
+          </th>
         </tr>
       </thead>
       <tbody className="nhsuk-table__body">
