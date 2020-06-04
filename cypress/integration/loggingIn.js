@@ -15,6 +15,27 @@ describe("Logging in", () => {
       );
       cy.contains("Book a virtual visit").should("be.visible");
     });
+
+    it("when a trust admin enters this information, the user should be able to sign in", () => {
+      cy.visit(Cypress.env("baseUrl"));
+      cy.get("input").type(Cypress.env("validTrustAdminCode"));
+      cy.get("button").contains("Log in").click();
+      cy.contains("The code you entered was not recognised").should(
+        "not.be.visible"
+      );
+      cy.contains("Test Trust").should("be.visible");
+      cy.contains("Dashboard").should("be.visible");
+    });
+
+    it("when an admin enters this information, the user should be able to sign in", () => {
+      cy.visit(Cypress.env("baseUrl"));
+      cy.get("input").type(Cypress.env("validAdminCode"));
+      cy.get("button").contains("Log in").click();
+      cy.contains("The code you entered was not recognised").should(
+        "not.be.visible"
+      );
+      cy.contains("Site administration").should("be.visible");
+    });
   });
 
   it("Given an invalid code, when a user enters this informtion, the user should see an error", () => {

@@ -11,6 +11,7 @@ async function getDb() {
 
 async function seedDatabase() {
   const db = await getDb();
+  await db.result("INSERT INTO admins (code) VALUES ('super')");
   await db.result(
     "INSERT INTO trusts (name, admin_code) VALUES ('Test Trust', 'admin')"
   );
