@@ -34,13 +34,22 @@ const TrustAdmin = ({
             Ward administration
           </Heading>
           <GridRow className="nhsuk-u-padding-bottom-3">
-            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-third">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-third"
+              width="one-third"
+            >
               <NumberTile number={visitsScheduled} label="booked visits" />
             </GridColumn>
-            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-third">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-third"
+              width="one-third"
+            >
               <NumberTile number={hospitals.length} label="hospitals" />
             </GridColumn>
-            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-third">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-third"
+              width="one-third"
+            >
               <NumberTile number={wards.length} label="wards" />
             </GridColumn>
           </GridRow>

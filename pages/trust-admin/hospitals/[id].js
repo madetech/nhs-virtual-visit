@@ -9,8 +9,17 @@ import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Layout from "../../../src/components/Layout";
 import WardsTable from "../../../src/components/WardsTable";
 import NumberTile from "../../../src/components/NumberTile";
+import Panel from "../../../src/components/Panel";
 
-const ShowHospital = ({ hospital, wards, error, totalBookedVisits }) => {
+const ShowHospital = ({
+  hospital,
+  wards,
+  error,
+  totalBookedVisits,
+  mostVisitedWard,
+  leastVisitedWard,
+  wardVisitTotals,
+}) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -21,14 +30,41 @@ const ShowHospital = ({ hospital, wards, error, totalBookedVisits }) => {
         <GridColumn width="full">
           <Heading>{hospital.name}</Heading>
           <GridRow className="nhsuk-u-padding-bottom-3">
-            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
               <NumberTile number={totalBookedVisits} label="booked visits" />
             </GridColumn>
-            <GridColumn className="nhsuk-u-padding-bottom-3" width="one-half">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
               <NumberTile number={wards.length} label="wards" />
             </GridColumn>
           </GridRow>
-          <WardsTable wards={wards} />
+
+          <GridRow className="nhsuk-u-padding-bottom-3">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
+              <Panel
+                title="Most booked visits"
+                body={`${mostVisitedWard.wardName} (${mostVisitedWard.totalVisits})`}
+              />
+            </GridColumn>
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
+              <Panel
+                title="Least booked visits"
+                body={`${leastVisitedWard.wardName} (${leastVisitedWard.totalVisits})`}
+              />
+            </GridColumn>
+          </GridRow>
+          <WardsTable wards={wards} wardVisitTotals={wardVisitTotals} />
           <Button
             className="nhsuk-button"
             onClick={() => {
@@ -67,12 +103,21 @@ export const getServerSideProps = propsWithContainer(
 
     const totalBookedVisits = visitTotals[hospital.id] || 0;
 
+    const {
+      wards: wardVisitTotals,
+      mostVisited: mostVisitedWard,
+      leastVisited: leastVisitedWard,
+    } = await container.getRetrieveHospitalWardVisitTotals()(hospital.id);
+
     return {
       props: {
         hospital,
         wards,
         error: hospitalError || wardsError,
         totalBookedVisits,
+        mostVisitedWard,
+        leastVisitedWard,
+        wardVisitTotals,
       },
     };
   })

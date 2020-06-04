@@ -44,16 +44,23 @@ describe("trust-admin/hospitals/[id]", () => {
       }));
 
       const hospitalSpy = jest.fn(async () => ({
-        hospital: { name: "Test Hospital" },
+        hospital: { id: hospitalId, name: "Test Hospital" },
         error: null,
       }));
 
       const visitTotalsSpy = jest.fn().mockReturnValue({ 1: 10, 2: 3 });
 
+      const hospitalWardTotalsSpy = jest.fn().mockReturnValue({
+        wards: { 1: 10, 2: 5 },
+        mostVisited: { wardName: "Most Visited", total_visits: 10 },
+        leastVisited: { wardName: "Least Visited", total_visits: 5 },
+      });
+
       const container = {
         getRetrieveWardsByHospitalId: () => wardsSpy,
         getRetrieveHospitalById: () => hospitalSpy,
         getRetrieveHospitalVisitTotals: () => visitTotalsSpy,
+        getRetrieveHospitalWardVisitTotals: () => hospitalWardTotalsSpy,
         getTokenProvider: () => tokenProvider,
       };
 
@@ -66,8 +73,19 @@ describe("trust-admin/hospitals/[id]", () => {
 
       expect(hospitalSpy).toHaveBeenCalledWith(hospitalId, trustId);
       expect(visitTotalsSpy).toHaveBeenCalledWith(trustId);
+      expect(hospitalWardTotalsSpy).toHaveBeenCalledWith(hospitalId);
+
       expect(props.wards).toEqual([{ id: 1 }, { id: 2 }]);
-      expect(props.hospital).toEqual({ name: "Test Hospital" });
+      expect(props.hospital).toEqual({ id: hospitalId, name: "Test Hospital" });
+      expect(props.mostVisitedWard).toEqual({
+        wardName: "Most Visited",
+        total_visits: 10,
+      });
+      expect(props.leastVisitedWard).toEqual({
+        wardName: "Least Visited",
+        total_visits: 5,
+      });
+      expect(props.wardVisitTotals).toEqual({ 1: 10, 2: 5 });
     });
   });
 });

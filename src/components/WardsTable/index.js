@@ -1,21 +1,28 @@
 import React from "react";
-import Router from "next/router";
+import AnchorLink from "../AnchorLink";
 
-const WardsTable = ({ wards }) => (
+const WardsTable = ({ wards, wardVisitTotals }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
       <caption className="nhsuk-table__caption">List of wards</caption>
       <thead className="nhsuk-table__head">
         <tr className="nhsuk-table__row">
-          <th className="nhsuk-table__header" scope="col">
-            Hospital name
-          </th>
+          {!wardVisitTotals && (
+            <th className="nhsuk-table__header" scope="col">
+              Hospital name
+            </th>
+          )}
           <th className="nhsuk-table__header" scope="col">
             Ward name
           </th>
           <th className="nhsuk-table__header" scope="col">
             Ward code
           </th>
+          {wardVisitTotals && (
+            <th className="nhsuk-table__header" scope="col">
+              Booked visits
+            </th>
+          )}
           <th className="nhsuk-table__header" scope="col"></th>
           <th className="nhsuk-table__header" scope="col"></th>
         </tr>
@@ -23,36 +30,25 @@ const WardsTable = ({ wards }) => (
       <tbody className="nhsuk-table__body">
         {wards.map((ward) => (
           <tr key={ward.callId} className="nhsuk-table__row">
-            <td className="nhsuk-table__cell">{ward.hospitalName}</td>
+            {!wardVisitTotals && (
+              <td className="nhsuk-table__cell">{ward.hospitalName}</td>
+            )}
             <td className="nhsuk-table__cell">{ward.name}</td>
             <td className="nhsuk-table__cell">{ward.code}</td>
+            {wardVisitTotals && (
+              <td className="nhsuk-table__cell">{wardVisitTotals[ward.id]}</td>
+            )}
             <td className="nhsuk-table__cell">
-              <button
-                className="nhsuk-button"
-                onClick={() => {
-                  const wardId = ward.id;
-                  Router.push({
-                    pathname: `/trust-admin/edit-a-ward`,
-                    query: { wardId },
-                  });
-                }}
-              >
+              <AnchorLink href={`/trust-admin/edit-a-ward?wardId=${ward.id}`}>
                 Edit
-              </button>
+              </AnchorLink>
             </td>
             <td className="nhsuk-table__cell">
-              <button
-                className="nhsuk-button nhsuk-button--secondary"
-                onClick={() => {
-                  const wardId = ward.id;
-                  Router.push({
-                    pathname: `/trust-admin/archive-a-ward-confirmation`,
-                    query: { wardId },
-                  });
-                }}
+              <AnchorLink
+                href={`/trust-admin/archive-a-ward-confirmation?wardId=${ward.id}`}
               >
                 Delete
-              </button>
+              </AnchorLink>
             </td>
           </tr>
         ))}
