@@ -1,5 +1,5 @@
 import withContainer from "../../src/middleware/withContainer";
-import { WARD_STAFF, TRUST_ADMIN, ADMIN } from "../../src/helpers/tokenTypes";
+import { WARD_STAFF, TRUST_ADMIN, ADMIN } from "../../src/helpers/userTypes";
 
 export default withContainer(
   async ({ body: { code }, method }, res, { container }) => {
