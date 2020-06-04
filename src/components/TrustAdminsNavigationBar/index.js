@@ -1,14 +1,6 @@
 import React from "react";
 import NavigationBar from "../NavigationBar";
 
-const logout = async () => {
-  await fetch("/api/session", {
-    method: "DELETE",
-  });
-
-  window.location.href = "/wards/login";
-};
-
 const TrustAdminsNavigationBar = () => {
   const links = [
     {
@@ -18,11 +10,6 @@ const TrustAdminsNavigationBar = () => {
     {
       text: "Hospitals",
       href: "/trust-admin/hospitals",
-    },
-    {
-      text: "Log out",
-      href: "#",
-      onClick: logout,
     },
   ];
 
