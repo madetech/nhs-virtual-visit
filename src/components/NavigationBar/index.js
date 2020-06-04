@@ -1,6 +1,14 @@
 import React from "react";
 import Link from "next/link";
 
+const logout = async () => {
+  await fetch("/api/session", {
+    method: "DELETE",
+  });
+
+  window.location.href = "/wards/login";
+};
+
 const NavigationBar = ({ links, testId }) => (
   <nav
     className="nhsuk-header__navigation"
@@ -47,6 +55,22 @@ const NavigationBar = ({ links, testId }) => (
             </Link>
           </li>
         ))}
+
+        <li className="nhsuk-header__navigation-item" key={"Log out"}>
+          <Link href={"#"}>
+            <a className="nhsuk-header__navigation-link" onClick={logout}>
+              Log out
+              <svg
+                className="nhsuk-icon nhsuk-icon__chevron-right"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M15.5 12a1 1 0 0 1-.29.71l-5 5a1 1 0 0 1-1.42-1.42l4.3-4.29-4.3-4.29a1 1 0 0 1 1.42-1.42l5 5a1 1 0 0 1 .29.71z"></path>
+              </svg>
+            </a>
+          </Link>
+        </li>
       </ul>
     </div>
   </nav>
