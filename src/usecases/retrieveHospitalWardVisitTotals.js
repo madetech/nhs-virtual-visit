@@ -5,7 +5,7 @@ export default ({ getDb }) => async (hospitalId) => {
     `SELECT
       wards.id as ward_id,
       wards.name as ward_name,
-      SUM(totals.total) AS total_visits
+      COALESCE(SUM(totals.total),0) AS total_visits
     FROM wards
     LEFT JOIN ward_visit_totals AS totals ON wards.id = totals.ward_id
     WHERE wards.hospital_id = $1
@@ -16,7 +16,7 @@ export default ({ getDb }) => async (hospitalId) => {
   let wards = {};
 
   queryResult.map(({ ward_id, total_visits }) => {
-    wards[ward_id] = parseInt(total_visits) || 0;
+    wards[ward_id] = parseInt(total_visits);
   });
 
   const sortedByTotalVisitsDescending = queryResult.sort(
@@ -30,14 +30,14 @@ export default ({ getDb }) => async (hospitalId) => {
   const mostVisited = mostVisitedWard
     ? {
         wardName: mostVisitedWard.ward_name,
-        totalVisits: parseInt(mostVisitedWard.total_visits) || 0,
+        totalVisits: parseInt(mostVisitedWard.total_visits),
       }
     : { wardName: "", totalVisits: 0 };
 
   const leastVisited = leastVisitedWard
     ? {
         wardName: leastVisitedWard.ward_name,
-        totalVisits: parseInt(leastVisitedWard.total_visits) || 0,
+        totalVisits: parseInt(leastVisitedWard.total_visits),
       }
     : { wardName: "", totalVisits: 0 };
 
