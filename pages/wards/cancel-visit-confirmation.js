@@ -10,6 +10,7 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Error from "next/error";
 import VisitSummaryList from "../../src/components/VisitSummaryList";
 import BackLink from "../../src/components/BackLink";
+import { WARD_STAFF } from "../../src/helpers/userTypes";
 
 const deleteVisitConfirmation = ({
   callId,
@@ -32,7 +33,7 @@ const deleteVisitConfirmation = ({
   return (
     <Layout
       title="Are you sure you want to cancel this visit?"
-      showNavigationBarForType="wardStaff"
+      showNavigationBarForType={WARD_STAFF}
       renderLogout={true}
       showNavigationBar={showNavigationBar}
     >

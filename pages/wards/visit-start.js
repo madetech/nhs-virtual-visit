@@ -10,6 +10,7 @@ import Error from "next/error";
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 import verifyToken from "../../src/usecases/verifyToken";
+import { WARD_STAFF } from "../../src/helpers/userTypes";
 
 const VisitStart = ({
   patientName,
@@ -54,7 +55,7 @@ const VisitStart = ({
   return (
     <Layout
       title="Before handing over to the patient"
-      showNavigationBarForType="wardStaff"
+      showNavigationBarForType={WARD_STAFF}
       renderLogout={true}
       showNavigationBar={showNavigationBar}
     >
