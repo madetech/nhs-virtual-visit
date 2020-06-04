@@ -7,7 +7,7 @@ import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import ActionLink from "../../src/components/ActionLink";
 import { TRUST_ADMIN } from "../../src/helpers/userTypes";
 
-const AddAHospitalSuccess = ({ error, name }) => {
+const AddAHospitalSuccess = ({ error, name, id }) => {
   if (error) {
     return <Error />;
   }
@@ -34,8 +34,8 @@ const AddAHospitalSuccess = ({ error, name }) => {
           </ActionLink>
 
           <p>
-            <AnchorLink href="/trust-admin">
-              Return to ward administration
+            <AnchorLink href={`/trust-admin/hospitals/${id}`}>
+              {`Go to ${name}`}
             </AnchorLink>
           </p>
         </div>
@@ -59,6 +59,7 @@ export const getServerSideProps = propsWithContainer(
         props: {
           error: error,
           name: hospital.name,
+          id: hospital.id,
         },
       };
     }

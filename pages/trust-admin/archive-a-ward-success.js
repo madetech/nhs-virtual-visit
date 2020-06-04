@@ -1,11 +1,16 @@
 import React from "react";
+import Error from "next/error";
 import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import AnchorLink from "../../src/components/AnchorLink";
 import { TRUST_ADMIN } from "../../src/helpers/userTypes";
 
-const archiveAWardSuccess = ({ name, hospitalName }) => {
+const archiveAWardSuccess = ({ name, hospitalName, hospitalId, error }) => {
+  if (error) {
+    return <Error err={error} />;
+  }
+
   return (
     <Layout
       title={`${name} has been deleted`}
@@ -24,8 +29,8 @@ const archiveAWardSuccess = ({ name, hospitalName }) => {
             <div className="nhsuk-panel__body">for {hospitalName}</div>
           </div>
           <p>
-            <AnchorLink href="/trust-admin">
-              Return to ward administration
+            <AnchorLink href={`/trust-admin/hospitals/${hospitalId}`}>
+              {`Return to ${hospitalName}`}
             </AnchorLink>
           </p>
         </div>
@@ -37,8 +42,13 @@ const archiveAWardSuccess = ({ name, hospitalName }) => {
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ query }) => {
     console.log(query);
+
     return {
-      props: { name: query.name, hospitalName: query.hospitalName },
+      props: {
+        name: query.name,
+        hospitalName: query.hospitalName,
+        hospitalId: query.hospitalId,
+      },
     };
   })
 );
