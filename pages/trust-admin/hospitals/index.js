@@ -42,15 +42,26 @@ const TrustAdmin = ({ hospitals, hospitalError, trust, trustError }) => {
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, authenticationToken }) => {
     const hospitalsResponse = await container.getRetrieveHospitalsByTrustId()(
-      authenticationToken.trustId
+      authenticationToken.trustId,
+      { withWards: true }
     );
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
+    const hospitalVisitTotalsResponse = await container.getRetrieveHospitalVisitTotals()(
+      authenticationToken.trustId
+    );
+
+    const hospitalsWithVisitTotals = hospitalsResponse.hospitals?.map(
+      (hospital) => {
+        hospital.bookedVisits = hospitalVisitTotalsResponse[hospital.id] || 0;
+        return hospital;
+      }
+    );
 
     return {
       props: {
-        hospitals: hospitalsResponse.hospitals,
+        hospitals: hospitalsWithVisitTotals,
         hospitalError: hospitalsResponse.error,
         trust: { name: trustResponse.trust?.name },
         trustError: trustResponse.error,

@@ -10,16 +10,31 @@ const HospitalsTable = ({ hospitals }) => (
           <th className="nhsuk-table__header" scope="col">
             Name
           </th>
-          <th className="nhsuk-table__header" scope="col"></th>
+          <th className="nhsuk-table__header" scope="col">
+            Number of wards
+          </th>
+          <th className="nhsuk-table__header" scope="col">
+            Booked visits
+          </th>
+          <th className="nhsuk-table__header" scope="col">
+            {" "}
+            <span className="nhsuk-u-visually-hidden">Actions</span>
+          </th>
         </tr>
       </thead>
       <tbody className="nhsuk-table__body">
         {hospitals.map((hospital) => (
           <tr key={hospital.name} className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{hospital.name}</td>
+            <td className="nhsuk-table__cell">{hospital.wards.length}</td>
+            <td className="nhsuk-table__cell">{hospital.bookedVisits}</td>
             <td className="nhsuk-table__cell" style={{ textAlign: "center" }}>
               <AnchorLink href={`/trust-admin/hospitals/${hospital.id}`}>
-                View
+                View{" "}
+                <span className="nhsuk-u-visually-hidden">
+                  {" "}
+                  {hospital.name}
+                </span>
               </AnchorLink>
             </td>
           </tr>

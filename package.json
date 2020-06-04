@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.9.0",
-    "@testing-library/react": "^10.0.6",
+    "@testing-library/react": "^10.1.0",
     "babel-eslint": "^10.1.0",
     "cypress": "^4.7.0",
     "eslint": "^7.1.0",
@@ -65,7 +65,7 @@
     "husky": "^4.2.5",
     "jest": "^26.0.1",
     "jest-css-modules-transform": "^4.0.0",
-    "lint-staged": "^10.2.7",
+    "lint-staged": "^10.2.8",
     "prettier": "^2.0.5",
     "uuid-validate": "0.0.3"
   },

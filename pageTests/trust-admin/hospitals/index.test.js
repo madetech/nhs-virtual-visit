@@ -19,17 +19,22 @@ describe("trust-admin/hospitals", () => {
     validate: jest.fn(() => ({ type: "trustAdmin", trustId: trustId })),
   };
 
-  let retrieveTrustByIdSpy = jest.fn(async () => ({
+  const retrieveTrustByIdSuccessStub = jest.fn(async () => ({
     trust: { name: "Doggo Trust" },
     error: null,
   }));
 
-  let getRetrieveHospitalsByTrustIdSpy = jest.fn(async () => ({
+  const retrieveHospitalsByTrustIdSuccessSpy = jest.fn(async () => ({
     hospitals: [
-      { id: 1, name: "1" },
-      { id: 2, name: "2" },
+      { id: 1, name: "1", wards: [{ id: 1, name: "Ward 1" }] },
+      { id: 2, name: "2", wards: [{ id: 2, name: "Ward 2" }] },
     ],
     error: null,
+  }));
+
+  const retrieveHospitalVisitTotalsStub = jest.fn(async () => ({
+    "1": 5,
+    "2": 10,
   }));
 
   let res, container;
@@ -39,8 +44,9 @@ describe("trust-admin/hospitals", () => {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
     };
     container = {
-      getRetrieveTrustById: () => retrieveTrustByIdSpy,
-      getRetrieveHospitalsByTrustId: () => getRetrieveHospitalsByTrustIdSpy,
+      getRetrieveTrustById: () => retrieveTrustByIdSuccessStub,
+      getRetrieveHospitalsByTrustId: () => retrieveHospitalsByTrustIdSuccessSpy,
+      getRetrieveHospitalVisitTotals: () => retrieveHospitalVisitTotalsStub,
       getTokenProvider: () => tokenProvider,
     };
   });
@@ -61,19 +67,24 @@ describe("trust-admin/hospitals", () => {
         container,
       });
 
+      expect(retrieveHospitalsByTrustIdSuccessSpy).toHaveBeenCalledWith(
+        trustId,
+        { withWards: true }
+      );
       expect(props.hospitals.length).toEqual(2);
       expect(props.hospitals[0].id).toEqual(1);
       expect(props.hospitals[1].name).toEqual("2");
     });
 
     it("sets an error in props if hospital error", async () => {
-      getRetrieveHospitalsByTrustIdSpy = jest.fn(async () => ({
+      const retrieveHospitalsByTrustIdErrorStub = jest.fn(async () => ({
         hospitals: null,
         error: "Error!",
       }));
       container = {
         ...container,
-        getRetrieveHospitalsByTrustId: () => getRetrieveHospitalsByTrustIdSpy,
+        getRetrieveHospitalsByTrustId: () =>
+          retrieveHospitalsByTrustIdErrorStub,
       };
 
       const { props } = await getServerSideProps({
@@ -92,18 +103,18 @@ describe("trust-admin/hospitals", () => {
         container,
       });
 
-      expect(retrieveTrustByIdSpy).toHaveBeenCalledWith(trustId);
+      expect(retrieveTrustByIdSuccessStub).toHaveBeenCalledWith(trustId);
       expect(props.trust).toEqual({ name: "Doggo Trust" });
     });
 
     it("sets an error in props if trust error", async () => {
-      retrieveTrustByIdSpy = jest.fn(async () => ({
+      const retrieveTrustByIdErrorStub = jest.fn(async () => ({
         trust: null,
         error: "Error!",
       }));
       container = {
         ...container,
-        getRetrieveHospitalsByTrustId: () => getRetrieveHospitalsByTrustIdSpy,
+        getRetrieveTrustById: () => retrieveTrustByIdErrorStub,
       };
 
       const { props } = await getServerSideProps({
@@ -113,6 +124,30 @@ describe("trust-admin/hospitals", () => {
       });
 
       expect(props.trustError).toEqual("Error!");
+    });
+
+    it("retrieves the number of booked visits for the trust's hospitals", async () => {
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(retrieveHospitalVisitTotalsStub).toHaveBeenCalledWith(trustId);
+      expect(props.hospitals).toEqual([
+        {
+          id: 1,
+          name: "1",
+          bookedVisits: 5,
+          wards: [{ id: 1, name: "Ward 1" }],
+        },
+        {
+          id: 2,
+          name: "2",
+          bookedVisits: 10,
+          wards: [{ id: 2, name: "Ward 2" }],
+        },
+      ]);
     });
   });
 });
