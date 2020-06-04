@@ -8,6 +8,7 @@ import verifyToken from "../../src/usecases/verifyToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import AccordionVisits from "../../src/components/AccordionVisits";
 import ActionLink from "../../src/components/ActionLink";
+import { WARD_STAFF } from "../../src/helpers/userTypes";
 
 export default function WardVisits({
   scheduledCalls,
@@ -21,7 +22,7 @@ export default function WardVisits({
   return (
     <Layout
       title="Virtual visits"
-      showNavigationBarForType="wardStaff"
+      showNavigationBarForType={WARD_STAFF}
       renderLogout={true}
       showNavigationBar={showNavigationBar}
     >

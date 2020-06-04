@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./styles.scss";
 import Head from "next/head";
 import LogoutButton from "../LogoutButton";
-import WardsNavigationBar from "../WardsNavigationBar";
+import NavigationBarForUserType from "../NavigationBarForUserType";
 import HeaderLink from "../HeaderLink";
 import MenuToggle from "../../../node_modules/nhsuk-frontend/packages/components/header/menuToggle";
 
@@ -77,8 +77,8 @@ const Layout = ({
             </div>
           </div>
         </div>
-        {showNavigationBar && showNavigationBarForType === "wardStaff" && (
-          <WardsNavigationBar />
+        {showNavigationBar && (
+          <NavigationBarForUserType userType={showNavigationBarForType} />
         )}
       </header>
       <div className="nhsuk-width-container">

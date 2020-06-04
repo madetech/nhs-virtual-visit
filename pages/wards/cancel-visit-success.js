@@ -8,6 +8,7 @@ import deleteVisitByCallId from "../../src/usecases/deleteVisitByCallId";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Error from "next/error";
 import formatDateAndTime from "../../src/helpers/formatDateAndTime";
+import { WARD_STAFF } from "../../src/helpers/userTypes";
 
 const deleteVisitSuccess = ({
   patientName,
@@ -23,7 +24,7 @@ const deleteVisitSuccess = ({
   return (
     <Layout
       title="Virtual visit cancelled"
-      showNavigationBarForType="wardStaff"
+      showNavigationBarForType={WARD_STAFF}
       renderLogout={true}
       showNavigationBar={showNavigationBar}
     >

@@ -6,12 +6,13 @@ import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
 import verifyToken from "../../src/usecases/verifyToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import { WARD_STAFF } from "../../src/helpers/userTypes";
 
 const BookAVisitStart = ({ showNavigationBar }) => {
   return (
     <Layout
       title="Before booking a virtual visit"
-      showNavigationBarForType="wardStaff"
+      showNavigationBarForType={WARD_STAFF}
       renderLogout={true}
       showNavigationBar={showNavigationBar}
     >

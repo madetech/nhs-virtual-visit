@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import Layout from "./index";
+import { WARD_STAFF } from "../../helpers/userTypes";
 
 describe("VisitorContactDetailsInput", () => {
   describe("when renderLogout is true and the navigation bar is not showing", () => {
@@ -22,7 +23,10 @@ describe("VisitorContactDetailsInput", () => {
   describe("when showNavigationBarForType is 'wardStaff'", () => {
     it("does not display the logout button", () => {
       render(
-        <Layout showNavigationBarForType="wardStaff" showNavigationBar={true} />
+        <Layout
+          showNavigationBarForType={WARD_STAFF}
+          showNavigationBar={true}
+        />
       );
 
       expect(screen.queryByTestId("logout-button")).toBeNull();
@@ -30,7 +34,10 @@ describe("VisitorContactDetailsInput", () => {
 
     it("displays the menu button for the navbar", () => {
       render(
-        <Layout showNavigationBarForType="wardStaff" showNavigationBar={true} />
+        <Layout
+          showNavigationBarForType={WARD_STAFF}
+          showNavigationBar={true}
+        />
       );
 
       expect(screen.getByTestId("navbar-menu-button")).toBeVisible();
@@ -38,7 +45,10 @@ describe("VisitorContactDetailsInput", () => {
 
     it("displays the wards navigation bar", () => {
       render(
-        <Layout showNavigationBarForType="wardStaff" showNavigationBar={true} />
+        <Layout
+          showNavigationBarForType={WARD_STAFF}
+          showNavigationBar={true}
+        />
       );
 
       expect(screen.getByTestId("wards-navbar")).toBeVisible();

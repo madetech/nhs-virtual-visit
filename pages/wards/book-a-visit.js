@@ -15,6 +15,7 @@ import Router from "next/router";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import validateDateAndTime from "../../src/helpers/validateDateAndTime";
 import validateEmailAddress from "../../src/helpers/validateEmailAddress";
+import { WARD_STAFF } from "../../src/helpers/userTypes";
 
 const isValidName = (input) => {
   if (input.length !== 0) {
@@ -165,7 +166,7 @@ const BookAVisit = ({
     <Layout
       title="Book a virtual visit"
       hasErrors={errors.length != 0}
-      showNavigationBarForType="wardStaff"
+      showNavigationBarForType={WARD_STAFF}
       renderLogout={true}
       showNavigationBar={showNavigationBar}
     >

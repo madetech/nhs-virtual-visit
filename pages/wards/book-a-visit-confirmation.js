@@ -10,6 +10,7 @@ import Router from "next/router";
 import verifyToken from "../../src/usecases/verifyToken";
 import VisitSummaryList from "../../src/components/VisitSummaryList";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import { WARD_STAFF } from "../../src/helpers/userTypes";
 
 const ScheduleConfirmation = ({
   patientName,
@@ -78,7 +79,7 @@ const ScheduleConfirmation = ({
   return (
     <Layout
       title="Check your answers before booking a virtual visit"
-      showNavigationBarForType="wardStaff"
+      showNavigationBarForType={WARD_STAFF}
       renderLogout={true}
       showNavigationBar={showNavigationBar}
     >
