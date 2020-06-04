@@ -1,6 +1,5 @@
 import cookie from "cookie";
-
-const { ADMIN } = require("../helpers/tokenTypes");
+import { ADMIN } from "../helpers/tokenTypes";
 
 export default ({ getTokenProvider }) => (requestCookie) => {
   const tokenProvider = getTokenProvider();
