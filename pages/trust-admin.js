@@ -3,11 +3,8 @@ import Error from "next/error";
 import Layout from "../src/components/Layout";
 import propsWithContainer from "../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../src/usecases/verifyTrustAdminToken";
-import WardsTable from "../src/components/WardsTable";
 import { GridRow, GridColumn } from "../src/components/Grid";
 import Heading from "../src/components/Heading";
-import ActionLink from "../src/components/ActionLink";
-import Text from "../src/components/Text";
 import NumberTile from "../src/components/NumberTile";
 import { TRUST_ADMIN } from "../src/helpers/userTypes";
 
@@ -25,7 +22,7 @@ const TrustAdmin = ({
 
   return (
     <Layout
-      title={`Ward administration for ${trust.name}`}
+      title={`Dashboard for ${trust.name}`}
       renderLogout={true}
       showNavigationBarForType={TRUST_ADMIN}
       showNavigationBar={true}
@@ -37,8 +34,9 @@ const TrustAdmin = ({
               {trust.name}
               <span className="nhsuk-u-visually-hidden">-</span>
             </span>
-            Ward administration
+            Dashboard
           </Heading>
+          <h2>Trust</h2>
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn
               className="nhsuk-u-padding-bottom-3 nhsuk-u-one-third"
@@ -59,15 +57,6 @@ const TrustAdmin = ({
               <NumberTile number={wards.length} label="wards" />
             </GridColumn>
           </GridRow>
-          <ActionLink href={`/trust-admin/add-a-ward`}>Add a ward</ActionLink>
-          <ActionLink href={`/trust-admin/add-a-hospital`}>
-            Add a hospital
-          </ActionLink>
-          {wards.length > 0 ? (
-            <WardsTable wards={wards} />
-          ) : (
-            <Text>There are no wards.</Text>
-          )}
         </GridColumn>
       </GridRow>
     </Layout>
