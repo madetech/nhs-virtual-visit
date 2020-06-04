@@ -9,6 +9,7 @@ import Heading from "../src/components/Heading";
 import ActionLink from "../src/components/ActionLink";
 import Text from "../src/components/Text";
 import NumberTile from "../src/components/NumberTile";
+import { TRUST_ADMIN } from "../src/helpers/userTypes";
 
 const TrustAdmin = ({
   wardError,
@@ -23,7 +24,12 @@ const TrustAdmin = ({
   }
 
   return (
-    <Layout title={`Ward administration for ${trust.name}`} renderLogout={true}>
+    <Layout
+      title={`Ward administration for ${trust.name}`}
+      renderLogout={true}
+      showNavigationBarForType={TRUST_ADMIN}
+      showNavigationBar={true}
+    >
       <GridRow>
         <GridColumn width="full">
           <Heading>
