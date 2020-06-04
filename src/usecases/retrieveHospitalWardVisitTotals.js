@@ -29,16 +29,16 @@ export default ({ getDb }) => async (hospitalId) => {
   const mostVisited = mostVisitedResult
     ? {
         wardName: mostVisitedResult.ward_name,
-        total_visits: parseInt(mostVisitedResult.total_visits),
+        totalVisits: parseInt(mostVisitedResult.total_visits),
       }
-    : { wardName: "", total_visits: 0 };
+    : { wardName: "", totalVisits: 0 };
 
   const leastVisited = leastVisitedResult
     ? {
         wardName: leastVisitedResult.ward_name,
-        total_visits: parseInt(leastVisitedResult.total_visits),
+        totalVisits: parseInt(leastVisitedResult.total_visits),
       }
-    : { wardName: "", total_visits: 0 };
+    : { wardName: "", totalVisits: 0 };
 
   return { wards, mostVisited, leastVisited };
 };

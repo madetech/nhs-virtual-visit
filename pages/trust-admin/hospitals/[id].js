@@ -51,7 +51,7 @@ const ShowHospital = ({
             >
               <Panel
                 title="Most booked visits"
-                body={`${mostVisitedWard.wardName} (${mostVisitedWard.total_visits})`}
+                body={`${mostVisitedWard.wardName} (${mostVisitedWard.totalVisits})`}
               />
             </GridColumn>
             <GridColumn
@@ -60,7 +60,7 @@ const ShowHospital = ({
             >
               <Panel
                 title="Least booked visits"
-                body={`${leastVisitedWard.wardName} (${leastVisitedWard.total_visits})`}
+                body={`${leastVisitedWard.wardName} (${leastVisitedWard.totalVisits})`}
               />
             </GridColumn>
           </GridRow>
