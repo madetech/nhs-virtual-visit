@@ -81,11 +81,11 @@ describe("retrieveHospitalWardVisitTotals contract tests", () => {
 
     expect(mostVisited).toEqual({
       wardName: "Test Ward 1",
-      total_visits: 3,
+      totalVisits: 3,
     });
     expect(leastVisited).toEqual({
       wardName: "Test Ward 2",
-      total_visits: 1,
+      totalVisits: 1,
     });
   });
 
@@ -93,8 +93,8 @@ describe("retrieveHospitalWardVisitTotals contract tests", () => {
     const response = await container.getRetrieveHospitalWardVisitTotals()();
     expect(response).toEqual({
       wards: {},
-      mostVisited: { wardName: "", total_visits: 0 },
-      leastVisited: { wardName: "", total_visits: 0 },
+      mostVisited: { wardName: "", totalVisits: 0 },
+      leastVisited: { wardName: "", totalVisits: 0 },
     });
   });
 
@@ -102,8 +102,8 @@ describe("retrieveHospitalWardVisitTotals contract tests", () => {
     const response = await container.getRetrieveHospitalWardVisitTotals()(12);
     expect(response).toEqual({
       wards: {},
-      mostVisited: { wardName: "", total_visits: 0 },
-      leastVisited: { wardName: "", total_visits: 0 },
+      mostVisited: { wardName: "", totalVisits: 0 },
+      leastVisited: { wardName: "", totalVisits: 0 },
     });
   });
 });
