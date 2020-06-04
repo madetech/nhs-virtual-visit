@@ -17,6 +17,7 @@ const ArchiveAWardConfirmation = ({
   name,
   hospitalName,
   trustId,
+  hospitalId,
 }) => {
   const [hasError, setHasError] = useState(error);
 
@@ -45,7 +46,7 @@ const ArchiveAWardConfirmation = ({
     });
     if (response.status === 200) {
       Router.push(
-        `/trust-admin/archive-a-ward-success?name=${name}&hospitalName=${hospitalName}`
+        `/trust-admin/archive-a-ward-success?name=${name}&hospitalName=${hospitalName}&hospitalId=${hospitalId}`
       );
     } else {
       setHasError(true);
@@ -74,7 +75,9 @@ const ArchiveAWardConfirmation = ({
             <p>All booked visits for this ward will be cancelled.</p>
 
             <Button>Yes, delete this ward</Button>
-            <BackLink href="/trust-admin">Back to trust dashboard</BackLink>
+            <BackLink
+              href={`/trust-admin/hospitals/${hospitalId}`}
+            >{`Back to ${hospitalName}`}</BackLink>
           </form>
         </GridColumn>
       </GridRow>
@@ -101,6 +104,7 @@ export const getServerSideProps = propsWithContainer(
           name: ward.name,
           hospitalName: ward.hospitalName,
           trustId: authenticationToken.trustId,
+          hospitalId: ward.hospitalId,
         },
       };
     }
