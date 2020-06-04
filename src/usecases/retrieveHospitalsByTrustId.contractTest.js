@@ -68,6 +68,15 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
       trustId: trustId,
     });
 
+    const { wardId: ward4Id } = await container.getCreateWard()({
+      name: "Archived ward",
+      code: "wardCode4",
+      hospitalId: hospital2Id,
+      trustId: trustId,
+    });
+
+    await container.getArchiveWard()(ward4Id, trustId);
+
     const {
       hospitals,
       error,

@@ -19,7 +19,7 @@ const retrieveHospitalsByTrustId = ({ getDb }) => async (
       hospitals = await Promise.all(
         hospitals.map(async (hospital) => {
           const wards = await db.any(
-            `SELECT * FROM wards WHERE hospital_id = $1`,
+            `SELECT * FROM wards WHERE hospital_id = $1 AND archived_at IS NULL`,
             hospital.id
           );
 
