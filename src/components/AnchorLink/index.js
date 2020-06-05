@@ -1,9 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import classNames from "classnames";
 
-const AnchorLink = ({ href, children }) => (
+const AnchorLink = ({ href, className, children }) => (
   <Link href={href}>
-    <a className="nhsuk-link">{children}</a>
+    <a className={classNames("nhsuk-link", className)}>{children}</a>
   </Link>
 );
 
