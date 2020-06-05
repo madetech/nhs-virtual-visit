@@ -11,6 +11,7 @@ import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Button from "../../src/components/Button";
 import Router from "next/router";
+import { ADMIN } from "../../src/helpers/userTypes";
 
 const AddATrust = () => {
   const [errors, setErrors] = useState([]);
@@ -132,6 +133,8 @@ const AddATrust = () => {
       title="Add a Trust"
       hasErrors={errors.length != 0}
       renderLogout={true}
+      showNavigationBarForType={ADMIN}
+      showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="two-thirds">

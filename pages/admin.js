@@ -8,6 +8,7 @@ import ActionLink from "../src/components/ActionLink";
 import TrustsTable from "../src/components/TrustsTable";
 import Text from "../src/components/Text";
 import Error from "next/error";
+import { ADMIN } from "../src/helpers/userTypes";
 
 const Admin = ({ trusts, error }) => {
   if (error) {
@@ -15,7 +16,12 @@ const Admin = ({ trusts, error }) => {
   }
 
   return (
-    <Layout title={`Site administration`} renderLogout={true}>
+    <Layout
+      title={`Site administration`}
+      renderLogout={true}
+      showNavigationBarForType={ADMIN}
+      showNavigationBar={true}
+    >
       <GridRow>
         <GridColumn width="full">
           <Heading>Site administration</Heading>
