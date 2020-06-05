@@ -17,7 +17,6 @@ const HospitalsTable = ({ hospitals }) => (
             Booked visits
           </th>
           <th className="nhsuk-table__header" scope="col">
-            {" "}
             <span className="nhsuk-u-visually-hidden">Actions</span>
           </th>
         </tr>
@@ -30,7 +29,7 @@ const HospitalsTable = ({ hospitals }) => (
             <td className="nhsuk-table__cell">{hospital.bookedVisits}</td>
             <td className="nhsuk-table__cell" style={{ textAlign: "center" }}>
               <AnchorLink href={`/trust-admin/hospitals/${hospital.id}`}>
-                View{" "}
+                View
                 <span className="nhsuk-u-visually-hidden">
                   {" "}
                   {hospital.name}
