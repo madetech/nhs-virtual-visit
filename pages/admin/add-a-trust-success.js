@@ -5,6 +5,7 @@ import AnchorLink from "../../src/components/AnchorLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
 import ActionLink from "../../src/components/ActionLink";
+import { ADMIN } from "../../src/helpers/userTypes";
 
 const AddATrustSuccess = ({ error, name }) => {
   if (error) {
@@ -12,7 +13,12 @@ const AddATrustSuccess = ({ error, name }) => {
   }
 
   return (
-    <Layout title={`${name} has been added`} renderLogout={true}>
+    <Layout
+      title={`${name} has been added`}
+      renderLogout={true}
+      showNavigationBarForType={ADMIN}
+      showNavigationBar={true}
+    >
       <div className="nhsuk-grid-row">
         <div className="nhsuk-grid-column-two-thirds">
           <div
