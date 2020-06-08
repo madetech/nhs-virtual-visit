@@ -17,6 +17,7 @@ const deleteVisitConfirmation = ({
   patientName,
   contactName,
   contactNumber,
+  contactEmail,
   callDateAndTime,
   error,
   showNavigationBar,
@@ -49,6 +50,7 @@ const deleteVisitConfirmation = ({
               patientName={patientName}
               visitorName={contactName}
               visitorMobileNumber={contactNumber}
+              visitorEmailAddress={contactEmail}
               visitDateAndTime={callDateAndTime}
             ></VisitSummaryList>
 
@@ -95,6 +97,7 @@ export const getServerSideProps = propsWithContainer(
         patientName: scheduledCall.patientName,
         contactName: scheduledCall.recipientName,
         contactNumber: scheduledCall.recipientNumber,
+        contactEmail: scheduledCall.recipientEmail,
         callDateAndTime: scheduledCall.callTime,
         callId,
         error,

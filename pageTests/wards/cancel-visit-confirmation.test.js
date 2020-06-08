@@ -65,6 +65,7 @@ describe("ward/cancel-visit-confirmation", () => {
                   patient_name: "Fred Bloggs",
                   recipient_name: "John Doe",
                   recipient_number: "07700900900",
+                  recipient_email: "john@example.com",
                   call_time: new Date("2020-04-15T23:00:00.000Z"),
                   call_id: "Test-Call-Id",
                   provider: "Test",
@@ -88,6 +89,7 @@ describe("ward/cancel-visit-confirmation", () => {
         expect(props.patientName).toEqual("Fred Bloggs");
         expect(props.contactName).toEqual("John Doe");
         expect(props.contactNumber).toEqual("07700900900");
+        expect(props.contactEmail).toEqual("john@example.com");
         expect(props.callDateAndTime).toEqual("2020-04-15T23:00:00.000Z");
       });
     });
