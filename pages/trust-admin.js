@@ -6,6 +6,7 @@ import verifyTrustAdminToken from "../src/usecases/verifyTrustAdminToken";
 import { GridRow, GridColumn } from "../src/components/Grid";
 import Heading from "../src/components/Heading";
 import NumberTile from "../src/components/NumberTile";
+import Text from "../src/components/Text";
 import { TRUST_ADMIN } from "../src/helpers/userTypes";
 
 const TrustAdmin = ({
@@ -15,6 +16,8 @@ const TrustAdmin = ({
   hospitals,
   trust,
   visitsScheduled,
+  leastUsage,
+  mostUsage,
 }) => {
   if (wardError || trustError) {
     return <Error />;
@@ -57,6 +60,47 @@ const TrustAdmin = ({
               <NumberTile number={wards.length} label="wards" />
             </GridColumn>
           </GridRow>
+          <h2>Usage</h2>
+          <GridRow className="nhsuk-u-padding-bottom-3">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
+              <div className="nhsuk-panel nhsuk-u-margin-top-1">
+                <h3>Most booked visits</h3>
+                {leastUsage.length > 0 ? (
+                  <ol>
+                    {leastUsage.map((hospital) => (
+                      <li key={hospital.id}>
+                        {hospital.name} ({hospital.totalVisits})
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <Text>No visits have been booked.</Text>
+                )}
+              </div>
+            </GridColumn>
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
+              <div className="nhsuk-panel nhsuk-u-margin-top-1">
+                <h3>Least booked visits</h3>
+                {mostUsage.length > 0 ? (
+                  <ol>
+                    {mostUsage.map((hospital) => (
+                      <li key={hospital.id}>
+                        {hospital.name} ({hospital.totalVisits})
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <Text>No visits have been booked.</Text>
+                )}
+              </div>
+            </GridColumn>
+          </GridRow>
         </GridColumn>
       </GridRow>
     </Layout>
@@ -74,6 +118,9 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
+    const retrieveHospitalVisitTotals = await container.getRetrieveHospitalVisitTotals()(
+      authenticationToken.trustId
+    );
     const retrieveWardVisitTotals = await container.getRetrieveWardVisitTotals()(
       authenticationToken.trustId
     );
@@ -86,6 +133,8 @@ export const getServerSideProps = propsWithContainer(
         wardError: wardsResponse.error,
         trustError: trustResponse.error,
         visitsScheduled: retrieveWardVisitTotals.total,
+        leastUsage: retrieveHospitalVisitTotals.slice(0, 3),
+        mostUsage: retrieveHospitalVisitTotals.slice(-3).reverse(),
       },
     };
   })

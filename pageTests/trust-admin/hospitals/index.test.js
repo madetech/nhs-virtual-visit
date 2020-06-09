@@ -32,10 +32,10 @@ describe("trust-admin/hospitals", () => {
     error: null,
   }));
 
-  const retrieveHospitalVisitTotalsStub = jest.fn(async () => ({
-    "1": 5,
-    "2": 10,
-  }));
+  const retrieveHospitalVisitTotalsStub = jest.fn(async () => [
+    { id: 1, name: "Test Hospital", totalVisits: 5 },
+    { id: 2, name: "Test Hospital", totalVisits: 10 },
+  ]);
 
   let res, container;
 
