@@ -6,7 +6,7 @@
     "validTrustAdminCode": "admin",
     "validAdminCode": "super",
     "fakeWard": "FAKENHS",
-    "baseUrl": "http://localhost:3000"
+    "baseUrl": "http://localhost:3001"
   },
   "video": false
 }
