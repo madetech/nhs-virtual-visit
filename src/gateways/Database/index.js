@@ -10,7 +10,7 @@ export default (() => {
           connectionString: process.env.DATABASE_URL,
         };
 
-        if (process.env.NODE_ENV === "test" || process.env.ENV === "test") {
+        if (process.env.NODE_ENV === "test" || process.env.APP_ENV === "test") {
           options.connectionString = process.env.TEST_DATABASE_URL;
         }
 
