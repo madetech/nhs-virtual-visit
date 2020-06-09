@@ -36,7 +36,6 @@ describe("As a ward staff, I want to cancel a virtual visit so that the visit ca
       .parent()
       .parent()
       .within(() => {
-        cy.get("button").should("contain", "Cancel");
         cy.get("button").contains("Cancel").click();
       });
   }
