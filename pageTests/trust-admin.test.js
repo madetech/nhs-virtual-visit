@@ -128,9 +128,9 @@ describe("trust-admin", () => {
         { id: 3, name: "Hospital 3", totalVisits: 10 },
       ]);
       expect(props.mostUsage).toEqual([
-        { id: 2, name: "Hospital 2", totalVisits: 1 },
-        { id: 3, name: "Hospital 3", totalVisits: 10 },
         { id: 4, name: "Hospital 4", totalVisits: 99 },
+        { id: 3, name: "Hospital 3", totalVisits: 10 },
+        { id: 2, name: "Hospital 2", totalVisits: 1 },
       ]);
     });
 
