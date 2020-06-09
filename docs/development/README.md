@@ -91,6 +91,26 @@ npm run test:contract
 
 Note: A test database is required to run contract tests. You can quickly set one up using `bin/setup_test_db.sh`
 
+## Running e2e tests
+
+To run e2e tests you need a test server running
+
+```bash
+npm run test-server
+```
+
+E2E tests (powered by cypress) can be run headless with
+
+```bash
+npm run e2e
+```
+
+or using the Cypress test runner to watch the test run
+
+```bash
+npm run cypress:open
+```
+
 ## Building a production version
 
 ```bash
