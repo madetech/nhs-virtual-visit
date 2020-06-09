@@ -76,18 +76,24 @@ describe("retrieveHospitalVisitTotals contract tests", () => {
 
     const totals = await container.getRetrieveHospitalVisitTotals()(trustId);
 
-    expect(Object.keys(totals).length).toEqual(2);
-    expect(totals[hospitalId]).toEqual(5);
-    expect(totals[hospital2Id]).toEqual(2);
+    expect(totals.length).toEqual(2);
+
+    const hospital1 = totals.find(({ id }) => id === hospitalId);
+    const hospital2 = totals.find(({ id }) => id === hospital2Id);
+
+    expect(hospital1.name).toBe("Test Hospital");
+    expect(hospital2.name).toBe("Test Hospital 2");
+    expect(hospital1.totalVisits).toEqual(5);
+    expect(hospital2.totalVisits).toEqual(2);
   });
 
   it("returns an empty object if no trustId is provided", async () => {
     const totals = await container.getRetrieveHospitalVisitTotals()();
-    expect(totals).toEqual({});
+    expect(totals).toEqual([]);
   });
 
   it("returns an empty object if the trustId does not exist", async () => {
     const totals = await container.getRetrieveHospitalVisitTotals()(12);
-    expect(totals).toEqual({});
+    expect(totals).toEqual([]);
   });
 });
