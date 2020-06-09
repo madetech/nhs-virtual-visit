@@ -46,9 +46,25 @@ ENABLE_SENTRY=
 
 ### PostgreSQL 12
 
-If you are installing a local instance of PostgreSQL on Ubuntu, see the steps in the separate [guide.](./UBUNTU2004-PG12.md)
+#### Setup the database with docker
 
-#### Setup the database
+Run `sudo docker-compose up --no-start` to create the container.
+
+Start it with `sudo docker-compose start`.
+
+Add `DATABASE_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` to your `.env` file.
+
+Run `./bin/setup_dev_db_docker.sh`
+
+Notes:
+
+- If you omit the `--no-start` flag it'll start the container in an interactive shell, which will kill the container when you exit.
+- You may stop the container with `sudo docker-compose stop`.
+- You may destroy the container with `sudo docker-compose down`, if you do this you'll need to re-run the setup script.
+
+#### Setup the database installed locally
+
+If you are installing a local instance of PostgreSQL on Ubuntu, see the steps in the separate [guide.](./UBUNTU2004-PG12.md)
 
 1. Add the database URL as an environment variable in `.env`. On Linux you may need to provide a username and password.
    ```bash
