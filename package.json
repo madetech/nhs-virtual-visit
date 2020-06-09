@@ -15,7 +15,7 @@
     "test:ci": "npm run format:check && npm run test:contract -- --runInBand && npm run test -- --runInBand",
     "build": "next build",
     "dev": "NODE_ENV=development node server.js",
-    "test-server": "NODE_ENV=test node server.js",
+    "test-server": "ENV=test NODE_ENV=development node server.js",
     "start": "NODE_ENV=production node server.js",
     "cleandb": "node db/scripts/cleanup_scheduled_calls.js",
     "db:seed": "node db/scripts/seed_database.js",
