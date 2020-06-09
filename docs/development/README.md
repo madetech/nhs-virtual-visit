@@ -48,42 +48,21 @@ ENABLE_SENTRY=
 
 If you are installing a local instance of PostgreSQL on Ubuntu, see the steps in the separate [guide.](./UBUNTU2004-PG12.md)
 
-#### Enable SSL in Postgres
-
-You may need to enable SSL on your local postgres server.
-
-Within the data folder of your PostgreSQL installation (e.g. `~/Library/Application Support/Postgres/var-12` or `/usr/local/var/postgres`), generate an self-signed certificate (details here https://www.postgresql.org/docs/12/ssl-tcp.html#SSL-CERTIFICATE-CREATION).
-
-After generating the certificate, edit the postgresql.conf file in the data folder to enable ssl (`ssl = on`).
-
-Restart your PostgreSQL server and SSL will connections will be enabled
-
 #### Setup the database
 
-1. Create the database
-   ```bash
-   createdb nhs-virtual-visit-dev
-   ```
-2. Run all migrations
-   ```bash
-   npm run dbmigrate up
-   ```
-3. Add the database URL as an environment variable in `.env`. On Linux you may need to provide a username and password.
+1. Add the database URL as an environment variable in `.env`. On Linux you may need to provide a username and password.
    ```bash
    cat <<<EOF >> .env
    DATABASE_URL=postgresql://localhost/nhs-virtual-visit-dev
    EOF
    ```
+1. Run the database setup script
 
-#### Seeding the database
+   ```bash
+   ./bin/setup_dev_db.sh
+   ```
 
-To seed your database with data to get going quickly, you can run the file under `db/seeds.sql` by doing the following:
-
-```bash
-cat db/seeds.sql | psql nhs-virtual-visit-dev
-```
-
-This will create two wards with codes `TEST1` and `TEST2`
+   - This will setup the database with two wards with codes `TEST1` and `TEST2`
 
 ## Running the service locally
 
