@@ -96,19 +96,19 @@ Note: A test database is required to run contract tests. You can quickly set one
 To run e2e tests you need a test server running
 
 ```bash
-npm run test-server
+npm run test:server
 ```
 
 E2E tests (powered by cypress) can be run headless with
 
 ```bash
-npm run e2e
+npm run test:e2e
 ```
 
 or using the Cypress test runner to watch the test run
 
 ```bash
-npm run cypress:open
+npm run test:e2e:open
 ```
 
 ## Building a production version
