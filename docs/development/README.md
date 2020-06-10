@@ -46,44 +46,39 @@ ENABLE_SENTRY=
 
 ### PostgreSQL 12
 
+#### Setup the database with docker
+
+Run `sudo docker-compose up --no-start` to create the container.
+
+Start it with `sudo docker-compose start`.
+
+Add `DATABASE_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` to your `.env` file.
+
+Run `./bin/setup_dev_db_docker.sh`
+
+Notes:
+
+- If you omit the `--no-start` flag it'll start the container in an interactive shell, which will kill the container when you exit.
+- You may stop the container with `sudo docker-compose stop`.
+- You may destroy the container with `sudo docker-compose down`, if you do this you'll need to re-run the setup script.
+
+#### Setup the database installed locally
+
 If you are installing a local instance of PostgreSQL on Ubuntu, see the steps in the separate [guide.](./UBUNTU2004-PG12.md)
 
-#### Enable SSL in Postgres
-
-You may need to enable SSL on your local postgres server.
-
-Within the data folder of your PostgreSQL installation (e.g. `~/Library/Application Support/Postgres/var-12` or `/usr/local/var/postgres`), generate an self-signed certificate (details here https://www.postgresql.org/docs/12/ssl-tcp.html#SSL-CERTIFICATE-CREATION).
-
-After generating the certificate, edit the postgresql.conf file in the data folder to enable ssl (`ssl = on`).
-
-Restart your PostgreSQL server and SSL will connections will be enabled
-
-#### Setup the database
-
-1. Create the database
-   ```bash
-   createdb nhs-virtual-visit-dev
-   ```
-2. Run all migrations
-   ```bash
-   npm run dbmigrate up
-   ```
-3. Add the database URL as an environment variable in `.env`. On Linux you may need to provide a username and password.
+1. Add the database URL as an environment variable in `.env`. On Linux you may need to provide a username and password.
    ```bash
    cat <<<EOF >> .env
    DATABASE_URL=postgresql://localhost/nhs-virtual-visit-dev
    EOF
    ```
+1. Run the database setup script
 
-#### Seeding the database
+   ```bash
+   ./bin/setup_dev_db.sh
+   ```
 
-To seed your database with data to get going quickly, you can run the file under `db/seeds.sql` by doing the following:
-
-```bash
-cat db/seeds.sql | psql nhs-virtual-visit-dev
-```
-
-This will create two wards with codes `TEST1` and `TEST2`
+   - This will setup the database with two wards with codes `TEST1` and `TEST2`
 
 ## Running the service locally
 
@@ -111,6 +106,26 @@ npm run test:contract
 ```
 
 Note: A test database is required to run contract tests. You can quickly set one up using `bin/setup_test_db.sh`
+
+## Running end to end (E2E) tests
+
+To run E2E tests you need a test server running
+
+```bash
+npm run test:server
+```
+
+E2E tests (powered by [Cypress](https://www.cypress.io/)) can be run headless with
+
+```bash
+npm run test:e2e
+```
+
+or using the [Cypress Test Runner](https://docs.cypress.io/guides/core-concepts/test-runner.html#Overview) to watch the test run
+
+```bash
+npm run test:e2e:open
+```
 
 ## Building a production version
 

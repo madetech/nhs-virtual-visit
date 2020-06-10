@@ -18,8 +18,15 @@ async function seedDatabase() {
   await db.result(
     "INSERT INTO hospitals (name, trust_id) VALUES ('Test Hospital', (SELECT id FROM trusts WHERE name='Test Trust'))"
   );
+  const { id: wardId } = await db.one(
+    "INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward One', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST1', (SELECT id FROM trusts WHERE name='Test Trust')) RETURNING id"
+  );
+
   await db.result(
-    "INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward One', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST1', (SELECT id FROM trusts WHERE name='Test Trust'))"
+    `INSERT INTO scheduled_calls_table
+    (patient_name, recipient_email, recipient_name, call_time, call_id, provider, ward_id, call_password)
+    VALUES ('Alice', 'bob@example.com', 'Bob', CURRENT_TIMESTAMP, '123', 'whereby', $1, 'password')`,
+    [wardId]
   );
   db.$pool.end();
 }
