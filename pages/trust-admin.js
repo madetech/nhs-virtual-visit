@@ -125,6 +125,8 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId
     );
 
+    const usageListitemCount = 3;
+
     return {
       props: {
         wards: wardsResponse.wards,
@@ -133,8 +135,10 @@ export const getServerSideProps = propsWithContainer(
         wardError: wardsResponse.error,
         trustError: trustResponse.error,
         visitsScheduled: retrieveWardVisitTotals.total,
-        leastUsage: retrieveHospitalVisitTotals.slice(0, 3),
-        mostUsage: retrieveHospitalVisitTotals.slice(-3).reverse(),
+        leastUsage: retrieveHospitalVisitTotals.slice(0, usageListitemCount),
+        mostUsage: retrieveHospitalVisitTotals
+          .slice(-usageListitemCount)
+          .reverse(),
       },
     };
   })
