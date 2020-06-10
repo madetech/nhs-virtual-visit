@@ -57,7 +57,7 @@ workflows:
     jobs:
       - build
       - test
-  linux-build:
+  end-to-end-test:
     jobs:
       # checks out code and installs dependencies once
       - cypress/install:
@@ -75,7 +75,7 @@ workflows:
       # and records on Cypress Dashboard
       - cypress/run:
           executor: pg-cypress
-          name: "1 machine"
+          name: "End to end test"
           # job will use workspace with code and dependencies
           # installed by the "install" job
           requires:
