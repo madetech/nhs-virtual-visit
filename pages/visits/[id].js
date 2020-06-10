@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Layout from "../../src/components/Layout";
+import Whereby from "../../src/components/Whereby";
 import Error from "next/error";
 import useScript from "../../src/hooks/useScript";
 import Router from "next/router";
@@ -14,7 +15,7 @@ const Call = ({ callId, name, provider, error }) => {
     return (
       <Layout mainStyleOverride>
         <main>
-          <Whereby id={callId} name={name} />
+          <Whereby callId={callId} displayName={name} />
           <button
             className="nhsuk-button"
             style={{ margin: "0 30%", width: "40%" }}
@@ -108,18 +109,6 @@ export const getServerSideProps = propsWithContainer(
       return { props: {} };
     }
   }
-);
-
-const Whereby = ({ id, name }) => (
-  <iframe
-    style={{
-      width: "100%",
-      height: "calc(100vh - 195px)",
-      border: 0,
-    }}
-    src={`https://${process.env.WHEREBY_SUBDOMAIN}.whereby.com/${id}?embed&iframeSource=${process.env.WHEREBY_SUBDOMAIN}&background=off&displayName=${name}&screenshare=off&chat=off`}
-    allow="camera; microphone; fullscreen; speaker"
-  ></iframe>
 );
 
 export default Call;
