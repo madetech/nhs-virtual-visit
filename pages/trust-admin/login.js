@@ -51,7 +51,7 @@ const Login = () => {
       });
 
       if (response.status === 201) {
-        window.location.href = `/wards/visits`;
+        window.location.href = `/trust-admin`;
       } else {
         onSubmitErrors.push({
           message: "The code or password you entered was not recognised",
