@@ -48,10 +48,14 @@ describe("trust-admin/hospitals/[id]", () => {
         error: null,
       }));
 
-      const visitTotalsSpy = jest.fn().mockReturnValue([
-        { id: 1, name: "Test Hospital", totalVisits: 10 },
-        { id: 2, name: "Test Hospital", totalVisits: 3 },
-      ]);
+      const visitTotalsSpy = jest.fn().mockReturnValue({
+        hospitals: [
+          { id: 1, name: "Test Hospital", totalVisits: 10 },
+          { id: 2, name: "Test Hospital", totalVisits: 3 },
+        ],
+        leastVisited: [{ id: 2, name: "Test Hospital", totalVisits: 3 }],
+        mostVisited: [{ id: 1, name: "Test Hospital", totalVisits: 10 }],
+      });
 
       const hospitalWardTotalsSpy = jest.fn().mockReturnValue({
         wards: { 1: 10, 2: 5 },

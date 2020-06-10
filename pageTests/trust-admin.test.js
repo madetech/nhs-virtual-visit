@@ -16,12 +16,24 @@ describe("trust-admin", () => {
     },
   };
 
-  const hospitals = [
-    { id: 1, name: "Hospital 1", totalVisits: 0 },
-    { id: 2, name: "Hospital 2", totalVisits: 1 },
-    { id: 3, name: "Hospital 3", totalVisits: 10 },
-    { id: 4, name: "Hospital 4", totalVisits: 99 },
-  ];
+  const hospitals = {
+    hospitals: [
+      { id: 1, name: "Hospital 1", totalVisits: 0 },
+      { id: 2, name: "Hospital 2", totalVisits: 1 },
+      { id: 3, name: "Hospital 3", totalVisits: 10 },
+      { id: 4, name: "Hospital 4", totalVisits: 99 },
+    ],
+    mostVisited: [
+      { id: 4, name: "Hospital 4", totalVisits: 99 },
+      { id: 3, name: "Hospital 3", totalVisits: 10 },
+      { id: 2, name: "Hospital 2", totalVisits: 1 },
+    ],
+    leastVisited: [
+      { id: 1, name: "Hospital 1", totalVisits: 0 },
+      { id: 2, name: "Hospital 2", totalVisits: 1 },
+      { id: 3, name: "Hospital 3", totalVisits: 10 },
+    ],
+  };
 
   const wards = [
     { id: 1, name: "Defoe Ward", hospital_id: 1, code: "test_code" },
@@ -120,14 +132,14 @@ describe("trust-admin", () => {
       });
 
       expect(retrieveHospitalVisitTotals).toHaveBeenCalledWith(trustId);
-      expect(props.leastUsage.length).toBe(3);
-      expect(props.mostUsage.length).toBe(3);
-      expect(props.leastUsage).toEqual([
+      expect(props.leastVisited.length).toBe(3);
+      expect(props.mostVisited.length).toBe(3);
+      expect(props.leastVisited).toEqual([
         { id: 1, name: "Hospital 1", totalVisits: 0 },
         { id: 2, name: "Hospital 2", totalVisits: 1 },
         { id: 3, name: "Hospital 3", totalVisits: 10 },
       ]);
-      expect(props.mostUsage).toEqual([
+      expect(props.mostVisited).toEqual([
         { id: 4, name: "Hospital 4", totalVisits: 99 },
         { id: 3, name: "Hospital 3", totalVisits: 10 },
         { id: 2, name: "Hospital 2", totalVisits: 1 },
@@ -135,7 +147,11 @@ describe("trust-admin", () => {
     });
 
     it("retrieves usage stats when fewer than 3 hospitals", async () => {
-      const hospitals = [{ id: 1, name: "Hospital 1", totalVisits: 5 }];
+      const hospitals = {
+        hospitals: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
+        leastVisited: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
+        mostVisited: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
+      };
 
       const { props } = await getServerSideProps({
         req: authenticatedReq,
@@ -146,10 +162,10 @@ describe("trust-admin", () => {
         }),
       });
 
-      expect(props.leastUsage.length).toBe(1);
-      expect(props.mostUsage.length).toBe(1);
-      expect(props.leastUsage).toEqual(hospitals);
-      expect(props.mostUsage).toEqual(hospitals);
+      expect(props.leastVisited.length).toBe(1);
+      expect(props.mostVisited.length).toBe(1);
+      expect(props.leastVisited).toEqual(hospitals.leastVisited);
+      expect(props.mostVisited).toEqual(hospitals.mostVisited);
     });
 
     it("sets an error in props if ward error", async () => {
