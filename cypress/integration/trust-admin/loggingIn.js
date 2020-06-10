@@ -1,4 +1,4 @@
-describe("As a user, I want to log in so that I can access the service.", () => {
+describe("As a trust admin, I want to log in so that I can access the service.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(
@@ -45,9 +45,7 @@ describe("As a user, I want to log in so that I can access the service.", () => 
   }
 
   function ThenISeeTheTrustAdminHomePage() {
-    cy.contains("The code you entered was not recognised").should(
-      "not.be.visible"
-    );
+    cy.contains("There is a problem").should("not.be.visible");
     cy.contains("Test Trust").should("be.visible");
     cy.contains("Dashboard").should("be.visible");
   }
