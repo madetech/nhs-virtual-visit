@@ -5,7 +5,7 @@ describe("createWard contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("creates a ward in the db when valid", async () => {
-    const { trustId } = await container.getCreateTrust(container)({
+    const { trustId } = await container.getCreateTrust()({
       name: "Test Trust",
       adminCode: "TEST",
     });
