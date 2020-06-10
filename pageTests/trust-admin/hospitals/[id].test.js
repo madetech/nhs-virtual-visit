@@ -36,7 +36,7 @@ describe("trust-admin/hospitals/[id]", () => {
     });
 
     it("provides the hospital and wards as props", async () => {
-      const hospitalId = 10;
+      const hospitalId = 1;
 
       const wardsSpy = jest.fn(async () => ({
         wards: [{ id: 1 }, { id: 2 }],
@@ -48,7 +48,14 @@ describe("trust-admin/hospitals/[id]", () => {
         error: null,
       }));
 
-      const visitTotalsSpy = jest.fn().mockReturnValue({ 1: 10, 2: 3 });
+      const visitTotalsSpy = jest.fn().mockReturnValue({
+        hospitals: [
+          { id: 1, name: "Test Hospital", totalVisits: 10 },
+          { id: 2, name: "Test Hospital", totalVisits: 3 },
+        ],
+        leastVisited: [{ id: 2, name: "Test Hospital", totalVisits: 3 }],
+        mostVisited: [{ id: 1, name: "Test Hospital", totalVisits: 10 }],
+      });
 
       const hospitalWardTotalsSpy = jest.fn().mockReturnValue({
         wards: { 1: 10, 2: 5 },
@@ -77,6 +84,7 @@ describe("trust-admin/hospitals/[id]", () => {
 
       expect(props.wards).toEqual([{ id: 1 }, { id: 2 }]);
       expect(props.hospital).toEqual({ id: hospitalId, name: "Test Hospital" });
+      expect(props.totalBookedVisits).toEqual(10);
       expect(props.mostVisitedWard).toEqual({
         wardName: "Most Visited",
         total_visits: 10,

@@ -60,7 +60,10 @@ export const getServerSideProps = propsWithContainer(
 
     const hospitalsWithVisitTotals = hospitalsResponse.hospitals?.map(
       (hospital) => {
-        hospital.bookedVisits = hospitalVisitTotalsResponse[hospital.id] || 0;
+        hospital.bookedVisits =
+          hospitalVisitTotalsResponse.hospitals.find(
+            ({ id }) => id === hospital.id
+          )?.totalVisits || 0;
         return hospital;
       }
     );
