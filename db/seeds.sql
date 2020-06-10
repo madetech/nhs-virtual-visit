@@ -1,5 +1,5 @@
-INSERT INTO trusts (name, admin_code, password) VALUES ('Test Trust', 'admin', crypt('adminpassword', gen_salt('bf', 8)));
-INSERT INTO trusts (name, admin_code, password) VALUES ('Test 2 Trust', 'admin2', crypt('adminpassword', gen_salt('bf', 8)));
+INSERT INTO trusts (name, admin_code, password) VALUES ('Test Trust', 'admin', crypt('trustpassword', gen_salt('bf', 8)));
+INSERT INTO trusts (name, admin_code, password) VALUES ('Test 2 Trust', 'admin2', crypt('trustpassword', gen_salt('bf', 8)));
 INSERT INTO hospitals (name, trust_id) VALUES ('Test Hospital', (SELECT id FROM trusts WHERE name='Test Trust'));
 INSERT INTO hospitals (name, trust_id) VALUES ('Test Hospital 2', (SELECT id FROM trusts WHERE name='Test Trust'));
 INSERT INTO hospitals (name, trust_id) VALUES ('Test 2 Hospital', (SELECT id FROM trusts WHERE name='Test 2 Trust'));
