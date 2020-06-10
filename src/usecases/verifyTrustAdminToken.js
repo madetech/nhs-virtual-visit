@@ -11,7 +11,7 @@ export default function (callback) {
     if (authenticationToken) {
       return callback({ ...context, authenticationToken }) ?? { props: {} };
     } else {
-      res.writeHead(302, { Location: "/wards/login" }).end();
+      res.writeHead(302, { Location: "/trust-admin/login" }).end();
     }
   };
 }
