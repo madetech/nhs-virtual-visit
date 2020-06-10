@@ -20,6 +20,7 @@ import updateWardVisitTotals from "../usecases/updateWardVisitTotals";
 import retrieveWardVisitTotals from "../usecases/retrieveWardVisitTotals";
 import updateWard from "../usecases/updateWard";
 import createHospital from "../usecases/createHospital";
+import updateHospital from "../usecases/updateHospital";
 import retrieveHospitalsByTrustId from "../usecases/retrieveHospitalsByTrustId";
 import retrieveTrustById from "../usecases/retrieveTrustById";
 import retrieveHospitalById from "../usecases/retrieveHospitalById";
@@ -120,6 +121,10 @@ class AppContainer {
 
   getCreateHospital = () => {
     return createHospital(this);
+  };
+
+  getUpdateHospital = () => {
+    return updateHospital(this);
   };
 
   getRetrieveHospitalsByTrustId = () => {
