@@ -78,6 +78,7 @@ describe("call", () => {
         end: jest.fn(),
       };
     });
+
     it("returns callId when the password is valid", async () => {
       const { props } = await getServerSideProps({
         query: {
@@ -94,6 +95,7 @@ describe("call", () => {
       );
       expect(props.callId).toEqual(1);
     });
+
     it("returns callId when the password is invalid, but the user is authenticated", async () => {
       getUserIsAuthenticatedSpy.mockReturnValueOnce(true);
       const { props } = await getServerSideProps({
@@ -108,6 +110,7 @@ describe("call", () => {
       expect(getVerifyCallPasswordSpy).toHaveBeenCalledWith(1, undefined);
       expect(props.callId).toEqual(1);
     });
+
     it("redirects when password is invalid, and the user is unauthenticated", async () => {
       await getServerSideProps({
         query: {
