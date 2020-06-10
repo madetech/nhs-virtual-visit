@@ -4,7 +4,7 @@
     "contactNumber": "07123456789",
     "validWard": "TEST1",
     "validTrustAdminCode": "admin",
-    "validTrustAdminPassword": "trustadminpassword",
+    "validTrustAdminPassword": "trustpassword",
     "validAdminCode": "super",
     "fakeWard": "FAKENHS",
     "baseUrl": "http://localhost:3001"
