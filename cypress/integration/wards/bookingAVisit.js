@@ -14,7 +14,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     WhenIClickStartNow();
     ThenISeeTheBookAVirtualVisitForm();
 
-    WhenIFillOutForm();
+    WhenIFillOutTheForm();
     AndISubmitTheForm();
     ThenISeeTheCheckYourAnswersPage();
 
@@ -67,7 +67,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     cy.get("h1").should("contain", "Book a virtual visit");
   }
 
-  function WhenIFillOutForm() {
+  function WhenIFillOutTheForm() {
     cy.get("input[name=patient-name]").type("Adora");
     cy.get("input[name=contact-name]").type("Catra");
     cy.get("input[name=email-checkbox]").click();

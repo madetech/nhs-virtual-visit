@@ -3,7 +3,6 @@ import ErrorSummary from "../../src/components/ErrorSummary";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Layout from "../../src/components/Layout";
 import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
-
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Error from "next/error";
 import FormGroup from "../../src/components/FormGroup";
@@ -90,7 +89,7 @@ const AddAHospital = ({ error, trustId }) => {
 
   return (
     <Layout
-      title="Add a Hospital"
+      title="Add a hospital"
       hasErrors={errors.length != 0}
       renderLogout={true}
       showNavigationBar={true}
@@ -100,7 +99,7 @@ const AddAHospital = ({ error, trustId }) => {
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
-            <Heading>Add a Hospital</Heading>
+            <Heading>Add a hospital</Heading>
             <FormGroup>
               <Label htmlFor="hospital-name" className="nhsuk-label--l">
                 What is the hospital name?
@@ -118,7 +117,7 @@ const AddAHospital = ({ error, trustId }) => {
                 value={hospitalName || ""}
               />
             </FormGroup>
-            <Button className="nhsuk-u-margin-top-5">Add Hospital</Button>
+            <Button className="nhsuk-u-margin-top-5">Add hospital</Button>
           </form>
         </GridColumn>
       </GridRow>
