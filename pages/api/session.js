@@ -2,13 +2,16 @@ import withContainer from "../../src/middleware/withContainer";
 import { WARD_STAFF, TRUST_ADMIN, ADMIN } from "../../src/helpers/userTypes";
 
 export default withContainer(
-  async ({ body: { code }, method }, res, { container }) => {
+  async ({ body: { code, password }, method }, res, { container }) => {
     if (method === "POST") {
       const verifyWardCode = container.getVerifyWardCode();
       const verifyWardCodeResponse = await verifyWardCode(code);
 
       const verifyTrustAdminCode = container.getVerifyTrustAdminCode();
-      const verifyTrustAdminCodeResponse = await verifyTrustAdminCode(code);
+      const verifyTrustAdminCodeResponse = await verifyTrustAdminCode(
+        code,
+        password
+      );
 
       const verifyAdminCode = container.getVerifyAdminCode();
       const verifyAdminCodeResponse = await verifyAdminCode(code);

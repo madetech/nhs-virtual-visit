@@ -13,7 +13,7 @@ async function seedDatabase() {
   const db = await getDb();
   await db.result("INSERT INTO admins (code) VALUES ('super')");
   await db.result(
-    "INSERT INTO trusts (name, admin_code) VALUES ('Test Trust', 'admin')"
+    "INSERT INTO trusts (name, admin_code, password) VALUES ('Test Trust', 'admin', crypt('trustadminpassword', gen_salt('bf', 8)))"
   );
   await db.result(
     "INSERT INTO hospitals (name, trust_id) VALUES ('Test Hospital', (SELECT id FROM trusts WHERE name='Test Trust'))"
