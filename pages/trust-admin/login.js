@@ -30,7 +30,7 @@ const Login = () => {
     if (!code) {
       onSubmitErrors.push({
         id: "code-error",
-        message: "Enter a Trust code",
+        message: "Enter a trust code",
       });
     }
 
@@ -63,11 +63,11 @@ const Login = () => {
   });
 
   return (
-    <Layout title="Log in to Trust dashboard" hasErrors={errors.length > 0}>
+    <Layout title="Log in to manage your trust" hasErrors={errors.length > 0}>
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <Heading>Log in to Trust dashboard</Heading>
+          <Heading>Log in to manage your trust</Heading>
 
           <form onSubmit={onSubmit}>
             <FormGroup>
