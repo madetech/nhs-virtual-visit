@@ -6,6 +6,8 @@ import verifyTrustAdminToken from "../src/usecases/verifyTrustAdminToken";
 import { GridRow, GridColumn } from "../src/components/Grid";
 import Heading from "../src/components/Heading";
 import NumberTile from "../src/components/NumberTile";
+import Text from "../src/components/Text";
+import AnchorLink from "../src/components/AnchorLink";
 import { TRUST_ADMIN } from "../src/helpers/userTypes";
 
 const TrustAdmin = ({
@@ -13,6 +15,8 @@ const TrustAdmin = ({
   trustError,
   wards,
   hospitals,
+  leastVisited,
+  mostVisited,
   trust,
   visitsScheduled,
 }) => {
@@ -57,6 +61,65 @@ const TrustAdmin = ({
               <NumberTile number={wards.length} label="wards" />
             </GridColumn>
           </GridRow>
+          <h2>Usage</h2>
+          <GridRow className="nhsuk-u-padding-bottom-3">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
+              <div className="nhsuk-panel nhsuk-u-margin-top-1">
+                <h3>Most booked visits</h3>
+                {mostVisited.length > 0 ? (
+                  <ol>
+                    {mostVisited.map((hospital) => (
+                      <li key={hospital.id}>
+                        <AnchorLink
+                          href={`/trust-admin/hospitals/${hospital.id}`}
+                        >
+                          {hospital.name}
+                          <span className="nhsuk-u-visually-hidden">
+                            {" "}
+                            {hospital.name}
+                          </span>
+                        </AnchorLink>{" "}
+                        ({hospital.totalVisits})
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <Text>No visits have been booked.</Text>
+                )}
+              </div>
+            </GridColumn>
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
+              <div className="nhsuk-panel nhsuk-u-margin-top-1">
+                <h3>Least booked visits</h3>
+                {leastVisited.length > 0 ? (
+                  <ol>
+                    {leastVisited.map((hospital) => (
+                      <li key={hospital.id}>
+                        <AnchorLink
+                          href={`/trust-admin/hospitals/${hospital.id}`}
+                        >
+                          {hospital.name}
+                          <span className="nhsuk-u-visually-hidden">
+                            {" "}
+                            {hospital.name}
+                          </span>
+                        </AnchorLink>{" "}
+                        ({hospital.totalVisits})
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <Text>No visits have been booked.</Text>
+                )}
+              </div>
+            </GridColumn>
+          </GridRow>
         </GridColumn>
       </GridRow>
     </Layout>
@@ -74,6 +137,9 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
+    const retrieveHospitalVisitTotals = await container.getRetrieveHospitalVisitTotals()(
+      authenticationToken.trustId
+    );
     const retrieveWardVisitTotals = await container.getRetrieveWardVisitTotals()(
       authenticationToken.trustId
     );
@@ -82,6 +148,8 @@ export const getServerSideProps = propsWithContainer(
       props: {
         wards: wardsResponse.wards,
         hospitals: hospitalsResponse.hospitals,
+        leastVisited: retrieveHospitalVisitTotals.leastVisited,
+        mostVisited: retrieveHospitalVisitTotals.mostVisited,
         trust: { name: trustResponse.trust?.name },
         wardError: wardsResponse.error,
         trustError: trustResponse.error,

@@ -107,7 +107,9 @@ export const getServerSideProps = propsWithContainer(
       trustId
     );
 
-    const totalBookedVisits = visitTotals[hospital.id] || 0;
+    const totalBookedVisits =
+      visitTotals.hospitals.find(({ id }) => id === hospitalId)?.totalVisits ||
+      0;
 
     const {
       wards: wardVisitTotals,
