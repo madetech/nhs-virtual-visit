@@ -86,7 +86,7 @@ const Login = () => {
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
-                type="text"
+                type="password"
                 hasError={hasError("password")}
                 errorMessage={errorMessage("password")}
                 className="nhsuk-input--width-10"
