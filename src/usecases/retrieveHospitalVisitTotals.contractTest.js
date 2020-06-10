@@ -1,5 +1,61 @@
 import AppContainer from "../containers/AppContainer";
 
+async function createTestWards(trustId, hospitalId, count) {
+  const container = AppContainer.getInstance();
+
+  for (let i = 1; i <= count; i++) {
+    const id = hospitalId + ":" + i;
+    const { wardId } = await container.getCreateWard()({
+      name: "Test Ward " + id,
+      code: "wardCode" + id,
+      hospitalId: hospitalId,
+      trustId: trustId,
+    });
+
+    const date1 = new Date("2020-06-01 13:00");
+    const date2 = new Date("2020-06-02 13:00");
+
+    await container.getUpdateWardVisitTotals()({
+      wardId: wardId,
+      date: date1.toISOString(),
+    });
+    await container.getUpdateWardVisitTotals()({
+      wardId: wardId,
+      date: date1.toISOString(),
+    });
+    await container.getUpdateWardVisitTotals()({
+      wardId: wardId,
+      date: date2.toISOString(),
+    });
+  }
+}
+
+async function createTestHospitals(trustId, count) {
+  const container = AppContainer.getInstance();
+
+  let ids = [];
+
+  for (let i = 1; i <= count; i++) {
+    const { hospitalId } = await container.getCreateHospital()({
+      name: "Test Hospital " + i,
+      trustId: trustId,
+    });
+    ids.push(hospitalId);
+
+    await createTestWards(trustId, hospitalId, i);
+  }
+
+  return ids;
+}
+
+function isAscending(nums) {
+  return !!nums.reduce((n, item) => n !== false && item >= n && item);
+}
+
+function isDescending(nums) {
+  return isAscending(nums.reverse());
+}
+
 describe("retrieveHospitalVisitTotals contract tests", () => {
   const container = AppContainer.getInstance();
 
@@ -9,91 +65,41 @@ describe("retrieveHospitalVisitTotals contract tests", () => {
       adminCode: "TEST",
     });
 
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
+    const hospitalIds = await createTestHospitals(trustId, 4);
 
-    const { hospitalId: hospital2Id } = await container.getCreateHospital()({
-      name: "Test Hospital 2",
-      trustId: trustId,
-    });
+    const {
+      hospitals,
+      mostVisited,
+      leastVisited,
+    } = await container.getRetrieveHospitalVisitTotals()(trustId);
 
-    const { wardId: ward1Id } = await container.getCreateWard()({
-      name: "Test Ward 1",
-      code: "wardCode1",
-      hospitalId: hospitalId,
-      trustId: trustId,
-    });
+    expect(hospitals.length).toBe(4);
 
-    const { wardId: ward2Id } = await container.getCreateWard()({
-      name: "Test Ward 2",
-      code: "wardCode2",
-      hospitalId: hospitalId,
-      trustId: trustId,
-    });
+    const hospital1 = hospitals.find(({ id }) => id === hospitalIds[0]);
+    const hospital2 = hospitals.find(({ id }) => id === hospitalIds[1]);
 
-    const { wardId: ward3Id } = await container.getCreateWard()({
-      name: "Test Ward 3",
-      code: "wardCode3",
-      hospitalId: hospital2Id,
-      trustId: trustId,
-    });
-
-    const date1 = new Date("2020-06-01 13:00");
-    const date2 = new Date("2020-06-02 13:00");
-
-    await container.getUpdateWardVisitTotals()({
-      wardId: ward1Id,
-      date: date1.toISOString(),
-    });
-    await container.getUpdateWardVisitTotals()({
-      wardId: ward1Id,
-      date: date1.toISOString(),
-    });
-    await container.getUpdateWardVisitTotals()({
-      wardId: ward1Id,
-      date: date2.toISOString(),
-    });
-
-    await container.getUpdateWardVisitTotals()({
-      wardId: ward2Id,
-      date: date1.toISOString(),
-    });
-    await container.getUpdateWardVisitTotals()({
-      wardId: ward2Id,
-      date: date2.toISOString(),
-    });
-
-    await container.getUpdateWardVisitTotals()({
-      wardId: ward3Id,
-      date: date1.toISOString(),
-    });
-    await container.getUpdateWardVisitTotals()({
-      wardId: ward3Id,
-      date: date2.toISOString(),
-    });
-
-    const totals = await container.getRetrieveHospitalVisitTotals()(trustId);
-
-    expect(totals.length).toEqual(2);
-
-    const hospital1 = totals.find(({ id }) => id === hospitalId);
-    const hospital2 = totals.find(({ id }) => id === hospital2Id);
-
-    expect(hospital1.name).toBe("Test Hospital");
+    expect(hospital1.name).toBe("Test Hospital 1");
     expect(hospital2.name).toBe("Test Hospital 2");
-    expect(hospital1.totalVisits).toEqual(5);
-    expect(hospital2.totalVisits).toEqual(2);
+    expect(hospital1.totalVisits).toEqual(3);
+    expect(hospital2.totalVisits).toEqual(6);
+
+    expect(leastVisited.length).toBe(3);
+    expect(mostVisited.length).toBe(3);
+
+    const leastTotals = leastVisited.map((hospital) => hospital.totalVisits);
+    expect(isAscending(leastTotals)).toBeTruthy();
+
+    const mostTotals = mostVisited.map((hospital) => hospital.totalVisits);
+    expect(isDescending(mostTotals)).toBeTruthy();
   });
 
   it("returns an empty object if no trustId is provided", async () => {
-    const totals = await container.getRetrieveHospitalVisitTotals()();
-    expect(totals).toEqual([]);
+    const { hospitals } = await container.getRetrieveHospitalVisitTotals()();
+    expect(hospitals).toEqual([]);
   });
 
   it("returns an empty object if the trustId does not exist", async () => {
-    const totals = await container.getRetrieveHospitalVisitTotals()(12);
-    expect(totals).toEqual([]);
+    const { hospitals } = await container.getRetrieveHospitalVisitTotals()(12);
+    expect(hospitals).toEqual([]);
   });
 });
