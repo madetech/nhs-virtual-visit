@@ -92,6 +92,7 @@ const Login = () => {
                 className="nhsuk-input--width-10"
                 onChange={(event) => setPassword(event.target.value)}
                 name="password"
+                autocomplete="off"
               />
               <br />
             </FormGroup>
