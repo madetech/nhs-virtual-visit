@@ -102,6 +102,7 @@ describe("api/session", () => {
           method: "POST",
           body: {
             code: "trust_admin_code",
+            password: "trust_admin_password",
           },
         };
 
@@ -136,7 +137,8 @@ describe("api/session", () => {
         await session(validRequest, response, { container });
 
         expect(verifyTrustAdminCodeSpy).toHaveBeenCalledWith(
-          "trust_admin_code"
+          "trust_admin_code",
+          "trust_admin_password"
         );
         expect(tokenGeneratorSpy).toHaveBeenCalledWith({
           wardId: undefined,
