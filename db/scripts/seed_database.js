@@ -21,6 +21,9 @@ async function seedDatabase() {
   const { id: wardId } = await db.one(
     "INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward One', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST1', (SELECT id FROM trusts WHERE name='Test Trust')) RETURNING id"
   );
+  await db.one(
+    "INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST2', (SELECT id FROM trusts WHERE name='Test Trust')) RETURNING id"
+  );
 
   await db.result(
     `INSERT INTO scheduled_calls_table
