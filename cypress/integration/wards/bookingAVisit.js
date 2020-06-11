@@ -94,7 +94,9 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
   }
 
   function AndIClickBookAVirtualVisit() {
-    cy.get("button").contains("Book virtual visit").click();
+    cy.get("button", { timeout: cy.pageLoadTimeout })
+      .contains("Book virtual visit")
+      .click();
   }
 
   function ThenISeeTheVirtualVisitIsBooked() {
