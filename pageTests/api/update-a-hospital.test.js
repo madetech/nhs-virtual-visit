@@ -28,7 +28,9 @@ describe("update-a-hospital", () => {
       }),
       getTrustAdminIsAuthenticated: jest
         .fn()
-        .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
+        .mockReturnValue((cookie) =>
+          cookie === "token=valid.token.value" ? { trustId: 1 } : false
+        ),
       getRetrieveHospitalById: jest.fn().mockReturnValue(() => {
         return { error: null };
       }),
@@ -187,14 +189,18 @@ describe("update-a-hospital", () => {
   });
 
   it("returns a 404 if hospital does not exist", async () => {
+    const retrieveHospitalByIdSpy = jest
+      .fn()
+      .mockReturnValue({ error: "Error!" });
+
     await updateAHospital(validRequest, response, {
       container: {
         ...container,
-        getRetrieveHospitalById: jest.fn().mockReturnValue(() => {
-          return { error: "Error!" };
-        }),
+        getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
       },
     });
+
+    expect(retrieveHospitalByIdSpy).toHaveBeenCalledWith(123, 1);
 
     expect(response.status).toHaveBeenCalledWith(404);
     expect(response.end).toHaveBeenCalledWith(

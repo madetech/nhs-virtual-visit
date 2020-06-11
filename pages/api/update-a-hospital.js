@@ -27,7 +27,7 @@ export default withContainer(
     const retrieveHospitalById = container.getRetrieveHospitalById();
 
     const existingHospital = retrieveHospitalById(
-      body.Id,
+      body.id,
       trustAdminToken.trustId
     );
 
