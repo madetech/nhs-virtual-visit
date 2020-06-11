@@ -36,8 +36,11 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
   // Allows a trust admin to add a hospital
   function GivenIAmLoggedInAsATrustAdmin() {
-    cy.visit(Cypress.env("baseUrl"));
-    cy.get("input").type(Cypress.env("validTrustAdminCode"));
+    cy.visit(Cypress.env("baseUrl") + "/trust-admin/login");
+
+    cy.get("input[name=code]").type(Cypress.env("validTrustAdminCode"));
+    cy.get("input[name=password]").type(Cypress.env("validTrustAdminPassword"));
+
     cy.get("button").contains("Log in").click();
   }
 
