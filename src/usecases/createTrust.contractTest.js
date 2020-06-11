@@ -9,6 +9,7 @@ describe("createTrust contract tests", () => {
     const request = {
       name: "Defoe Trust",
       adminCode: "adminCode",
+      password: "trustpassword",
     };
 
     const { trustId, error } = await createTrust(container)(request);
