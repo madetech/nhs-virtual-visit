@@ -28,6 +28,12 @@ export default withContainer(
       return;
     }
 
+    if (!body.password) {
+      res.status(409);
+      res.end(JSON.stringify({ err: "password must be present" }));
+      return;
+    }
+
     res.setHeader("Content-Type", "application/json");
 
     const createTrust = container.getCreateTrust();
@@ -35,6 +41,7 @@ export default withContainer(
     const { trustId, error } = await createTrust({
       name: body.name,
       adminCode: body.adminCode,
+      password: body.password,
     });
 
     if (error) {

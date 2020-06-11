@@ -14,6 +14,7 @@ describe("createTrust", () => {
     const request = {
       name: "Defoe Trust",
       adminCode: "adminCode",
+      password: "password",
     };
 
     const { trustId, error } = await createTrust(container)(request);
@@ -22,6 +23,7 @@ describe("createTrust", () => {
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       "Defoe Trust",
       "adminCode",
+      "password",
     ]);
   });
 

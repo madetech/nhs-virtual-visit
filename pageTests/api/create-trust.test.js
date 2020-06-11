@@ -13,6 +13,7 @@ describe("create-trust", () => {
       body: {
         name: "Test Trust",
         adminCode: "admincode",
+        password: "password",
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -195,6 +196,55 @@ describe("create-trust", () => {
     expect(response.status).toHaveBeenCalledWith(409);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ err: "admin code must be present" })
+    );
+  });
+
+  it("returns a 409 if the password is not provided", async () => {
+    const invalidRequest = {
+      method: "POST",
+      body: {
+        name: "Test Trust",
+        adminCode: "admincode",
+      },
+      headers: {
+        cookie: "token=valid.token.value",
+      },
+    };
+
+    await createTrust(invalidRequest, response, {
+      container: {
+        ...container,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(409);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "password must be present" })
+    );
+  });
+
+  it("returns a 409 if the password is an empty string", async () => {
+    const invalidRequest = {
+      method: "POST",
+      body: {
+        name: "Test Trust",
+        adminCode: "admincode",
+        password: "",
+      },
+      headers: {
+        cookie: "token=valid.token.value",
+      },
+    };
+
+    await createTrust(invalidRequest, response, {
+      container: {
+        ...container,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(409);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "password must be present" })
     );
   });
 });
