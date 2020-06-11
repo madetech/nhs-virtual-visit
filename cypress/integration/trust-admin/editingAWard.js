@@ -41,7 +41,7 @@ describe("As a trust admin, I want to edit a ward so that I can modify the detai
     ThenISeeErrors();
   });
 
-  // Allows a trust admin to add a hospital
+  // Allows a trust admin to edit a ward
   function GivenIAmLoggedInAsATrustAdmin() {
     cy.visit(Cypress.env("baseUrl") + "/trust-admin/login");
 
