@@ -100,8 +100,10 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
   }
 
   function ThenISeeTheVirtualVisitIsBooked() {
-    cy.url().should("include", "book-a-visit-success");
-    cy.get("h1").should("contain", "Virtual visit booked");
+    cy.get("h1", { timeout: cy.pageLoadTimeout }).should(
+      "contain",
+      "Virtual visit booked"
+    );
   }
 
   function WhenIClickViewVirtualVisits() {
