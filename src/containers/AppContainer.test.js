@@ -89,4 +89,8 @@ describe("AppContainer", () => {
   it("returns getValidateMobileNumber", () => {
     expect(container.getValidateMobileNumber()).toBeDefined();
   });
+
+  it("returns getCaptureEvent", () => {
+    expect(container.getCaptureEvent()).toBeDefined();
+  });
 });
