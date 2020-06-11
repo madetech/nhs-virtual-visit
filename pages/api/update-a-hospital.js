@@ -41,7 +41,10 @@ export default withContainer(
 
     const updateHospital = container.getUpdateHospital();
 
-    const { id, error } = await updateHospital(body);
+    const { id, error } = await updateHospital({
+      id: body.id,
+      name: body.name,
+    });
 
     if (error) {
       res.status(500);
