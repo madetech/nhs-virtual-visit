@@ -143,7 +143,7 @@ const AddATrust = () => {
 
   return (
     <Layout
-      title="Add a Trust"
+      title="Add a trust"
       hasErrors={errors.length != 0}
       renderLogout={true}
       showNavigationBarForType={ADMIN}
@@ -153,7 +153,7 @@ const AddATrust = () => {
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
-            <Heading>Add a Trust</Heading>
+            <Heading>Add a trust</Heading>
             <FormGroup>
               <Label htmlFor="trust-name" className="nhsuk-label--l">
                 What is the trust name?
@@ -227,7 +227,7 @@ const AddATrust = () => {
                 value={passwordConfirmation || ""}
               />
             </FormGroup>
-            <Button className="nhsuk-u-margin-top-5">Add Trust</Button>
+            <Button className="nhsuk-u-margin-top-5">Add trust</Button>
           </form>
         </GridColumn>
       </GridRow>
