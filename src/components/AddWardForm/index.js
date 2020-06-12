@@ -199,7 +199,6 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
             value={wardCodeConfirmation || ""}
           />
         </FormGroup>
-        <br></br>
         <Button className="nhsuk-u-margin-top-5">Add ward</Button>
       </form>
     </>

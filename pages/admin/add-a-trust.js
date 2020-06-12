@@ -17,7 +17,8 @@ const AddATrust = () => {
   const [errors, setErrors] = useState([]);
   const [name, setName] = useState("");
   const [adminCode, setAdminCode] = useState("");
-  const [adminCodeConfirmation, setAdminCodeConfirmation] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
@@ -52,24 +53,31 @@ const AddATrust = () => {
       });
     };
 
-    const setAdminCodeLengthError = (errors) => {
+    const setPasswordError = (errors) => {
       errors.push({
-        id: "trust-admin-code-error",
-        message: "Trust admin code must be at least 8 characters long",
+        id: "trust-password-error",
+        message: "Enter a password",
       });
     };
 
-    const setAdminCodeConfirmationMismatchError = (errors) => {
+    const setPasswordLengthError = (errors) => {
       errors.push({
-        id: "trust-admin-code-confirmation-error",
-        message: "Trust admin code confirmation does not match",
+        id: "trust-password-error",
+        message: "Password must be at least 8 characters long",
       });
     };
 
-    const setAdminCodeConfirmationError = (errors) => {
+    const setPasswordConfirmationMismatchError = (errors) => {
       errors.push({
-        id: "trust-admin-code-confirmation-error",
-        message: "Confirm the trust admin code",
+        id: "trust-password-confirmation-error",
+        message: "Password confirmation does not match",
+      });
+    };
+
+    const setPasswordConfirmationError = (errors) => {
+      errors.push({
+        id: "trust-password-confirmation-error",
+        message: "Confirm the password",
       });
     };
 
@@ -79,16 +87,20 @@ const AddATrust = () => {
 
     if (adminCode.length === 0) {
       setAdminCodeError(onSubmitErrors);
-    } else if (adminCode.length < 8) {
-      setAdminCodeLengthError(onSubmitErrors);
     }
 
-    if (adminCodeConfirmation.length !== 0) {
-      if (adminCode !== adminCodeConfirmation) {
-        setAdminCodeConfirmationMismatchError(onSubmitErrors);
+    if (password.length === 0) {
+      setPasswordError(onSubmitErrors);
+    } else if (password.length < 8) {
+      setPasswordLengthError(onSubmitErrors);
+    }
+
+    if (passwordConfirmation.length !== 0) {
+      if (password !== passwordConfirmation) {
+        setPasswordConfirmationMismatchError(onSubmitErrors);
       }
     } else {
-      setAdminCodeConfirmationError(onSubmitErrors);
+      setPasswordConfirmationError(onSubmitErrors);
     }
 
     if (onSubmitErrors.length === 0) {
@@ -101,6 +113,7 @@ const AddATrust = () => {
           body: JSON.stringify({
             name,
             adminCode,
+            password,
           }),
         });
 
@@ -130,7 +143,7 @@ const AddATrust = () => {
 
   return (
     <Layout
-      title="Add a Trust"
+      title="Add a trust"
       hasErrors={errors.length != 0}
       renderLogout={true}
       showNavigationBarForType={ADMIN}
@@ -140,7 +153,7 @@ const AddATrust = () => {
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <form onSubmit={onSubmit}>
-            <Heading>Add a Trust</Heading>
+            <Heading>Add a trust</Heading>
             <FormGroup>
               <Label htmlFor="trust-name" className="nhsuk-label--l">
                 What is the trust name?
@@ -176,28 +189,45 @@ const AddATrust = () => {
               />
             </FormGroup>
             <FormGroup>
-              <Label
-                htmlFor="trust-admin-code-confirmation"
-                className="nhsuk-label--l"
-              >
-                Confirm the trust admin code
+              <Label htmlFor="trust-password" className="nhsuk-label--l">
+                Create a password
               </Label>
               <Input
-                id="trust-admin-code-confirmation"
-                type="text"
-                hasError={hasError("trust-admin-code-confirmation")}
-                errorMessage={errorMessage("trust-admin-code-confirmation")}
+                id="trust-password"
+                type="password"
+                hasError={hasError("trust-password")}
+                errorMessage={errorMessage("trust-password")}
+                className="nhsuk-u-font-size-32 nhsuk-input--width-10"
+                style={{ padding: "16px!important", height: "64px" }}
+                onChange={(event) => setPassword(event.target.value)}
+                name="trust-password"
+                autoComplete="off"
+                value={password || ""}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label
+                htmlFor="trust-password-confirmation"
+                className="nhsuk-label--l"
+              >
+                Confirm the password
+              </Label>
+              <Input
+                id="trust-password-confirmation"
+                type="password"
+                hasError={hasError("trust-password-confirmation")}
+                errorMessage={errorMessage("trust-password-confirmation")}
                 className="nhsuk-u-font-size-32 nhsuk-input--width-10"
                 style={{ padding: "16px!important", height: "64px" }}
                 onChange={(event) =>
-                  setAdminCodeConfirmation(event.target.value)
+                  setPasswordConfirmation(event.target.value)
                 }
-                name="trust-admin-code-confirmation"
+                name="trust-password-confirmation"
                 autoComplete="off"
-                value={adminCodeConfirmation || ""}
+                value={passwordConfirmation || ""}
               />
             </FormGroup>
-            <Button className="nhsuk-u-margin-top-5">Add Trust</Button>
+            <Button className="nhsuk-u-margin-top-5">Add trust</Button>
           </form>
         </GridColumn>
       </GridRow>
