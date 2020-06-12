@@ -77,10 +77,10 @@ describe("retrieveVisits", () => {
       wardId: 1,
     });
 
-    expect(
-      anySpy
-    ).toHaveBeenCalledWith(
-      "SELECT * FROM scheduled_calls_table WHERE ward_id = $1 ORDER BY call_time ASC",
+    expect(anySpy).toHaveBeenCalledWith(
+      `SELECT * FROM scheduled_calls_table 
+                 WHERE ward_id = $1 AND call_time >= NOW() AND status = 'scheduled' 
+                 ORDER BY call_time ASC`,
       [1]
     );
   });

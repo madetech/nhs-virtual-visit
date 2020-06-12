@@ -16,10 +16,9 @@ const archiveWard = ({ getRetrieveWardById, getDb }) => async (
 
   try {
     await db.result(
-      `DELETE FROM scheduled_calls_table
-        WHERE
-            ward_id = $1
-    `,
+      `UPDATE scheduled_calls_table
+       SET status = 'archived'
+       WHERE ward_id = $1`,
       [wardId]
     );
   } catch (err) {

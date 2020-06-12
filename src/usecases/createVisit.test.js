@@ -37,6 +37,7 @@ describe("createVisit", () => {
       request.provider,
       request.wardId,
       request.callPassword,
+      "scheduled",
     ]);
   });
 });
