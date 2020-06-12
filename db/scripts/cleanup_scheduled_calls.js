@@ -13,7 +13,9 @@ async function getDb() {
 async function cleanupScheduledCalls() {
   const db = await getDb();
   const scheduledCalls = await db.result(
-    "DELETE from scheduled_calls_table WHERE call_time < (now() - INTERVAL '1 DAY')"
+    `UPDATE scheduled_calls_table 
+     SET patient_name = null, recipient_number = null, recipient_name = null, call_password = null, recipient_email = null, status = 'complete'
+     WHERE call_time < (now() - INTERVAL '1 DAY')`
   );
   return scheduledCalls;
 }

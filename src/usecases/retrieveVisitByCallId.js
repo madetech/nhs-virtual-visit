@@ -3,7 +3,7 @@ const retrieveVisitByCallId = ({ getDb }) => async (callId) => {
   console.log("Retrieving visit for  ", callId);
   try {
     const scheduledCalls = await db.any(
-      `SELECT * FROM scheduled_calls_table WHERE call_id = $1 LIMIT 1`,
+      `SELECT * FROM scheduled_calls_table WHERE call_id = $1 AND status = 'scheduled' LIMIT 1`,
       callId
     );
 

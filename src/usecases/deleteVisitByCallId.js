@@ -3,7 +3,7 @@ const deleteVisitByCallId = ({ getDb }) => async (callId) => {
   console.log("deleting visit for  ", callId);
   try {
     const results = await db.any(
-      `DELETE FROM scheduled_calls_table WHERE call_id = $1`,
+      `UPDATE scheduled_calls_table SET status = 'cancelled' WHERE call_id = $1`,
       callId
     );
     console.log(results, "success=true");

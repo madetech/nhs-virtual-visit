@@ -35,7 +35,7 @@ describe("archiveWard", () => {
       error: null,
     });
     expect(resultSpy).toHaveBeenCalledWith(
-      expect.stringMatching(/delete from scheduled_calls_table/i),
+      expect.stringMatching(/UPDATE scheduled_calls_table/i),
       [1]
     );
     const [sql, [wardId, date]] = resultSpy.mock.calls[1];

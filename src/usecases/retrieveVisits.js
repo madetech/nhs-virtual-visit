@@ -1,7 +1,9 @@
 const retrieveVisits = ({ getDb }) => async ({ wardId }) => {
   const db = await getDb();
   try {
-    let query = `SELECT * FROM scheduled_calls_table WHERE ward_id = $1 ORDER BY call_time ASC`;
+    let query = `SELECT * FROM scheduled_calls_table 
+                 WHERE ward_id = $1 AND call_time >= NOW() AND status = 'scheduled' 
+                 ORDER BY call_time ASC`;
 
     const scheduledCalls = await db.any(query, [wardId]);
 
