@@ -1,5 +1,6 @@
 export default async ({ getDb }) => {
   const db = await getDb();
+  await db.any("DELETE from events");
   await db.any("DELETE from ward_visit_totals");
   await db.any("DELETE from scheduled_calls_table");
   await db.any("DELETE from wards");

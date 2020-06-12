@@ -25,7 +25,6 @@ const captureEvent = ({ getDb }) => async ({ action, visitId, sessionId }) => {
     };
   } catch (err) {
     const message = `Failed to add ${action} event for visit ${visitId}`;
-    console.error(message, err);
     return { event: null, error: message };
   }
 };
