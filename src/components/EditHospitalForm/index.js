@@ -40,7 +40,11 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
         if (!response.ok) throw Error(response.status);
         return response.json();
       })
-      .then(() => Router.push({ pathname: `/trust-admin/hospitals` }))
+      .then((result) =>
+        Router.push({
+          pathname: `/trust-admin/hospitals/${result.hospitalId}/edit-success`,
+        })
+      )
       .catch(() => {
         onSubmitErrors.push({
           id: "hospital-update-error",
