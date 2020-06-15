@@ -36,7 +36,7 @@ describe("archiveWard", () => {
     });
     expect(resultSpy).toHaveBeenCalledWith(
       expect.stringMatching(/UPDATE scheduled_calls_table/i),
-      [1]
+      ["archived", 1]
     );
     const [sql, [wardId, date]] = resultSpy.mock.calls[1];
     expect(sql).toMatch(/update wards/i), expect(wardId).toEqual(1);

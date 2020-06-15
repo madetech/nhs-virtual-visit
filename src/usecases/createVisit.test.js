@@ -1,4 +1,5 @@
 import createVisit from "./createVisit";
+import { SCHEDULED } from "../../src/helpers/visitStatus";
 
 describe("createVisit", () => {
   it("creates a visit in the db when valid", async () => {
@@ -37,7 +38,7 @@ describe("createVisit", () => {
       request.provider,
       request.wardId,
       request.callPassword,
-      "scheduled",
+      SCHEDULED,
     ]);
   });
 });

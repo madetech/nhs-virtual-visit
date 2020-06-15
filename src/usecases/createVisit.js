@@ -1,3 +1,5 @@
+import { SCHEDULED } from "../../src/helpers/visitStatus";
+
 const createVisit = ({ getDb }) => async (visit) => {
   const db = await getDb();
 
@@ -17,7 +19,7 @@ const createVisit = ({ getDb }) => async (visit) => {
       visit.provider,
       visit.wardId,
       visit.callPassword,
-      "scheduled",
+      SCHEDULED,
     ]
   );
 };

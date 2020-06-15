@@ -1,10 +1,12 @@
+import { SCHEDULED } from "../../src/helpers/visitStatus";
+
 const retrieveVisitByCallId = ({ getDb }) => async (callId) => {
   const db = await getDb();
   console.log("Retrieving visit for  ", callId);
   try {
     const scheduledCalls = await db.any(
-      `SELECT * FROM scheduled_calls_table WHERE call_id = $1 AND status = 'scheduled' LIMIT 1`,
-      callId
+      `SELECT * FROM scheduled_calls_table WHERE call_id = $1 AND status = $2 LIMIT 1`,
+      [callId, SCHEDULED]
     );
 
     const scheduledCall = scheduledCalls[0];
