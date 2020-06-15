@@ -1,11 +1,13 @@
+import { SCHEDULED } from "../../src/helpers/visitStatus";
+
 const retrieveVisits = ({ getDb }) => async ({ wardId }) => {
   const db = await getDb();
   try {
     let query = `SELECT * FROM scheduled_calls_table 
-                 WHERE ward_id = $1 AND call_time >= NOW() AND status = 'scheduled' 
+                 WHERE ward_id = $1 AND status = $2
                  ORDER BY call_time ASC`;
 
-    const scheduledCalls = await db.any(query, [wardId]);
+    const scheduledCalls = await db.any(query, [wardId, SCHEDULED]);
 
     return {
       scheduledCalls: scheduledCalls.map((scheduledCall) => ({

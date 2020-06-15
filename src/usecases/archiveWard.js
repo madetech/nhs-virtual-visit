@@ -1,4 +1,5 @@
 import moment from "moment";
+import { ARCHIVED } from "../../src/helpers/visitStatus";
 
 const archiveWard = ({ getRetrieveWardById, getDb }) => async (
   wardId,
@@ -17,9 +18,9 @@ const archiveWard = ({ getRetrieveWardById, getDb }) => async (
   try {
     await db.result(
       `UPDATE scheduled_calls_table
-       SET status = 'archived'
-       WHERE ward_id = $1`,
-      [wardId]
+       SET status = $1
+       WHERE ward_id = $2`,
+      [ARCHIVED, wardId]
     );
   } catch (err) {
     console.error(

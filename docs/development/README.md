@@ -137,7 +137,7 @@ This will produce output that you can use to host a production copy of the app.
 
 ## Scheduling regular database cleanup
 
-Old scheduled calls are deleted after 24 hours. You can cleanup the table by running the following in a scheduled job runner of your choosing (for Heroku we use https://devcenter.heroku.com/articles/scheduler)
+Old scheduled calls have all personal data removed after 24 hours. You can cleanup the table by running the following in a scheduled job runner of your choosing (for Heroku we use https://devcenter.heroku.com/articles/scheduler)
 
 ```bash
 npm run cleandb

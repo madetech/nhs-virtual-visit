@@ -28,7 +28,7 @@ async function seedDatabase() {
   await db.result(
     `INSERT INTO scheduled_calls_table
     (patient_name, recipient_email, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
-    VALUES ('Alice', 'bob@example.com', 'Bob', CURRENT_TIMESTAMP, '123', 'whereby', $1, 'password', 'scheduled')`,
+    VALUES ('Alice', 'bob@example.com', 'Bob', CURRENT_TIMESTAMP + interval '1 hour', '123', 'whereby', $1, 'password', 'scheduled')`,
     [wardId]
   );
   db.$pool.end();
