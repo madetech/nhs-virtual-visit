@@ -3,4 +3,4 @@
 export const SCHEDULED = "scheduled"; // Default - initial state
 export const ARCHIVED = "archived"; // The visit's parent ward has been archived
 export const CANCELLED = "cancelled"; // The visit has been explicitly cancelled
-export const ADMIN = "complete"; // The visit has occurred
+export const COMPLETE = "complete"; // The visit has occurred
