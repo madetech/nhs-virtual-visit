@@ -46,7 +46,7 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     );
   }
 
-  it("allows an admin to add a trust", () => {
+  it("allows an admin to edit a hospital", () => {
     GivenIAmLoggedInAsAnAdmin();
     WhenIClickOnHospitals();
     ThenISeeTheHospitalList();
