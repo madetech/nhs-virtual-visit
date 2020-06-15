@@ -1,5 +1,5 @@
 describe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
-  before(() => {
+  beforeEach(() => {
     // reset and seed the database
     cy.exec(
       "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
@@ -46,6 +46,15 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     );
   }
 
+  function WhenISubmitFormEmptyHospitalName() {
+    cy.get("input[name=hospital-name]").clear();
+    AndIClickTheEditHospitalButton();
+  }
+
+  function ThenISeeErrors() {
+    cy.get(".nhsuk-error-summary").should("be.visible");
+  }
+
   it("allows an admin to edit a hospital", () => {
     GivenIAmLoggedInAsAnAdmin();
     WhenIClickOnHospitals();
@@ -57,5 +66,17 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     WhenIChangeHospitalNameInputText();
     AndIClickTheEditHospitalButton();
     ThenIShouldBeOnTheEditSuccessPageWithNewName();
+  });
+
+  it("displays errors when fields have been left blank", () => {
+    GivenIAmLoggedInAsAnAdmin();
+    WhenIClickOnHospitals();
+    ThenISeeTheHospitalList();
+
+    WhenIClickOnTheEditLink();
+    ThenIShouldBeOnTheEditHospitalPage();
+
+    WhenISubmitFormEmptyHospitalName();
+    ThenISeeErrors();
   });
 });
