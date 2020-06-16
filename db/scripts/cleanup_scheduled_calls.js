@@ -5,15 +5,19 @@ async function getDb() {
   dotenv.config();
 
   const pgp = require("pg-promise")({});
-  const connectionURL =
-    process.env.NODE_ENV === "test" || process.env.APP_ENV === "test"
-      ? process.env.TEST_DATABASE_URL
-      : process.env.DATABASE_URL;
 
-  return pgp({
-    connectionString: connectionURL,
-    ssl: { rejectUnauthorized: process.env.NODE_ENV === "production" },
-  });
+  let options = {
+    connectionString:
+      process.env.NODE_ENV === "test" || process.env.APP_ENV === "test"
+        ? process.env.TEST_DATABASE_URL
+        : process.env.DATABASE_URL,
+  };
+
+  if (process.env.NODE_ENV === "production") {
+    options.ssl = { rejectUnauthorized: false };
+  }
+
+  return pgp(options);
 }
 
 async function cleanupScheduledCalls() {
