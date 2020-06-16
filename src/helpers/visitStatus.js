@@ -1,6 +1,13 @@
 // Defined the set of statuses that a visit can have (status column in scheduled_calls_table)
 
-export const SCHEDULED = "scheduled"; // Default - initial state
-export const ARCHIVED = "archived"; // The visit's parent ward has been archived
-export const CANCELLED = "cancelled"; // The visit has been explicitly cancelled
-export const COMPLETE = "complete"; // The visit has occurred
+const SCHEDULED = "scheduled"; // Default - initial state
+const ARCHIVED = "archived"; // The visit's parent ward has been archived
+const CANCELLED = "cancelled"; // The visit has been explicitly cancelled
+const COMPLETE = "complete"; // The visit has occurred
+
+module.exports = {
+  SCHEDULED,
+  ARCHIVED,
+  CANCELLED,
+  COMPLETE,
+};
