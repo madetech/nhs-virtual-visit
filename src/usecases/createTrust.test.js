@@ -23,7 +23,7 @@ describe("createTrust", () => {
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       "Defoe Trust",
       "adminCode",
-      "password",
+      expect.anything(),
     ]);
   });
 
@@ -38,8 +38,45 @@ describe("createTrust", () => {
       },
     };
 
-    const { trustId, error } = await createTrust(container)("");
+    const { trustId, error } = await createTrust(container)({
+      name: "Test Trust",
+      adminCode: "adminCode",
+      password: "password",
+    });
     expect(error).toEqual("Error: DB Error!");
     expect(trustId).toBeNull();
+  });
+
+  it("returns an error if the password is undefined", async () => {
+    const container = {
+      async getDb() {},
+    };
+
+    const request = {
+      name: "Test Trust",
+      adminCode: "adminCode",
+    };
+
+    const { trustId, error } = await createTrust(container)(request);
+
+    expect(trustId).toBeNull();
+    expect(error.toString()).toEqual("password is not defined");
+  });
+
+  it("returns an error if the password is empty", async () => {
+    const container = {
+      async getDb() {},
+    };
+
+    const request = {
+      name: "Test Trust",
+      adminCode: "adminCode",
+      password: "",
+    };
+
+    const { trustId, error } = await createTrust(container)(request);
+
+    expect(trustId).toBeNull();
+    expect(error.toString()).toEqual("password is not defined");
   });
 });

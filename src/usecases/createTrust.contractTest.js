@@ -28,11 +28,13 @@ describe("createTrust contract tests", () => {
     await createTrust(container)({
       name: "Test Trust",
       adminCode: "adminCode",
+      password: "trustpassword",
     });
 
     const request = {
       name: "Test Trust 2",
       adminCode: "adminCode",
+      password: "trustpassword",
     };
 
     const { trustId, error } = await createTrust(container)(request);

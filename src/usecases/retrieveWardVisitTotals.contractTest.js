@@ -11,6 +11,7 @@ describe("retrieveWardVisitTotals contract tests", () => {
       const { trustId } = await container.getCreateTrust()({
         name: "Test Trust",
         adminCode: "TEST",
+        password: "password",
       });
       const { hospitalId } = await container.getCreateHospital()({
         name: "Test Hospital",
@@ -33,6 +34,7 @@ describe("retrieveWardVisitTotals contract tests", () => {
       const { trustId: trust2Id } = await container.getCreateTrust()({
         name: "Test Trust 2",
         adminCode: "TEST2",
+        password: "password",
       });
       const { hospitalId: hospital2Id } = await container.getCreateHospital()({
         name: "Test Hospital 2",
@@ -98,6 +100,7 @@ describe("retrieveWardVisitTotals contract tests", () => {
       const { trustId } = await container.getCreateTrust()({
         name: "Test Trust",
         adminCode: "TEST",
+        password: "password",
       });
       const { hospitalId } = await container.getCreateHospital()({
         name: "Test Hospital",
@@ -120,6 +123,7 @@ describe("retrieveWardVisitTotals contract tests", () => {
       const { trustId: trust2Id } = await container.getCreateTrust()({
         name: "Test Trust 2",
         adminCode: "TEST2",
+        password: "password",
       });
       const { hospitalId: hospital2Id } = await container.getCreateHospital()({
         name: "Test Hospital 2",
