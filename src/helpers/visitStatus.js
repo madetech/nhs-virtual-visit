@@ -1,3 +1,7 @@
+/*-----------------------------------------------------------------------------------------------+
+| This file uses an older method of exporting to maintain compatibility with the cleandb script  |
++-----------------------------------------------------------------------------------------------*/
+
 // Defined the set of statuses that a visit can have (status column in scheduled_calls_table)
 
 const SCHEDULED = "scheduled"; // Default - initial state
