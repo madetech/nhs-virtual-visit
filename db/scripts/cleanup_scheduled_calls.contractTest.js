@@ -9,6 +9,7 @@ describe("test cleanup script", () => {
     const { trustId } = await container.getCreateTrust()({
       name: "Test Trust",
       adminCode: "TEST",
+      password: "password",
     });
 
     const { hospitalId } = await container.getCreateHospital()({
