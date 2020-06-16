@@ -6,12 +6,13 @@ async function getDb() {
 
   const pgp = require("pg-promise")({});
   const connectionURL =
-    process.env.NODE_ENV === "test"
+    process.env.NODE_ENV === "test" || process.env.APP_ENV === "test"
       ? process.env.TEST_DATABASE_URL
       : process.env.DATABASE_URL;
+
   return pgp({
     connectionString: connectionURL,
-    ssl: { rejectUnauthorized: false },
+    ssl: { rejectUnauthorized: process.env.NODE_ENV === "production" },
   });
 }
 
@@ -38,6 +39,8 @@ async function cleanupScheduledCalls() {
      WHERE status = $1`,
     status.CANCELLED
   );
+
+  db.$pool.end();
 
   return {
     completed: scheduledCalls.rowCount,
