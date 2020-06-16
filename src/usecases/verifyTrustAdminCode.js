@@ -1,17 +1,34 @@
+import bcrypt from "bcryptjs";
+
 const verifyTrustAdminCode = ({ getDb }) => async (
   trustAdminCode,
   password
 ) => {
+  if (!password) {
+    return {
+      validTrustAdminCode: false,
+      trust: null,
+      error: "password is not defined",
+    };
+  }
+
   const db = await getDb();
 
   try {
     const dbResponse = await db.any(
-      `SELECT id FROM trusts WHERE admin_code = $1 AND password = crypt($2, password) LIMIT 1`,
-      [trustAdminCode, password]
+      `SELECT id, password FROM trusts WHERE admin_code = $1 LIMIT 1`,
+      [trustAdminCode]
     );
 
     if (dbResponse.length > 0) {
       let [trust] = dbResponse;
+
+      if (!bcrypt.compareSync(password, trust.password))
+        return {
+          validTrustAdminCode: false,
+          trust: null,
+          error: "Incorrect trust admin code or password",
+        };
 
       return {
         validTrustAdminCode: true,
@@ -19,7 +36,7 @@ const verifyTrustAdminCode = ({ getDb }) => async (
         error: null,
       };
     } else {
-      return { validTrustAdminCode: false, error: null };
+      return { validTrustAdminCode: false, trust: null, error: null };
     }
   } catch (error) {
     console.log(error);
@@ -27,6 +44,7 @@ const verifyTrustAdminCode = ({ getDb }) => async (
     return {
       validTrustAdminCode: false,
       error: error.toString(),
+      trust: null,
     };
   }
 };
