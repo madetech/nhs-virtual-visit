@@ -33,6 +33,7 @@ import regenerateToken from "../usecases/regenerateToken";
 import retrieveWardsByHospitalId from "../usecases/retrieveWardsByHospitalId";
 import retrieveHospitalVisitTotals from "../usecases/retrieveHospitalVisitTotals";
 import retrieveHospitalWardVisitTotals from "../usecases/retrieveHospitalWardVisitTotals";
+import captureEvent from "../usecases/captureEvent";
 
 class AppContainer {
   getDb = () => {
@@ -173,6 +174,10 @@ class AppContainer {
 
   getRetrieveHospitalWardVisitTotals = () => {
     return retrieveHospitalWardVisitTotals(this);
+  };
+
+  getCaptureEvent = () => {
+    return captureEvent(this);
   };
 }
 

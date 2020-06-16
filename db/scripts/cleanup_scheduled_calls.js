@@ -1,3 +1,5 @@
+import { COMPLETE } from "../../src/helpers/visitStatus";
+
 async function getDb() {
   const dotenv = require("dotenv");
   dotenv.config();
@@ -13,7 +15,10 @@ async function getDb() {
 async function cleanupScheduledCalls() {
   const db = await getDb();
   const scheduledCalls = await db.result(
-    "DELETE from scheduled_calls_table WHERE call_time < (now() - INTERVAL '1 DAY')"
+    `UPDATE scheduled_calls_table 
+     SET patient_name = null, recipient_number = null, recipient_name = null, call_password = null, recipient_email = null, status = $1
+     WHERE call_time < (now() - INTERVAL '1 DAY')`,
+    COMPLETE
   );
   return scheduledCalls;
 }

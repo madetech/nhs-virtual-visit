@@ -38,7 +38,7 @@ describe("retrieveVisits", () => {
     });
 
     expect(error).toBeNull();
-    expect(anySpy).toHaveBeenCalledWith(expect.anything(), [1]);
+    expect(anySpy).toHaveBeenCalledWith(expect.anything(), [1, "scheduled"]);
     expect(scheduledCalls).toHaveLength(2);
     expect(scheduledCalls[0]).toEqual({
       id: 1,
@@ -77,11 +77,11 @@ describe("retrieveVisits", () => {
       wardId: 1,
     });
 
-    expect(
-      anySpy
-    ).toHaveBeenCalledWith(
-      "SELECT * FROM scheduled_calls_table WHERE ward_id = $1 ORDER BY call_time ASC",
-      [1]
+    expect(anySpy).toHaveBeenCalledWith(
+      `SELECT * FROM scheduled_calls_table 
+                 WHERE ward_id = $1 AND status = $2
+                 ORDER BY call_time ASC`,
+      [1, "scheduled"]
     );
   });
 
