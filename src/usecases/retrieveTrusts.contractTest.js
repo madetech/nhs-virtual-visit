@@ -7,11 +7,13 @@ describe("retrieveTrusts contract tests", () => {
     const { trustId: trustId1 } = await container.getCreateTrust()({
       name: "Test Trust",
       adminCode: "code1",
+      password: "password",
     });
 
     const { trustId: trustId2 } = await container.getCreateTrust()({
       name: "Test Trust 2",
       adminCode: "code2",
+      password: "password",
     });
 
     const { trusts } = await container.getRetrieveTrusts()();

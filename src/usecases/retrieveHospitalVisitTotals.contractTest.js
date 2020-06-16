@@ -63,6 +63,7 @@ describe("retrieveHospitalVisitTotals contract tests", () => {
     const { trustId } = await container.getCreateTrust()({
       name: "Test Trust",
       adminCode: "TEST",
+      password: "password",
     });
 
     const hospitalIds = await createTestHospitals(trustId, 4);
