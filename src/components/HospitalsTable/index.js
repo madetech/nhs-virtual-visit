@@ -28,8 +28,18 @@ const HospitalsTable = ({ hospitals }) => (
             <td className="nhsuk-table__cell">{hospital.wards.length}</td>
             <td className="nhsuk-table__cell">{hospital.bookedVisits}</td>
             <td className="nhsuk-table__cell" style={{ textAlign: "center" }}>
-              <AnchorLink href={`/trust-admin/hospitals/${hospital.id}`}>
+              <AnchorLink
+                href={`/trust-admin/hospitals/${hospital.id}`}
+                className="nhsuk-u-margin-right-4"
+              >
                 View
+                <span className="nhsuk-u-visually-hidden">
+                  {" "}
+                  {hospital.name}
+                </span>
+              </AnchorLink>
+              <AnchorLink href={`/trust-admin/hospitals/${hospital.id}/edit`}>
+                Edit
                 <span className="nhsuk-u-visually-hidden">
                   {" "}
                   {hospital.name}

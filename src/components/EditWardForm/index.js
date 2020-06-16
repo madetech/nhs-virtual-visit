@@ -37,31 +37,35 @@ const EditWardForm = ({
     return error.length === 1 ? error[0].message : "";
   };
 
-  const submitAnswers = async () => {
-    let name = wardName;
-    const response = await fetch("/api/update-a-ward", {
+  const submitAnswers = async () =>
+    await fetch("/api/update-a-ward", {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify({
         id,
-        name,
+        name: wardName,
         hospitalId,
       }),
-    });
-
-    const status = response.status;
-    const { wardId } = await response.json();
-    if (status == 201) {
-      Router.push({
-        pathname: "/trust-admin/edit-a-ward-success",
-        query: { wardId: wardId },
+    })
+      .then((response) => {
+        if (!response.ok) throw Error(response.status);
+        return response.json();
+      })
+      .then((response) =>
+        Router.push({
+          pathname: "/trust-admin/edit-a-ward-success",
+          query: { wardId: response.wardId },
+        })
+      )
+      .catch(() => {
+        onSubmitErrors.push({
+          id: "ward-update-error",
+          message: "There was a problem saving your changes",
+        });
+        setErrors(onSubmitErrors);
       });
-    } else {
-      setErrors(onSubmitErrors);
-    }
-  };
 
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
