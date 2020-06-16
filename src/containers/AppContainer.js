@@ -1,6 +1,7 @@
 import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
 import createVisit from "../usecases/createVisit";
+import deleteVisitByCallId from "../usecases/deleteVisitByCallId";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
 import sendEmail from "../usecases/sendEmail";
@@ -42,6 +43,10 @@ class AppContainer {
 
   getCreateVisit = () => {
     return createVisit(this);
+  };
+
+  getDeleteVisitByCallId = () => {
+    return deleteVisitByCallId(this);
   };
 
   getCreateWard = () => {
