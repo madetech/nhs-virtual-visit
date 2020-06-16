@@ -17,7 +17,7 @@ describe("verifyTrustAdminCode contract tests", () => {
 
     expect(validTrustAdminCode).toEqual(true);
     expect(trust).toEqual({ id: trustId });
-    expect(error).toBeNull;
+    expect(error).toBeNull();
   });
 
   it("is not valid if the password is not provided", async () => {
@@ -32,8 +32,8 @@ describe("verifyTrustAdminCode contract tests", () => {
     )("TESTCODE");
 
     expect(validTrustAdminCode).toEqual(false);
-    expect(trust).toBeNull;
-    expect(error).toBeNull;
+    expect(trust).toBeNull();
+    expect(error).toBe("password is not defined");
   });
 
   it("is not valid if the code is incorrect", async () => {
@@ -48,8 +48,8 @@ describe("verifyTrustAdminCode contract tests", () => {
     )("WRONGCODE", "TESTPASSWORD");
 
     expect(validTrustAdminCode).toEqual(false);
-    expect(trust).toBeNull;
-    expect(error).toBeNull;
+    expect(trust).toBeNull();
+    expect(error).toBeNull();
   });
 
   it("is not valid if the password is incorrect", async () => {
@@ -64,7 +64,7 @@ describe("verifyTrustAdminCode contract tests", () => {
     )("TESTCODE", "WRONGPASSWORD");
 
     expect(validTrustAdminCode).toEqual(false);
-    expect(trust).toBeNull;
-    expect(error).toBeNull;
+    expect(trust).toBeNull();
+    expect(error).toBe("Incorrect trust admin code or password");
   });
 });
