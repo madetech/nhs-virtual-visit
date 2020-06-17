@@ -14,7 +14,7 @@ export default withContainer(
       );
 
       const verifyAdminCode = container.getVerifyAdminCode();
-      const verifyAdminCodeResponse = await verifyAdminCode(code);
+      const verifyAdminCodeResponse = await verifyAdminCode(code, password);
 
       if (
         !verifyTrustAdminCodeResponse.validTrustAdminCode &&

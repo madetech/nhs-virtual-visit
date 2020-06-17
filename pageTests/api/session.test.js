@@ -161,6 +161,7 @@ describe("api/session", () => {
           method: "POST",
           body: {
             code: "admin_code",
+            password: "password",
           },
         };
 
@@ -192,7 +193,10 @@ describe("api/session", () => {
 
         await session(validRequest, response, { container });
 
-        expect(verifyAdminCodeSpy).toHaveBeenCalledWith("admin_code");
+        expect(verifyAdminCodeSpy).toHaveBeenCalledWith(
+          "admin_code",
+          "password"
+        );
         expect(tokenGeneratorSpy).toHaveBeenCalledWith({
           wardId: undefined,
           wardCode: undefined,

@@ -31,8 +31,9 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
 
   // Allows an admin to add a trust
   function GivenIAmLoggedInAsAnAdmin() {
-    cy.visit(Cypress.env("baseUrl") + "/wards/login");
+    cy.visit(Cypress.env("baseUrl") + "/admin/login");
     cy.get("input[name=code]").type(Cypress.env("validAdminCode"));
+    cy.get("input[name=password]").type(Cypress.env("validAdminPassword"));
     cy.get("button").contains("Log in").click();
   }
 

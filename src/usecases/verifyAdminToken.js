@@ -31,7 +31,7 @@ export default function (callback) {
         }
       );
     } else {
-      res.writeHead(302, { Location: "/wards/login" }).end();
+      res.writeHead(302, { Location: "/admin/login" }).end();
     }
   };
 }

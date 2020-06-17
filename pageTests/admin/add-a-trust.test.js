@@ -20,7 +20,7 @@ describe("/trust-admin/add-a-trust", () => {
       await getServerSideProps({ req: anonymousReq, res });
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/wards/login",
+        Location: "/admin/login",
       });
     });
   });
