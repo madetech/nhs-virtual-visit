@@ -60,7 +60,7 @@ export class NotifyClient {
     );
   };
 
-  sendSms = jest.fn((templateId, mobileNumber, { personalisation }) => {
+  sendSms = (templateId, mobileNumber, { personalisation }) => {
     const requestValidationError = this._validateRequest(
       templateId,
       personalisation
@@ -80,9 +80,9 @@ export class NotifyClient {
     return Promise.resolve({
       id: "test-sms-return-response-id",
     });
-  });
+  };
 
-  sendEmail = jest.fn((templateId, emailAddress, { personalisation }) => {
+  sendEmail = (templateId, emailAddress, { personalisation }) => {
     const requestValidationError = this._validateRequest(
       templateId,
       personalisation
@@ -102,5 +102,5 @@ export class NotifyClient {
     return Promise.resolve({
       id: "740e5834-3a29-46b4-9a6f-16142fde533a",
     });
-  });
+  };
 }
