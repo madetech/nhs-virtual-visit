@@ -1,8 +1,6 @@
 import { NotifyClient } from "notifications-node-client";
 
-const {
-  NotifyClient: FakeNotifyClient,
-} = require("../../../__mocks__/notifications-node-client");
+import { NotifyClient as FakeNotifyClient } from "../../../__mocks__/notifications-node-client";
 
 export default (() => {
   let instance;
