@@ -16,7 +16,7 @@ describe("verifyAdminCode", () => {
 
       let response = await verifyAdminCode(container)("matching code");
       expect(response.validAdminCode).toEqual(true);
-      expect(response.error).toBeNull;
+      expect(response.error).toBeNull();
     });
   });
 

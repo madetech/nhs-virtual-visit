@@ -22,8 +22,8 @@ describe("regenerateToken", () => {
     } = regenerateToken(container)(authenticationToken);
 
     expect(isTokenRegenerated).toEqual(false);
-    expect(regeneratedToken).toBeNull;
-    expect(regeneratedEncodedToken).toBeNull;
+    expect(regeneratedToken).toBeNull();
+    expect(regeneratedEncodedToken).toBeNull();
   });
 
   it("doesn't refresh the token when now is after the expiry window", () => {
@@ -46,8 +46,8 @@ describe("regenerateToken", () => {
     } = regenerateToken(container)(authenticationToken);
 
     expect(isTokenRegenerated).toEqual(false);
-    expect(regeneratedToken).toBeNull;
-    expect(regeneratedEncodedToken).toBeNull;
+    expect(regeneratedToken).toBeNull();
+    expect(regeneratedEncodedToken).toBeNull();
   });
 
   it("returns a new token if now is within the expiry window", () => {
