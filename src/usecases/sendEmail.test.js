@@ -4,7 +4,7 @@ import sendEmail from "./sendEmail";
 import fillObjectWithStrings from "../testUtils/fillObjectWithStrings";
 
 describe("sendEmail", () => {
-  const { templateId, personalisationKeys } = TemplateStore.firstText;
+  const { templateId, personalisationKeys } = TemplateStore.firstEmail;
   const personalisation = fillObjectWithStrings(personalisationKeys);
 
   const emailAddress = "test@example.com";
@@ -15,6 +15,7 @@ describe("sendEmail", () => {
 
   beforeEach(() => {
     notifyClient = new NotifyClient();
+    notifyClient.sendEmail = jest.fn(notifyClient.sendEmail);
     container = {
       getNotifyClient: () => notifyClient,
     };

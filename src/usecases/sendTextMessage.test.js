@@ -15,6 +15,7 @@ describe("sendTextMessage", () => {
 
   beforeEach(() => {
     notifyClient = new NotifyClient();
+    notifyClient.sendSms = jest.fn(notifyClient.sendSms);
     container = {
       getNotifyClient: () => notifyClient,
     };
