@@ -54,7 +54,8 @@
     "pg-promise": "^10.5.2",
     "query-string": "^6.12.1",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "uuid-validate": "0.0.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.10.1",
@@ -68,8 +69,7 @@
     "jest": "^26.0.1",
     "jest-css-modules-transform": "^4.0.0",
     "lint-staged": "^10.2.10",
-    "prettier": "^2.0.5",
-    "uuid-validate": "0.0.3"
+    "prettier": "^2.0.5"
   },
   "husky": {
     "hooks": {
