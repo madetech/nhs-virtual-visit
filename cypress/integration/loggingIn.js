@@ -14,14 +14,6 @@ describe("As a user, I want to log in so that I can access the service.", () => 
     ThenISeeTheWardHomePage();
   });
 
-  it("allows an admin to log in and displays their home page", () => {
-    GivenIAmAnAdmin();
-    WhenIVisitTheLogInPage();
-    AndIEnterAValidAdminCode();
-    AndISubmitTheForm();
-    ThenISeeTheAdminHomePage();
-  });
-
   it("displays an error for an invalid code", () => {
     WhenIVisitTheLogInPage();
     AndIEnterAnInvalidCode();
@@ -49,20 +41,6 @@ describe("As a user, I want to log in so that I can access the service.", () => 
       "not.be.visible"
     );
     cy.contains("Book a virtual visit").should("be.visible");
-  }
-
-  // Allows an admin to log in and displays their home page
-  function GivenIAmAnAdmin() {}
-
-  function AndIEnterAValidAdminCode() {
-    cy.get("input").type(Cypress.env("validAdminCode"));
-  }
-
-  function ThenISeeTheAdminHomePage() {
-    cy.contains("The code you entered was not recognised").should(
-      "not.be.visible"
-    );
-    cy.contains("Site administration").should("be.visible");
   }
 
   // Displays an error for an invalid code

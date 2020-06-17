@@ -9,12 +9,17 @@ describe("verifyAdminCode", () => {
             {
               id: 1,
               code: "matching code",
+              password:
+                "$2y$04$vOxbx/0uUTg6BbDXtXqhQO4zwYh3jfkj6bXi06hlWfM.UlOR9QKv2", // "password" hashed
             },
           ]),
         }),
       };
 
-      let response = await verifyAdminCode(container)("matching code");
+      let response = await verifyAdminCode(container)(
+        "matching code",
+        "password"
+      );
       expect(response.validAdminCode).toEqual(true);
       expect(response.error).toBeNull();
     });

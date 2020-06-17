@@ -6,6 +6,7 @@
     "validTrustAdminCode": "admin",
     "validTrustAdminPassword": "trustpassword",
     "validAdminCode": "super",
+    "validAdminPassword": "adminpassword",
     "fakeWard": "FAKENHS",
     "baseUrl": "http://localhost:3001"
   },

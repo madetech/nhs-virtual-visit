@@ -48,7 +48,7 @@ describe("verifyAdminToken", () => {
 
     verifyAdminToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
-      Location: "/wards/login",
+      Location: "/admin/login",
     });
   });
 
@@ -70,7 +70,7 @@ describe("verifyAdminToken", () => {
 
     verifyAdminToken(callback)({ req: noCookieReq, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
-      Location: "/wards/login",
+      Location: "/admin/login",
     });
   });
 
