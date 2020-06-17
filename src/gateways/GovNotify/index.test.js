@@ -16,7 +16,7 @@ describe("GovNotify", () => {
     expect(instanceOne).toEqual(instanceTwo);
   });
 
-  describe("when using production environment", () => {
+  describe("when we are not running a test server", () => {
     it("returns the real Notify client", async () => {
       const instance = await GovNotify.getInstance();
 
