@@ -6,4 +6,5 @@ export default async ({ getDb }) => {
   await db.any("DELETE from wards");
   await db.any("DELETE from hospitals");
   await db.any("DELETE from trusts");
+  await db.any("DELETE from admins");
 };
