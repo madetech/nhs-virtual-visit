@@ -1,14 +1,11 @@
 import AppContainer from "../containers/AppContainer";
+import setupTrust from "../testUtils/fixtures/setupTrust";
 
 describe("retrieveHospitalWardVisitTotals contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns the total number of visits for each hospital", async () => {
-    const { trustId } = await container.getCreateTrust()({
-      name: "Test Trust",
-      adminCode: "TEST",
-      password: "password",
-    });
+    const { trustId } = await setupTrust();
 
     const { hospitalId } = await container.getCreateHospital()({
       name: "Test Hospital",

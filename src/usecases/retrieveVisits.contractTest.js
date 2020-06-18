@@ -1,16 +1,13 @@
 import AppContainer from "../containers/AppContainer";
 import moment from "moment";
 import deleteVisitByCallId from "./deleteVisitByCallId";
+import setupTrust from "../testUtils/fixtures/setupTrust";
 
 describe("retrieveVisits contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("retrieves all Visits from the db", async () => {
-    const { trustId } = await container.getCreateTrust(container)({
-      name: "Test Trust",
-      adminCode: "TEST",
-      password: "password",
-    });
+    const { trustId } = await setupTrust();
 
     const { hospitalId } = await container.getCreateHospital()({
       name: "Test Hospital",

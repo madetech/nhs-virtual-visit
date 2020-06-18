@@ -1,5 +1,6 @@
 import captureEvent from "./captureEvent";
 import AppContainer from "../containers/AppContainer";
+import setupTrust from "../testUtils/fixtures/setupTrust";
 
 describe("captureEvent contract tests", () => {
   const container = AppContainer.getInstance();
@@ -18,11 +19,7 @@ describe("captureEvent contract tests", () => {
   });
 
   it("creates a join-visit event in the db when valid", async () => {
-    const { trustId } = await container.getCreateTrust()({
-      name: "Test Trust",
-      adminCode: "TEST",
-      password: "password",
-    });
+    const { trustId } = await setupTrust();
 
     const { hospitalId } = await container.getCreateHospital()({
       name: "Test Hospital",
