@@ -46,7 +46,7 @@ const deleteVisitSuccess = ({
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/admin/add-a-ward`}>
+          <ActionLink href={`/wards/book-a-visit`}>
             Book a virtual visit
           </ActionLink>
 
