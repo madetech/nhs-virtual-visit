@@ -1,15 +1,12 @@
 import verifyTrustAdminCode from "./verifyTrustAdminCode";
 import AppContainer from "../containers/AppContainer";
+import setupTrust from "../testUtils/fixtures/setupTrust";
 
 describe("verifyTrustAdminCode contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("verifies if a admin code and password match an existing trust", async () => {
-    const { trustId } = await container.getCreateTrust()({
-      name: "Test Trust",
-      adminCode: "TESTCODE",
-      password: "TESTPASSWORD",
-    });
+    const { trustId } = await setupTrust();
 
     const { validTrustAdminCode, trust, error } = await verifyTrustAdminCode(
       container
@@ -21,11 +18,7 @@ describe("verifyTrustAdminCode contract tests", () => {
   });
 
   it("is not valid if the password is not provided", async () => {
-    await container.getCreateTrust()({
-      name: "Test Trust",
-      adminCode: "TESTCODE",
-      password: "TESTPASSWORD",
-    });
+    await setupTrust();
 
     const { validTrustAdminCode, trust, error } = await verifyTrustAdminCode(
       container
@@ -37,11 +30,7 @@ describe("verifyTrustAdminCode contract tests", () => {
   });
 
   it("is not valid if the code is incorrect", async () => {
-    await container.getCreateTrust()({
-      name: "Test Trust",
-      adminCode: "TESTCODE",
-      password: "TESTPASSWORD",
-    });
+    await setupTrust();
 
     const { validTrustAdminCode, trust, error } = await verifyTrustAdminCode(
       container
@@ -53,11 +42,7 @@ describe("verifyTrustAdminCode contract tests", () => {
   });
 
   it("is not valid if the password is incorrect", async () => {
-    await container.getCreateTrust()({
-      name: "Test Trust",
-      adminCode: "TESTCODE",
-      password: "TESTPASSWORD",
-    });
+    await setupTrust();
 
     const { validTrustAdminCode, trust, error } = await verifyTrustAdminCode(
       container

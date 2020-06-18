@@ -2,6 +2,7 @@ import archiveWard from "./archiveWard";
 import retrieveWardById from "./retrieveWardById";
 import AppContainer from "../containers/AppContainer";
 import retrieveVisits from "./retrieveVisits";
+import setupTrust from "../testUtils/fixtures/setupTrust";
 
 describe("archiveWard contract tests", () => {
   const container = AppContainer.getInstance();
@@ -14,11 +15,7 @@ describe("archiveWard contract tests", () => {
   });
 
   it("archives the ward when the ward data is valid", async () => {
-    const { trustId } = await container.getCreateTrust()({
-      name: "Test Trust",
-      adminCode: "TEST",
-      password: "password",
-    });
+    const { trustId } = await setupTrust();
 
     const { hospitalId } = await container.getCreateHospital()({
       name: "Test Hospital",
@@ -59,11 +56,7 @@ describe("archiveWard contract tests", () => {
   });
 
   it("archives ward visits when the ward data is valid and visits are scheduled", async () => {
-    const { trustId } = await container.getCreateTrust()({
-      name: "Test Trust",
-      adminCode: "TEST",
-      password: "password",
-    });
+    const { trustId } = await setupTrust();
 
     const { hospitalId } = await container.getCreateHospital()({
       name: "Test Hospital",

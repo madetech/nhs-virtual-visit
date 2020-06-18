@@ -1,15 +1,12 @@
 import updateHospital from "./updateHospital";
 import AppContainer from "../containers/AppContainer";
+import setupTrust from "../testUtils/fixtures/setupTrust";
 
 describe("updateHospital contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("updates a hospital in the db when valid", async () => {
-    const { trustId } = await container.getCreateTrust(container)({
-      name: "Test Trust",
-      adminCode: "TEST",
-      password: "password",
-    });
+    const { trustId } = await setupTrust();
 
     const { hospitalId } = await container.getCreateHospital()({
       name: "Test Hospital",

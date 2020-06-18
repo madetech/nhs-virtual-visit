@@ -1,4 +1,5 @@
 import AppContainer from "../containers/AppContainer";
+import setupTrust from "../testUtils/fixtures/setupTrust";
 
 describe("retrieveWardVisitTotals contract tests", () => {
   const container = AppContainer.getInstance();
@@ -8,11 +9,7 @@ describe("retrieveWardVisitTotals contract tests", () => {
   describe("when a trustID isn't provided", () => {
     it("returns the number of booked visits for the service and by all wards", async () => {
       // A trust with 1 hospital and 2 wards
-      const { trustId } = await container.getCreateTrust()({
-        name: "Test Trust",
-        adminCode: "TEST",
-        password: "password",
-      });
+      const { trustId } = await setupTrust();
       const { hospitalId } = await container.getCreateHospital()({
         name: "Test Hospital",
         trustId: trustId,
@@ -31,10 +28,9 @@ describe("retrieveWardVisitTotals contract tests", () => {
       });
 
       // A trust with 1 hospital and 1 ward
-      const { trustId: trust2Id } = await container.getCreateTrust()({
+      const { trustId: trust2Id } = await setupTrust({
         name: "Test Trust 2",
         adminCode: "TEST2",
-        password: "password",
       });
       const { hospitalId: hospital2Id } = await container.getCreateHospital()({
         name: "Test Hospital 2",
@@ -97,11 +93,7 @@ describe("retrieveWardVisitTotals contract tests", () => {
   describe("when a trustID is provided", () => {
     it("returns the number of booked visits for the trust and by ward", async () => {
       // A trust with 1 hospital and 2 wards
-      const { trustId } = await container.getCreateTrust()({
-        name: "Test Trust",
-        adminCode: "TEST",
-        password: "password",
-      });
+      const { trustId } = await setupTrust();
       const { hospitalId } = await container.getCreateHospital()({
         name: "Test Hospital",
         trustId: trustId,
@@ -120,10 +112,9 @@ describe("retrieveWardVisitTotals contract tests", () => {
       });
 
       // A trust with 1 hospital and 1 ward
-      const { trustId: trust2Id } = await container.getCreateTrust()({
+      const { trustId: trust2Id } = await setupTrust({
         name: "Test Trust 2",
         adminCode: "TEST2",
-        password: "password",
       });
       const { hospitalId: hospital2Id } = await container.getCreateHospital()({
         name: "Test Hospital 2",
