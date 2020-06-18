@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../pages/trust-admin/wards/[id]/edit";
+import { getServerSideProps } from "../../../../pages/trust-admin/wards/[id]/add-success";
 
 const authenticatedReq = {
   headers: {
@@ -6,7 +6,7 @@ const authenticatedReq = {
   },
 };
 
-describe("/trust-admin/wards/[id]/edit", () => {
+describe("/trust-admin/wards/[id]/add-success", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
@@ -16,7 +16,7 @@ describe("/trust-admin/wards/[id]/edit", () => {
   let res;
 
   const tokenProvider = {
-    validate: jest.fn(() => ({ type: "trustAdmin", trustId: 10 })),
+    validate: jest.fn(() => ({ type: "trustAdmin", trustId: 1 })),
   };
 
   beforeEach(() => {
@@ -47,11 +47,6 @@ describe("/trust-admin/wards/[id]/edit", () => {
 
         const container = {
           getRetrieveWardById: () => retrieveWardByIdSpy,
-          getRetrieveHospitalsByTrustId: () =>
-            jest.fn().mockReturnValue({
-              hospitals: [],
-              error: null,
-            }),
           getTokenProvider: () => tokenProvider,
         };
 
@@ -64,7 +59,7 @@ describe("/trust-admin/wards/[id]/edit", () => {
           container,
         });
 
-        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 10);
+        expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 1);
       });
 
       it("set a ward prop based on the retrieved ward", async () => {
@@ -72,18 +67,13 @@ describe("/trust-admin/wards/[id]/edit", () => {
           ward: {
             id: 1,
             name: "Defoe Ward",
-            hospitalId: "1",
+            hospitalName: "Northwick Park Hospital",
           },
           error: null,
         });
 
         const container = {
           getRetrieveWardById: () => retrieveWardByIdSpy,
-          getRetrieveHospitalsByTrustId: () =>
-            jest.fn().mockReturnValue({
-              hospitals: [],
-              error: null,
-            }),
           getTokenProvider: () => tokenProvider,
         };
 
@@ -96,9 +86,8 @@ describe("/trust-admin/wards/[id]/edit", () => {
           container,
         });
 
-        expect(props.id).toEqual(1);
         expect(props.name).toEqual("Defoe Ward");
-        expect(props.hospitalId).toEqual("1");
+        expect(props.hospitalName).toEqual("Northwick Park Hospital");
       });
     });
   });

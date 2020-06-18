@@ -1,6 +1,6 @@
 import React from "react";
-import { getServerSideProps } from "../../pages/trust-admin/wards/add";
-import AddAWard from "../../pages/trust-admin/wards/add";
+import { getServerSideProps } from "../../../pages/trust-admin/wards/add";
+import AddAWard from "../../../pages/trust-admin/wards/add";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 describe("/trust-admin/wards/add", () => {

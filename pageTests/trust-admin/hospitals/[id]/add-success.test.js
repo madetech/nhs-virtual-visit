@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../pages/trust-admin/hospitals/[id]/add-success";
+import { getServerSideProps } from "../../../../pages/trust-admin/hospitals/[id]/add-success";
 
 const authenticatedReq = {
   headers: {

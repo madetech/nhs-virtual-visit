@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../pages/trust-admin/wards/[id]/add-success";
+import { getServerSideProps } from "../../../../pages/trust-admin/wards/[id]/edit-success";
 
 const authenticatedReq = {
   headers: {
@@ -6,7 +6,7 @@ const authenticatedReq = {
   },
 };
 
-describe("/trust-admin/wards/[id]/add-success", () => {
+describe("/trust-admin/wards/[id]/edit-success", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
