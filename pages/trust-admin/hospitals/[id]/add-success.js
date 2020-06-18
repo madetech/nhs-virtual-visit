@@ -1,11 +1,11 @@
 import React from "react";
 import Error from "next/error";
-import Layout from "../../src/components/Layout";
-import AnchorLink from "../../src/components/AnchorLink";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
-import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
-import ActionLink from "../../src/components/ActionLink";
-import { TRUST_ADMIN } from "../../src/helpers/userTypes";
+import Layout from "../../../../src/components/Layout";
+import AnchorLink from "../../../../src/components/AnchorLink";
+import propsWithContainer from "../../../../src/middleware/propsWithContainer";
+import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
+import ActionLink from "../../../../src/components/ActionLink";
+import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 
 const AddAHospitalSuccess = ({ error, name, id }) => {
   if (error) {
@@ -29,7 +29,7 @@ const AddAHospitalSuccess = ({ error, name, id }) => {
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/trust-admin/add-a-hospital`}>
+          <ActionLink href={`/trust-admin/hospitals/add`}>
             Add another hospital
           </ActionLink>
 
@@ -48,7 +48,7 @@ export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
     const getRetrieveHospitalById = container.getRetrieveHospitalById();
     const { hospital, error } = await getRetrieveHospitalById(
-      query.hospitalId,
+      query.id,
       authenticationToken.trustId
     );
 

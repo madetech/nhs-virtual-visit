@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../pages/trust-admin/add-a-hospital-success";
+import { getServerSideProps } from "../../pages/trust-admin/hospitals/[id]/add-success";
 
 const authenticatedReq = {
   headers: {
@@ -10,7 +10,7 @@ const tokenProvider = {
   validate: jest.fn(() => ({ type: "trustAdmin", trustId: 1 })),
 };
 
-describe("/trust-admin/add-a-hospital-success", () => {
+describe("/trust-admin/hospitals/[id]/add-success", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
