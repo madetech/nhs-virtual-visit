@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { GridRow, GridColumn } from "../../src/components/Grid";
-import Layout from "../../src/components/Layout";
-import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
-import AddWardForm from "../../src/components/AddWardForm";
+import { GridRow, GridColumn } from "../../../src/components/Grid";
+import Layout from "../../../src/components/Layout";
+import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
+import propsWithContainer from "../../../src/middleware/propsWithContainer";
+import AddWardForm from "../../../src/components/AddWardForm";
 import Error from "next/error";
-import { TRUST_ADMIN } from "../../src/helpers/userTypes";
+import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const AddAWard = ({ hospitals, error, hospitalId }) => {
   if (error) {

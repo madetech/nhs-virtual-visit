@@ -113,8 +113,7 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
         if (status == 201) {
           const { wardId } = await response.json();
           Router.push({
-            pathname: "/trust-admin/add-a-ward-success",
-            query: { wardId: wardId },
+            pathname: `/trust-admin/wards/${wardId}/add-success`,
           });
         } else {
           setUniqueWardCodeError(onSubmitErrors);

@@ -1,9 +1,9 @@
 import React from "react";
-import { getServerSideProps } from "../../pages/trust-admin/add-a-ward";
-import AddAWard from "../../pages/trust-admin/add-a-ward";
+import { getServerSideProps } from "../../pages/trust-admin/wards/add";
+import AddAWard from "../../pages/trust-admin/wards/add";
 import { render, screen, fireEvent } from "@testing-library/react";
 
-describe("/trust-admin/add-a-ward", () => {
+describe("/trust-admin/wards/add", () => {
   const anonymousReq = {
     headers: {
       cookie: "",

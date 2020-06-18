@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../pages/trust-admin/edit-a-ward";
+import { getServerSideProps } from "../../pages/trust-admin/wards/[id]/edit";
 
 const authenticatedReq = {
   headers: {
@@ -6,7 +6,7 @@ const authenticatedReq = {
   },
 };
 
-describe("/trust-admin/edit-a-ward", () => {
+describe("/trust-admin/wards/[id]/edit", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
@@ -59,7 +59,7 @@ describe("/trust-admin/edit-a-ward", () => {
           req: authenticatedReq,
           res,
           query: {
-            wardId: "ward ID",
+            id: "ward ID",
           },
           container,
         });
@@ -91,7 +91,7 @@ describe("/trust-admin/edit-a-ward", () => {
           req: authenticatedReq,
           res,
           query: {
-            wardId: "1",
+            id: "1",
           },
           container,
         });

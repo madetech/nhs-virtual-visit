@@ -55,8 +55,7 @@ const EditWardForm = ({
       })
       .then((response) =>
         Router.push({
-          pathname: "/trust-admin/edit-a-ward-success",
-          query: { wardId: response.wardId },
+          pathname: `/trust-admin/wards/${response.wardId}/edit-success`,
         })
       )
       .catch(() => {

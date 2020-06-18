@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Error from "next/error";
-import { GridRow, GridColumn } from "../../src/components/Grid";
-import Layout from "../../src/components/Layout";
-import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
-import EditWardForm from "../../src/components/EditWardForm";
-import { TRUST_ADMIN } from "../../src/helpers/userTypes";
+import { GridRow, GridColumn } from "../../../../src/components/Grid";
+import Layout from "../../../../src/components/Layout";
+import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
+import propsWithContainer from "../../../../src/middleware/propsWithContainer";
+import EditWardForm from "../../../../src/components/EditWardForm";
+import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 
 const EditAWard = ({ error, id, name, hospitalId, hospitals }) => {
   if (error) {
@@ -44,7 +44,7 @@ export const getServerSideProps = propsWithContainer(
 
     let error = null;
     const getRetrieveWardByIdResponse = await getRetrieveWardById(
-      query.wardId,
+      query.id,
       authenticationToken.trustId
     );
     error = error || getRetrieveWardByIdResponse.error;

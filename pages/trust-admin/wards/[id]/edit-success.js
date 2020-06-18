@@ -1,11 +1,11 @@
 import React from "react";
 import Error from "next/error";
-import Layout from "../../src/components/Layout";
-import AnchorLink from "../../src/components/AnchorLink";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
-import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
-import ActionLink from "../../src/components/ActionLink";
-import { TRUST_ADMIN } from "../../src/helpers/userTypes";
+import Layout from "../../../../src/components/Layout";
+import AnchorLink from "../../../../src/components/AnchorLink";
+import propsWithContainer from "../../../../src/middleware/propsWithContainer";
+import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
+import ActionLink from "../../../../src/components/ActionLink";
+import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 
 const EditAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
   if (error) {
@@ -31,7 +31,7 @@ const EditAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/trust-admin/add-a-ward`}>Add a ward</ActionLink>
+          <ActionLink href={`/trust-admin/wards/add`}>Add a ward</ActionLink>
 
           <p>
             <AnchorLink href={`/trust-admin/hospitals/${hospitalId}`}>
@@ -48,7 +48,7 @@ export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
     const getRetrieveWardById = container.getRetrieveWardById();
     const { ward, error } = await getRetrieveWardById(
-      query.wardId,
+      query.id,
       authenticationToken.trustId
     );
 
