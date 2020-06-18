@@ -41,14 +41,14 @@ const WardsTable = ({ wards, wardVisitTotals }) => (
             )}
             <td className="nhsuk-table__cell" style={{ textAlign: "center" }}>
               <AnchorLink
-                href={`/trust-admin/edit-a-ward?wardId=${ward.id}`}
+                href={`/trust-admin/wards/${ward.id}/edit`}
                 className="nhsuk-u-margin-right-4"
               >
                 Edit
                 <span className="nhsuk-u-visually-hidden"> {ward.name}</span>
               </AnchorLink>
               <AnchorLink
-                href={`/trust-admin/archive-a-ward-confirmation?wardId=${ward.id}`}
+                href={`/trust-admin/wards/${ward.id}/archive-confirmation`}
               >
                 Delete
                 <span className="nhsuk-u-visually-hidden"> {ward.name}</span>

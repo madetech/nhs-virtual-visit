@@ -75,7 +75,7 @@ const ShowHospital = ({
             className="nhsuk-button"
             onClick={() => {
               Router.push({
-                pathname: `/trust-admin/add-a-ward`,
+                pathname: `/trust-admin/wards/add`,
                 query: { hospitalId: hospital.id },
               });
             }}

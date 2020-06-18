@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Error from "next/error";
-import { GridRow, GridColumn } from "../../src/components/Grid";
-import Layout from "../../src/components/Layout";
-import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
-import SummaryList from "../../src/components/SummaryList";
-import Heading from "../../src/components/Heading";
-import Button from "../../src/components/Button";
-import BackLink from "../../src/components/BackLink";
+import { GridRow, GridColumn } from "../../../../src/components/Grid";
+import Layout from "../../../../src/components/Layout";
+import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
+import propsWithContainer from "../../../../src/middleware/propsWithContainer";
+import SummaryList from "../../../../src/components/SummaryList";
+import Heading from "../../../../src/components/Heading";
+import Button from "../../../../src/components/Button";
+import BackLink from "../../../../src/components/BackLink";
 import Router from "next/router";
-import { TRUST_ADMIN } from "../../src/helpers/userTypes";
+import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 
 const ArchiveAWardConfirmation = ({
   error,
@@ -46,7 +46,7 @@ const ArchiveAWardConfirmation = ({
     });
     if (response.status === 200) {
       Router.push(
-        `/trust-admin/archive-a-ward-success?name=${name}&hospitalName=${hospitalName}&hospitalId=${hospitalId}`
+        `/trust-admin/wards/archive-success?name=${name}&hospitalName=${hospitalName}&hospitalId=${hospitalId}`
       );
     } else {
       setHasError(true);
@@ -90,7 +90,7 @@ export const getServerSideProps = propsWithContainer(
     const getRetrieveWardById = container.getRetrieveWardById();
 
     const { ward, error } = await getRetrieveWardById(
-      query.wardId,
+      query.id,
       authenticationToken.trustId
     );
 

@@ -1,10 +1,10 @@
 import React from "react";
 import Error from "next/error";
-import Layout from "../../src/components/Layout";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
-import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
-import AnchorLink from "../../src/components/AnchorLink";
-import { TRUST_ADMIN } from "../../src/helpers/userTypes";
+import Layout from "../../../src/components/Layout";
+import propsWithContainer from "../../../src/middleware/propsWithContainer";
+import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
+import AnchorLink from "../../../src/components/AnchorLink";
+import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const archiveAWardSuccess = ({ name, hospitalName, hospitalId, error }) => {
   if (error) {
