@@ -53,7 +53,7 @@ describe("/trust-admin/hospitals/[id]/add-success", () => {
           req: authenticatedReq,
           res,
           query: {
-            hospitalId: "hospital ID",
+            id: "hospital ID",
           },
           container,
         });
