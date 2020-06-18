@@ -31,7 +31,7 @@ const TrustAdmin = ({ hospitals, hospitalError, trust, trustError }) => {
             </span>
             Hospitals
           </Heading>
-          <ActionLink href={`/trust-admin/add-a-hospital`}>
+          <ActionLink href={`/trust-admin/hospitals/add`}>
             Add a hospital
           </ActionLink>
           {hospitals.length > 0 ? (

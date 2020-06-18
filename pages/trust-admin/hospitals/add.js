@@ -1,17 +1,17 @@
 import React, { useState, useCallback } from "react";
-import ErrorSummary from "../../src/components/ErrorSummary";
-import { GridRow, GridColumn } from "../../src/components/Grid";
-import Layout from "../../src/components/Layout";
-import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
+import ErrorSummary from "../../../src/components/ErrorSummary";
+import { GridRow, GridColumn } from "../../../src/components/Grid";
+import Layout from "../../../src/components/Layout";
+import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
+import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import Error from "next/error";
-import FormGroup from "../../src/components/FormGroup";
-import Heading from "../../src/components/Heading";
-import Input from "../../src/components/Input";
-import Label from "../../src/components/Label";
-import Button from "../../src/components/Button";
+import FormGroup from "../../../src/components/FormGroup";
+import Heading from "../../../src/components/Heading";
+import Input from "../../../src/components/Input";
+import Label from "../../../src/components/Label";
+import Button from "../../../src/components/Button";
 import Router from "next/router";
-import { TRUST_ADMIN } from "../../src/helpers/userTypes";
+import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const AddAHospital = ({ error, trustId }) => {
   if (error) {
@@ -68,8 +68,7 @@ const AddAHospital = ({ error, trustId }) => {
         if (status == 201) {
           const { hospitalId } = await response.json();
           Router.push({
-            pathname: "/trust-admin/add-a-hospital-success",
-            query: { hospitalId: hospitalId },
+            pathname: `/trust-admin/hospitals/${hospitalId}/add-success`,
           });
         } else if (status === 400) {
           const { err } = await response.json();
