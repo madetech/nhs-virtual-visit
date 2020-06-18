@@ -1,6 +1,6 @@
-import { getServerSideProps } from "../../pages/trust-admin/hospitals/add";
+import { getServerSideProps } from "../../../pages/trust-admin/wards/archive-success";
 
-describe("/trust-admin/hospitals/add", () => {
+describe("/trust-admin/wards/archive-success", () => {
   const anonymousReq = {
     headers: {
       cookie: "",
