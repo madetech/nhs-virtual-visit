@@ -73,6 +73,7 @@ Please take a look at our separate [Contributing Guide](./CONTRIBUTING.md).
 - **Joshua-Luke Bevan** - Software Engineer at [Made Tech](https://www.madetech.com) (joshua.bevan@madetech.com)
 - **Stephen Thomson** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (stephen.thomson@madetech.com)
 - **Neil Kidd** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (neil.kidd@madetech.com)
+- **Stu Mackellar** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (stu.mackellar@madetech.com)
 
 ## License
 
