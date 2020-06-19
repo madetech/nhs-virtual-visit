@@ -1,84 +1,48 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Layout from "../../src/components/Layout";
+import Jitsi from "../../src/components/Jitsi";
 import Whereby from "../../src/components/Whereby";
 import Error from "next/error";
-import useScript from "../../src/hooks/useScript";
-import Router from "next/router";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import fetch from "isomorphic-unfetch";
+import { v4 as uuidv4 } from "uuid";
 
-const Call = ({ callId, name, provider, error }) => {
+async function captureEvent(visitId, sessionId, action) {
+  const body = {
+    action: action,
+    visitId: visitId,
+    sessionId: sessionId,
+  };
+
+  await fetch("/api/capture-event", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+}
+
+const Call = ({ visitId, callId, sessionId, name, provider, error }) => {
   if (error) {
     return <Error />;
   }
 
-  if (provider === "whereby") {
-    return (
-      <Layout mainStyleOverride>
-        <main>
-          <Whereby callId={callId} displayName={name} />
-          <button
-            className="nhsuk-button"
-            style={{ margin: "0 30%", width: "40%" }}
-            type="submit"
-            onClick={() => {
-              Router.push(`/visits/end?callId=${callId}`);
-            }}
-          >
-            End call
-          </button>
-        </main>
-      </Layout>
-    );
-  } else {
-    const [jitsiLoaded] = useScript("https://meet.jit.si/external_api.js");
+  captureEvent(visitId, sessionId, "join-visit");
 
-    useEffect(() => {
-      if (!jitsiLoaded) {
-        return;
-      }
+  const leaveVisit = () => {
+    captureEvent(visitId, sessionId, "leave-visit");
+  };
 
-      if (!callId) {
-        return;
-      }
-
-      const domain = "meet.jit.si";
-      const options = {
-        roomName: callId,
-        width: "100%",
-        height: "100%",
-        parentNode: document.querySelector("#meet"),
-        interfaceConfigOverwrite: {
-          TOOLBAR_BUTTONS: ["microphone", "camera", "hangup"],
-        },
-      };
-
-      const api = new window.JitsiMeetExternalAPI(domain, options);
-
-      if (name) {
-        api.executeCommand("displayName", name);
-        api.on("videoConferenceLeft", () => {
-          Router.push(`/visits/end?callId=${callId}`);
-        });
-      }
-    }, [jitsiLoaded]);
-
-    if (!callId) {
-      return (
-        <Layout title="No calling code provided" isBookService={false}>
-          <h1>No calling code provided</h1>
-          <p>Please use the link provided in the message you received.</p>
-        </Layout>
-      );
-    }
-
-    return (
-      <Layout title="Virtual visit" isBookService={false}>
-        <main>
-          <div id="meet"></div>
-        </main>
-      </Layout>
-    );
-  }
+  return (
+    <Layout title="Virtual visit" isBookService={false} mainStyleOverride>
+      {provider === "whereby" ? (
+        <Whereby callId={callId} displayName={name} onEnd={leaveVisit} />
+      ) : (
+        <Jitsi callId={callId} name={name} onEnd={leaveVisit} />
+      )}
+    </Layout>
+  );
 };
 
 export const getServerSideProps = propsWithContainer(
@@ -98,8 +62,10 @@ export const getServerSideProps = propsWithContainer(
     if (validCallPassword || authenticationToken) {
       const { scheduledCall, error } = await retrieveVisitByCallId(callId);
       const provider = scheduledCall.provider;
+      const sessionId = uuidv4();
+      const visitId = scheduledCall.id;
 
-      return { props: { callId, name, provider, error } };
+      return { props: { visitId, callId, sessionId, name, provider, error } };
     } else {
       res.writeHead(307, {
         Location: "/error",
