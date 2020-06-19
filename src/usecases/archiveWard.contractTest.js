@@ -2,7 +2,7 @@ import archiveWard from "./archiveWard";
 import retrieveWardById from "./retrieveWardById";
 import AppContainer from "../containers/AppContainer";
 import retrieveVisits from "./retrieveVisits";
-import setupTrust from "../testUtils/fixtures/setupTrust";
+import { setupTrust } from "../testUtils/factories";
 
 describe("archiveWard contract tests", () => {
   const container = AppContainer.getInstance();

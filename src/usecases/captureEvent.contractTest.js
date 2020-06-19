@@ -1,6 +1,6 @@
 import captureEvent from "./captureEvent";
 import AppContainer from "../containers/AppContainer";
-import setupTrust from "../testUtils/fixtures/setupTrust";
+import { setupTrust } from "../testUtils/factories";
 
 describe("captureEvent contract tests", () => {
   const container = AppContainer.getInstance();

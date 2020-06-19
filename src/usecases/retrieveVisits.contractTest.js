@@ -1,7 +1,7 @@
 import AppContainer from "../containers/AppContainer";
 import moment from "moment";
 import deleteVisitByCallId from "./deleteVisitByCallId";
-import setupTrust from "../testUtils/fixtures/setupTrust";
+import { setupTrust } from "../testUtils/factories";
 
 describe("retrieveVisits contract tests", () => {
   const container = AppContainer.getInstance();

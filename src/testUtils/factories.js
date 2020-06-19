@@ -1,7 +1,7 @@
-import AppContainer from "../../containers/AppContainer";
+import AppContainer from "../containers/AppContainer";
 const container = AppContainer.getInstance();
 
-export default async ({
+export const setupTrust = async ({
   name = null,
   adminCode = null,
   password = null,

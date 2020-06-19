@@ -1,5 +1,5 @@
 import AppContainer from "../containers/AppContainer";
-import setupTrust from "../testUtils/fixtures/setupTrust";
+import { setupTrust } from "../testUtils/factories";
 
 describe("retrieveWardsByHospitalId contract tests", () => {
   const container = AppContainer.getInstance();
