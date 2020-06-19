@@ -14,6 +14,7 @@ describe("create-trust", () => {
         name: "Test Trust",
         adminCode: "admincode",
         password: "password",
+        videoProvider: "whereby",
       },
       headers: {
         cookie: "token=valid.token.value",

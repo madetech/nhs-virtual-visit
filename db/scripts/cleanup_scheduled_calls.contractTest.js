@@ -1,16 +1,13 @@
 const { cleanupScheduledCalls } = require("./cleanup_scheduled_calls");
 import AppContainer from "../../src/containers/AppContainer";
 import moment from "moment";
+import { setupTrust } from "../../src/testUtils/factories";
 
 describe("test cleanup script", () => {
   it("updates visit states and data correctly", async () => {
     const container = AppContainer.getInstance();
 
-    const { trustId } = await container.getCreateTrust()({
-      name: "Test Trust",
-      adminCode: "TEST",
-      password: "password",
-    });
+    const { trustId } = await setupTrust();
 
     const { hospitalId } = await container.getCreateHospital()({
       name: "Test Hospital",
