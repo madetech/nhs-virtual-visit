@@ -1,6 +1,6 @@
 import updateWard from "./updateWard";
 import AppContainer from "../containers/AppContainer";
-import setupTrust from "../testUtils/fixtures/setupTrust";
+import { setupTrust } from "../testUtils/factories";
 
 describe("updateWard contract tests", () => {
   const container = AppContainer.getInstance();

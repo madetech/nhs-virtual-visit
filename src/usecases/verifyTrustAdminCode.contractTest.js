@@ -1,6 +1,6 @@
 import verifyTrustAdminCode from "./verifyTrustAdminCode";
 import AppContainer from "../containers/AppContainer";
-import setupTrust from "../testUtils/fixtures/setupTrust";
+import { setupTrust } from "../testUtils/factories";
 
 describe("verifyTrustAdminCode contract tests", () => {
   const container = AppContainer.getInstance();

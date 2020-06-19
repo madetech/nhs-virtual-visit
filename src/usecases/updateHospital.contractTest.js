@@ -1,6 +1,6 @@
 import updateHospital from "./updateHospital";
 import AppContainer from "../containers/AppContainer";
-import setupTrust from "../testUtils/fixtures/setupTrust";
+import { setupTrust } from "../testUtils/factories";
 
 describe("updateHospital contract tests", () => {
   const container = AppContainer.getInstance();

@@ -1,5 +1,5 @@
 import AppContainer from "../containers/AppContainer";
-import setupTrust from "../testUtils/fixtures/setupTrust";
+import { setupTrust } from "../testUtils/factories";
 
 async function createTestWards(trustId, hospitalId, count) {
   const container = AppContainer.getInstance();
