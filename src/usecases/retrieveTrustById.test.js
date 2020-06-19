@@ -8,6 +8,7 @@ describe("retrieveTrustById", () => {
           oneOrNone: jest.fn().mockReturnValue({
             id: 1,
             name: "Doggo Trust",
+            video_provider: "testprovider",
           }),
         };
       },
@@ -20,6 +21,7 @@ describe("retrieveTrustById", () => {
     expect(trust).toEqual({
       id: 1,
       name: "Doggo Trust",
+      videoProvider: "testprovider",
     });
   });
 
