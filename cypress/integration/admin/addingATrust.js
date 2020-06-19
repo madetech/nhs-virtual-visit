@@ -50,6 +50,7 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
     cy.get("input[name=trust-admin-code]").type("bowcode");
     cy.get("input[name=trust-password]").type("bowpassword");
     cy.get("input[name=trust-password-confirmation]").type("bowpassword");
+    cy.get("select").select("whereby");
   }
 
   function AndISubmitTheForm() {

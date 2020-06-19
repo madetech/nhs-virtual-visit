@@ -1,6 +1,11 @@
 import bcrypt from "bcryptjs";
 
-const createTrust = ({ getDb }) => async ({ name, adminCode, password }) => {
+const createTrust = ({ getDb }) => async ({
+  name,
+  adminCode,
+  password,
+  videoProvider,
+}) => {
   const db = await getDb();
 
   if (!password) {
@@ -18,11 +23,11 @@ const createTrust = ({ getDb }) => async ({ name, adminCode, password }) => {
 
     const createdTrust = await db.one(
       `INSERT INTO trusts
-            (id, name, admin_code, password)
-            VALUES (default, $1, $2, $3)
+            (id, name, admin_code, password, video_provider)
+            VALUES (default, $1, $2, $3, $4)
             RETURNING id
           `,
-      [name, adminCode, hashedPassword]
+      [name, adminCode, hashedPassword, videoProvider]
     );
 
     return {
