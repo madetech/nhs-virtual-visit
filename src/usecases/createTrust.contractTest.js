@@ -20,6 +20,7 @@ describe("createTrust contract tests", () => {
     expect(trust).toEqual({
       id: trustId,
       name: request.name,
+      videoProvider: "provider",
     });
 
     expect(error).toBeNull();

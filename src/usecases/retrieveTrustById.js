@@ -11,6 +11,7 @@ const retrieveTrustById = ({ getDb }) => async (trustId) => {
       trust: {
         id: trust.id,
         name: trust.name,
+        videoProvider: trust.video_provider,
       },
       error: null,
     };
