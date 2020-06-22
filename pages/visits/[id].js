@@ -7,7 +7,15 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 import fetch from "isomorphic-unfetch";
 import { v4 as uuidv4 } from "uuid";
 
-const Call = ({ visitId, callId, sessionId, name, provider, error }) => {
+const Call = ({
+  visitId,
+  callId,
+  callPassword,
+  sessionId,
+  name,
+  provider,
+  error,
+}) => {
   if (error) {
     return <Error />;
   }
@@ -17,6 +25,8 @@ const Call = ({ visitId, callId, sessionId, name, provider, error }) => {
       action: action,
       visitId: visitId,
       sessionId: sessionId,
+      callId,
+      callPassword,
     };
 
     await fetch("/api/capture-event", {
@@ -67,7 +77,17 @@ export const getServerSideProps = propsWithContainer(
       const sessionId = uuidv4();
       const visitId = scheduledCall.id;
 
-      return { props: { visitId, callId, sessionId, name, provider, error } };
+      return {
+        props: {
+          visitId,
+          callId,
+          callPassword: callPassword || "",
+          sessionId,
+          name,
+          provider,
+          error,
+        },
+      };
     } else {
       res.writeHead(307, {
         Location: "/error",
