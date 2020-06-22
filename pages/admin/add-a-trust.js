@@ -204,6 +204,7 @@ const AddATrust = () => {
                 }}
                 hasError={hasError("video-provider")}
                 errorMessage={errorMessage("video-provider")}
+                name="video-provider"
               />
             </FormGroup>
             <FormGroup>
