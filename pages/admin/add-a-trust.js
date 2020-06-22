@@ -99,6 +99,10 @@ const AddATrust = () => {
       setNameError(onSubmitErrors);
     }
 
+    if (videoProvider.length === 0) {
+      setVideoProviderError(onSubmitErrors);
+    }
+
     if (adminCode.length === 0) {
       setAdminCodeError(onSubmitErrors);
     }
@@ -115,10 +119,6 @@ const AddATrust = () => {
       }
     } else {
       setPasswordConfirmationError(onSubmitErrors);
-    }
-
-    if (videoProvider.length === 0) {
-      setVideoProviderError(onSubmitErrors);
     }
 
     if (onSubmitErrors.length === 0) {
