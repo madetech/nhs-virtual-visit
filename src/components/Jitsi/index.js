@@ -29,7 +29,7 @@ const Jitsi = ({ callId, name, onEnd }) => {
 
     if (name) {
       api.executeCommand("displayName", name);
-      api.on("videoConferenceLeft", () => {
+      api.on("readyToClose", () => {
         onEnd();
         Router.push(`/visits/end?callId=${callId}`);
       });
