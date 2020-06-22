@@ -47,6 +47,7 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
 
   function WhenIFillOutTheForm() {
     cy.get("input[name=trust-name]").type("Bow Trust");
+    cy.get("select[name=video-provider]").select("whereby");
     cy.get("input[name=trust-admin-code]").type("bowcode");
     cy.get("input[name=trust-password]").type("bowpassword");
     cy.get("input[name=trust-password-confirmation]").type("bowpassword");

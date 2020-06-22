@@ -10,8 +10,14 @@ import Heading from "../../src/components/Heading";
 import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Button from "../../src/components/Button";
+import Select from "../../src/components/Select";
 import Router from "next/router";
 import { ADMIN } from "../../src/helpers/userTypes";
+
+const VIDEO_PROVIDER_OPTIONS = [
+  { id: "whereby", name: "Whereby" },
+  { id: "jitsi", name: "Jitsi" },
+];
 
 const AddATrust = () => {
   const [errors, setErrors] = useState([]);
@@ -19,6 +25,7 @@ const AddATrust = () => {
   const [adminCode, setAdminCode] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [videoProvider, setVideoProvider] = useState("");
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
@@ -81,8 +88,19 @@ const AddATrust = () => {
       });
     };
 
+    const setVideoProviderError = (errors) => {
+      errors.push({
+        id: "video-provider-error",
+        message: "Select a video provider",
+      });
+    };
+
     if (name.length === 0) {
       setNameError(onSubmitErrors);
+    }
+
+    if (videoProvider.length === 0) {
+      setVideoProviderError(onSubmitErrors);
     }
 
     if (adminCode.length === 0) {
@@ -114,6 +132,7 @@ const AddATrust = () => {
             name,
             adminCode,
             password,
+            videoProvider,
           }),
         });
 
@@ -169,6 +188,23 @@ const AddATrust = () => {
                 name="trust-name"
                 autoComplete="off"
                 value={name || ""}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label htmlFor="video-provider" className="nhsuk-label--l">
+                Which video provider would you like to use?
+              </Label>
+              <Select
+                id="video-provider"
+                className="nhsuk-input--width-10 nhsuk-u-width-one-half"
+                prompt="Choose a provider"
+                options={VIDEO_PROVIDER_OPTIONS}
+                onChange={(event) => {
+                  setVideoProvider(event.target.value);
+                }}
+                hasError={hasError("video-provider")}
+                errorMessage={errorMessage("video-provider")}
+                name="video-provider"
               />
             </FormGroup>
             <FormGroup>

@@ -15,6 +15,7 @@ describe("createTrust", () => {
       name: "Defoe Trust",
       adminCode: "adminCode",
       password: "password",
+      videoProvider: "whereby",
     };
 
     const { trustId, error } = await createTrust(container)(request);
@@ -24,6 +25,7 @@ describe("createTrust", () => {
       "Defoe Trust",
       "adminCode",
       expect.anything(),
+      "whereby",
     ]);
   });
 

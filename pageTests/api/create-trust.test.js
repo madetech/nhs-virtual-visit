@@ -14,6 +14,7 @@ describe("create-trust", () => {
         name: "Test Trust",
         adminCode: "admincode",
         password: "password",
+        videoProvider: "whereby",
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -245,6 +246,57 @@ describe("create-trust", () => {
     expect(response.status).toHaveBeenCalledWith(409);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ err: "password must be present" })
+    );
+  });
+
+  it("returns a 409 if the video provider is not provided", async () => {
+    const invalidRequest = {
+      method: "POST",
+      body: {
+        name: "Test Trust",
+        adminCode: "admincode",
+        password: "password",
+      },
+      headers: {
+        cookie: "token=valid.token.value",
+      },
+    };
+
+    await createTrust(invalidRequest, response, {
+      container: {
+        ...container,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(409);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "video provider must be present" })
+    );
+  });
+
+  it("returns a 409 if the video provider is an empty string", async () => {
+    const invalidRequest = {
+      method: "POST",
+      body: {
+        name: "Test Trust",
+        adminCode: "admincode",
+        password: "password",
+        videoProvider: "",
+      },
+      headers: {
+        cookie: "token=valid.token.value",
+      },
+    };
+
+    await createTrust(invalidRequest, response, {
+      container: {
+        ...container,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(409);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "video provider must be present" })
     );
   });
 });
