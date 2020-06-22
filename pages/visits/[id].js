@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import Layout from "../../src/components/Layout";
 import Jitsi from "../../src/components/Jitsi";
 import Whereby from "../../src/components/Whereby";
@@ -7,32 +7,34 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 import fetch from "isomorphic-unfetch";
 import { v4 as uuidv4 } from "uuid";
 
-async function captureEvent(visitId, sessionId, action) {
-  const body = {
-    action: action,
-    visitId: visitId,
-    sessionId: sessionId,
-  };
-
-  await fetch("/api/capture-event", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
-}
-
 const Call = ({ visitId, callId, sessionId, name, provider, error }) => {
   if (error) {
     return <Error />;
   }
 
-  captureEvent(visitId, sessionId, "join-visit");
+  const captureEvent = async (action) => {
+    const body = {
+      action: action,
+      visitId: visitId,
+      sessionId: sessionId,
+    };
 
-  const leaveVisit = () => {
-    captureEvent(visitId, sessionId, "leave-visit");
+    await fetch("/api/capture-event", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
   };
+
+  useEffect(() => {
+    captureEvent("join-visit");
+  }, []);
+
+  const leaveVisit = useCallback(async () => {
+    await captureEvent("leave-visit");
+  });
 
   return (
     <Layout title="Virtual visit" isBookService={false} mainStyleOverride>
