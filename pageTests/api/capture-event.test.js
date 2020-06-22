@@ -13,6 +13,11 @@ describe("/api/capture-event", () => {
     trustId: 1,
   }));
 
+  const verifyCallPassword = jest.fn((callId, password) => ({
+    validCallPassword: password === "securePassword",
+    error: null,
+  }));
+
   const mockCaptureEvent = jest.fn().mockReturnValue(() => ({
     event: {
       id: 1,
@@ -46,6 +51,7 @@ describe("/api/capture-event", () => {
     container = {
       getUserIsAuthenticated: validUserIsAuthenticatedSpy,
       getCaptureEvent: mockCaptureEvent,
+      getVerifyCallPassword: () => verifyCallPassword,
     };
   });
 
@@ -78,7 +84,52 @@ describe("/api/capture-event", () => {
     );
 
     expect(response.status).toHaveBeenCalledWith(401);
-    expect(userIsAuthenticatedMock).toHaveBeenCalled();
+  });
+
+  it("returns a 401 if no callId provided", async () => {
+    await captureEvent(
+      {
+        method: "POST",
+        body: { callPassword: "securePassword" },
+      },
+      response,
+      {
+        container,
+      }
+    );
+
+    expect(response.status).toHaveBeenCalledWith(401);
+  });
+
+  it("returns a 401 if no callPassword provided", async () => {
+    await captureEvent(
+      {
+        method: "POST",
+        body: { callId: "123" },
+      },
+      response,
+      {
+        container,
+      }
+    );
+
+    expect(response.status).toHaveBeenCalledWith(401);
+  });
+
+  it("returns a 401 if invalid call password", async () => {
+    await captureEvent(
+      {
+        method: "POST",
+        body: { callId: "123", callPassword: "fakeCode" },
+      },
+      response,
+      {
+        container,
+      }
+    );
+
+    expect(verifyCallPassword).toHaveBeenCalledWith("123", "fakeCode");
+    expect(response.status).toHaveBeenCalledWith(401);
   });
 
   it("returns 400 if action missing", async () => {
@@ -184,8 +235,27 @@ describe("/api/capture-event", () => {
     expect(response.status).toHaveBeenCalledWith(500);
   });
 
-  it("returns 201 for a valid event", async () => {
+  it("returns 201 for a valid event with authentication cookie", async () => {
     await captureEvent(request, response, { container: container });
+
+    expect(response.status).toHaveBeenCalledWith(201);
+  });
+
+  it("returns 201 for a valid event with callId and callPassword", async () => {
+    await captureEvent(
+      {
+        method: "POST",
+        body: {
+          callId: "123",
+          callPassword: "securePassword",
+          action: "join-visit",
+          visitId: "1",
+          sessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
+        },
+      },
+      response,
+      { container: container }
+    );
 
     expect(response.status).toHaveBeenCalledWith(201);
   });
