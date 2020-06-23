@@ -11,30 +11,18 @@ export default withContainer(
       return;
     }
 
-    if (headers?.cookie) {
-      const userIsAuthenticated = container.getUserIsAuthenticated();
-      const userIsAuthenticatedResponse = await userIsAuthenticated(
-        headers.cookie
-      );
+    const userIsAuthenticated = container.getUserIsAuthenticated();
+    const userIsAuthenticatedResponse = await userIsAuthenticated(
+      headers?.cookie
+    );
 
-      if (!userIsAuthenticatedResponse) {
-        res.status(401);
-        res.end(JSON.stringify({ err: "Unauthorized" }));
-        return;
-      }
-    } else if (body?.callId && body?.callPassword) {
-      const verifyCallPassword = container.getVerifyCallPassword();
-      const { validCallPassword } = await verifyCallPassword(
-        body.callId,
-        body.callPassword
-      );
+    const verifyCallPassword = container.getVerifyCallPassword();
+    const { validCallPassword } = await verifyCallPassword(
+      body.callId,
+      body.callPassword
+    );
 
-      if (!validCallPassword) {
-        res.status(401);
-        res.end(JSON.stringify({ err: "Invalid call password" }));
-        return;
-      }
-    } else {
+    if (!userIsAuthenticatedResponse && !validCallPassword) {
       res.status(401);
       res.end(JSON.stringify({ err: "Unauthorized" }));
       return;
