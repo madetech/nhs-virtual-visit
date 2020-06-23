@@ -7,11 +7,11 @@ describe("send-visit-ready-notification", () => {
     end: jest.fn(),
     writeHead: jest.fn().mockReturnValue({ end: () => {} }),
   };
-  const validUserIsAuthenticatedSpy = jest.fn(() => ({
+  const validUserIsAuthenticatedSpy = jest.fn().mockResolvedValue({
     wardId: 10,
     ward: "MEOW",
     trustId: 1,
-  }));
+  });
   const retrieveWardByIdSpy = jest.fn(() => ({
     ward: {
       id: 1,
@@ -47,10 +47,11 @@ describe("send-visit-ready-notification", () => {
         headers: {},
       };
 
-      container.getUserIsAuthenticated = jest.fn(() => () => false);
-
       await sendVisitReadyNotification(requestWithoutToken, response, {
-        container,
+        container: {
+          ...container,
+          getUserIsAuthenticated: () => jest.fn().mockResolvedValue(false),
+        },
       });
 
       expect(response.status).toHaveBeenCalledWith(401);
