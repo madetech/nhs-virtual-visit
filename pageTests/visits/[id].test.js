@@ -23,7 +23,7 @@ describe("call", () => {
         validCallPassword: password === "securePassword",
         error: null,
       }));
-      getUserIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
+      getUserIsAuthenticatedSpy = jest.fn().mockResolvedValue(false);
       container = {
         getVerifyCallPassword: () => getVerifyCallPasswordSpy,
         getUserIsAuthenticated: () => getUserIsAuthenticatedSpy,
@@ -55,7 +55,7 @@ describe("call", () => {
     });
 
     it("returns callId when the password is invalid, but the user is authenticated", async () => {
-      getUserIsAuthenticatedSpy.mockReturnValueOnce(true);
+      getUserIsAuthenticatedSpy.mockResolvedValue(true);
       const { props } = await getServerSideProps({
         query: {
           callPassword: undefined,
@@ -79,6 +79,8 @@ describe("call", () => {
         res,
         req,
       });
+
+      expect(getUserIsAuthenticatedSpy).toHaveBeenCalled();
       expect(getVerifyCallPasswordSpy).toHaveBeenCalledWith(1, "fakeCode");
       expect(res.writeHead).toHaveBeenCalledWith(307, { Location: "/error" });
     });
