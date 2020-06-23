@@ -31,8 +31,6 @@ EMAIL_JOIN_TEMPLATE_ID=
 ALLOWED_CODES=
 # Signing key for JWT tokens
 JWT_SIGNING_KEY=
-# Whereby Feature Flag
-ENABLE_WHEREBY=
 # Whereby API Credentials
 WHEREBY_API_KEY=
 WHEREBY_SUBDOMAIN=
