@@ -70,6 +70,19 @@ const VisitsPanelList = ({ visits, title, showButtons }) => {
                           </button>
 
                           <button
+                            className="nhsuk-button nhsuk-u-margin-right-5 nhsuk-button--secondary"
+                            onClick={() => {
+                              const callId = visit.callId;
+                              Router.push({
+                                pathname: `/wards/book-a-visit`,
+                                query: { rebookCallId: callId },
+                              });
+                            }}
+                          >
+                            Rebook
+                          </button>
+
+                          <button
                             className="nhsuk-button nhsuk-button--secondary"
                             onClick={() => {
                               const callId = visit.callId;
