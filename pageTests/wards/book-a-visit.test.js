@@ -31,7 +31,8 @@ describe("ward/book-a-visit", () => {
     container = {
       getTokenProvider: () => tokenProvider,
       getRetrieveWardById: () => jest.fn().mockReturnValue({}),
-      getUserIsAuthenticated: () => (token) => token && { ward: "123" },
+      getUserIsAuthenticated: () =>
+        jest.fn().mockResolvedValue("token=123" && { ward: "123" }),
       getRetrieveVisitByCallId: () => () => ({
         scheduledCall: {
           id: 1,

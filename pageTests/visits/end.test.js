@@ -49,7 +49,8 @@ describe("end", () => {
     };
     it("provides the call id", async () => {
       const container = {
-        getUserIsAuthenticated: () => () => ({ ward: "test-ward-id" }),
+        getUserIsAuthenticated: () =>
+          jest.fn().mockResolvedValue({ ward: "test-ward-id" }),
       };
       const query = { callId: "TEST123" };
       const { props } = await getServerSideProps({ req, container, query });
@@ -58,7 +59,8 @@ describe("end", () => {
 
     it("provides the ward id if the user is authenticated", async () => {
       const container = {
-        getUserIsAuthenticated: () => () => ({ ward: "test-ward-id" }),
+        getUserIsAuthenticated: () =>
+          jest.fn().mockResolvedValue({ ward: "test-ward-id" }),
       };
 
       const query = { callId: "TEST123" };
@@ -69,7 +71,7 @@ describe("end", () => {
 
     it("does not provides the ward id if the user is unauthenticated", async () => {
       const container = {
-        getUserIsAuthenticated: () => () => false,
+        getUserIsAuthenticated: () => jest.fn().mockResolvedValue(false),
       };
       const query = { callId: "TEST123" };
       const { props } = await getServerSideProps({ req, container, query });

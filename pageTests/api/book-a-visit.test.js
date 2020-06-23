@@ -15,11 +15,11 @@ describe("/api/book-a-visit", () => {
   let container;
   let createVisitSpy;
 
-  const validUserIsAuthenticatedSpy = jest.fn(() => ({
+  const validUserIsAuthenticatedSpy = jest.fn().mockResolvedValue({
     wardId: 10,
     ward: "MEOW",
     trustId: 1,
-  }));
+  });
 
   const updateWardVisitTotalsSpy = jest.fn(() => ({
     success: true,
@@ -255,7 +255,7 @@ describe("/api/book-a-visit", () => {
   });
 
   it("returns a 401 when there is no token provided", async () => {
-    const userIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
+    const userIsAuthenticatedSpy = jest.fn().mockResolvedValue(false);
 
     await bookAVisit(
       {

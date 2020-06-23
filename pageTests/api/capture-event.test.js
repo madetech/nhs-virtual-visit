@@ -7,11 +7,11 @@ describe("/api/capture-event", () => {
   let response;
   let container;
 
-  const validUserIsAuthenticatedSpy = jest.fn().mockReturnValue(() => ({
+  const validUserIsAuthenticatedSpy = jest.fn().mockResolvedValue({
     wardId: 10,
     ward: "MEOW",
     trustId: 1,
-  }));
+  });
 
   const verifyCallPassword = jest.fn((callId, password) => ({
     validCallPassword: password === "securePassword" && callId === "123",
@@ -49,7 +49,7 @@ describe("/api/capture-event", () => {
       body: jest.fn(),
     };
     container = {
-      getUserIsAuthenticated: validUserIsAuthenticatedSpy,
+      getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
       getCaptureEvent: mockCaptureEvent,
       getVerifyCallPassword: () => verifyCallPassword,
     };
@@ -66,7 +66,7 @@ describe("/api/capture-event", () => {
   });
 
   it("returns a 401 if no token provided", async () => {
-    const userIsAuthenticatedMock = jest.fn().mockReturnValue(false);
+    const userIsAuthenticatedMock = jest.fn().mockResolvedValue(false);
 
     await captureEvent(
       {
@@ -87,7 +87,7 @@ describe("/api/capture-event", () => {
   });
 
   it("returns a 401 if no callId provided", async () => {
-    const userIsAuthenticated = jest.fn().mockReturnValue(false);
+    const userIsAuthenticated = jest.fn().mockResolvedValue(false);
 
     await captureEvent(
       {
@@ -107,7 +107,7 @@ describe("/api/capture-event", () => {
   });
 
   it("returns a 401 if no callPassword provided", async () => {
-    const userIsAuthenticated = jest.fn().mockReturnValue(false);
+    const userIsAuthenticated = jest.fn().mockResolvedValue(false);
 
     await captureEvent(
       {
@@ -127,7 +127,7 @@ describe("/api/capture-event", () => {
   });
 
   it("returns a 401 if invalid call password", async () => {
-    const userIsAuthenticated = jest.fn().mockReturnValue(false);
+    const userIsAuthenticated = jest.fn().mockResolvedValue(false);
 
     await captureEvent(
       {
