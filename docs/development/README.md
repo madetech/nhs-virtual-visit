@@ -57,7 +57,7 @@ Notes:
 - If you omit the `--no-start` flag it'll start the container in an interactive shell, which will kill the container when you exit.
 - You may stop the container with `sudo docker-compose stop`.
 - You may start the container again with `sudo docker-compose start`.
-- You may destroy the container with `sudo docker-compose down`, if you do this you'll need to re-run the setup script.
+- You may destroy the container with `sudo docker-compose down`.
 
 #### Setup the database installed locally
 
