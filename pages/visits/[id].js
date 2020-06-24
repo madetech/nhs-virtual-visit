@@ -6,6 +6,7 @@ import Error from "next/error";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import fetch from "isomorphic-unfetch";
 import { v4 as uuidv4 } from "uuid";
+import { JOIN_VISIT, LEAVE_VISIT } from "../../src/helpers/eventActions";
 
 const Call = ({
   visitId,
@@ -39,11 +40,11 @@ const Call = ({
   };
 
   useEffect(() => {
-    captureEvent("join-visit");
+    captureEvent(JOIN_VISIT);
   }, []);
 
   const leaveVisit = useCallback(async () => {
-    await captureEvent("leave-visit");
+    await captureEvent(LEAVE_VISIT);
   });
 
   return (
