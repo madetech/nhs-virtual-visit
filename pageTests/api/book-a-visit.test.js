@@ -35,6 +35,24 @@ describe("/api/book-a-visit", () => {
     error: null,
   }));
 
+  const getRetrieveWherebyTrustByIdSpy = jest.fn().mockResolvedValue({
+    trust: {
+      id: 1,
+      name: "Test trust",
+      videoProvider: "whereby",
+    },
+    error: null,
+  });
+
+  const getRetrieveJitsiTrustByIdSpy = jest.fn().mockResolvedValue({
+    trust: {
+      id: 1,
+      name: "Test trust",
+      videoProvider: "jitsi",
+    },
+    error: null,
+  });
+
   beforeEach(() => {
     createVisitSpy = jest.fn();
     request = {
@@ -59,6 +77,7 @@ describe("/api/book-a-visit", () => {
       getCreateVisit: () => createVisitSpy,
       getRetrieveWardById: () => getRetrieveWardByIdSpy,
       getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
+      getRetrieveTrustById: () => getRetrieveWherebyTrustByIdSpy,
       getDb: jest.fn().mockResolvedValue(() => {}),
       getSendTextMessage: () => () => ({ success: true, error: null }),
       getSendEmail: () => () => ({ success: true, error: null }),
@@ -67,7 +86,6 @@ describe("/api/book-a-visit", () => {
       getValidateEmailAddress: () => () => true,
     };
 
-    process.env.ENABLE_WHEREBY = "yes";
     process.env.WHEREBY_API_KEY = "meow";
 
     fetch.mockReturnValue({
@@ -475,7 +493,8 @@ describe("/api/book-a-visit", () => {
 
   describe("Select provider", () => {
     it("Uses jitsi when whereby is not enabled", async () => {
-      process.env.ENABLE_WHEREBY = "no";
+      container.getRetrieveTrustById = () => getRetrieveJitsiTrustByIdSpy;
+
       await bookAVisit(request, response, { container });
 
       expect(createVisitSpy).toHaveBeenCalledWith(
@@ -486,7 +505,8 @@ describe("/api/book-a-visit", () => {
     });
 
     it("Uses whereby when enabled", async () => {
-      process.env.ENABLE_WHEREBY = "yes";
+      container.getRetrieveTrustById = () => getRetrieveWherebyTrustByIdSpy;
+
       await bookAVisit(request, response, { container });
 
       expect(createVisitSpy).toHaveBeenCalledWith(

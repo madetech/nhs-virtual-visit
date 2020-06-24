@@ -13,11 +13,7 @@ import Button from "../../src/components/Button";
 import Select from "../../src/components/Select";
 import Router from "next/router";
 import { ADMIN } from "../../src/helpers/userTypes";
-
-const VIDEO_PROVIDER_OPTIONS = [
-  { id: "whereby", name: "Whereby" },
-  { id: "jitsi", name: "Jitsi" },
-];
+import { VIDEO_PROVIDER_OPTIONS } from "../../src/providers/CallIdProvider";
 
 const AddATrust = () => {
   const [errors, setErrors] = useState([]);

@@ -1,37 +1,15 @@
 import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
-import moment from "moment";
 import withContainer from "../../src/middleware/withContainer";
-import fetch from "node-fetch";
 import formatDateAndTime from "../../src/helpers/formatDateAndTime";
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 import validateDateAndTime from "../../src/helpers/validateDateAndTime";
 import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
+import CallIdProvider from "../../src/providers/CallIdProvider";
 
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
-
-const wherebyCallId = async (callTime) => {
-  let startTime = moment(callTime).format();
-  let endTime = moment(callTime).add(1, "years").format();
-
-  const response = await fetch("https://api.whereby.dev/v1/meetings", {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${process.env.WHEREBY_API_KEY}`,
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      startDate: startTime,
-      endDate: endTime,
-    }),
-  });
-
-  let jsonResponse = await response.json();
-  let roomUrl = new URL(jsonResponse.roomUrl);
-  return roomUrl.pathname.slice(1);
-};
 
 const isFieldAbsent = (field) => {
   return !field || field.length === 0;
@@ -103,13 +81,21 @@ export default withContainer(
     }
 
     try {
-      let callId = ids.generate();
       let { wardId, trustId } = userIsAuthenticatedResponse;
-      let callPassword = ids.generate();
 
-      if (process.env.ENABLE_WHEREBY == "yes") {
-        callId = await wherebyCallId(body.callTime);
+      const { trust, error: trustErr } = await container.getRetrieveTrustById()(
+        trustId
+      );
+      if (trustErr) {
+        throw trustErr;
       }
+
+      const callIdProvider = new CallIdProvider(
+        trust.videoProvider,
+        body.callTime
+      );
+      const callId = await callIdProvider.generate();
+      let callPassword = ids.generate();
 
       const createVisit = container.getCreateVisit();
       const updateWardVisitTotals = container.getUpdateWardVisitTotals();
@@ -130,7 +116,7 @@ export default withContainer(
         callTime: body.callTime,
         callTimeLocal: body.callTimeLocal,
         callId: callId,
-        provider: process.env.ENABLE_WHEREBY === "yes" ? "whereby" : "jitsi",
+        provider: trust.videoProvider,
         wardId: ward.id,
         callPassword: callPassword,
       });
