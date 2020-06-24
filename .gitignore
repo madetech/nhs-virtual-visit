@@ -38,3 +38,6 @@ cypress/fixtures
 cypress/plugins
 cypress/support
 cypress/screenshots
+
+#docker db files
+/db/docker-data

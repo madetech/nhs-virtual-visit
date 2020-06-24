@@ -48,9 +48,7 @@ ENABLE_SENTRY=
 
 #### Setup the database with docker
 
-Run `sudo docker-compose up --no-start` to create the container.
-
-Start it with `sudo docker-compose start`.
+Run `sudo docker-compose up -d` to create the container.
 
 Add `DATABASE_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` to your `.env` file.
 
@@ -60,6 +58,7 @@ Notes:
 
 - If you omit the `--no-start` flag it'll start the container in an interactive shell, which will kill the container when you exit.
 - You may stop the container with `sudo docker-compose stop`.
+- You may start the container again with `sudo docker-compose start`.
 - You may destroy the container with `sudo docker-compose down`, if you do this you'll need to re-run the setup script.
 
 #### Setup the database installed locally

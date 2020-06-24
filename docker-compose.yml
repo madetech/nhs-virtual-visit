@@ -8,6 +8,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
-      - "5432:5432"
+      - 5432:5432
     volumes:
-      - "./db:/db"
+      - ./db:/db
+      - ./db/docker-data:/var/lib/postgresql/data
