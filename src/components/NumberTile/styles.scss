@@ -1,6 +1,6 @@
 @import "node_modules/nhsuk-frontend/packages/nhsuk";
 
-.app-number-tile {
+.app-number-tile, .app-number-tile--s {
   @include nhsuk-typography-responsive(48);
 
   background-color: $color_nhsuk-blue;
@@ -14,5 +14,19 @@
 
     font-weight: normal;
     display: block;
+  }
+}
+
+.app-number-tile--s {
+  @include nhsuk-typography-responsive(32);
+
+  background-color: $color_nhsuk-grey-1;
+  padding: 1rem 1rem;
+
+  .app-number-tile-label {
+    @include nhsuk-typography-responsive(19);
+
+    font-weight: normal;
+    display: initial;
   }
 }
