@@ -1,5 +1,5 @@
-import JitsiCallIdProvider from "./call_id_providers/JitsiCallIdProvider";
-import WherebyCallIdProvider from "./call_id_providers/WherebyCallIdProvider";
+import JitsiCallIdProvider from "./callIdProviders/JitsiCallIdProvider";
+import WherebyCallIdProvider from "./callIdProviders/WherebyCallIdProvider";
 
 const WHEREBY = "whereby";
 const JITSI = "jitsi";

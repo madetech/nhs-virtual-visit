@@ -1,8 +1,8 @@
 import CallIdProvider from "./CallIdProvider";
-import JitsiCallIdProvider from "./call_id_providers/JitsiCallIdProvider";
-import WherebyCallIdProvider from "./call_id_providers/WherebyCallIdProvider";
-jest.mock("./call_id_providers/JitsiCallIdProvider");
-jest.mock("./call_id_providers/WherebyCallIdProvider");
+import JitsiCallIdProvider from "./callIdProviders/JitsiCallIdProvider";
+import WherebyCallIdProvider from "./callIdProviders/WherebyCallIdProvider";
+jest.mock("./callIdProviders/JitsiCallIdProvider");
+jest.mock("./callIdProviders/WherebyCallIdProvider");
 
 describe("CallIdProvider", () => {
   it("returns a call ID for whereby", async () => {
