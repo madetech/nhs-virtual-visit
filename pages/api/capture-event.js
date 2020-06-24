@@ -1,7 +1,8 @@
 import withContainer from "../../src/middleware/withContainer";
 import isGuid from "../../src/helpers/isGuid";
+import { JOIN_VISIT, LEAVE_VISIT } from "../../src/helpers/eventActions";
 
-const actions = ["join-visit", "leave-visit"];
+const actions = [JOIN_VISIT, LEAVE_VISIT];
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
