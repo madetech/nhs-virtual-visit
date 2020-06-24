@@ -93,4 +93,8 @@ describe("AppContainer", () => {
   it("returns getCaptureEvent", () => {
     expect(container.getCaptureEvent()).toBeDefined();
   });
+
+  it("returns getRetrieveAverageParticipantsInVisit", () => {
+    expect(container.getRetrieveAverageParticipantsInVisit()).toBeDefined();
+  });
 });
