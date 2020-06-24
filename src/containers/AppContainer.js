@@ -36,6 +36,7 @@ import retrieveHospitalVisitTotals from "../usecases/retrieveHospitalVisitTotals
 import retrieveHospitalWardVisitTotals from "../usecases/retrieveHospitalWardVisitTotals";
 import captureEvent from "../usecases/captureEvent";
 import retrieveAverageParticipantsInVisit from "../usecases/retrieveAverageParticipantsInVisit";
+import retrieveAverageVisitTimeByTrustId from "../usecases/retrieveAverageVisitTimeByTrustId";
 
 class AppContainer {
   getDb = () => {
@@ -188,6 +189,10 @@ class AppContainer {
 
   getRetrieveAverageParticipantsInVisit = () => {
     return retrieveAverageParticipantsInVisit(this);
+  };
+
+  getRetrieveAverageVisitTimeByTrustId = () => {
+    return retrieveAverageVisitTimeByTrustId(this);
   };
 }
 
