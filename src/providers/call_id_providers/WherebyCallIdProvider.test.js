@@ -7,8 +7,6 @@ const frozenTime = moment("2020-05-18 13:00");
 
 describe("WherebyCallIdProvider", () => {
   beforeEach(() => {
-    fetch.mockClear();
-
     fetch.mockResolvedValue({
       json: () => ({ roomUrl: "http://example.com/fakeUrl" }),
     });
@@ -17,7 +15,6 @@ describe("WherebyCallIdProvider", () => {
   });
 
   afterEach(() => {
-    fetch.mockClear();
     process.env.WHEREBY_API_KEY = null;
   });
 
