@@ -6,9 +6,7 @@ describe("retrieveAverageParticipantsInVisit", () => {
   let dbAnySpy;
 
   beforeEach(() => {
-    dbAnySpy = jest
-      .fn()
-      .mockResolvedValue([{ average_participants: "3.5000000000000000" }]);
+    dbAnySpy = jest.fn().mockResolvedValue([{ average_participants: "3.5" }]);
   });
 
   it("returns an error if a trustId is not provided", async () => {
