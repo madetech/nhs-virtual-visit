@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 describe("retrieveAverageParticipantsInVisit contract tests", () => {
   const container = AppContainer.getInstance();
 
-  it("returns all the average number of participants in a visit for a trust", async () => {
+  it("returns the average number of participants in a visit for a trust", async () => {
     // A trust with a visit with 1 participant
     const { trustId } = await setupTrust();
 
@@ -131,6 +131,18 @@ describe("retrieveAverageParticipantsInVisit contract tests", () => {
     } = await container.getRetrieveAverageParticipantsInVisit()(trustId2);
 
     expect(averageParticipantsInVisit).toEqual(1.5);
+    expect(error).toBeNull();
+  });
+
+  it("returns 0 if there are no events for a trust", async () => {
+    const { trustId } = await setupTrust();
+
+    const {
+      averageParticipantsInVisit,
+      error,
+    } = await container.getRetrieveAverageParticipantsInVisit()(trustId);
+
+    expect(averageParticipantsInVisit).toEqual(0);
     expect(error).toBeNull();
   });
 

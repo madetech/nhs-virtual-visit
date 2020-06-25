@@ -3,7 +3,7 @@ const retrieveAverageParticipantsInVisit = ({ getDb }) => async (trustId) => {
 
   const db = await getDb();
   const [{ average_participants: averageParticipantsInVisit }] = await db.any(
-    `SELECT AVG(participants) as average_participants
+    `SELECT COALESCE(AVG(participants), 0) as average_participants
     FROM (SELECT COUNT ( DISTINCT session_id ) AS participants
           FROM events
           LEFT JOIN scheduled_calls_table ON events.visit_id = scheduled_calls_table.id
