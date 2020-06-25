@@ -24,7 +24,7 @@ const Admin = ({ trusts, error }) => {
     >
       <GridRow>
         <GridColumn width="full">
-          <Heading>Site administration</Heading>
+          <Heading>Site adminininistration</Heading>
           <ActionLink href={`/admin/add-a-trust`}>Add a trust</ActionLink>
 
           {trusts.length > 0 ? (
