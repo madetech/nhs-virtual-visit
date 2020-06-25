@@ -18,9 +18,11 @@ const TrustAdmin = ({
   leastVisited,
   mostVisited,
   trust,
+  averageParticipantsInVisit,
+  averageParticipantsInVisitError,
   visitsScheduled,
 }) => {
-  if (wardError || trustError) {
+  if (wardError || trustError || averageParticipantsInVisitError) {
     return <Error />;
   }
 
@@ -40,28 +42,44 @@ const TrustAdmin = ({
             </span>
             Dashboard
           </Heading>
-          <h2>Trust</h2>
+
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn
-              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-third"
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
               width="one-third"
             >
               <NumberTile number={visitsScheduled} label="booked visits" />
             </GridColumn>
             <GridColumn
-              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-third"
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
               width="one-third"
             >
-              <NumberTile number={hospitals.length} label="hospitals" />
-            </GridColumn>
-            <GridColumn
-              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-third"
-              width="one-third"
-            >
-              <NumberTile number={wards.length} label="wards" />
+              <NumberTile
+                number={averageParticipantsInVisit}
+                label="average participants in a visit"
+              />
             </GridColumn>
           </GridRow>
-          <h2>Usage</h2>
+
+          <GridRow className="nhsuk-u-padding-bottom-3">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-third"
+            >
+              <NumberTile
+                number={hospitals.length}
+                label="hospitals"
+                small={true}
+              />
+            </GridColumn>
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-third"
+            >
+              <NumberTile number={wards.length} label="wards" small={true} />
+            </GridColumn>
+          </GridRow>
+
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn
               className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
@@ -143,6 +161,9 @@ export const getServerSideProps = propsWithContainer(
     const retrieveWardVisitTotals = await container.getRetrieveWardVisitTotals()(
       authenticationToken.trustId
     );
+    const averageParticipantsInVisitResponse = await container.getRetrieveAverageParticipantsInVisit()(
+      authenticationToken.trustId
+    );
 
     return {
       props: {
@@ -151,8 +172,12 @@ export const getServerSideProps = propsWithContainer(
         leastVisited: retrieveHospitalVisitTotals.leastVisited,
         mostVisited: retrieveHospitalVisitTotals.mostVisited,
         trust: { name: trustResponse.trust?.name },
+        averageParticipantsInVisit:
+          averageParticipantsInVisitResponse.averageParticipantsInVisit,
         wardError: wardsResponse.error,
         trustError: trustResponse.error,
+        averageParticipantsInVisitError:
+          averageParticipantsInVisitResponse.error,
         visitsScheduled: retrieveWardVisitTotals.total,
       },
     };

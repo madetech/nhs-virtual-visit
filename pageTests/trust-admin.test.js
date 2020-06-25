@@ -65,12 +65,18 @@ describe("trust-admin", () => {
 
   const retrieveHospitalVisitTotals = jest.fn().mockReturnValue(hospitals);
 
+  const retrieveAverageParticipantsInVisit = jest
+    .fn()
+    .mockReturnValue({ averageParticipantsInVisit: 3, error: null });
+
   const container = {
     getRetrieveWards: () => getRetrieveWardsSpy,
     getRetrieveTrustById: () => retrieveTrustByIdSpy,
     getRetrieveHospitalsByTrustId: () => retrieveHospitalsByTrustId,
     getRetrieveWardVisitTotals: () => retrieveWardVisitTotalsSpy,
     getRetrieveHospitalVisitTotals: () => retrieveHospitalVisitTotals,
+    getRetrieveAverageParticipantsInVisit: () =>
+      retrieveAverageParticipantsInVisit,
     getTokenProvider: () => tokenProvider,
   };
 
@@ -194,7 +200,7 @@ describe("trust-admin", () => {
 
       expect(retrieveTrustByIdSpy).toHaveBeenCalledWith(trustId);
       expect(props.trust).toEqual({ name: "Doggo Trust" });
-      expect(props.wardError).toBeNull();
+      expect(props.trustError).toBeNull();
     });
 
     it("sets an error in props if trust error", async () => {
@@ -212,6 +218,35 @@ describe("trust-admin", () => {
       });
 
       expect(props.trustError).toEqual("Error!");
+    });
+
+    it("retrieves the average number of participants in a visit", async () => {
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(retrieveAverageParticipantsInVisit).toHaveBeenCalledWith(trustId);
+      expect(props.averageParticipantsInVisit).toEqual(3);
+      expect(props.averageParticipantsInVisitError).toBeNull();
+    });
+
+    it("sets an error in props if trust error", async () => {
+      const retrieveAverageParticipantsInVisitError = jest.fn(async () => ({
+        error: "Error!",
+      }));
+
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container: Object.assign({}, container, {
+          getRetrieveAverageParticipantsInVisit: () =>
+            retrieveAverageParticipantsInVisitError,
+        }),
+      });
+
+      expect(props.averageParticipantsInVisitError).toEqual("Error!");
     });
   });
 });
