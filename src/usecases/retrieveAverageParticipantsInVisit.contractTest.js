@@ -46,7 +46,8 @@ describe("retrieveAverageParticipantsInVisit contract tests", () => {
       sessionId,
     });
 
-    // A trust with a visit with 1 participant and another with 2 participants
+    // A trust with a visit with 1 participant, one with 2 participants and
+    // another with 1 participant
     const { trustId: trustId2 } = await setupTrust({ adminCode: "TESTCODE2" });
 
     const { hospitalId: hospitalId2 } = await container.getCreateHospital()({
@@ -125,12 +126,37 @@ describe("retrieveAverageParticipantsInVisit contract tests", () => {
       sessionId: sessionId4,
     });
 
+    const { id: visitId4 } = await container.getCreateVisit()({
+      patientName: "Mermista",
+      contactEmail: "seahawk@example.com",
+      contactName: "Seahawk",
+      callTime: new Date("2020-06-01 13:00"),
+      callId: "testCallId4",
+      provider: "TESTPROVIDER",
+      wardId: wardId2,
+      callPassword: "testCallPassword",
+    });
+
+    const sessionId5 = uuidv4();
+
+    await container.getCaptureEvent()({
+      action: "join-visit",
+      visitId: visitId4,
+      sessionId: sessionId5,
+    });
+
+    await container.getCaptureEvent()({
+      action: "leave-visit",
+      visitId: visitId4,
+      sessionId: sessionId5,
+    });
+
     const {
       averageParticipantsInVisit,
       error,
     } = await container.getRetrieveAverageParticipantsInVisit()(trustId2);
 
-    expect(averageParticipantsInVisit).toEqual(1.5);
+    expect(averageParticipantsInVisit).toEqual(1.3);
     expect(error).toBeNull();
   });
 
