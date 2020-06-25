@@ -23,7 +23,9 @@ const TrustAdmin = ({
   visitsScheduled,
 }) => {
   if (wardError || trustError || averageParticipantsInVisitError) {
-    return <Error />;
+    return (
+      <Error err={wardError || trustError || averageParticipantsInVisitError} />
+    );
   }
 
   return (
