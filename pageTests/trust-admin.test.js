@@ -69,6 +69,10 @@ describe("trust-admin", () => {
     .fn()
     .mockReturnValue({ averageParticipantsInVisit: 3, error: null });
 
+  const retrieveAverageVisitTimeByTrustId = jest
+    .fn()
+    .mockReturnValue({ averageVisitTimeSeconds: 4200, error: null });
+
   const retrieveWardVisitTotalsStartDateByTrustId = jest
     .fn()
     .mockReturnValue({ startDate: new Date("2020-04-01"), error: null });
@@ -81,6 +85,8 @@ describe("trust-admin", () => {
     getRetrieveHospitalVisitTotals: () => retrieveHospitalVisitTotals,
     getRetrieveAverageParticipantsInVisit: () =>
       retrieveAverageParticipantsInVisit,
+    getRetrieveAverageVisitTimeByTrustId: () =>
+      retrieveAverageVisitTimeByTrustId,
     getRetrieveWardVisitTotalsStartDateByTrustId: () =>
       retrieveWardVisitTotalsStartDateByTrustId,
     getTokenProvider: () => tokenProvider,
@@ -253,6 +259,18 @@ describe("trust-admin", () => {
       });
 
       expect(props.error).toEqual("Error!");
+    });
+
+    it("retrieves the average visit duration", async () => {
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(retrieveAverageVisitTimeByTrustId).toHaveBeenCalledWith(trustId);
+      expect(props.averageVisitTime).toEqual("1 hour, 10 minutes");
+      expect(props.error).toBeNull();
     });
 
     it("retrieves the starting date for booked visits reporting", async () => {

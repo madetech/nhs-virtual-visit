@@ -11,6 +11,9 @@ import AnchorLink from "../src/components/AnchorLink";
 import ReviewDate from "../src/components/ReviewDate";
 import { TRUST_ADMIN } from "../src/helpers/userTypes";
 import formatDate from "../src/helpers/formatDate";
+import moment from "moment";
+import momentDurationFormatSetup from "moment-duration-format";
+momentDurationFormatSetup(moment);
 
 const TrustAdmin = ({
   error,
@@ -22,6 +25,7 @@ const TrustAdmin = ({
   averageParticipantsInVisit,
   wardVisitTotalsStartDate,
   visitsScheduled,
+  averageVisitTime,
 }) => {
   if (error) {
     return <Error err={error} />;
@@ -58,6 +62,18 @@ const TrustAdmin = ({
               <NumberTile
                 number={averageParticipantsInVisit}
                 label="average participants in a visit"
+              />
+            </GridColumn>
+          </GridRow>
+
+          <GridRow className="nhsuk-u-padding-bottom-3">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-third"
+            >
+              <NumberTile
+                number={averageVisitTime}
+                label="average visit time"
               />
             </GridColumn>
           </GridRow>
@@ -175,11 +191,23 @@ export const getServerSideProps = propsWithContainer(
       ? formatDate(retrieveWardVisitTotalsStartDateResponse.startDate)
       : null;
 
+    const {
+      averageVisitTimeSeconds,
+      error: averageVisitTimeSecondsError,
+    } = await container.getRetrieveAverageVisitTimeByTrustId()(
+      authenticationToken.trustId
+    );
+
+    const averageVisitTime = moment
+      .duration(averageVisitTimeSeconds, "seconds")
+      .format("h [hours], m [minutes]");
+
     const error =
       wardError ||
       trustError ||
       averageParticipantsInVisitError ||
-      retrieveWardVisitTotalsStartDateResponse.error;
+      retrieveWardVisitTotalsStartDateResponse.error ||
+      averageVisitTimeSecondsError;
 
     return {
       props: {
@@ -191,6 +219,7 @@ export const getServerSideProps = propsWithContainer(
         wardVisitTotalsStartDate,
         averageParticipantsInVisit,
         visitsScheduled: retrieveWardVisitTotals.total,
+        averageVisitTime,
         error,
       },
     };
