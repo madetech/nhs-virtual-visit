@@ -10,3 +10,10 @@ export const setupTrust = async (args = {}) => {
     ...args,
   });
 };
+
+export const setupHospital = async (args = {}) => {
+  return await container.getCreateHospital()({
+    name: "Test Hospital",
+    ...args,
+  });
+};

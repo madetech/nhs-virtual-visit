@@ -1,5 +1,5 @@
 import AppContainer from "../containers/AppContainer";
-import { setupTrust } from "../testUtils/factories";
+import { setupTrust, setupHospital } from "../testUtils/factories";
 import { v4 as uuidv4 } from "uuid";
 import MockDate from "mockdate";
 
@@ -9,11 +9,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
   it("returns the average visit time for a Trust", async () => {
     // A trust with a visit with 1 participant
     const { trustId } = await setupTrust();
-
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
+    const { hospitalId } = await setupHospital({ trustId });
 
     const { wardId } = await container.getCreateWard()({
       name: "Test Ward 1",
@@ -109,11 +105,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
   it("returns 0 if there is only 1 event for a trust", async () => {
     // A trust with a visit with 1 participant
     const { trustId } = await setupTrust();
-
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
+    const { hospitalId } = await setupHospital({ trustId });
 
     const { wardId } = await container.getCreateWard()({
       name: "Test Ward 1",
@@ -155,11 +147,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
   it("returns 0 if there are only join events", async () => {
     // A trust with a visit with 1 participant
     const { trustId } = await setupTrust();
-
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
+    const { hospitalId } = await setupHospital({ trustId });
 
     const { wardId } = await container.getCreateWard()({
       name: "Test Ward 1",
@@ -207,11 +195,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
   it("ignores visits with 0 duration when calculating the average", async () => {
     // A trust with a visit with 1 participant
     const { trustId } = await setupTrust();
-
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
+    const { hospitalId } = await setupHospital({ trustId });
 
     const { wardId } = await container.getCreateWard()({
       name: "Test Ward 1",
