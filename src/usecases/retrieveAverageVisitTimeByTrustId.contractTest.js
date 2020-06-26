@@ -11,15 +11,26 @@ import MockDate from "mockdate";
 describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
   const container = AppContainer.getInstance();
 
-  it("returns the average visit time for a Trust", async () => {
-    // A trust with a visit with 1 participant
-    const { trustId } = await setupTrust();
-    const { hospitalId } = await setupHospital({ trustId });
-    const { wardId } = await setupWard({
+  let trustId;
+  let hospitalId;
+  let wardId;
+
+  beforeEach(async () => {
+    const trust = await setupTrust();
+    trustId = trust.trustId;
+
+    const hospital = await setupHospital({ trustId });
+    hospitalId = hospital.hospitalId;
+
+    const ward = await setupWard({
       hospitalId: hospitalId,
       trustId: trustId,
     });
+    wardId = ward.wardId;
+  });
 
+  it("returns the average visit time for a Trust", async () => {
+    // A trust with a visit with 1 participant
     const { id: visitId } = await setupVisit({
       wardId: wardId,
     });
@@ -79,9 +90,6 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
   });
 
   it("returns 0 when there are no events", async () => {
-    // A trust with a visit with 1 participant
-    const { trustId } = await setupTrust();
-
     const {
       averageVisitTimeSeconds,
       error,
@@ -93,13 +101,6 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
 
   it("returns 0 if there is only 1 event for a trust", async () => {
     // A trust with a visit with 1 participant
-    const { trustId } = await setupTrust();
-    const { hospitalId } = await setupHospital({ trustId });
-    const { wardId } = await setupWard({
-      hospitalId: hospitalId,
-      trustId: trustId,
-    });
-
     const { id: visitId } = await setupVisit({
       wardId: wardId,
     });
@@ -125,13 +126,6 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
 
   it("returns 0 if there are only join events", async () => {
     // A trust with a visit with 1 participant
-    const { trustId } = await setupTrust();
-    const { hospitalId } = await setupHospital({ trustId });
-    const { wardId } = await setupWard({
-      hospitalId: hospitalId,
-      trustId: trustId,
-    });
-
     const { id: visitId } = await setupVisit({
       wardId: wardId,
     });
@@ -163,13 +157,6 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
 
   it("ignores visits with 0 duration when calculating the average", async () => {
     // A trust with a visit with 1 participant
-    const { trustId } = await setupTrust();
-    const { hospitalId } = await setupHospital({ trustId });
-    const { wardId } = await setupWard({
-      hospitalId: hospitalId,
-      trustId: trustId,
-    });
-
     const { id: visitId } = await setupVisit({
       wardId: wardId,
     });
