@@ -25,3 +25,16 @@ export const setupWard = async (args = {}) => {
     ...args,
   });
 };
+
+export const setupVisit = async (args = {}) => {
+  return await container.getCreateVisit()({
+    patientName: "Patient Name",
+    contactEmail: "contact@example.com",
+    contactName: "Contact Name",
+    callTime: new Date("2020-06-01 13:00"),
+    callId: "TESTCALLID",
+    provider: "TESTPROVIDER",
+    callPassword: "TESTCALLPASSWORD",
+    ...args,
+  });
+};

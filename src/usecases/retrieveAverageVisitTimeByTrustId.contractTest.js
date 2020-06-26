@@ -1,5 +1,10 @@
 import AppContainer from "../containers/AppContainer";
-import { setupTrust, setupHospital, setupWard } from "../testUtils/factories";
+import {
+  setupTrust,
+  setupHospital,
+  setupWard,
+  setupVisit,
+} from "../testUtils/factories";
 import { v4 as uuidv4 } from "uuid";
 import MockDate from "mockdate";
 
@@ -15,15 +20,8 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       trustId: trustId,
     });
 
-    const { id: visitId } = await container.getCreateVisit()({
-      patientName: "Glimmer",
-      contactEmail: "bow@example.com",
-      contactName: "Bow",
-      callTime: new Date("2020-06-01 13:00"),
-      callId: "testCallId",
-      provider: "TESTPROVIDER",
+    const { id: visitId } = await setupVisit({
       wardId: wardId,
-      callPassword: "testCallPassword",
     });
 
     const sessionId = uuidv4();
@@ -44,15 +42,9 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       sessionId,
     });
 
-    const { id: visit2Id } = await container.getCreateVisit()({
-      patientName: "Glimmer",
-      contactEmail: "bow@example.com",
-      contactName: "Bow",
-      callTime: new Date("2020-06-01 12:00"),
-      callId: "testCallId2",
-      provider: "TESTPROVIDER",
+    const { id: visit2Id } = await setupVisit({
       wardId: wardId,
-      callPassword: "testCallPassword",
+      callId: "TESTCALLID2",
     });
 
     const session2Id = uuidv4();
@@ -108,15 +100,8 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       trustId: trustId,
     });
 
-    const { id: visitId } = await container.getCreateVisit()({
-      patientName: "Glimmer",
-      contactEmail: "bow@example.com",
-      contactName: "Bow",
-      callTime: new Date("2020-06-01 13:00"),
-      callId: "testCallId",
-      provider: "TESTPROVIDER",
+    const { id: visitId } = await setupVisit({
       wardId: wardId,
-      callPassword: "testCallPassword",
     });
 
     const sessionId = uuidv4();
@@ -147,15 +132,8 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       trustId: trustId,
     });
 
-    const { id: visitId } = await container.getCreateVisit()({
-      patientName: "Glimmer",
-      contactEmail: "bow@example.com",
-      contactName: "Bow",
-      callTime: new Date("2020-06-01 13:00"),
-      callId: "testCallId",
-      provider: "TESTPROVIDER",
+    const { id: visitId } = await setupVisit({
       wardId: wardId,
-      callPassword: "testCallPassword",
     });
 
     MockDate.set(new Date("2020-06-01 13:00"));
@@ -192,15 +170,8 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       trustId: trustId,
     });
 
-    const { id: visitId } = await container.getCreateVisit()({
-      patientName: "Glimmer",
-      contactEmail: "bow@example.com",
-      contactName: "Bow",
-      callTime: new Date("2020-06-01 13:00"),
-      callId: "testCallId",
-      provider: "TESTPROVIDER",
+    const { id: visitId } = await setupVisit({
       wardId: wardId,
-      callPassword: "testCallPassword",
     });
 
     const sessionId = uuidv4();
@@ -221,15 +192,9 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       sessionId,
     });
 
-    const { id: visit2Id } = await container.getCreateVisit()({
-      patientName: "Glimmer",
-      contactEmail: "bow@example.com",
-      contactName: "Bow",
-      callTime: new Date("2020-06-01 12:00"),
-      callId: "testCallId2",
-      provider: "TESTPROVIDER",
+    const { id: visit2Id } = await setupVisit({
       wardId: wardId,
-      callPassword: "testCallPassword",
+      callId: "TESTCALLID2",
     });
 
     const session2Id = uuidv4();
