@@ -97,4 +97,10 @@ describe("AppContainer", () => {
   it("returns getRetrieveAverageParticipantsInVisit", () => {
     expect(container.getRetrieveAverageParticipantsInVisit()).toBeDefined();
   });
+
+  it("returns getRetrieveWardVisitTotalsStartDateByTrustId", () => {
+    expect(
+      container.getRetrieveWardVisitTotalsStartDateByTrustId()
+    ).toBeDefined();
+  });
 });
