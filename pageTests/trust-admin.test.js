@@ -110,7 +110,7 @@ describe("trust-admin", () => {
 
       expect(getRetrieveWardsSpy).toHaveBeenCalledWith(1);
       expect(props.wards).toEqual(wards);
-      expect(props.wardError).toBeNull();
+      expect(props.error).toBeNull();
     });
 
     it("retrieves hospitals", async () => {
@@ -194,7 +194,7 @@ describe("trust-admin", () => {
         }),
       });
 
-      expect(props.wardError).toEqual("Error!");
+      expect(props.error).toEqual("Error!");
     });
 
     it("retrieves the trust of the trustAdmin", async () => {
@@ -206,7 +206,7 @@ describe("trust-admin", () => {
 
       expect(retrieveTrustByIdSpy).toHaveBeenCalledWith(trustId);
       expect(props.trust).toEqual({ name: "Doggo Trust" });
-      expect(props.trustError).toBeNull();
+      expect(props.error).toBeNull();
     });
 
     it("sets an error in props if trust error", async () => {
@@ -223,7 +223,7 @@ describe("trust-admin", () => {
         }),
       });
 
-      expect(props.trustError).toEqual("Error!");
+      expect(props.error).toEqual("Error!");
     });
 
     it("retrieves the average number of participants in a visit", async () => {
@@ -235,7 +235,7 @@ describe("trust-admin", () => {
 
       expect(retrieveAverageParticipantsInVisit).toHaveBeenCalledWith(trustId);
       expect(props.averageParticipantsInVisit).toEqual(3);
-      expect(props.averageParticipantsInVisitError).toBeNull();
+      expect(props.error).toBeNull();
     });
 
     it("sets an error in props if average participants in visit error", async () => {
@@ -252,7 +252,7 @@ describe("trust-admin", () => {
         }),
       });
 
-      expect(props.averageParticipantsInVisitError).toEqual("Error!");
+      expect(props.error).toEqual("Error!");
     });
 
     it("retrieves the starting date for booked visits reporting", async () => {
@@ -266,7 +266,7 @@ describe("trust-admin", () => {
         trustId
       );
       expect(props.wardVisitTotalsStartDate).toEqual("1 April 2020");
-      expect(props.wardVisitTotalsStartDateError).toBeNull();
+      expect(props.error).toBeNull();
     });
 
     it("sets an error in props if starting date for booked visits reporting error", async () => {
@@ -287,7 +287,7 @@ describe("trust-admin", () => {
         },
       });
 
-      expect(props.wardVisitTotalsStartDateError).toEqual("Error!");
+      expect(props.error).toEqual("Error!");
     });
   });
 });
