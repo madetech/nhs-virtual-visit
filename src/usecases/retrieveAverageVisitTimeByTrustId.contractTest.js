@@ -1,5 +1,5 @@
 import AppContainer from "../containers/AppContainer";
-import { setupTrust, setupHospital } from "../testUtils/factories";
+import { setupTrust, setupHospital, setupWard } from "../testUtils/factories";
 import { v4 as uuidv4 } from "uuid";
 import MockDate from "mockdate";
 
@@ -10,10 +10,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     // A trust with a visit with 1 participant
     const { trustId } = await setupTrust();
     const { hospitalId } = await setupHospital({ trustId });
-
-    const { wardId } = await container.getCreateWard()({
-      name: "Test Ward 1",
-      code: "wardCode1",
+    const { wardId } = await setupWard({
       hospitalId: hospitalId,
       trustId: trustId,
     });
@@ -106,10 +103,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     // A trust with a visit with 1 participant
     const { trustId } = await setupTrust();
     const { hospitalId } = await setupHospital({ trustId });
-
-    const { wardId } = await container.getCreateWard()({
-      name: "Test Ward 1",
-      code: "wardCode1",
+    const { wardId } = await setupWard({
       hospitalId: hospitalId,
       trustId: trustId,
     });
@@ -148,10 +142,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     // A trust with a visit with 1 participant
     const { trustId } = await setupTrust();
     const { hospitalId } = await setupHospital({ trustId });
-
-    const { wardId } = await container.getCreateWard()({
-      name: "Test Ward 1",
-      code: "wardCode1",
+    const { wardId } = await setupWard({
       hospitalId: hospitalId,
       trustId: trustId,
     });
@@ -196,10 +187,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     // A trust with a visit with 1 participant
     const { trustId } = await setupTrust();
     const { hospitalId } = await setupHospital({ trustId });
-
-    const { wardId } = await container.getCreateWard()({
-      name: "Test Ward 1",
-      code: "wardCode1",
+    const { wardId } = await setupWard({
       hospitalId: hospitalId,
       trustId: trustId,
     });

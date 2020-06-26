@@ -17,3 +17,11 @@ export const setupHospital = async (args = {}) => {
     ...args,
   });
 };
+
+export const setupWard = async (args = {}) => {
+  return await container.getCreateWard()({
+    name: "Test Ward",
+    code: "wardCode",
+    ...args,
+  });
+};
