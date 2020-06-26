@@ -13,30 +13,18 @@ import { TRUST_ADMIN } from "../src/helpers/userTypes";
 import formatDate from "../src/helpers/formatDate";
 
 const TrustAdmin = ({
-  wardError,
-  trustError,
+  error,
   wards,
   hospitals,
   leastVisited,
   mostVisited,
   trust,
   averageParticipantsInVisit,
-  averageParticipantsInVisitError,
   wardVisitTotalsStartDate,
-  wardVisitTotalsStartDateError,
   visitsScheduled,
 }) => {
-  if (wardError || trustError || averageParticipantsInVisitError) {
-    return (
-      <Error
-        err={
-          wardError ||
-          trustError ||
-          averageParticipantsInVisitError ||
-          wardVisitTotalsStartDateError
-        }
-      />
-    );
+  if (error) {
+    return <Error err={error} />;
   }
 
   return (
@@ -158,13 +146,13 @@ const TrustAdmin = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, authenticationToken }) => {
-    const wardsResponse = await container.getRetrieveWards()(
+    const { wards, error: wardError } = await container.getRetrieveWards()(
       authenticationToken.trustId
     );
     const hospitalsResponse = await container.getRetrieveHospitalsByTrustId()(
       authenticationToken.trustId
     );
-    const trustResponse = await container.getRetrieveTrustById()(
+    const { trust, error: trustError } = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
     const retrieveHospitalVisitTotals = await container.getRetrieveHospitalVisitTotals()(
@@ -173,7 +161,10 @@ export const getServerSideProps = propsWithContainer(
     const retrieveWardVisitTotals = await container.getRetrieveWardVisitTotals()(
       authenticationToken.trustId
     );
-    const averageParticipantsInVisitResponse = await container.getRetrieveAverageParticipantsInVisit()(
+    const {
+      averageParticipantsInVisit,
+      error: averageParticipantsInVisitError,
+    } = await container.getRetrieveAverageParticipantsInVisit()(
       authenticationToken.trustId
     );
     const retrieveWardVisitTotalsStartDateResponse = await container.getRetrieveWardVisitTotalsStartDateByTrustId()(
@@ -184,23 +175,23 @@ export const getServerSideProps = propsWithContainer(
       ? formatDate(retrieveWardVisitTotalsStartDateResponse.startDate)
       : null;
 
+    const error =
+      wardError ||
+      trustError ||
+      averageParticipantsInVisitError ||
+      retrieveWardVisitTotalsStartDateResponse.error;
+
     return {
       props: {
-        wards: wardsResponse.wards,
+        wards: wards,
         hospitals: hospitalsResponse.hospitals,
         leastVisited: retrieveHospitalVisitTotals.leastVisited,
         mostVisited: retrieveHospitalVisitTotals.mostVisited,
-        trust: { name: trustResponse.trust?.name },
-        averageParticipantsInVisit:
-          averageParticipantsInVisitResponse.averageParticipantsInVisit,
-        wardVisitTotalsStartDate: wardVisitTotalsStartDate,
-        wardError: wardsResponse.error,
-        trustError: trustResponse.error,
-        averageParticipantsInVisitError:
-          averageParticipantsInVisitResponse.error,
-        wardVisitTotalsStartDateError:
-          retrieveWardVisitTotalsStartDateResponse.error,
+        trust: { name: trust?.name },
+        wardVisitTotalsStartDate,
+        averageParticipantsInVisit,
         visitsScheduled: retrieveWardVisitTotals.total,
+        error,
       },
     };
   })
