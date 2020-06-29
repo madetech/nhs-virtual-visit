@@ -16,11 +16,11 @@ describe("retrieveWardVisitTotalsStartDateByTrustId contract tests", () => {
 
     await container.getUpdateWardVisitTotals()({
       wardId: wardId1,
-      date: new Date("2020-12-01T23:00:00.000Z"),
+      date: new Date(2020, 12, 1),
     });
     await container.getUpdateWardVisitTotals()({
       wardId: wardId1,
-      date: new Date("2020-06-01T23:00:00.000Z"),
+      date: new Date(2020, 6, 1),
     });
 
     // Another trust with ward visit totals
@@ -30,7 +30,7 @@ describe("retrieveWardVisitTotalsStartDateByTrustId contract tests", () => {
 
     await container.getUpdateWardVisitTotals()({
       wardId: wardId2,
-      date: new Date("2020-01-01T23:00:00.000Z"),
+      date: new Date(2020, 1, 1),
     });
 
     const {
@@ -40,7 +40,7 @@ describe("retrieveWardVisitTotalsStartDateByTrustId contract tests", () => {
       trustId1
     );
 
-    expect(startDate).toEqual(new Date("2020-06-01T23:00:00.000Z"));
+    expect(startDate).toEqual(new Date(2020, 6, 1));
     expect(error).toBeNull();
   });
 
