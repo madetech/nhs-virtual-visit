@@ -26,6 +26,18 @@ export const setupWard = async (args = {}) => {
   });
 };
 
+export const setupWardWithinHospitalAndTrust = async ({ index = 1 }) => {
+  const { trustId } = await setupTrust({ adminCode: `TESTCODE${index}` });
+  const { hospitalId } = await setupHospital({ trustId });
+  const { wardId } = await setupWard({
+    code: `wardCode${index}`,
+    trustId,
+    hospitalId,
+  });
+
+  return { wardId, hospitalId, trustId };
+};
+
 export const setupVisit = async (args = {}) => {
   return await container.getCreateVisit()({
     patientName: "Patient Name",
