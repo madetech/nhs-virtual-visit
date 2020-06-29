@@ -200,7 +200,7 @@ export const getServerSideProps = propsWithContainer(
 
     const averageVisitTime = moment
       .duration(averageVisitTimeSeconds, "seconds")
-      .format("h [hours], m [minutes]");
+      .format("h[hr], m[min]");
 
     const error =
       wardError ||
