@@ -269,7 +269,7 @@ describe("trust-admin", () => {
       });
 
       expect(retrieveAverageVisitTimeByTrustId).toHaveBeenCalledWith(trustId);
-      expect(props.averageVisitTime).toEqual("1 hour, 10 minutes");
+      expect(props.averageVisitTime).toEqual("1hr, 10mins");
       expect(props.error).toBeNull();
     });
 
