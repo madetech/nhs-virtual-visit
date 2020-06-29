@@ -6,12 +6,15 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
     );
   });
 
-  it("allows a ward staff to log in and displays their home page", () => {
+  it("allows a ward staff to log in and out", () => {
     GivenIAmAWardStaff();
     WhenIVisitTheLogInPage();
     AndIEnterAValidWardCode();
     AndISubmitTheForm();
     ThenISeeTheWardHomePage();
+
+    WhenIClickLogOut();
+    ThenISeeTheWardStaffLogInPage();
   });
 
   it("displays an error for an invalid code", () => {
@@ -21,7 +24,7 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
     ThenISeeAnError();
   });
 
-  // Allows a ward staff to log in and displays their home page
+  // Allows a ward staff to log in and out
   function GivenIAmAWardStaff() {}
 
   function WhenIVisitTheLogInPage() {
@@ -40,7 +43,15 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
     cy.contains("The code you entered was not recognised").should(
       "not.be.visible"
     );
-    cy.contains("Book a virtual visit").should("be.visible");
+    cy.get("h1").should("contain", "Virtual visits");
+  }
+
+  function WhenIClickLogOut() {
+    cy.get("a.nhsuk-header__navigation-link").contains("Log out").click();
+  }
+
+  function ThenISeeTheWardStaffLogInPage() {
+    cy.get("h1").should("contain", "Log in to book a virtual visit");
   }
 
   // Displays an error for an invalid code
