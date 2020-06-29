@@ -6,12 +6,15 @@ describe("As an admin, I want to log in so that I can access the service.", () =
     );
   });
 
-  it("allows an admin to log in and displays their home page", () => {
+  it("allows an admin to log in and out", () => {
     GivenIAmAnAdmin();
     WhenIVisitTheAdminLogInPage();
     AndIEnterAValidAdminCodeAndPassword();
     AndISubmitTheForm();
     ThenISeeTheAdminHomePage();
+
+    WhenIClickLogOut();
+    ThenISeeTheAdminLogInPage();
   });
 
   it("displays an error for an invalid code", () => {
@@ -36,7 +39,7 @@ describe("As an admin, I want to log in so that I can access the service.", () =
     cy.get("button").contains("Log in").click();
   }
 
-  // Allows an admin to log in and displays their home page
+  // Allows an admin to log in and out
   function GivenIAmAnAdmin() {}
 
   function AndIEnterAValidAdminCodeAndPassword() {
@@ -47,6 +50,14 @@ describe("As an admin, I want to log in so that I can access the service.", () =
   function ThenISeeTheAdminHomePage() {
     cy.contains("There is a problem").should("not.be.visible");
     cy.contains("Site administration").should("be.visible");
+  }
+
+  function WhenIClickLogOut() {
+    cy.get("a.nhsuk-header__navigation-link").contains("Log out").click();
+  }
+
+  function ThenISeeTheAdminLogInPage() {
+    cy.get("h1").should("contain", "Log in to manage your site");
   }
 
   // Displays an error for an invalid code
