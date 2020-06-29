@@ -1,3 +1,7 @@
+import moment from "moment";
+import momentDurationFormatSetup from "moment-duration-format";
+momentDurationFormatSetup(moment);
+
 const retrieveAverageVisitTimeByTrustId = ({ getDb }) => async (trustId) => {
   if (!trustId) return { error: "A trustId must be provided." };
 
@@ -31,8 +35,13 @@ const retrieveAverageVisitTimeByTrustId = ({ getDb }) => async (trustId) => {
     [trustId]
   );
 
+  const averageVisitTime = moment
+    .duration(parseFloat(averageVisitTimeSeconds), "seconds")
+    .format("h[hr], m[min]");
+
   return {
     averageVisitTimeSeconds: parseFloat(averageVisitTimeSeconds),
+    averageVisitTime,
     error: null,
   };
 };
