@@ -6,12 +6,15 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     );
   });
 
-  it("allows a trust admin to log in and displays their home page", () => {
+  it("allows a trust admin to log in and out", () => {
     GivenIAmATrustAdmin();
     WhenIVisitTheTrustAdminLogInPage();
     AndIEnterAValidTrustAdminCodeAndPassword();
     AndISubmitTheForm();
     ThenISeeTheTrustAdminHomePage();
+
+    WhenIClickLogOut();
+    ThenISeeTheTrustAdminLogInPage();
   });
 
   it("displays an error for an invalid code", () => {
@@ -36,7 +39,7 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     cy.get("button").contains("Log in").click();
   }
 
-  // Allows a trust admin to log in and displays their home page
+  // Allows a trust admin to log in and out
   function GivenIAmATrustAdmin() {}
 
   function AndIEnterAValidTrustAdminCodeAndPassword() {
@@ -48,6 +51,14 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     cy.contains("There is a problem").should("not.be.visible");
     cy.contains("Test Trust").should("be.visible");
     cy.contains("Dashboard").should("be.visible");
+  }
+
+  function WhenIClickLogOut() {
+    cy.get("a.nhsuk-header__navigation-link").contains("Log out").click();
+  }
+
+  function ThenISeeTheTrustAdminLogInPage() {
+    cy.get("h1").should("contain", "Log in to manage your trust");
   }
 
   // Displays an error for an invalid code
