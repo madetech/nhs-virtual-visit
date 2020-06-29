@@ -1,20 +1,18 @@
 import AppContainer from "../containers/AppContainer";
-import { setupTrust, setupHospital, setupWard } from "../testUtils/factories";
+import {
+  setupTrust,
+  setupWardWithinHospitalAndTrust,
+} from "../testUtils/factories";
 
 describe("retrieveWardVisitTotalsStartDateByTrustId contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns the date of when reporting started for a trust", async () => {
-    // A trust with booked visits
-    const { trustId: trustId1 } = await setupTrust({ adminCode: "TESTCODE1" });
-    const { hospitalId: hospitalId1 } = await setupHospital({
+    // A trust with ward visit totals
+    const {
+      wardId: wardId1,
       trustId: trustId1,
-    });
-    const { wardId: wardId1 } = await setupWard({
-      code: "wardCode1",
-      hospitalId: hospitalId1,
-      trustId: trustId1,
-    });
+    } = await setupWardWithinHospitalAndTrust({ index: 1 });
 
     await container.getUpdateWardVisitTotals()({
       wardId: wardId1,
@@ -25,15 +23,9 @@ describe("retrieveWardVisitTotalsStartDateByTrustId contract tests", () => {
       date: new Date("2020-06-01T23:00:00.000Z"),
     });
 
-    // Another trust with booked visits
-    const { trustId: trustId2 } = await setupTrust({ adminCode: "TESTCODE2" });
-    const { hospitalId: hospitalId2 } = await setupHospital({
-      trustId: trustId2,
-    });
-    const { wardId: wardId2 } = await setupWard({
-      code: "wardCode2",
-      hospitalId: hospitalId2,
-      trustId: trustId2,
+    // Another trust with ward visit totals
+    const { wardId: wardId2 } = await setupWardWithinHospitalAndTrust({
+      index: 2,
     });
 
     await container.getUpdateWardVisitTotals()({
