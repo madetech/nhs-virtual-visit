@@ -8,7 +8,9 @@ import Heading from "../src/components/Heading";
 import NumberTile from "../src/components/NumberTile";
 import Text from "../src/components/Text";
 import AnchorLink from "../src/components/AnchorLink";
+import ReviewDate from "../src/components/ReviewDate";
 import { TRUST_ADMIN } from "../src/helpers/userTypes";
+import formatDate from "../src/helpers/formatDate";
 
 const TrustAdmin = ({
   wardError,
@@ -20,11 +22,20 @@ const TrustAdmin = ({
   trust,
   averageParticipantsInVisit,
   averageParticipantsInVisitError,
+  wardVisitTotalsStartDate,
+  wardVisitTotalsStartDateError,
   visitsScheduled,
 }) => {
   if (wardError || trustError || averageParticipantsInVisitError) {
     return (
-      <Error err={wardError || trustError || averageParticipantsInVisitError} />
+      <Error
+        err={
+          wardError ||
+          trustError ||
+          averageParticipantsInVisitError ||
+          wardVisitTotalsStartDateError
+        }
+      />
     );
   }
 
@@ -44,6 +55,12 @@ const TrustAdmin = ({
             </span>
             Dashboard
           </Heading>
+
+          {wardVisitTotalsStartDate && (
+            <ReviewDate>
+              Reporting for booked visits start date: {wardVisitTotalsStartDate}
+            </ReviewDate>
+          )}
 
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn
@@ -166,6 +183,13 @@ export const getServerSideProps = propsWithContainer(
     const averageParticipantsInVisitResponse = await container.getRetrieveAverageParticipantsInVisit()(
       authenticationToken.trustId
     );
+    const retrieveWardVisitTotalsStartDateResponse = await container.getRetrieveWardVisitTotalsStartDateByTrustId()(
+      authenticationToken.trustId
+    );
+
+    const wardVisitTotalsStartDate = retrieveWardVisitTotalsStartDateResponse.startDate
+      ? formatDate(retrieveWardVisitTotalsStartDateResponse.startDate)
+      : null;
 
     return {
       props: {
@@ -176,10 +200,13 @@ export const getServerSideProps = propsWithContainer(
         trust: { name: trustResponse.trust?.name },
         averageParticipantsInVisit:
           averageParticipantsInVisitResponse.averageParticipantsInVisit,
+        wardVisitTotalsStartDate: wardVisitTotalsStartDate,
         wardError: wardsResponse.error,
         trustError: trustResponse.error,
         averageParticipantsInVisitError:
           averageParticipantsInVisitResponse.error,
+        wardVisitTotalsStartDateError:
+          retrieveWardVisitTotalsStartDateResponse.error,
         visitsScheduled: retrieveWardVisitTotals.total,
       },
     };
