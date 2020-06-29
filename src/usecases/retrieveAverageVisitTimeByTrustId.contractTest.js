@@ -79,13 +79,13 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
 
     expect(error2).toBeNull();
 
-    // (90 + 80) minutes / 2 = 5100 seconds
     const {
-      averageVisitTimeSeconds,
+      averageVisitTime,
       error,
     } = await container.getRetrieveAverageVisitTimeByTrustId()(trustId);
 
-    expect(averageVisitTimeSeconds).toEqual(5100);
+    // (90 + 80) minutes / 2 = 1 hr, 25 mins
+    expect(averageVisitTime).toEqual("1 hr, 25 mins");
     expect(error).toBeNull();
   });
 
@@ -116,11 +116,11 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     });
 
     const {
-      averageVisitTimeSeconds,
+      averageVisitTime,
       error,
     } = await container.getRetrieveAverageVisitTimeByTrustId()(trustId);
 
-    expect(averageVisitTimeSeconds).toEqual(0);
+    expect(averageVisitTime).toEqual("0 mins");
     expect(error).toBeNull();
   });
 
@@ -147,11 +147,11 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     });
 
     const {
-      averageVisitTimeSeconds,
+      averageVisitTime,
       error,
     } = await container.getRetrieveAverageVisitTimeByTrustId()(trustId);
 
-    expect(averageVisitTimeSeconds).toEqual(0);
+    expect(averageVisitTime).toEqual("0 mins");
     expect(error).toBeNull();
   });
 
@@ -195,11 +195,11 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     });
 
     const {
-      averageVisitTimeSeconds,
+      averageVisitTime,
       error,
     } = await container.getRetrieveAverageVisitTimeByTrustId()(trustId);
 
-    expect(averageVisitTimeSeconds).toEqual(5400);
+    expect(averageVisitTime).toEqual("1 hr, 30 mins");
     expect(error).toBeNull();
   });
 
