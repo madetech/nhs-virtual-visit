@@ -3,19 +3,12 @@ import Layout from "../../src/components/Layout";
 import HeadingWithTime from "../../src/components/HeadingWithTime";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Error from "next/error";
-import Text from "../../src/components/Text";
 import verifyToken from "../../src/usecases/verifyToken";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import AccordionVisits from "../../src/components/AccordionVisits";
-import ActionLink from "../../src/components/ActionLink";
 import { WARD_STAFF } from "../../src/helpers/userTypes";
 
-export default function WardVisits({
-  scheduledCalls,
-  ward,
-  error,
-  showNavigationBar,
-}) {
+export default function WardVisits({ scheduledCalls, ward, error }) {
   if (error) {
     return <Error />;
   }
@@ -23,8 +16,7 @@ export default function WardVisits({
     <Layout
       title="Virtual visits"
       showNavigationBarForType={WARD_STAFF}
-      renderLogout={true}
-      showNavigationBar={showNavigationBar}
+      showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="full">
@@ -35,22 +27,6 @@ export default function WardVisits({
             </span>
             Virtual visits
           </HeadingWithTime>
-          {!showNavigationBar && (
-            <>
-              <h2 className="nhsuk-heading-l">Book a virtual visit</h2>
-
-              <Text>
-                You&apos;ll need the name and mobile number of your
-                patient&apos;s key contact in order to set up a virtual visit.
-              </Text>
-
-              <ActionLink href={`/wards/book-a-visit`}>
-                Book a virtual visit
-              </ActionLink>
-
-              <h2 className="nhsuk-heading-l">Pre-booked virtual visits</h2>
-            </>
-          )}
           <AccordionVisits visits={scheduledCalls} />
         </GridColumn>
       </GridRow>
@@ -68,10 +44,8 @@ export const getServerSideProps = propsWithContainer(
     let ward;
     ({ ward, error } = await container.getRetrieveWardById()(wardId, trustId));
 
-    const showNavigationBar = process.env.SHOW_NAVIGATION_BAR === "yes";
-
     return {
-      props: { scheduledCalls, ward, error, showNavigationBar },
+      props: { scheduledCalls, ward, error },
     };
   })
 );

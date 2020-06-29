@@ -160,7 +160,6 @@ const AddATrust = () => {
     <Layout
       title="Add a trust"
       hasErrors={errors.length != 0}
-      renderLogout={true}
       showNavigationBarForType={ADMIN}
       showNavigationBar={true}
     >

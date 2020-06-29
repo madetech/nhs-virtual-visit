@@ -20,7 +20,6 @@ const VisitStart = ({
   callId,
   error,
   callPassword,
-  showNavigationBar,
 }) => {
   const [userError, setUserError] = useState(error);
 
@@ -56,8 +55,7 @@ const VisitStart = ({
     <Layout
       title="Before handing over to the patient"
       showNavigationBarForType={WARD_STAFF}
-      renderLogout={true}
-      showNavigationBar={showNavigationBar}
+      showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="two-thirds">
@@ -110,7 +108,6 @@ export const getServerSideProps = propsWithContainer(
 
     const callTime = formatTime(scheduledCall.callTime, "HH:mm");
     const callDate = formatDate(scheduledCall.callTime);
-    const showNavigationBar = process.env.SHOW_NAVIGATION_BAR === "yes";
 
     return {
       props: {
@@ -123,7 +120,6 @@ export const getServerSideProps = propsWithContainer(
         callId,
         error,
         callPassword: scheduledCall.callPassword,
-        showNavigationBar,
       },
     };
   })

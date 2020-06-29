@@ -18,7 +18,6 @@ const TrustAdmin = ({ hospitals, hospitalError, trust, trustError }) => {
   return (
     <Layout
       title={`Hospitals for ${trust.name}`}
-      renderLogout={true}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >

@@ -17,7 +17,6 @@ const AddAWard = ({ hospitals, error, hospitalId }) => {
     <Layout
       title="Add a ward"
       hasErrors={errors.length != 0}
-      renderLogout={true}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >

@@ -31,7 +31,6 @@ const TrustAdmin = ({
   return (
     <Layout
       title={`Dashboard for ${trust.name}`}
-      renderLogout={true}
       showNavigationBarForType={TRUST_ADMIN}
       showNavigationBar={true}
     >

@@ -18,7 +18,6 @@ const ScheduleConfirmation = ({
   contactNumber,
   contactEmail,
   callTime,
-  showNavigationBar,
 }) => {
   const changeLink = () => {
     Router.push({
@@ -80,8 +79,7 @@ const ScheduleConfirmation = ({
     <Layout
       title="Check your answers before booking a virtual visit"
       showNavigationBarForType={WARD_STAFF}
-      renderLogout={true}
-      showNavigationBar={showNavigationBar}
+      showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="two-thirds">
@@ -129,8 +127,6 @@ export const getServerSideProps = propsWithContainer(
     } = query;
     const callTime = { day, month, year, hour, minute };
 
-    const showNavigationBar = process.env.SHOW_NAVIGATION_BAR === "yes";
-
     return {
       props: {
         patientName,
@@ -138,7 +134,6 @@ export const getServerSideProps = propsWithContainer(
         contactNumber: contactNumber || null,
         contactEmail: contactEmail || null,
         callTime,
-        showNavigationBar,
       },
     };
   })
