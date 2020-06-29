@@ -69,6 +69,10 @@ describe("trust-admin", () => {
     .fn()
     .mockReturnValue({ averageParticipantsInVisit: 3, error: null });
 
+  const retrieveWardVisitTotalsStartDateByTrustId = jest
+    .fn()
+    .mockReturnValue({ startDate: new Date("2020-04-01"), error: null });
+
   const container = {
     getRetrieveWards: () => getRetrieveWardsSpy,
     getRetrieveTrustById: () => retrieveTrustByIdSpy,
@@ -77,6 +81,8 @@ describe("trust-admin", () => {
     getRetrieveHospitalVisitTotals: () => retrieveHospitalVisitTotals,
     getRetrieveAverageParticipantsInVisit: () =>
       retrieveAverageParticipantsInVisit,
+    getRetrieveWardVisitTotalsStartDateByTrustId: () =>
+      retrieveWardVisitTotalsStartDateByTrustId,
     getTokenProvider: () => tokenProvider,
   };
 
@@ -232,7 +238,7 @@ describe("trust-admin", () => {
       expect(props.averageParticipantsInVisitError).toBeNull();
     });
 
-    it("sets an error in props if trust error", async () => {
+    it("sets an error in props if average participants in visit error", async () => {
       const retrieveAverageParticipantsInVisitError = jest.fn(async () => ({
         error: "Error!",
       }));
@@ -247,6 +253,41 @@ describe("trust-admin", () => {
       });
 
       expect(props.averageParticipantsInVisitError).toEqual("Error!");
+    });
+
+    it("retrieves the starting date for booked visits reporting", async () => {
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(retrieveWardVisitTotalsStartDateByTrustId).toHaveBeenCalledWith(
+        trustId
+      );
+      expect(props.wardVisitTotalsStartDate).toEqual("1 April 2020");
+      expect(props.wardVisitTotalsStartDateError).toBeNull();
+    });
+
+    it("sets an error in props if starting date for booked visits reporting error", async () => {
+      const retrieveWardVisitTotalsStartDateByTrustIdError = jest.fn(
+        async () => ({
+          startDate: null,
+          error: "Error!",
+        })
+      );
+
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container: {
+          ...container,
+          getRetrieveWardVisitTotalsStartDateByTrustId: () =>
+            retrieveWardVisitTotalsStartDateByTrustIdError,
+        },
+      });
+
+      expect(props.wardVisitTotalsStartDateError).toEqual("Error!");
     });
   });
 });
