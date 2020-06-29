@@ -71,7 +71,7 @@ describe("trust-admin", () => {
 
   const retrieveAverageVisitTimeByTrustId = jest
     .fn()
-    .mockReturnValue({ averageVisitTimeSeconds: 4200, error: null });
+    .mockReturnValue({ averageVisitTime: "1hr, 10mins", error: null });
 
   const retrieveWardVisitTotalsStartDateByTrustId = jest
     .fn()

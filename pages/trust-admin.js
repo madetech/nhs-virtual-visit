@@ -11,9 +11,6 @@ import AnchorLink from "../src/components/AnchorLink";
 import ReviewDate from "../src/components/ReviewDate";
 import { TRUST_ADMIN } from "../src/helpers/userTypes";
 import formatDate from "../src/helpers/formatDate";
-import moment from "moment";
-import momentDurationFormatSetup from "moment-duration-format";
-momentDurationFormatSetup(moment);
 
 const TrustAdmin = ({
   error,
@@ -192,15 +189,11 @@ export const getServerSideProps = propsWithContainer(
       : null;
 
     const {
-      averageVisitTimeSeconds,
+      averageVisitTime,
       error: averageVisitTimeSecondsError,
     } = await container.getRetrieveAverageVisitTimeByTrustId()(
       authenticationToken.trustId
     );
-
-    const averageVisitTime = moment
-      .duration(averageVisitTimeSeconds, "seconds")
-      .format("h[hr], m[min]");
 
     const error =
       wardError ||
