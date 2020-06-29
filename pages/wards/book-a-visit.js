@@ -29,7 +29,6 @@ const BookAVisit = ({
   initialContactNumber,
   initialContactEmail,
   initialCallDateTime,
-  showNavigationBar,
 }) => {
   const [textMessageIsChecked, setTextMessageIsChecked] = useState(
     initialContactNumber?.length > 0 || false
@@ -167,8 +166,7 @@ const BookAVisit = ({
       title="Book a virtual visit"
       hasErrors={errors.length != 0}
       showNavigationBarForType={WARD_STAFF}
-      renderLogout={true}
-      showNavigationBar={showNavigationBar}
+      showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="two-thirds">
@@ -264,9 +262,7 @@ const queryContainsInitialData = (query) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyToken(async ({ query, container }) => {
-    const showNavigationBar = process.env.SHOW_NAVIGATION_BAR === "yes";
-
-    let props = { showNavigationBar };
+    let props = {};
     if (queryContainsInitialData(query)) {
       const {
         patientName,

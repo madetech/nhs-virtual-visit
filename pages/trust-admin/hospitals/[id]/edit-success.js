@@ -15,7 +15,6 @@ const EditAHospitalSuccess = ({ error, hospitalName, hospitalId }) => {
   return (
     <Layout
       title={`${hospitalName} has been updated`}
-      renderLogout={true}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >

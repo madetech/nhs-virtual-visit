@@ -18,7 +18,6 @@ const EditAWard = ({ error, id, name, hospitalId, hospitals }) => {
     <Layout
       title="Edit a ward"
       hasErrors={errors.length != 0}
-      renderLogout={true}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >

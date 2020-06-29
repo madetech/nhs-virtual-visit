@@ -56,7 +56,6 @@ const ArchiveAWardConfirmation = ({
   return (
     <Layout
       title="Are you sure you want to delete this ward?"
-      renderLogout={true}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >

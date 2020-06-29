@@ -18,7 +18,6 @@ const EditHospital = ({ hospital, error }) => {
     <Layout
       title="Edit a hospital"
       hasErrors={errors.length != 0}
-      renderLogout={true}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >

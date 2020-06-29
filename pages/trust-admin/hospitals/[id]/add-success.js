@@ -15,7 +15,6 @@ const AddAHospitalSuccess = ({ error, name, id }) => {
   return (
     <Layout
       title={`${name} has been added`}
-      renderLogout={true}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >

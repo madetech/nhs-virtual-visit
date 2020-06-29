@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./styles.scss";
 import Head from "next/head";
-import LogoutButton from "../LogoutButton";
 import NavigationBarForUserType from "../NavigationBarForUserType";
 import HeaderLink from "../HeaderLink";
 import MenuToggle from "../../../node_modules/nhsuk-frontend/packages/components/header/menuToggle";
@@ -12,7 +11,6 @@ const Layout = ({
   children,
   backLink,
   mainStyleOverride,
-  renderLogout = false,
   isBookService = true,
   showNavigationBarForType,
   showNavigationBar = false,
@@ -69,10 +67,6 @@ const Layout = ({
                 >
                   Menu
                 </button>
-              )}
-
-              {!showNavigationBar && renderLogout && (
-                <LogoutButton renderLogout={renderLogout} />
               )}
             </div>
           </div>

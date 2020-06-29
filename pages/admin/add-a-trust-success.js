@@ -15,7 +15,6 @@ const AddATrustSuccess = ({ error, name }) => {
   return (
     <Layout
       title={`${name} has been added`}
-      renderLogout={true}
       showNavigationBarForType={ADMIN}
       showNavigationBar={true}
     >

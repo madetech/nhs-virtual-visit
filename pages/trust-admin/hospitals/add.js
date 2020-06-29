@@ -90,7 +90,6 @@ const AddAHospital = ({ error, trustId }) => {
     <Layout
       title="Add a hospital"
       hasErrors={errors.length != 0}
-      renderLogout={true}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >

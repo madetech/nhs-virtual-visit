@@ -28,7 +28,6 @@ const ShowHospital = ({
   return (
     <Layout
       title={hospital.name}
-      renderLogout={true}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >

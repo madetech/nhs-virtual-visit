@@ -14,7 +14,6 @@ const archiveAWardSuccess = ({ name, hospitalName, hospitalId, error }) => {
   return (
     <Layout
       title={`${name} has been deleted`}
-      renderLogout={true}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >

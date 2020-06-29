@@ -18,7 +18,6 @@ const Admin = ({ trusts, error }) => {
   return (
     <Layout
       title={`Site administration`}
-      renderLogout={true}
       showNavigationBarForType={ADMIN}
       showNavigationBar={true}
     >
