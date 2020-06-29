@@ -56,12 +56,6 @@ const TrustAdmin = ({
             Dashboard
           </Heading>
 
-          {wardVisitTotalsStartDate && (
-            <ReviewDate>
-              Reporting for booked visits start date: {wardVisitTotalsStartDate}
-            </ReviewDate>
-          )}
-
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn
               className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
@@ -99,12 +93,9 @@ const TrustAdmin = ({
             </GridColumn>
           </GridRow>
 
-          <GridRow className="nhsuk-u-padding-bottom-3">
-            <GridColumn
-              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
-              width="one-half"
-            >
-              <div className="nhsuk-panel nhsuk-u-margin-top-1">
+          <GridRow>
+            <GridColumn className="nhsuk-u-one-half" width="one-half">
+              <div className="nhsuk-panel nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-0">
                 <h3>Most booked visits</h3>
                 {mostVisited.length > 0 ? (
                   <ol>
@@ -128,11 +119,8 @@ const TrustAdmin = ({
                 )}
               </div>
             </GridColumn>
-            <GridColumn
-              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
-              width="one-half"
-            >
-              <div className="nhsuk-panel nhsuk-u-margin-top-1">
+            <GridColumn className="nhsuk-u-one-half" width="one-half">
+              <div className="nhsuk-panel nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-0">
                 <h3>Least booked visits</h3>
                 {leastVisited.length > 0 ? (
                   <ol>
@@ -157,6 +145,11 @@ const TrustAdmin = ({
               </div>
             </GridColumn>
           </GridRow>
+          {wardVisitTotalsStartDate && (
+            <ReviewDate>
+              Reporting for booked visits start date: {wardVisitTotalsStartDate}
+            </ReviewDate>
+          )}
         </GridColumn>
       </GridRow>
     </Layout>
