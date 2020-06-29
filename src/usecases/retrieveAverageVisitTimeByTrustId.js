@@ -37,7 +37,7 @@ const retrieveAverageVisitTimeByTrustId = ({ getDb }) => async (trustId) => {
 
   const averageVisitTime = moment
     .duration(parseFloat(averageVisitTimeSeconds), "seconds")
-    .format("h[hr], m[min]");
+    .format("h [hr], m [min]");
 
   return {
     averageVisitTimeSeconds: parseFloat(averageVisitTimeSeconds),

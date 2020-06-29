@@ -17,7 +17,7 @@ describe("retrieveAverageVisitTimeByTrustId", () => {
       container
     )(trustId);
 
-    expect(averageVisitTime).toEqual("3hrs, 25mins");
+    expect(averageVisitTime).toEqual("3 hrs, 25 mins");
   });
 
   it("formats the average visit time when the average visit time is NULL", async () => {
@@ -35,7 +35,7 @@ describe("retrieveAverageVisitTimeByTrustId", () => {
       container
     )(trustId);
 
-    expect(averageVisitTime).toEqual("0mins");
+    expect(averageVisitTime).toEqual("0 mins");
   });
 
   it("returns an error if no trustId is provided", async () => {
