@@ -103,4 +103,8 @@ describe("AppContainer", () => {
       container.getRetrieveWardVisitTotalsStartDateByTrustId()
     ).toBeDefined();
   });
+
+  it("returns getRetrieveReportingStartDateByTrustId", () => {
+    expect(container.getRetrieveReportingStartDateByTrustId()).toBeDefined();
+  });
 });
