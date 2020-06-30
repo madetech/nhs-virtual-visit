@@ -210,7 +210,7 @@ export const getServerSideProps = propsWithContainer(
         trust: { name: trust?.name },
         wardVisitTotalsStartDate,
         averageParticipantsInVisit,
-        visitsScheduled: retrieveWardVisitTotals.total,
+        visitsScheduled: retrieveWardVisitTotals.total.toLocaleString(),
         averageVisitTime,
         error,
       },
