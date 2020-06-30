@@ -16,6 +16,7 @@ describe("updateHospital contract tests", () => {
     const request = {
       name: "Test Hospital 2",
       id: hospitalId,
+      supportUrl: "https://www.support.example.com",
     };
 
     const { id: updatedHospitalId, error } = await updateHospital(container)(
@@ -30,7 +31,7 @@ describe("updateHospital contract tests", () => {
     expect(hospital).toEqual({
       id: hospitalId,
       name: "Test Hospital 2",
-      supportUrl: null,
+      supportUrl: "https://www.support.example.com",
     });
 
     expect(error).toBeNull();
