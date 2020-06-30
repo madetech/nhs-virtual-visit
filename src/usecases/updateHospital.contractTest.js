@@ -30,6 +30,7 @@ describe("updateHospital contract tests", () => {
     expect(hospital).toEqual({
       id: hospitalId,
       name: "Test Hospital 2",
+      supportUrl: null,
     });
 
     expect(error).toBeNull();

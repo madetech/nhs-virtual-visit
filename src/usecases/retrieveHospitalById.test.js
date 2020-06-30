@@ -8,6 +8,7 @@ describe("retrieveHospitalById", () => {
           oneOrNone: jest.fn().mockReturnValue({
             id: 1,
             name: "Test Hospital",
+            support_url: "https://www.support.example.com",
           }),
         };
       },
@@ -25,6 +26,7 @@ describe("retrieveHospitalById", () => {
     expect(hospital).toEqual({
       id: hospitalId,
       name: "Test Hospital",
+      supportUrl: "https://www.support.example.com",
     });
   });
 

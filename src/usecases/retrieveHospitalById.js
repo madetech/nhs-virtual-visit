@@ -11,6 +11,7 @@ const retrieveHospitalById = ({ getDb }) => async (hospitalId, trustId) => {
       hospital: {
         id: hospital.id,
         name: hospital.name,
+        supportUrl: hospital.support_url,
       },
       error: null,
     };
