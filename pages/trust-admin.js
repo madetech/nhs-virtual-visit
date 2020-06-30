@@ -21,6 +21,7 @@ const TrustAdmin = ({
   trust,
   averageParticipantsInVisit,
   wardVisitTotalsStartDate,
+  reportingStartDate,
   visitsScheduled,
   averageVisitTime,
 }) => {
@@ -145,9 +146,13 @@ const TrustAdmin = ({
               </div>
             </GridColumn>
           </GridRow>
-          {wardVisitTotalsStartDate && (
+          {(wardVisitTotalsStartDate || reportingStartDate) && (
             <ReviewDate>
-              Reporting for booked visits start date: {wardVisitTotalsStartDate}
+              {wardVisitTotalsStartDate &&
+                `Start date for booked visits reporting: ${wardVisitTotalsStartDate}`}
+              {wardVisitTotalsStartDate && reportingStartDate && <br />}
+              {reportingStartDate &&
+                `Start date for other reporting: ${reportingStartDate}`}
             </ReviewDate>
           )}
         </GridColumn>
@@ -182,9 +187,16 @@ export const getServerSideProps = propsWithContainer(
     const retrieveWardVisitTotalsStartDateResponse = await container.getRetrieveWardVisitTotalsStartDateByTrustId()(
       authenticationToken.trustId
     );
+    const retrieveReportingStartDateResponse = await container.getRetrieveReportingStartDateByTrustId()(
+      authenticationToken.trustId
+    );
 
     const wardVisitTotalsStartDate = retrieveWardVisitTotalsStartDateResponse.startDate
       ? formatDate(retrieveWardVisitTotalsStartDateResponse.startDate)
+      : null;
+
+    const reportingStartDate = retrieveReportingStartDateResponse.startDate
+      ? formatDate(retrieveReportingStartDateResponse.startDate)
       : null;
 
     const {
@@ -199,6 +211,7 @@ export const getServerSideProps = propsWithContainer(
       trustError ||
       averageParticipantsInVisitError ||
       retrieveWardVisitTotalsStartDateResponse.error ||
+      retrieveReportingStartDateResponse.error ||
       averageVisitTimeSecondsError;
 
     return {
@@ -209,6 +222,7 @@ export const getServerSideProps = propsWithContainer(
         mostVisited: retrieveHospitalVisitTotals.mostVisited,
         trust: { name: trust?.name },
         wardVisitTotalsStartDate,
+        reportingStartDate,
         averageParticipantsInVisit,
         visitsScheduled: retrieveWardVisitTotals.total.toLocaleString(),
         averageVisitTime,

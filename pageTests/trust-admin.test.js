@@ -77,6 +77,10 @@ describe("trust-admin", () => {
     .fn()
     .mockReturnValue({ startDate: new Date("2020-04-01"), error: null });
 
+  const retrieveReportingStartDateByTrustId = jest
+    .fn()
+    .mockReturnValue({ startDate: new Date("2020-05-01"), error: null });
+
   const container = {
     getRetrieveWards: () => getRetrieveWardsSpy,
     getRetrieveTrustById: () => retrieveTrustByIdSpy,
@@ -89,6 +93,8 @@ describe("trust-admin", () => {
       retrieveAverageVisitTimeByTrustId,
     getRetrieveWardVisitTotalsStartDateByTrustId: () =>
       retrieveWardVisitTotalsStartDateByTrustId,
+    getRetrieveReportingStartDateByTrustId: () =>
+      retrieveReportingStartDateByTrustId,
     getTokenProvider: () => tokenProvider,
   };
 
@@ -302,6 +308,37 @@ describe("trust-admin", () => {
           ...container,
           getRetrieveWardVisitTotalsStartDateByTrustId: () =>
             retrieveWardVisitTotalsStartDateByTrustIdError,
+        },
+      });
+
+      expect(props.error).toEqual("Error!");
+    });
+
+    it("retrieves the starting date for events reporting", async () => {
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(retrieveReportingStartDateByTrustId).toHaveBeenCalledWith(trustId);
+      expect(props.reportingStartDate).toEqual("1 May 2020");
+      expect(props.error).toBeNull();
+    });
+
+    it("sets an error in props if starting date for events reporting error", async () => {
+      const retrieveReportingStartDateByTrustIdError = jest.fn(async () => ({
+        startDate: null,
+        error: "Error!",
+      }));
+
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container: {
+          ...container,
+          getRetrieveReportingStartDateByTrustId: () =>
+            retrieveReportingStartDateByTrustIdError,
         },
       });
 
