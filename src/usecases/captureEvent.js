@@ -2,10 +2,10 @@ import moment from "moment";
 
 const captureEvent = ({ getDb }) => async ({ action, visitId, sessionId }) => {
   const db = await getDb();
-  const timestamp = moment().toISOString();
+  const timestamp = moment().utc().toISOString();
 
   try {
-    const captureEvent = await db.one(
+    const event = await db.one(
       `INSERT INTO events
           (id, time, action, visit_id, session_id)
           VALUES (default, $1, $2, $3, $4)
@@ -15,7 +15,7 @@ const captureEvent = ({ getDb }) => async ({ action, visitId, sessionId }) => {
 
     return {
       event: {
-        id: captureEvent.id,
+        id: event.id,
         time: timestamp,
         action: action,
         visitId: visitId,
