@@ -61,7 +61,7 @@ describe("trust-admin", () => {
     ],
   });
 
-  const retrieveWardVisitTotalsSpy = jest.fn().mockReturnValue({ total: 5 });
+  const retrieveWardVisitTotalsSpy = jest.fn().mockReturnValue({ total: 1234 });
 
   const retrieveHospitalVisitTotals = jest.fn().mockReturnValue(hospitals);
 
@@ -139,7 +139,7 @@ describe("trust-admin", () => {
       });
 
       expect(retrieveWardVisitTotalsSpy).toHaveBeenCalledWith(trustId);
-      expect(props.visitsScheduled).toEqual(5);
+      expect(props.visitsScheduled).toEqual("1,234");
     });
 
     it("retrieves usage stats", async () => {
