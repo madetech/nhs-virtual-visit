@@ -22,6 +22,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     ThenISeeTheBookAVirtualVisitForm();
 
     WhenISubmitTheForm();
+    ThenISeeTheCheckYourAnswersPage();
     AndIClickBookAVirtualVisit();
     ThenISeeTheVirtualVisitIsBooked();
 
