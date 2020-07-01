@@ -6,6 +6,7 @@ describe("end", () => {
   it("renders end of visit message", () => {
     const { getByText } = render(<EndOfVisit />);
     const text = getByText(/visit has completed/i);
+
     expect(text).toBeInTheDocument();
   });
 
@@ -13,18 +14,23 @@ describe("end", () => {
     it("has a link back to the ward visits page", () => {
       const { getByText } = render(<EndOfVisit wardId="TEST" />);
       const text = getByText(/return to virtual visits/i);
+
       expect(text).toBeInTheDocument();
     });
+
     it("does not show a link to the help and support page", () => {
       const { queryByText } = render(<EndOfVisit wardId="TEST" />);
       const text = queryByText(/Get further help and support/i);
+
       expect(text).not.toBeInTheDocument();
     });
+
     it("shows the correct rebook link", () => {
       const { getByText } = render(
         <EndOfVisit wardId="TEST" callId="TEST123" />
       );
       const text = getByText(/Rebook another virtual visit/i);
+
       expect(text).toBeInTheDocument();
     });
 
@@ -37,6 +43,7 @@ describe("end", () => {
         container,
         "/wards/book-a-visit?rebookCallId=TEST123"
       );
+
       expect(rebookLink).toBeInTheDocument();
     });
   });
@@ -47,6 +54,7 @@ describe("end", () => {
         cookie: "",
       },
     };
+
     it("provides the call id", async () => {
       const container = {
         getUserIsAuthenticated: () =>
@@ -54,6 +62,7 @@ describe("end", () => {
       };
       const query = { callId: "TEST123" };
       const { props } = await getServerSideProps({ req, container, query });
+
       expect(props.callId).toEqual("TEST123");
     });
 
