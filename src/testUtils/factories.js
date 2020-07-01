@@ -14,6 +14,8 @@ export const setupTrust = async (args = {}) => {
 export const setupHospital = async (args = {}) => {
   return await container.getCreateHospital()({
     name: "Test Hospital",
+    supportUrl: "https://www.support.example.com",
+    surveyUrl: "https://www.survey.example.com",
     ...args,
   });
 };
