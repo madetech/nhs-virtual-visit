@@ -6,7 +6,11 @@ describe("retrieveAverageVisitsPerDay", () => {
   let dbAnySpy;
 
   beforeEach(() => {
-    dbAnySpy = jest.fn().mockResolvedValue([{ average_visits_per_day: "3.5" }]);
+    dbAnySpy = jest.fn().mockResolvedValue([
+      { visits: "3", call_date: new Date(2020, 6, 1) },
+      { visits: "2", call_date: new Date(2020, 6, 2) },
+      { visits: "1", call_date: new Date(2020, 6, 3) },
+    ]);
   });
 
   it("returns an error if a trustId is not provided", async () => {
@@ -42,9 +46,9 @@ describe("retrieveAverageVisitsPerDay", () => {
 
     const { averageVisitsPerDay, error } = await retrieveAverageVisitsPerDay(
       container
-    )(trustId);
+    )(trustId, new Date(2020, 6, 3));
 
-    expect(averageVisitsPerDay).toEqual(3.5);
+    expect(averageVisitsPerDay).toEqual(2);
     expect(error).toBeNull();
   });
 });
