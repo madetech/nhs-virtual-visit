@@ -10,7 +10,6 @@ import Text from "../src/components/Text";
 import AnchorLink from "../src/components/AnchorLink";
 import ReviewDate from "../src/components/ReviewDate";
 import { TRUST_ADMIN } from "../src/helpers/userTypes";
-import formatDate from "../src/helpers/formatDate";
 
 const TrustAdmin = ({
   error,
@@ -21,8 +20,10 @@ const TrustAdmin = ({
   trust,
   averageParticipantsInVisit,
   wardVisitTotalsStartDate,
+  reportingStartDate,
   visitsScheduled,
   averageVisitTime,
+  averageVisitsPerDay,
 }) => {
   if (error) {
     return <Error err={error} />;
@@ -70,6 +71,15 @@ const TrustAdmin = ({
               <NumberTile
                 number={averageVisitTime}
                 label="average visit time"
+              />
+            </GridColumn>
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-third"
+            >
+              <NumberTile
+                number={averageVisitsPerDay}
+                label="average visits per day"
               />
             </GridColumn>
           </GridRow>
@@ -145,11 +155,17 @@ const TrustAdmin = ({
               </div>
             </GridColumn>
           </GridRow>
-          {wardVisitTotalsStartDate && (
-            <ReviewDate>
-              Reporting for booked visits start date: {wardVisitTotalsStartDate}
-            </ReviewDate>
-          )}
+
+          <ReviewDate
+            className="nhsuk-u-margin-bottom-0"
+            beforeDateText="Start date for booked visits reporting: "
+            date={wardVisitTotalsStartDate}
+          />
+          <ReviewDate
+            className="nhsuk-u-margin-0"
+            beforeDateText="Start date for other reporting: "
+            date={reportingStartDate}
+          />
         </GridColumn>
       </GridRow>
     </Layout>
@@ -179,13 +195,18 @@ export const getServerSideProps = propsWithContainer(
     } = await container.getRetrieveAverageParticipantsInVisit()(
       authenticationToken.trustId
     );
-    const retrieveWardVisitTotalsStartDateResponse = await container.getRetrieveWardVisitTotalsStartDateByTrustId()(
+    const {
+      startDate: wardVisitTotalsStartDate,
+      error: wardVisitTotalsStartDateError,
+    } = await container.getRetrieveWardVisitTotalsStartDateByTrustId()(
       authenticationToken.trustId
     );
-
-    const wardVisitTotalsStartDate = retrieveWardVisitTotalsStartDateResponse.startDate
-      ? formatDate(retrieveWardVisitTotalsStartDateResponse.startDate)
-      : null;
+    const {
+      startDate: reportingStartDate,
+      error: reportingStartDateError,
+    } = await container.getRetrieveReportingStartDateByTrustId()(
+      authenticationToken.trustId
+    );
 
     const {
       averageVisitTime,
@@ -194,12 +215,21 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId
     );
 
+    const {
+      averageVisitsPerDay,
+      error: averageVisitsPerDayError,
+    } = await container.getRetrieveAverageVisitsPerDayByTrustId()(
+      authenticationToken.trustId
+    );
+
     const error =
       wardError ||
       trustError ||
       averageParticipantsInVisitError ||
-      retrieveWardVisitTotalsStartDateResponse.error ||
-      averageVisitTimeSecondsError;
+      wardVisitTotalsStartDateError ||
+      reportingStartDateError ||
+      averageVisitTimeSecondsError ||
+      averageVisitsPerDayError;
 
     return {
       props: {
@@ -209,9 +239,11 @@ export const getServerSideProps = propsWithContainer(
         mostVisited: retrieveHospitalVisitTotals.mostVisited,
         trust: { name: trust?.name },
         wardVisitTotalsStartDate,
+        reportingStartDate,
         averageParticipantsInVisit,
         visitsScheduled: retrieveWardVisitTotals.total.toLocaleString(),
         averageVisitTime,
+        averageVisitsPerDay,
         error,
       },
     };

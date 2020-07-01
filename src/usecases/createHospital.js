@@ -2,6 +2,7 @@ const createHospital = ({ getDb }) => async ({
   name,
   trustId,
   supportUrl = null,
+  surveyUrl = null,
 }) => {
   const db = await getDb();
 
@@ -9,11 +10,11 @@ const createHospital = ({ getDb }) => async ({
     console.log("Creating hospital for", name);
     const createdHospital = await db.one(
       `INSERT INTO hospitals
-          (id, name, trust_id, support_url)
-          VALUES (default, $1, $2, $3)
+          (id, name, trust_id, support_url, survey_url)
+          VALUES (default, $1, $2, $3, $4)
           RETURNING id
         `,
-      [name, trustId, supportUrl]
+      [name, trustId, supportUrl, surveyUrl]
     );
 
     return {

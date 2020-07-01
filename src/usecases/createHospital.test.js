@@ -23,6 +23,7 @@ describe("createHospital", () => {
       "Defoe Hospital",
       2,
       null,
+      null,
     ]);
   });
 
@@ -40,6 +41,7 @@ describe("createHospital", () => {
       name: "Defoe Hospital",
       trustId: 2,
       supportUrl: "https://www.support.example.com",
+      surveyUrl: "https://www.survey.example.com",
     };
 
     const { hospitalId, error } = await createHospital(container)(request);
@@ -49,6 +51,7 @@ describe("createHospital", () => {
       "Defoe Hospital",
       2,
       "https://www.support.example.com",
+      "https://www.survey.example.com",
     ]);
   });
 

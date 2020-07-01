@@ -1,20 +1,19 @@
 import formatDate from "../helpers/formatDate";
 
-const retrieveWardVisitTotalsStartDateByTrustId = ({ getDb }) => async (
-  trustId
-) => {
+const retrieveReportingStartDateByTrustId = ({ getDb }) => async (trustId) => {
   if (!trustId) return { error: "A trustId must be provided." };
 
   const db = await getDb();
   try {
     const { start_date: startDate } = await db.one(
-      `SELECT ward_visit_totals.total_date AS start_date
-      FROM ward_visit_totals
-      LEFT JOIN wards ON ward_visit_totals.ward_id = wards.id
+      `SELECT events.time AS start_date
+      FROM events
+      LEFT JOIN scheduled_calls_table ON events.visit_id = scheduled_calls_table.id
+      LEFT JOIN wards ON scheduled_calls_table.ward_id = wards.id
       LEFT JOIN hospitals ON wards.hospital_id = hospitals.id
       LEFT JOIN trusts ON hospitals.trust_id = trusts.id
       WHERE trusts.id = $1
-      ORDER BY total_date ASC
+      ORDER BY time ASC
       LIMIT 1`,
       trustId
     );
@@ -29,4 +28,4 @@ const retrieveWardVisitTotalsStartDateByTrustId = ({ getDb }) => async (
   }
 };
 
-export default retrieveWardVisitTotalsStartDateByTrustId;
+export default retrieveReportingStartDateByTrustId;

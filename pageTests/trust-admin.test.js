@@ -75,7 +75,16 @@ describe("trust-admin", () => {
 
   const retrieveWardVisitTotalsStartDateByTrustId = jest
     .fn()
-    .mockReturnValue({ startDate: new Date("2020-04-01"), error: null });
+    .mockReturnValue({ startDate: "1 April 2020", error: null });
+
+  const retrieveReportingStartDateByTrustId = jest
+    .fn()
+    .mockReturnValue({ startDate: "1 May 2020", error: null });
+
+  const retrieveAverageVisitsPerDayByTrustId = jest.fn().mockReturnValue({
+    averageVisitsPerDay: 1,
+    error: null,
+  });
 
   const container = {
     getRetrieveWards: () => getRetrieveWardsSpy,
@@ -89,6 +98,10 @@ describe("trust-admin", () => {
       retrieveAverageVisitTimeByTrustId,
     getRetrieveWardVisitTotalsStartDateByTrustId: () =>
       retrieveWardVisitTotalsStartDateByTrustId,
+    getRetrieveReportingStartDateByTrustId: () =>
+      retrieveReportingStartDateByTrustId,
+    getRetrieveAverageVisitsPerDayByTrustId: () =>
+      retrieveAverageVisitsPerDayByTrustId,
     getTokenProvider: () => tokenProvider,
   };
 
@@ -165,7 +178,7 @@ describe("trust-admin", () => {
     });
 
     it("retrieves usage stats when fewer than 3 hospitals", async () => {
-      const hospitals = {
+      const threeHospitals = {
         hospitals: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
         leastVisited: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
         mostVisited: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
@@ -176,18 +189,18 @@ describe("trust-admin", () => {
         res,
         container: Object.assign({}, container, {
           getRetrieveHospitalVisitTotals: () =>
-            jest.fn().mockReturnValue(hospitals),
+            jest.fn().mockReturnValue(threeHospitals),
         }),
       });
 
       expect(props.leastVisited.length).toBe(1);
       expect(props.mostVisited.length).toBe(1);
-      expect(props.leastVisited).toEqual(hospitals.leastVisited);
-      expect(props.mostVisited).toEqual(hospitals.mostVisited);
+      expect(props.leastVisited).toEqual(threeHospitals.leastVisited);
+      expect(props.mostVisited).toEqual(threeHospitals.mostVisited);
     });
 
     it("sets an error in props if ward error", async () => {
-      const getRetrieveWardsSpy = jest.fn(async () => ({
+      const getRetrieveWardsSpyError = jest.fn(async () => ({
         wards: null,
         error: "Error!",
       }));
@@ -196,7 +209,7 @@ describe("trust-admin", () => {
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveWards: () => getRetrieveWardsSpy,
+          getRetrieveWards: () => getRetrieveWardsSpyError,
         }),
       });
 
@@ -216,7 +229,7 @@ describe("trust-admin", () => {
     });
 
     it("sets an error in props if trust error", async () => {
-      const retrieveTrustByIdSpy = jest.fn(async () => ({
+      const retrieveTrustByIdSpyError = jest.fn(async () => ({
         trust: null,
         error: "Error!",
       }));
@@ -225,7 +238,7 @@ describe("trust-admin", () => {
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveTrustById: () => retrieveTrustByIdSpy,
+          getRetrieveTrustById: () => retrieveTrustByIdSpyError,
         }),
       });
 
@@ -273,6 +286,20 @@ describe("trust-admin", () => {
       expect(props.error).toBeNull();
     });
 
+    it("retrieves the average visits per day", async () => {
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(retrieveAverageVisitsPerDayByTrustId).toHaveBeenCalledWith(
+        trustId
+      );
+      expect(props.averageVisitsPerDay).toEqual(1);
+      expect(props.error).toBeNull();
+    });
+
     it("retrieves the starting date for booked visits reporting", async () => {
       const { props } = await getServerSideProps({
         req: authenticatedReq,
@@ -302,6 +329,37 @@ describe("trust-admin", () => {
           ...container,
           getRetrieveWardVisitTotalsStartDateByTrustId: () =>
             retrieveWardVisitTotalsStartDateByTrustIdError,
+        },
+      });
+
+      expect(props.error).toEqual("Error!");
+    });
+
+    it("retrieves the starting date for events reporting", async () => {
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(retrieveReportingStartDateByTrustId).toHaveBeenCalledWith(trustId);
+      expect(props.reportingStartDate).toEqual("1 May 2020");
+      expect(props.error).toBeNull();
+    });
+
+    it("sets an error in props if starting date for events reporting error", async () => {
+      const retrieveReportingStartDateByTrustIdError = jest.fn(async () => ({
+        startDate: null,
+        error: "Error!",
+      }));
+
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container: {
+          ...container,
+          getRetrieveReportingStartDateByTrustId: () =>
+            retrieveReportingStartDateByTrustIdError,
         },
       });
 
