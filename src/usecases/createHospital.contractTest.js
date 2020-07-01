@@ -11,6 +11,7 @@ describe("createHospital contract tests", () => {
       trustId,
       name: "Test Hospital",
       supportUrl: "https://www.support.example.com",
+      surveyUrl: "https://www.survey.example.com",
     });
 
     const { hospital, error } = await container.getRetrieveHospitalById()(
@@ -23,6 +24,7 @@ describe("createHospital contract tests", () => {
       id: hospitalId,
       name: "Test Hospital",
       supportUrl: "https://www.support.example.com",
+      surveyUrl: "https://www.survey.example.com",
     });
   });
 });
