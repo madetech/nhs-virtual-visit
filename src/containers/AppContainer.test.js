@@ -107,4 +107,8 @@ describe("AppContainer", () => {
   it("returns getRetrieveReportingStartDateByTrustId", () => {
     expect(container.getRetrieveReportingStartDateByTrustId()).toBeDefined();
   });
+
+  it("returns getRetrieveSurveyUrlByCallId", () => {
+    expect(container.getRetrieveSurveyUrlByCallId()).toBeDefined();
+  });
 });

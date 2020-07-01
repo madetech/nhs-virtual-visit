@@ -40,6 +40,7 @@ import retrieveAverageVisitTimeByTrustId from "../usecases/retrieveAverageVisitT
 import retrieveWardVisitTotalsStartDateByTrustId from "../usecases/retrieveWardVisitTotalsStartDateByTrustId";
 import retrieveAverageVisitsPerDayByTrustId from "../usecases/retrieveAverageVisitsPerDayByTrustId";
 import retrieveReportingStartDateByTrustId from "../usecases/retrieveReportingStartDateByTrustId";
+import retrieveSurveyUrlByCallId from "../usecases/retrieveSurveyUrlByCallId";
 
 class AppContainer {
   getDb = () => {
@@ -208,6 +209,10 @@ class AppContainer {
 
   getRetrieveReportingStartDateByTrustId = () => {
     return retrieveReportingStartDateByTrustId(this);
+  };
+
+  getRetrieveSurveyUrlByCallId = () => {
+    return retrieveSurveyUrlByCallId(this);
   };
 }
 
