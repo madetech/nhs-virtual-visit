@@ -91,6 +91,35 @@ describe("create-hospital", () => {
     );
   });
 
+  it("creates a new hospital with a support url if valid", async () => {
+    const createHospitalSpy = jest
+      .fn()
+      .mockReturnValue({ hospitalId: 123, error: null });
+
+    validRequest.body = {
+      name: "Yugi Muto Hospital",
+      trustId: "1",
+      supportUrl: "https://www.support.example.com",
+    };
+
+    await createHospital(validRequest, response, {
+      container: {
+        ...container,
+        getCreateHospital: () => createHospitalSpy,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(201);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ hospitalId: 123 })
+    );
+    expect(createHospitalSpy).toHaveBeenCalledWith({
+      name: "Yugi Muto Hospital",
+      trustId: "1",
+      supportUrl: "https://www.support.example.com",
+    });
+  });
+
   it("returns a 400 status if errors", async () => {
     const createHospitalStub = jest
       .fn()
