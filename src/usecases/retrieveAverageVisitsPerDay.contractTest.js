@@ -1,5 +1,5 @@
 import AppContainer from "../containers/AppContainer";
-import { setupTrust } from "../testUtils/factories";
+import { setupTrust, setupHospital, setupWard } from "../testUtils/factories";
 import { v4 as uuidv4 } from "uuid";
 
 describe("retrieveAverageVisitsPerDay contract tests", () => {
@@ -9,12 +9,12 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
     // A trust with a visit with 1 participant
     const { trustId } = await setupTrust();
 
-    const { hospitalId } = await container.getCreateHospital()({
+    const { hospitalId } = await setupHospital({
       name: "Test Hospital",
       trustId: trustId,
     });
 
-    const { wardId } = await container.getCreateWard()({
+    const { wardId } = await setupWard({
       name: "Test Ward 1",
       code: "wardCode1",
       hospitalId: hospitalId,
@@ -49,12 +49,12 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
     // A trust with a visit with 1 participant, one with 2 participants and
     // another with 1 participant
 
-    const { hospitalId: hospitalId2 } = await container.getCreateHospital()({
+    const { hospitalId: hospitalId2 } = await setupHospital({
       name: "Test Hospital 2",
       trustId: trustId,
     });
 
-    const { wardId: wardId2 } = await container.getCreateWard()({
+    const { wardId: wardId2 } = await setupWard({
       name: "Test Ward 2",
       code: "wardCode2",
       hospitalId: hospitalId2,
