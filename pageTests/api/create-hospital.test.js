@@ -67,7 +67,7 @@ describe("create-hospital", () => {
     expect(trustAdminIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
-  it("creates a new ward if valid", async () => {
+  it("creates a new hospital if valid", async () => {
     const createHospitalSpy = jest
       .fn()
       .mockReturnValue({ hospitalId: 123, error: null });
