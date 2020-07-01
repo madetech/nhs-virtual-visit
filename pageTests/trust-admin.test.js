@@ -81,6 +81,11 @@ describe("trust-admin", () => {
     .fn()
     .mockReturnValue({ startDate: "1 May 2020", error: null });
 
+  const retrieveAverageVisitsPerDayByTrustId = jest.fn().mockReturnValue({
+    averageVisitsPerDay: 1,
+    error: null,
+  });
+
   const container = {
     getRetrieveWards: () => getRetrieveWardsSpy,
     getRetrieveTrustById: () => retrieveTrustByIdSpy,
@@ -95,6 +100,8 @@ describe("trust-admin", () => {
       retrieveWardVisitTotalsStartDateByTrustId,
     getRetrieveReportingStartDateByTrustId: () =>
       retrieveReportingStartDateByTrustId,
+    getRetrieveAverageVisitsPerDayByTrustId: () =>
+      retrieveAverageVisitsPerDayByTrustId,
     getTokenProvider: () => tokenProvider,
   };
 
@@ -276,6 +283,20 @@ describe("trust-admin", () => {
 
       expect(retrieveAverageVisitTimeByTrustId).toHaveBeenCalledWith(trustId);
       expect(props.averageVisitTime).toEqual("1hr, 10mins");
+      expect(props.error).toBeNull();
+    });
+
+    it("retrieves the average visits per day", async () => {
+      const { props } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+
+      expect(retrieveAverageVisitsPerDayByTrustId).toHaveBeenCalledWith(
+        trustId
+      );
+      expect(props.averageVisitsPerDay).toEqual(1);
       expect(props.error).toBeNull();
     });
 
