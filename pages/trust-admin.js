@@ -146,15 +146,17 @@ const TrustAdmin = ({
               </div>
             </GridColumn>
           </GridRow>
-          {(wardVisitTotalsStartDate || reportingStartDate) && (
-            <ReviewDate>
-              {wardVisitTotalsStartDate &&
-                `Start date for booked visits reporting: ${wardVisitTotalsStartDate}`}
-              {wardVisitTotalsStartDate && reportingStartDate && <br />}
-              {reportingStartDate &&
-                `Start date for other reporting: ${reportingStartDate}`}
-            </ReviewDate>
-          )}
+
+          <ReviewDate
+            className="nhsuk-u-margin-bottom-0"
+            beforeDateText="Start date for booked visits reporting: "
+            date={wardVisitTotalsStartDate}
+          />
+          <ReviewDate
+            className="nhsuk-u-margin-0"
+            beforeDateText="Start date for other reporting: "
+            date={reportingStartDate}
+          />
         </GridColumn>
       </GridRow>
     </Layout>

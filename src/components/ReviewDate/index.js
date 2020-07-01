@@ -1,10 +1,17 @@
 import React from "react";
 import classNames from "classnames";
 
-const ReviewDate = ({ children, className }) => (
-  <div className={classNames("nhsuk-review-date", className)}>
-    <p className="nhsuk-body-s">{children}</p>
-  </div>
+const ReviewDate = ({ beforeDateText = "", date, className }) => (
+  <>
+    {date && (
+      <div className={classNames("nhsuk-review-date", className)}>
+        <p className={classNames("nhsuk-body-s", className)}>
+          {beforeDateText}
+          {date}
+        </p>
+      </div>
+    )}
+  </>
 );
 
 export default ReviewDate;
