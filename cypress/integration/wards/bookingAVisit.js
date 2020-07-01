@@ -7,28 +7,45 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
   });
 
   it("allows a ward staff to book a virtual visit", () => {
+    cy.log("* 1 bookingAVisit integration test ***", new Date().toISOString());
     GivenIAmLoggedInAsAWardStaff();
+    cy.log("* 2 bookingAVisit integration test ***", new Date().toISOString());
     WhenIClickBookAVirtualVisitOnTheNavigationBar();
+    cy.log("* 3 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheBeforeBookingAVisitPage();
 
     WhenIClickStartNow();
+    cy.log("* 4 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheBookAVirtualVisitForm();
+    cy.log("* 5 bookingAVisit integration test ***", new Date().toISOString());
 
     WhenIFillOutTheForm();
+    cy.log("* 6 bookingAVisit integration test ***", new Date().toISOString());
     AndISubmitTheForm();
+    cy.log("* 7 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheCheckYourAnswersPage();
+    cy.log("* 8 bookingAVisit integration test ***", new Date().toISOString());
 
     WhenIClickChange();
+    cy.log("* 9 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheBookAVirtualVisitForm();
+    cy.log("* 10 bookingAVisit integration test ***", new Date().toISOString());
 
     WhenISubmitTheForm();
+    cy.log("* 11 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheCheckYourAnswersPage();
+    cy.log("* 12 bookingAVisit integration test ***", new Date().toISOString());
     AndIClickBookAVirtualVisit();
+    cy.log("* 13 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheVirtualVisitIsBooked();
+    cy.log("* 14 bookingAVisit integration test ***", new Date().toISOString());
 
     WhenIClickViewVirtualVisits();
+    cy.log("* 15 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheVirtualVisitsPage();
+    cy.log("* 16 bookingAVisit integration test ***", new Date().toISOString());
     AndISeeTheBookedVirtualVisitInTheList();
+    cy.log("* 17 bookingAVisit integration test ***", new Date().toISOString());
   });
 
   it("displays errors when fields have been left blank", () => {
