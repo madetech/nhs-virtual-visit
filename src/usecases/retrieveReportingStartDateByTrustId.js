@@ -1,3 +1,5 @@
+import formatDate from "../helpers/formatDate";
+
 const retrieveReportingStartDateByTrustId = ({ getDb }) => async (trustId) => {
   if (!trustId) return { error: "A trustId must be provided." };
 
@@ -16,7 +18,7 @@ const retrieveReportingStartDateByTrustId = ({ getDb }) => async (trustId) => {
       trustId
     );
 
-    return { startDate, error: null };
+    return { startDate: formatDate(startDate), error: null };
   } catch (error) {
     if (error.name === "QueryResultError") {
       return { startDate: null, error: null };
