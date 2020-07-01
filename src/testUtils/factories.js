@@ -26,13 +26,22 @@ export const setupWard = async (args = {}) => {
   });
 };
 
-export const setupWardWithinHospitalAndTrust = async ({ index = 1 }) => {
-  const { trustId } = await setupTrust({ adminCode: `TESTCODE${index}` });
-  const { hospitalId } = await setupHospital({ trustId });
+export const setupWardWithinHospitalAndTrust = async ({
+  index = 1,
+  trustArgs = {},
+  hospitalArgs = {},
+  wardArgs = {},
+}) => {
+  const { trustId } = await setupTrust({
+    adminCode: `TESTCODE${index}`,
+    ...trustArgs,
+  });
+  const { hospitalId } = await setupHospital({ trustId, ...hospitalArgs });
   const { wardId } = await setupWard({
     code: `wardCode${index}`,
     trustId,
     hospitalId,
+    ...wardArgs,
   });
 
   return { wardId, hospitalId, trustId };
