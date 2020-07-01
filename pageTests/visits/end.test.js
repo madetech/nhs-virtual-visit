@@ -3,11 +3,29 @@ import { render, queryByAttribute } from "@testing-library/react";
 import EndOfVisit, { getServerSideProps } from "../../pages/visits/end";
 
 describe("end", () => {
-  it("renders end of visit message", () => {
-    const { getByText } = render(<EndOfVisit />);
-    const text = getByText(/visit has completed/i);
+  describe("for a key contact", () => {
+    it("renders end of visit message", () => {
+      const { getByText } = render(<EndOfVisit />);
+      const text = getByText(/visit has completed/i);
 
-    expect(text).toBeInTheDocument();
+      expect(text).toBeInTheDocument();
+    });
+
+    it("renders the survey section if there is a survey link", () => {
+      const { getByText } = render(
+        <EndOfVisit surveyUrl="https://www.survey.example.com" />
+      );
+      const text = getByText(/Help improve virtual visits/i);
+
+      expect(text).toBeInTheDocument();
+    });
+
+    it("does not render the survey section if there is no survey link", () => {
+      const { queryByText } = render(<EndOfVisit surveyUrl={null} />);
+      const text = queryByText(/Help improve virtual visits/i);
+
+      expect(text).toBeNull();
+    });
   });
 
   describe("for a staff member", () => {
@@ -55,37 +73,69 @@ describe("end", () => {
       },
     };
 
+    const callId = "TEST123";
+    const query = { callId };
+    const surveyUrl = "https://www.survey.example.com";
+
+    const retrieveSurveyUrlByCallId = jest.fn().mockResolvedValue({
+      surveyUrl,
+      error: null,
+    });
+
+    const container = {
+      getUserIsAuthenticated: () =>
+        jest.fn().mockResolvedValue({ ward: "test-ward-id" }),
+      getRetrieveSurveyUrlByCallId: () => retrieveSurveyUrlByCallId,
+    };
+
     it("provides the call id", async () => {
-      const container = {
-        getUserIsAuthenticated: () =>
-          jest.fn().mockResolvedValue({ ward: "test-ward-id" }),
-      };
-      const query = { callId: "TEST123" };
       const { props } = await getServerSideProps({ req, container, query });
 
       expect(props.callId).toEqual("TEST123");
     });
 
     it("provides the ward id if the user is authenticated", async () => {
-      const container = {
-        getUserIsAuthenticated: () =>
-          jest.fn().mockResolvedValue({ ward: "test-ward-id" }),
-      };
-
-      const query = { callId: "TEST123" };
       const { props } = await getServerSideProps({ req, container, query });
 
       expect(props.wardId).toEqual("test-ward-id");
     });
 
     it("does not provides the ward id if the user is unauthenticated", async () => {
-      const container = {
-        getUserIsAuthenticated: () => jest.fn().mockResolvedValue(false),
-      };
-      const query = { callId: "TEST123" };
-      const { props } = await getServerSideProps({ req, container, query });
+      const { props } = await getServerSideProps({
+        req,
+        container: {
+          ...container,
+          getUserIsAuthenticated: () => jest.fn().mockResolvedValue(false),
+        },
+        query,
+      });
 
       expect(props.wardId).toBeNull();
+    });
+
+    it("retrieves the survey link of the hospital", async () => {
+      const { props } = await getServerSideProps({ req, container, query });
+
+      expect(retrieveSurveyUrlByCallId).toHaveBeenCalledWith(callId);
+      expect(props.surveyUrl).toEqual(surveyUrl);
+    });
+
+    it("sets an error in props if starting date for events reporting error", async () => {
+      const retrieveSurveyUrlByCallIdError = jest.fn().mockResolvedValue({
+        surveyUrl: null,
+        error: "Error!",
+      });
+
+      const { props } = await getServerSideProps({
+        req,
+        container: {
+          ...container,
+          getRetrieveSurveyUrlByCallId: () => retrieveSurveyUrlByCallIdError,
+        },
+        query,
+      });
+
+      expect(props.error).toEqual("Error!");
     });
   });
 });
