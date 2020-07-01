@@ -65,7 +65,7 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
       patientName: "Adora",
       contactEmail: "catra@example.com",
       contactName: "Catra",
-      callTime: new Date("2020-06-02 13:00"),
+      callTime: new Date("2020-06-03 13:00"),
       callId: "testCallId2",
       provider: "TESTPROVIDER",
       wardId: wardId2,
@@ -90,7 +90,7 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
       patientName: "Scorpia",
       contactEmail: "perfuma@example.com",
       contactName: "Perfuma",
-      callTime: new Date("2020-06-02 13:00"),
+      callTime: new Date("2020-06-03 13:00"),
       callId: "testCallId3",
       provider: "TESTPROVIDER",
       wardId: wardId2,
@@ -125,7 +125,8 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
       sessionId: sessionId4,
     });
 
-    const { id: visitId4 } = await container.getCreateVisit()({
+    // Has no events so shouldn't be counted
+    await container.getCreateVisit()({
       patientName: "Mermista",
       contactEmail: "seahawk@example.com",
       contactName: "Seahawk",
@@ -136,26 +137,15 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
       callPassword: "testCallPassword",
     });
 
-    const sessionId5 = uuidv4();
-
-    await container.getCaptureEvent()({
-      action: "join-visit",
-      visitId: visitId4,
-      sessionId: sessionId5,
-    });
-
-    await container.getCaptureEvent()({
-      action: "leave-visit",
-      visitId: visitId4,
-      sessionId: sessionId5,
-    });
-
     const {
       averageVisitsPerDay,
       error,
-    } = await container.getRetrieveAverageVisitsPerDay()(trustId);
+    } = await container.getRetrieveAverageVisitsPerDay()(
+      trustId,
+      new Date("2020-06-03 13:00")
+    );
 
-    expect(averageVisitsPerDay).toEqual(1.3);
+    expect(averageVisitsPerDay).toEqual(1);
     expect(error).toBeNull();
   });
 
