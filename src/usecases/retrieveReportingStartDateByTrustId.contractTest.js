@@ -74,7 +74,7 @@ describe("retrieveReportingStartDateByTrustId contract tests", () => {
       error,
     } = await container.getRetrieveReportingStartDateByTrustId()(trustId1);
 
-    expect(startDate).toEqual(new Date("2020-06-01 13:00"));
+    expect(startDate).toEqual("1 June 2020");
     expect(error).toBeNull();
   });
 

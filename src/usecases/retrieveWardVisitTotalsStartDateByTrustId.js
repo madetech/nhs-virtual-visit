@@ -1,3 +1,5 @@
+import formatDate from "../helpers/formatDate";
+
 const retrieveWardVisitTotalsStartDateByTrustId = ({ getDb }) => async (
   trustId
 ) => {
@@ -17,7 +19,7 @@ const retrieveWardVisitTotalsStartDateByTrustId = ({ getDb }) => async (
       trustId
     );
 
-    return { startDate, error: null };
+    return { startDate: formatDate(startDate), error: null };
   } catch (error) {
     if (error.name === "QueryResultError") {
       return { startDate: null, error: null };

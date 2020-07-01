@@ -10,7 +10,6 @@ import Text from "../src/components/Text";
 import AnchorLink from "../src/components/AnchorLink";
 import ReviewDate from "../src/components/ReviewDate";
 import { TRUST_ADMIN } from "../src/helpers/userTypes";
-import formatDate from "../src/helpers/formatDate";
 
 const TrustAdmin = ({
   error,
@@ -186,20 +185,18 @@ export const getServerSideProps = propsWithContainer(
     } = await container.getRetrieveAverageParticipantsInVisit()(
       authenticationToken.trustId
     );
-    const retrieveWardVisitTotalsStartDateResponse = await container.getRetrieveWardVisitTotalsStartDateByTrustId()(
+    const {
+      startDate: wardVisitTotalsStartDate,
+      error: wardVisitTotalsStartDateError,
+    } = await container.getRetrieveWardVisitTotalsStartDateByTrustId()(
       authenticationToken.trustId
     );
-    const retrieveReportingStartDateResponse = await container.getRetrieveReportingStartDateByTrustId()(
+    const {
+      startDate: reportingStartDate,
+      error: reportingStartDateError,
+    } = await container.getRetrieveReportingStartDateByTrustId()(
       authenticationToken.trustId
     );
-
-    const wardVisitTotalsStartDate = retrieveWardVisitTotalsStartDateResponse.startDate
-      ? formatDate(retrieveWardVisitTotalsStartDateResponse.startDate)
-      : null;
-
-    const reportingStartDate = retrieveReportingStartDateResponse.startDate
-      ? formatDate(retrieveReportingStartDateResponse.startDate)
-      : null;
 
     const {
       averageVisitTime,
@@ -212,8 +209,8 @@ export const getServerSideProps = propsWithContainer(
       wardError ||
       trustError ||
       averageParticipantsInVisitError ||
-      retrieveWardVisitTotalsStartDateResponse.error ||
-      retrieveReportingStartDateResponse.error ||
+      wardVisitTotalsStartDateError ||
+      reportingStartDateError ||
       averageVisitTimeSecondsError;
 
     return {

@@ -75,11 +75,11 @@ describe("trust-admin", () => {
 
   const retrieveWardVisitTotalsStartDateByTrustId = jest
     .fn()
-    .mockReturnValue({ startDate: new Date("2020-04-01"), error: null });
+    .mockReturnValue({ startDate: "1 April 2020", error: null });
 
   const retrieveReportingStartDateByTrustId = jest
     .fn()
-    .mockReturnValue({ startDate: new Date("2020-05-01"), error: null });
+    .mockReturnValue({ startDate: "1 May 2020", error: null });
 
   const container = {
     getRetrieveWards: () => getRetrieveWardsSpy,
@@ -171,7 +171,7 @@ describe("trust-admin", () => {
     });
 
     it("retrieves usage stats when fewer than 3 hospitals", async () => {
-      const hospitals = {
+      const threeHospitals = {
         hospitals: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
         leastVisited: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
         mostVisited: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
@@ -182,18 +182,18 @@ describe("trust-admin", () => {
         res,
         container: Object.assign({}, container, {
           getRetrieveHospitalVisitTotals: () =>
-            jest.fn().mockReturnValue(hospitals),
+            jest.fn().mockReturnValue(threeHospitals),
         }),
       });
 
       expect(props.leastVisited.length).toBe(1);
       expect(props.mostVisited.length).toBe(1);
-      expect(props.leastVisited).toEqual(hospitals.leastVisited);
-      expect(props.mostVisited).toEqual(hospitals.mostVisited);
+      expect(props.leastVisited).toEqual(threeHospitals.leastVisited);
+      expect(props.mostVisited).toEqual(threeHospitals.mostVisited);
     });
 
     it("sets an error in props if ward error", async () => {
-      const getRetrieveWardsSpy = jest.fn(async () => ({
+      const getRetrieveWardsSpyError = jest.fn(async () => ({
         wards: null,
         error: "Error!",
       }));
@@ -202,7 +202,7 @@ describe("trust-admin", () => {
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveWards: () => getRetrieveWardsSpy,
+          getRetrieveWards: () => getRetrieveWardsSpyError,
         }),
       });
 
@@ -222,7 +222,7 @@ describe("trust-admin", () => {
     });
 
     it("sets an error in props if trust error", async () => {
-      const retrieveTrustByIdSpy = jest.fn(async () => ({
+      const retrieveTrustByIdSpyError = jest.fn(async () => ({
         trust: null,
         error: "Error!",
       }));
@@ -231,7 +231,7 @@ describe("trust-admin", () => {
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveTrustById: () => retrieveTrustByIdSpy,
+          getRetrieveTrustById: () => retrieveTrustByIdSpyError,
         }),
       });
 

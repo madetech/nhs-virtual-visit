@@ -40,7 +40,7 @@ describe("retrieveWardVisitTotalsStartDateByTrustId contract tests", () => {
       trustId1
     );
 
-    expect(startDate).toEqual(new Date(2020, 6, 1));
+    expect(startDate).toEqual("1 July 2020");
     expect(error).toBeNull();
   });
 
