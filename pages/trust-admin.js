@@ -23,6 +23,7 @@ const TrustAdmin = ({
   reportingStartDate,
   visitsScheduled,
   averageVisitTime,
+  averageVisitsPerDay,
 }) => {
   if (error) {
     return <Error err={error} />;
@@ -70,6 +71,15 @@ const TrustAdmin = ({
               <NumberTile
                 number={averageVisitTime}
                 label="average visit time"
+              />
+            </GridColumn>
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-third"
+            >
+              <NumberTile
+                number={averageVisitsPerDay}
+                label="average visits per day"
               />
             </GridColumn>
           </GridRow>
@@ -205,13 +215,21 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId
     );
 
+    const {
+      averageVisitsPerDay,
+      error: averageVisitsPerDayError,
+    } = await container.getRetrieveAverageVisitsPerDayByTrustId()(
+      authenticationToken.trustId
+    );
+
     const error =
       wardError ||
       trustError ||
       averageParticipantsInVisitError ||
       wardVisitTotalsStartDateError ||
       reportingStartDateError ||
-      averageVisitTimeSecondsError;
+      averageVisitTimeSecondsError ||
+      averageVisitsPerDayError;
 
     return {
       props: {
@@ -225,6 +243,7 @@ export const getServerSideProps = propsWithContainer(
         averageParticipantsInVisit,
         visitsScheduled: retrieveWardVisitTotals.total.toLocaleString(),
         averageVisitTime,
+        averageVisitsPerDay,
         error,
       },
     };
