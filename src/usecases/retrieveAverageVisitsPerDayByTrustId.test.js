@@ -1,4 +1,4 @@
-import retrieveAverageVisitsPerDay from "./retrieveAverageVisitsPerDay";
+import retrieveAverageVisitsPerDayByTrustId from "./retrieveAverageVisitsPerDayByTrustId";
 
 describe("retrieveAverageVisitsPerDay", () => {
   const trustId = 1;
@@ -20,7 +20,7 @@ describe("retrieveAverageVisitsPerDay", () => {
       },
     };
 
-    const { error } = await retrieveAverageVisitsPerDay(container)();
+    const { error } = await retrieveAverageVisitsPerDayByTrustId(container)();
 
     expect(error).toEqual("A trustId must be provided.");
   });
@@ -32,7 +32,7 @@ describe("retrieveAverageVisitsPerDay", () => {
       },
     };
 
-    await retrieveAverageVisitsPerDay(container)(trustId);
+    await retrieveAverageVisitsPerDayByTrustId(container)(trustId);
 
     expect(dbAnySpy).toHaveBeenCalledWith(expect.anything(), trustId);
   });
@@ -44,9 +44,13 @@ describe("retrieveAverageVisitsPerDay", () => {
       },
     };
 
-    const { averageVisitsPerDay, error } = await retrieveAverageVisitsPerDay(
-      container
-    )(trustId, new Date(2020, 6, 3));
+    const {
+      averageVisitsPerDay,
+      error,
+    } = await retrieveAverageVisitsPerDayByTrustId(container)(
+      trustId,
+      new Date(2020, 6, 3)
+    );
 
     expect(averageVisitsPerDay).toEqual(2);
     expect(error).toBeNull();

@@ -140,7 +140,7 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
     const {
       averageVisitsPerDay,
       error,
-    } = await container.getRetrieveAverageVisitsPerDay()(
+    } = await container.getRetrieveAverageVisitsPerDayByTrustId()(
       trustId,
       new Date("2020-06-03 13:00")
     );
@@ -155,14 +155,16 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
     const {
       averageVisitsPerDay,
       error,
-    } = await container.getRetrieveAverageVisitsPerDay()(trustId);
+    } = await container.getRetrieveAverageVisitsPerDayByTrustId()(trustId);
 
     expect(averageVisitsPerDay).toEqual(0);
     expect(error).toBeNull();
   });
 
   it("returns an error if no trustId is provided", async () => {
-    const { error } = await container.getRetrieveAverageVisitsPerDay()();
+    const {
+      error,
+    } = await container.getRetrieveAverageVisitsPerDayByTrustId()();
 
     expect(error).not.toBeNull();
   });
