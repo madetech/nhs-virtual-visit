@@ -83,12 +83,10 @@ describe("create-hospital", () => {
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ hospitalId: 123 })
     );
-    expect(createHospitalSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        name: "Yugi Muto Hospital",
-        trustId: "1",
-      })
-    );
+    expect(createHospitalSpy).toHaveBeenCalledWith({
+      name: "Yugi Muto Hospital",
+      trustId: "1",
+    });
   });
 
   it("creates a new hospital with a support url if valid", async () => {
