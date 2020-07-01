@@ -9,6 +9,7 @@ describe("retrieveHospitalById", () => {
             id: 1,
             name: "Test Hospital",
             support_url: "https://www.support.example.com",
+            survey_url: "https://www.survey.example.com",
           }),
         };
       },
@@ -27,6 +28,7 @@ describe("retrieveHospitalById", () => {
       id: hospitalId,
       name: "Test Hospital",
       supportUrl: "https://www.support.example.com",
+      surveyUrl: "https://www.survey.example.com",
     });
   });
 
