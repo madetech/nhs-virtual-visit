@@ -35,6 +35,7 @@ export default withContainer(
     const { hospitalId, error } = await createHospital({
       name: body.name,
       trustId: body.trustId,
+      supportUrl: body.supportUrl,
     });
 
     if (error) {
