@@ -221,12 +221,10 @@ describe("update-a-hospital", () => {
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ hospitalId: 123 })
     );
-    expect(updateHospitalSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        id: 123,
-        name: "Hospital Name",
-      })
-    );
+    expect(updateHospitalSpy).toHaveBeenCalledWith({
+      id: 123,
+      name: "Hospital Name",
+    });
   });
 
   it("returns a 500 if hospital fails to update", async () => {
