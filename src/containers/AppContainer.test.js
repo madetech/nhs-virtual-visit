@@ -111,4 +111,8 @@ describe("AppContainer", () => {
   it("returns getRetrieveSurveyUrlByCallId", () => {
     expect(container.getRetrieveSurveyUrlByCallId()).toBeDefined();
   });
+
+  it("returns getRetrieveSupportUrlByCallId", () => {
+    expect(container.getRetrieveSupportUrlByCallId()).toBeDefined();
+  });
 });

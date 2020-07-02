@@ -1,11 +1,13 @@
 import React from "react";
 import Layout from "../../src/components/Layout";
+import ActionLinkSection from "../../src/components/ActionLinkSection";
 import ActionLink from "../../src/components/ActionLink";
 import AnchorLink from "../../src/components/AnchorLink";
+import InsetText from "../../src/components/InsetText";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import * as Sentry from "@sentry/node";
 
-const End = ({ wardId, callId, surveyUrl }) => {
+const End = ({ wardId, callId, surveyUrl, supportUrl }) => {
   return (
     <Layout title="Your virtual visit has completed" isBookService={false}>
       <div className="nhsuk-grid-row">
@@ -50,21 +52,32 @@ const End = ({ wardId, callId, surveyUrl }) => {
               </h1>
 
               <div className="nhsuk-panel__body">
-                <p>Thank you for using the virtual visit service.</p>
-                <p>Your personal data will be removed within 24 hours.</p>
+                <p className="nhsuk-u-margin-bottom-0">
+                  Thank you for using the virtual visit service.
+                </p>
               </div>
             </div>
-            {surveyUrl && (
-              <>
-                <h2>Help improve virtual visits</h2>
-                <p>
-                  We’d welcome your feedback. Can you answer some questions
-                  about your virtual visit today?
-                </p>
 
-                <ActionLink href={surveyUrl}>Take a survey</ActionLink>
-              </>
-            )}
+            <InsetText>
+              Your personal data will be removed within 24 hours.
+            </InsetText>
+
+            <ActionLinkSection
+              heading="What happens next"
+              link={supportUrl}
+              linkText="Get support from this hospital"
+            />
+
+            <ActionLinkSection
+              heading="Help improve virtual visits"
+              link={surveyUrl}
+              linkText="Take a survey"
+            >
+              <p>
+                We’d welcome your feedback. Can you answer some questions about
+                your virtual visit today?
+              </p>
+            </ActionLinkSection>
           </div>
         )}
       </div>
@@ -83,8 +96,15 @@ export const getServerSideProps = propsWithContainer(
       error: surveyUrlError,
     } = await container.getRetrieveSurveyUrlByCallId()(query.callId);
 
-    if (surveyUrlError) {
-      Sentry.captureException(surveyUrlError);
+    const {
+      supportUrl,
+      error: supportUrlError,
+    } = await container.getRetrieveSupportUrlByCallId()(query.callId);
+
+    const error = surveyUrlError || supportUrlError;
+
+    if (error) {
+      Sentry.captureException(error);
     }
 
     return {
@@ -92,6 +112,7 @@ export const getServerSideProps = propsWithContainer(
         wardId: token?.ward || null,
         callId: query.callId,
         surveyUrl,
+        supportUrl,
       },
     };
   }
