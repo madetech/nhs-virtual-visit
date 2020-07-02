@@ -117,7 +117,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
             style={{ padding: "16px!important", height: "64px" }}
             onChange={(event) => setHospitalSurveyUrl(event.target.value)}
             name="hospital-survey-url"
-            autoComplete="off"
             value={hospitalSurveyUrl || null}
           />
         </FormGroup>
