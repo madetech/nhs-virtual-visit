@@ -44,6 +44,7 @@ export default withContainer(
     const { id, error } = await updateHospital({
       id: body.id,
       name: body.name,
+      surveyUrl: body.surveyUrl,
     });
 
     if (error) {
