@@ -102,7 +102,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
 
         <FormGroup>
           <Label htmlFor="hospital-survey-url" className="nhsuk-label--l">
-            Key contact survey URL
+            Key contact survey URL (optional)
           </Label>
           <span className="nhsuk-hint" id="hospital-survey-url-hint">
             The survey URL will appear on the visit complete page for the key
