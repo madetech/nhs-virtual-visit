@@ -243,7 +243,7 @@ export const getServerSideProps = propsWithContainer(
         averageParticipantsInVisit,
         visitsScheduled: retrieveWardVisitTotals.total.toLocaleString(),
         averageVisitTime,
-        averageVisitsPerDay,
+        averageVisitsPerDay: averageVisitsPerDay.toFixed(1),
         error,
       },
     };
