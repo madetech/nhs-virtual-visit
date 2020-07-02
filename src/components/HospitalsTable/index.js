@@ -32,7 +32,13 @@ const HospitalsTable = ({ hospitals }) => (
             <td className="nhsuk-table__cell">{hospital.bookedVisits}</td>
             <td className="nhsuk-table__cell">
               {hospital.surveyUrl ? (
-                <a href={hospital.surveyUrl}>Link</a>
+                <a href={hospital.surveyUrl}>
+                  Link
+                  <span className="nhsuk-u-visually-hidden">
+                    {" "}
+                    for {hospital.name} survey
+                  </span>
+                </a>
               ) : (
                 "None"
               )}
