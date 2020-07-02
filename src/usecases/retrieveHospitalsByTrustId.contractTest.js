@@ -10,11 +10,13 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
     const { hospitalId } = await setupHospital({
       name: "Test Hospital",
       trustId: trustId,
+      surveyUrl: "https://www.survey.example.com",
     });
 
     const { hospitalId: hospital2Id } = await setupHospital({
       name: "Test Hospital 2",
       trustId: trustId,
+      surveyUrl: null,
     });
 
     const {
@@ -23,8 +25,12 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
     } = await container.getRetrieveHospitalsByTrustId()(trustId);
 
     expect(hospitals).toEqual([
-      { id: hospitalId, name: "Test Hospital" },
-      { id: hospital2Id, name: "Test Hospital 2" },
+      {
+        id: hospitalId,
+        name: "Test Hospital",
+        surveyUrl: "https://www.survey.example.com",
+      },
+      { id: hospital2Id, name: "Test Hospital 2", surveyUrl: null },
     ]);
     expect(error).toBeNull();
   });
@@ -35,11 +41,13 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
     const { hospitalId } = await setupHospital({
       name: "Test Hospital",
       trustId: trustId,
+      surveyUrl: "https://www.survey.example.com",
     });
 
     const { hospitalId: hospital2Id } = await setupHospital({
       name: "Test Hospital 2",
       trustId: trustId,
+      surveyUrl: null,
     });
 
     const { wardId: ward1Id } = await setupWard({
@@ -83,6 +91,7 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
       {
         id: hospitalId,
         name: "Test Hospital",
+        surveyUrl: "https://www.survey.example.com",
         wards: [
           { id: ward1Id, name: "Test Ward 1" },
           { id: ward2Id, name: "Test Ward 2" },
@@ -91,6 +100,7 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
       {
         id: hospital2Id,
         name: "Test Hospital 2",
+        surveyUrl: null,
         wards: [{ id: ward3Id, name: "Test Ward 3" }],
       },
     ]);
