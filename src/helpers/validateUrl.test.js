@@ -1,6 +1,7 @@
 import validateUrl from "./validateUrl";
 
 const validUrls = [
+  "https://foo.com/blah_blah",
   "http://foo.com/blah_blah",
   "http://foo.com/blah_blah/",
   "http://foo.com/blah_blah_(wikipedia)",
@@ -36,13 +37,17 @@ const validUrls = [
   "http://1337.net",
   "http://a.b-c.de",
   "http://223.255.255.254",
+  "https://223.255.255.254",
 ];
 
 const invalidUrls = [
   "ftp://foo.bar/baz",
   "http://",
+  "https://",
   "http://.",
+  "https://.",
   "http://..",
+  "https://..",
   "http://../",
   "http://?",
   "http://??",
