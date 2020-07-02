@@ -36,6 +36,7 @@ export default withContainer(
       name: body.name,
       trustId: body.trustId,
       supportUrl: body.supportUrl,
+      surveyUrl: body.surveyUrl,
     });
 
     if (error) {
