@@ -296,7 +296,7 @@ describe("trust-admin", () => {
       expect(retrieveAverageVisitsPerDayByTrustId).toHaveBeenCalledWith(
         trustId
       );
-      expect(props.averageVisitsPerDay).toEqual(1);
+      expect(props.averageVisitsPerDay).toEqual("1.0");
       expect(props.error).toBeNull();
     });
 
