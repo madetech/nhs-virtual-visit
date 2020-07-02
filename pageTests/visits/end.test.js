@@ -29,6 +29,22 @@ describe("end", () => {
 
       expect(text).toBeNull();
     });
+
+    it("renders the support section if there is a support link", () => {
+      const { getByText } = render(
+        <EndOfVisit supportUrl="https://www.support.example.com" />
+      );
+      const text = getByText(/Get support from this hospital/i);
+
+      expect(text).toBeInTheDocument();
+    });
+
+    it("does not render the support section if there is no support link", () => {
+      const { queryByText } = render(<EndOfVisit supportUrl={null} />);
+      const text = queryByText(/Get support from this hospital/i);
+
+      expect(text).toBeNull();
+    });
   });
 
   describe("for a staff member", () => {
@@ -79,9 +95,15 @@ describe("end", () => {
     const callId = "TEST123";
     const query = { callId };
     const surveyUrl = "https://www.survey.example.com";
+    const supportUrl = "https://www.support.example.com";
 
     const retrieveSurveyUrlByCallId = jest.fn().mockResolvedValue({
       surveyUrl,
+      error: null,
+    });
+
+    const retrieveSupportUrlByCallId = jest.fn().mockResolvedValue({
+      supportUrl,
       error: null,
     });
 
@@ -89,6 +111,7 @@ describe("end", () => {
       getUserIsAuthenticated: () =>
         jest.fn().mockResolvedValue({ ward: "test-ward-id" }),
       getRetrieveSurveyUrlByCallId: () => retrieveSurveyUrlByCallId,
+      getRetrieveSupportUrlByCallId: () => retrieveSupportUrlByCallId,
     };
 
     it("provides the call id", async () => {
@@ -135,6 +158,32 @@ describe("end", () => {
         container: {
           ...container,
           getRetrieveSurveyUrlByCallId: () => retrieveSurveyUrlByCallIdError,
+        },
+        query,
+      });
+
+      expect(Sentry.captureException).toHaveBeenCalledWith("Error!");
+    });
+
+    it("retrieves the support link of the hospital", async () => {
+      const { props } = await getServerSideProps({ req, container, query });
+
+      expect(retrieveSurveyUrlByCallId).toHaveBeenCalledWith(callId);
+      expect(props.supportUrl).toEqual(supportUrl);
+      expect(Sentry.captureException).not.toHaveBeenCalled();
+    });
+
+    it("send the survey link error to Sentry", async () => {
+      const retrieveSupportUrlByCallIdError = jest.fn().mockResolvedValue({
+        supportUrl: null,
+        error: "Error!",
+      });
+
+      await getServerSideProps({
+        req,
+        container: {
+          ...container,
+          getRetrieveSupportUrlByCallId: () => retrieveSupportUrlByCallIdError,
         },
         query,
       });
