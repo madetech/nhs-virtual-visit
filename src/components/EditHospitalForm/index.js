@@ -91,7 +91,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
             type="text"
             hasError={hasError("hospital-name")}
             errorMessage={errorMessage("hospital-name")}
-            className="nhsuk-u-font-size-32 nhsuk-input--width-10"
+            className="nhsuk-u-font-size-32"
             style={{ padding: "16px!important", height: "64px" }}
             onChange={(event) => setHospitalName(event.target.value)}
             name="hospital-name"
@@ -113,7 +113,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
             type="url"
             hasError={hasError("hospital-survey-url")}
             errorMessage={errorMessage("hospital-survey-url")}
-            className="nhsuk-u-font-size-32 nhsuk-input--width-10"
+            className="nhsuk-u-font-size-32"
             style={{ padding: "16px!important", height: "64px" }}
             onChange={(event) => setHospitalSurveyUrl(event.target.value)}
             name="hospital-survey-url"
