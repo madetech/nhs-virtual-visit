@@ -33,7 +33,7 @@ const EditAHospitalSuccess = ({ error, hospitalName, hospitalId }) => {
             {`View ${hospitalName}`}
           </ActionLink>
           <p>
-            <AnchorLink href="/trust-admin/hospitals/">
+            <AnchorLink href="/trust-admin/hospitals">
               Return to Hospitals
             </AnchorLink>
           </p>
