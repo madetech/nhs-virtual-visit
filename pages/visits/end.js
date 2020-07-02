@@ -1,15 +1,11 @@
 import React from "react";
-import Error from "next/error";
 import Layout from "../../src/components/Layout";
 import ActionLink from "../../src/components/ActionLink";
 import AnchorLink from "../../src/components/AnchorLink";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import * as Sentry from "@sentry/node";
 
-const End = ({ wardId, callId, surveyUrl, error }) => {
-  if (error) {
-    return <Error error={error} />;
-  }
-
+const End = ({ wardId, callId, surveyUrl }) => {
   return (
     <Layout title="Your virtual visit has completed" isBookService={false}>
       <div className="nhsuk-grid-row">
@@ -87,12 +83,15 @@ export const getServerSideProps = propsWithContainer(
       error: surveyUrlError,
     } = await container.getRetrieveSurveyUrlByCallId()(query.callId);
 
+    if (surveyUrlError) {
+      Sentry.captureException(surveyUrlError);
+    }
+
     return {
       props: {
         wardId: token?.ward || null,
         callId: query.callId,
         surveyUrl,
-        error: surveyUrlError,
       },
     };
   }

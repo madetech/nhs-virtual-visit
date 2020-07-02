@@ -1,6 +1,9 @@
 import React from "react";
 import { render, queryByAttribute } from "@testing-library/react";
 import EndOfVisit, { getServerSideProps } from "../../pages/visits/end";
+import * as Sentry from "@sentry/node";
+
+jest.mock("@sentry/node");
 
 describe("end", () => {
   describe("for a key contact", () => {
@@ -118,15 +121,16 @@ describe("end", () => {
 
       expect(retrieveSurveyUrlByCallId).toHaveBeenCalledWith(callId);
       expect(props.surveyUrl).toEqual(surveyUrl);
+      expect(Sentry.captureException).not.toHaveBeenCalled();
     });
 
-    it("sets an error in props if starting date for events reporting error", async () => {
+    it("send the survey link error to Sentry", async () => {
       const retrieveSurveyUrlByCallIdError = jest.fn().mockResolvedValue({
         surveyUrl: null,
         error: "Error!",
       });
 
-      const { props } = await getServerSideProps({
+      await getServerSideProps({
         req,
         container: {
           ...container,
@@ -135,7 +139,7 @@ describe("end", () => {
         query,
       });
 
-      expect(props.error).toEqual("Error!");
+      expect(Sentry.captureException).toHaveBeenCalledWith("Error!");
     });
   });
 });
