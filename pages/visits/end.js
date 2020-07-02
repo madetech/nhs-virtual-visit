@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "../../src/components/Layout";
+import ActionLinkSection from "../../src/components/ActionLinkSection";
 import ActionLink from "../../src/components/ActionLink";
 import AnchorLink from "../../src/components/AnchorLink";
 import InsetText from "../../src/components/InsetText";
@@ -61,27 +62,22 @@ const End = ({ wardId, callId, surveyUrl, supportUrl }) => {
               Your personal data will be removed within 24 hours.
             </InsetText>
 
-            {supportUrl && (
-              <>
-                <h2>What happens next</h2>
+            <ActionLinkSection
+              heading="What happens next"
+              link={supportUrl}
+              linkText="Get support from this hospital"
+            />
 
-                <ActionLink href={supportUrl}>
-                  Get support from this hospital
-                </ActionLink>
-              </>
-            )}
-
-            {surveyUrl && (
-              <>
-                <h2>Help improve virtual visits</h2>
-                <p>
-                  We’d welcome your feedback. Can you answer some questions
-                  about your virtual visit today?
-                </p>
-
-                <ActionLink href={surveyUrl}>Take a survey</ActionLink>
-              </>
-            )}
+            <ActionLinkSection
+              heading="Help improve virtual visits"
+              link={surveyUrl}
+              linkText="Take a survey"
+            >
+              <p>
+                We’d welcome your feedback. Can you answer some questions about
+                your virtual visit today?
+              </p>
+            </ActionLinkSection>
           </div>
         )}
       </div>
