@@ -15,6 +15,9 @@ const isPresent = (input) => {
 
 const EditHospitalForm = ({ errors, setErrors, hospital }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
+  const [hospitalSurveyUrl, setHospitalSurveyUrl] = useState(
+    hospital.surveyUrl
+  );
   let onSubmitErrors = [];
 
   const hasError = (field) =>
@@ -34,6 +37,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
       body: JSON.stringify({
         id: hospital.id,
         name: hospitalName,
+        surveyUrl: hospitalSurveyUrl,
       }),
     })
       .then((response) => {
@@ -93,6 +97,28 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
             name="hospital-name"
             autoComplete="off"
             value={hospitalName || ""}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label htmlFor="hospital-survey-url" className="nhsuk-label--l">
+            Key contact survey URL
+          </Label>
+          <span className="nhsuk-hint" id="hospital-survey-url-hint">
+            The survey URL will appear on the visit complete page for the key
+            contact.
+          </span>
+          <Input
+            id="hospital-survey-url"
+            type="url"
+            hasError={hasError("hospital-survey-url")}
+            errorMessage={errorMessage("hospital-survey-url")}
+            className="nhsuk-u-font-size-32 nhsuk-input--width-10"
+            style={{ padding: "16px!important", height: "64px" }}
+            onChange={(event) => setHospitalSurveyUrl(event.target.value)}
+            name="hospital-survey-url"
+            autoComplete="off"
+            value={hospitalSurveyUrl || null}
           />
         </FormGroup>
 
