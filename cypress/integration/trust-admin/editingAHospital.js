@@ -30,8 +30,11 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     cy.get("input[name=hospital-name]").should("have.value", "Test Hospital");
   }
 
-  function WhenIChangeHospitalNameInputText() {
+  function WhenIFillOutTheForm() {
     cy.get("input[name=hospital-name]").type(" updated");
+    cy.get("input[name=hospital-survey-url]").type(
+      "https://www.survey.example.com"
+    );
   }
 
   function AndIClickTheEditHospitalButton() {
@@ -75,7 +78,7 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     WhenIClickOnTheEditLink();
     ThenIShouldBeOnTheEditHospitalPage();
 
-    WhenIChangeHospitalNameInputText();
+    WhenIFillOutTheForm();
     AndIClickTheEditHospitalButton();
     ThenIShouldBeOnTheEditSuccessPageWithNewName();
   });
