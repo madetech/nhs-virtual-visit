@@ -19,6 +19,7 @@ const AddAHospital = ({ error, trustId }) => {
   }
   const [errors, setErrors] = useState([]);
   const [hospitalName, setHospitalName] = useState("");
+  const [hospitalSurveyUrl, setHospitalSurveyUrl] = useState("");
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
@@ -60,6 +61,7 @@ const AddAHospital = ({ error, trustId }) => {
           body: JSON.stringify({
             name,
             trustId,
+            surveyUrl: hospitalSurveyUrl,
           }),
         });
 
@@ -107,7 +109,7 @@ const AddAHospital = ({ error, trustId }) => {
                 type="text"
                 hasError={hasError("hospital-name")}
                 errorMessage={errorMessage("hospital-name")}
-                className="nhsuk-u-font-size-32 nhsuk-input--width-10"
+                className="nhsuk-u-font-size-32"
                 style={{ padding: "16px!important", height: "64px" }}
                 onChange={(event) => setHospitalName(event.target.value)}
                 name="hospital-name"
@@ -115,6 +117,28 @@ const AddAHospital = ({ error, trustId }) => {
                 value={hospitalName || ""}
               />
             </FormGroup>
+
+            <FormGroup>
+              <Label htmlFor="hospital-survey-url" className="nhsuk-label--l">
+                Key contact survey URL (optional)
+              </Label>
+              <span className="nhsuk-hint" id="hospital-survey-url-hint">
+                The survey URL will appear on the visit complete page for the
+                key contact.
+              </span>
+              <Input
+                id="hospital-survey-url"
+                type="url"
+                hasError={hasError("hospital-survey-url")}
+                errorMessage={errorMessage("hospital-survey-url")}
+                className="nhsuk-u-font-size-32"
+                style={{ padding: "16px!important", height: "64px" }}
+                onChange={(event) => setHospitalSurveyUrl(event.target.value)}
+                name="hospital-survey-url"
+                value={hospitalSurveyUrl || null}
+              />
+            </FormGroup>
+
             <Button className="nhsuk-u-margin-top-5">Add hospital</Button>
           </form>
         </GridColumn>
