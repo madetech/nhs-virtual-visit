@@ -6,6 +6,7 @@ import Input from "../Input";
 import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
 import Router from "next/router";
+import validateUrl from "../../helpers/validateUrl";
 
 const isPresent = (input) => {
   if (input.length !== 0) {
@@ -67,8 +68,19 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
       });
     };
 
+    const setHospitalSurveyUrlInvalidError = (errors) => {
+      errors.push({
+        id: "hospital-survey-url-error",
+        message: "Enter a valid survey URL",
+      });
+    };
+
     if (!isPresent(hospitalName)) {
       setHospitalNameError(onSubmitErrors);
+    }
+
+    if (isPresent(hospitalSurveyUrl) && !validateUrl(hospitalSurveyUrl)) {
+      setHospitalSurveyUrlInvalidError(onSubmitErrors);
     }
 
     if (onSubmitErrors.length === 0) {
