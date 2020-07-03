@@ -9,7 +9,7 @@ import Router from "next/router";
 import validateUrl from "../../helpers/validateUrl";
 
 const isPresent = (input) => {
-  if (input.length !== 0) {
+  if (input && input.length !== 0) {
     return input;
   }
 };
