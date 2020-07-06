@@ -13,12 +13,7 @@ import Button from "../../../src/components/Button";
 import Router from "next/router";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 import validateUrl from "../../../src/helpers/validateUrl";
-
-const isPresent = (input) => {
-  if (input && input.length !== 0) {
-    return input;
-  }
-};
+import isPresent from "../../../src/helpers/isPresent";
 
 const AddAHospital = ({ error, trustId }) => {
   if (error) {
