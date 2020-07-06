@@ -11,12 +11,14 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
       name: "Test Hospital",
       trustId: trustId,
       surveyUrl: "https://www.survey.example.com",
+      supportUrl: "https://www.support.example.com",
     });
 
     const { hospitalId: hospital2Id } = await setupHospital({
       name: "Test Hospital 2",
       trustId: trustId,
       surveyUrl: null,
+      supportUrl: null,
     });
 
     const {
@@ -29,8 +31,14 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
         id: hospitalId,
         name: "Test Hospital",
         surveyUrl: "https://www.survey.example.com",
+        supportUrl: "https://www.support.example.com",
       },
-      { id: hospital2Id, name: "Test Hospital 2", surveyUrl: null },
+      {
+        id: hospital2Id,
+        name: "Test Hospital 2",
+        surveyUrl: null,
+        supportUrl: null,
+      },
     ]);
     expect(error).toBeNull();
   });
@@ -42,12 +50,14 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
       name: "Test Hospital",
       trustId: trustId,
       surveyUrl: "https://www.survey.example.com",
+      supportUrl: "https://www.support.example.com",
     });
 
     const { hospitalId: hospital2Id } = await setupHospital({
       name: "Test Hospital 2",
       trustId: trustId,
       surveyUrl: null,
+      supportUrl: null,
     });
 
     const { wardId: ward1Id } = await setupWard({
@@ -92,6 +102,7 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
         id: hospitalId,
         name: "Test Hospital",
         surveyUrl: "https://www.survey.example.com",
+        supportUrl: "https://www.support.example.com",
         wards: [
           { id: ward1Id, name: "Test Ward 1" },
           { id: ward2Id, name: "Test Ward 2" },
@@ -101,6 +112,7 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
         id: hospital2Id,
         name: "Test Hospital 2",
         surveyUrl: null,
+        supportUrl: null,
         wards: [{ id: ward3Id, name: "Test Ward 3" }],
       },
     ]);
