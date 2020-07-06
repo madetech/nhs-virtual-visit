@@ -1,15 +1,15 @@
 import React from "react";
 import Error from "next/error";
-import Layout from "../src/components/Layout";
-import propsWithContainer from "../src/middleware/propsWithContainer";
-import verifyTrustAdminToken from "../src/usecases/verifyTrustAdminToken";
-import { GridRow, GridColumn } from "../src/components/Grid";
-import Heading from "../src/components/Heading";
-import NumberTile from "../src/components/NumberTile";
-import Text from "../src/components/Text";
-import AnchorLink from "../src/components/AnchorLink";
-import ReviewDate from "../src/components/ReviewDate";
-import { TRUST_ADMIN } from "../src/helpers/userTypes";
+import Layout from "../../src/components/Layout";
+import propsWithContainer from "../../src/middleware/propsWithContainer";
+import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
+import { GridRow, GridColumn } from "../../src/components/Grid";
+import Heading from "../../src/components/Heading";
+import NumberTile from "../../src/components/NumberTile";
+import Text from "../../src/components/Text";
+import AnchorLink from "../../src/components/AnchorLink";
+import ReviewDate from "../../src/components/ReviewDate";
+import { TRUST_ADMIN } from "../../src/helpers/userTypes";
 
 const TrustAdmin = ({
   error,
