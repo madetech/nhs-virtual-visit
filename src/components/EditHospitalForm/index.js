@@ -7,12 +7,7 @@ import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
 import Router from "next/router";
 import validateUrl from "../../helpers/validateUrl";
-
-const isPresent = (input) => {
-  if (input && input.length !== 0) {
-    return input;
-  }
-};
+import isPresent from "../../helpers/isPresent";
 
 const EditHospitalForm = ({ errors, setErrors, hospital }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);

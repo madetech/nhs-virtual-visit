@@ -7,12 +7,7 @@ import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
 import Router from "next/router";
 import Select from "../../components/Select";
-
-const isPresent = (input) => {
-  if (input.length !== 0) {
-    return input;
-  }
-};
+import isPresent from "../../helpers/isPresent";
 
 const EditWardForm = ({
   errors,
