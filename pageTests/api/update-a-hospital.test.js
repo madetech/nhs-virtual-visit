@@ -263,4 +263,26 @@ describe("update-a-hospital", () => {
       surveyUrl: "https://www.survey.example.com",
     });
   });
+
+  it("updates hospital with support URL", async () => {
+    const updateHospitalSpy = jest
+      .fn()
+      .mockReturnValue({ id: 123, error: null });
+
+    validRequest.body.supportUrl = "https://www.support.example.com";
+
+    await updateAHospital(validRequest, response, {
+      container: { ...container, getUpdateHospital: () => updateHospitalSpy },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ hospitalId: 123 })
+    );
+    expect(updateHospitalSpy).toHaveBeenCalledWith({
+      id: 123,
+      name: "Hospital Name",
+      supportUrl: "https://www.support.example.com",
+    });
+  });
 });

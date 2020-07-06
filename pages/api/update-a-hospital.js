@@ -45,6 +45,7 @@ export default withContainer(
       id: body.id,
       name: body.name,
       surveyUrl: body.surveyUrl,
+      supportUrl: body.supportUrl,
     });
 
     if (error) {
