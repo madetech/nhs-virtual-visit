@@ -10,6 +10,7 @@ import Layout from "../../../src/components/Layout";
 import WardsTable from "../../../src/components/WardsTable";
 import NumberTile from "../../../src/components/NumberTile";
 import Panel from "../../../src/components/Panel";
+import HospitalSummaryList from "../../../src/components/HospitalSummaryList";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const ShowHospital = ({
@@ -69,7 +70,21 @@ const ShowHospital = ({
               />
             </GridColumn>
           </GridRow>
+
+          <HospitalSummaryList
+            name={hospital.name}
+            surveyUrl={hospital.surveyUrl}
+            supportUrl={hospital.supportUrl}
+            withActions={true}
+            actionLinkOnClick={() => {
+              Router.push({
+                pathname: `/trust-admin/hospitals/${hospital.id}/edit`,
+              });
+            }}
+          />
+
           <WardsTable wards={wards} wardVisitTotals={wardVisitTotals} />
+
           <Button
             className="nhsuk-button"
             onClick={() => {
