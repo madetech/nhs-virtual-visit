@@ -14,6 +14,7 @@ const retrieveHospitalsByTrustId = ({ getDb }) => async (
       id: row.id,
       name: row.name,
       surveyUrl: row.survey_url,
+      supportUrl: row.support_url,
     }));
 
     if (options.withWards) {
@@ -28,6 +29,7 @@ const retrieveHospitalsByTrustId = ({ getDb }) => async (
             id: hospital.id,
             name: hospital.name,
             surveyUrl: hospital.surveyUrl,
+            supportUrl: hospital.supportUrl,
             wards: wards.map((ward) => ({ id: ward.id, name: ward.name })),
           };
         })
