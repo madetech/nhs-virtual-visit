@@ -12,6 +12,13 @@ import Label from "../../../src/components/Label";
 import Button from "../../../src/components/Button";
 import Router from "next/router";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
+import validateUrl from "../../../src/helpers/validateUrl";
+
+const isPresent = (input) => {
+  if (input && input.length !== 0) {
+    return input;
+  }
+};
 
 const AddAHospital = ({ error, trustId }) => {
   if (error) {
@@ -47,8 +54,19 @@ const AddAHospital = ({ error, trustId }) => {
       });
     };
 
-    if (hospitalName.length === 0) {
+    const setHospitalSurveyUrlInvalidError = (errors) => {
+      errors.push({
+        id: "hospital-survey-url-error",
+        message: "Enter a valid survey URL",
+      });
+    };
+
+    if (!isPresent(hospitalName)) {
       setHospitalNameError(onSubmitErrors);
+    }
+
+    if (isPresent(hospitalSurveyUrl) && !validateUrl(hospitalSurveyUrl)) {
+      setHospitalSurveyUrlInvalidError(onSubmitErrors);
     }
 
     if (onSubmitErrors.length === 0) {
@@ -135,7 +153,7 @@ const AddAHospital = ({ error, trustId }) => {
                 style={{ padding: "16px!important", height: "64px" }}
                 onChange={(event) => setHospitalSurveyUrl(event.target.value)}
                 name="hospital-survey-url"
-                value={hospitalSurveyUrl || null}
+                value={hospitalSurveyUrl || ""}
               />
             </FormGroup>
 
