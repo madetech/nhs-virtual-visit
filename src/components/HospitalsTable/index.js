@@ -19,7 +19,7 @@ const HospitalsTable = ({ hospitals }) => (
           <th className="nhsuk-table__header" scope="col">
             Survey URL
           </th>
-          <th className="nhsuk-table__header" scope="col">
+          <th className="nhsuk-table__header" scope="col" colSpan="2">
             <span className="nhsuk-u-visually-hidden">Actions</span>
           </th>
         </tr>
@@ -43,17 +43,16 @@ const HospitalsTable = ({ hospitals }) => (
                 "None"
               )}
             </td>
-            <td className="nhsuk-table__cell" style={{ textAlign: "center" }}>
-              <AnchorLink
-                href={`/trust-admin/hospitals/${hospital.id}`}
-                className="nhsuk-u-margin-right-4"
-              >
+            <td className="nhsuk-table__cell">
+              <AnchorLink href={`/trust-admin/hospitals/${hospital.id}`}>
                 View
                 <span className="nhsuk-u-visually-hidden">
                   {" "}
                   {hospital.name}
                 </span>
               </AnchorLink>
+            </td>
+            <td className="nhsuk-table__cell">
               <AnchorLink href={`/trust-admin/hospitals/${hospital.id}/edit`}>
                 Edit
                 <span className="nhsuk-u-visually-hidden">
