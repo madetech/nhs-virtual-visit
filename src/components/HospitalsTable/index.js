@@ -19,6 +19,9 @@ const HospitalsTable = ({ hospitals }) => (
           <th className="nhsuk-table__header" scope="col">
             Survey URL
           </th>
+          <th className="nhsuk-table__header" scope="col">
+            Support URL
+          </th>
           <th className="nhsuk-table__header" scope="col" colSpan="2">
             <span className="nhsuk-u-visually-hidden">Actions</span>
           </th>
@@ -37,6 +40,19 @@ const HospitalsTable = ({ hospitals }) => (
                   <span className="nhsuk-u-visually-hidden">
                     {" "}
                     for {hospital.name} survey
+                  </span>
+                </a>
+              ) : (
+                "None"
+              )}
+            </td>
+            <td className="nhsuk-table__cell">
+              {hospital.supportUrl ? (
+                <a href={hospital.supportUrl}>
+                  Link
+                  <span className="nhsuk-u-visually-hidden">
+                    {" "}
+                    for {hospital.name} support
                   </span>
                 </a>
               ) : (
