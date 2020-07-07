@@ -15,7 +15,8 @@ const EditHospital = ({ hospital, error }) => {
 
   const [errors, setErrors] = useState([]);
 
-  const submit = async (payload) =>
+  const submit = async (payload) => {
+    payload.id = hospital.id;
     await fetch("/api/update-a-hospital", {
       method: "PATCH",
       headers: {
@@ -41,6 +42,7 @@ const EditHospital = ({ hospital, error }) => {
         ];
         setErrors(onSubmitErrors);
       });
+  };
 
   return (
     <Layout
