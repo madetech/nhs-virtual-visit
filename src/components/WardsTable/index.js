@@ -23,7 +23,7 @@ const WardsTable = ({ wards, wardVisitTotals }) => (
               Booked visits
             </th>
           )}
-          <th className="nhsuk-table__header" scope="col">
+          <th className="nhsuk-table__header" scope="col" colSpan="2">
             <span className="nhsuk-u-visually-hidden">Actions</span>
           </th>
         </tr>
@@ -39,14 +39,13 @@ const WardsTable = ({ wards, wardVisitTotals }) => (
             {wardVisitTotals && (
               <td className="nhsuk-table__cell">{wardVisitTotals[ward.id]}</td>
             )}
-            <td className="nhsuk-table__cell" style={{ textAlign: "center" }}>
-              <AnchorLink
-                href={`/trust-admin/wards/${ward.id}/edit`}
-                className="nhsuk-u-margin-right-4"
-              >
+            <td className="nhsuk-table__cell">
+              <AnchorLink href={`/trust-admin/wards/${ward.id}/edit`}>
                 Edit
                 <span className="nhsuk-u-visually-hidden"> {ward.name}</span>
               </AnchorLink>
+            </td>
+            <td className="nhsuk-table__cell">
               <AnchorLink
                 href={`/trust-admin/wards/${ward.id}/archive-confirmation`}
               >
