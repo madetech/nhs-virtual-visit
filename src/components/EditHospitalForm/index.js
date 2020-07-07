@@ -5,11 +5,10 @@ import Heading from "../Heading";
 import Input from "../Input";
 import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
-import Router from "next/router";
 import validateUrl from "../../helpers/validateUrl";
 import isPresent from "../../helpers/isPresent";
 
-const EditHospitalForm = ({ errors, setErrors, hospital }) => {
+const EditHospitalForm = ({ errors, setErrors, hospital, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
   const [hospitalSurveyUrl, setHospitalSurveyUrl] = useState(
     hospital.surveyUrl
@@ -23,35 +22,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
     const error = errors.filter((err) => err.id === `${field}-error`);
     return error.length === 1 ? error[0].message : "";
   };
-
-  const submitAnswers = async () =>
-    await fetch("/api/update-a-hospital", {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        id: hospital.id,
-        name: hospitalName,
-        surveyUrl: hospitalSurveyUrl,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) throw Error(response.status);
-        return response.json();
-      })
-      .then((result) =>
-        Router.push({
-          pathname: `/trust-admin/hospitals/${result.hospitalId}/edit-success`,
-        })
-      )
-      .catch(() => {
-        onSubmitErrors.push({
-          id: "hospital-update-error",
-          message: "There was a problem saving your changes",
-        });
-        setErrors(onSubmitErrors);
-      });
 
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -79,7 +49,11 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
     }
 
     if (onSubmitErrors.length === 0) {
-      await submitAnswers();
+      await submit({
+        id: hospital.id,
+        name: hospitalName,
+        surveyUrl: hospitalSurveyUrl,
+      });
     }
     setErrors(onSubmitErrors);
   });
@@ -124,7 +98,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital }) => {
             style={{ padding: "16px!important", height: "64px" }}
             onChange={(event) => setHospitalSurveyUrl(event.target.value)}
             name="hospital-survey-url"
-            value={hospitalSurveyUrl || null}
+            value={hospitalSurveyUrl || ""}
           />
         </FormGroup>
 
