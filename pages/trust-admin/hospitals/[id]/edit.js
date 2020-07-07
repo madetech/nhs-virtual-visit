@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Error from "next/error";
+import Router from "next/router";
 import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
@@ -14,6 +15,33 @@ const EditHospital = ({ hospital, error }) => {
 
   const [errors, setErrors] = useState([]);
 
+  const submit = async (payload) =>
+    await fetch("/api/update-a-hospital", {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => {
+        if (!response.ok) throw Error(response.status);
+        return response.json();
+      })
+      .then((result) =>
+        Router.push({
+          pathname: `/trust-admin/hospitals/${result.hospitalId}/edit-success`,
+        })
+      )
+      .catch(() => {
+        const onSubmitErrors = [
+          {
+            id: "hospital-update-error",
+            message: "There was a problem saving your changes",
+          },
+        ];
+        setErrors(onSubmitErrors);
+      });
+
   return (
     <Layout
       title="Edit a hospital"
@@ -27,6 +55,7 @@ const EditHospital = ({ hospital, error }) => {
             errors={errors}
             setErrors={setErrors}
             hospital={hospital}
+            submit={submit}
           />
         </GridColumn>
       </GridRow>
