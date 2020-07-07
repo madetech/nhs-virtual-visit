@@ -3,7 +3,7 @@ import { SCHEDULED } from "../../src/helpers/visitStatus";
 
 describe("createVisit", () => {
   it("creates a visit in the db when valid", async () => {
-    const oneSpy = jest.fn().mockReturnValue(10);
+    const oneSpy = jest.fn().mockResolvedValue({ id: 10, call_id: "12345" });
     const container = {
       async getDb() {
         return {
@@ -18,15 +18,16 @@ describe("createVisit", () => {
       contactName: "John Smith",
       contactNumber: "07123456789",
       callTime: new Date(),
-      callId: 12345,
+      callId: "12345",
       provider: "jitsi",
       wardId: 1,
       callPassword: "securePassword",
     };
 
-    const resultingId = await createVisit(container)(request);
+    const { id, callId } = await createVisit(container)(request);
 
-    expect(resultingId).toEqual(10);
+    expect(id).toEqual(10);
+    expect(callId).toEqual("12345");
 
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.patientName,

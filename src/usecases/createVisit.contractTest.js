@@ -19,5 +19,6 @@ describe("createVisit contract tests", () => {
     });
 
     expect(visit.id).not.toBeNull();
+    expect(visit.callId).toEqual("TESTCALLID");
   });
 });
