@@ -50,7 +50,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital, submit }) => {
 
     if (onSubmitErrors.length === 0) {
       await submit({
-        id: hospital.id,
         name: hospitalName,
         surveyUrl: hospitalSurveyUrl,
       });
@@ -58,11 +57,13 @@ const EditHospitalForm = ({ errors, setErrors, hospital, submit }) => {
     setErrors(onSubmitErrors);
   });
 
+  const action = hospital.Id ? "Edit" : "Add";
+
   return (
     <>
       <ErrorSummary errors={errors} />
       <form onSubmit={onSubmit}>
-        <Heading>Edit a hospital</Heading>
+        <Heading>{action} a hospital</Heading>
         <FormGroup>
           <Label htmlFor="hospital-name" className="nhsuk-label--l">
             What is the hospital name?
@@ -102,7 +103,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital, submit }) => {
           />
         </FormGroup>
 
-        <Button className="nhsuk-u-margin-top-5">Edit hospital</Button>
+        <Button className="nhsuk-u-margin-top-5">{action} hospital</Button>
       </form>
     </>
   );
