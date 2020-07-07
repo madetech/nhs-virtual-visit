@@ -1,0 +1,7 @@
+# See https://github.com/wei/pull for reference
+---
+version: "1"
+rules:
+  - base: master
+    upstream: madetech:master
+    mergeMethod: merge
