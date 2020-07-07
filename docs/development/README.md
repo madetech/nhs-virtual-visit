@@ -21,10 +21,14 @@ DATABASE_URL=
 TEST_DATABASE_URL=
 # GovNotify SMS Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
+# GovNotify SMS Updated Visit Template ID
+SMS_UPDATED_VISIT_TEMPLATE_ID=
 # GovNotify SMS Join Template ID
 SMS_JOIN_TEMPLATE_ID=
 # GovNotify Email Initial Template ID
 EMAIL_INITIAL_TEMPLATE_ID=
+# GovNotify Email Updated Visit Template ID
+EMAIL_UPDATED_VISIT_TEMPLATE_ID=
 # GovNotify Email Join Template ID
 EMAIL_JOIN_TEMPLATE_ID=
 # Valid Ward Codes
