@@ -7,6 +7,7 @@ import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import Layout from "../../../../src/components/Layout";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import EditHospitalForm from "../../../../src/components/EditHospitalForm";
+import ErrorSummary from "../../../../src/components/ErrorSummary";
 
 const EditHospital = ({ hospital, error }) => {
   if (error) {
@@ -53,6 +54,7 @@ const EditHospital = ({ hospital, error }) => {
     >
       <GridRow>
         <GridColumn width="two-thirds">
+          <ErrorSummary errors={errors} />
           <EditHospitalForm
             errors={errors}
             setErrors={setErrors}

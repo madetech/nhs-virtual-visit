@@ -7,6 +7,7 @@ import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 import EditHospitalForm from "../../../src/components/EditHospitalForm";
+import ErrorSummary from "../../../src/components/ErrorSummary";
 
 const AddAHospital = ({ error, trustId }) => {
   if (error) {
@@ -60,6 +61,7 @@ const AddAHospital = ({ error, trustId }) => {
     >
       <GridRow>
         <GridColumn width="two-thirds">
+          <ErrorSummary errors={errors} />
           <EditHospitalForm
             errors={errors}
             setErrors={setErrors}
