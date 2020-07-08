@@ -4,54 +4,12 @@ import withContainer from "../../src/middleware/withContainer";
 import formatDateAndTime from "../../src/helpers/formatDateAndTime";
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
-import validateDateAndTime from "../../src/helpers/validateDateAndTime";
+import validateVisit from "../../src/helpers/validateVisit";
 import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
 import CallIdProvider from "../../src/providers/CallIdProvider";
 
 const ids = new RandomIdProvider();
 const notifier = new ConsoleNotifyProvider();
-
-const isFieldAbsent = (field) => {
-  return !field || field.length === 0;
-};
-
-const getValidationErrors = (
-  container,
-  { patientName, contactEmail, contactNumber, callTime }
-) => {
-  const validateMobileNumber = container.getValidateMobileNumber();
-  const validateEmailAddress = container.getValidateEmailAddress();
-
-  if (isFieldAbsent(patientName)) {
-    return "patientName must be a string";
-  }
-
-  if (isFieldAbsent(contactEmail) && isFieldAbsent(contactNumber)) {
-    return "contactNumber or contactEmail must be present";
-  }
-
-  if (!isFieldAbsent(contactNumber) && !validateMobileNumber(contactNumber)) {
-    return "contactNumber must be a valid mobile number";
-  }
-
-  if (!isFieldAbsent(contactEmail) && !validateEmailAddress(contactEmail)) {
-    return "contactEmail must be a valid email address";
-  }
-
-  const { isValidTime, isValidDate, errorMessage } = validateDateAndTime(
-    callTime
-  );
-
-  if (!isValidTime) {
-    return errorMessage;
-  }
-
-  if (!isValidDate) {
-    return errorMessage;
-  }
-
-  return null;
-};
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -73,10 +31,17 @@ export default withContainer(
     }
 
     res.setHeader("Content-Type", "application/json");
-    const validationErrors = getValidationErrors(container, body);
-    if (validationErrors) {
+    const { validVisit, errors } = validateVisit({
+      patientName: body.patientName,
+      contactName: body.contactName,
+      contactEmail: body.contactEmail,
+      contactNumber: body.contactNumber,
+      callTime: body.callTime,
+    });
+
+    if (!validVisit) {
       res.status(400);
-      res.end(JSON.stringify({ err: validationErrors }));
+      res.end(JSON.stringify({ err: errors }));
       return;
     }
 
