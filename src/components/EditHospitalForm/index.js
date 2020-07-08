@@ -57,7 +57,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital, submit }) => {
     setErrors(onSubmitErrors);
   });
 
-  const action = hospital.Id ? "Edit" : "Add";
+  const action = hospital.id ? "Edit" : "Add";
 
   return (
     <>
