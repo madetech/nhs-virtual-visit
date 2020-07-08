@@ -115,4 +115,8 @@ describe("AppContainer", () => {
   it("returns getRetrieveSupportUrlByCallId", () => {
     expect(container.getRetrieveSupportUrlByCallId()).toBeDefined();
   });
+
+  it("returns getUpdateVisitByCallId", () => {
+    expect(container.getUpdateVisitByCallId()).toBeDefined();
+  });
 });
