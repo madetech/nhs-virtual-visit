@@ -15,41 +15,47 @@ const AddAHospital = ({ error, trustId }) => {
   }
   const [errors, setErrors] = useState([]);
 
-  const onSubmitErrors = [];
-
-  const setHospitalUniqueError = (errors, err) => {
-    errors.push({
+  const getHospitalUniqueError = (err) => {
+    return {
       id: "hospital-name-error",
       message: err,
-    });
+    };
+  };
+
+  const getGenericError = () => {
+    return {
+      message: "Something went wrong, please try again later.",
+    };
   };
 
   const submit = async (payload) => {
     payload.trustId = trustId;
-    const response = await fetch("/api/create-hospital", {
+    await fetch("/api/create-hospital", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify(payload),
-    });
-
-    const status = response.status;
-
-    if (status == 201) {
-      const { hospitalId } = await response.json();
-      Router.push({
-        pathname: `/trust-admin/hospitals/${hospitalId}/add-success`,
+    })
+      .then(async (response) => {
+        const json = await response.json();
+        if (!response.ok && response.status !== 201)
+          throw new Error({ ...json, status: response.status });
+        return json;
+      })
+      .then((response) =>
+        Router.push({
+          pathname: `/trust-admin/hospitals/${response.hospitalId}/add-success`,
+        })
+      )
+      .catch((e) => {
+        let submitErrors = [
+          e.props.status === 400
+            ? getHospitalUniqueError(e.props.err)
+            : getGenericError(),
+        ];
+        setErrors(submitErrors);
       });
-    } else if (status === 400) {
-      const { err } = await response.json();
-      setHospitalUniqueError(onSubmitErrors, err);
-    } else {
-      onSubmitErrors.push({
-        message: "Something went wrong, please try again later.",
-      });
-      setErrors(onSubmitErrors);
-    }
   };
 
   return (
