@@ -7,7 +7,7 @@ import Label from "../Label";
 import validateUrl from "../../helpers/validateUrl";
 import isPresent from "../../helpers/isPresent";
 
-const EditHospitalForm = ({ errors, setErrors, hospital, submit }) => {
+const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
   const [hospitalSurveyUrl, setHospitalSurveyUrl] = useState(
     hospital.surveyUrl

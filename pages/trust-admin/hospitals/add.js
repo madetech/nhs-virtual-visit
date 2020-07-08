@@ -71,7 +71,6 @@ const AddAHospital = ({ error, trustId }) => {
           <EditHospitalForm
             errors={errors}
             setErrors={setErrors}
-            hospital={{}}
             submit={submit}
           />
         </GridColumn>
