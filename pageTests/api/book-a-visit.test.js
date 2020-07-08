@@ -173,7 +173,7 @@ describe("/api/book-a-visit", () => {
     it("sends a text message and an email", async () => {
       request.body = {
         patientName: "Bob Smith",
-        contactNumber: "john@smith.com",
+        contactNumber: "07123456789",
         contactEmail: "john@smith.com",
         contactName: "John Smith",
         callTime: frozenTime,
@@ -197,7 +197,7 @@ describe("/api/book-a-visit", () => {
     it("returns a 201 status if successful", async () => {
       request.body = {
         patientName: "Bob Smith",
-        contactNumber: "john@smith.com",
+        contactNumber: "07123456789",
         contactEmail: "john@smith.com",
         contactName: "John Smith",
         callTime: frozenTime,
@@ -211,7 +211,7 @@ describe("/api/book-a-visit", () => {
     it("returns a 400 status if error with sending a text", async () => {
       request.body = {
         patientName: "Bob Smith",
-        contactNumber: "john@smith.com",
+        contactNumber: "07123456789",
         contactEmail: "john@smith.com",
         contactName: "John Smith",
         callTime: frozenTime,
@@ -238,7 +238,7 @@ describe("/api/book-a-visit", () => {
     it("returns a 400 status if error with sending an email", async () => {
       request.body = {
         patientName: "Bob Smith",
-        contactNumber: "john@smith.com",
+        contactNumber: "07123456789",
         contactEmail: "john@smith.com",
         contactName: "John Smith",
         callTime: frozenTime,
@@ -352,7 +352,9 @@ describe("/api/book-a-visit", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(createVisitSpy).not.toHaveBeenCalled();
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "contactEmail must be a valid email address" })
+      JSON.stringify({
+        err: { contactEmail: "contactEmail must be a valid email address" },
+      })
     );
   });
 
@@ -373,7 +375,9 @@ describe("/api/book-a-visit", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(createVisitSpy).not.toHaveBeenCalled();
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "contactNumber must be a valid mobile number" })
+      JSON.stringify({
+        err: { contactNumber: "contactNumber must be a valid mobile number" },
+      })
     );
   });
 
@@ -388,7 +392,12 @@ describe("/api/book-a-visit", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(createVisitSpy).not.toHaveBeenCalled();
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "contactNumber or contactEmail must be present" })
+      JSON.stringify({
+        err: {
+          contactEmail: "contactNumber or contactEmail must be present",
+          contactNumber: "contactNumber or contactEmail must be present",
+        },
+      })
     );
   });
 
