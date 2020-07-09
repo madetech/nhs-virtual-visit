@@ -37,6 +37,11 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     );
   }
 
+  function WhenIFillOutTheFormWithBadSurveyUrl() {
+    cy.get("input[name=hospital-name]").type("Scorpia Hospital");
+    cy.get("input[name=hospital-survey-url]").type("https://www");
+  }
+
   function AndIClickTheEditHospitalButton() {
     cy.get("button[type=submit]").contains("Edit hospital").click();
   }
@@ -67,6 +72,19 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     ThenIShouldBeOnTheEditHospitalPage();
 
     WhenISubmitFormEmptyHospitalName();
+    ThenISeeErrors();
+  });
+
+  it("displays errors when survey url is invalid", () => {
+    GivenIAmLoggedInAsAnAdmin();
+    WhenIClickOnHospitals();
+    ThenISeeTheHospitalList();
+
+    WhenIClickOnTheEditLink();
+    ThenIShouldBeOnTheEditHospitalPage();
+
+    WhenIFillOutTheFormWithBadSurveyUrl();
+    AndIClickTheEditHospitalButton();
     ThenISeeErrors();
   });
 
