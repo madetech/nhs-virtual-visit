@@ -47,6 +47,19 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     ThenISeeErrors();
   });
 
+  it("displays errors when support url is invalid", () => {
+    GivenIAmLoggedInAsATrustAdmin();
+    WhenIClickHospitalsOnTheNavigationBar();
+    ThenISeeTheHospitalsPage();
+
+    WhenIClickAddAHospital();
+    ThenISeeTheAddAHospitalForm();
+
+    WhenIFillOutTheFormWithBadSupportUrl();
+    AndISubmitTheForm();
+    ThenISeeErrors();
+  });
+
   // Allows a trust admin to add a hospital
   function GivenIAmLoggedInAsATrustAdmin() {
     cy.visit(Cypress.env("baseUrl") + "/trust-admin/login");
@@ -78,11 +91,19 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     cy.get("input[name=hospital-survey-url]").type(
       "https://www.survey.example.com"
     );
+    cy.get("input[name=hospital-support-url]").type(
+      "https://www.support.example.com"
+    );
   }
 
   function WhenIFillOutTheFormWithBadSurveyUrl() {
     cy.get("input[name=hospital-name]").type("Scorpia Hospital");
     cy.get("input[name=hospital-survey-url]").type("https://www");
+  }
+
+  function WhenIFillOutTheFormWithBadSupportUrl() {
+    cy.get("input[name=hospital-name]").type("Scorpia Hospital");
+    cy.get("input[name=hospital-support-url]").type("https://www");
   }
 
   function AndISubmitTheForm() {
