@@ -12,6 +12,9 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalSurveyUrl, setHospitalSurveyUrl] = useState(
     hospital.surveyUrl
   );
+  const [hospitalSupportUrl, setHospitalSupportUrl] = useState(
+    hospital.supportUrl
+  );
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
@@ -24,6 +27,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
     let onSubmitErrors = [];
+
     const setHospitalNameError = (errors) => {
       errors.push({
         id: "hospital-name-error",
@@ -38,6 +42,13 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       });
     };
 
+    const setHospitalSupportUrlInvalidError = (errors) => {
+      errors.push({
+        id: "hospital-support-url-error",
+        message: "Enter a valid support URL",
+      });
+    };
+
     if (!isPresent(hospitalName)) {
       setHospitalNameError(onSubmitErrors);
     }
@@ -46,10 +57,15 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       setHospitalSurveyUrlInvalidError(onSubmitErrors);
     }
 
+    if (isPresent(hospitalSupportUrl) && !validateUrl(hospitalSupportUrl)) {
+      setHospitalSupportUrlInvalidError(onSubmitErrors);
+    }
+
     if (onSubmitErrors.length === 0) {
       await submit({
         name: hospitalName,
         surveyUrl: hospitalSurveyUrl,
+        supportUrl: hospitalSupportUrl,
       });
     } else setErrors(onSubmitErrors);
   });
@@ -94,6 +110,26 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           onChange={(event) => setHospitalSurveyUrl(event.target.value)}
           name="hospital-survey-url"
           value={hospitalSurveyUrl || ""}
+        />
+      </FormGroup>
+
+      <FormGroup>
+        <Label htmlFor="hospital-support-url" className="nhsuk-label--l">
+          Key contact support URL (optional)
+        </Label>
+        <span className="nhsuk-hint" id="hospital-support-url-hint">
+          The support URL will appear at the end of a visit for a key contact.
+        </span>
+        <Input
+          id="hospital-support-url"
+          type="url"
+          hasError={hasError("hospital-support-url")}
+          errorMessage={errorMessage("hospital-support-url")}
+          className="nhsuk-u-font-size-32"
+          style={{ padding: "16px!important", height: "64px" }}
+          onChange={(event) => setHospitalSupportUrl(event.target.value)}
+          name="hospital-support-url"
+          value={hospitalSupportUrl || ""}
         />
       </FormGroup>
 
