@@ -82,8 +82,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           Key contact survey URL (optional)
         </Label>
         <span className="nhsuk-hint" id="hospital-survey-url-hint">
-          The survey URL will appear on the visit complete page for the key
-          contact.
+          The survey URL will appear at the end of a visit for a key contact.
         </span>
         <Input
           id="hospital-survey-url"
