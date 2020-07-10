@@ -119,4 +119,8 @@ describe("AppContainer", () => {
   it("returns getUpdateVisitByCallId", () => {
     expect(container.getUpdateVisitByCallId()).toBeDefined();
   });
+
+  it("returns getSendBookingNotification", () => {
+    expect(container.getSendBookingNotification()).toBeDefined();
+  });
 });

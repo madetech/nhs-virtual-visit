@@ -43,6 +43,7 @@ import retrieveReportingStartDateByTrustId from "../usecases/retrieveReportingSt
 import retrieveSurveyUrlByCallId from "../usecases/retrieveSurveyUrlByCallId";
 import retrieveSupportUrlByCallId from "../usecases/retrieveSupportUrlByCallId";
 import updateVisitByCallId from "../usecases/updateVisitByCallId";
+import sendBookingNotification from "../usecases/sendBookingNotification";
 
 class AppContainer {
   getDb = () => {
@@ -223,6 +224,10 @@ class AppContainer {
 
   getUpdateVisitByCallId = () => {
     return updateVisitByCallId(this);
+  };
+
+  getSendBookingNotification = () => {
+    return sendBookingNotification(this);
   };
 }
 
