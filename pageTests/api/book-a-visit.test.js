@@ -1,9 +1,6 @@
-import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
 import bookAVisit from "../../pages/api/book-a-visit";
 import fetch from "node-fetch";
 import moment from "moment";
-import formatDate from "../../src/helpers/formatDate";
-import formatTime from "../../src/helpers/formatTime";
 
 jest.mock("node-fetch");
 
@@ -53,6 +50,11 @@ describe("/api/book-a-visit", () => {
     error: null,
   });
 
+  const sendBookingNotificationSpy = jest.fn().mockResolvedValue({
+    success: true,
+    errors: null,
+  });
+
   beforeEach(() => {
     createVisitSpy = jest.fn();
     request = {
@@ -60,6 +62,7 @@ describe("/api/book-a-visit", () => {
       body: {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
+        contactEmail: "bob@example.com",
         contactName: "John Smith",
         callTime: frozenTime,
       },
@@ -79,11 +82,10 @@ describe("/api/book-a-visit", () => {
       getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
       getRetrieveTrustById: () => getRetrieveWherebyTrustByIdSpy,
       getDb: jest.fn().mockResolvedValue(() => {}),
-      getSendTextMessage: () => () => ({ success: true, error: null }),
-      getSendEmail: () => () => ({ success: true, error: null }),
       getUpdateWardVisitTotals: () => updateWardVisitTotalsSpy,
       getValidateMobileNumber: () => () => true,
       getValidateEmailAddress: () => () => true,
+      getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 
     process.env.WHEREBY_API_KEY = "meow";
@@ -93,174 +95,44 @@ describe("/api/book-a-visit", () => {
     });
   });
 
-  describe("when a contact number is provided", () => {
-    it("sends a text message", async () => {
-      request.body = {
-        patientName: "Bob Smith",
-        contactNumber: "07123456789",
-        contactName: "John Smith",
-        callTime: frozenTime,
-      };
+  it("sends a booking notification", async () => {
+    await bookAVisit(request, response, { container });
 
-      const sendTextMessageSpy = jest
-        .fn()
-        .mockReturnValue({ success: true, error: null });
-
-      const sendEmailSpy = jest.fn();
-
-      await bookAVisit(request, response, {
-        container: {
-          ...container,
-          getSendTextMessage: () => sendTextMessageSpy,
-          getSendEmail: () => sendEmailSpy,
-        },
-      });
-
-      expect(sendTextMessageSpy).toHaveBeenCalledWith(
-        TemplateStore.firstText.templateId,
-        "07123456789",
-        {
-          ward_name: "Fake Ward",
-          hospital_name: "Fake Hospital",
-          visit_date: formatDate(frozenTime),
-          visit_time: formatTime(frozenTime),
-        },
-        null
-      );
-      expect(sendEmailSpy).not.toHaveBeenCalled();
+    expect(response.status).toHaveBeenCalledWith(201);
+    expect(sendBookingNotificationSpy).toHaveBeenCalledWith({
+      mobileNumber: "07123456789",
+      emailAddress: "bob@example.com",
+      wardName: "Fake Ward",
+      hospitalName: "Fake Hospital",
+      visitDateAndTime: frozenTime,
     });
   });
 
-  describe("when a contact email is provided", () => {
-    it("sends an email", async () => {
-      request.body = {
-        patientName: "Bob Smith",
-        contactEmail: "john@smith.com",
-        contactName: "John Smith",
-        callTime: frozenTime,
-      };
-
-      const sendEmailSpy = jest
-        .fn()
-        .mockReturnValue({ success: true, error: null });
-
-      const sendTextMessageSpy = jest.fn();
-
-      await bookAVisit(request, response, {
-        container: {
-          ...container,
-          getSendTextMessage: () => sendTextMessageSpy,
-          getSendEmail: () => sendEmailSpy,
-        },
-      });
-
-      expect(sendEmailSpy).toHaveBeenCalledWith(
-        TemplateStore.firstEmail.templateId,
-        "john@smith.com",
-        {
-          ward_name: "Fake Ward",
-          hospital_name: "Fake Hospital",
-          visit_date: formatDate(frozenTime),
-          visit_time: formatTime(frozenTime),
-        },
-        null
-      );
-      expect(sendTextMessageSpy).not.toHaveBeenCalled();
-    });
-  });
-
-  describe("when a contact number and contact email are provided", () => {
-    it("sends a text message and an email", async () => {
-      request.body = {
-        patientName: "Bob Smith",
-        contactNumber: "07123456789",
-        contactEmail: "john@smith.com",
-        contactName: "John Smith",
-        callTime: frozenTime,
-      };
-
-      const sendEmailSpy = jest.fn();
-      const sendTextMessageSpy = jest.fn();
-
-      await bookAVisit(request, response, {
-        container: {
-          ...container,
-          getSendTextMessage: () => sendTextMessageSpy,
-          getSendEmail: () => sendEmailSpy,
-        },
-      });
-
-      expect(sendTextMessageSpy).toHaveBeenCalled();
-      expect(sendEmailSpy).toHaveBeenCalled();
+  it("returns a 400 status if unable to send booking notification", async () => {
+    const sendBookingNotificationError = jest.fn().mockResolvedValue({
+      success: false,
+      errors: {
+        textMessageError: "Failed to send text message!",
+        emailError: "Failed to send email!",
+      },
     });
 
-    it("returns a 201 status if successful", async () => {
-      request.body = {
-        patientName: "Bob Smith",
-        contactNumber: "07123456789",
-        contactEmail: "john@smith.com",
-        contactName: "John Smith",
-        callTime: frozenTime,
-      };
-
-      await bookAVisit(request, response, { container });
-
-      expect(response.status).toHaveBeenCalledWith(201);
+    await bookAVisit(request, response, {
+      container: {
+        ...container,
+        getSendBookingNotification: () => sendBookingNotificationError,
+      },
     });
 
-    it("returns a 400 status if error with sending a text", async () => {
-      request.body = {
-        patientName: "Bob Smith",
-        contactNumber: "07123456789",
-        contactEmail: "john@smith.com",
-        contactName: "John Smith",
-        callTime: frozenTime,
-      };
-
-      const sendTextMessageStub = jest
-        .fn()
-        .mockReturnValue({ success: false, error: "Error message" });
-      const sendEmailStub = jest
-        .fn()
-        .mockReturnValue({ success: true, error: null });
-
-      await bookAVisit(request, response, {
-        container: {
-          ...container,
-          getSendTextMessage: () => sendTextMessageStub,
-          getSendEmail: () => sendEmailStub,
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({
+        err: {
+          textMessageError: "Failed to send text message!",
+          emailError: "Failed to send email!",
         },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(400);
-    });
-
-    it("returns a 400 status if error with sending an email", async () => {
-      request.body = {
-        patientName: "Bob Smith",
-        contactNumber: "07123456789",
-        contactEmail: "john@smith.com",
-        contactName: "John Smith",
-        callTime: frozenTime,
-      };
-
-      const sendTextMessageStub = jest
-        .fn()
-        .mockReturnValue({ success: true, error: null });
-      const sendEmailStub = jest
-        .fn()
-        .mockReturnValue({ success: false, error: "Error message" });
-
-      await bookAVisit(request, response, {
-        container: {
-          ...container,
-          getSendTextMessage: () => sendTextMessageStub,
-          getSendEmail: () => sendEmailStub,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(400);
-    });
+      })
+    );
   });
 
   it("updates the ward visit totals", async () => {
@@ -399,84 +271,6 @@ describe("/api/book-a-visit", () => {
         },
       })
     );
-  });
-
-  describe("when sending a text message", () => {
-    it("returns a 201 status if successful", async () => {
-      const sendTextMessageStub = jest
-        .fn()
-        .mockReturnValue({ success: true, error: null });
-
-      await bookAVisit(request, response, {
-        container: {
-          ...container,
-          getSendTextMessage: () => sendTextMessageStub,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(201);
-    });
-
-    it("returns a 400 status if errors", async () => {
-      const sendTextMessageStub = jest
-        .fn()
-        .mockReturnValue({ success: false, error: "Error message" });
-
-      await bookAVisit(request, response, {
-        container: {
-          ...container,
-          getSendTextMessage: () => sendTextMessageStub,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(400);
-    });
-  });
-
-  describe("when sending an email", () => {
-    it("returns a 201 status if successful", async () => {
-      request.body = {
-        patientName: "Bob Smith",
-        contactEmail: "john@smith.com",
-        contactName: "John Smith",
-        callTime: frozenTime,
-      };
-
-      const sendEmailStub = jest
-        .fn()
-        .mockReturnValue({ success: true, error: null });
-
-      await bookAVisit(request, response, {
-        container: {
-          ...container,
-          getSendEmail: () => sendEmailStub,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(201);
-    });
-
-    it("returns a 400 status if errors", async () => {
-      request.body = {
-        patientName: "Bob Smith",
-        contactEmail: "john@smith.com",
-        contactName: "John Smith",
-        callTime: frozenTime,
-      };
-
-      const sendEmailStub = jest
-        .fn()
-        .mockReturnValue({ success: false, error: "Error message" });
-
-      await bookAVisit(request, response, {
-        container: {
-          ...container,
-          getSendEmail: () => sendEmailStub,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(400);
-    });
   });
 
   describe("Whereby", () => {

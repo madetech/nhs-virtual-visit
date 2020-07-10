@@ -1,15 +1,9 @@
 import RandomIdProvider from "../../src/providers/RandomIdProvider";
-import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
 import withContainer from "../../src/middleware/withContainer";
-import formatDateAndTime from "../../src/helpers/formatDateAndTime";
-import formatDate from "../../src/helpers/formatDate";
-import formatTime from "../../src/helpers/formatTime";
 import validateVisit from "../../src/helpers/validateVisit";
-import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
 import CallIdProvider from "../../src/providers/CallIdProvider";
 
 const ids = new RandomIdProvider();
-const notifier = new ConsoleNotifyProvider();
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -88,54 +82,25 @@ export default withContainer(
 
       await updateWardVisitTotals({ wardId: ward.id, date: body.callTime });
 
-      let sendTextMessageResponse;
-      if (body.contactNumber) {
-        const sendTextMessage = container.getSendTextMessage();
-        const textMessageTemplateId = TemplateStore.firstText.templateId;
+      const sendBookingNotification = container.getSendBookingNotification();
 
-        sendTextMessageResponse = await sendTextMessage(
-          textMessageTemplateId,
-          body.contactNumber,
-          {
-            visit_date: formatDate(body.callTime),
-            visit_time: formatTime(body.callTime),
-            ward_name: ward.name,
-            hospital_name: ward.hospitalName,
-          },
-          null
-        );
-      }
+      const {
+        success: bookingNotificationSuccess,
+        errors: bookingNotificationErrors,
+      } = await sendBookingNotification({
+        mobileNumber: body.contactNumber,
+        emailAddress: body.contactEmail,
+        wardName: ward.name,
+        hospitalName: ward.hospitalName,
+        visitDateAndTime: body.callTime,
+      });
 
-      let sendEmailResponse;
-      if (body.contactEmail) {
-        const sendEmail = container.getSendEmail();
-        const emailTemplateId = TemplateStore.firstEmail.templateId;
-
-        sendEmailResponse = await sendEmail(
-          emailTemplateId,
-          body.contactEmail,
-          {
-            visit_date: formatDate(body.callTime),
-            visit_time: formatTime(body.callTime),
-            ward_name: ward.name,
-            hospital_name: ward.hospitalName,
-          },
-          null
-        );
-      }
-
-      if (
-        (sendTextMessageResponse?.success && sendEmailResponse?.success) ||
-        (sendTextMessageResponse?.success && !sendEmailResponse) ||
-        (sendEmailResponse?.success && !sendTextMessageResponse)
-      ) {
-        notifier.notify(formatDateAndTime(body.callTimeLocal));
-
+      if (bookingNotificationSuccess) {
         res.status(201);
         res.end(JSON.stringify({ success: true }));
       } else {
         res.status(400);
-        res.end(JSON.stringify({ err: "Failed to schedule a visit" }));
+        res.end(JSON.stringify({ err: bookingNotificationErrors }));
       }
     } catch (err) {
       console.error(err);
