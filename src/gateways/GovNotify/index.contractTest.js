@@ -31,7 +31,7 @@ const contractTestClient = (testCallback) => () => {
 describe(
   "GovNotify contract sms tests",
   contractTestClient(({ client }) => {
-    const { templateId, personalisationKeys } = TemplateStore.firstText;
+    const { templateId, personalisationKeys } = TemplateStore().firstText;
 
     const personalisation = fillObjectWithStrings(personalisationKeys);
 
@@ -113,7 +113,7 @@ describe(
 describe(
   "GovNotify contract email tests",
   contractTestClient(({ client }) => {
-    const { templateId, personalisationKeys } = TemplateStore.firstEmail;
+    const { templateId, personalisationKeys } = TemplateStore().firstEmail;
 
     const personalisation = fillObjectWithStrings(personalisationKeys);
 

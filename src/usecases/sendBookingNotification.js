@@ -14,8 +14,8 @@ const sendBookingNotification = ({
   hospitalName,
   visitDateAndTime,
 }) => {
-  const textMessageTemplateId = TemplateStore.firstText.templateId;
-  const emailTemplateId = TemplateStore.firstEmail.templateId;
+  const textMessageTemplateId = TemplateStore().firstText.templateId;
+  const emailTemplateId = TemplateStore().firstEmail.templateId;
 
   const personalisation = {
     visit_date: formatDate(visitDateAndTime),

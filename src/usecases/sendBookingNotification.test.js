@@ -2,8 +2,8 @@ import sendBookingNotification from "./sendBookingNotification";
 import TemplateStore from "../gateways/GovNotify/TemplateStore";
 
 describe("sendBookingNotification", () => {
-  const textMessageTemplateId = TemplateStore.firstText.templateId;
-  const emailTemplateId = TemplateStore.firstEmail.templateId;
+  const textMessageTemplateId = TemplateStore().firstText.templateId;
+  const emailTemplateId = TemplateStore().firstEmail.templateId;
   const mobileNumber = "07123456789";
   const emailAddress = "test@example.com";
   const wardName = "Test Ward";
