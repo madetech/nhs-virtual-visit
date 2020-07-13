@@ -175,4 +175,37 @@ describe("sendBookingNotification", () => {
       textMessageError: null,
     });
   });
+
+  describe("when we set the notificationType to updated", () => {
+    it("uses the correct text message and email template", async () => {
+      const textMessageUpdatedTemplateId = TemplateStore().updatedVisitText
+        .templateId;
+      const emailUpdatedTemplateId = TemplateStore().updatedVisitEmail
+        .templateId;
+
+      const { success, errors } = await sendBookingNotification(container)({
+        mobileNumber,
+        emailAddress,
+        wardName,
+        hospitalName,
+        visitDateAndTime,
+        notificationType: "updated",
+      });
+
+      expect(success).toBeTruthy();
+      expect(errors).toBeNull();
+      expect(sendTextMessage).toHaveBeenCalledWith(
+        textMessageUpdatedTemplateId,
+        mobileNumber,
+        personalisation,
+        null
+      );
+      expect(sendEmail).toHaveBeenCalledWith(
+        emailUpdatedTemplateId,
+        emailAddress,
+        personalisation,
+        null
+      );
+    });
+  });
 });
