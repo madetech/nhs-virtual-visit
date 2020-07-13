@@ -4,6 +4,9 @@ import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 import ConsoleNotifyProvider from "../providers/ConsoleNotifyProvider";
 
+const NEW_NOTIFICATION = "new";
+const NOTIFICATION_TYPES = [NEW_NOTIFICATION];
+
 const sendBookingNotification = ({
   getSendTextMessage,
   getSendEmail,
@@ -13,9 +16,14 @@ const sendBookingNotification = ({
   wardName,
   hospitalName,
   visitDateAndTime,
+  notificationType = NEW_NOTIFICATION,
 }) => {
-  const textMessageTemplateId = TemplateStore().firstText.templateId;
-  const emailTemplateId = TemplateStore().firstEmail.templateId;
+  if (!NOTIFICATION_TYPES.includes(notificationType))
+    throw `Unsupported notification type ${notificationType}`;
+
+  const { textMessageTemplateId, emailTemplateId } = getTemplateIds(
+    notificationType
+  );
 
   const personalisation = {
     visit_date: formatDate(visitDateAndTime),
@@ -67,6 +75,18 @@ const sendBookingNotification = ({
       errors: null,
     };
   }
+};
+
+const getTemplateIds = (notificationType) => {
+  let textMessageTemplateId;
+  let emailTemplateId;
+
+  if (notificationType == NEW_NOTIFICATION) {
+    textMessageTemplateId = TemplateStore().firstText.templateId;
+    emailTemplateId = TemplateStore().firstEmail.templateId;
+  }
+
+  return { textMessageTemplateId, emailTemplateId };
 };
 
 export default sendBookingNotification;

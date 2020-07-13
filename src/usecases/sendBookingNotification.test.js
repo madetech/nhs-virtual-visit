@@ -62,9 +62,10 @@ describe("sendBookingNotification", () => {
         success: false,
         error: "Failed to send text message!",
       });
-      sendEmail = jest
-        .fn()
-        .mockResolvedValue({ success: false, error: "Failed to send email!" });
+      sendEmail = jest.fn().mockResolvedValue({
+        success: false,
+        error: "Failed to send email!",
+      });
       container = {
         getSendTextMessage: () => sendTextMessage,
         getSendEmail: () => sendEmail,
