@@ -2,8 +2,6 @@ import sendBookingNotification from "./sendBookingNotification";
 import TemplateStore from "../gateways/GovNotify/TemplateStore";
 
 describe("sendBookingNotification", () => {
-  const textMessageTemplateId = TemplateStore().firstText.templateId;
-  const emailTemplateId = TemplateStore().firstEmail.templateId;
   const mobileNumber = "07123456789";
   const emailAddress = "test@example.com";
   const wardName = "Test Ward";
@@ -15,6 +13,11 @@ describe("sendBookingNotification", () => {
     ward_name: wardName,
     hospital_name: hospitalName,
   };
+
+  let textMessageTemplateId;
+  let emailTemplateId;
+  let textMessageUpdatedTemplateId;
+  let emailUpdatedTemplateId;
 
   let sendTextMessage;
   let sendEmail;
@@ -29,6 +32,27 @@ describe("sendBookingNotification", () => {
       getSendTextMessage: () => sendTextMessage,
       getSendEmail: () => sendEmail,
     };
+
+    process.env.SMS_INITIAL_TEMPLATE_ID = "1";
+    process.env.SMS_UPDATED_VISIT_TEMPLATE_ID = "2";
+    process.env.SMS_JOIN_TEMPLATE_ID = "3";
+    process.env.EMAIL_INITIAL_TEMPLATE_ID = "4";
+    process.env.EMAIL_UPDATED_VISIT_TEMPLATE_ID = "5";
+    process.env.EMAIL_JOIN_TEMPLATE_ID = "6";
+
+    textMessageTemplateId = TemplateStore().firstText.templateId;
+    emailTemplateId = TemplateStore().firstEmail.templateId;
+    textMessageUpdatedTemplateId = TemplateStore().updatedVisitText.templateId;
+    emailUpdatedTemplateId = TemplateStore().updatedVisitEmail.templateId;
+  });
+
+  afterEach(() => {
+    process.env.SMS_INITIAL_TEMPLATE_ID = "";
+    process.env.SMS_UPDATED_VISIT_TEMPLATE_ID = "";
+    process.env.SMS_JOIN_TEMPLATE_ID = "";
+    process.env.EMAIL_INITIAL_TEMPLATE_ID = "";
+    process.env.EMAIL_UPDATED_VISIT_TEMPLATE_ID = "";
+    process.env.EMAIL_JOIN_TEMPLATE_ID = "";
   });
 
   describe("when a mobile number and email address is provided", () => {
@@ -178,11 +202,6 @@ describe("sendBookingNotification", () => {
 
   describe("when we set the notificationType to updated", () => {
     it("uses the correct text message and email template", async () => {
-      const textMessageUpdatedTemplateId = TemplateStore().updatedVisitText
-        .templateId;
-      const emailUpdatedTemplateId = TemplateStore().updatedVisitEmail
-        .templateId;
-
       const { success, errors } = await sendBookingNotification(container)({
         mobileNumber,
         emailAddress,
