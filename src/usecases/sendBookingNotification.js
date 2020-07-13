@@ -5,7 +5,8 @@ import formatTime from "../../src/helpers/formatTime";
 import ConsoleNotifyProvider from "../providers/ConsoleNotifyProvider";
 
 const NEW_NOTIFICATION = "new";
-const NOTIFICATION_TYPES = [NEW_NOTIFICATION];
+const UPDATED_NOTIFICATION = "updated";
+const NOTIFICATION_TYPES = [NEW_NOTIFICATION, UPDATED_NOTIFICATION];
 
 const sendBookingNotification = ({
   getSendTextMessage,
@@ -84,6 +85,11 @@ const getTemplateIds = (notificationType) => {
   if (notificationType == NEW_NOTIFICATION) {
     textMessageTemplateId = TemplateStore().firstText.templateId;
     emailTemplateId = TemplateStore().firstEmail.templateId;
+  }
+
+  if (notificationType == UPDATED_NOTIFICATION) {
+    textMessageTemplateId = TemplateStore().updatedVisitText.templateId;
+    emailTemplateId = TemplateStore().updatedVisitEmail.templateId;
   }
 
   return { textMessageTemplateId, emailTemplateId };
