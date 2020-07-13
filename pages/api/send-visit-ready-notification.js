@@ -33,10 +33,10 @@ export default withContainer(async (req, res, { container }) => {
   const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
 
   const sendTextMessage = container.getSendTextMessage();
-  const secondTextTemplateId = TemplateStore.secondText.templateId;
+  const secondTextTemplateId = TemplateStore().secondText.templateId;
 
   const sendEmail = container.getSendEmail();
-  const secondEmailTemplateId = TemplateStore.secondEmail.templateId;
+  const secondEmailTemplateId = TemplateStore().secondEmail.templateId;
 
   try {
     const { ward, error } = await container.getRetrieveWardById()(

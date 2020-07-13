@@ -105,7 +105,7 @@ describe("send-visit-ready-notification", () => {
         });
 
         expect(sendTextMessageSpy).toHaveBeenCalledWith(
-          TemplateStore.secondText.templateId,
+          TemplateStore().secondText.templateId,
           "07123456789",
           {
             call_url:
@@ -170,7 +170,7 @@ describe("send-visit-ready-notification", () => {
         });
 
         expect(sendEmailSpy).toHaveBeenCalledWith(
-          TemplateStore.secondEmail.templateId,
+          TemplateStore().secondEmail.templateId,
           "leslie@knope.com",
           {
             call_url:
@@ -271,7 +271,7 @@ describe("send-visit-ready-notification", () => {
         });
 
         expect(sendTextMessageSpy).toHaveBeenCalledWith(
-          TemplateStore.secondText.templateId,
+          TemplateStore().secondText.templateId,
           "07123456789",
           {
             call_url:

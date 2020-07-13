@@ -25,7 +25,7 @@ export class NotifyClient {
     }
 
     if (
-      Object.values(TemplateStore).findIndex(
+      Object.values(TemplateStore()).findIndex(
         (it) => it.templateId === templateId
       ) === -1
     ) {
@@ -51,7 +51,7 @@ export class NotifyClient {
   };
 
   _validatePersonalisation = (templateId, personalisation) => {
-    const template = Object.values(TemplateStore).filter(
+    const template = Object.values(TemplateStore()).filter(
       (it) => it.templateId === templateId
     )[0];
 

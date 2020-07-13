@@ -4,7 +4,7 @@ import sendTextMessage from "./sendTextMessage";
 import fillObjectWithStrings from "../testUtils/fillObjectWithStrings";
 
 describe("sendTextMessage", () => {
-  const { templateId, personalisationKeys } = TemplateStore.firstText;
+  const { templateId, personalisationKeys } = TemplateStore().firstText;
   const personalisation = fillObjectWithStrings(personalisationKeys);
 
   const phoneNumber = "07123456789";
