@@ -6,7 +6,6 @@ import ConsoleNotifyProvider from "../providers/ConsoleNotifyProvider";
 
 const NEW_NOTIFICATION = "new";
 const UPDATED_NOTIFICATION = "updated";
-const NOTIFICATION_TYPES = [NEW_NOTIFICATION, UPDATED_NOTIFICATION];
 
 const sendBookingNotification = ({
   getSendTextMessage,
@@ -19,9 +18,6 @@ const sendBookingNotification = ({
   visitDateAndTime,
   notificationType = NEW_NOTIFICATION,
 }) => {
-  if (!NOTIFICATION_TYPES.includes(notificationType))
-    throw `Unsupported notification type ${notificationType}`;
-
   const { textMessageTemplateId, emailTemplateId } = getTemplateIds(
     notificationType
   );
@@ -82,14 +78,17 @@ const getTemplateIds = (notificationType) => {
   let textMessageTemplateId;
   let emailTemplateId;
 
-  if (notificationType == NEW_NOTIFICATION) {
-    textMessageTemplateId = TemplateStore().firstText.templateId;
-    emailTemplateId = TemplateStore().firstEmail.templateId;
-  }
-
-  if (notificationType == UPDATED_NOTIFICATION) {
-    textMessageTemplateId = TemplateStore().updatedVisitText.templateId;
-    emailTemplateId = TemplateStore().updatedVisitEmail.templateId;
+  switch (notificationType) {
+    case NEW_NOTIFICATION:
+      textMessageTemplateId = TemplateStore().firstText.templateId;
+      emailTemplateId = TemplateStore().firstEmail.templateId;
+      break;
+    case UPDATED_NOTIFICATION:
+      textMessageTemplateId = TemplateStore().updatedVisitText.templateId;
+      emailTemplateId = TemplateStore().updatedVisitEmail.templateId;
+      break;
+    default:
+      throw `Unsupported notification type ${notificationType}`;
   }
 
   return { textMessageTemplateId, emailTemplateId };

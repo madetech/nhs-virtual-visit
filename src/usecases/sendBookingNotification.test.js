@@ -227,4 +227,19 @@ describe("sendBookingNotification", () => {
       );
     });
   });
+
+  it("throws an error if the notificationType is not supported", async () => {
+    try {
+      await sendBookingNotification(container)({
+        mobileNumber,
+        emailAddress,
+        wardName,
+        hospitalName,
+        visitDateAndTime,
+        notificationType: "notsupported",
+      });
+    } catch (e) {
+      expect(e).toEqual("Unsupported notification type notsupported");
+    }
+  });
 });
