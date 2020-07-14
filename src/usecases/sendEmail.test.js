@@ -4,7 +4,7 @@ import sendEmail from "./sendEmail";
 import fillObjectWithStrings from "../testUtils/fillObjectWithStrings";
 
 describe("sendEmail", () => {
-  const { templateId, personalisationKeys } = TemplateStore.firstEmail;
+  const { templateId, personalisationKeys } = TemplateStore().firstEmail;
   const personalisation = fillObjectWithStrings(personalisationKeys);
 
   const emailAddress = "test@example.com";

@@ -2,8 +2,6 @@ import sendBookingNotification from "./sendBookingNotification";
 import TemplateStore from "../gateways/GovNotify/TemplateStore";
 
 describe("sendBookingNotification", () => {
-  const textMessageTemplateId = TemplateStore.firstText.templateId;
-  const emailTemplateId = TemplateStore.firstEmail.templateId;
   const mobileNumber = "07123456789";
   const emailAddress = "test@example.com";
   const wardName = "Test Ward";
@@ -15,6 +13,11 @@ describe("sendBookingNotification", () => {
     ward_name: wardName,
     hospital_name: hospitalName,
   };
+
+  let textMessageTemplateId;
+  let emailTemplateId;
+  let textMessageUpdatedTemplateId;
+  let emailUpdatedTemplateId;
 
   let sendTextMessage;
   let sendEmail;
@@ -29,6 +32,27 @@ describe("sendBookingNotification", () => {
       getSendTextMessage: () => sendTextMessage,
       getSendEmail: () => sendEmail,
     };
+
+    process.env.SMS_INITIAL_TEMPLATE_ID = "1";
+    process.env.SMS_UPDATED_VISIT_TEMPLATE_ID = "2";
+    process.env.SMS_JOIN_TEMPLATE_ID = "3";
+    process.env.EMAIL_INITIAL_TEMPLATE_ID = "4";
+    process.env.EMAIL_UPDATED_VISIT_TEMPLATE_ID = "5";
+    process.env.EMAIL_JOIN_TEMPLATE_ID = "6";
+
+    textMessageTemplateId = TemplateStore().firstText.templateId;
+    emailTemplateId = TemplateStore().firstEmail.templateId;
+    textMessageUpdatedTemplateId = TemplateStore().updatedVisitText.templateId;
+    emailUpdatedTemplateId = TemplateStore().updatedVisitEmail.templateId;
+  });
+
+  afterEach(() => {
+    process.env.SMS_INITIAL_TEMPLATE_ID = "";
+    process.env.SMS_UPDATED_VISIT_TEMPLATE_ID = "";
+    process.env.SMS_JOIN_TEMPLATE_ID = "";
+    process.env.EMAIL_INITIAL_TEMPLATE_ID = "";
+    process.env.EMAIL_UPDATED_VISIT_TEMPLATE_ID = "";
+    process.env.EMAIL_JOIN_TEMPLATE_ID = "";
   });
 
   describe("when a mobile number and email address is provided", () => {
@@ -62,9 +86,10 @@ describe("sendBookingNotification", () => {
         success: false,
         error: "Failed to send text message!",
       });
-      sendEmail = jest
-        .fn()
-        .mockResolvedValue({ success: false, error: "Failed to send email!" });
+      sendEmail = jest.fn().mockResolvedValue({
+        success: false,
+        error: "Failed to send email!",
+      });
       container = {
         getSendTextMessage: () => sendTextMessage,
         getSendEmail: () => sendEmail,
@@ -173,5 +198,48 @@ describe("sendBookingNotification", () => {
       emailError: "Failed to send email!",
       textMessageError: null,
     });
+  });
+
+  describe("when we set the notificationType to updated", () => {
+    it("uses the correct text message and email template", async () => {
+      const { success, errors } = await sendBookingNotification(container)({
+        mobileNumber,
+        emailAddress,
+        wardName,
+        hospitalName,
+        visitDateAndTime,
+        notificationType: "updated",
+      });
+
+      expect(success).toBeTruthy();
+      expect(errors).toBeNull();
+      expect(sendTextMessage).toHaveBeenCalledWith(
+        textMessageUpdatedTemplateId,
+        mobileNumber,
+        personalisation,
+        null
+      );
+      expect(sendEmail).toHaveBeenCalledWith(
+        emailUpdatedTemplateId,
+        emailAddress,
+        personalisation,
+        null
+      );
+    });
+  });
+
+  it("throws an error if the notificationType is not supported", async () => {
+    try {
+      await sendBookingNotification(container)({
+        mobileNumber,
+        emailAddress,
+        wardName,
+        hospitalName,
+        visitDateAndTime,
+        notificationType: "notsupported",
+      });
+    } catch (e) {
+      expect(e).toEqual("Unsupported notification type notsupported");
+    }
   });
 });
