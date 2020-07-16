@@ -1,4 +1,5 @@
 import updateAVisit from "../../pages/api/update-a-visit";
+import moment from "moment";
 
 describe("/api/book-a-visit", () => {
   it("returns a 405 when incorrect method is used", async () => {
@@ -79,7 +80,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "INVALID_NUMBER",
         contactName: "John Smith",
-        callTime: new Date(),
+        callTime: moment(),
       },
     };
 
@@ -112,7 +113,7 @@ describe("/api/book-a-visit", () => {
         callId: "1",
         patientName: "Bob Smith",
         contactName: "John Smith",
-        callTime: new Date(),
+        callTime: moment(),
       },
     };
 
@@ -145,7 +146,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
-        callTime: new Date(),
+        callTime: moment(),
       },
     };
 
@@ -181,7 +182,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
-        callTime: new Date(),
+        callTime: moment(),
       },
     };
 
@@ -226,7 +227,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
-        callTime: new Date(),
+        callTime: moment(),
       },
     };
 
@@ -283,7 +284,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
-        callTime: new Date(),
+        callTime: moment(),
       },
     };
 
@@ -325,9 +326,451 @@ describe("/api/book-a-visit", () => {
       expect.objectContaining({
         callId: "1",
         patientName: "Bob Smith",
+        recipientEmail: "john.smith@madetech.com",
+        recipientName: "John Smith",
+      })
+    );
+  });
+
+  it("does not send an update notification if nothing has changed", async () => {
+    const callTime = moment();
+    const request = {
+      method: "PATCH",
+      headers: { cookie: "test" },
+      body: {
+        callId: "1",
+        patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
+        callTime: callTime,
+      },
+    };
+
+    const response = {
+      status: jest.fn(),
+      end: jest.fn(),
+    };
+
+    const userAuthResult = { wardId: 1, trustId: 1 };
+
+    const updateVisitSpy = jest.fn();
+    const callResult = {
+      scheduledCall: {
+        id: "1",
+        patientName: "Bob Smith",
+        recipientName: "John Smith",
+        recipientEmail: "john.smith@madetech.com",
+        callId: "1",
+        callTime: callTime,
+      },
+      error: null,
+    };
+
+    const wardResult = {
+      ward: { name: "ward name", hospitalName: "hospital name" },
+      error: null,
+    };
+
+    const sendBookingNotificationSpy = jest.fn();
+    sendBookingNotificationSpy.mockReturnValue({ success: true, errors: null });
+
+    const container = {
+      getUserIsAuthenticated: () => () => userAuthResult,
+      getUpdateVisitByCallId: () => updateVisitSpy,
+      getRetrieveVisitByCallId: () => () => callResult,
+      getRetrieveWardById: () => () => wardResult,
+      getSendBookingNotification: () => sendBookingNotificationSpy,
+    };
+
+    await updateAVisit(request, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(updateVisitSpy).toHaveBeenCalled();
+    expect(sendBookingNotificationSpy).not.toHaveBeenCalled();
+  });
+
+  it("sends an update notification if patient name is changed", async () => {
+    const callTime = moment();
+    const request = {
+      method: "PATCH",
+      headers: { cookie: "test" },
+      body: {
+        callId: "1",
+        patientName: "Bob Smith",
+        contactEmail: "john.smith@madetech.com",
+        contactName: "John Smith",
+        callTime: callTime,
+      },
+    };
+
+    const response = {
+      status: jest.fn(),
+      end: jest.fn(),
+    };
+
+    const userAuthResult = { wardId: 1, trustId: 1 };
+
+    const updateVisitSpy = jest.fn();
+    const callResult = {
+      scheduledCall: {
+        id: "1",
+        patientName: "Alice Smith",
+        recipientName: "John Smith",
+        recipientEmail: "john.smith@madetech.com",
+        callId: "1",
+      },
+      error: null,
+    };
+
+    const wardResult = {
+      ward: { name: "ward name", hospitalName: "hospital name" },
+      error: null,
+    };
+
+    const sendBookingNotificationSpy = jest.fn();
+    sendBookingNotificationSpy.mockReturnValue({ success: true, errors: null });
+
+    const container = {
+      getUserIsAuthenticated: () => () => userAuthResult,
+      getUpdateVisitByCallId: () => updateVisitSpy,
+      getRetrieveVisitByCallId: () => () => callResult,
+      getRetrieveWardById: () => () => wardResult,
+      getSendBookingNotification: () => sendBookingNotificationSpy,
+    };
+
+    await updateAVisit(request, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(updateVisitSpy).toHaveBeenCalled();
+    expect(sendBookingNotificationSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        emailAddress: "john.smith@madetech.com",
+        wardName: "ward name",
+        hospitalName: "hospital name",
+        visitDateAndTime: callTime,
+        notificationType: "updated",
       })
+    );
+  });
+
+  it("sends an update notification if key contact name is changed", async () => {
+    const callTime = moment();
+    const request = {
+      method: "PATCH",
+      headers: { cookie: "test" },
+      body: {
+        callId: "1",
+        patientName: "Bob Smith",
+        contactEmail: "john.smith@madetech.com",
+        contactName: "John Smith",
+        callTime: callTime,
+      },
+    };
+
+    const response = {
+      status: jest.fn(),
+      end: jest.fn(),
+    };
+
+    const userAuthResult = { wardId: 1, trustId: 1 };
+
+    const updateVisitSpy = jest.fn();
+    const callResult = {
+      scheduledCall: {
+        id: "1",
+        patientName: "Bob Smith",
+        recipientName: "Alice Smith",
+        recipientEmail: "john.smith@madetech.com",
+        callId: "1",
+      },
+      error: null,
+    };
+
+    const wardResult = {
+      ward: { name: "ward name", hospitalName: "hospital name" },
+      error: null,
+    };
+
+    const sendBookingNotificationSpy = jest.fn();
+    sendBookingNotificationSpy.mockReturnValue({ success: true, errors: null });
+
+    const container = {
+      getUserIsAuthenticated: () => () => userAuthResult,
+      getUpdateVisitByCallId: () => updateVisitSpy,
+      getRetrieveVisitByCallId: () => () => callResult,
+      getRetrieveWardById: () => () => wardResult,
+      getSendBookingNotification: () => sendBookingNotificationSpy,
+    };
+
+    await updateAVisit(request, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(updateVisitSpy).toHaveBeenCalled();
+    expect(sendBookingNotificationSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        emailAddress: "john.smith@madetech.com",
+        wardName: "ward name",
+        hospitalName: "hospital name",
+        visitDateAndTime: callTime,
+        notificationType: "updated",
+      })
+    );
+  });
+
+  it("sends an update notification if date or name is changed", async () => {
+    const currentTime = moment();
+    const newTime = currentTime.add(1, "h");
+    const request = {
+      method: "PATCH",
+      headers: { cookie: "test" },
+      body: {
+        callId: "1",
+        patientName: "Bob Smith",
+        contactEmail: "john.smith@madetech.com",
+        contactName: "John Smith",
+        callTime: newTime,
+      },
+    };
+
+    const response = {
+      status: jest.fn(),
+      end: jest.fn(),
+    };
+
+    const userAuthResult = { wardId: 1, trustId: 1 };
+
+    const updateVisitSpy = jest.fn();
+    const callResult = {
+      scheduledCall: {
+        id: "1",
+        patientName: "Bob Smith",
+        recipientName: "Alice Smith",
+        recipientEmail: "john.smith@madetech.com",
+        callTime: currentTime,
+        callId: "1",
+      },
+      error: null,
+    };
+
+    const wardResult = {
+      ward: { name: "ward name", hospitalName: "hospital name" },
+      error: null,
+    };
+
+    const sendBookingNotificationSpy = jest.fn();
+    sendBookingNotificationSpy.mockReturnValue({ success: true, errors: null });
+
+    const container = {
+      getUserIsAuthenticated: () => () => userAuthResult,
+      getUpdateVisitByCallId: () => updateVisitSpy,
+      getRetrieveVisitByCallId: () => () => callResult,
+      getRetrieveWardById: () => () => wardResult,
+      getSendBookingNotification: () => sendBookingNotificationSpy,
+    };
+
+    await updateAVisit(request, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(updateVisitSpy).toHaveBeenCalled();
+    expect(sendBookingNotificationSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        emailAddress: "john.smith@madetech.com",
+        wardName: "ward name",
+        hospitalName: "hospital name",
+        visitDateAndTime: newTime,
+        notificationType: "updated",
+      })
+    );
+  });
+
+  it("sends an new notification if email address is changed", async () => {
+    const callTime = moment();
+    const request = {
+      method: "PATCH",
+      headers: { cookie: "test" },
+      body: {
+        callId: "1",
+        patientName: "Bob Smith",
+        contactEmail: "Alice.smith@madetech.com",
+        contactName: "John Smith",
+        callTime: callTime,
+      },
+    };
+
+    const response = {
+      status: jest.fn(),
+      end: jest.fn(),
+    };
+
+    const userAuthResult = { wardId: 1, trustId: 1 };
+
+    const updateVisitSpy = jest.fn();
+    const callResult = {
+      scheduledCall: {
+        id: "1",
+        patientName: "Bob Smith",
+        recipientName: "Alice Smith",
+        recipientEmail: "john.smith@madetech.com",
+        callTime: callTime,
+        callId: "1",
+      },
+      error: null,
+    };
+
+    const wardResult = {
+      ward: { name: "ward name", hospitalName: "hospital name" },
+      error: null,
+    };
+
+    const sendBookingNotificationSpy = jest.fn();
+    sendBookingNotificationSpy.mockReturnValue({ success: true, errors: null });
+
+    const container = {
+      getUserIsAuthenticated: () => () => userAuthResult,
+      getUpdateVisitByCallId: () => updateVisitSpy,
+      getRetrieveVisitByCallId: () => () => callResult,
+      getRetrieveWardById: () => () => wardResult,
+      getSendBookingNotification: () => sendBookingNotificationSpy,
+    };
+
+    await updateAVisit(request, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(updateVisitSpy).toHaveBeenCalled();
+    expect(sendBookingNotificationSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        emailAddress: "Alice.smith@madetech.com",
+        wardName: "ward name",
+        hospitalName: "hospital name",
+        visitDateAndTime: callTime,
+        notificationType: "new",
+      })
+    );
+  });
+
+  it("sends an new notification if email address is changed", async () => {
+    const callTime = moment();
+    const request = {
+      method: "PATCH",
+      headers: { cookie: "test" },
+      body: {
+        callId: "1",
+        patientName: "Bob Smith",
+        contactNumber: "07123456789",
+        contactName: "John Smith",
+        callTime: callTime,
+      },
+    };
+
+    const response = {
+      status: jest.fn(),
+      end: jest.fn(),
+    };
+
+    const userAuthResult = { wardId: 1, trustId: 1 };
+
+    const updateVisitSpy = jest.fn();
+    const callResult = {
+      scheduledCall: {
+        id: "1",
+        patientName: "Bob Smith",
+        recipientName: "John Smith",
+        recipientNumber: "07123456788",
+        callTime: callTime,
+        callId: "1",
+      },
+      error: null,
+    };
+
+    const wardResult = {
+      ward: { name: "ward name", hospitalName: "hospital name" },
+      error: null,
+    };
+
+    const sendBookingNotificationSpy = jest.fn();
+    sendBookingNotificationSpy.mockReturnValue({ success: true, errors: null });
+
+    const container = {
+      getUserIsAuthenticated: () => () => userAuthResult,
+      getUpdateVisitByCallId: () => updateVisitSpy,
+      getRetrieveVisitByCallId: () => () => callResult,
+      getRetrieveWardById: () => () => wardResult,
+      getSendBookingNotification: () => sendBookingNotificationSpy,
+    };
+
+    await updateAVisit(request, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(updateVisitSpy).toHaveBeenCalled();
+    expect(sendBookingNotificationSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mobileNumber: "07123456789",
+        hospitalName: "hospital name",
+        wardName: "ward name",
+        visitDateAndTime: callTime,
+        notificationType: "new",
+      })
+    );
+  });
+
+  it("returns 500 when sending notification fails", async () => {
+    const callTime = moment();
+    const request = {
+      method: "PATCH",
+      headers: { cookie: "test" },
+      body: {
+        callId: "1",
+        patientName: "Bob Smith",
+        contactNumber: "07123456789",
+        contactName: "John Smith",
+        callTime: callTime,
+      },
+    };
+
+    const response = {
+      status: jest.fn(),
+      end: jest.fn(),
+    };
+
+    const userAuthResult = { wardId: 1, trustId: 1 };
+
+    const updateVisitSpy = jest.fn();
+    const callResult = {
+      scheduledCall: {
+        id: "1",
+        patientName: "Bob Smith",
+        recipientName: "John Smith",
+        recipientNumber: "07123456788",
+        callTime: callTime,
+        callId: "1",
+      },
+      error: null,
+    };
+
+    const wardResult = {
+      ward: { name: "ward name", hospitalName: "hospital name" },
+      error: null,
+    };
+
+    const sendBookingNotificationSpy = jest.fn();
+    sendBookingNotificationSpy.mockReturnValue({
+      success: false,
+      errors: { textMessageError: "te", emailError: "ee" },
+    });
+
+    const container = {
+      getUserIsAuthenticated: () => () => userAuthResult,
+      getUpdateVisitByCallId: () => updateVisitSpy,
+      getRetrieveVisitByCallId: () => () => callResult,
+      getRetrieveWardById: () => () => wardResult,
+      getSendBookingNotification: () => sendBookingNotificationSpy,
+    };
+
+    await updateAVisit(request, response, { container });
+
+    expect(response.status).toHaveBeenCalledWith(500);
+    expect(response.end).toHaveBeenCalledWith(
+      '{"err":{"textMessageError":"te","emailError":"ee"}}'
     );
   });
 });
