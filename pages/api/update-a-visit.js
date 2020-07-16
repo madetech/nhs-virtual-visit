@@ -52,9 +52,9 @@ export default withContainer(
     const updatedCall = {
       callId: body.callId,
       patientName: body.patientName,
-      contactName: body.contactName,
-      contactEmail: body.contactEmail,
-      contactNumber: body.contactNumber,
+      recipientName: body.contactName,
+      recipientEmail: body.contactEmail,
+      recipientNumber: body.contactNumber,
       callTime: body.callTime,
     };
 

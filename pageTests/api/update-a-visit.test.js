@@ -268,8 +268,8 @@ describe("/api/book-a-visit", () => {
       expect.objectContaining({
         callId: "1",
         patientName: "Bob Smith",
-        contactNumber: "07123456789",
-        contactName: "John Smith",
+        recipientNumber: "07123456789",
+        recipientName: "John Smith",
       })
     );
   });
