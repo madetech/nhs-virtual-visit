@@ -1,5 +1,29 @@
 import withContainer from "../../src/middleware/withContainer";
 import validateVisit from "../../src/helpers/validateVisit";
+import {
+  NEW_NOTIFICATION,
+  UPDATED_NOTIFICATION,
+} from "../../src/usecases/sendBookingNotification";
+
+const determineNotificationType = (sideA, sideB) => {
+  if (
+    sideA.callId == sideB.callId &&
+    sideA.patientName == sideB.patientName &&
+    sideA.recipientName == sideB.recipientName &&
+    sideA.recipientEmail == sideB.recipientEmail &&
+    sideA.recipientNumber == sideB.recipientNumber &&
+    sideA.callTime == sideB.callTime
+  )
+    return false;
+
+  if (
+    sideA.recipientEmail !== sideB.recipientEmail ||
+    sideA.recipientNumber !== sideB.recipientNumber
+  )
+    return NEW_NOTIFICATION;
+
+  return UPDATED_NOTIFICATION;
+};
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -64,6 +88,41 @@ export default withContainer(
     } catch (updateError) {
       console.log(updateError);
       respond(500, { err: "Failed to update visit" });
+      return;
+    }
+
+    try {
+      const { ward } = await container.getRetrieveWardById()(
+        userIsAuthenticatedResponse.wardId,
+        userIsAuthenticatedResponse.trustId
+      );
+
+      const notificationType = determineNotificationType(
+        updatedCall,
+        scheduledCall
+      );
+      if (!notificationType) return;
+
+      const sendBookingNotification = container.getSendBookingNotification();
+      const {
+        success: bookingNotificationSuccess,
+        errors: bookingNotificationErrors,
+      } = await sendBookingNotification({
+        mobileNumber: body.contactNumber,
+        emailAddress: body.contactEmail,
+        wardName: ward.name,
+        hospitalName: ward.hospitalName,
+        visitDateAndTime: body.callTime,
+        notificationType: notificationType,
+      });
+
+      if (!bookingNotificationSuccess) {
+        respond(500, { err: bookingNotificationErrors });
+        return;
+      }
+    } catch (notificationError) {
+      console.log(notificationError);
+      respond(500, { err: "Failed to send notification" });
       return;
     }
   }

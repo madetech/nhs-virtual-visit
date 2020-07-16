@@ -4,8 +4,8 @@ import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 import ConsoleNotifyProvider from "../providers/ConsoleNotifyProvider";
 
-const NEW_NOTIFICATION = "new";
-const UPDATED_NOTIFICATION = "updated";
+export const NEW_NOTIFICATION = "new";
+export const UPDATED_NOTIFICATION = "updated";
 
 const sendBookingNotification = ({
   getSendTextMessage,
