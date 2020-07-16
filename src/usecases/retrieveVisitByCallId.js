@@ -30,7 +30,7 @@ const retrieveVisitByCallId = ({ getDb }) => async (callId) => {
   } catch (error) {
     console.error(error);
     return {
-      scheduledCalls: null,
+      scheduledCall: null,
       error: error.toString(),
     };
   }
