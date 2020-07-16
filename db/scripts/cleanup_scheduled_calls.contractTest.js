@@ -89,14 +89,14 @@ describe("test cleanup script", () => {
 
     // past visit is now complete and cannot be retrieved
     const pastVisit = await container.getRetrieveVisitByCallId()("2");
-    expect(pastVisit.scheduledCalls).toBeNull();
+    expect(pastVisit.scheduledCall).toBeNull();
 
     // cancelled visit cannot be retrieved
     const cancelledVisit = await container.getRetrieveVisitByCallId()("3");
-    expect(cancelledVisit.scheduledCalls).toBeNull();
+    expect(cancelledVisit.scheduledCall).toBeNull();
 
     // archived visit cannot be retrieved
     const archivedVisit = await container.getRetrieveVisitByCallId()("4");
-    expect(archivedVisit.scheduledCalls).toBeNull();
+    expect(archivedVisit.scheduledCall).toBeNull();
   });
 });
