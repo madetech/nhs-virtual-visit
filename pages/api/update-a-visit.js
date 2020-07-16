@@ -62,6 +62,7 @@ export default withContainer(
       await container.getUpdateVisitByCallId()(updatedCall);
       respond(200, { success: true });
     } catch (updateError) {
+      console.log(updateError);
       respond(500, { err: "Failed to update visit" });
       return;
     }
