@@ -8,7 +8,17 @@ We recommend [creating a pipeline](https://devcenter.heroku.com/articles/pipelin
 
 Each app requires the [heroku/node.js buildpack](https://devcenter.heroku.com/articles/buildpacks) and uses the following addons: [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql), [Heroku Scheduler](https://elements.heroku.com/addons/scheduler).
 
+For the production app you should use a professional dyno for the web app, and a standard plan Postres addon. While you will incur a small charge by Heroku for this, it will ensure that the application is able to handle the requests from your users. For more on scaling, please refer to the [Scaling Your Dyno Formation](https://devcenter.heroku.com/articles/scaling) documentation.
+
 We also recommend setting up [review apps](https://devcenter.heroku.com/articles/github-integration-review-apps) so that you can easily test changes in your PRs.
+
+## Downtime-free Deployments
+
+Once you've carried out the necessary checks on your staging environment and wish to promote the build to production, Heroku by default will stop the older production application and then start the new production application resulting in downtime and a poor experience for your users.
+
+Heroku has a deployment strategy called Blue Green deployments whereby the old application remains running and serving requests while the new application starts. Once the new application has started successfully, any new web requests are served by the new application.
+
+To enable this, see the [Preboot](https://devcenter.heroku.com/articles/preboot) documentation.
 
 ## Heroku Scheduler
 
