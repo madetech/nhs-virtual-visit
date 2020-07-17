@@ -15,12 +15,12 @@ As time goes on, the trust fork will become out of date with the upstream as we 
 
 ## Automatically updating your fork
 
-We have set up the repository to work instantly with the [Pull app by Wei](https://github.com/wei/pull). To install the app, visit https://github.com/apps/pull and click install, pointing the app to your newly created fork.
+We have set up the repository to work instantly with the [Pull app by Wei](https://github.com/wei/pull). To install the app, visit [github.com/apps/pull](https://github.com/apps/pull) and click install, pointing the app to your newly created fork.
 
 ## Manually updating your fork
 
-You can also manually sync your fork with the upstream repo via the following instructions: https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork
+You can also manually sync your fork with the upstream repo via the following instructions: [Github: Syncing a fork](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/syncing-a-fork)
 
 ## Caveats
 
-If you make changes to your forked repo, the Pull utility (or manual sync) will attempt to merge our changes into yours. Any conflicting changes will need to be resolved (see https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/addressing-merge-conflicts).
+If you make changes to your forked repo, the Pull utility (or manual sync) will attempt to merge our changes into yours. Any conflicting changes will need to be resolved (see [Github: Addressing merge conflicts](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/addressing-merge-conflicts)).
