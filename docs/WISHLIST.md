@@ -7,3 +7,7 @@
 - Edit Trusts
 
   - Allow Site Admins to change the video provider
+
+- Scheduled list screen
+  
+  - Show when a virtual visit has been completed 
