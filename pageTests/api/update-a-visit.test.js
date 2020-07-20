@@ -517,9 +517,9 @@ describe("/api/book-a-visit", () => {
     );
   });
 
-  it("sends an update notification if date or name is changed", async () => {
+  it("sends an update notification if date or time is changed", async () => {
     const currentTime = moment();
-    const newTime = currentTime.add(1, "h");
+    const newTime = moment().add(1, "h");
     const request = {
       method: "PATCH",
       headers: { cookie: "test" },
@@ -544,7 +544,7 @@ describe("/api/book-a-visit", () => {
       scheduledCall: {
         id: "1",
         patientName: "Bob Smith",
-        recipientName: "Alice Smith",
+        recipientName: "John Smith",
         recipientEmail: "john.smith@madetech.com",
         callTime: currentTime,
         callId: "1",
