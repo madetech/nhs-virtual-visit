@@ -8,7 +8,7 @@ We recommend [creating a pipeline](https://devcenter.heroku.com/articles/pipelin
 
 Each app requires the [heroku/node.js buildpack](https://devcenter.heroku.com/articles/buildpacks) and uses the following addons: [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql), [Heroku Scheduler](https://elements.heroku.com/addons/scheduler).
 
-For the production app you should use a professional dyno for the web app, and a standard plan Postres addon. While you will incur a small charge by Heroku for this, it will ensure that the application is able to handle the requests from your users. For more on scaling, please refer to the [Scaling Your Dyno Formation](https://devcenter.heroku.com/articles/scaling) documentation.
+For the production app you should use a professional dyno for the web app, and a standard plan Postgres addon. While you will incur a small charge by Heroku for this, it will ensure that the application is able to handle the requests from your users. For more on scaling, please refer to the [Scaling Your Dyno Formation](https://devcenter.heroku.com/articles/scaling) documentation.
 
 We also recommend setting up [review apps](https://devcenter.heroku.com/articles/github-integration-review-apps) so that you can easily test changes in your PRs.
 
