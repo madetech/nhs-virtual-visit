@@ -332,7 +332,7 @@ describe("/api/book-a-visit", () => {
     );
   });
 
-  it("does not send an update notification if nothing has changed", async () => {
+  it("does not send a notification if nothing has changed", async () => {
     const callTime = moment();
     const request = {
       method: "PATCH",
@@ -389,7 +389,7 @@ describe("/api/book-a-visit", () => {
     expect(sendBookingNotificationSpy).not.toHaveBeenCalled();
   });
 
-  it("does not send an update notification if patient name is changed", async () => {
+  it("does not send a notification if patient name is changed", async () => {
     const callTime = moment();
     const request = {
       method: "PATCH",
@@ -577,7 +577,7 @@ describe("/api/book-a-visit", () => {
         callId: "1",
         patientName: "Bob Smith",
         contactEmail: "Alice.smith@madetech.com",
-        contactName: "John Smith",
+        contactName: "Alice Smith",
         callTime: callTime,
       },
     };
@@ -633,7 +633,7 @@ describe("/api/book-a-visit", () => {
     );
   });
 
-  it("sends an new notification if email address is changed", async () => {
+  it("sends an new notification if phone number is changed", async () => {
     const callTime = moment();
     const request = {
       method: "PATCH",
