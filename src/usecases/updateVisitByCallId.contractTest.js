@@ -14,16 +14,16 @@ describe("updateVisitByCallId contract tests", () => {
     const { visit, error } = await container.getUpdateVisitByCallId()({
       callId,
       patientName: "Aang",
-      contactName: "Katara",
-      contactEmail: "katara@example.com",
-      contactNumber: "07123456789",
+      recipientName: "Katara",
+      recipientEmail: "katara@example.com",
+      recipientNumber: "07123456789",
       callTime: new Date("2020-08-01 18:00"),
     });
 
     expect(visit.patientName).toEqual("Aang");
-    expect(visit.contactName).toEqual("Katara");
-    expect(visit.contactEmail).toEqual("katara@example.com");
-    expect(visit.contactNumber).toEqual("07123456789");
+    expect(visit.recipientName).toEqual("Katara");
+    expect(visit.recipientEmail).toEqual("katara@example.com");
+    expect(visit.recipientNumber).toEqual("07123456789");
     expect(visit.callTime).toEqual(new Date("2020-08-01 18:00"));
     expect(error).toBeNull();
   });
@@ -34,9 +34,9 @@ describe("updateVisitByCallId contract tests", () => {
     const { visit, error } = await container.getUpdateVisitByCallId()({
       callId: "fakeCallId",
       patientName: "Aang",
-      contactName: "Katara",
-      contactEmail: "katara@example.com",
-      contactNumber: "07123456789",
+      recipientName: "Katara",
+      recipientEmail: "katara@example.com",
+      recipientNumber: "07123456789",
       callTime: new Date("2020-08-01 18:00"),
     });
 

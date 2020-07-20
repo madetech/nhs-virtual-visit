@@ -1,9 +1,9 @@
 const updateVisitByCallId = ({ getDb }) => async ({
   callId,
   patientName,
-  contactName,
-  contactEmail,
-  contactNumber,
+  recipientName,
+  recipientEmail,
+  recipientNumber,
   callTime,
 }) => {
   const db = await getDb();
@@ -18,16 +18,23 @@ const updateVisitByCallId = ({ getDb }) => async ({
       WHERE
           call_id = $6
       RETURNING *`,
-      [patientName, contactName, contactEmail, contactNumber, callTime, callId]
+      [
+        patientName,
+        recipientName,
+        recipientEmail,
+        recipientNumber,
+        callTime,
+        callId,
+      ]
     );
 
     return {
       visit: {
         id: updatedVisit.id,
         patientName: updatedVisit.patient_name,
-        contactName: updatedVisit.recipient_name,
-        contactNumber: updatedVisit.recipient_number,
-        contactEmail: updatedVisit.recipient_email,
+        recipientName: updatedVisit.recipient_name,
+        recipientNumber: updatedVisit.recipient_number,
+        recipientEmail: updatedVisit.recipient_email,
         callTime: updatedVisit.call_time,
         callId: updatedVisit.call_id,
       },
