@@ -1,11 +1,11 @@
 # Setting up your repository
 
-To run your own version of the NHS Book a virtual visit app, you will need to first create a fork of the repository
+To run your own version of the NHS Book a virtual visit app, you will need to first create a fork of the repository.
 
-Forking a repository is a two-step process.
+Forking a repository is a two-step process:
 
-- Navigate to the [NHS Book a virtual visit repository](https://github.com/madetech/nhs-virtual-visit)
-- In the top-right corner of the page, click **Fork**
+1. Navigate to the [NHS Book a virtual visit repository](https://github.com/madetech/nhs-virtual-visit)
+2. In the top-right corner of the page, click **Fork**
 
 ![fork button](../images/fork_button.png)
 
