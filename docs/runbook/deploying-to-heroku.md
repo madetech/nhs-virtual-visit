@@ -1,6 +1,6 @@
 # Deploying to Heroku
 
-The app has been designed to easily deploy to Heroku.
+The app has been designed to easily deploy to [Heroku](https://www.heroku.com/).
 
 ## Pipelines
 
