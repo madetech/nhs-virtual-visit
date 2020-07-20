@@ -7,22 +7,21 @@ import {
 
 const determineNotificationType = (sideA, sideB) => {
   if (
-    sideA.callId == sideB.callId &&
-    sideA.patientName == sideB.patientName &&
-    sideA.recipientName == sideB.recipientName &&
-    sideA.recipientEmail == sideB.recipientEmail &&
-    sideA.recipientNumber == sideB.recipientNumber &&
-    sideA.callTime == sideB.callTime
-  )
-    return false;
+    sideA.callId != sideB.callId ||
+    sideA.recipientEmail != sideB.recipientEmail ||
+    sideA.recipientNumber != sideB.recipientNumber ||
+    sideA.callTime != sideB.callTime
+  ) {
+    if (
+      sideA.recipientEmail !== sideB.recipientEmail ||
+      sideA.recipientNumber !== sideB.recipientNumber
+    )
+      return NEW_NOTIFICATION;
 
-  if (
-    sideA.recipientEmail !== sideB.recipientEmail ||
-    sideA.recipientNumber !== sideB.recipientNumber
-  )
-    return NEW_NOTIFICATION;
+    return UPDATED_NOTIFICATION;
+  }
 
-  return UPDATED_NOTIFICATION;
+  return false;
 };
 
 export default withContainer(

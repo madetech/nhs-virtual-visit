@@ -389,7 +389,7 @@ describe("/api/book-a-visit", () => {
     expect(sendBookingNotificationSpy).not.toHaveBeenCalled();
   });
 
-  it("sends an update notification if patient name is changed", async () => {
+  it("does not send an update notification if patient name is changed", async () => {
     const callTime = moment();
     const request = {
       method: "PATCH",
@@ -442,18 +442,10 @@ describe("/api/book-a-visit", () => {
 
     expect(response.status).toHaveBeenCalledWith(200);
     expect(updateVisitSpy).toHaveBeenCalled();
-    expect(sendBookingNotificationSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        emailAddress: "john.smith@madetech.com",
-        wardName: "ward name",
-        hospitalName: "hospital name",
-        visitDateAndTime: callTime,
-        notificationType: "updated",
-      })
-    );
+    expect(sendBookingNotificationSpy).not.toHaveBeenCalledWith();
   });
 
-  it("sends an update notification if key contact name is changed", async () => {
+  it("does not send an update notification if key contact name is changed", async () => {
     const callTime = moment();
     const request = {
       method: "PATCH",
@@ -482,6 +474,7 @@ describe("/api/book-a-visit", () => {
         recipientName: "Alice Smith",
         recipientEmail: "john.smith@madetech.com",
         callId: "1",
+        callTime: callTime,
       },
       error: null,
     };
@@ -506,15 +499,7 @@ describe("/api/book-a-visit", () => {
 
     expect(response.status).toHaveBeenCalledWith(200);
     expect(updateVisitSpy).toHaveBeenCalled();
-    expect(sendBookingNotificationSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        emailAddress: "john.smith@madetech.com",
-        wardName: "ward name",
-        hospitalName: "hospital name",
-        visitDateAndTime: callTime,
-        notificationType: "updated",
-      })
-    );
+    expect(sendBookingNotificationSpy).not.toHaveBeenCalled();
   });
 
   it("sends an update notification if date or time is changed", async () => {
