@@ -42,7 +42,7 @@ import retrieveAverageVisitsPerDayByTrustId from "../usecases/retrieveAverageVis
 import retrieveReportingStartDateByTrustId from "../usecases/retrieveReportingStartDateByTrustId";
 import retrieveSurveyUrlByCallId from "../usecases/retrieveSurveyUrlByCallId";
 import retrieveSupportUrlByCallId from "../usecases/retrieveSupportUrlByCallId";
-import updateVisitByCallId from "../usecases/updateVisitByCallId";
+import updateVisitById from "../usecases/updateVisitById";
 import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 
@@ -223,8 +223,8 @@ class AppContainer {
     return retrieveSupportUrlByCallId(this);
   };
 
-  getUpdateVisitByCallId = () => {
-    return updateVisitByCallId(this);
+  getUpdateVisitById = () => {
+    return updateVisitById(this);
   };
 
   getSendBookingNotification = () => {

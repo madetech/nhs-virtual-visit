@@ -4,15 +4,15 @@ import {
   setupVisit,
 } from "../testUtils/factories";
 
-describe("updateVisitByCallId contract tests", () => {
+describe("updateVisitById contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("updates the details of a visit", async () => {
     const { wardId } = await setupWardWithinHospitalAndTrust();
-    const { callId } = await setupVisit({ wardId });
+    const { id } = await setupVisit({ wardId });
 
-    const { visit, error } = await container.getUpdateVisitByCallId()({
-      callId,
+    const { visit, error } = await container.getUpdateVisitById()({
+      id,
       patientName: "Aang",
       recipientName: "Katara",
       recipientEmail: "katara@example.com",
@@ -31,8 +31,8 @@ describe("updateVisitByCallId contract tests", () => {
   it("returns an error if visit doesn't exisit", async () => {
     await setupWardWithinHospitalAndTrust();
 
-    const { visit, error } = await container.getUpdateVisitByCallId()({
-      callId: "fakeCallId",
+    const { visit, error } = await container.getUpdateVisitById()({
+      id: "fakeId",
       patientName: "Aang",
       recipientName: "Katara",
       recipientEmail: "katara@example.com",
