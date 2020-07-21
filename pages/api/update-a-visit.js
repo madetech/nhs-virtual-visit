@@ -6,17 +6,13 @@ import {
 } from "../../src/usecases/sendBookingNotification";
 
 const determineNotificationType = (
-  sideA,
-  sideB,
+  sideACallTime,
+  sideBCallTime,
   sideAContact,
   sideBContact
 ) => {
-  let diff = false;
-  for (var i = 0; i < sideA.length; i++) {
-    if (sideA[i] != sideB[i]) diff = true;
-  }
-
-  if (!diff) return false;
+  if (sideACallTime == sideBCallTime && sideAContact == sideBContact)
+    return false;
 
   return sideAContact !== sideBContact
     ? NEW_NOTIFICATION
@@ -97,18 +93,8 @@ export default withContainer(
 
       const sendNotification = async (type) => {
         const notificationType = determineNotificationType(
-          [
-            updatedCall.callId,
-            updatedCall.callTime,
-            updatedCall.recipientEmail,
-            updatedCall.recipientNumber,
-          ],
-          [
-            scheduledCall.callId,
-            scheduledCall.callTime,
-            scheduledCall.recipientEmail,
-            scheduledCall.recipientNumber,
-          ],
+          updatedCall.callTime,
+          scheduledCall.callTime,
           type == "email"
             ? updatedCall.recipientEmail
             : updatedCall.recipientNumber,
