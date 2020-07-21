@@ -33,7 +33,7 @@ describe("/api/book-a-visit", () => {
     const userIsAuthenticatedSpy = jest.fn().mockResolvedValue(false);
     const container = {
       getUserIsAuthenticated: () => userIsAuthenticatedSpy,
-      getUpdateVisitByCallId: () => updateVisitSpy,
+      getUpdateVisitById: () => updateVisitSpy,
     };
 
     await updateAVisit(request, response, { container });
@@ -44,7 +44,7 @@ describe("/api/book-a-visit", () => {
     expect(updateVisitSpy).not.toHaveBeenCalled();
   });
 
-  it("rejects if callId is missing", async () => {
+  it("rejects if id is missing", async () => {
     const request = {
       method: "PATCH",
       headers: { cookie: "test" },
@@ -59,14 +59,14 @@ describe("/api/book-a-visit", () => {
     const updateVisitSpy = jest.fn();
     const container = {
       getUserIsAuthenticated: () => () => true,
-      getUpdateVisitByCallId: () => updateVisitSpy,
+      getUpdateVisitById: () => updateVisitSpy,
     };
 
     await updateAVisit(request, response, { container });
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      '{"err":{"callId":"callId must be present"}}'
+      '{"err":{"id":"id must be present"}}'
     );
     expect(updateVisitSpy).not.toHaveBeenCalled();
   });
@@ -76,7 +76,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactNumber: "INVALID_NUMBER",
         contactName: "John Smith",
@@ -93,7 +93,7 @@ describe("/api/book-a-visit", () => {
     const container = {
       getUserIsAuthenticated: () => () => true,
       getValidateMobileNumber: () => () => false,
-      getUpdateVisitByCallId: () => updateVisitSpy,
+      getUpdateVisitById: () => updateVisitSpy,
     };
 
     await updateAVisit(request, response, { container });
@@ -110,7 +110,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactName: "John Smith",
         callTime: moment(),
@@ -125,7 +125,7 @@ describe("/api/book-a-visit", () => {
     const updateVisitSpy = jest.fn();
     const container = {
       getUserIsAuthenticated: () => () => true,
-      getUpdateVisitByCallId: () => updateVisitSpy,
+      getUpdateVisitById: () => updateVisitSpy,
     };
 
     await updateAVisit(request, response, { container });
@@ -142,7 +142,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
@@ -162,8 +162,8 @@ describe("/api/book-a-visit", () => {
     };
     const container = {
       getUserIsAuthenticated: () => () => true,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callNotFoundResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callNotFoundResult,
     };
 
     await updateAVisit(request, response, { container });
@@ -178,7 +178,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
@@ -204,8 +204,8 @@ describe("/api/book-a-visit", () => {
 
     const container = {
       getUserIsAuthenticated: () => () => true,
-      getRetrieveVisitByCallId: () => () => callResult,
-      getUpdateVisitByCallId: () => () => {
+      getRetrieveVisitById: () => () => callResult,
+      getUpdateVisitById: () => () => {
         throw new Error();
       },
     };
@@ -223,7 +223,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
@@ -254,8 +254,8 @@ describe("/api/book-a-visit", () => {
     };
     const container = {
       getUserIsAuthenticated: () => () => true,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callResult,
       getRetrieveWardById: () => () => wardResult,
       getSendBookingNotification: () => () => {
         return { success: true, errors: null };
@@ -267,7 +267,7 @@ describe("/api/book-a-visit", () => {
     expect(response.status).toHaveBeenCalledWith(200);
     expect(updateVisitSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         recipientNumber: "07123456789",
         recipientName: "John Smith",
@@ -280,7 +280,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
@@ -311,8 +311,8 @@ describe("/api/book-a-visit", () => {
     };
     const container = {
       getUserIsAuthenticated: () => () => true,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callResult,
       getRetrieveWardById: () => () => wardResult,
       getSendBookingNotification: () => () => {
         return { success: true, errors: null };
@@ -324,7 +324,7 @@ describe("/api/book-a-visit", () => {
     expect(response.status).toHaveBeenCalledWith(200);
     expect(updateVisitSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         recipientEmail: "john.smith@madetech.com",
         recipientName: "John Smith",
@@ -338,7 +338,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
@@ -376,8 +376,8 @@ describe("/api/book-a-visit", () => {
 
     const container = {
       getUserIsAuthenticated: () => () => userAuthResult,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callResult,
       getRetrieveWardById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
@@ -395,7 +395,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
@@ -432,8 +432,8 @@ describe("/api/book-a-visit", () => {
 
     const container = {
       getUserIsAuthenticated: () => () => userAuthResult,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callResult,
       getRetrieveWardById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
@@ -451,7 +451,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
@@ -489,8 +489,8 @@ describe("/api/book-a-visit", () => {
 
     const container = {
       getUserIsAuthenticated: () => () => userAuthResult,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callResult,
       getRetrieveWardById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
@@ -509,7 +509,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
@@ -547,8 +547,8 @@ describe("/api/book-a-visit", () => {
 
     const container = {
       getUserIsAuthenticated: () => () => userAuthResult,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callResult,
       getRetrieveWardById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
@@ -574,7 +574,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactEmail: "Alice.smith@madetech.com",
         contactName: "Alice Smith",
@@ -612,8 +612,8 @@ describe("/api/book-a-visit", () => {
 
     const container = {
       getUserIsAuthenticated: () => () => userAuthResult,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callResult,
       getRetrieveWardById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
@@ -639,7 +639,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
@@ -677,8 +677,8 @@ describe("/api/book-a-visit", () => {
 
     const container = {
       getUserIsAuthenticated: () => () => userAuthResult,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callResult,
       getRetrieveWardById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
@@ -705,7 +705,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
@@ -745,8 +745,8 @@ describe("/api/book-a-visit", () => {
 
     const container = {
       getUserIsAuthenticated: () => () => userAuthResult,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callResult,
       getRetrieveWardById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
@@ -781,7 +781,7 @@ describe("/api/book-a-visit", () => {
       method: "PATCH",
       headers: { cookie: "test" },
       body: {
-        callId: "1",
+        id: "1",
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
@@ -822,8 +822,8 @@ describe("/api/book-a-visit", () => {
 
     const container = {
       getUserIsAuthenticated: () => () => userAuthResult,
-      getUpdateVisitByCallId: () => updateVisitSpy,
-      getRetrieveVisitByCallId: () => () => callResult,
+      getUpdateVisitById: () => updateVisitSpy,
+      getRetrieveVisitById: () => () => callResult,
       getRetrieveWardById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };

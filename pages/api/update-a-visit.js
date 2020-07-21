@@ -41,8 +41,8 @@ export default withContainer(
       return;
     }
 
-    if (!body.callId) {
-      respond(400, { err: { callId: "callId must be present" } });
+    if (!body.id) {
+      respond(400, { err: { id: "id must be present" } });
       return;
     }
 
@@ -59,16 +59,14 @@ export default withContainer(
       return;
     }
 
-    const { scheduledCall } = await container.getRetrieveVisitByCallId()(
-      body.callId
-    );
+    const { scheduledCall } = await container.getRetrieveVisitById()(body.id);
     if (!scheduledCall) {
       respond(404, { err: "call does not exist" });
       return;
     }
 
     const updatedCall = {
-      callId: body.callId,
+      id: body.id,
       patientName: body.patientName,
       recipientName: body.contactName,
       recipientEmail: body.contactEmail,
@@ -77,7 +75,7 @@ export default withContainer(
     };
 
     try {
-      await container.getUpdateVisitByCallId()(updatedCall);
+      await container.getUpdateVisitById()(updatedCall);
       respond(200, { success: true });
     } catch (updateError) {
       console.log(updateError);
