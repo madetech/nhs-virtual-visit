@@ -5,23 +5,22 @@ import {
   UPDATED_NOTIFICATION,
 } from "../../src/usecases/sendBookingNotification";
 
-const determineNotificationType = (sideA, sideB) => {
-  if (
-    sideA.callId != sideB.callId ||
-    sideA.recipientEmail != sideB.recipientEmail ||
-    sideA.recipientNumber != sideB.recipientNumber ||
-    sideA.callTime != sideB.callTime
-  ) {
-    if (
-      sideA.recipientEmail !== sideB.recipientEmail ||
-      sideA.recipientNumber !== sideB.recipientNumber
-    )
-      return NEW_NOTIFICATION;
-
-    return UPDATED_NOTIFICATION;
+const determineNotificationType = (
+  sideA,
+  sideB,
+  sideAContact,
+  sideBContact
+) => {
+  let diff = false;
+  for (var i = 0; i < sideA.length; i++) {
+    if (sideA[i] != sideB[i]) diff = true;
   }
 
-  return false;
+  if (!diff) return false;
+
+  return sideAContact !== sideBContact
+    ? NEW_NOTIFICATION
+    : UPDATED_NOTIFICATION;
 };
 
 export default withContainer(
@@ -96,28 +95,60 @@ export default withContainer(
         userIsAuthenticatedResponse.trustId
       );
 
-      const notificationType = determineNotificationType(
-        updatedCall,
-        scheduledCall
-      );
-      if (!notificationType) return;
+      const sendNotification = async (type) => {
+        const notificationType = determineNotificationType(
+          [
+            updatedCall.callId,
+            updatedCall.callTime,
+            updatedCall.recipientEmail,
+            updatedCall.recipientNumber,
+          ],
+          [
+            scheduledCall.callId,
+            scheduledCall.callTime,
+            scheduledCall.recipientEmail,
+            scheduledCall.recipientNumber,
+          ],
+          type == "email"
+            ? updatedCall.recipientEmail
+            : updatedCall.recipientNumber,
+          type == "email"
+            ? scheduledCall.recipientEmail
+            : scheduledCall.recipientNumber
+        );
+        if (!notificationType) return;
 
-      const sendBookingNotification = container.getSendBookingNotification();
-      const {
-        success: bookingNotificationSuccess,
-        errors: bookingNotificationErrors,
-      } = await sendBookingNotification({
-        mobileNumber: body.contactNumber,
-        emailAddress: body.contactEmail,
-        wardName: ward.name,
-        hospitalName: ward.hospitalName,
-        visitDateAndTime: body.callTime,
-        notificationType: notificationType,
-      });
+        const sendBookingNotification = container.getSendBookingNotification();
+        return await sendBookingNotification({
+          mobileNumber: type == "number" ? body.contactNumber : undefined,
+          emailAddress: type == "email" ? body.contactEmail : undefined,
+          wardName: ward.name,
+          hospitalName: ward.hospitalName,
+          visitDateAndTime: body.callTime,
+          notificationType: notificationType,
+        });
+      };
 
-      if (!bookingNotificationSuccess) {
-        respond(500, { err: bookingNotificationErrors });
-        return;
+      if (updatedCall.recipientEmail) {
+        const {
+          success: emailSuccess,
+          errors: emailErrors,
+        } = await sendNotification("email");
+        if (!emailSuccess) {
+          respond(500, { err: emailErrors });
+          return;
+        }
+      }
+
+      if (updatedCall.recipientNumber) {
+        const {
+          success: numberSuccess,
+          errors: numberErrors,
+        } = await sendNotification("number");
+        if (!numberSuccess) {
+          respond(500, { err: numberErrors });
+          return;
+        }
       }
     } catch (notificationError) {
       console.log(notificationError);
