@@ -35,6 +35,7 @@ const BookAVisit = ({
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
           <VisitForm
+            heading="Book a virtual visit"
             initialPatientName={initialPatientName}
             initialContactName={initialContactName}
             initialContactNumber={initialContactNumber}
