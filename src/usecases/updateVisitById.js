@@ -1,5 +1,5 @@
-const updateVisitByCallId = ({ getDb }) => async ({
-  callId,
+const updateVisitById = ({ getDb }) => async ({
+  id,
   patientName,
   recipientName,
   recipientEmail,
@@ -16,7 +16,7 @@ const updateVisitByCallId = ({ getDb }) => async ({
           recipient_number = $4,
           call_time = $5
       WHERE
-          call_id = $6
+          id = $6
       RETURNING *`,
       [
         patientName,
@@ -24,7 +24,7 @@ const updateVisitByCallId = ({ getDb }) => async ({
         recipientEmail,
         recipientNumber,
         callTime,
-        callId,
+        id,
       ]
     );
 
@@ -45,4 +45,4 @@ const updateVisitByCallId = ({ getDb }) => async ({
   }
 };
 
-export default updateVisitByCallId;
+export default updateVisitById;
