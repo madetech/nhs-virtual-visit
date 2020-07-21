@@ -123,4 +123,8 @@ describe("AppContainer", () => {
   it("returns getSendBookingNotification", () => {
     expect(container.getSendBookingNotification()).toBeDefined();
   });
+
+  it("returns getRetrieveVisitById", () => {
+    expect(container.getRetrieveVisitById()).toBeDefined();
+  });
 });
