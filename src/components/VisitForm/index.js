@@ -11,6 +11,7 @@ import validateDateAndTime from "../../helpers/validateDateAndTime";
 import validateEmailAddress from "../../helpers/validateEmailAddress";
 
 const VisitForm = ({
+  heading,
   initialPatientName,
   initialContactName,
   initialContactNumber,
@@ -132,7 +133,7 @@ const VisitForm = ({
 
   return (
     <form onSubmit={onSubmit}>
-      <Heading>Book a virtual visit</Heading>
+      <Heading>{heading}</Heading>
       <FormGroup>
         <Label htmlFor="patient-name" className="nhsuk-label--l">
           What is the patient&apos;s name?
