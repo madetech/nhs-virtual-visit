@@ -59,7 +59,10 @@ export default withContainer(
       return;
     }
 
-    const { scheduledCall } = await container.getRetrieveVisitById()(body.id);
+    const { scheduledCall } = await container.getRetrieveVisitById()({
+      id: body.id,
+      wardId: userIsAuthenticatedResponse.wardId,
+    });
     if (!scheduledCall) {
       respond(404, { err: "call does not exist" });
       return;
