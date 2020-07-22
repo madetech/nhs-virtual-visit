@@ -16,7 +16,7 @@ describe("As a ward staff, I want to edit a visit from the list screen so that I
     AndISubmitTheForm();
     ThenISeeTheCheckYourAnswersPage();
 
-    WhenIClickBookAVirtualVisit();
+    WhenIClickEditAVirtualVisit();
     ThenISeeTheVirtualVisitIsUpdated();
 
     WhenIClickViewVirtualVisits();
@@ -75,9 +75,9 @@ describe("As a ward staff, I want to edit a visit from the list screen so that I
     );
   }
 
-  function WhenIClickBookAVirtualVisit() {
+  function WhenIClickEditAVirtualVisit() {
     cy.get("button", { timeout: cy.pageLoadTimeout })
-      .contains("Book virtual visit")
+      .contains("Edit virtual visit")
       .click();
   }
 
