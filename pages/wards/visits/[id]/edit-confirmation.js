@@ -21,16 +21,25 @@ const EditAVisitConfirmation = ({
   callTime,
 }) => {
   const changeLink = () => {
-    Router.push({
-      pathname: `/wards/visits/${id}/edit`,
-      query: {
-        patientName,
-        contactName,
-        contactNumber,
-        contactEmail,
-        ...callTime,
-      },
-    });
+    const query = {
+      patientName,
+      contactName,
+      contactNumber,
+      contactEmail,
+      ...callTime,
+    };
+
+    var queryParameters = Object.keys(query)
+      .map((k) => {
+        if (query[k]) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(query[k]);
+        }
+      })
+      .join("&");
+
+    const asPath = `/wards/visits/${id}/edit?${queryParameters}`;
+
+    Router.push("/wards/visits/[id]/edit", asPath);
   };
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();

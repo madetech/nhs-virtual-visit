@@ -19,10 +19,17 @@ const EditAVisit = ({
   const [errors, setErrors] = useState([]);
 
   const submit = (query) => {
-    Router.push({
-      pathname: `/wards/visits/${id}/edit-confirmation`,
-      query,
-    });
+    var queryParameters = Object.keys(query)
+      .map((k) => {
+        if (query[k]) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(query[k]);
+        }
+      })
+      .join("&");
+
+    const asPath = `/wards/visits/${id}/edit-confirmation?${queryParameters}`;
+
+    Router.push("/wards/visits/[id]/edit-confirmation", asPath);
   };
 
   return (

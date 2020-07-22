@@ -72,7 +72,10 @@ const VisitsPanelList = ({ visits, title, showButtons }) => {
                           <button
                             className="nhsuk-button nhsuk-u-margin-right-5 nhsuk-button--secondary"
                             onClick={() => {
-                              Router.push(`/wards/visits/${visit.id}/edit`);
+                              Router.push(
+                                "/wards/visits/[id]/edit",
+                                `/wards/visits/${visit.id}/edit`
+                              );
                             }}
                           >
                             Edit
