@@ -32,7 +32,7 @@ const Layout = ({
       <a className="nhsuk-skip-link" href="#maincontent">
         Skip to main content
       </a>
-      <header className="nhsuk-header" role="banner">
+      <header className="nhsuk-header nhsuk-header--organisation" role="banner">
         <div className="nhsuk-width-container nhsuk-header__container">
           <div className="nhsuk-header__logo nhsuk-header__logo--only">
             <HeaderLink enabled={!!showNavigationBarForType}>

@@ -17,6 +17,12 @@ const Logo = () => {
         ></path>
         <image src="https://assets.nhs.uk/images/nhs-logo.png"></image>
       </svg>
+      <span className="nhsuk-organisation-name">
+        Kettering General Hospital
+      </span>
+      <span className="nhsuk-organisation-descriptor">
+        NHS Foundation Trust
+      </span>
     </>
   );
 };
