@@ -18,10 +18,18 @@ const EditAVisit = ({
 }) => {
   const [errors, setErrors] = useState([]);
 
-  const submit = () => {
-    Router.push({
-      pathname: `/wards/visits/${id}/edit-success`,
-    });
+  const submit = (query) => {
+    var queryParameters = Object.keys(query)
+      .map((k) => {
+        if (query[k]) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(query[k]);
+        }
+      })
+      .join("&");
+
+    const asPath = `/wards/visits/${id}/edit-confirmation?${queryParameters}`;
+
+    Router.push("/wards/visits/[id]/edit-confirmation", asPath);
   };
 
   return (
@@ -51,35 +59,79 @@ const EditAVisit = ({
   );
 };
 
+const queryContainsInitialData = (query) => {
+  const initialDataKeys = [
+    "patientName",
+    "contactName",
+    "contactNumber",
+    "contactEmail",
+    "day",
+    "month",
+    "year",
+    "hour",
+    "minute",
+  ];
+
+  const queryKeys = Object.keys(query);
+  return initialDataKeys.every((key) => queryKeys.includes(key));
+};
+
 export const getServerSideProps = propsWithContainer(
   verifyToken(async ({ authenticationToken, query, container }) => {
-    const { wardId } = authenticationToken;
-
     const id = query.id;
-    const retrieveVisitById = container.getRetrieveVisitById();
 
-    const { scheduledCall } = await retrieveVisitById({ id, wardId });
+    if (queryContainsInitialData(query)) {
+      const {
+        patientName,
+        contactName,
+        contactNumber,
+        contactEmail,
+        day,
+        month,
+        year,
+        hour,
+        minute,
+      } = query;
+      const callDateTime = { day, month, year, hour, minute };
 
-    const callTime = new Date(scheduledCall.callTime);
+      return {
+        props: {
+          id,
+          initialPatientName: patientName,
+          initialContactName: contactName,
+          initialContactNumber: contactNumber,
+          initialContactEmail: contactEmail,
+          initialCallDateTime: callDateTime,
+        },
+      };
+    } else {
+      const { wardId } = authenticationToken;
 
-    const initialCallDateTime = {
-      day: callTime.getDate(),
-      month: callTime.getMonth(),
-      year: callTime.getFullYear(),
-      hour: callTime.getHours(),
-      minute: callTime.getMinutes(),
-    };
+      const retrieveVisitById = container.getRetrieveVisitById();
 
-    return {
-      props: {
-        id,
-        initialPatientName: scheduledCall.patientName,
-        initialContactName: scheduledCall.recipientName,
-        initialContactNumber: scheduledCall.recipientNumber,
-        initialContactEmail: scheduledCall.recipientEmail,
-        initialCallDateTime,
-      },
-    };
+      const { scheduledCall } = await retrieveVisitById({ id, wardId });
+
+      const callTime = new Date(scheduledCall.callTime);
+
+      const initialCallDateTime = {
+        day: callTime.getDate(),
+        month: callTime.getMonth(),
+        year: callTime.getFullYear(),
+        hour: callTime.getHours(),
+        minute: callTime.getMinutes(),
+      };
+
+      return {
+        props: {
+          id,
+          initialPatientName: scheduledCall.patientName,
+          initialContactName: scheduledCall.recipientName,
+          initialContactNumber: scheduledCall.recipientNumber,
+          initialContactEmail: scheduledCall.recipientEmail,
+          initialCallDateTime,
+        },
+      };
+    }
   })
 );
 
