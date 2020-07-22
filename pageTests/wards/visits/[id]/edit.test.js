@@ -76,5 +76,72 @@ describe("wards/visits/[id]/edit", () => {
       });
       expect(retrieveVisitById).toBeCalledWith({ id, wardId });
     });
+
+    it("sets props using the query parameters if provided", async () => {
+      const id = "1";
+      const wardId = "10";
+      const callTime = new Date(2020, 1, 1, 15, 0);
+
+      const retrieveVisitById = jest.fn().mockResolvedValue({
+        scheduledCall: {
+          id: "1",
+          patientName: "Bob Smith",
+          recipientName: "John Smith",
+          recipientEmail: "john.smith@example.com",
+          recipientNumber: "07123456789",
+          callTime,
+          callId: "callId",
+        },
+        error: null,
+      });
+
+      const container = {
+        getUserIsAuthenticated: () => jest.fn().mockResolvedValue({ wardId }),
+        getRetrieveWardById: () => () => ({ error: null }),
+        getTokenProvider: () => ({
+          validate: jest.fn(() => ({
+            type: "wardStaff",
+            wardId,
+          })),
+        }),
+        getRetrieveVisitById: () => retrieveVisitById,
+      };
+
+      const { props } = await getServerSideProps({
+        req: {
+          headers: {
+            cookie: "token=123",
+          },
+        },
+        query: {
+          id,
+          patientName: "Adora",
+          contactName: "Catra",
+          day: "15",
+          month: "1",
+          year: "2020",
+          hour: "15",
+          minute: "0",
+          contactNumber: "07123456789",
+          contactEmail: "catra@example.com",
+        },
+        container,
+      });
+
+      expect(props).toEqual({
+        id: "1",
+        initialPatientName: "Adora",
+        initialContactName: "Catra",
+        initialContactNumber: "07123456789",
+        initialContactEmail: "catra@example.com",
+        initialCallDateTime: {
+          day: "15",
+          month: "1",
+          year: "2020",
+          hour: "15",
+          minute: "0",
+        },
+      });
+    });
   });
 });
