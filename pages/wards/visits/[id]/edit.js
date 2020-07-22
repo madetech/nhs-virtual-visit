@@ -21,7 +21,7 @@ const EditAVisit = ({
   const submit = (query) => {
     var queryParameters = Object.keys(query)
       .map((k) => {
-        if (query[k]) {
+        if (query[k] !== null && query[k] !== undefined) {
           return encodeURIComponent(k) + "=" + encodeURIComponent(query[k]);
         }
       })
