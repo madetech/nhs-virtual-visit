@@ -96,13 +96,12 @@ const ScheduleConfirmation = ({
               actionLinkOnClick={changeLink}
             ></VisitSummaryList>
 
-            <h2 className="nhsuk-heading-l">
-              Key contact&apos;s mobile number
-            </h2>
+            <h2 className="nhsuk-heading-l">Key contact&apos;s information</h2>
             <Text>
-              Please double check the mobile number of the key contact to ensure
-              we set up the virtual visit with the correct person. A text
-              message will be sent to them once you&apos;ve booked the visit.
+              Please double check the contact information of the key contact to
+              ensure we set up the virtual visit with the correct person. A
+              confirmation will be sent to them once you&apos;ve booked the
+              visit.
             </Text>
             <Button className="nhsuk-u-margin-top-5">Book virtual visit</Button>
           </form>
