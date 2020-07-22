@@ -21,8 +21,8 @@ const Success = () => {
           <Heading>Virtual visit booked</Heading>
 
           <Text>
-            Your virtual visit has been booked and the key contact has been sent
-            a text message with their scheduled time.
+            Your virtual visit has been booked and the key contact will be
+            notified of their scheduled time.
           </Text>
 
           <ActionLink href={`/wards/book-a-visit`}>
