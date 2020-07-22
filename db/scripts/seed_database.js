@@ -33,6 +33,12 @@ async function seedDatabase() {
     VALUES ('Alice', 'bob@example.com', 'Bob', CURRENT_TIMESTAMP + interval '1 hour', '123', 'whereby', $1, 'password', 'scheduled')`,
     [wardId]
   );
+  await db.result(
+    `INSERT INTO scheduled_calls_table
+    (patient_name, recipient_email, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
+    VALUES ('Elliot', 'darlene@example.com', 'Darlene', CURRENT_TIMESTAMP + interval '1 hour', '456', 'whereby', $1, 'password', 'scheduled')`,
+    [wardId]
+  );
   db.$pool.end();
 }
 

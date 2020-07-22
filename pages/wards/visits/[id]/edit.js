@@ -18,9 +18,10 @@ const EditAVisit = ({
 }) => {
   const [errors, setErrors] = useState([]);
 
-  const submit = () => {
+  const submit = (query) => {
     Router.push({
-      pathname: `/wards/visits/${id}/edit-success`,
+      pathname: `/wards/visits/${id}/edit-confirmation`,
+      query,
     });
   };
 
