@@ -156,20 +156,25 @@ describe("/api/book-a-visit", () => {
     };
 
     const updateVisitSpy = jest.fn();
-    const callNotFoundResult = {
+    const retrieveVisitByIdSpy = jest.fn().mockResolvedValue({
       scheduledCall: null,
       error: "error",
-    };
+    });
     const container = {
-      getUserIsAuthenticated: () => () => true,
+      getUserIsAuthenticated: () =>
+        jest.fn().mockResolvedValue({ wardId: "123" }),
       getUpdateVisitById: () => updateVisitSpy,
-      getRetrieveVisitById: () => () => callNotFoundResult,
+      getRetrieveVisitById: () => retrieveVisitByIdSpy,
     };
 
     await updateAVisit(request, response, { container });
 
     expect(response.status).toHaveBeenCalledWith(404);
     expect(response.end).toHaveBeenCalledWith('{"err":"call does not exist"}');
+    expect(retrieveVisitByIdSpy).toHaveBeenCalledWith({
+      id: "1",
+      wardId: "123",
+    });
     expect(updateVisitSpy).not.toHaveBeenCalled();
   });
 

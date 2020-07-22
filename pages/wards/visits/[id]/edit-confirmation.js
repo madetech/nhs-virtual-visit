@@ -1,18 +1,19 @@
 import React, { useCallback } from "react";
-import Button from "../../src/components/Button";
-import { GridRow, GridColumn } from "../../src/components/Grid";
-import Text from "../../src/components/Text";
-import Heading from "../../src/components/Heading";
-import Layout from "../../src/components/Layout";
+import Button from "../../../../src/components/Button";
+import { GridRow, GridColumn } from "../../../../src/components/Grid";
+import Text from "../../../../src/components/Text";
+import Heading from "../../../../src/components/Heading";
+import Layout from "../../../../src/components/Layout";
 import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import Router from "next/router";
-import verifyToken from "../../src/usecases/verifyToken";
-import VisitSummaryList from "../../src/components/VisitSummaryList";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
-import { WARD_STAFF } from "../../src/helpers/userTypes";
+import verifyToken from "../../../../src/usecases/verifyToken";
+import VisitSummaryList from "../../../../src/components/VisitSummaryList";
+import propsWithContainer from "../../../../src/middleware/propsWithContainer";
+import { WARD_STAFF } from "../../../../src/helpers/userTypes";
 
-const ScheduleConfirmation = ({
+const EditAVisitConfirmation = ({
+  id,
   patientName,
   contactName,
   contactNumber,
@@ -20,25 +21,35 @@ const ScheduleConfirmation = ({
   callTime,
 }) => {
   const changeLink = () => {
-    Router.push({
-      pathname: `/wards/book-a-visit`,
-      query: {
-        patientName,
-        contactName,
-        contactNumber,
-        contactEmail,
-        ...callTime,
-      },
-    });
+    const query = {
+      patientName,
+      contactName,
+      contactNumber,
+      contactEmail,
+      ...callTime,
+    };
+
+    var queryParameters = Object.keys(query)
+      .map((k) => {
+        if (query[k] !== null && query[k] !== undefined) {
+          return encodeURIComponent(k) + "=" + encodeURIComponent(query[k]);
+        }
+      })
+      .join("&");
+
+    const asPath = `/wards/visits/${id}/edit?${queryParameters}`;
+
+    Router.push("/wards/visits/[id]/edit", asPath);
   };
   const onSubmit = useCallback(async (event) => {
     event.preventDefault();
 
     const submitAnswers = async () => {
       let body = {
+        id,
         patientName,
         contactName,
-        callTime: moment(callTime).toISOString(true),
+        callTime: moment(callTime),
         callTimeLocal: callTime,
       };
 
@@ -49,8 +60,8 @@ const ScheduleConfirmation = ({
         body.contactEmail = contactEmail;
       }
 
-      const response = await fetch("/api/book-a-visit", {
-        method: "POST",
+      const response = await fetch("/api/update-a-visit", {
+        method: "PATCH",
         headers: {
           "content-type": "application/json",
         },
@@ -60,7 +71,7 @@ const ScheduleConfirmation = ({
       const { success, err } = await response.json();
 
       if (success) {
-        Router.push(`/wards/book-a-visit-success`);
+        Router.push(`/wards/visits/${id}/edit-success`);
       } else {
         console.error(err);
       }
@@ -77,14 +88,14 @@ const ScheduleConfirmation = ({
 
   return (
     <Layout
-      title="Check your answers before booking a virtual visit"
+      title="Check your answers before editing a virtual visit"
       showNavigationBarForType={WARD_STAFF}
       showNavigationBar={true}
     >
       <GridRow>
         <GridColumn width="two-thirds">
           <form onSubmit={onSubmit}>
-            <Heading>Check your answers before booking a virtual visit</Heading>
+            <Heading>Check your answers before editing a virtual visit</Heading>
 
             <VisitSummaryList
               patientName={patientName}
@@ -99,11 +110,9 @@ const ScheduleConfirmation = ({
             <h2 className="nhsuk-heading-l">Key contact&apos;s information</h2>
             <Text>
               Please double check the contact information of the key contact to
-              ensure we set up the virtual visit with the correct person. A
-              confirmation will be sent to them once you&apos;ve booked the
-              visit.
+              ensure we set up the virtual visit with the correct person.
             </Text>
-            <Button className="nhsuk-u-margin-top-5">Book virtual visit</Button>
+            <Button className="nhsuk-u-margin-top-5">Edit virtual visit</Button>
           </form>
         </GridColumn>
       </GridRow>
@@ -128,6 +137,7 @@ export const getServerSideProps = propsWithContainer(
 
     return {
       props: {
+        id: query.id,
         patientName,
         contactName,
         contactNumber: contactNumber || null,
@@ -138,4 +148,4 @@ export const getServerSideProps = propsWithContainer(
   })
 );
 
-export default ScheduleConfirmation;
+export default EditAVisitConfirmation;
