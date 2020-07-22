@@ -31,7 +31,7 @@ const EditAVisitConfirmation = ({
 
     var queryParameters = Object.keys(query)
       .map((k) => {
-        if (query[k]) {
+        if (query[k] !== null && query[k] !== undefined) {
           return encodeURIComponent(k) + "=" + encodeURIComponent(query[k]);
         }
       })
@@ -112,7 +112,7 @@ const EditAVisitConfirmation = ({
               Please double check the contact information of the key contact to
               ensure we set up the virtual visit with the correct person.
             </Text>
-            <Button className="nhsuk-u-margin-top-5">Book virtual visit</Button>
+            <Button className="nhsuk-u-margin-top-5">Edit virtual visit</Button>
           </form>
         </GridColumn>
       </GridRow>
