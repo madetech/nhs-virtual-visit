@@ -9,7 +9,7 @@ import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import { WARD_STAFF } from "../../../../src/helpers/userTypes";
 
 const EditAVisit = ({
-  callId,
+  id,
   initialPatientName,
   initialContactName,
   initialContactNumber,
@@ -20,7 +20,7 @@ const EditAVisit = ({
 
   const submit = () => {
     Router.push({
-      pathname: `/wards/visits/${callId}/edit-success`,
+      pathname: `/wards/visits/${id}/edit-success`,
     });
   };
 
@@ -50,12 +50,15 @@ const EditAVisit = ({
     </Layout>
   );
 };
-export const getServerSideProps = propsWithContainer(
-  verifyToken(async ({ query, container }) => {
-    const callId = query.id;
-    const retrieveVisitByCallId = container.getRetrieveVisitByCallId();
 
-    const { scheduledCall } = await retrieveVisitByCallId(callId);
+export const getServerSideProps = propsWithContainer(
+  verifyToken(async ({ authenticationToken, query, container }) => {
+    const { wardId } = authenticationToken;
+
+    const id = query.id;
+    const retrieveVisitById = container.getRetrieveVisitById();
+
+    const { scheduledCall } = await retrieveVisitById({ id, wardId });
 
     const callTime = new Date(scheduledCall.callTime);
 
@@ -69,7 +72,7 @@ export const getServerSideProps = propsWithContainer(
 
     return {
       props: {
-        callId,
+        id,
         initialPatientName: scheduledCall.patientName,
         initialContactName: scheduledCall.recipientName,
         initialContactNumber: scheduledCall.recipientNumber,

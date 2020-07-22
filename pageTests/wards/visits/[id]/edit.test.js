@@ -21,9 +21,11 @@ describe("wards/visits/[id]/edit", () => {
     });
 
     it("retrieves a visit", async () => {
+      const id = "1";
+      const wardId = "10";
       const callTime = new Date(2020, 1, 1, 15, 0);
 
-      const retrieveVisitByCallId = jest.fn().mockResolvedValue({
+      const retrieveVisitById = jest.fn().mockResolvedValue({
         scheduledCall: {
           id: "1",
           patientName: "Bob Smith",
@@ -37,16 +39,15 @@ describe("wards/visits/[id]/edit", () => {
       });
 
       const container = {
-        getUserIsAuthenticated: () => () => true,
+        getUserIsAuthenticated: () => jest.fn().mockResolvedValue({ wardId }),
         getRetrieveWardById: () => () => ({ error: null }),
         getTokenProvider: () => ({
           validate: jest.fn(() => ({
             type: "wardStaff",
-            wardId: 123,
-            trustId: 10,
+            wardId,
           })),
         }),
-        getRetrieveVisitByCallId: () => retrieveVisitByCallId,
+        getRetrieveVisitById: () => retrieveVisitById,
       };
 
       const { props } = await getServerSideProps({
@@ -55,12 +56,12 @@ describe("wards/visits/[id]/edit", () => {
             cookie: "token=123",
           },
         },
-        query: { id: "callId" },
+        query: { id },
         container,
       });
 
       expect(props).toEqual({
-        callId: "callId",
+        id: "1",
         initialPatientName: "Bob Smith",
         initialContactName: "John Smith",
         initialContactNumber: "07123456789",
@@ -73,7 +74,7 @@ describe("wards/visits/[id]/edit", () => {
           minute: 0,
         },
       });
-      expect(retrieveVisitByCallId).toBeCalledWith("callId");
+      expect(retrieveVisitById).toBeCalledWith({ id, wardId });
     });
   });
 });

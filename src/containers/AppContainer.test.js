@@ -116,11 +116,15 @@ describe("AppContainer", () => {
     expect(container.getRetrieveSupportUrlByCallId()).toBeDefined();
   });
 
-  it("returns getUpdateVisitByCallId", () => {
-    expect(container.getUpdateVisitByCallId()).toBeDefined();
+  it("returns getUpdateVisitById", () => {
+    expect(container.getUpdateVisitById()).toBeDefined();
   });
 
   it("returns getSendBookingNotification", () => {
     expect(container.getSendBookingNotification()).toBeDefined();
+  });
+
+  it("returns getRetrieveVisitById", () => {
+    expect(container.getRetrieveVisitById()).toBeDefined();
   });
 });
