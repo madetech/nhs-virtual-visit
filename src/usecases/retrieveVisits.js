@@ -1,13 +1,13 @@
-import { SCHEDULED } from "../../src/helpers/visitStatus";
+import { SCHEDULED, COMPLETE } from "../../src/helpers/visitStatus";
 
 const retrieveVisits = ({ getDb }) => async ({ wardId }) => {
   const db = await getDb();
   try {
-    let query = `SELECT * FROM scheduled_calls_table 
-                 WHERE ward_id = $1 AND status = $2
+    let query = `SELECT * FROM scheduled_calls_table
+                 WHERE ward_id = $1 AND status = ANY(ARRAY[$2,$3]::text[]) AND pii_cleared_at IS NULL
                  ORDER BY call_time ASC`;
 
-    const scheduledCalls = await db.any(query, [wardId, SCHEDULED]);
+    const scheduledCalls = await db.any(query, [wardId, SCHEDULED, COMPLETE]);
 
     return {
       scheduledCalls: scheduledCalls.map((scheduledCall) => ({

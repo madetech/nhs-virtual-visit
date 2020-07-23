@@ -1,4 +1,4 @@
-import { SCHEDULED } from "../../src/helpers/visitStatus";
+import { SCHEDULED, COMPLETE } from "../../src/helpers/visitStatus";
 
 const retrieveVisitById = ({ getDb }) => async ({ id, wardId }) => {
   if (!id) {
@@ -12,8 +12,10 @@ const retrieveVisitById = ({ getDb }) => async ({ id, wardId }) => {
 
   try {
     const scheduledCall = await db.one(
-      `SELECT * FROM scheduled_calls_table WHERE id = $1 AND ward_id = $2 AND status = $3 LIMIT 1`,
-      [id, wardId, SCHEDULED]
+      `SELECT * FROM scheduled_calls_table
+         WHERE id = $1 AND ward_id = $2 AND status = ANY(ARRAY[$3,$4]::text[]) AND pii_cleared_at IS NULL
+         LIMIT 1`,
+      [id, wardId, SCHEDULED, COMPLETE]
     );
 
     return {

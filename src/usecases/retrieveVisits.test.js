@@ -38,7 +38,11 @@ describe("retrieveVisits", () => {
     });
 
     expect(error).toBeNull();
-    expect(anySpy).toHaveBeenCalledWith(expect.anything(), [1, "scheduled"]);
+    expect(anySpy).toHaveBeenCalledWith(expect.anything(), [
+      1,
+      "scheduled",
+      "complete",
+    ]);
     expect(scheduledCalls).toHaveLength(2);
     expect(scheduledCalls[0]).toEqual({
       id: 1,
@@ -78,10 +82,10 @@ describe("retrieveVisits", () => {
     });
 
     expect(anySpy).toHaveBeenCalledWith(
-      `SELECT * FROM scheduled_calls_table 
-                 WHERE ward_id = $1 AND status = $2
+      `SELECT * FROM scheduled_calls_table
+                 WHERE ward_id = $1 AND status = ANY(ARRAY[$2,$3]::text[]) AND pii_cleared_at IS NULL
                  ORDER BY call_time ASC`,
-      [1, "scheduled"]
+      [1, "scheduled", "complete"]
     );
   });
 
