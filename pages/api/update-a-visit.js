@@ -106,7 +106,7 @@ export default withContainer(
 
         if (!notificationType)
           return {
-            success: null,
+            success: true,
             errors: null,
           };
 
@@ -126,7 +126,7 @@ export default withContainer(
           success: emailSuccess,
           errors: emailErrors,
         } = await sendNotification("email");
-        if (emailSuccess === false) {
+        if (!emailSuccess) {
           respond(500, { err: emailErrors });
           return;
         }
@@ -137,7 +137,7 @@ export default withContainer(
           success: numberSuccess,
           errors: numberErrors,
         } = await sendNotification("number");
-        if (numberSuccess === false) {
+        if (!numberSuccess) {
           respond(500, { err: numberErrors });
           return;
         }
