@@ -26,21 +26,21 @@ async function cleanupScheduledCalls() {
   const scheduledCalls = await db.result(
     `UPDATE scheduled_calls_table
      SET patient_name = null, recipient_number = null, recipient_name = null, recipient_email = null, status = $1, pii_cleared_at = NOW()
-     WHERE call_time < (now() - INTERVAL '1 DAY') AND status = $2`,
+     WHERE call_time < (now() - INTERVAL '1 DAY') AND status = $2 AND pii_cleared_at IS NULL`,
     [status.COMPLETE, status.SCHEDULED]
   );
 
   const archivedCalls = await db.result(
     `UPDATE scheduled_calls_table
      SET patient_name = null, recipient_number = null, recipient_name = null, recipient_email = null, pii_cleared_at = NOW()
-     WHERE status = $1`,
+     WHERE status = $1 AND pii_cleared_at IS NULL`,
     status.ARCHIVED
   );
 
   const cancelledCalls = await db.result(
     `UPDATE scheduled_calls_table
      SET patient_name = null, recipient_number = null, recipient_name = null, recipient_email = null, pii_cleared_at = NOW()
-     WHERE status = $1`,
+     WHERE status = $1 AND pii_cleared_at IS NULL`,
     status.CANCELLED
   );
 
