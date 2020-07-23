@@ -24,22 +24,22 @@ async function cleanupScheduledCalls() {
   const db = await getDb();
 
   const scheduledCalls = await db.result(
-    `UPDATE scheduled_calls_table 
-     SET patient_name = null, recipient_number = null, recipient_name = null, recipient_email = null, status = $1
+    `UPDATE scheduled_calls_table
+     SET patient_name = null, recipient_number = null, recipient_name = null, recipient_email = null, status = $1, pii_cleared_at = NOW()
      WHERE call_time < (now() - INTERVAL '1 DAY') AND status = $2`,
     [status.COMPLETE, status.SCHEDULED]
   );
 
   const archivedCalls = await db.result(
-    `UPDATE scheduled_calls_table 
-     SET patient_name = null, recipient_number = null, recipient_name = null, recipient_email = null
+    `UPDATE scheduled_calls_table
+     SET patient_name = null, recipient_number = null, recipient_name = null, recipient_email = null, pii_cleared_at = NOW()
      WHERE status = $1`,
     status.ARCHIVED
   );
 
   const cancelledCalls = await db.result(
-    `UPDATE scheduled_calls_table 
-     SET patient_name = null, recipient_number = null, recipient_name = null, recipient_email = null
+    `UPDATE scheduled_calls_table
+     SET patient_name = null, recipient_number = null, recipient_name = null, recipient_email = null, pii_cleared_at = NOW()
      WHERE status = $1`,
     status.CANCELLED
   );
@@ -57,7 +57,7 @@ cleanupScheduledCalls()
   .then(function (result) {
     console.log(`
     ${result.completed} visits completed
-    ${result.archived} visits archived 
+    ${result.archived} visits archived
     ${result.cancelled} visits cancelled`);
   })
   .catch((error) => {
