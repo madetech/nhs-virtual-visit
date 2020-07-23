@@ -1,0 +1,18 @@
+name: Fork Sync
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fork Sync
+        uses: TG908/fork-sync@v1.1.7
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          owner: madetech
+          base: master
+          head: master
+          merge_method: merge
