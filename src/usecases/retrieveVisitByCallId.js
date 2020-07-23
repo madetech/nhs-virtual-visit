@@ -1,12 +1,14 @@
-import { SCHEDULED } from "../../src/helpers/visitStatus";
+import { SCHEDULED, COMPLETE } from "../../src/helpers/visitStatus";
 
 const retrieveVisitByCallId = ({ getDb }) => async (callId) => {
   const db = await getDb();
   console.log("Retrieving visit for  ", callId);
   try {
     const scheduledCalls = await db.any(
-      `SELECT * FROM scheduled_calls_table WHERE call_id = $1 AND status = $2 LIMIT 1`,
-      [callId, SCHEDULED]
+      `SELECT * FROM scheduled_calls_table
+         WHERE call_id = $1 AND status = ANY(ARRAY[$2,$3]::text[]) AND pii_cleared_at IS NULL
+         LIMIT 1`,
+      [callId, SCHEDULED, COMPLETE]
     );
 
     const scheduledCall = scheduledCalls[0];
