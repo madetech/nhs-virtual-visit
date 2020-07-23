@@ -10,6 +10,7 @@ jobs:
     steps:
       - name: Fork Sync
         uses: TG908/fork-sync@v1.1.7
+        if: github.repository == 'Kettering-General-Hospital/nhs-virtual-visit'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           owner: madetech
