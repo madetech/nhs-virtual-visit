@@ -71,7 +71,10 @@ const EditAVisitConfirmation = ({
       const { success, err } = await response.json();
 
       if (success) {
-        Router.push(`/wards/visits/${id}/edit-success`);
+        Router.push(
+          "/wards/visits/[id]/edit-success",
+          `/wards/visits/${id}/edit-success`
+        );
       } else {
         console.error(err);
       }
