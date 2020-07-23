@@ -33,7 +33,7 @@ describe("test cleanup script", () => {
       callPassword: "securePassword",
     });
 
-    await container.getCreateVisit()({
+    const { id: pastVisitId } = await container.getCreateVisit()({
       patientName: "Bob Smith",
       contactEmail: "bob.smith@madetech.com",
       contactName: "John Smith",
@@ -90,6 +90,13 @@ describe("test cleanup script", () => {
     // past visit is now complete and cannot be retrieved
     const pastVisit = await container.getRetrieveVisitByCallId()("2");
     expect(pastVisit.scheduledCall).toBeNull();
+
+    // past visit is now complete and cannot be retrieved
+    const pastVisitById = await container.getRetrieveVisitById()({
+      id: pastVisitId,
+      wardId: wardId,
+    });
+    expect(pastVisitById.scheduledCall).toBeNull();
 
     // cancelled visit cannot be retrieved
     const cancelledVisit = await container.getRetrieveVisitByCallId()("3");
