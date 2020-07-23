@@ -104,7 +104,11 @@ export default withContainer(
             : scheduledCall.recipientNumber
         );
 
-        if (!notificationType) return;
+        if (!notificationType)
+          return {
+            success: null,
+            errors: null,
+          };
 
         const sendBookingNotification = container.getSendBookingNotification();
         return await sendBookingNotification({
