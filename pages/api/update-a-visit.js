@@ -95,7 +95,7 @@ export default withContainer(
       const sendNotification = async (type) => {
         const notificationType = determineNotificationType(
           updatedCall.callTime,
-          scheduledCall.callTime,
+          scheduledCall.callTime.toISOString(),
           type == "email"
             ? updatedCall.recipientEmail
             : updatedCall.recipientNumber,
@@ -103,6 +103,7 @@ export default withContainer(
             ? scheduledCall.recipientEmail
             : scheduledCall.recipientNumber
         );
+
         if (!notificationType) return;
 
         const sendBookingNotification = container.getSendBookingNotification();
