@@ -80,7 +80,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "INVALID_NUMBER",
         contactName: "John Smith",
-        callTime: moment(),
+        callTime: moment().toISOString(),
       },
     };
 
@@ -113,7 +113,7 @@ describe("/api/book-a-visit", () => {
         id: "1",
         patientName: "Bob Smith",
         contactName: "John Smith",
-        callTime: moment(),
+        callTime: moment().toISOString(),
       },
     };
 
@@ -146,7 +146,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
-        callTime: moment(),
+        callTime: moment().toISOString(),
       },
     };
 
@@ -187,7 +187,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
-        callTime: moment(),
+        callTime: moment().toISOString(),
       },
     };
 
@@ -232,7 +232,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
-        callTime: moment(),
+        callTime: moment().toISOString(),
       },
     };
 
@@ -289,7 +289,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
-        callTime: moment(),
+        callTime: moment().toISOString(),
       },
     };
 
@@ -347,7 +347,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
-        callTime: callTime,
+        callTime: callTime.toISOString(),
       },
     };
 
@@ -404,7 +404,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
-        callTime: callTime,
+        callTime: callTime.toISOString(),
       },
     };
 
@@ -460,7 +460,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactEmail: "john.smith@madetech.com",
         contactName: "John Smith",
-        callTime: callTime,
+        callTime: callTime.toISOString(),
       },
     };
 
@@ -509,7 +509,7 @@ describe("/api/book-a-visit", () => {
 
   it("sends an update notification if date or time is changed", async () => {
     const currentTime = moment();
-    const newTime = moment().add(1, "h");
+    const newTime = moment().add(1, "h").toISOString();
     const request = {
       method: "PATCH",
       headers: { cookie: "test" },
@@ -583,7 +583,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactEmail: "Alice.smith@madetech.com",
         contactName: "Alice Smith",
-        callTime: callTime,
+        callTime: callTime.toISOString(),
       },
     };
 
@@ -632,7 +632,7 @@ describe("/api/book-a-visit", () => {
         emailAddress: "Alice.smith@madetech.com",
         wardName: "ward name",
         hospitalName: "hospital name",
-        visitDateAndTime: callTime,
+        visitDateAndTime: callTime.toISOString(),
         notificationType: "new",
       })
     );
@@ -648,7 +648,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
-        callTime: callTime,
+        callTime: callTime.toISOString(),
       },
     };
 
@@ -697,7 +697,7 @@ describe("/api/book-a-visit", () => {
         mobileNumber: "07123456789",
         hospitalName: "hospital name",
         wardName: "ward name",
-        visitDateAndTime: callTime,
+        visitDateAndTime: callTime.toISOString(),
         notificationType: "new",
       })
     );
@@ -705,7 +705,7 @@ describe("/api/book-a-visit", () => {
 
   it("send an update notification to email address on time change and sends an new notification to phone number if changed", async () => {
     const callTime = moment();
-    const newTime = moment().add(1, "h");
+    const newTime = moment().add(1, "h").toISOString();
     const request = {
       method: "PATCH",
       headers: { cookie: "test" },
@@ -790,7 +790,7 @@ describe("/api/book-a-visit", () => {
         patientName: "Bob Smith",
         contactNumber: "07123456789",
         contactName: "John Smith",
-        callTime: callTime,
+        callTime: callTime.toISOString(),
       },
     };
 
