@@ -105,5 +105,11 @@ describe("test cleanup script", () => {
     // archived visit cannot be retrieved
     const archivedVisit = await container.getRetrieveVisitByCallId()("4");
     expect(archivedVisit.scheduledCall).toBeNull();
+
+    // Only the future visit is retrieved when retrieving all visits
+    const { scheduledCalls: visits } = await container.getRetrieveVisits()({
+      wardId,
+    });
+    expect(visits.map((visit) => visit.callId)).toEqual(["1"]);
   });
 });
