@@ -29,6 +29,7 @@ const retrieveVisitById = ({ getDb }) => async ({ id, wardId }) => {
         callId: scheduledCall.call_id,
         provider: scheduledCall.provider,
         callPassword: scheduledCall.call_password,
+        status: scheduledCall.status,
       },
       error: null,
     };

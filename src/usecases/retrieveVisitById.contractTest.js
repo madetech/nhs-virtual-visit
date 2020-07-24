@@ -3,6 +3,7 @@ import {
   setupWardWithinHospitalAndTrust,
   setupVisit,
 } from "../testUtils/factories";
+import { SCHEDULED } from "../helpers/visitStatus";
 
 describe("retrieveVisitById contract tests", () => {
   const container = AppContainer.getInstance();
@@ -26,6 +27,7 @@ describe("retrieveVisitById contract tests", () => {
       callId: "TESTCALLID",
       provider: "TESTPROVIDER",
       callPassword: "TESTCALLPASSWORD",
+      status: SCHEDULED,
       id,
     });
     expect(error).toBeNull();
