@@ -39,12 +39,23 @@ const Call = ({
     });
   };
 
+  const completeVisit = async () => {
+    await fetch("/api/complete-visit", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ callId }),
+    });
+  };
+
   useEffect(() => {
     captureEvent(JOIN_VISIT);
   }, []);
 
   const leaveVisit = useCallback(async () => {
     await captureEvent(LEAVE_VISIT);
+    await completeVisit();
   });
 
   return (
