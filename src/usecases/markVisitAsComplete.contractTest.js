@@ -33,16 +33,4 @@ describe("markVisitAsComplete contract tests", () => {
       })
     );
   });
-
-  it("returns an error if no id is provided", async () => {
-    const { error } = await container.getMarkVisitAsComplete()({ wardId: 1 });
-
-    expect(error).toEqual("An id must be provided.");
-  });
-
-  it("returns an error if no wardId is provided", async () => {
-    const { error } = await container.getMarkVisitAsComplete()({ id: 1 });
-
-    expect(error).toEqual("A wardId must be provided.");
-  });
 });
