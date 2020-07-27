@@ -107,6 +107,15 @@ describe("/api/complete-visit", () => {
   });
 
   it("returns 201 when a visit is marked as complete successfully", async () => {
+    const retrieveVisitByCallIdSpy = jest.fn().mockResolvedValue({
+      scheduledCall: { id: 456 },
+      error: null,
+    });
+
+    const markVisitAsCompleteSpy = jest
+      .fn()
+      .mockResolvedValue({ id: 456, error: null });
+
     await completeVisit(
       {
         method: "POST",
@@ -116,16 +125,17 @@ describe("/api/complete-visit", () => {
       {
         container: {
           getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
-          getRetrieveVisitByCallId: () =>
-            jest.fn().mockResolvedValue({
-              scheduledCall: { id: "456" },
-              error: null,
-            }),
-          getMarkVisitAsComplete: () =>
-            jest.fn().mockResolvedValue({ id: "456", error: null }),
+          getRetrieveVisitByCallId: () => retrieveVisitByCallIdSpy,
+          getMarkVisitAsComplete: () => markVisitAsCompleteSpy,
         },
       }
     );
+
+    expect(retrieveVisitByCallIdSpy).toHaveBeenCalledWith("123");
+    expect(markVisitAsCompleteSpy).toHaveBeenCalledWith({
+      id: 456,
+      wardId: 10,
+    });
 
     expect(response.status).toHaveBeenCalledWith(201);
   });
