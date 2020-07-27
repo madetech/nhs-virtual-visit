@@ -1,7 +1,12 @@
 const { cleanupScheduledCalls } = require("./cleanup_scheduled_calls");
 import AppContainer from "../../src/containers/AppContainer";
 import moment from "moment";
-import { setupTrust } from "../../src/testUtils/factories";
+import {
+  setupTrust,
+  setupHospital,
+  setupWard,
+  setupVisit,
+} from "../../src/testUtils/factories";
 
 describe("test cleanup script", () => {
   it("updates visit states and data correctly", async () => {
@@ -9,73 +14,44 @@ describe("test cleanup script", () => {
 
     const { trustId } = await setupTrust();
 
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
+    const { hospitalId } = await setupHospital({ trustId: trustId });
 
-    const { wardId } = await container.getCreateWard()({
-      name: "Test Ward 1",
+    const { wardId } = await setupWard({
       code: "wardCode1",
       hospitalId: hospitalId,
       trustId: trustId,
     });
 
-    await container.getCreateVisit()({
-      patientName: "Bob Smith",
-      contactEmail: "bob.smith@madetech.com",
-      contactName: "John Smith",
-      contactNumber: "07123456789",
+    await setupVisit({
       callTime: moment(),
       callId: "1",
-      provider: "jitsi",
       wardId: wardId,
-      callPassword: "securePassword",
     });
 
-    const { id: pastVisitId } = await container.getCreateVisit()({
-      patientName: "Bob Smith",
-      contactEmail: "bob.smith@madetech.com",
-      contactName: "John Smith",
-      contactNumber: "07123456789",
+    const { id: pastVisitId } = await setupVisit({
       callTime: moment().subtract(5, "days"),
       callId: "2",
-      provider: "jitsi",
       wardId: wardId,
-      callPassword: "securePassword",
     });
 
-    await container.getCreateVisit()({
-      patientName: "Bob Smith",
-      contactEmail: "bob.smith@madetech.com",
-      contactName: "John Smith",
-      contactNumber: "07123456789",
+    await setupVisit({
       callTime: moment(),
       callId: "3",
-      provider: "jitsi",
       wardId: wardId,
-      callPassword: "securePassword",
     });
 
     await container.getDeleteVisitByCallId()("3");
 
-    const { wardId: archiveWardId } = await container.getCreateWard()({
-      name: "Test Ward 2",
+    const { wardId: archiveWardId } = await setupWard({
       code: "wardCode2",
       hospitalId: hospitalId,
       trustId: trustId,
     });
 
-    await container.getCreateVisit()({
-      patientName: "Bob Smith",
-      contactEmail: "bob.smith@madetech.com",
-      contactName: "John Smith",
-      contactNumber: "07123456789",
+    await setupVisit({
       callTime: moment(),
       callId: "4",
-      provider: "jitsi",
       wardId: archiveWardId,
-      callPassword: "securePassword",
     });
 
     await container.getArchiveWard()(archiveWardId, trustId);
