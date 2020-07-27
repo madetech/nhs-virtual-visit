@@ -48,6 +48,7 @@ export default withContainer(
       res.end(JSON.stringify({ err: "Unable to mark visit as complete" }));
     } else {
       res.status(201);
+      res.end(JSON.stringify({}));
     }
   }
 );
