@@ -21,6 +21,7 @@ const retrieveVisits = ({ getDb }) => async ({ wardId }) => {
           : null,
         callId: scheduledCall.call_id,
         provider: scheduledCall.provider,
+        status: scheduledCall.status,
       })),
       error: null,
     };

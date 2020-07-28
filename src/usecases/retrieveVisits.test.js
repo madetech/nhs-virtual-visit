@@ -1,4 +1,5 @@
 import retrieveVisits from "./retrieveVisits";
+import { SCHEDULED, COMPLETE } from "../helpers/visitStatus";
 
 describe("retrieveVisits", () => {
   it("returns a json object containing the calls", async () => {
@@ -12,6 +13,7 @@ describe("retrieveVisits", () => {
         recipient_name: "Billy",
         call_id: "cb238rfv23cuv3",
         provider: "whereby",
+        status: SCHEDULED,
       },
       {
         id: 2,
@@ -22,6 +24,7 @@ describe("retrieveVisits", () => {
         recipient_name: "Bob",
         call_id: "cb238rfv23cuv3",
         provider: "jitsi",
+        status: COMPLETE,
       },
     ]);
 
@@ -53,6 +56,7 @@ describe("retrieveVisits", () => {
       recipientName: "Billy",
       callId: "cb238rfv23cuv3",
       provider: "whereby",
+      status: SCHEDULED,
     });
     expect(scheduledCalls[1]).toEqual({
       id: 2,
@@ -63,6 +67,7 @@ describe("retrieveVisits", () => {
       recipientName: "Bob",
       callId: "cb238rfv23cuv3",
       provider: "jitsi",
+      status: COMPLETE,
     });
   });
 
