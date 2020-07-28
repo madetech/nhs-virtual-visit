@@ -13,9 +13,9 @@ If you would like to change the video provider, you will need to do so by changi
 
 Whereby requires specific environment variables which you can find in the [development README](../development/README.md).
 
-## Setup
+## Prerequisites
 
-Ensure that you can access the heroku command line interface (https://devcenter.heroku.com/articles/heroku-cli).
+- Heroku CLI, see [setting up Heroku CLI](./setting-up-heroku-cli.md)
 
 ## How to update
 
