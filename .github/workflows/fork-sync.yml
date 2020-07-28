@@ -7,7 +7,7 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    if: github.repository == 'Kettering-General-Hospital/nhs-virtual-visit'
+    if: (github.repository == 'Kettering-General-Hospital/nhs-virtual-visit') || (github.repository == 'London-North-West-Trust/nhs-virtual-visit')
     steps:
       - name: Fork Sync
         uses: TG908/fork-sync@v1.1.7
