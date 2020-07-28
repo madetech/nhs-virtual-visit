@@ -5,6 +5,7 @@ import formatDateAndTime from "../../helpers/formatDateAndTime";
 import VisitSummaryList from "../VisitSummaryList";
 import TimeFromNow from "../TimeFromNow";
 import Text from "../Text";
+import { COMPLETE } from "../../helpers/visitStatus";
 
 const VisitsPanelList = ({ visits, title, showButtons }) => {
   if (visits.length != 0) {
@@ -37,6 +38,7 @@ const VisitsPanelList = ({ visits, title, showButtons }) => {
                       <span className="nhsuk-details__summary-text">
                         {formatDateAndTime(visit.callTime, "HH:mm")} -{" "}
                         {visit.patientName}
+                        {visit.status == COMPLETE && " (Complete)"}
                       </span>
                     </summary>
                     <div

@@ -21,6 +21,7 @@ describe("As a ward staff, I want to start a virtual visit so that patients can 
 
     WhenIClickToReturnToVirtualVisits();
     ThenISeeTheVirtualVisitsPage();
+    AndISeeTheVirtualVisitMarkedAsComplete();
   });
 
   // Allows a ward staff to start a virtual visit
@@ -74,5 +75,11 @@ describe("As a ward staff, I want to start a virtual visit so that patients can 
 
   function ThenISeeTheVirtualVisitsPage() {
     cy.get("h1").should("contain", "Virtual visits");
+  }
+
+  function AndISeeTheVirtualVisitMarkedAsComplete() {
+    cy.get("summary.nhsuk-details__summary")
+      .contains("Alice")
+      .should("contain", "(Complete)");
   }
 });
