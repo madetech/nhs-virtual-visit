@@ -12,6 +12,7 @@ export default function (callback) {
       return callback({ ...context, authenticationToken }) ?? { props: {} };
     } else {
       res.writeHead(302, { Location: "/wards/login" }).end();
+      return { props: {} };
     }
   };
 }
