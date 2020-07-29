@@ -7,20 +7,10 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 import fetch from "isomorphic-unfetch";
 import { useState } from "react";
 import Error from "next/error";
-import formatDate from "../../src/helpers/formatDate";
-import formatTime from "../../src/helpers/formatTime";
 import verifyToken from "../../src/usecases/verifyToken";
 import { WARD_STAFF } from "../../src/helpers/userTypes";
 
-const VisitStart = ({
-  patientName,
-  contactName,
-  contactNumber,
-  contactEmail,
-  callId,
-  error,
-  callPassword,
-}) => {
+const VisitStart = ({ scheduledCall, callId, error }) => {
   const [userError, setUserError] = useState(error);
 
   const startCall = async () => {
@@ -31,9 +21,9 @@ const VisitStart = ({
       },
       body: JSON.stringify({
         callId,
-        contactNumber,
-        contactEmail,
-        callPassword,
+        contactNumber: scheduledCall.recipientNumber,
+        contactEmail: scheduledCall.recipientEmail,
+        callPassword: scheduledCall.callPassword,
       }),
     });
 
@@ -49,6 +39,10 @@ const VisitStart = ({
 
   if (userError) {
     return <Error />;
+  }
+
+  if (!scheduledCall) {
+    return <Error statusCode={404} />;
   }
 
   return (
@@ -70,11 +64,11 @@ const VisitStart = ({
 
           <ul>
             <li>
-              Key contact name{contactName && ":"}{" "}
-              <strong>{contactName}</strong>
+              Key contact name{scheduledCall.contactName && ":"}{" "}
+              <strong>{scheduledCall.contactName}</strong>
             </li>
             <li>
-              Patient name: <strong>{patientName}</strong>
+              Patient name: <strong>{scheduledCall.patientName}</strong>
             </li>
             <li>Patient&apos;s date of birth</li>
           </ul>
@@ -85,8 +79,8 @@ const VisitStart = ({
             onClick={() =>
               startCall({
                 callId,
-                contactNumber,
-                callPassword,
+                contactNumber: scheduledCall.recipientNumber,
+                callPassword: scheduledCall.callPassword,
               })
             }
           >
@@ -106,20 +100,11 @@ export const getServerSideProps = propsWithContainer(
       callId
     );
 
-    const callTime = formatTime(scheduledCall.callTime, "HH:mm");
-    const callDate = formatDate(scheduledCall.callTime);
-
     return {
       props: {
-        patientName: scheduledCall.patientName,
-        contactName: scheduledCall.recipientName,
-        contactNumber: scheduledCall.recipientNumber,
-        contactEmail: scheduledCall.recipientEmail,
-        callTime,
-        callDate,
+        scheduledCall,
         callId,
         error,
-        callPassword: scheduledCall.callPassword,
       },
     };
   })

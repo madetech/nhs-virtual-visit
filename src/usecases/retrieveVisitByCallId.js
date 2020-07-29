@@ -13,6 +13,13 @@ const retrieveVisitByCallId = ({ getDb }) => async (callId) => {
 
     const scheduledCall = scheduledCalls[0];
 
+    if (!scheduledCall) {
+      return {
+        scheduledCall: null,
+        error: null,
+      };
+    }
+
     return {
       scheduledCall: {
         id: scheduledCall.id,
