@@ -69,8 +69,8 @@ describe("call", () => {
       expect(props.callId).toEqual(1);
     });
 
-    it("redirects when password is invalid, and the user is unauthenticated", async () => {
-      await getServerSideProps({
+    it("an error is returned when password is invalid", async () => {
+      const { props } = await getServerSideProps({
         query: {
           callPassword: "fakeCode",
           id: 1,
@@ -82,7 +82,7 @@ describe("call", () => {
 
       expect(getUserIsAuthenticatedSpy).toHaveBeenCalled();
       expect(getVerifyCallPasswordSpy).toHaveBeenCalledWith(1, "fakeCode");
-      expect(res.writeHead).toHaveBeenCalledWith(307, { Location: "/error" });
+      expect(props.error).toEqual("Unauthorized");
     });
 
     it("returns sessionId", async () => {
