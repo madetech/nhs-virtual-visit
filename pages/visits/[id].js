@@ -70,7 +70,7 @@ const Call = ({
 };
 
 export const getServerSideProps = propsWithContainer(
-  async ({ req: { headers }, res, query, container }) => {
+  async ({ req: { headers }, query, container }) => {
     const { id: callId, name, callPassword } = query;
 
     const verifyCallPassword = container.getVerifyCallPassword();
@@ -102,12 +102,7 @@ export const getServerSideProps = propsWithContainer(
         },
       };
     } else {
-      res.writeHead(307, {
-        Location: "/error",
-      });
-      res.end();
-
-      return { props: {} };
+      return { props: { error: "Unauthorized" } };
     }
   }
 );

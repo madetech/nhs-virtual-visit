@@ -102,7 +102,7 @@ const Name = ({ callId, error, callPassword }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  async ({ query, container, res }) => {
+  async ({ query, container }) => {
     const { id: callId, callPassword } = query;
 
     const verifyCallPassword = container.getVerifyCallPassword();
@@ -113,10 +113,7 @@ export const getServerSideProps = propsWithContainer(
     );
 
     if (!validCallPassword) {
-      res.writeHead(307, {
-        Location: "/error",
-      });
-      res.end();
+      return { props: { error: "Unauthorized" } };
     }
     console.log("name.js error", error);
     return { props: { callId, error, callPassword } };

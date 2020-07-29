@@ -70,8 +70,8 @@ describe("call", () => {
       expect(props.callId).toEqual(1);
     });
 
-    it("given an invalid passcode, the user should be redirected", async () => {
-      await getServerSideProps({
+    it("given an invalid passcode, an error should be returned", async () => {
+      const { props } = await getServerSideProps({
         query: {
           callPassword: "fakeCode",
           id: 1,
@@ -80,7 +80,7 @@ describe("call", () => {
         res,
       });
       expect(getVerifyCallPasswordSpy).toHaveBeenCalledWith(1, "fakeCode");
-      expect(res.writeHead).toHaveBeenCalledWith(307, { Location: "/error" });
+      expect(props.error).toEqual("Unauthorized");
     });
   });
 });
