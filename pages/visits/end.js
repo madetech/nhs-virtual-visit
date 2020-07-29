@@ -5,7 +5,6 @@ import ActionLink from "../../src/components/ActionLink";
 import AnchorLink from "../../src/components/AnchorLink";
 import InsetText from "../../src/components/InsetText";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import * as Sentry from "@sentry/node";
 
 const End = ({ wardId, callId, surveyUrl, supportUrl }) => {
   return (
@@ -103,9 +102,7 @@ export const getServerSideProps = propsWithContainer(
 
     const error = surveyUrlError || supportUrlError;
 
-    if (error) {
-      Sentry.captureException(error);
-    }
+    if (error) console.error(error);
 
     return {
       props: {
