@@ -1,9 +1,6 @@
 import React from "react";
 import { render, queryByAttribute } from "@testing-library/react";
 import EndOfVisit, { getServerSideProps } from "../../pages/visits/end";
-import * as Sentry from "@sentry/node";
-
-jest.mock("@sentry/node");
 
 describe("end", () => {
   describe("for a key contact", () => {
@@ -144,25 +141,6 @@ describe("end", () => {
 
       expect(retrieveSurveyUrlByCallId).toHaveBeenCalledWith(callId);
       expect(props.surveyUrl).toEqual(surveyUrl);
-      expect(Sentry.captureException).not.toHaveBeenCalled();
-    });
-
-    it("send the survey link error to Sentry", async () => {
-      const retrieveSurveyUrlByCallIdError = jest.fn().mockResolvedValue({
-        surveyUrl: null,
-        error: "Error!",
-      });
-
-      await getServerSideProps({
-        req,
-        container: {
-          ...container,
-          getRetrieveSurveyUrlByCallId: () => retrieveSurveyUrlByCallIdError,
-        },
-        query,
-      });
-
-      expect(Sentry.captureException).toHaveBeenCalledWith("Error!");
     });
 
     it("retrieves the support link of the hospital", async () => {
@@ -170,25 +148,6 @@ describe("end", () => {
 
       expect(retrieveSurveyUrlByCallId).toHaveBeenCalledWith(callId);
       expect(props.supportUrl).toEqual(supportUrl);
-      expect(Sentry.captureException).not.toHaveBeenCalled();
-    });
-
-    it("send the survey link error to Sentry", async () => {
-      const retrieveSupportUrlByCallIdError = jest.fn().mockResolvedValue({
-        supportUrl: null,
-        error: "Error!",
-      });
-
-      await getServerSideProps({
-        req,
-        container: {
-          ...container,
-          getRetrieveSupportUrlByCallId: () => retrieveSupportUrlByCallIdError,
-        },
-        query,
-      });
-
-      expect(Sentry.captureException).toHaveBeenCalledWith("Error!");
     });
   });
 });
