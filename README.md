@@ -38,14 +38,21 @@ It includes an administration panel which provides self-service functionality fo
 
 ## Technology
 
-The service is currently hosted on [Heroku](https://www.heroku.com), and connects to a [postgres](https://www.postgresql.org) database also hosted on Heroku.
+The web application is built using [Next.js](https://nextjs.org/) with a
+[PostgreSQL](https://www.postgresql.org) database and hosted on
+[Heroku](https://www.heroku.com).
 
-For the text messaging it uses [GOV.UK Notify](https://www.notifications.service.gov.uk/accounts). This is a secure service that allows the service to communicate clearly with Visitors, building trust that the application is legitimate.
+To notify visitors via text message and/or email, it uses [GOV.UK
+Notify](https://www.notifications.service.gov.uk) which is used widely by
+central government, local authorities and the NHS.
 
-The following video chat capabilities are currently supported:
+To enable video call capabilities, a video provider is used. The following
+providers are currently supported:
 
 - [Whereby](https://whereby.com/information/product-api/)
 - [Jitsi Meet](https://github.com/jitsi/jitsi-meet/blob/master/doc/README.md)
+
+For error monitoring and logging, [Sentry](https://sentry.io) is used.
 
 ## Development
 
