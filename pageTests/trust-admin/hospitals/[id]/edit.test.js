@@ -51,6 +51,7 @@ describe("/trust-admin/hospitals/[id]/edit", () => {
       const container = {
         getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
         getTokenProvider: () => tokenProvider,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
 
       await getServerSideProps({

@@ -9,6 +9,22 @@ export default function (callback) {
     );
 
     if (authenticationToken) {
+      const {
+        regeneratedToken,
+        regeneratedEncodedToken,
+        isTokenRegenerated,
+      } = container.getRegenerateToken()(authenticationToken);
+
+      if (isTokenRegenerated) {
+        res.setHeader("Set-Cookie", [
+          `token=${regeneratedEncodedToken}; httpOnly; path=/;`,
+        ]);
+        return (
+          callback({ ...context, authenticationToken: regeneratedToken }) ?? {
+            props: {},
+          }
+        );
+      }
       return callback({ ...context, authenticationToken }) ?? { props: {} };
     } else {
       res.writeHead(302, { Location: "/trust-admin/login" }).end();
