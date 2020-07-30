@@ -4,7 +4,7 @@ Requirements:
 
 - PostgreSQL 12
 - Node LTS (Currently Node 12. There is a known issue with db-migrate and Node 14)
-- GovNotify API keys
+- GOV.UK Notify API keys
 
 ## Environment Setup
 
@@ -13,23 +13,23 @@ Requirements:
 In order to run this app locally you will need to create a `.env` file in the root of this project and add these variables to it.
 
 ```bash
-# GovNotify API Key
+# GOV.UK Notify API Key
 API_KEY=
 # Postgres Connection String
 DATABASE_URL=
 # Postgres Connection String for the test database
 TEST_DATABASE_URL=
-# GovNotify SMS Initial Template ID
+# GOV.UK Notify SMS Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
-# GovNotify SMS Updated Visit Template ID
+# GOV.UK Notify SMS Updated Visit Template ID
 SMS_UPDATED_VISIT_TEMPLATE_ID=
-# GovNotify SMS Join Template ID
+# GOV.UK Notify SMS Join Template ID
 SMS_JOIN_TEMPLATE_ID=
-# GovNotify Email Initial Template ID
+# GOV.UK Notify Email Initial Template ID
 EMAIL_INITIAL_TEMPLATE_ID=
-# GovNotify Email Updated Visit Template ID
+# GOV.UK Notify Email Updated Visit Template ID
 EMAIL_UPDATED_VISIT_TEMPLATE_ID=
-# GovNotify Email Join Template ID
+# GOV.UK Notify Email Join Template ID
 EMAIL_JOIN_TEMPLATE_ID=
 # Valid Ward Codes
 ALLOWED_CODES=
