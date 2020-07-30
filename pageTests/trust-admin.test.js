@@ -103,6 +103,7 @@ describe("trust-admin", () => {
     getRetrieveAverageVisitsPerDayByTrustId: () =>
       retrieveAverageVisitsPerDayByTrustId,
     getTokenProvider: () => tokenProvider,
+    getRegenerateToken: () => jest.fn().mockReturnValue({}),
   };
 
   beforeEach(() => {

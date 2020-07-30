@@ -47,6 +47,7 @@ describe("/trust-admin/hospitals/[id]/add-success", () => {
         const container = {
           getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
           getTokenProvider: () => tokenProvider,
+          getRegenerateToken: () => jest.fn().mockReturnValue({}),
         };
 
         await getServerSideProps({
@@ -73,6 +74,7 @@ describe("/trust-admin/hospitals/[id]/add-success", () => {
         const container = {
           getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
           getTokenProvider: () => tokenProvider,
+          getRegenerateToken: () => jest.fn().mockReturnValue({}),
         };
 
         const { props } = await getServerSideProps({

@@ -69,6 +69,7 @@ describe("trust-admin/hospitals/[id]", () => {
         getRetrieveHospitalVisitTotals: () => visitTotalsSpy,
         getRetrieveHospitalWardVisitTotals: () => hospitalWardTotalsSpy,
         getTokenProvider: () => tokenProvider,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({

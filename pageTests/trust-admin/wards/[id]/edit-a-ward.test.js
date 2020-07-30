@@ -53,6 +53,7 @@ describe("/trust-admin/wards/[id]/edit", () => {
               error: null,
             }),
           getTokenProvider: () => tokenProvider,
+          getRegenerateToken: () => jest.fn().mockReturnValue({}),
         };
 
         await getServerSideProps({
@@ -85,6 +86,7 @@ describe("/trust-admin/wards/[id]/edit", () => {
               error: null,
             }),
           getTokenProvider: () => tokenProvider,
+          getRegenerateToken: () => jest.fn().mockReturnValue({}),
         };
 
         const { props } = await getServerSideProps({

@@ -1,15 +1,16 @@
 import verifyTrustAdminToken from "./verifyTrustAdminToken";
 
 describe("verifyTrustAdminToken", () => {
+  const res = {
+    writeHead: jest.fn(() => res),
+    end: jest.fn(),
+    setHeader: jest.fn(),
+  };
+
   const req = {
     headers: {
       cookie: "token=sample.token.value",
     },
-  };
-
-  const res = {
-    writeHead: jest.fn(() => res),
-    end: jest.fn(),
   };
 
   it("calls the supplied callback if the token is valid", async () => {
@@ -23,6 +24,7 @@ describe("verifyTrustAdminToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
 
     const result = verifyTrustAdminToken(callback)({ req, res, container });
@@ -64,5 +66,57 @@ describe("verifyTrustAdminToken", () => {
     expect(res.writeHead).toHaveBeenCalledWith(302, {
       Location: "/trust-admin/login",
     });
+  });
+
+  it("updates the cookie if the token is regenerated", () => {
+    const regenRes = {
+      writeHead: jest.fn(() => regenRes),
+      end: jest.fn(),
+      setHeader: jest.fn(),
+    };
+    const regenReq = {
+      headers: {
+        cookie: "token=sample.token.value",
+      },
+    };
+
+    const callback = jest.fn();
+    const authenticationToken = {
+      type: "trustAdmin",
+    };
+    const tokenProvider = {
+      validate: jest.fn(() => authenticationToken),
+    };
+
+    const regeneratedToken = { type: "trustAdmin", test: "1" };
+
+    const regenerateTokenSpy = jest.fn().mockReturnValue({
+      isTokenRegenerated: true,
+      regeneratedEncodedToken: "encodedToken",
+      regeneratedToken: regeneratedToken,
+    });
+
+    const container = {
+      getTokenProvider: () => tokenProvider,
+      getRegenerateToken: () => regenerateTokenSpy,
+    };
+
+    verifyTrustAdminToken(callback)({
+      req: regenReq,
+      res: regenRes,
+      container,
+    });
+
+    expect(regenerateTokenSpy).toHaveBeenCalledWith(authenticationToken);
+
+    expect(regenRes.setHeader).toHaveBeenCalledWith("Set-Cookie", [
+      "token=encodedToken; httpOnly; path=/;",
+    ]);
+
+    expect(callback).toHaveBeenCalledWith(
+      expect.objectContaining({
+        authenticationToken: regeneratedToken,
+      })
+    );
   });
 });

@@ -52,6 +52,7 @@ describe("trust-admin/hospitals", () => {
       getRetrieveHospitalsByTrustId: () => retrieveHospitalsByTrustIdSuccessSpy,
       getRetrieveHospitalVisitTotals: () => retrieveHospitalVisitTotalsStub,
       getTokenProvider: () => tokenProvider,
+      getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
   });
 

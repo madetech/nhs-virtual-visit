@@ -38,6 +38,7 @@ describe("/performance", () => {
       const container = {
         getRetrieveWardVisitTotals: () => wardVisitTotalSpy,
         getTokenProvider: () => tokenProvider,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
       const { props } = await getServerSideProps({
         req: authenticatedReq,
