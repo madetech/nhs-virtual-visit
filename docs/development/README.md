@@ -31,8 +31,6 @@ EMAIL_INITIAL_TEMPLATE_ID=
 EMAIL_UPDATED_VISIT_TEMPLATE_ID=
 # GOV.UK Notify Email Join Template ID
 EMAIL_JOIN_TEMPLATE_ID=
-# Valid Ward Codes
-ALLOWED_CODES=
 # Signing key for JWT tokens
 JWT_SIGNING_KEY=
 # Whereby API Credentials
