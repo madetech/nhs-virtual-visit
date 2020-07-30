@@ -57,6 +57,7 @@ Please take a look at our separate [Contributing Guide](./CONTRIBUTING.md).
 
 ## More documentation
 
+- [Runbook](docs/runbook/README.md) - documentation for setting up the service and other tasks.
 - [Glossary](docs/GLOSSARY.md) - types of users, vocabulary used in copy and descriptions of the intent for each page.
 
 ## Contributors
