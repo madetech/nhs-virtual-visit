@@ -1,4 +1,4 @@
-# Gov.uk Notify Templates
+# GOV.UK Notify Templates
 
 https://www.notifications.service.gov.uk/using-notify/get-started
 

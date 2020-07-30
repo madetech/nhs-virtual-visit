@@ -40,7 +40,7 @@ It includes an administration panel which provides self-service functionality fo
 
 The service is currently hosted on [Heroku](https://www.heroku.com), and connects to a [postgres](https://www.postgresql.org) database also hosted on Heroku.
 
-For the SMS messaging it uses [GovNotify](https://www.notifications.service.gov.uk/accounts). This is a secure service that allows the service to communicate clearly with Visitors, building trust that the application is legitimate.
+For the text messaging it uses [GOV.UK Notify](https://www.notifications.service.gov.uk/accounts). This is a secure service that allows the service to communicate clearly with Visitors, building trust that the application is legitimate.
 
 The following video chat capabilities are currently supported:
 
