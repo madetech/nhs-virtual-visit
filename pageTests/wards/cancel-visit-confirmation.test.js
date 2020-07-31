@@ -41,6 +41,7 @@ describe("ward/cancel-visit-confirmation", () => {
             },
           }),
         getTokenProvider: () => tokenProvider,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
         getRetrieveWardById: () => jest.fn().mockReturnValue({}),
       };
 
@@ -73,6 +74,7 @@ describe("ward/cancel-visit-confirmation", () => {
               ],
             }),
           getTokenProvider: () => tokenProvider,
+          getRegenerateToken: () => jest.fn().mockReturnValue({}),
           getRetrieveWardById: () => jest.fn().mockReturnValue({}),
         };
 

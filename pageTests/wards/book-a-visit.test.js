@@ -30,6 +30,7 @@ describe("ward/book-a-visit", () => {
     originalBookingDate = new Date();
     container = {
       getTokenProvider: () => tokenProvider,
+      getRegenerateToken: () => jest.fn().mockReturnValue({}),
       getRetrieveWardById: () => jest.fn().mockReturnValue({}),
       getUserIsAuthenticated: () =>
         jest.fn().mockResolvedValue("token=123" && { ward: "123" }),

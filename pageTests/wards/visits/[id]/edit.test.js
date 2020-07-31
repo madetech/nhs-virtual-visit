@@ -47,6 +47,7 @@ describe("wards/visits/[id]/edit", () => {
             wardId,
           })),
         }),
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
         getRetrieveVisitById: () => retrieveVisitById,
       };
 
@@ -105,6 +106,7 @@ describe("wards/visits/[id]/edit", () => {
           })),
         }),
         getRetrieveVisitById: () => retrieveVisitById,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({
