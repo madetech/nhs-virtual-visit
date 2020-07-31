@@ -40,6 +40,7 @@ describe("wards/book-a-visit-success", () => {
       const container = {
         getRetrieveWardById: () => getRetrieveWardByIdSpy,
         getTokenProvider: () => tokenProvider,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({

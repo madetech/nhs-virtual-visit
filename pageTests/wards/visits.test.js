@@ -46,6 +46,7 @@ describe("ward/visits", () => {
         getRetrieveVisits: () => visitsSpy,
         getRetrieveWardById: () => wardSpy,
         getTokenProvider: () => tokenProvider,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({
@@ -81,6 +82,7 @@ describe("ward/visits", () => {
         getRetrieveVisits: () => retrieveVisitsStub,
         getRetrieveWardById: () => jest.fn().mockReturnValue({}),
         getTokenProvider: () => tokenProvider,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({
