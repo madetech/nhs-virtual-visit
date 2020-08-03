@@ -1,7 +1,11 @@
 import { nanoid } from "nanoid";
 
 class RandomIdProvider {
-  generate() {
+  generate(length = null) {
+    if (length) {
+      return nanoid(length);
+    }
+
     return nanoid();
   }
 }
