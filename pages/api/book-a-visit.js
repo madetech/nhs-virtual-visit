@@ -54,7 +54,7 @@ export default withContainer(
         body.callTime
       );
       const callId = await callIdProvider.generate();
-      let callPassword = ids.generate();
+      let callPassword = ids.generate(10);
 
       const createVisit = container.getCreateVisit();
       const updateWardVisitTotals = container.getUpdateWardVisitTotals();
