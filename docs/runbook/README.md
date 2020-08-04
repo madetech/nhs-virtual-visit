@@ -8,4 +8,5 @@ This runbook contains documentation for:
 - [Setting up CircleCI](./setting-up-circle-ci.md)
 - [Setting up Heroku CLI](./setting-up-heroku-cli.md)
 - [Accessing the database of a Heroku app](./accessing-heroku-app-database.md)
+- [Migrating the database](./migrating-the-database.md)
 - [Changing video provider](./changing-video-provider.md)
