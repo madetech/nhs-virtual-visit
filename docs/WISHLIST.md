@@ -21,13 +21,3 @@ As a site admin,
 I want to be able to edit a trust,
 So that I can change details of a trust such as the video provider and password.
 ```
-
-## View completed virtual visits
-
-We received user feedback that it's hard to differeniate between a visit which has already been completed by another ward staff. This is because on the scheduled list screen there is no indication of when a visit has been completed.
-
-```
-As a ward staff,
-I want to be able to see that a virtual visit has been completed,
-So that I can differentiate between a visit that has already completed and one that hasn't.
-```
