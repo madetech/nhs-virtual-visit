@@ -6,6 +6,8 @@ Requirements:
 - Node LTS (Currently Node 12. There is a known issue with db-migrate and Node 14)
 - GOV.UK Notify API keys
 
+_NOTE_ Use `nvm install` to automatically set node version.
+
 ## Environment Setup
 
 ### `.env`
@@ -50,7 +52,7 @@ ENABLE_SENTRY=
 
 Run `docker-compose up -d` to create the container.
 
-Add `DATABASE_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` to your `.env` file.
+Set `DATABASE_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` in your `.env` file.
 
 Run `./bin/setup_dev_db_docker.sh`
 
