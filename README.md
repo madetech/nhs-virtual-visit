@@ -10,19 +10,19 @@ It includes an administration panel which provides self-service functionality fo
 
 1. Ward staff makes contact with a visitor of a patient
 1. A date and time is agreed and the ward staff schedules the visit
-1. The visitor is sent an SMS or email notification confirming the date and time of the visit
+1. The visitor is sent a text message and/or email notification confirming the date and time of the visit
 
 ### Starting a visit
 
 1. Ward staff can see a list of visits booked for patients on their ward
 1. At the time of a visit, the ward staff will see a reminder of the visit details
 1. The ward staff prepares the patient to start the visit
-1. An SMS or email notification with a unique link is sent to the visitor to join the visit
+1. A text message and/or email notification with a unique link is sent to the visitor to join the visit
 1. The ward staff waits for the visitor to join, and checks some basic details before handing over to the patient
 
 ### Joining a visit
 
-1. The visitor will receive an SMS or email with a unique link
+1. The visitor will receive a text message and/or email with a unique link
 1. Following the link will prompt the visitor to enter their name
 1. The visitor confirms the information of the patient with the ward staff
 1. The visitor can now communicate face to face through the service with the patient
@@ -31,10 +31,10 @@ It includes an administration panel which provides self-service functionality fo
 
 <!-- To update the screenshots, please see the overview slide deck https://docs.google.com/presentation/d/1KaHYSZzcdFJ1oOCZdiPfZCXv9uAEOeE8EvkIjD-mId8/edit -->
 
-| ![Trust Admin can add new hospitals and wards](docs/images/TrustAdmin_01_AddNew.png)            | ![Trust Admin can edit and delete hospitals and wards](docs/images/TrustAdmin_02_ManageExisting.png) |
-| ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| ![Ward Staff can book a virtual visit via email or SMS](docs/images/WardStaff_01_BookVisit.png) | ![Ward Staff can start a virtual visit](docs/images/WardStaff_02_StartVisit.png)                     |
-| ![Key Contact can join a virtual visit](docs/images/KeyContact_01_JoinVisit.png)                | ![Ward Staff can reschedule a virtual visit afterwards](docs/images/WardStaff_03_RebookVisit.png)    |
+| ![Trust Admin can add new hospitals and wards](docs/images/TrustAdmin_01_AddNew.png)                         | ![Trust Admin can edit and delete hospitals and wards](docs/images/TrustAdmin_02_ManageExisting.png) |
+| ------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| ![Ward Staff can book a virtual visit via email and/or text message](docs/images/WardStaff_01_BookVisit.png) | ![Ward Staff can start a virtual visit](docs/images/WardStaff_02_StartVisit.png)                     |
+| ![Key Contact can join a virtual visit](docs/images/KeyContact_01_JoinVisit.png)                             | ![Ward Staff can reschedule a virtual visit](docs/images/WardStaff_03_RebookVisit.png)               |
 
 ## Technology
 
