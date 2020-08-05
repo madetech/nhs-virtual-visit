@@ -6,5 +6,8 @@
         "postdeploy": "psql -f 'db/seeds.sql' $DATABASE_URL"
       }
     }
+  },
+  "env": {
+    "CYPRESS_INSTALL_BINARY": "0"
   }
 }
