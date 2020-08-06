@@ -14,7 +14,7 @@ const updateTrust = ({ getDb }) => async ({ id, videoProvider }) => {
   const db = await getDb();
 
   try {
-    const updatedTrust = await db.one(
+    const updatedTrust = await db.oneOrNone(
       `UPDATE trusts
       SET video_provider = $1
       WHERE
@@ -24,10 +24,17 @@ const updateTrust = ({ getDb }) => async ({ id, videoProvider }) => {
       [videoProvider, id]
     );
 
-    return {
-      id: updatedTrust.id,
-      error: null,
-    };
+    if (updatedTrust) {
+      return {
+        id: updatedTrust.id,
+        error: null,
+      };
+    } else {
+      return {
+        id: null,
+        error: null,
+      };
+    }
   } catch (error) {
     console.error(error);
 
