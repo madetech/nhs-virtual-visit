@@ -46,6 +46,7 @@ import updateVisitById from "../usecases/updateVisitById";
 import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
+import updateTrust from "../usecases/updateTrust";
 
 class AppContainer {
   getDb = () => {
@@ -238,6 +239,10 @@ class AppContainer {
 
   getMarkVisitAsComplete = () => {
     return markVisitAsComplete(this);
+  };
+
+  getUpdateTrust = () => {
+    return updateTrust(this);
   };
 }
 
