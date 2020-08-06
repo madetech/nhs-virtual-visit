@@ -4,16 +4,17 @@ import AppContainer from "../containers/AppContainer";
 describe("updateTrust contract test", () => {
   it("updates the video provider", async () => {
     const container = AppContainer.getInstance();
-    const { trustId } = await setupTrust({ videoProvider: "oldProvider" });
+    const { trustId } = await setupTrust({ videoProvider: "jitsi" });
     const updateTrust = container.getUpdateTrust();
 
     const { id: updatedTrustId } = await updateTrust({
       id: trustId,
-      videoProvider: "newProvider",
+      videoProvider: "whereby",
     });
 
     const { trust } = await container.getRetrieveTrustById()(updatedTrustId);
-    expect(trust.videoProvider).toEqual("newProvider");
+
+    expect(trust.videoProvider).toEqual("whereby");
   });
 
   it("returns an error if the trust doesn't exist", async () => {
@@ -22,7 +23,7 @@ describe("updateTrust contract test", () => {
 
     const result = await updateTrust({
       id: 12345,
-      videoProvider: "newProvider",
+      videoProvider: "whereby",
     });
 
     expect(result.error).not.toBeNull();
