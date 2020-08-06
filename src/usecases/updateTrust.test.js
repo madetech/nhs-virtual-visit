@@ -19,4 +19,23 @@ describe("updateTrust", () => {
 
     expect(error).toEqual("An id must be provided.");
   });
+
+  it("returns an error if the database query errors", async () => {
+    const container = {
+      async getDb() {
+        return {
+          oneOrNone: jest.fn(() => {
+            throw new Error("fail");
+          }),
+        };
+      },
+    };
+
+    const { error, id } = await updateTrust(container)({
+      id: 123,
+      videoProvider: "whereby",
+    });
+    expect(error).toEqual("Error: fail");
+    expect(id).toBeNull();
+  });
 });

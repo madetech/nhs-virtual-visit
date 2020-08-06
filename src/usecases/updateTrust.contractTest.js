@@ -17,7 +17,7 @@ describe("updateTrust contract test", () => {
     expect(trust.videoProvider).toEqual("whereby");
   });
 
-  it("returns an error if the trust doesn't exist", async () => {
+  it("returns a null id and error if the Trust does not exist", async () => {
     const container = AppContainer.getInstance();
     const updateTrust = container.getUpdateTrust();
 
@@ -26,6 +26,7 @@ describe("updateTrust contract test", () => {
       videoProvider: "whereby",
     });
 
-    expect(result.error).not.toBeNull();
+    expect(result.id).toBeNull();
+    expect(result.error).toBeNull();
   });
 });
