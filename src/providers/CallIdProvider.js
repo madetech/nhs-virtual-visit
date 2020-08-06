@@ -4,6 +4,8 @@ import WherebyCallIdProvider from "./callIdProviders/WherebyCallIdProvider";
 const WHEREBY = "whereby";
 const JITSI = "jitsi";
 
+export const VIDEO_PROVIDERS = [WHEREBY, JITSI];
+
 export const VIDEO_PROVIDER_OPTIONS = [
   { id: WHEREBY, name: "Whereby" },
   { id: JITSI, name: "Jitsi" },
