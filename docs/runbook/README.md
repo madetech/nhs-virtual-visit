@@ -27,6 +27,8 @@ To set up the application like current NHS trusts:
 1. [Setting up your repository](./setting-up-your-repo.md)
 1. [GOV.UK Notify Templates](./govuk-notify-templates.md)
 1. [Setting up CircleCI](./setting-up-circle-ci.md)
+1. Setting up Sentry (coming soon)
+1. Setting up Whereby (coming soon)
 1. [Deploying to Heroku](./deploying-to-heroku.md)
 
 For maintenance and other miscellaneous tasks:
