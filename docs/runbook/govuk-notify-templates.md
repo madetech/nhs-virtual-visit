@@ -1,6 +1,6 @@
 # GOV.UK Notify Templates
 
-https://www.notifications.service.gov.uk/using-notify/get-started
+To notify visitors via text message and/or email, it uses [GOV.UK Notify](https://www.notifications.service.gov.uk) which is used widely by central government, local authorities and the NHS.
 
 The app uses 6 different notification templates (3 SMS and 3 Email). You can find suggested copy for each notification below, listed by the environment variable we use in the app.
 
