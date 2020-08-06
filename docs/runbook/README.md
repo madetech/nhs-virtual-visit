@@ -1,5 +1,7 @@
 # Runbook
 
+## Overview
+
 NHS Book a virtual visit is a web application that connects patients to their
 loved ones via video call. It's built using [Next.js](https://nextjs.org/) with
 a [PostgreSQL](https://www.postgresql.org) database.
@@ -18,11 +20,15 @@ updates from Made Tech. This consists of the following dependencies:
 - [Sentry](https://sentry.io) - to log and monitor uncaught errors and
   exceptions
 
-The purpose of this runbook is to provide documentation for setting up the
-application as described above. That being said, it's entirely possible to
-replace these services with ones that work best for your trust.
+## Purpose
 
-To set up the application like current NHS trusts:
+The main purpose of this runbook is to provide documentation for setting up the
+application as described in the overview. That being said, it's entirely
+possible to replace these services with ones that work best for your trust.
+
+## Setting up the application
+
+To get the application running like current NHS trusts:
 
 1. [Setting up your repository](./setting-up-your-repo.md)
 1. [GOV.UK Notify Templates](./govuk-notify-templates.md)
@@ -30,6 +36,8 @@ To set up the application like current NHS trusts:
 1. Setting up Sentry (coming soon)
 1. Setting up Whereby (coming soon)
 1. [Deploying to Heroku](./deploying-to-heroku.md)
+
+## Other documentation
 
 For maintenance and other miscellaneous tasks:
 
