@@ -11,7 +11,10 @@ import Button from "../../../../src/components/Button";
 import Select from "../../../../src/components/Select";
 import Router from "next/router";
 import { ADMIN } from "../../../../src/helpers/userTypes";
-import { VIDEO_PROVIDER_OPTIONS } from "../../../../src/providers/CallIdProvider";
+import {
+  VIDEO_PROVIDER_OPTIONS,
+  VIDEO_PROVIDERS,
+} from "../../../../src/providers/CallIdProvider";
 
 const EditTrust = ({ trust }) => {
   const [errors, setErrors] = useState([]);
@@ -96,7 +99,9 @@ const EditTrust = ({ trust }) => {
                 hasError={hasError("video-provider")}
                 errorMessage={getErrorMessage("video-provider")}
                 name="video-provider"
-                defaultValue={videoProvider}
+                defaultValue={
+                  VIDEO_PROVIDERS.includes(videoProvider) ? videoProvider : null
+                }
               />
             </FormGroup>
             <Button className="nhsuk-u-margin-top-5">Edit Trust</Button>
