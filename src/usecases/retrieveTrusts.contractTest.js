@@ -17,8 +17,18 @@ describe("retrieveTrusts contract tests", () => {
     const { trusts } = await container.getRetrieveTrusts()();
 
     expect(trusts).toEqual([
-      { id: trustId1, name: "Test Trust", adminCode: "code1" },
-      { id: trustId2, name: "Test Trust 2", adminCode: "code2" },
+      {
+        id: trustId1,
+        name: "Test Trust",
+        adminCode: "code1",
+        videoProvider: "TESTPROVIDER",
+      },
+      {
+        id: trustId2,
+        name: "Test Trust 2",
+        adminCode: "code2",
+        videoProvider: "TESTPROVIDER",
+      },
     ]);
   });
 });
