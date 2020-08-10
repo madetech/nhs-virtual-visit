@@ -20,7 +20,7 @@ describe("/api/update-a-trust", () => {
       getUpdateTrust: () => jest.fn().mockResolvedValue({ id: 5, error: null }),
     };
 
-    await updateATrust(req, response, container);
+    await updateATrust(req, response, { container });
 
     expect(response.status).toBeCalledWith(200);
   });
@@ -51,7 +51,7 @@ describe("/api/update-a-trust", () => {
 
     const req = { headers: { cookie: "token" }, body, method: "PATCH" };
 
-    updateATrust(req, response, container);
+    updateATrust(req, response, { container });
 
     expect(response.status).toBeCalledWith(400);
   });
@@ -72,7 +72,7 @@ describe("/api/update-a-trust", () => {
 
     const req = { headers: { cookie: "token" }, body, method: "PATCH" };
 
-    updateATrust(req, response, container);
+    updateATrust(req, response, { container });
 
     expect(response.status).toBeCalledWith(400);
   });
@@ -92,7 +92,7 @@ describe("/api/update-a-trust", () => {
 
     const req = { headers: { cookie: "token" }, body, method: "PATCH" };
 
-    updateATrust(req, response, container);
+    updateATrust(req, response, { container });
 
     expect(response.status).toBeCalledWith(400);
   });
@@ -113,7 +113,7 @@ describe("/api/update-a-trust", () => {
 
     const req = { headers: { cookie: "token" }, body, method: "PATCH" };
 
-    updateATrust(req, response, container);
+    updateATrust(req, response, { container });
 
     expect(response.status).toBeCalledWith(400);
   });
@@ -135,7 +135,7 @@ describe("/api/update-a-trust", () => {
 
     const req = { headers: { cookie: "token" }, body, method: "PATCH" };
 
-    updateATrust(req, response, container);
+    updateATrust(req, response, { container });
 
     expect(response.status).toBeCalledWith(401);
     expect(adminIsAuthenticatedStub).toBeCalledWith("token");
@@ -160,7 +160,7 @@ describe("/api/update-a-trust", () => {
 
     const req = { headers: { cookie: "token" }, body, method: "PATCH" };
 
-    await updateATrust(req, response, container);
+    await updateATrust(req, response, { container });
 
     expect(response.status).toBeCalledWith(200);
     expect(updateTrustStub).toHaveBeenCalledWith({
@@ -190,7 +190,7 @@ describe("/api/update-a-trust", () => {
 
     const req = { headers: { cookie: "token" }, body, method: "PATCH" };
 
-    await updateATrust(req, response, container);
+    await updateATrust(req, response, { container });
 
     expect(response.status).toBeCalledWith(404);
   });

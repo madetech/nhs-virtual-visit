@@ -1,7 +1,7 @@
 import { VIDEO_PROVIDERS } from "../../src/providers/CallIdProvider";
 import withContainer from "../../src/middleware/withContainer";
 
-export default withContainer(async (req, res, container) => {
+export default withContainer(async (req, res, { container }) => {
   if (req.method !== "PATCH") {
     res.status(405).end();
     return;
