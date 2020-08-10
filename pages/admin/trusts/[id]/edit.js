@@ -96,7 +96,7 @@ const EditTrust = ({ trust }) => {
                 hasError={hasError("video-provider")}
                 errorMessage={getErrorMessage("video-provider")}
                 name="video-provider"
-                value={videoProvider}
+                defaultValue={videoProvider}
               />
             </FormGroup>
             <Button className="nhsuk-u-margin-top-5">Edit Trust</Button>
