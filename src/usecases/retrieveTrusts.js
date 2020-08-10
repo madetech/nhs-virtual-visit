@@ -5,7 +5,8 @@ const retrieveTrusts = ({ getDb }) => async () => {
       `SELECT
         id as id,
         name as name,
-        admin_code as admin_code
+        admin_code as admin_code,
+        video_provider
       FROM
         trusts`
     );
@@ -15,6 +16,7 @@ const retrieveTrusts = ({ getDb }) => async () => {
         id: trust.id,
         name: trust.name,
         adminCode: trust.admin_code,
+        videoProvider: trust.video_provider,
       })),
       error: null,
     };
