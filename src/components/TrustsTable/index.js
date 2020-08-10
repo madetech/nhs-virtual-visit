@@ -32,8 +32,10 @@ const TrustsTable = ({ trusts }) => (
               <td className="nhsuk-table__cell">{trust.name}</td>
               <td className="nhsuk-table__cell">
                 {
-                  VIDEO_PROVIDER_OPTIONS.find(
-                    ({ id }) => id === trust.videoProvider
+                  (
+                    VIDEO_PROVIDER_OPTIONS.find(
+                      ({ id }) => id === trust.videoProvider
+                    ) || { name: "Unknown" }
                   ).name
                 }
               </td>
