@@ -55,9 +55,10 @@ const EditTrust = ({ trust }) => {
         const status = response.status;
 
         if (status == 200) {
-          Router.push({
-            pathname: `/admin/trusts/${trust.id}/edit-success`,
-          });
+          Router.push(
+            "/admin/trusts/[id]/edit-success",
+            `/admin/trusts/${trust.id}/edit-success`
+          );
         } else {
           onSubmitErrors.push({
             message: "Something went wrong, please try again later.",

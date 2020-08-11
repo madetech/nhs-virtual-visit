@@ -60,7 +60,10 @@ const HospitalsTable = ({ hospitals }) => (
               )}
             </td>
             <td className="nhsuk-table__cell">
-              <AnchorLink href={`/trust-admin/hospitals/${hospital.id}`}>
+              <AnchorLink
+                href="/trust-admin/hospitals/[id]"
+                as={`/trust-admin/hospitals/${hospital.id}`}
+              >
                 View
                 <span className="nhsuk-u-visually-hidden">
                   {" "}
@@ -69,7 +72,10 @@ const HospitalsTable = ({ hospitals }) => (
               </AnchorLink>
             </td>
             <td className="nhsuk-table__cell">
-              <AnchorLink href={`/trust-admin/hospitals/${hospital.id}/edit`}>
+              <AnchorLink
+                href="/trust-admin/hospitals/[id]/edit"
+                as={`/trust-admin/hospitals/${hospital.id}/edit`}
+              >
                 Edit
                 <span className="nhsuk-u-visually-hidden">
                   {" "}

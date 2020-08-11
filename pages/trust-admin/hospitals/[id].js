@@ -77,9 +77,10 @@ const ShowHospital = ({
             supportUrl={hospital.supportUrl}
             withActions={true}
             actionLinkOnClick={() => {
-              Router.push({
-                pathname: `/trust-admin/hospitals/${hospital.id}/edit`,
-              });
+              Router.push(
+                "/trust-admin/hospitals/[id]/edit",
+                `/trust-admin/hospitals/${hospital.id}/edit`
+              );
             }}
           />
 
