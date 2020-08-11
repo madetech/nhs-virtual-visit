@@ -84,6 +84,7 @@ Please take a look at our separate [Contributing Guide](./CONTRIBUTING.md).
 - **Stu Mackellar** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (stu.mackellar@madetech.com)
 - **Robert Marshall** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (robert.marshall@madetech.com)
 - **Shaun Wild** - Software Engineer at [Made Tech](https://www.madetech.com) (shaun.wild@madetech.com)
+- **Pete Craven** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (pete.craven@madetech.com)
 
 ## License
 
