@@ -33,7 +33,10 @@ const EditAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
           <ActionLink href={`/trust-admin/wards/add`}>Add a ward</ActionLink>
 
           <p>
-            <AnchorLink href={`/trust-admin/hospitals/${hospitalId}`}>
+            <AnchorLink
+              href="/trust-admin/hospitals/[id]"
+              as={`/trust-admin/hospitals/${hospitalId}`}
+            >
               {`Return to ${hospitalName}`}
             </AnchorLink>
           </p>

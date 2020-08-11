@@ -28,7 +28,10 @@ const archiveAWardSuccess = ({ name, hospitalName, hospitalId, error }) => {
             <div className="nhsuk-panel__body">for {hospitalName}</div>
           </div>
           <p>
-            <AnchorLink href={`/trust-admin/hospitals/${hospitalId}`}>
+            <AnchorLink
+              href="/trust-admin/hospitals/[id]"
+              as={`/trust-admin/hospitals/${hospitalId}`}
+            >
               {`Return to ${hospitalName}`}
             </AnchorLink>
           </p>

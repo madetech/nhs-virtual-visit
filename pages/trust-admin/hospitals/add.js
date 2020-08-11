@@ -44,9 +44,10 @@ const AddAHospital = ({ error, trustId }) => {
         return json;
       })
       .then((response) =>
-        Router.push({
-          pathname: `/trust-admin/hospitals/${response.hospitalId}/add-success`,
-        })
+        Router.push(
+          "/trust-admin/hospitals/[id]/add-success",
+          `/trust-admin/hospitals/${response.hospitalId}/add-success`
+        )
       )
       .catch((e) => {
         let submitErrors = [

@@ -49,9 +49,10 @@ const EditWardForm = ({
         return response.json();
       })
       .then((response) =>
-        Router.push({
-          pathname: `/trust-admin/wards/${response.wardId}/edit-success`,
-        })
+        Router.push(
+          "/trust-admin/wards/[id]/edit-success",
+          `/trust-admin/wards/${response.wardId}/edit-success`
+        )
       )
       .catch(() => {
         onSubmitErrors.push({

@@ -12,7 +12,10 @@ import Error from "next/error";
 const Start = ({ callId, error, callPassword }) => {
   const router = useRouter();
   const onClick = () =>
-    router.push(`/visitors/${callId}/name?callPassword=${callPassword}`);
+    router.push(
+      "/visitors/[id]/name",
+      `/visitors/${callId}/name?callPassword=${callPassword}`
+    );
   if (error) {
     return <Error />;
   }

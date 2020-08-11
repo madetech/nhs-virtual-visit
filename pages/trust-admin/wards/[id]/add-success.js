@@ -35,7 +35,10 @@ const AddAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
           </ActionLink>
 
           <p>
-            <AnchorLink href={`/trust-admin/hospitals/${hospitalId}`}>
+            <AnchorLink
+              href="/trust-admin/hospitals/[id]"
+              as={`/trust-admin/hospitals/${hospitalId}`}
+            >
               {`Return to ${hospitalName}`}
             </AnchorLink>
           </p>
