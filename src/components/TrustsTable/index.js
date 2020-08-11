@@ -45,10 +45,7 @@ const TrustsTable = ({ trusts }) => (
                   as={`/admin/trusts/${trust.id}/edit`}
                 >
                   Edit
-                  <span className="nhsuk-u-visually -hidden">
-                    {" "}
-                    {trust.name}
-                  </span>
+                  <span className="nhsuk-u-visually-hidden"> {trust.name}</span>
                 </AnchorLink>
               </td>
             </tr>
