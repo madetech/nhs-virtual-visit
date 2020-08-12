@@ -9,7 +9,7 @@ const ErrorSummary = ({ errors }) => {
 
   useEffect(() => {
     thisRef.current.focus();
-  }, []);
+  }, [errors]);
 
   return (
     <div
