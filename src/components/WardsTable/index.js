@@ -40,14 +40,18 @@ const WardsTable = ({ wards, wardVisitTotals }) => (
               <td className="nhsuk-table__cell">{wardVisitTotals[ward.id]}</td>
             )}
             <td className="nhsuk-table__cell">
-              <AnchorLink href={`/trust-admin/wards/${ward.id}/edit`}>
+              <AnchorLink
+                href="/trust-admin/wards/[id]/edit"
+                as={`/trust-admin/wards/${ward.id}/edit`}
+              >
                 Edit
                 <span className="nhsuk-u-visually-hidden"> {ward.name}</span>
               </AnchorLink>
             </td>
             <td className="nhsuk-table__cell">
               <AnchorLink
-                href={`/trust-admin/wards/${ward.id}/archive-confirmation`}
+                href="/trust-admin/wards/[id]/archive-confirmation"
+                as={`/trust-admin/wards/${ward.id}/archive-confirmation`}
               >
                 Delete
                 <span className="nhsuk-u-visually-hidden"> {ward.name}</span>

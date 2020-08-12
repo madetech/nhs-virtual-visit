@@ -30,9 +30,10 @@ const EditHospital = ({ hospital, error }) => {
         return response.json();
       })
       .then((result) =>
-        Router.push({
-          pathname: `/trust-admin/hospitals/${result.hospitalId}/edit-success`,
-        })
+        Router.push(
+          "/trust-admin/hospitals/[id]/edit-success",
+          `/trust-admin/hospitals/${result.hospitalId}/edit-success`
+        )
       )
       .catch(() => {
         const onSubmitErrors = [

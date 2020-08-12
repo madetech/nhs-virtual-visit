@@ -1,6 +1,6 @@
 import { PhoneNumberUtil, PhoneNumberType } from "google-libphonenumber";
 
-export default (input) => {
+const validateMobileNumber = (input) => {
   const validator = PhoneNumberUtil.getInstance();
 
   try {
@@ -14,3 +14,5 @@ export default (input) => {
     return false;
   }
 };
+
+export default validateMobileNumber;

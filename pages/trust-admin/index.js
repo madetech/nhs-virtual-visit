@@ -112,7 +112,8 @@ const TrustAdmin = ({
                     {mostVisited.map((hospital) => (
                       <li key={hospital.id}>
                         <AnchorLink
-                          href={`/trust-admin/hospitals/${hospital.id}`}
+                          href="/trust-admin/hospitals/[id]"
+                          as={`/trust-admin/hospitals/${hospital.id}`}
                         >
                           {hospital.name}
                           <span className="nhsuk-u-visually-hidden">

@@ -12,6 +12,8 @@ const EMAIL_VALIDATION_STRING =
 
 const EMAIL_VALIDATION_REGEX = new RegExp(EMAIL_VALIDATION_STRING);
 
-export default (email) => {
+const validateEmailAddress = (email) => {
   return EMAIL_VALIDATION_REGEX.test(email);
 };
+
+export default validateEmailAddress;
