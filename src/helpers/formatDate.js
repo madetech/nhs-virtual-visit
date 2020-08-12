@@ -1,3 +1,4 @@
 import moment from "moment";
 
-export default (time) => moment(time).format("D MMMM YYYY");
+const formatDate = (time) => moment(time).format("D MMMM YYYY");
+export default formatDate;
