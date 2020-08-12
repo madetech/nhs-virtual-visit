@@ -72,7 +72,7 @@ const DateSelect = ({
             onChange={(event) => {
               setDate({ ...date, month: parseInt(event.target.value) - 1 });
             }}
-            value={date.month + 1}
+            value={Number(date.month) + 1}
             autoComplete="off"
           />
         </div>
