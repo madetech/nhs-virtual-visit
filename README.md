@@ -2,7 +2,7 @@
 
 This service allows ward staff to schedule a visit for a patient. Allowing face to face visits for visitors who are unable to visit in person.
 
-It includes an administration panel which provides self-service functionality for adding new Trusts, Hospitals, and Wards.
+It includes an Administration panel which provides self-service functionality for adding new Trusts, Hospitals, and Wards.
 
 ## User flows
 
