@@ -1,3 +1,6 @@
 import moment from "moment";
 
-export default (time, timeFormat = "h:mma") => moment(time).format(timeFormat);
+const formatTime = (time, timeFormat = "h:mma") =>
+  moment(time).format(timeFormat);
+
+export default formatTime;
