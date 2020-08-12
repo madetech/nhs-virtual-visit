@@ -83,6 +83,7 @@ Please take a look at our separate [Contributing Guide](./CONTRIBUTING.md).
 - **Neil Kidd** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (neil.kidd@madetech.com)
 - **Stu Mackellar** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (stu.mackellar@madetech.com)
 - **Robert Marshall** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (robert.marshall@madetech.com)
+- **Shaun Wild** - Software Engineer at [Made Tech](https://www.madetech.com) (shaun.wild@madetech.com)
 
 ## License
 
