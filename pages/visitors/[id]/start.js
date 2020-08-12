@@ -13,7 +13,7 @@ const Start = ({ callId, error, callPassword }) => {
   const router = useRouter();
   const onClick = () =>
     router.push(
-      "/visitors/[id]/name",
+      `/visitors/[id]/name?callPassword=${callPassword}`,
       `/visitors/${callId}/name?callPassword=${callPassword}`
     );
   if (error) {

@@ -46,7 +46,7 @@ const Name = ({ callId, error, callPassword }) => {
 
     if (errors.length === 0) {
       router.push(
-        "/visits/[id]",
+        `/visits/[id]?name=${name}&callPassword=${callPassword}`,
         `/visits/${router.query.id}?name=${name}&callPassword=${callPassword}`
       );
     }
