@@ -1,4 +1,4 @@
-# Deploying to Heroku
+# 6. Deploying to Heroku
 
 The app has been designed to easily deploy to [Heroku](https://www.heroku.com/) by including specific configuration such as a [Procfile](https://github.com/madetech/nhs-virtual-visit/blob/master/Procfile) and an [app.json](https://github.com/madetech/nhs-virtual-visit/blob/master/app.json).
 

@@ -1,4 +1,4 @@
-# Setting up CircleCI
+# 3. Setting up CircleCI
 
 The application is configured to run automated tests via [CircleCI](https://circleci.com/). The configuration can be found in [circle.yml](../../circle.yml). Once set up, CircleCI will ensure that changes in Pull Requests pass our test suite before they are allowed to be merged.
 

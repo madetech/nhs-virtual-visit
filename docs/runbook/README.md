@@ -30,12 +30,12 @@ possible to replace these services with ones that work best for your trust.
 
 To get the application running like current NHS trusts:
 
-1. [Setting up your repository](./setting-up-your-repo.md)
-1. [GOV.UK Notify Templates](./govuk-notify-templates.md)
-1. [Setting up CircleCI](./setting-up-circle-ci.md)
-1. [Setting up Sentry](./setting-up-sentry.md)
+1. [Setting up your repository](./01-setting-up-your-repo.md)
+1. [GOV.UK Notify Templates](./02-govuk-notify-templates.md)
+1. [Setting up CircleCI](./03-setting-up-circle-ci.md)
+1. [Setting up Sentry](./04-setting-up-sentry.md)
 1. Setting up Whereby (coming soon)
-1. [Deploying to Heroku](./deploying-to-heroku.md)
+1. [Deploying to Heroku](./06-deploying-to-heroku.md)
 
 ## Other documentation
 

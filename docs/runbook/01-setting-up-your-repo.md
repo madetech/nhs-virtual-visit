@@ -1,4 +1,4 @@
-# Setting up your repository
+# 1. Setting up your repository
 
 Current NHS trusts have forked the `made-tech/nhs-virtual-visit` repository so
 that they can develop their own features whilst receiving updates from Made
