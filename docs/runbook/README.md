@@ -14,7 +14,8 @@ updates from Made Tech. This consists of the following dependencies:
 - [CircleCI](https://circleci.com/) - to run automated tests on a pull request
 - [GOV.UK Notify](https://www.notifications.service.gov.uk) - to send text
   messages and emails
-- [Jitsi Meet](https://github.com/jitsi/jitsi-meet/blob/master/doc/README.md) - to enable video calls (open source solution)
+- [Jitsi Meet](https://github.com/jitsi/jitsi-meet/blob/master/doc/README.md) -
+  to enable video calls (open source solution)
 - [Whereby](https://whereby.com/information/product-api/) - to enable video
   calls (paid solution)
 - [Sentry](https://sentry.io) - to log and monitor uncaught errors and
@@ -34,7 +35,7 @@ To get the application running like current NHS trusts:
 1. [GOV.UK Notify Templates](./02-govuk-notify-templates.md)
 1. [Setting up CircleCI](./03-setting-up-circle-ci.md)
 1. [Setting up Sentry](./04-setting-up-sentry.md)
-1. Setting up Whereby (coming soon)
+1. [Setting up Whereby](./05-setting-up-whereby.md)
 1. [Deploying to Heroku](./06-deploying-to-heroku.md)
 
 ## Other documentation
