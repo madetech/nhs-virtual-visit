@@ -1,4 +1,4 @@
-# Setting up Sentry
+# 4. Setting up Sentry
 
 To track errors and get full stack traces of exceptions, we use [Sentry](https://sentry.io). This makes it easier to diagnose bugs found in the application.
 

@@ -1,4 +1,4 @@
-# GOV.UK Notify Templates
+# 2. GOV.UK Notify Templates
 
 To notify visitors via text message and/or email, it uses [GOV.UK Notify](https://www.notifications.service.gov.uk) which is used widely by central government, local authorities and the NHS.
 
