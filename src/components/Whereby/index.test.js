@@ -5,19 +5,17 @@ import Whereby from "./index";
 jest.mock("next/router");
 
 describe("Whereby", () => {
-  beforeEach(() => {
-    process.env.WHEREBY_SUBDOMAIN = "test-subdomain";
-  });
-
-  afterEach(() => {
-    process.env.WHEREBY_SUBDOMAIN = "";
-  });
-
   it("sets the source of the iframe with the subdomain", () => {
     const callId = "testCallId";
     const displayName = "Test McTest";
 
-    render(<Whereby callId={callId} displayName={displayName} />);
+    render(
+      <Whereby
+        callId={callId}
+        displayName={displayName}
+        wherebySubdomain="test-subdomain"
+      />
+    );
 
     expect(screen.getByTestId("whereby")).toHaveAttribute(
       "src",
