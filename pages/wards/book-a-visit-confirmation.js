@@ -25,8 +25,8 @@ const ScheduleConfirmation = ({
       query: {
         patientName,
         contactName,
-        contactNumber,
-        contactEmail,
+        contactNumber: contactNumber || "",
+        contactEmail: contactEmail || "",
         ...callTime,
       },
     });

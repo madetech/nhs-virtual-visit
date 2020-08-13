@@ -3,7 +3,7 @@ import moment from "moment";
 const yearsInFuture = 3;
 const secondsForAPIDelay = 60;
 
-export default (dateTime) => {
+const validateDateAndTime = (dateTime) => {
   // allow for server side delay in network request
   let currentMomentServerSide = new moment();
   currentMomentServerSide.subtract(secondsForAPIDelay, "seconds");
@@ -38,3 +38,5 @@ export default (dateTime) => {
 
   return { isValidTime, isValidDate, errorMessage };
 };
+
+export default validateDateAndTime;
