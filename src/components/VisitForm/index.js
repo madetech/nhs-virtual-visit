@@ -150,7 +150,8 @@ const VisitForm = ({
           autoComplete="off"
           value={patientName || ""}
         />
-
+      </FormGroup>
+      <FormGroup>
         <Label htmlFor="contact-name" className="nhsuk-label--l">
           What is the key contact&apos;s name?
         </Label>
@@ -166,37 +167,32 @@ const VisitForm = ({
           autoComplete="off"
           value={contactName || ""}
         />
-
-        <VisitorContactDetailsInput
-          textMessageIsChecked={textMessageIsChecked}
-          setTextMessageIsChecked={setTextMessageIsChecked}
-          emailIsChecked={emailIsChecked}
-          setEmailIsChecked={setEmailIsChecked}
-          hasContactMethodUncheckedError={hasError("contact-method")}
-          hasContactNumberError={hasError("contact-number")}
-          contactNumber={contactNumber}
-          setContactNumber={setContactNumber}
-          hasContactEmailError={hasError("contact-email")}
-          contactEmail={contactEmail}
-          setContactEmail={setContactEmail}
-        />
-
-        <DateSelect
-          onChange={(date) => setCallDateTime(date)}
-          name="call-datetime"
-          hasDateError={hasError("call-date")}
-          dateErrorMessage={
-            hasError("call-date") && getErrorMessage("call-date")
-          }
-          hasTimeError={hasError("call-time")}
-          timeErrorMessage={
-            hasError("call-time") && getErrorMessage("call-time")
-          }
-          initialDate={callDateTime}
-        ></DateSelect>
-        <br></br>
-        <Button className="nhsuk-u-margin-top-5">Continue</Button>
       </FormGroup>
+      <VisitorContactDetailsInput
+        textMessageIsChecked={textMessageIsChecked}
+        setTextMessageIsChecked={setTextMessageIsChecked}
+        emailIsChecked={emailIsChecked}
+        setEmailIsChecked={setEmailIsChecked}
+        hasContactMethodUncheckedError={hasError("contact-method")}
+        hasContactNumberError={hasError("contact-number")}
+        contactNumber={contactNumber}
+        setContactNumber={setContactNumber}
+        hasContactEmailError={hasError("contact-email")}
+        contactEmail={contactEmail}
+        setContactEmail={setContactEmail}
+      />
+
+      <DateSelect
+        onChange={(date) => setCallDateTime(date)}
+        name="call-datetime"
+        hasDateError={hasError("call-date")}
+        dateErrorMessage={hasError("call-date") && getErrorMessage("call-date")}
+        hasTimeError={hasError("call-time")}
+        timeErrorMessage={hasError("call-time") && getErrorMessage("call-time")}
+        initialDate={callDateTime}
+      ></DateSelect>
+      <br></br>
+      <Button className="nhsuk-u-margin-top-5">Continue</Button>
     </form>
   );
 };
