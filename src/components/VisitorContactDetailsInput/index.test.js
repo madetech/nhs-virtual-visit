@@ -85,7 +85,7 @@ describe("VisitorContactDetailsInput", () => {
         />
       );
 
-      fireEvent.click(screen.getByLabelText(/Email/));
+      fireEvent.click(screen.getByLabelText("Email"));
 
       expect(setEmailIsChecked).toHaveBeenCalledWith(true);
     });
@@ -122,7 +122,7 @@ describe("VisitorContactDetailsInput", () => {
 
       const contactEmailInput = screen.getByTestId("email-address");
 
-      fireEvent.click(screen.getByLabelText(/Email/));
+      fireEvent.click(screen.getByLabelText("Email"));
       fireEvent.change(contactEmailInput, { target: { value: "cool" } });
 
       expect(screen.getByText(/Enter a valid email address/)).toBeVisible();
