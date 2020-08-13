@@ -1,7 +1,7 @@
 import React from "react";
 import Router from "next/router";
 
-const Whereby = ({ callId, displayName, onEnd }) => (
+const Whereby = ({ callId, displayName, onEnd, wherebySubdomain }) => (
   <div>
     <iframe
       data-testid="whereby"
@@ -10,7 +10,7 @@ const Whereby = ({ callId, displayName, onEnd }) => (
         height: "calc(100vh - 195px)",
         border: 0,
       }}
-      src={`https://${process.env.WHEREBY_SUBDOMAIN}.whereby.com/${callId}?embed&iframeSource=${process.env.WHEREBY_SUBDOMAIN}&background=off&displayName=${displayName}&screenshare=off&chat=off`}
+      src={`https://${wherebySubdomain}.whereby.com/${callId}?embed&iframeSource=${wherebySubdomain}&background=off&displayName=${displayName}&screenshare=off&chat=off`}
       allow="camera; microphone; fullscreen; speaker"
     ></iframe>
     <button
