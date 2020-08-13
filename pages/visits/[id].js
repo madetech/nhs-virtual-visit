@@ -16,6 +16,7 @@ const Call = ({
   name,
   provider,
   error,
+  wherebySubdomain,
 }) => {
   if (error) {
     return <Error />;
@@ -61,7 +62,12 @@ const Call = ({
   return (
     <Layout title="Virtual visit" isBookService={false} mainStyleOverride>
       {provider === "whereby" ? (
-        <Whereby callId={callId} displayName={name} onEnd={leaveVisit} />
+        <Whereby
+          callId={callId}
+          displayName={name}
+          onEnd={leaveVisit}
+          wherebySubdomain={wherebySubdomain}
+        />
       ) : (
         <Jitsi callId={callId} name={name} onEnd={leaveVisit} />
       )}
@@ -99,6 +105,7 @@ export const getServerSideProps = propsWithContainer(
           name,
           provider,
           error,
+          wherebySubdomain: process.env.WHEREBY_SUBDOMAIN || null,
         },
       };
     } else {

@@ -191,7 +191,7 @@ describe("ward/book-a-visit", () => {
 
       expect(screen.getByText(/Email address/)).not.toBeVisible();
 
-      fireEvent.click(screen.getByLabelText(/Email/));
+      fireEvent.click(screen.getByLabelText("Email"));
 
       expect(screen.getByText(/Email address/)).toBeVisible();
     });

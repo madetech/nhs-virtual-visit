@@ -45,4 +45,3 @@ For maintenance and other miscellaneous tasks:
 - [Setting up Heroku CLI](./setting-up-heroku-cli.md)
 - [Accessing the database of a Heroku app](./accessing-heroku-app-database.md)
 - [Migrating the database](./migrating-the-database.md)
-- [Changing video provider](./changing-video-provider.md)
