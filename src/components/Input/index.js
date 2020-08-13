@@ -8,6 +8,7 @@ const Input = ({ id, className, hasError, errorMessage, ...props }) => (
       <ErrorMessage id={`${id}-error`}>{errorMessage}</ErrorMessage>
     ) : null}
     <input
+      id={id}
       className={classnames(
         {
           "nhsuk-input--error": hasError,
