@@ -14,10 +14,11 @@ So that I can track trends in the usage of the service.
 
 ## Edit a trust
 
-We only enable creating a trust as a site admin, they are unable to edit the details of a trust such as the video provider and password.
+We only enable creating a trust as a site admin and changing their video
+provider. They're unable to edit the details of a trust such as their password.
 
 ```
 As a site admin,
-I want to be able to edit a trust,
-So that I can change details of a trust such as the video provider and password.
+I want to be able to edit all details of a trust,
+So that I can change details such as the password.
 ```
