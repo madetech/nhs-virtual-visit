@@ -1,50 +1,47 @@
 import AppContainer from "../containers/AppContainer";
-import { setupTrust } from "../testUtils/factories";
+import {
+  setupWardWithinHospitalAndTrust,
+  setupWard,
+} from "../testUtils/factories";
 
 describe("retrieveHospitalWardVisitTotals contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns the total number of visits for each hospital", async () => {
-    const { trustId } = await setupTrust();
-
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
+    const {
+      trustId,
+      hospitalId,
+      wardId: ward1Id,
+    } = await setupWardWithinHospitalAndTrust({
+      wardArgs: { name: "Test Ward 1" },
     });
 
-    const { wardId: ward1Id } = await container.getCreateWard()({
-      name: "Test Ward 1",
-      code: "wardCode1",
-      hospitalId: hospitalId,
-      trustId: trustId,
-    });
-
-    const { wardId: ward2Id } = await container.getCreateWard()({
+    const { wardId: ward2Id } = await setupWard({
       name: "Test Ward 2",
       code: "wardCode2",
-      hospitalId: hospitalId,
-      trustId: trustId,
+      hospitalId,
+      trustId,
     });
 
-    const { wardId: ward3Id } = await container.getCreateWard()({
+    const { wardId: ward3Id } = await setupWard({
       name: "Test Ward 3",
       code: "wardCode3",
-      hospitalId: hospitalId,
-      trustId: trustId,
+      hospitalId,
+      trustId,
     });
 
-    const { wardId: ward4Id } = await container.getCreateWard()({
+    const { wardId: ward4Id } = await setupWard({
       name: "Test Ward 4",
       code: "wardCode4",
-      hospitalId: hospitalId,
-      trustId: trustId,
+      hospitalId,
+      trustId,
     });
 
-    const { wardId: ward5Id } = await container.getCreateWard()({
+    const { wardId: ward5Id } = await setupWard({
       name: "Test Ward 5",
       code: "wardCode5",
-      hospitalId: hospitalId,
-      trustId: trustId,
+      hospitalId,
+      trustId,
     });
 
     await container.getArchiveWard()(ward5Id, trustId);
