@@ -1,5 +1,6 @@
 import createTrust from "./createTrust";
 import AppContainer from "../containers/AppContainer";
+import { setupTrust } from "../testUtils/factories";
 
 describe("createTrust contract tests", () => {
   const container = AppContainer.getInstance();
@@ -13,7 +14,7 @@ describe("createTrust contract tests", () => {
       videoProvider: "provider",
     };
 
-    const { trustId, error } = await createTrust(container)(request);
+    const { trustId, error } = await setupTrust(request);
 
     const { trust } = await retrieveTrustById(trustId);
 
@@ -34,14 +35,9 @@ describe("createTrust contract tests", () => {
       videoProvider: "provider",
     });
 
-    const request = {
-      name: "Test Trust 2",
-      adminCode: "adminCode",
-      password: "trustpassword",
-      videoProvider: "provider",
-    };
+    await setupTrust({ adminCode: "adminCode" });
 
-    const { trustId, error } = await createTrust(container)(request);
+    const { trustId, error } = await setupTrust({ adminCode: "adminCode" });
 
     expect(trustId).toBeNull();
     expect(error.toString()).toEqual(
@@ -50,11 +46,7 @@ describe("createTrust contract tests", () => {
   });
 
   it("returns an error if the video provider is not present", async () => {
-    const { trustId, error } = await createTrust(container)({
-      name: "Test Trust 2",
-      adminCode: "adminCode",
-      password: "trustpassword",
-    });
+    const { trustId, error } = await setupTrust({ videoProvider: null });
 
     expect(trustId).toBeNull();
     expect(error.toString()).toEqual(
