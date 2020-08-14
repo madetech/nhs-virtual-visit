@@ -1,6 +1,6 @@
 import createWard from "./createWard";
 import AppContainer from "../containers/AppContainer";
-import { setupTrust } from "../testUtils/factories";
+import { setupTrust, setupHospital } from "../testUtils/factories";
 
 describe("createWard contract tests", () => {
   const container = AppContainer.getInstance();
@@ -8,17 +8,14 @@ describe("createWard contract tests", () => {
   it("creates a ward in the db when valid", async () => {
     const { trustId } = await setupTrust();
 
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
+    const { hospitalId } = await setupHospital({ trustId });
 
     const request = {
       name: "Defoe Ward",
       hospitalName: "Test Hospital",
       code: "WardCode",
-      trustId: trustId,
-      hospitalId: hospitalId,
+      trustId,
+      hospitalId,
     };
 
     const { wardId, error } = await createWard(container)(request);
@@ -28,7 +25,7 @@ describe("createWard contract tests", () => {
     expect(ward).toEqual({
       id: wardId,
       name: "Defoe Ward",
-      hospitalId: hospitalId,
+      hospitalId,
       hospitalName: "Test Hospital",
     });
 
