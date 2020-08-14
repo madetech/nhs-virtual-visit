@@ -2,7 +2,10 @@ import archiveWard from "./archiveWard";
 import retrieveWardById from "./retrieveWardById";
 import AppContainer from "../containers/AppContainer";
 import retrieveVisits from "./retrieveVisits";
-import { setupTrust } from "../testUtils/factories";
+import {
+  setupWardWithinHospitalAndTrust,
+  setupVisit,
+} from "../testUtils/factories";
 
 describe("archiveWard contract tests", () => {
   const container = AppContainer.getInstance();
@@ -15,19 +18,7 @@ describe("archiveWard contract tests", () => {
   });
 
   it("archives the ward when the ward data is valid", async () => {
-    const { trustId } = await setupTrust();
-
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
-
-    const { wardId } = await container.getCreateWard()({
-      name: "Test Ward 1",
-      code: "wardCode1",
-      hospitalId: hospitalId,
-      trustId: trustId,
-    });
+    const { trustId, wardId } = await setupWardWithinHospitalAndTrust();
 
     const {
       ward: preArchiveWard,
@@ -56,31 +47,9 @@ describe("archiveWard contract tests", () => {
   });
 
   it("archives ward visits when the ward data is valid and visits are scheduled", async () => {
-    const { trustId } = await setupTrust();
+    const { trustId, wardId } = await setupWardWithinHospitalAndTrust();
 
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
-
-    const { wardId } = await container.getCreateWard()({
-      name: "Test Ward 1",
-      code: "wardCode1",
-      hospitalId: hospitalId,
-      trustId: trustId,
-    });
-
-    const { id: visitId } = await container.getCreateVisit()({
-      patientName: "Bob Smith",
-      contactEmail: "bob.smith@madetech.com",
-      contactName: "John Smith",
-      contactNumber: "07123456789",
-      callTime: new Date(),
-      callId: 12345,
-      provider: "jitsi",
-      wardId: wardId,
-      callPassword: "securePassword",
-    });
+    const { id: visitId } = await setupVisit({ wardId });
 
     expect(visitId).toBeDefined();
 
