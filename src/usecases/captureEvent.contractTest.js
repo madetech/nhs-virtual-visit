@@ -1,6 +1,9 @@
 import captureEvent from "./captureEvent";
 import AppContainer from "../containers/AppContainer";
-import { setupTrust } from "../testUtils/factories";
+import {
+  setupWardWithinHospitalAndTrust,
+  setupVisit,
+} from "../testUtils/factories";
 
 describe("captureEvent contract tests", () => {
   const container = AppContainer.getInstance();
@@ -19,31 +22,9 @@ describe("captureEvent contract tests", () => {
   });
 
   it("creates a join-visit event in the db when valid", async () => {
-    const { trustId } = await setupTrust();
+    const { wardId } = await setupWardWithinHospitalAndTrust();
 
-    const { hospitalId } = await container.getCreateHospital()({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
-
-    const { wardId } = await container.getCreateWard()({
-      name: "Test Ward 1",
-      code: "wardCode1",
-      hospitalId: hospitalId,
-      trustId: trustId,
-    });
-
-    const { id: visitId } = await container.getCreateVisit()({
-      patientName: "Bob Smith",
-      contactEmail: "bob.smith@madetech.com",
-      contactName: "John Smith",
-      contactNumber: "07123456789",
-      callTime: new Date(),
-      callId: 12345,
-      provider: "jitsi",
-      wardId: wardId,
-      callPassword: "securePassword",
-    });
+    const { id: visitId } = await setupVisit({ wardId });
 
     const joinRequest = {
       action: "join-visit",
