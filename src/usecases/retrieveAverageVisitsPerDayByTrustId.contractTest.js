@@ -1,5 +1,11 @@
 import AppContainer from "../containers/AppContainer";
-import { setupTrust, setupHospital, setupWard } from "../testUtils/factories";
+import {
+  setupWardWithinHospitalAndTrust,
+  setupWard,
+  setupHospital,
+  setupTrust,
+  setupVisit,
+} from "../testUtils/factories";
 import { v4 as uuidv4 } from "uuid";
 
 describe("retrieveAverageVisitsPerDay contract tests", () => {
@@ -7,30 +13,9 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
 
   it("returns the average number of visits per day for a trust", async () => {
     // A trust with a visit with 1 participant
-    const { trustId } = await setupTrust();
+    const { trustId, wardId } = await setupWardWithinHospitalAndTrust();
 
-    const { hospitalId } = await setupHospital({
-      name: "Test Hospital",
-      trustId: trustId,
-    });
-
-    const { wardId } = await setupWard({
-      name: "Test Ward 1",
-      code: "wardCode1",
-      hospitalId: hospitalId,
-      trustId: trustId,
-    });
-
-    const { id: visitId } = await container.getCreateVisit()({
-      patientName: "Glimmer",
-      contactEmail: "bow@example.com",
-      contactName: "Bow",
-      callTime: new Date("2020-06-01 13:00"),
-      callId: "testCallId",
-      provider: "TESTPROVIDER",
-      wardId: wardId,
-      callPassword: "testCallPassword",
-    });
+    const { id: visitId } = await setupVisit({ wardId });
 
     const sessionId = uuidv4();
 
@@ -42,34 +27,27 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
 
     await container.getCaptureEvent()({
       action: "leave-visit",
-      visitId: visitId,
+      visitId,
       sessionId,
     });
 
     // A trust with a visit with 1 participant, one with 2 participants and
     // another with 1 participant
-
     const { hospitalId: hospitalId2 } = await setupHospital({
       name: "Test Hospital 2",
-      trustId: trustId,
+      trustId,
     });
 
     const { wardId: wardId2 } = await setupWard({
       name: "Test Ward 2",
       code: "wardCode2",
       hospitalId: hospitalId2,
-      trustId: trustId,
+      trustId,
     });
 
-    const { id: visitId2 } = await container.getCreateVisit()({
-      patientName: "Adora",
-      contactEmail: "catra@example.com",
-      contactName: "Catra",
-      callTime: new Date("2020-06-03 13:00"),
-      callId: "testCallId2",
-      provider: "TESTPROVIDER",
+    const { id: visitId2 } = await setupVisit({
       wardId: wardId2,
-      callPassword: "testCallPassword",
+      callId: "testCallId2",
     });
 
     const sessionId2 = uuidv4();
@@ -86,15 +64,9 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
       sessionId: sessionId2,
     });
 
-    const { id: visitId3 } = await container.getCreateVisit()({
-      patientName: "Scorpia",
-      contactEmail: "perfuma@example.com",
-      contactName: "Perfuma",
-      callTime: new Date("2020-06-03 13:00"),
-      callId: "testCallId3",
-      provider: "TESTPROVIDER",
+    const { id: visitId3 } = await setupVisit({
       wardId: wardId2,
-      callPassword: "testCallPassword",
+      callId: "testCallId3",
     });
 
     const sessionId3 = uuidv4();
@@ -126,16 +98,7 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
     });
 
     // Has no events so shouldn't be counted
-    await container.getCreateVisit()({
-      patientName: "Mermista",
-      contactEmail: "seahawk@example.com",
-      contactName: "Seahawk",
-      callTime: new Date("2020-06-03 13:00"),
-      callId: "testCallId4",
-      provider: "TESTPROVIDER",
-      wardId: wardId2,
-      callPassword: "testCallPassword",
-    });
+    await setupVisit({ wardId: wardId2, callId: "testCallId4" });
 
     const {
       averageVisitsPerDay,
