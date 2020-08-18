@@ -29,7 +29,10 @@ const EditAVisit = ({
 
     const asPath = `/wards/visits/${id}/edit-confirmation?${queryParameters}`;
 
-    Router.push("/wards/visits/[id]/edit-confirmation", asPath);
+    Router.push(
+      `/wards/visits/[id]/edit-confirmation?${queryParameters}`,
+      asPath
+    );
   };
 
   return (
