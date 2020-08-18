@@ -1,9 +1,10 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Button from "../../../../src/components/Button";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import Text from "../../../../src/components/Text";
 import Heading from "../../../../src/components/Heading";
 import Layout from "../../../../src/components/Layout";
+import Form from "../../../../src/components/Form";
 import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import Router from "next/router";
@@ -41,9 +42,7 @@ const EditAVisitConfirmation = ({
 
     Router.push("/wards/visits/[id]/edit", asPath);
   };
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
-
+  const onSubmit = async () => {
     const submitAnswers = async () => {
       let body = {
         id,
@@ -75,19 +74,23 @@ const EditAVisitConfirmation = ({
           "/wards/visits/[id]/edit-success",
           `/wards/visits/${id}/edit-success`
         );
+
+        return true;
       } else {
         console.error(err);
       }
+
+      return false;
     };
 
-    submitAnswers({
+    return submitAnswers({
       contactNumber,
       contactName,
       patientName,
       callTime,
       contactEmail,
     });
-  });
+  };
 
   return (
     <Layout
@@ -97,7 +100,7 @@ const EditAVisitConfirmation = ({
     >
       <GridRow>
         <GridColumn width="two-thirds">
-          <form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <Heading>Check your answers before editing a virtual visit</Heading>
 
             <VisitSummaryList
@@ -116,7 +119,7 @@ const EditAVisitConfirmation = ({
               ensure we set up the virtual visit with the correct person.
             </Text>
             <Button className="nhsuk-u-margin-top-5">Edit virtual visit</Button>
-          </form>
+          </Form>
         </GridColumn>
       </GridRow>
     </Layout>
