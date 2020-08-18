@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Button from "../../src/components/Button";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Heading from "../../src/components/Heading";
@@ -10,6 +10,7 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Error from "next/error";
 import VisitSummaryList from "../../src/components/VisitSummaryList";
 import BackLink from "../../src/components/BackLink";
+import Form from "../../src/components/Form";
 import { WARD_STAFF } from "../../src/helpers/userTypes";
 
 const deleteVisitConfirmation = ({
@@ -21,10 +22,9 @@ const deleteVisitConfirmation = ({
   callDateAndTime,
   error,
 }) => {
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     Router.push(`/wards/cancel-visit-success?callId=${callId}`);
-  });
+  };
 
   if (error) {
     return <Error />;
@@ -43,7 +43,7 @@ const deleteVisitConfirmation = ({
       </GridRow>
       <GridRow>
         <GridColumn width="two-thirds">
-          <form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <VisitSummaryList
               patientName={patientName}
               visitorName={contactName}
@@ -65,7 +65,7 @@ const deleteVisitConfirmation = ({
             <Button>Yes, cancel this visit</Button>
 
             <BackLink href="/wards/visits">Back to virtual visits</BackLink>
-          </form>
+          </Form>
         </GridColumn>
       </GridRow>
     </Layout>
