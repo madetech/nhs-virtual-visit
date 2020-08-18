@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Button from "../../../src/components/Button";
 import FormGroup from "../../../src/components/FormGroup";
@@ -12,6 +12,7 @@ import BackLink from "../../../src/components/BackLink";
 import ErrorSummary from "../../../src/components/ErrorSummary";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import Error from "next/error";
+import Form from "../../../src/components/Form";
 
 const Name = ({ callId, error, callPassword }) => {
   const router = useRouter();
@@ -31,8 +32,7 @@ const Name = ({ callId, error, callPassword }) => {
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
 
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     const errors = [];
 
     if (!name) {
@@ -45,12 +45,15 @@ const Name = ({ callId, error, callPassword }) => {
     setErrors(errors);
 
     if (errors.length === 0) {
-      router.push(
+      await router.push(
         `/visits/[id]?name=${name}&callPassword=${callPassword}`,
         `/visits/${router.query.id}?name=${name}&callPassword=${callPassword}`
       );
+      return true;
     }
-  });
+
+    return false;
+  };
 
   return (
     <Layout
@@ -63,7 +66,7 @@ const Name = ({ callId, error, callPassword }) => {
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
 
-          <form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <FormGroup>
               <LabelHeader
                 htmlFor="name"
@@ -95,7 +98,7 @@ const Name = ({ callId, error, callPassword }) => {
 
               <Button>Attend visit</Button>
             </FormGroup>
-          </form>
+          </Form>
         </GridColumn>
       </GridRow>
     </Layout>
