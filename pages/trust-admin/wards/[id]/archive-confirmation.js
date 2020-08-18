@@ -10,6 +10,7 @@ import Button from "../../../../src/components/Button";
 import BackLink from "../../../../src/components/BackLink";
 import Router from "next/router";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
+import Form from "../../../../src/components/Form";
 
 const ArchiveAWardConfirmation = ({
   error,
@@ -30,8 +31,7 @@ const ArchiveAWardConfirmation = ({
     { key: "Hospital", value: hospitalName },
   ];
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     const response = await fetch("/api/archive-ward", {
       method: "DELETE",
       headers: {
@@ -45,12 +45,14 @@ const ArchiveAWardConfirmation = ({
       }),
     });
     if (response.status === 200) {
-      Router.push(
+      await Router.push(
         `/trust-admin/wards/archive-success?name=${name}&hospitalName=${hospitalName}&hospitalId=${hospitalId}`
       );
+      return true;
     } else {
       setHasError(true);
     }
+    return false;
   };
 
   return (
@@ -66,7 +68,7 @@ const ArchiveAWardConfirmation = ({
       </GridRow>
       <GridRow>
         <GridColumn width="two-thirds">
-          <form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <SummaryList
               list={wardSummaryList}
               withActions={false}
@@ -77,7 +79,7 @@ const ArchiveAWardConfirmation = ({
             <BackLink
               href={`/trust-admin/hospitals/${hospitalId}`}
             >{`Back to ${hospitalName}`}</BackLink>
-          </form>
+          </Form>
         </GridColumn>
       </GridRow>
     </Layout>
