@@ -8,7 +8,7 @@
     "format:check": "prettier --check '{pages,pageTests,src}/**/*.{js,css,md,yml}'",
     "lint": "eslint . --ext .js",
     "test": "jest --silent",
-    "test:watch": "jest --watch --silent",
+    "test:watch": "jest --watch",
     "test:contract": "jest --config ./jest.contract.config.js --runInBand",
     "test:contract:watch": "npm run test:contract -- --watch",
     "test:e2e": "cypress run --headless",

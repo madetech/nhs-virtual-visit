@@ -1,9 +1,10 @@
-import React, { useCallback } from "react";
+import React from "react";
 import Button from "../../src/components/Button";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Text from "../../src/components/Text";
 import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
+import Form from "../../src/components/Form";
 import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import Router from "next/router";
@@ -31,9 +32,7 @@ const ScheduleConfirmation = ({
       },
     });
   };
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
-
+  const onSubmit = async () => {
     const submitAnswers = async () => {
       let body = {
         patientName,
@@ -61,19 +60,22 @@ const ScheduleConfirmation = ({
 
       if (success) {
         Router.push(`/wards/book-a-visit-success`);
+        return true;
       } else {
         console.error(err);
       }
+
+      return false;
     };
 
-    submitAnswers({
+    return submitAnswers({
       contactNumber,
       contactName,
       patientName,
       callTime,
       contactEmail,
     });
-  });
+  };
 
   return (
     <Layout
@@ -83,7 +85,7 @@ const ScheduleConfirmation = ({
     >
       <GridRow>
         <GridColumn width="two-thirds">
-          <form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <Heading>Check your answers before booking a virtual visit</Heading>
 
             <VisitSummaryList
@@ -104,7 +106,7 @@ const ScheduleConfirmation = ({
               visit.
             </Text>
             <Button className="nhsuk-u-margin-top-5">Book virtual visit</Button>
-          </form>
+          </Form>
         </GridColumn>
       </GridRow>
     </Layout>
