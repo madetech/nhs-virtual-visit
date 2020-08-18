@@ -18,32 +18,38 @@ const EditHospital = ({ hospital, error }) => {
 
   const submit = async (payload) => {
     payload.id = hospital.id;
-    await fetch("/api/update-a-hospital", {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error(response.status);
-        return response.json();
-      })
-      .then((result) =>
-        Router.push(
-          "/trust-admin/hospitals/[id]/edit-success",
-          `/trust-admin/hospitals/${result.hospitalId}/edit-success`
-        )
-      )
-      .catch(() => {
-        const onSubmitErrors = [
-          {
-            id: "hospital-update-error",
-            message: "There was a problem saving your changes",
-          },
-        ];
-        setErrors(onSubmitErrors);
+    try {
+      const response = await fetch("/api/update-a-hospital", {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
+
+      if (!response.ok) {
+        throw new Error(response.status);
+      }
+
+      const json = await response.json();
+
+      Router.push(
+        "/trust-admin/hospitals/[id]/edit-success",
+        `/trust-admin/hospitals/${json.hospitalId}/edit-success`
+      );
+
+      return true;
+    } catch (e) {
+      const onSubmitErrors = [
+        {
+          id: "hospital-update-error",
+          message: "There was a problem saving your changes",
+        },
+      ];
+      setErrors(onSubmitErrors);
+    }
+
+    return false;
   };
 
   return (
