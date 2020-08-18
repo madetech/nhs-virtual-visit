@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import Button from "../Button";
 import FormGroup from "../FormGroup";
 import Heading from "../Heading";
@@ -7,6 +7,7 @@ import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
 import Router from "next/router";
 import Select from "../../components/Select";
+import Form from "../../components/Form";
 import isPresent from "../../helpers/isPresent";
 
 const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
@@ -23,8 +24,7 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
     return error.length === 1 ? error[0].message : "";
   };
 
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     const onSubmitErrors = [];
 
     const setWardNameError = (errors) => {
@@ -111,20 +111,25 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
             "/trust-admin/wards/[id]/add-success",
             `/trust-admin/wards/${wardId}/add-success`
           );
+
+          return true;
         } else {
           setUniqueWardCodeError(onSubmitErrors);
           setErrors(onSubmitErrors);
         }
+
+        return false;
       };
 
-      await submitAnswers({ wardName, wardCode });
+      return await submitAnswers({ wardName, wardCode });
     }
     setErrors(onSubmitErrors);
-  });
+  };
+
   return (
     <>
       <ErrorSummary errors={errors} />
-      <form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit}>
         <Heading>Add a ward</Heading>
         <FormGroup>
           <Label htmlFor="ward-name" className="nhsuk-label--l">
@@ -195,7 +200,7 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
           />
         </FormGroup>
         <Button className="nhsuk-u-margin-top-5">Add ward</Button>
-      </form>
+      </Form>
     </>
   );
 };
