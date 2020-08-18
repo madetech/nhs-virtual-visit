@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import Button from "../Button";
 import FormGroup from "../FormGroup";
 import Heading from "../Heading";
@@ -8,6 +8,7 @@ import Label from "../Label";
 import Router from "next/router";
 import Select from "../../components/Select";
 import isPresent from "../../helpers/isPresent";
+import Form from "../Form";
 
 const EditWardForm = ({
   errors,
@@ -32,38 +33,43 @@ const EditWardForm = ({
     return error.length === 1 ? error[0].message : "";
   };
 
-  const submitAnswers = async () =>
-    await fetch("/api/update-a-ward", {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        id,
-        name: wardName,
-        hospitalId,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) throw Error(response.status);
-        return response.json();
-      })
-      .then((response) =>
-        Router.push(
-          "/trust-admin/wards/[id]/edit-success",
-          `/trust-admin/wards/${response.wardId}/edit-success`
-        )
-      )
-      .catch(() => {
-        onSubmitErrors.push({
-          id: "ward-update-error",
-          message: "There was a problem saving your changes",
-        });
-        setErrors(onSubmitErrors);
+  const submitAnswers = async () => {
+    try {
+      const response = await fetch("/api/update-a-ward", {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          name: wardName,
+          hospitalId,
+        }),
       });
 
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
+      if (!response.ok) {
+        throw Error(response.status);
+      }
+
+      const json = await response.json();
+      console.log({ response, json });
+      await Router.push(
+        "/trust-admin/wards/[id]/edit-success",
+        `/trust-admin/wards/${json.wardId}/edit-success`
+      );
+      return true;
+    } catch (e) {
+      onSubmitErrors.push({
+        id: "ward-update-error",
+        message: "There was a problem saving your changes",
+      });
+      setErrors(onSubmitErrors);
+    }
+
+    return false;
+  };
+
+  const onSubmit = async () => {
     onSubmitErrors = [];
     const setWardNameError = (errors) => {
       errors.push({
@@ -89,12 +95,12 @@ const EditWardForm = ({
       await submitAnswers();
     }
     setErrors(onSubmitErrors);
-  });
+  };
 
   return (
     <>
       <ErrorSummary errors={errors} />
-      <form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit}>
         <Heading>Edit a ward</Heading>
         <FormGroup>
           <Label htmlFor="ward-name" className="nhsuk-label--l">
@@ -133,7 +139,7 @@ const EditWardForm = ({
         </FormGroup>
 
         <Button className="nhsuk-u-margin-top-5">Edit ward</Button>
-      </form>
+      </Form>
     </>
   );
 };
