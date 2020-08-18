@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import Button from "../Button";
 import FormGroup from "../FormGroup";
 import Heading from "../Heading";
 import Input from "../Input";
 import Label from "../Label";
+import Form from "../Form";
 import validateUrl from "../../helpers/validateUrl";
 import isPresent from "../../helpers/isPresent";
 
@@ -24,8 +25,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
     return error.length === 1 ? error[0].message : "";
   };
 
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     let onSubmitErrors = [];
 
     const setHospitalNameError = (errors) => {
@@ -62,18 +62,18 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
     }
 
     if (onSubmitErrors.length === 0) {
-      await submit({
+      return await submit({
         name: hospitalName,
         surveyUrl: hospitalSurveyUrl,
         supportUrl: hospitalSupportUrl,
       });
     } else setErrors(onSubmitErrors);
-  });
+  };
 
   const action = hospital.id ? "Edit" : "Add";
 
   return (
-    <form onSubmit={onSubmit}>
+    <Form onSubmit={onSubmit}>
       <Heading>{action} a hospital</Heading>
       <FormGroup>
         <Label htmlFor="hospital-name" className="nhsuk-label--l">
@@ -134,7 +134,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       </FormGroup>
 
       <Button className="nhsuk-u-margin-top-5">{action} hospital</Button>
-    </form>
+    </Form>
   );
 };
 
