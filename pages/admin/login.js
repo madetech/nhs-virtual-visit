@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import fetch from "isomorphic-unfetch";
 import Button from "../../src/components/Button";
 import ErrorSummary from "../../src/components/ErrorSummary";
@@ -9,6 +9,7 @@ import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import Form from "../../src/components/Form";
 
 const Login = () => {
   const [code, setCode] = useState("");
@@ -23,8 +24,7 @@ const Login = () => {
     return error.length === 1 ? error[0].message : "";
   };
 
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     const onSubmitErrors = [];
 
     if (!code) {
@@ -52,15 +52,18 @@ const Login = () => {
 
       if (response.status === 201) {
         window.location.href = `/admin`;
+        return true;
       } else {
         onSubmitErrors.push({
           message: "The code or password you entered was not recognised",
         });
       }
+
+      return false;
     }
 
     setErrors(onSubmitErrors);
-  });
+  };
 
   return (
     <Layout title="Log in to manage your site" hasErrors={errors.length > 0}>
@@ -69,7 +72,7 @@ const Login = () => {
           <ErrorSummary errors={errors} />
           <Heading>Log in to manage your site</Heading>
 
-          <form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label htmlFor="code">Admin code</Label>
               <Input
@@ -99,7 +102,7 @@ const Login = () => {
             <Button className="nhsuk-u-margin-top-5" type="submit">
               Log in
             </Button>
-          </form>
+          </Form>
         </GridColumn>
         <span style={{ clear: "both", display: "block" }}></span>
       </GridRow>
