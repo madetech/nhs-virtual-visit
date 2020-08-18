@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import ErrorSummary from "../../../../src/components/ErrorSummary";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import Layout from "../../../../src/components/Layout";
@@ -9,6 +9,7 @@ import Heading from "../../../../src/components/Heading";
 import Label from "../../../../src/components/Label";
 import Button from "../../../../src/components/Button";
 import Select from "../../../../src/components/Select";
+import Form from "../../../../src/components/Form";
 import Router from "next/router";
 import { ADMIN } from "../../../../src/helpers/userTypes";
 import {
@@ -28,8 +29,7 @@ const EditTrust = ({ trust }) => {
     return error.length === 1 ? error[0].message : "";
   };
 
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     const onSubmitErrors = [];
 
     if (videoProvider.length === 0) {
@@ -59,18 +59,21 @@ const EditTrust = ({ trust }) => {
             "/admin/trusts/[id]/edit-success",
             `/admin/trusts/${trust.id}/edit-success`
           );
+          return true;
         } else {
           onSubmitErrors.push({
             message: "Something went wrong, please try again later.",
           });
           setErrors(onSubmitErrors);
         }
+
+        return false;
       };
 
-      await submitAnswers(name);
+      return await submitAnswers(name);
     }
     setErrors(onSubmitErrors);
-  });
+  };
 
   return (
     <Layout
@@ -82,7 +85,7 @@ const EditTrust = ({ trust }) => {
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <Heading>{`Edit ${trust.name}`}</Heading>
 
             <FormGroup>
@@ -106,7 +109,7 @@ const EditTrust = ({ trust }) => {
               />
             </FormGroup>
             <Button className="nhsuk-u-margin-top-5">Edit Trust</Button>
-          </form>
+          </Form>
         </GridColumn>
       </GridRow>
     </Layout>
