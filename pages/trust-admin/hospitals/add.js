@@ -30,33 +30,37 @@ const AddAHospital = ({ error, trustId }) => {
 
   const submit = async (payload) => {
     payload.trustId = trustId;
-    await fetch("/api/create-hospital", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    })
-      .then(async (response) => {
-        const json = await response.json();
-        if (!response.ok && response.status !== 201)
-          throw new Error({ ...json, status: response.status });
-        return json;
-      })
-      .then((response) =>
-        Router.push(
-          "/trust-admin/hospitals/[id]/add-success",
-          `/trust-admin/hospitals/${response.hospitalId}/add-success`
-        )
-      )
-      .catch((e) => {
-        let submitErrors = [
-          e.props.status === 400
-            ? getHospitalUniqueError(e.props.err)
-            : getGenericError(),
-        ];
-        setErrors(submitErrors);
+    try {
+      const response = await fetch("/api/create-hospital", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error({ ...json, status: response.status });
+      }
+
+      Router.push(
+        "/trust-admin/hospitals/[id]/add-success",
+        `/trust-admin/hospitals/${json.hospitalId}/add-success`
+      );
+
+      return true;
+    } catch (e) {
+      const submitErrors = [
+        e.props.status === 400
+          ? getHospitalUniqueError(error.props.err)
+          : getGenericError(),
+      ];
+      setErrors(submitErrors);
+    }
+
+    return false;
   };
 
   return (
