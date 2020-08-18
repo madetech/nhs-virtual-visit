@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import ErrorSummary from "../../src/components/ErrorSummary";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Layout from "../../src/components/Layout";
@@ -11,6 +11,7 @@ import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Button from "../../src/components/Button";
 import Select from "../../src/components/Select";
+import Form from "../../src/components/Form";
 import Router from "next/router";
 import { ADMIN } from "../../src/helpers/userTypes";
 import { VIDEO_PROVIDER_OPTIONS } from "../../src/providers/CallIdProvider";
@@ -31,8 +32,7 @@ const AddATrust = () => {
     return error.length === 1 ? error[0].message : "";
   };
 
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     const onSubmitErrors = [];
 
     const setNameError = (errors) => {
@@ -140,6 +140,7 @@ const AddATrust = () => {
             pathname: "/admin/add-a-trust-success",
             query: { trustId: trustId },
           });
+          return true;
         } else if (status === 409) {
           const { err } = await response.json();
           setAdminCodeUniqueError(onSubmitErrors, err);
@@ -149,12 +150,14 @@ const AddATrust = () => {
           });
           setErrors(onSubmitErrors);
         }
+
+        return false;
       };
 
-      await submitAnswers(name);
+      return await submitAnswers(name);
     }
     setErrors(onSubmitErrors);
-  });
+  };
 
   return (
     <Layout
@@ -166,7 +169,7 @@ const AddATrust = () => {
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <Heading>Add a trust</Heading>
             <FormGroup>
               <Label htmlFor="trust-name" className="nhsuk-label--l">
@@ -259,7 +262,7 @@ const AddATrust = () => {
               />
             </FormGroup>
             <Button className="nhsuk-u-margin-top-5">Add trust</Button>
-          </form>
+          </Form>
         </GridColumn>
       </GridRow>
     </Layout>
