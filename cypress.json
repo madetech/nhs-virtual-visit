@@ -10,5 +10,12 @@
     "fakeWard": "FAKENHS",
     "baseUrl": "http://localhost:3001"
   },
-  "video": false
+  "video": false,
+  "lighthouse": {
+    "performance": 15,
+    "accessibility": 95,
+    "best-practices": 95,
+    "seo": 80,
+    "pwa": 0
+  }
 }
