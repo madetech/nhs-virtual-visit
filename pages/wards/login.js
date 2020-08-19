@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import fetch from "isomorphic-unfetch";
 import Button from "../../src/components/Button";
 import ErrorSummary from "../../src/components/ErrorSummary";
@@ -9,14 +9,14 @@ import Hint from "../../src/components/Hint";
 import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
+import Form from "../../src/components/Form";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 const Login = () => {
   const [code, setCode] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const onSubmit = useCallback(async (event) => {
-    event.preventDefault();
+  const onSubmit = async () => {
     const errors = [];
 
     if (!code) {
@@ -37,6 +37,8 @@ const Login = () => {
 
       if (response.status === 201) {
         window.location.href = `/wards/visits`;
+
+        return true;
       } else {
         errors.push({
           id: "code",
@@ -46,7 +48,9 @@ const Login = () => {
     }
 
     setErrors(errors);
-  });
+
+    return false;
+  };
 
   return (
     <Layout
@@ -58,7 +62,7 @@ const Login = () => {
           <ErrorSummary errors={errors} />
           <Heading>Log in to book a virtual visit</Heading>
 
-          <form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label htmlFor="code">Ward code</Label>
               <Hint>You&apos;ll have been given a ward code to use.</Hint>
@@ -76,7 +80,7 @@ const Login = () => {
                 Log in
               </Button>
             </FormGroup>
-          </form>
+          </Form>
         </GridColumn>
         <span style={{ clear: "both", display: "block" }}></span>
       </GridRow>
