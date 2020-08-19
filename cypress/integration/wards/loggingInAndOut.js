@@ -24,6 +24,11 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
     ThenISeeAnError();
   });
 
+  it("should pass the audits", function () {
+    cy.lighthouse();
+    cy.pa11y();
+  });
+
   // Allows a ward staff to log in and out
   function GivenIAmAWardStaff() {}
 
