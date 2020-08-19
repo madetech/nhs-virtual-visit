@@ -58,11 +58,11 @@ const Login = () => {
           message: "The code or password you entered was not recognised",
         });
       }
-
-      return false;
     }
 
     setErrors(onSubmitErrors);
+
+    return false;
   };
 
   return (
