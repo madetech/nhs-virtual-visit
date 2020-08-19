@@ -45,52 +45,58 @@ const DateSelect = ({
         <Hint>For example, 1&zwj;6&zwj; 4&zwj; 2&zwj;0&zwj;2&zwj;0</Hint>
         {hasDateError ? <ErrorMessage>{dateErrorMessage}</ErrorMessage> : null}
         <div className="nhsuk-date-input__item">
-          <Label>Day</Label>
-          <Input
-            style={{ padding: "16px!important", height: "64px" }}
-            type="number"
-            hasError={hasDateError}
-            onChange={(event) => {
-              setDate({ ...date, day: parseInt(event.target.value) });
-            }}
-            className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-u-font-size-32 nhsuk-input--width-10"
-            id="day"
-            name="day"
-            value={date.day}
-            autoComplete="off"
-          />
+          <FormGroup>
+            <Label htmlFor="day">Day</Label>
+            <Input
+              style={{ padding: "16px!important", height: "64px" }}
+              type="number"
+              hasError={hasDateError}
+              onChange={(event) => {
+                setDate({ ...date, day: parseInt(event.target.value) });
+              }}
+              className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-u-font-size-32 nhsuk-input--width-10"
+              id="day"
+              name="day"
+              value={date.day}
+              autoComplete="off"
+            />
+          </FormGroup>
         </div>
         <div className="nhsuk-date-input__item">
-          <Label>Month</Label>
-          <Input
-            style={{ padding: "16px!important", height: "64px" }}
-            type="number"
-            hasError={hasDateError}
-            className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-u-font-size-32 nhsuk-input--width-10"
-            id="month"
-            name="month"
-            onChange={(event) => {
-              setDate({ ...date, month: parseInt(event.target.value) - 1 });
-            }}
-            value={Number(date.month) + 1}
-            autoComplete="off"
-          />
+          <FormGroup>
+            <Label htmlFor="month">Month</Label>
+            <Input
+              style={{ padding: "16px!important", height: "64px" }}
+              type="number"
+              hasError={hasDateError}
+              className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-u-font-size-32 nhsuk-input--width-10"
+              id="month"
+              name="month"
+              onChange={(event) => {
+                setDate({ ...date, month: parseInt(event.target.value) - 1 });
+              }}
+              value={Number(date.month) + 1}
+              autoComplete="off"
+            />
+          </FormGroup>
         </div>
         <div className="nhsuk-date-input__item nhsuk-u-padding-bottom-5">
-          <Label>Year</Label>
-          <Input
-            style={{ padding: "16px!important", height: "64px" }}
-            type="number"
-            hasError={hasDateError}
-            className="nhsuk-input--width-4 nhsuk-u-font-size-32 nhsuk-input--width-10"
-            id="year"
-            name="year"
-            onChange={(event) => {
-              setDate({ ...date, year: parseInt(event.target.value) });
-            }}
-            value={date.year}
-            autoComplete="off"
-          />
+          <FormGroup>
+            <Label htmlFor="year">Year</Label>
+            <Input
+              style={{ padding: "16px!important", height: "64px" }}
+              type="number"
+              hasError={hasDateError}
+              className="nhsuk-input--width-4 nhsuk-u-font-size-32 nhsuk-input--width-10"
+              id="year"
+              name="year"
+              onChange={(event) => {
+                setDate({ ...date, year: parseInt(event.target.value) });
+              }}
+              value={date.year}
+              autoComplete="off"
+            />
+          </FormGroup>
         </div>
       </FormGroup>
       <FormGroup>
@@ -100,36 +106,40 @@ const DateSelect = ({
         <Hint>For example, 15 00</Hint>
         {hasTimeError ? <ErrorMessage>{timeErrorMessage}</ErrorMessage> : null}
         <div className="nhsuk-date-input__item">
-          <Label>Hour</Label>
-          <Input
-            style={{ padding: "16px!important", height: "64px" }}
-            type="number"
-            hasError={hasTimeError}
-            className="nhsuk-input--width-2 nhsuk-u-font-size-32"
-            id="hour"
-            name="hour"
-            onChange={(event) => {
-              setDate({ ...date, hour: parseInt(event.target.value) });
-            }}
-            value={date.hour}
-            autoComplete="off"
-          />
+          <FormGroup>
+            <Label htmlFor="hour">Hour</Label>
+            <Input
+              style={{ padding: "16px!important", height: "64px" }}
+              type="number"
+              hasError={hasTimeError}
+              className="nhsuk-input--width-2 nhsuk-u-font-size-32"
+              id="hour"
+              name="hour"
+              onChange={(event) => {
+                setDate({ ...date, hour: parseInt(event.target.value) });
+              }}
+              value={date.hour}
+              autoComplete="off"
+            />
+          </FormGroup>
         </div>
         <div className="nhsuk-date-input__item">
-          <Label>Minutes</Label>
-          <Input
-            style={{ padding: "16px!important", height: "64px" }}
-            type="number"
-            hasError={hasTimeError}
-            className="nhsuk-input--width-2 nhsuk-u-font-size-32"
-            id="minute"
-            name="minute"
-            onChange={(event) => {
-              setDate({ ...date, minute: parseInt(event.target.value) });
-            }}
-            value={date.minute}
-            autoComplete="off"
-          />
+          <FormGroup>
+            <Label htmlFor="minute">Minutes</Label>
+            <Input
+              style={{ padding: "16px!important", height: "64px" }}
+              type="number"
+              hasError={hasTimeError}
+              className="nhsuk-input--width-2 nhsuk-u-font-size-32"
+              id="minute"
+              name="minute"
+              onChange={(event) => {
+                setDate({ ...date, minute: parseInt(event.target.value) });
+              }}
+              value={date.minute}
+              autoComplete="off"
+            />
+          </FormGroup>
         </div>
       </FormGroup>
     </>
