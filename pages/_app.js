@@ -19,7 +19,7 @@ class MyApp extends App {
 
     return (
       <>
-        <Head>
+        <Head lang="en">
           <meta name="robots" content="noindex, nofollow" />
         </Head>
         <Component {...modifiedPageProps} />
