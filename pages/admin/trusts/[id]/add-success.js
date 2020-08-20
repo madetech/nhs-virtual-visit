@@ -1,11 +1,11 @@
 import React from "react";
 import Error from "next/error";
-import Layout from "../../src/components/Layout";
-import AnchorLink from "../../src/components/AnchorLink";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
-import verifyAdminToken from "../../src/usecases/verifyAdminToken";
-import ActionLink from "../../src/components/ActionLink";
-import { ADMIN } from "../../src/helpers/userTypes";
+import Layout from "../../../../src/components/Layout";
+import AnchorLink from "../../../../src/components/AnchorLink";
+import propsWithContainer from "../../../../src/middleware/propsWithContainer";
+import verifyAdminToken from "../../../../src/usecases/verifyAdminToken";
+import ActionLink from "../../../../src/components/ActionLink";
+import { ADMIN } from "../../../../src/helpers/userTypes";
 
 const AddATrustSuccess = ({ error, name }) => {
   if (error) {
@@ -42,7 +42,7 @@ const AddATrustSuccess = ({ error, name }) => {
 export const getServerSideProps = propsWithContainer(
   verifyAdminToken(async ({ container, query }) => {
     const getRetrieveTrustById = container.getRetrieveTrustById();
-    const { trust, error } = await getRetrieveTrustById(query.trustId);
+    const { trust, error } = await getRetrieveTrustById(query.id);
 
     if (error) {
       return { props: { error: error } };
