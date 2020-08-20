@@ -35,8 +35,6 @@ yarn-error.log*
 # Cypress to ignore
 cypress/videos
 cypress/fixtures
-cypress/plugins
-cypress/support
 cypress/screenshots
 
 #docker db files
