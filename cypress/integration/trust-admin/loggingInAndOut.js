@@ -7,6 +7,7 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   });
 
   it("allows a trust admin to log in and out", () => {
+    cy.audit();
     GivenIAmATrustAdmin();
     WhenIVisitTheTrustAdminLogInPage();
     AndIEnterAValidTrustAdminCodeAndPassword();
