@@ -9,12 +9,14 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
   it("allows a ward staff to log in and out", () => {
     GivenIAmAWardStaff();
     WhenIVisitTheLogInPage();
+    cy.audit();
     AndIEnterAValidWardCode();
     AndISubmitTheForm();
     ThenISeeTheWardHomePage();
 
     WhenIClickLogOut();
     ThenISeeTheWardStaffLogInPage();
+    cy.audit();
   });
 
   it("displays an error for an invalid code", () => {

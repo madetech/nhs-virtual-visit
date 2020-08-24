@@ -11,9 +11,13 @@ describe("As an admin, I want to edit a trust so that I can update the details o
     WhenIClickToEditATrust();
     ThenISeeTheEditATrustForm();
 
+    cy.audit();
+
     WhenIUpdateTheVideoProvider();
     AndISubmitTheForm();
     ThenISeeTheTrustIsUpdated();
+
+    cy.audit();
 
     WhenIClickToReturnToSiteAdministration();
     ThenISeeTheSiteAdministrationPage();

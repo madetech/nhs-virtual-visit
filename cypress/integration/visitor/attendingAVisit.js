@@ -10,17 +10,21 @@ describe("As a patient's key contact, I want to attend a virtual visit so that I
     GivenIAmAKeyContact();
     WhenIVisitTheAttendAVirtualVisitPageWithACallPassword();
     ThenISeeTheAttendAVirtualStartPage();
+    cy.audit();
 
     WhenIClickOnStartNow();
     ThenISeeTheWhatIsYourNamePage();
+    cy.audit();
 
     WhenIEnterMyName();
     AndISubmitTheForm();
     ThenISeeAVideoFrame();
     AndISeeAnEndCallButton();
+    cy.audit();
 
     WhenIClickOnEndCall();
     ThenISeeTheVirtualVisitIsCompleted();
+    cy.audit();
     AndIDoNotSeeLinksForWardStaff();
   });
 

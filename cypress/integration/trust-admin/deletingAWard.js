@@ -16,6 +16,7 @@ describe("As a trust admin, I want to delete a ward so that it can no longer use
 
     WhenIClickToDeleteAWard();
     ThenISeeTheDeleteAWardConfirmationPage();
+    cy.audit();
 
     WhenIConfirmIWantToDeleteThisWard();
     ThenISeeTheWardIsDeleted();

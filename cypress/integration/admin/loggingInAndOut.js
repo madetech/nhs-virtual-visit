@@ -9,9 +9,14 @@ describe("As an admin, I want to log in so that I can access the service.", () =
   it("allows an admin to log in and out", () => {
     GivenIAmAnAdmin();
     WhenIVisitTheAdminLogInPage();
+
+    cy.audit();
+
     AndIEnterAValidAdminCodeAndPassword();
     AndISubmitTheForm();
     ThenISeeTheAdminHomePage();
+
+    cy.audit();
 
     WhenIClickLogOut();
     ThenISeeTheAdminLogInPage();
