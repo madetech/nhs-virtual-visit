@@ -13,11 +13,13 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     WhenIClickBookAVirtualVisitOnTheNavigationBar();
     cy.log("* 3 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheBeforeBookingAVisitPage();
+    cy.audit();
 
     WhenIClickStartNow();
     cy.log("* 4 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheBookAVirtualVisitForm();
     cy.log("* 5 bookingAVisit integration test ***", new Date().toISOString());
+    cy.audit();
 
     WhenIFillOutTheForm();
     cy.log("* 6 bookingAVisit integration test ***", new Date().toISOString());
@@ -25,6 +27,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     cy.log("* 7 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheCheckYourAnswersPage();
     cy.log("* 8 bookingAVisit integration test ***", new Date().toISOString());
+    cy.audit();
 
     WhenIClickChange();
     cy.log("* 9 bookingAVisit integration test ***", new Date().toISOString());
@@ -34,15 +37,18 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     WhenISubmitTheForm();
     cy.log("* 11 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheCheckYourAnswersPage();
+    cy.audit();
     cy.log("* 12 bookingAVisit integration test ***", new Date().toISOString());
     AndIClickBookAVirtualVisit();
     cy.log("* 13 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheVirtualVisitIsBooked();
+    cy.audit();
     cy.log("* 14 bookingAVisit integration test ***", new Date().toISOString());
 
     WhenIClickViewVirtualVisits();
     cy.log("* 15 bookingAVisit integration test ***", new Date().toISOString());
     ThenISeeTheVirtualVisitsPage();
+    cy.audit();
     cy.log("* 16 bookingAVisit integration test ***", new Date().toISOString());
     AndISeeTheBookedVirtualVisitInTheList();
     cy.log("* 17 bookingAVisit integration test ***", new Date().toISOString());

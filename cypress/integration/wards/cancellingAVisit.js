@@ -11,11 +11,12 @@ describe("As a ward staff, I want to cancel a virtual visit so that the visit ca
     WhenIClickOnAVirtualVisit();
     AndIClickOnCancel();
     ThenISeeTheCancelConfirmationPage();
+    cy.audit();
     AndISeeTheDetailsOfTheVirtualVisit();
 
     WhenIClickOnYesCancelThisVisit();
     ThenISeeTheVirtualVisitIsCancelled();
-
+    cy.audit();
     WhenIClickReturnToVirtualVisits();
     ThenIDoNotSeeTheVirtualVisit();
   });

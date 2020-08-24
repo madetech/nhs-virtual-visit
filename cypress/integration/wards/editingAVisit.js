@@ -11,6 +11,7 @@ describe("As a ward staff, I want to edit a visit from the list screen so that I
     WhenIClickOnAVirtualVisit();
     AndIClickOnEdit();
     ThenISeeTheEditAVirtualVisitForm();
+    cy.audit();
 
     WhenIEditTheVisit();
     AndISubmitTheForm();

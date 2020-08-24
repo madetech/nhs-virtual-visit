@@ -17,6 +17,8 @@ describe("As a trust admin, I want to add a ward so that ward staff can book vir
     WhenIClickOnAddAWard();
     ThenISeeTheAddAWardForm();
 
+    cy.audit();
+
     WhenIFillOutTheForm();
     AndISubmitTheForm();
     ThenISeeTheWardIsAdded();

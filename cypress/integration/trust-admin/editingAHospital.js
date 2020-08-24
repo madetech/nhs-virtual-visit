@@ -78,6 +78,7 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
 
     WhenIClickOnTheEditLink();
     ThenIShouldBeOnTheEditHospitalPage();
+    cy.audit();
 
     WhenISubmitFormEmptyHospitalName();
     ThenISeeErrors();

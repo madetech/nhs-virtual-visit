@@ -11,15 +11,20 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     WhenIClickHospitalsOnTheNavigationBar();
     ThenISeeTheHospitalsPage();
 
+    cy.audit();
+
     WhenIClickAddAHospital();
     ThenISeeTheAddAHospitalForm();
+
+    cy.audit();
 
     WhenIFillOutTheForm();
     AndISubmitTheForm();
     ThenISeeTheHospitalIsAdded();
-
     WhenIClickToGoToTheAddedHospital();
     ThenISeeTheAddedHospitalPage();
+
+    cy.audit();
   });
 
   it("displays errors when fields have been left blank", () => {

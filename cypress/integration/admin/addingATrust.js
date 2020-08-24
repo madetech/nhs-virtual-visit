@@ -11,9 +11,13 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
     WhenIClickOnAddATrust();
     ThenISeeTheAddATrustForm();
 
+    cy.audit();
+
     WhenIFillOutTheForm();
     AndISubmitTheForm();
     ThenISeeTheTrustIsAdded();
+
+    cy.audit();
 
     WhenIClickToReturnToSiteAdministration();
     ThenISeeTheSiteAdministrationPage();
