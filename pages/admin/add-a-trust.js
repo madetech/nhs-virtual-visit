@@ -3,7 +3,6 @@ import ErrorSummary from "../../src/components/ErrorSummary";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Layout from "../../src/components/Layout";
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
-
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import FormGroup from "../../src/components/FormGroup";
 import Heading from "../../src/components/Heading";
@@ -136,10 +135,10 @@ const AddATrust = () => {
 
         if (status == 201) {
           const { trustId } = await response.json();
-          Router.push({
-            pathname: "/admin/add-a-trust-success",
-            query: { trustId: trustId },
-          });
+          Router.push(
+            "/admin/trusts/[id]/add-success",
+            `/admin/trusts/${trustId}/add-success`
+          );
           return true;
         } else if (status === 409) {
           const { err } = await response.json();
