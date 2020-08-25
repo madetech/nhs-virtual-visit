@@ -1,9 +1,15 @@
+import {
+  GivenIAmLoggedInAsAWardStaff,
+  ThenISeeTheCheckYourAnswersPage,
+  ThenISeeTheVirtualVisitsPage,
+  WhenIClickOnAVirtualVisit,
+  WhenIClickViewVirtualVisits,
+} from "./wardCommonSteps";
+import { whenIClickLogOut } from "../commonSteps";
+
 describe("As a ward staff, I want to edit a visit from the list screen so that I can change the details of a visit.", () => {
-  before(() => {
-    // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
-    );
+  after(() => {
+    whenIClickLogOut();
   });
 
   it("allows a ward staff to edit a virtual visit", () => {
@@ -35,16 +41,9 @@ describe("As a ward staff, I want to edit a visit from the list screen so that I
     ThenISeeErrors();
   });
 
-  // Allows a ward staff to edit a virtual visit
-  function GivenIAmLoggedInAsAWardStaff() {
-    cy.visit(Cypress.env("baseUrl"));
-    cy.get("input").type(Cypress.env("validWard"));
-    cy.get("button").contains("Log in").click();
-  }
-
-  function WhenIClickOnAVirtualVisit() {
-    cy.get("summary.nhsuk-details__summary").contains("Alice").click();
-  }
+  // function WhenIClickOnAVirtualVisit() {
+  //   cy.get("summary.nhsuk-details__summary").contains("Alice").click();
+  // }
 
   function AndIClickOnEdit() {
     cy.get("summary.nhsuk-details__summary")
@@ -69,12 +68,12 @@ describe("As a ward staff, I want to edit a visit from the list screen so that I
     cy.get("button").contains("Continue").click();
   }
 
-  function ThenISeeTheCheckYourAnswersPage() {
-    cy.get("h1").should(
-      "contain",
-      "Check your answers before editing a virtual visit"
-    );
-  }
+  // function ThenISeeTheCheckYourAnswersPage() {
+  //   cy.get("h1").should(
+  //     "contain",
+  //     "Check your answers before editing a virtual visit"
+  //   );
+  // }
 
   function WhenIClickEditAVirtualVisit() {
     cy.get("button", { timeout: cy.pageLoadTimeout })
@@ -89,13 +88,13 @@ describe("As a ward staff, I want to edit a visit from the list screen so that I
     );
   }
 
-  function WhenIClickViewVirtualVisits() {
-    cy.get("a").contains("Return to virtual visits").click();
-  }
+  // function WhenIClickViewVirtualVisits() {
+  //   cy.get("a").contains("Return to virtual visits").click();
+  // }
 
-  function ThenISeeTheVirtualVisitsPage() {
-    cy.get("h1").should("contain", "Virtual visits");
-  }
+  // function ThenISeeTheVirtualVisitsPage() {
+  //   cy.get("h1").should("contain", "Virtual visits");
+  // }
 
   function AndISeeTheEditedVirtualVisitInTheList() {
     cy.get("summary.nhsuk-details__summary").should("contain", "Catra");

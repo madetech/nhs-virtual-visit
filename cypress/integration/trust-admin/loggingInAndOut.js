@@ -1,9 +1,8 @@
+import { whenIClickLogOut } from "../commonSteps";
+
 describe("As a trust admin, I want to log in so that I can access the service.", () => {
-  before(() => {
-    // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
-    );
+  after(() => {
+    whenIClickLogOut();
   });
 
   it("allows a trust admin to log in and out", () => {

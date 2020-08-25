@@ -1,9 +1,12 @@
+import {
+  GivenIAmLoggedInAsAWardStaff,
+  ThenISeeTheVirtualVisitIsBooked,
+} from "./wardCommonSteps";
+import { whenIClickLogOut } from "../commonSteps";
+
 describe("As a ward staff, I want to easily rebook a visit from the list screen so that I can easily book a patient in for another visit.", () => {
-  before(() => {
-    // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
-    );
+  after(() => {
+    whenIClickLogOut();
   });
 
   it("allows a ward staff to rebook a virtual visit", () => {
@@ -24,12 +27,6 @@ describe("As a ward staff, I want to easily rebook a visit from the list screen 
     WhenIClickUpcomingVisits();
     ThenISeeTheBookedVirtualVisitInTheList();
   });
-
-  function GivenIAmLoggedInAsAWardStaff() {
-    cy.visit(Cypress.env("baseUrl"));
-    cy.get("input").type(Cypress.env("validWard"));
-    cy.get("button").contains("Log in").click();
-  }
 
   function WhenIClickOnAVirtualVisit() {
     cy.get("summary.nhsuk-details__summary").contains("Alice").click();
@@ -64,13 +61,6 @@ describe("As a ward staff, I want to easily rebook a visit from the list screen 
     cy.get("button", { timeout: cy.pageLoadTimeout })
       .contains("Book virtual visit")
       .click();
-  }
-
-  function ThenISeeTheVirtualVisitIsBooked() {
-    cy.get("h1", { timeout: cy.pageLoadTimeout }).should(
-      "contain",
-      "Virtual visit booked"
-    );
   }
 
   function WhenIClickViewVirtualVisits() {

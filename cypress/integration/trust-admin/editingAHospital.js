@@ -1,9 +1,8 @@
+import { whenIClickLogOut } from "../commonSteps";
+
 describe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
-  before(() => {
-    // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
-    );
+  after(() => {
+    whenIClickLogOut();
   });
 
   function GivenIAmLoggedInAsAnAdmin() {

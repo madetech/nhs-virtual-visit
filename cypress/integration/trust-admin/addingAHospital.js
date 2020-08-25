@@ -1,9 +1,13 @@
+import { whenIClickLogOut } from "../commonSteps";
+import {
+  GivenIAmLoggedInAsATrustAdmin,
+  ThenISeeTheHospitalsPage,
+  WhenIClickHospitalsOnTheNavigationBar,
+} from "./trustAdminCommonSteps";
+
 describe("As a trust admin, I want to add a hospital so that I can manage virtual visits per hospital.", () => {
-  before(() => {
-    // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
-    );
+  after(() => {
+    whenIClickLogOut();
   });
 
   it("allows a trust admin to add a hospital", () => {
@@ -64,24 +68,6 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     AndISubmitTheForm();
     ThenISeeErrors();
   });
-
-  // Allows a trust admin to add a hospital
-  function GivenIAmLoggedInAsATrustAdmin() {
-    cy.visit(Cypress.env("baseUrl") + "/trust-admin/login");
-
-    cy.get("input[name=code]").type(Cypress.env("validTrustAdminCode"));
-    cy.get("input[name=password]").type(Cypress.env("validTrustAdminPassword"));
-
-    cy.get("button").contains("Log in").click();
-  }
-
-  function WhenIClickHospitalsOnTheNavigationBar() {
-    cy.get("a.nhsuk-header__navigation-link").contains("Hospitals").click();
-  }
-
-  function ThenISeeTheHospitalsPage() {
-    cy.get("h1").should("contain", "Hospitals");
-  }
 
   function WhenIClickAddAHospital() {
     cy.get("a").contains("Add a hospital").click();

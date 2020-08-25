@@ -1,9 +1,9 @@
+import { ThenISeeThePageForTheHospital } from "./trustAdminCommonSteps";
+import { whenIClickLogOut } from "../commonSteps";
+
 describe("As a trust admin, I want to edit a ward so that I can modify the details of a ward.", () => {
-  before(() => {
-    // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
-    );
+  after(() => {
+    whenIClickLogOut();
   });
 
   it("allows a trust admin to edit a ward", () => {
@@ -62,10 +62,6 @@ describe("As a trust admin, I want to edit a ward so that I can modify the detai
 
   function WhenIClickOnAHospital() {
     cy.get("a").contains("View Test Hospital").click();
-  }
-
-  function ThenISeeThePageForTheHospital() {
-    cy.get("h1").should("contain", "Test Hospital");
   }
 
   function WhenIClickToEditAWard() {

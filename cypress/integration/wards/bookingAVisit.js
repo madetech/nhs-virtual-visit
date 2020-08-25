@@ -1,9 +1,16 @@
+import { whenIClickLogOut } from "../commonSteps";
+import {
+  GivenIAmLoggedInAsAWardStaff,
+  ThenISeeTheBookAVirtualVisitForm,
+  ThenISeeTheCheckYourAnswersPage,
+  ThenISeeTheVirtualVisitIsBooked,
+  ThenISeeTheVirtualVisitsPage,
+  WhenIClickViewVirtualVisits,
+} from "./wardCommonSteps";
+
 describe("As a ward staff, I want to schedule a virtual visit so that patients can speak with their loved ones.", () => {
-  before(() => {
-    // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
-    );
+  after(() => {
+    whenIClickLogOut();
   });
 
   it("allows a ward staff to book a virtual visit", () => {
@@ -66,13 +73,6 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     ThenISeeErrors();
   });
 
-  // Allows a ward staff to book a virtual visit
-  function GivenIAmLoggedInAsAWardStaff() {
-    cy.visit(Cypress.env("baseUrl"));
-    cy.get("input").type(Cypress.env("validWard"));
-    cy.get("button").contains("Log in").click();
-  }
-
   function WhenIClickBookAVirtualVisitOnTheNavigationBar() {
     cy.get("a.nhsuk-header__navigation-link")
       .contains("Book a virtual visit")
@@ -87,10 +87,6 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     cy.get("a.nhsuk-button").contains("Start now").click();
   }
 
-  function ThenISeeTheBookAVirtualVisitForm() {
-    cy.get("h1").should("contain", "Book a virtual visit");
-  }
-
   function WhenIFillOutTheForm() {
     cy.get("input[name=patient-name]").type("Adora");
     cy.get("input[name=contact-name]").type("Catra");
@@ -100,13 +96,6 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
 
   function AndISubmitTheForm() {
     cy.get("button").contains("Continue").click();
-  }
-
-  function ThenISeeTheCheckYourAnswersPage() {
-    cy.get("h1").should(
-      "contain",
-      "Check your answers before booking a virtual visit"
-    );
   }
 
   function WhenIClickChange() {
@@ -121,21 +110,6 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     cy.get("button", { timeout: cy.pageLoadTimeout })
       .contains("Book virtual visit")
       .click();
-  }
-
-  function ThenISeeTheVirtualVisitIsBooked() {
-    cy.get("h1", { timeout: cy.pageLoadTimeout }).should(
-      "contain",
-      "Virtual visit booked"
-    );
-  }
-
-  function WhenIClickViewVirtualVisits() {
-    cy.get("a").contains("View virtual visits").click();
-  }
-
-  function ThenISeeTheVirtualVisitsPage() {
-    cy.get("h1").should("contain", "Virtual visits");
   }
 
   function AndISeeTheBookedVirtualVisitInTheList() {
