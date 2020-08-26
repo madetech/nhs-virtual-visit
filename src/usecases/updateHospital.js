@@ -1,3 +1,5 @@
+import logger from "../../logger";
+
 export default ({ getDb }) => async ({
   name,
   id,
@@ -21,7 +23,7 @@ export default ({ getDb }) => async ({
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       id: null,
       error: error.toString(),

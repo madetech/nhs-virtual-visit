@@ -1,3 +1,5 @@
+import logger from "../../logger";
+
 const retrieveWards = ({ getDb }) => async (trustId) => {
   const db = await getDb();
   try {
@@ -38,7 +40,7 @@ const retrieveWards = ({ getDb }) => async (trustId) => {
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       wards: null,
       error: error.toString(),

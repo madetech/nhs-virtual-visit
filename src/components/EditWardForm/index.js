@@ -52,7 +52,6 @@ const EditWardForm = ({
       }
 
       const json = await response.json();
-      console.log({ response, json });
       await Router.push(
         "/trust-admin/wards/[id]/edit-success",
         `/trust-admin/wards/${json.wardId}/edit-success`

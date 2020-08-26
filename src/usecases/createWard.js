@@ -1,7 +1,9 @@
+import logger from "../../logger";
+
 const createWard = ({ getDb }) => async (ward) => {
   const db = await getDb();
   try {
-    console.log("Creating ward for ", ward);
+    logger.info("Creating ward for ", ward);
     const createdWard = await db.one(
       `INSERT INTO wards
         (id, name, code, trust_id, hospital_id)
@@ -16,7 +18,7 @@ const createWard = ({ getDb }) => async (ward) => {
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       wardId: null,
       error: error.toString(),

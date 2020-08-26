@@ -1,3 +1,5 @@
+import logger from "../../logger";
+
 const retrieveTrusts = ({ getDb }) => async () => {
   const db = await getDb();
   try {
@@ -21,7 +23,7 @@ const retrieveTrusts = ({ getDb }) => async () => {
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       trusts: null,
       error: error.toString(),

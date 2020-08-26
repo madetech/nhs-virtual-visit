@@ -28,7 +28,6 @@ describe("<Form>", () => {
 
   it("should allow multiple submits on failed submit", () => {
     const onSubmit = jest.fn(() => {
-      console.log("hello");
       return false;
     });
 

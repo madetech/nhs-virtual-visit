@@ -1,3 +1,5 @@
+import logger from "../../logger";
+
 export default ({ getDb }) => async (ward) => {
   const db = await getDb();
   try {
@@ -16,7 +18,7 @@ export default ({ getDb }) => async (ward) => {
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       wardId: null,
       error: error.toString(),

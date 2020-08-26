@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs";
+import logger from "../../logger";
 
 const verifyAdminCode = ({ getDb }) => async (code, password) => {
   const db = await getDb();
@@ -36,7 +37,7 @@ const verifyAdminCode = ({ getDb }) => async (code, password) => {
       };
     }
   } catch (error) {
-    console.log(error);
+    logger.error(error);
 
     return {
       validAdminCode: false,

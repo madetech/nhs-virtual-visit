@@ -1,4 +1,5 @@
 import moment from "moment";
+import logger from "../../logger";
 
 const captureEvent = ({ getDb }) => async ({ action, visitId, sessionId }) => {
   const db = await getDb();
@@ -24,7 +25,7 @@ const captureEvent = ({ getDb }) => async ({ action, visitId, sessionId }) => {
       error: null,
     };
   } catch (err) {
-    console.log(err);
+    logger.info(err);
     const message = `Failed to add ${action} event for visit ${visitId}`;
     return { event: null, error: message };
   }

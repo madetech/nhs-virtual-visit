@@ -1,6 +1,7 @@
 const next = require("next");
 const express = require("express");
 const sslRedirect = require("heroku-ssl-redirect");
+const log = require("./logger");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== "production";
@@ -19,6 +20,6 @@ app.prepare().then(() => {
 
   server.listen(port, (err) => {
     if (err) throw err;
-    console.log(`> Ready on http://localhost:${port}`);
+    log.info(`Ready on http://localhost:${port}`);
   });
 });
