@@ -1,6 +1,8 @@
+import logger from "../../logger";
+
 class ConsoleNotifyProvider {
   notify(linkUrl) {
-    console.log(`[ConsoleNotifyProvider] Link sent: ${linkUrl}`);
+    logger.info(`[ConsoleNotifyProvider] Link sent: ${linkUrl}`);
   }
 }
 

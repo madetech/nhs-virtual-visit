@@ -1,3 +1,4 @@
+import logger from "../../logger";
 import { COMPLETE } from "../helpers/visitStatus";
 
 const markVisitAsComplete = ({ getDb }) => async ({ id, wardId }) => {
@@ -25,7 +26,7 @@ const markVisitAsComplete = ({ getDb }) => async ({ id, wardId }) => {
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       id: null,
       error: error.toString(),

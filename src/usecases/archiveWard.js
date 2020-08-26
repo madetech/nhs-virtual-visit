@@ -1,5 +1,6 @@
 import moment from "moment";
 import { ARCHIVED } from "../../src/helpers/visitStatus";
+import logger from "../../logger";
 
 const archiveWard = ({ getRetrieveWardById, getDb }) => async (
   wardId,
@@ -23,7 +24,7 @@ const archiveWard = ({ getRetrieveWardById, getDb }) => async (
       [ARCHIVED, wardId]
     );
   } catch (err) {
-    console.error(
+    logger.error(
       `Failed to remove visits [${wardId}] from ward ${trustId}`,
       err
     );
@@ -39,7 +40,7 @@ const archiveWard = ({ getRetrieveWardById, getDb }) => async (
       [wardId, moment().toISOString()]
     );
   } catch (err) {
-    console.error(
+    logger.error(
       `Failed to remove ward [${wardId}] from trust ${trustId}`,
       err
     );

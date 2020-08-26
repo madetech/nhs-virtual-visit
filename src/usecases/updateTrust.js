@@ -1,3 +1,4 @@
+import logger from "../../logger";
 import { VIDEO_PROVIDERS } from "../providers/CallIdProvider";
 
 const updateTrust = ({ getDb }) => async ({ id, videoProvider }) => {
@@ -36,7 +37,7 @@ const updateTrust = ({ getDb }) => async ({ id, videoProvider }) => {
       };
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
 
     return {
       id: null,

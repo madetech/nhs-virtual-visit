@@ -1,3 +1,4 @@
+import logger from "../../logger";
 import bcrypt from "bcryptjs";
 
 const createTrust = ({ getDb }) => async ({
@@ -16,7 +17,7 @@ const createTrust = ({ getDb }) => async ({
   }
 
   try {
-    console.log("Creating trust", name);
+    logger.info("Creating trust", name);
 
     var salt = bcrypt.genSaltSync(10);
     var hashedPassword = bcrypt.hashSync(password, salt);
@@ -35,7 +36,7 @@ const createTrust = ({ getDb }) => async ({
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       trustId: null,
       error: error.toString(),

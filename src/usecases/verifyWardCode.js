@@ -1,3 +1,5 @@
+import logger from "../../logger";
+
 const verifyWardCode = ({ getDb }) => async (wardCode) => {
   const db = await getDb();
 
@@ -19,7 +21,7 @@ const verifyWardCode = ({ getDb }) => async (wardCode) => {
       return { validWardCode: false, error: null };
     }
   } catch (error) {
-    console.log(error);
+    logger.info(error);
 
     return {
       validWardCode: false,

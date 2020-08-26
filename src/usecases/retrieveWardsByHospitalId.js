@@ -1,3 +1,5 @@
+import logger from "../../logger";
+
 const retrieveWardsByHospitalId = ({ getDb }) => async (hospitalId) => {
   const db = await getDb();
   try {
@@ -36,7 +38,7 @@ const retrieveWardsByHospitalId = ({ getDb }) => async (hospitalId) => {
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       wards: null,
       error: error.toString(),

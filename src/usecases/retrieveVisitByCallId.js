@@ -1,8 +1,9 @@
+import logger from "../../logger";
 import { SCHEDULED, COMPLETE } from "../../src/helpers/visitStatus";
 
 const retrieveVisitByCallId = ({ getDb }) => async (callId) => {
   const db = await getDb();
-  console.log("Retrieving visit for  ", callId);
+  logger.info(`Retrieving visit for ${callId}`);
   try {
     const scheduledCalls = await db.any(
       `SELECT * FROM scheduled_calls_table
@@ -30,7 +31,7 @@ const retrieveVisitByCallId = ({ getDb }) => async (callId) => {
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       scheduledCall: null,
       error: error.toString(),

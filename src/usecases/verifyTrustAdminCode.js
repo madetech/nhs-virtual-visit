@@ -1,3 +1,4 @@
+import logger from "../../logger";
 import bcrypt from "bcryptjs";
 
 const verifyTrustAdminCode = ({ getDb }) => async (
@@ -39,7 +40,7 @@ const verifyTrustAdminCode = ({ getDb }) => async (
       return { validTrustAdminCode: false, trust: null, error: null };
     }
   } catch (error) {
-    console.log(error);
+    logger.info(error);
 
     return {
       validTrustAdminCode: false,

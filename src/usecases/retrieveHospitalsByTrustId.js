@@ -1,3 +1,5 @@
+import logger from "../../logger";
+
 const retrieveHospitalsByTrustId = ({ getDb }) => async (
   trustId,
   options = { withWards: false }
@@ -41,7 +43,7 @@ const retrieveHospitalsByTrustId = ({ getDb }) => async (
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       hospitals: [],
       error: error.toString(),

@@ -1,3 +1,4 @@
+import logger from "../../logger";
 import { SCHEDULED, COMPLETE } from "../../src/helpers/visitStatus";
 
 const retrieveVisits = ({ getDb }) => async ({ wardId }) => {
@@ -26,7 +27,7 @@ const retrieveVisits = ({ getDb }) => async ({ wardId }) => {
       error: null,
     };
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     return {
       scheduledCalls: null,
       error: error.toString(),
