@@ -63,7 +63,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.3",
+    "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^10.4.9",
     "babel-eslint": "^10.1.0",
     "cypress": "^4.12.1",
@@ -74,8 +74,8 @@
     "husky": "^4.2.5",
     "jest": "^26.4.2",
     "jest-css-modules-transform": "^4.0.1",
-    "lint-staged": "^10.2.11",
-    "prettier": "^2.0.5"
+    "lint-staged": "^10.2.13",
+    "prettier": "^2.1.1"
   },
   "husky": {
     "hooks": {
