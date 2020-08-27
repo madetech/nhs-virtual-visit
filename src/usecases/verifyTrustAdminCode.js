@@ -40,7 +40,7 @@ const verifyTrustAdminCode = ({ getDb }) => async (
       return { validTrustAdminCode: false, trust: null, error: null };
     }
   } catch (error) {
-    logger.info(error);
+    logger.error(error);
 
     return {
       validTrustAdminCode: false,
