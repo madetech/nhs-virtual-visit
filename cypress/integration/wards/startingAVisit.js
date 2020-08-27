@@ -2,7 +2,7 @@ import { GivenIAmLoggedInAsAWardStaff } from "./wardCommonSteps";
 import { whenIClickLogOut } from "../commonSteps";
 
 describe("As a ward staff, I want to start a virtual visit so that patients can speak with their loved ones.", () => {
-  after(() => {
+  afterEach(() => {
     whenIClickLogOut();
   });
 

@@ -1,7 +1,7 @@
 import { whenIClickLogOut } from "../commonSteps";
 
 describe("As a patient's key contact, I want to attend a virtual visit so that I can speak with my loved one.", () => {
-  after(() => {
+  afterEach(() => {
     whenIClickLogOut();
   });
 

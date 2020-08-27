@@ -50,6 +50,9 @@ const WardsTable = ({ wards, wardVisitTotals }) => (
             </td>
             <td className="nhsuk-table__cell">
               <AnchorLink
+                data-testid={`delete-${ward.name
+                  .toLowerCase()
+                  .replace(/\W+/g, "-")}`}
                 href="/trust-admin/wards/[id]/archive-confirmation"
                 as={`/trust-admin/wards/${ward.id}/archive-confirmation`}
               >

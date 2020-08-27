@@ -6,7 +6,7 @@ import {
 } from "./trustAdminCommonSteps";
 
 describe("As a trust admin, I want to add a hospital so that I can manage virtual visits per hospital.", () => {
-  after(() => {
+  afterEach(() => {
     whenIClickLogOut();
   });
 

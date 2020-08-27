@@ -8,7 +8,7 @@ import {
 import { whenIClickLogOut } from "../commonSteps";
 
 describe("As a ward staff, I want to edit a visit from the list screen so that I can change the details of a visit.", () => {
-  after(() => {
+  afterEach(() => {
     whenIClickLogOut();
   });
 

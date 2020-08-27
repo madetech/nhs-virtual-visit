@@ -23,10 +23,63 @@ function ThenISeeThePageForTheHospital() {
   cy.get("h1").should("contain", "Test Hospital");
 }
 
+function WhenIClickOnAHospital() {
+  cy.get("a").contains("View Test Hospital").click();
+}
+
+function WhenIClickOnAddAWard() {
+  cy.get("button").contains("Add a ward").click();
+}
+
+function WhenIFillOutTheAddWardForm(name) {
+  cy.get("input[name=ward-name]").type(name);
+  cy.get("input[name=ward-code]").type("glimmercode");
+  cy.get("input[name=ward-code-confirmation]").type("glimmercode");
+}
+
+function AndISubmitTheAddWardForm() {
+  cy.get("button").contains("Add ward").click();
+}
+
+function ThenISeeTheAddAWardForm() {
+  cy.get("h1").should("contain", "Add a ward");
+}
+
+function WhenIClickToEditAWard(name) {
+  cy.get("a").contains(`Edit ${name}`).click();
+}
+
+function ThenISeeTheEditAWardForm() {
+  cy.get("h1").should("contain", "Edit a ward");
+}
+
+function AndISubmitTheEditWardForm() {
+  cy.get("button").contains("Edit ward").click();
+}
+
+function WhenIClickToDeleteAWard(name) {
+  let element = name.toLowerCase().replace(/\W+/g, "-");
+  cy.get(`[data-testid=delete-${element}]`).click();
+}
+
+function ThenISeeTheWardIsDeleted(name) {
+  cy.get("h1").should("contain", `${name} has been deleted`);
+}
+
 module.exports = {
   GivenIAmLoggedInAsATrustAdmin,
   WhenIClickHospitalsOnTheNavigationBar,
   ThenISeeTheHospitalsPage,
   WhenIClickToReturnToThePageForTheHospital,
   ThenISeeThePageForTheHospital,
+  WhenIClickOnAHospital,
+  WhenIClickOnAddAWard,
+  WhenIFillOutTheAddWardForm,
+  AndISubmitTheAddWardForm,
+  ThenISeeTheAddAWardForm,
+  WhenIClickToEditAWard,
+  ThenISeeTheEditAWardForm,
+  AndISubmitTheEditWardForm,
+  WhenIClickToDeleteAWard,
+  ThenISeeTheWardIsDeleted,
 };

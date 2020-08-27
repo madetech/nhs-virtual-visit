@@ -5,7 +5,7 @@ import {
 } from "./adminCommonSteps";
 
 describe("As an admin, I want to edit a trust so that I can update the details of a trust.", () => {
-  after(() => {
+  afterEach(() => {
     whenIClickLogOut();
   });
 

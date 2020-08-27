@@ -1,7 +1,7 @@
 import { whenIClickLogOut } from "../commonSteps";
 
 describe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
-  after(() => {
+  afterEach(() => {
     whenIClickLogOut();
   });
 

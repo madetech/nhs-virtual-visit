@@ -9,7 +9,7 @@ import {
 } from "./wardCommonSteps";
 
 describe("As a ward staff, I want to schedule a virtual visit so that patients can speak with their loved ones.", () => {
-  after(() => {
+  afterEach(() => {
     whenIClickLogOut();
   });
 

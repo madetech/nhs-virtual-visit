@@ -1,7 +1,7 @@
 import { whenIClickLogOut } from "../commonSteps";
 
 describe("As a trust admin, I want to log in so that I can access the service.", () => {
-  after(() => {
+  afterEach(() => {
     whenIClickLogOut();
   });
 
