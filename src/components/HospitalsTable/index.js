@@ -73,6 +73,9 @@ const HospitalsTable = ({ hospitals }) => (
             </td>
             <td className="nhsuk-table__cell">
               <AnchorLink
+                data-testid={`edit-${hospital.name
+                  .toLowerCase()
+                  .replace(/\W+/g, "-")}`}
                 href="/trust-admin/hospitals/[id]/edit"
                 as={`/trust-admin/hospitals/${hospital.id}/edit`}
               >

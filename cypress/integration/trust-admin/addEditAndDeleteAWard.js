@@ -19,6 +19,7 @@ import {
 
 describe("As a trust admin, I want to add, edit and delete  a ward so that ward staff can book virtual visits.", () => {
   afterEach(() => {
+    // ensures state is clean for next test to run
     whenIClickLogOut();
   });
 

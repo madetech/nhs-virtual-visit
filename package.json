@@ -20,6 +20,7 @@
     "test:ci": "npm run format:check && npm run test:contract -- --runInBand && npm run test -- --runInBand",
     "test:migrate": "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed",
     "test:e2e2": "npm run test:migrate && npm run test:e2e",
+    "test:e2e2:open": "npm run test:migrate && npm run test:e2e:open",
     "build": "next build",
     "dev": "NODE_ENV=development node server.js",
     "start": "NODE_ENV=production node server.js",
