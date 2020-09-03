@@ -11,7 +11,7 @@
     "test:watch": "jest --watch",
     "test:contract": "jest --config ./jest.contract.config.js --runInBand",
     "test:contract:watch": "npm run test:contract -- --watch",
-    "test:e2e": "cypress run --headless",
+    "test:e2e": "npm run test:migrate && cypress run --headless",
     "test:e2e:open": "cypress open",
     "test:e2e:audit": "cypress run --headless --env runAudit=true performance=true",
     "test:e2e:audit:open": "cypress open --env runAudit=true performance=true",
