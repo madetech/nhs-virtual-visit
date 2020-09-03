@@ -1,10 +1,4 @@
-import { whenIClickLogOut } from "../commonSteps";
-
 describe("As a ward staff, I want to log in so that I can access the service.", () => {
-  afterEach(() => {
-    whenIClickLogOut();
-  });
-
   it("allows a ward staff to log in and out", () => {
     GivenIAmAWardStaff();
     WhenIVisitTheLogInPage();
