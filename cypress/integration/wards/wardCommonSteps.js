@@ -31,8 +31,8 @@ function GivenIAmLoggedInAsAWardStaff() {
   cy.get("button").contains("Log in").click();
 }
 
-function WhenIClickOnAVirtualVisit() {
-  cy.get("summary.nhsuk-details__summary").contains("Alice").click();
+function WhenIClickOnAVirtualVisit(name) {
+  cy.get("summary.nhsuk-details__summary").contains(name).click();
 }
 
 function WhenIClickReturnToVirtualVisits() {

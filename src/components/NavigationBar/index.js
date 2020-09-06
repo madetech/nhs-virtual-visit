@@ -1,14 +1,14 @@
 import React from "react";
 import Link from "next/link";
+import toLowerSnake from "../../helpers/toLowerSnake";
 
-const NavigationBar = ({ links, testId }) => (
+const NavigationBar = ({ links }) => (
   <nav
     className="nhsuk-header__navigation"
     id="header-navigation"
     role="navigation"
     aria-label="Primary navigation"
     aria-labelledby="label-navigation"
-    data-testid={testId}
   >
     <div className="nhsuk-width-container">
       <p className="nhsuk-header__navigation-title">
@@ -33,6 +33,7 @@ const NavigationBar = ({ links, testId }) => (
               <a
                 className="nhsuk-header__navigation-link"
                 onClick={link?.onClick}
+                data-testid={`link-${toLowerSnake(link.text)}`}
               >
                 {link.text}
                 <svg

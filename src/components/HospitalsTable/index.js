@@ -1,5 +1,6 @@
 import React from "react";
 import AnchorLink from "../AnchorLink";
+import toLowerSnake from "../../helpers/toLowerSnake";
 
 const HospitalsTable = ({ hospitals }) => (
   <div className="nhsuk-table-responsive">
@@ -73,9 +74,7 @@ const HospitalsTable = ({ hospitals }) => (
             </td>
             <td className="nhsuk-table__cell">
               <AnchorLink
-                data-testid={`edit-${hospital.name
-                  .toLowerCase()
-                  .replace(/\W+/g, "-")}`}
+                data-testid={`edit-${toLowerSnake(hospital.name)}`}
                 href="/trust-admin/hospitals/[id]/edit"
                 as={`/trust-admin/hospitals/${hospital.id}/edit`}
               >

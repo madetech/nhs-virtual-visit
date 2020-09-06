@@ -138,7 +138,9 @@ const EditWardForm = ({
           />
         </FormGroup>
 
-        <Button className="nhsuk-u-margin-top-5">Edit ward</Button>
+        <Button data-testid="edit-ward-button" className="nhsuk-u-margin-top-5">
+          Edit ward
+        </Button>
       </Form>
     </>
   );

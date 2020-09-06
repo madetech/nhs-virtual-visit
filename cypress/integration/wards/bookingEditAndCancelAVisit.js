@@ -5,6 +5,8 @@ import {
   ThenISeeTheCheckYourAnswersPage,
   ThenISeeTheVirtualVisitIsBooked,
   ThenISeeTheVirtualVisitsPage,
+  WhenIClickOnAVirtualVisit,
+  WhenIClickReturnToVirtualVisits,
   WhenIClickViewVirtualVisits,
 } from "./wardCommonSteps";
 
@@ -12,6 +14,9 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
   afterEach(() => {
     whenIClickLogOut();
   });
+
+  const first = "Adora";
+  const newFirstName = "Catra";
 
   it("allows a ward staff to book a virtual visit", () => {
     cy.log("* 1 bookingAVisit integration test ***", new Date().toISOString());
@@ -28,7 +33,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     cy.log("* 5 bookingAVisit integration test ***", new Date().toISOString());
     cy.audit();
 
-    WhenIFillOutTheForm();
+    WhenIFillOutTheBookAVisitForm(first);
     cy.log("* 6 bookingAVisit integration test ***", new Date().toISOString());
     AndISubmitTheForm();
     cy.log("* 7 bookingAVisit integration test ***", new Date().toISOString());
@@ -57,11 +62,11 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     ThenISeeTheVirtualVisitsPage();
     cy.audit();
     cy.log("* 16 bookingAVisit integration test ***", new Date().toISOString());
-    AndISeeTheBookedVirtualVisitInTheList();
+    AndISeeTheBookedVirtualVisitInTheList(first);
     cy.log("* 17 bookingAVisit integration test ***", new Date().toISOString());
   });
 
-  it("displays errors when fields have been left blank", () => {
+  it("displays errors when fields have been left blank when creating a visit", () => {
     GivenIAmLoggedInAsAWardStaff();
     WhenIClickBookAVirtualVisitOnTheNavigationBar();
     ThenISeeTheBeforeBookingAVisitPage();
@@ -72,6 +77,132 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     WhenISubmitFormWithoutFillingAnythingOut();
     ThenISeeErrors();
   });
+
+  it("allows a ward staff to edit a virtual visit", () => {
+    GivenIAmLoggedInAsAWardStaff();
+    WhenIClickOnAVirtualVisit();
+    AndIClickOnEdit(first);
+    ThenISeeTheEditAVirtualVisitForm();
+    cy.audit();
+
+    WhenIEditTheVisit(newFirstName);
+    AndISubmitTheForm();
+    ThenISeeTheCheckYourAnswersPage();
+
+    WhenIClickEditAVirtualVisit();
+    ThenISeeTheVirtualVisitIsUpdated();
+
+    WhenIClickViewVirtualVisits();
+    ThenISeeTheVirtualVisitsPage();
+    AndISeeTheEditedVirtualVisitInTheList(newFirstName);
+  });
+
+  it("displays errors when fields have been left blank", () => {
+    GivenIAmLoggedInAsAWardStaff();
+    WhenIClickOnAnotherVirtualVisit("Elliot");
+    AndIClickOnEditForAnotherVirtualVisit("Elliot");
+    ThenISeeTheEditAVirtualVisitForm();
+
+    WhenISubmitFormWithBlankFields();
+    ThenISeeErrors();
+  });
+
+  it("allows a ward staff to cancel a virtual visit", () => {
+    GivenIAmLoggedInAsAWardStaff();
+    WhenIClickOnAVirtualVisit(newFirstName);
+    AndIClickOnCancel(newFirstName);
+    ThenISeeTheCancelConfirmationPage();
+    cy.audit();
+    AndISeeTheDetailsOfTheVirtualVisit();
+
+    WhenIClickOnYesCancelThisVisit();
+    ThenISeeTheVirtualVisitIsCancelled();
+    cy.audit();
+    WhenIClickReturnToVirtualVisits();
+    ThenIDoNotSeeTheVirtualVisit();
+  });
+
+  function WhenIClickOnYesCancelThisVisit() {
+    cy.get("button").contains("Yes, cancel this visit").click();
+  }
+
+  function ThenISeeTheVirtualVisitIsCancelled() {
+    cy.get("h1").should("contain", "Virtual visit cancelled");
+  }
+
+  function ThenIDoNotSeeTheVirtualVisit() {
+    cy.get("summary.nhsuk-details__summary").should("not.contain", "Alice");
+  }
+
+  function AndISeeTheDetailsOfTheVirtualVisit() {
+    cy.contains("bob@example.com").should("be.visible");
+  }
+
+  function ThenISeeTheCancelConfirmationPage() {
+    cy.get("h1").should(
+      "contain",
+      "Are you sure you want to cancel this visit?"
+    );
+  }
+
+  function AndIClickOnCancel(name) {
+    cy.get("summary.nhsuk-details__summary")
+      .contains(name)
+      .parent()
+      .parent()
+      .within(() => {
+        cy.get("button").contains("Cancel").click();
+      });
+  }
+
+  function WhenISubmitFormWithBlankFields() {
+    cy.get("input[name=patient-name]").clear();
+    cy.get("input[name=contact-name]").clear();
+    cy.get("button").contains("Continue").click();
+  }
+
+  function AndIClickOnEditForAnotherVirtualVisit(name) {
+    cy.get("summary.nhsuk-details__summary")
+      .contains(name)
+      .parent()
+      .parent()
+      .within(() => {
+        cy.get("button").contains("Edit").click();
+      });
+
+    // cy.get("[data-testid=edit-ward-button]").click();
+  }
+
+  function WhenIClickOnAnotherVirtualVisit(name) {
+    cy.get("summary.nhsuk-details__summary").contains(name).click();
+  }
+
+  function AndISeeTheEditedVirtualVisitInTheList(name) {
+    cy.get("summary.nhsuk-details__summary").should("contain", name);
+  }
+
+  function ThenISeeTheVirtualVisitIsUpdated() {
+    cy.contains("Virtual visit has been updated");
+  }
+
+  function WhenIClickEditAVirtualVisit() {
+    cy.get("[data-testid=edit-button]").click();
+  }
+
+  function WhenIEditTheVisit(firstName) {
+    cy.get("input[name=patient-name]").clear();
+    cy.get("input[name=patient-name]").type(firstName);
+  }
+
+  function ThenISeeTheEditAVirtualVisitForm() {
+    cy.get("h1").should("contain", "Edit a virtual visit");
+  }
+
+  function AndIClickOnEdit(firstName) {
+    cy.get("summary.nhsuk-details__summary").contains(firstName)[0].click();
+
+    cy.get(`[data-testid=edit-visit-button-${firstName}]`).click();
+  }
 
   function WhenIClickBookAVirtualVisitOnTheNavigationBar() {
     cy.get("a.nhsuk-header__navigation-link")
@@ -87,11 +218,11 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     cy.get("a.nhsuk-button").contains("Start now").click();
   }
 
-  function WhenIFillOutTheForm() {
-    cy.get("input[name=patient-name]").type("Adora");
-    cy.get("input[name=contact-name]").type("Catra");
+  function WhenIFillOutTheBookAVisitForm(patientName) {
+    cy.get("input[name=patient-name]").type(patientName);
+    cy.get("input[name=contact-name]").type("contact name");
     cy.get("input[name=email-checkbox]").click();
-    cy.get("input[name=email-address]").type("catra@example.com");
+    cy.get("input[name=email-address]").type("bob@example.com");
   }
 
   function AndISubmitTheForm() {
@@ -112,8 +243,8 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
       .click();
   }
 
-  function AndISeeTheBookedVirtualVisitInTheList() {
-    cy.get("summary.nhsuk-details__summary").should("contain", "Adora");
+  function AndISeeTheBookedVirtualVisitInTheList(patientName) {
+    cy.get("summary.nhsuk-details__summary").should("contain", patientName);
   }
 
   // Displays errors when fields have been left blank

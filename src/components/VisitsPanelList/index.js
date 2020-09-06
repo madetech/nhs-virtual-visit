@@ -72,6 +72,7 @@ const VisitsPanelList = ({ visits, title, showButtons }) => {
                           </button>
 
                           <button
+                            data-testid={`edit-visit-button-${visit.patientName}`}
                             className="nhsuk-button nhsuk-u-margin-right-5 nhsuk-button--secondary"
                             onClick={() => {
                               Router.push(
