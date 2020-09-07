@@ -2,13 +2,14 @@ import React from "react";
 import Link from "next/link";
 import toLowerSnake from "../../helpers/toLowerSnake";
 
-const NavigationBar = ({ links }) => (
+const NavigationBar = ({ links, testId }) => (
   <nav
     className="nhsuk-header__navigation"
     id="header-navigation"
     role="navigation"
     aria-label="Primary navigation"
     aria-labelledby="label-navigation"
+    data-testid={testId}
   >
     <div className="nhsuk-width-container">
       <p className="nhsuk-header__navigation-title">
