@@ -9,6 +9,13 @@ function ThenISeeTheCheckYourAnswersPage() {
   );
 }
 
+function ThenISeeTheCheckYourEditsPage() {
+  cy.get("h1").should(
+    "contain",
+    "Check your answers before editing a virtual visit"
+  );
+}
+
 function ThenISeeTheVirtualVisitIsBooked() {
   cy.get("h1", { timeout: cy.pageLoadTimeout }).should(
     "contain",
@@ -32,7 +39,7 @@ function GivenIAmLoggedInAsAWardStaff() {
 }
 
 function WhenIClickOnAVirtualVisit(name) {
-  cy.get("summary.nhsuk-details__summary").contains(name).click();
+  cy.get(`[data-testid=details-summary-${name}]`).click();
 }
 
 function WhenIClickReturnToVirtualVisits() {
@@ -42,6 +49,7 @@ function WhenIClickReturnToVirtualVisits() {
 module.exports = {
   ThenISeeTheBookAVirtualVisitForm,
   ThenISeeTheCheckYourAnswersPage,
+  ThenISeeTheCheckYourEditsPage,
   ThenISeeTheVirtualVisitIsBooked,
   WhenIClickViewVirtualVisits,
   ThenISeeTheVirtualVisitsPage,

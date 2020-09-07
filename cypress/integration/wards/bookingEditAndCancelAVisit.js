@@ -3,6 +3,7 @@ import {
   GivenIAmLoggedInAsAWardStaff,
   ThenISeeTheBookAVirtualVisitForm,
   ThenISeeTheCheckYourAnswersPage,
+  ThenISeeTheCheckYourEditsPage,
   ThenISeeTheVirtualVisitIsBooked,
   ThenISeeTheVirtualVisitsPage,
   WhenIClickOnAVirtualVisit,
@@ -80,19 +81,19 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
 
   it("allows a ward staff to edit a virtual visit", () => {
     GivenIAmLoggedInAsAWardStaff();
-    WhenIClickOnAVirtualVisit();
+    WhenIClickOnAVirtualVisit(first);
     AndIClickOnEdit(first);
     ThenISeeTheEditAVirtualVisitForm();
     cy.audit();
 
     WhenIEditTheVisit(newFirstName);
     AndISubmitTheForm();
-    ThenISeeTheCheckYourAnswersPage();
+    ThenISeeTheCheckYourEditsPage();
 
     WhenIClickEditAVirtualVisit();
     ThenISeeTheVirtualVisitIsUpdated();
 
-    WhenIClickViewVirtualVisits();
+    WhenIClickReturnToVirtualVisits();
     ThenISeeTheVirtualVisitsPage();
     AndISeeTheEditedVirtualVisitInTheList(newFirstName);
   });
@@ -119,7 +120,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     ThenISeeTheVirtualVisitIsCancelled();
     cy.audit();
     WhenIClickReturnToVirtualVisits();
-    ThenIDoNotSeeTheVirtualVisit();
+    ThenIDoNotSeeTheVirtualVisit(newFirstName);
   });
 
   function WhenIClickOnYesCancelThisVisit() {
@@ -130,8 +131,8 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     cy.get("h1").should("contain", "Virtual visit cancelled");
   }
 
-  function ThenIDoNotSeeTheVirtualVisit() {
-    cy.get("summary.nhsuk-details__summary").should("not.contain", "Alice");
+  function ThenIDoNotSeeTheVirtualVisit(firstName) {
+    cy.get("summary.nhsuk-details__summary").should("not.contain", firstName);
   }
 
   function AndISeeTheDetailsOfTheVirtualVisit() {
@@ -174,7 +175,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
   }
 
   function WhenIClickOnAnotherVirtualVisit(name) {
-    cy.get("summary.nhsuk-details__summary").contains(name).click();
+    cy.get(`[data-testid=details-summary-${name}]`).click();
   }
 
   function AndISeeTheEditedVirtualVisitInTheList(name) {
@@ -199,7 +200,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
   }
 
   function AndIClickOnEdit(firstName) {
-    cy.get("summary.nhsuk-details__summary").contains(firstName)[0].click();
+    cy.get(`[data-testid=details-summary-${firstName}]`).click();
 
     cy.get(`[data-testid=edit-visit-button-${firstName}]`).click();
   }
