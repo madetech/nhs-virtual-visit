@@ -20,6 +20,7 @@ app.prepare().then(() => {
 
   server.listen(port, (err) => {
     if (err) throw err;
+    log.info(`Running as ${process.env.NODE_ENV}`);
     log.info(`Ready on http://localhost:${port}`);
   });
 });

@@ -5,6 +5,7 @@ import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
 import AnchorLink from "../../../src/components/AnchorLink";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
+import logger from "../../../logger";
 
 const archiveAWardSuccess = ({ name, hospitalName, hospitalId, error }) => {
   if (error) {
@@ -43,7 +44,7 @@ const archiveAWardSuccess = ({ name, hospitalName, hospitalId, error }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ query }) => {
-    console.log(query);
+    logger.debug(query);
 
     return {
       props: {

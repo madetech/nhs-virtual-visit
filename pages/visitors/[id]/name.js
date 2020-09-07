@@ -13,6 +13,7 @@ import ErrorSummary from "../../../src/components/ErrorSummary";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import Error from "next/error";
 import Form from "../../../src/components/Form";
+import logger from "../../../logger";
 
 const Name = ({ callId, error, callPassword }) => {
   const router = useRouter();
@@ -116,10 +117,14 @@ export const getServerSideProps = propsWithContainer(
       callPassword
     );
 
+    if (error) {
+      logger.error(`Call password invalid in name.js`, error);
+    }
+
     if (!validCallPassword) {
       return { props: { error: "Unauthorized" } };
     }
-    console.log("name.js error", error);
+
     return { props: { callId, error, callPassword } };
   }
 );

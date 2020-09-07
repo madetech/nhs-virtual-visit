@@ -1,7 +1,7 @@
 const winston = require("winston");
 
 const logger = winston.createLogger({
-  level: "info",
+  level: process.env.NODE_ENV === "development" ? "debug" : "info",
   format: winston.format.json(),
   defaultMeta: { service: "nhs-virtual-visit" },
 });

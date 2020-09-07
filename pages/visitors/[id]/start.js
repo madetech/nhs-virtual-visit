@@ -8,6 +8,7 @@ import Text from "../../../src/components/Text";
 import Button from "../../../src/components/Button";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import Error from "next/error";
+import logger from "../../../logger";
 
 const Start = ({ callId, error, callPassword }) => {
   const router = useRouter();
@@ -69,10 +70,13 @@ export const getServerSideProps = propsWithContainer(
       callPassword
     );
 
+    if (error) {
+      logger.error(`Call password invalid in start.js`, error);
+    }
+
     if (!validCallPassword) {
       return { props: { error: "Unauthorized" } };
     }
-    console.log("start.js error", error);
 
     return { props: { callId, error, callPassword } };
   }

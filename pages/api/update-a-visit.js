@@ -4,6 +4,7 @@ import {
   NEW_NOTIFICATION,
   UPDATED_NOTIFICATION,
 } from "../../src/usecases/sendBookingNotification";
+import logger from "../../logger";
 
 const determineNotificationType = (
   sideACallTime,
@@ -13,7 +14,6 @@ const determineNotificationType = (
 ) => {
   if (sideACallTime == sideBCallTime && sideAContact == sideBContact)
     return false;
-
   return sideAContact !== sideBContact
     ? NEW_NOTIFICATION
     : UPDATED_NOTIFICATION;
@@ -81,7 +81,7 @@ export default withContainer(
       await container.getUpdateVisitById()(updatedCall);
       respond(200, { success: true });
     } catch (updateError) {
-      console.log(updateError);
+      logger.error(`Error updating visit`, updateError);
       respond(500, { err: "Failed to update visit" });
       return;
     }
@@ -143,7 +143,7 @@ export default withContainer(
         }
       }
     } catch (notificationError) {
-      console.log(notificationError);
+      logger.error(`Error sending booking notifications`, notificationError);
       respond(500, { err: "Failed to send notification" });
       return;
     }
