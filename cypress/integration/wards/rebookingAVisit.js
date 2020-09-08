@@ -5,10 +5,6 @@ import {
 import { whenIClickLogOut } from "../commonSteps";
 
 describe("As a ward staff, I want to easily rebook a visit from the list screen so that I can easily book a patient in for another visit.", () => {
-  afterEach(() => {
-    whenIClickLogOut();
-  });
-
   it("allows a ward staff to rebook a virtual visit", () => {
     GivenIAmLoggedInAsAWardStaff();
     WhenIClickOnAVirtualVisit();
@@ -26,6 +22,8 @@ describe("As a ward staff, I want to easily rebook a visit from the list screen 
 
     WhenIClickUpcomingVisits();
     ThenISeeTheBookedVirtualVisitInTheList();
+
+    whenIClickLogOut();
   });
 
   function WhenIClickOnAVirtualVisit() {

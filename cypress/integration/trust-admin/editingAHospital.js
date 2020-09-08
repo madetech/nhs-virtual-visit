@@ -1,10 +1,6 @@
 import { whenIClickLogOut } from "../commonSteps";
 
 describe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
-  afterEach(() => {
-    whenIClickLogOut();
-  });
-
   function GivenIAmLoggedInAsAnAdmin() {
     cy.visit(Cypress.env("baseUrl") + "/trust-admin/login");
     cy.get("input[name=code]").type(Cypress.env("validTrustAdminCode"));
@@ -64,6 +60,8 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
 
     WhenISubmitFormEmptyHospitalName();
     ThenISeeErrors();
+
+    whenIClickLogOut();
   });
 
   it("displays errors when survey url is invalid", () => {
@@ -76,6 +74,8 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     WhenIFillOutTheFormWithBadSurveyUrl();
     AndIClickTheEditHospitalButton();
     ThenISeeErrors();
+
+    whenIClickLogOut();
   });
 
   it("displays errors when support url is invalid", () => {
@@ -88,5 +88,7 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     WhenIFillOutTheFormWithBadSupportUrl();
     AndIClickTheEditHospitalButton();
     ThenISeeErrors();
+
+    whenIClickLogOut();
   });
 });

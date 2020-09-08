@@ -6,10 +6,6 @@ import {
 } from "./adminCommonSteps";
 
 describe("As an admin, I want to add a trust so that a trust can use the virtual visits service.", () => {
-  afterEach(() => {
-    whenIClickLogOut();
-  });
-
   it("allows an admin to add a trust", () => {
     GivenIAmLoggedInAsAnAdmin();
     WhenIClickOnAddATrust();
@@ -26,6 +22,8 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
     WhenIClickToReturnToSiteAdministration();
     ThenISeeTheSiteAdministrationPage();
     AndISeeTheAddedTrust();
+
+    whenIClickLogOut();
   });
 
   it("displays errors when fields have been left blank", () => {
@@ -35,6 +33,8 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
 
     WhenISubmitFormWithoutFillingAnythingOut();
     ThenISeeErrors();
+
+    whenIClickLogOut();
   });
 
   function WhenIClickOnAddATrust() {

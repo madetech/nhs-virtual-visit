@@ -6,10 +6,6 @@ import {
 } from "./trustAdminCommonSteps";
 
 describe("As a trust admin, I want to add a hospital so that I can manage virtual visits per hospital.", () => {
-  afterEach(() => {
-    whenIClickLogOut();
-  });
-
   const hospitalName = "Scorpia Hospital";
 
   it("allows a trust admin to add and edit  a hospital", () => {
@@ -42,6 +38,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     AndIClickTheEditHospitalButton();
 
     ThenIShouldBeOnTheEditSuccessPageWithNewName(newName);
+    whenIClickLogOut();
   });
 
   // it("allows an admin to edit a hospital", () => {
@@ -67,6 +64,8 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
     WhenISubmitFormWithoutFillingAnythingOut();
     ThenISeeErrors();
+
+    whenIClickLogOut();
   });
 
   it("add hospital displays errors when survey url is invalid", () => {
@@ -80,6 +79,8 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     WhenIFillOutTheFormWithBadSurveyUrl();
     AndISubmitTheForm();
     ThenISeeErrors();
+
+    whenIClickLogOut();
   });
 
   it("add hospital displays errors when support url is invalid", () => {
@@ -93,6 +94,8 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     WhenIFillOutTheFormWithBadSupportUrl();
     AndISubmitTheForm();
     ThenISeeErrors();
+
+    whenIClickLogOut();
   });
 
   function WhenIClickAddAHospital() {

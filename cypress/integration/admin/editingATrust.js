@@ -25,6 +25,8 @@ describe("As an admin, I want to edit a trust so that I can update the details o
     WhenIClickToReturnToSiteAdministration();
     ThenISeeTheSiteAdministrationPage();
     AndISeeTheUpdatedTrust();
+
+    whenIClickLogOut();
   });
 
   function WhenIClickToEditATrust() {

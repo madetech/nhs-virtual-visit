@@ -8,10 +8,6 @@ import {
 import { whenIClickLogOut } from "../commonSteps";
 
 describe("As a trust admin, I want to edit a ward so that I can modify the details of a ward.", () => {
-  afterEach(() => {
-    whenIClickLogOut();
-  });
-
   it("displays errors when fields have been left blank", () => {
     GivenIAmLoggedInAsATrustAdmin();
     WhenIClickHospitalsOnTheNavigationBar();
@@ -25,6 +21,8 @@ describe("As a trust admin, I want to edit a ward so that I can modify the detai
 
     WhenISubmitFormWithoutFillingAnythingOut();
     ThenISeeErrors();
+
+    whenIClickLogOut();
   });
 
   function ThenISeeTheHospitalsPage() {

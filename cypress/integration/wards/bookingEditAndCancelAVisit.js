@@ -12,10 +12,6 @@ import {
 } from "./wardCommonSteps";
 
 describe("As a ward staff, I want to schedule a virtual visit so that patients can speak with their loved ones.", () => {
-  afterEach(() => {
-    whenIClickLogOut();
-  });
-
   const first = "Adora";
   const newFirstName = "Catra";
 
@@ -65,6 +61,8 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     cy.log("* 16 bookingAVisit integration test ***", new Date().toISOString());
     AndISeeTheBookedVirtualVisitInTheList(first);
     cy.log("* 17 bookingAVisit integration test ***", new Date().toISOString());
+
+    whenIClickLogOut();
   });
 
   it("displays errors when fields have been left blank when creating a visit", () => {
@@ -77,6 +75,8 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
 
     WhenISubmitFormWithoutFillingAnythingOut();
     ThenISeeErrors();
+
+    whenIClickLogOut();
   });
 
   it("allows a ward staff to edit a virtual visit", () => {
@@ -96,6 +96,8 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     WhenIClickReturnToVirtualVisits();
     ThenISeeTheVirtualVisitsPage();
     AndISeeTheEditedVirtualVisitInTheList(newFirstName);
+
+    whenIClickLogOut();
   });
 
   it("displays errors when fields have been left blank", () => {
@@ -106,6 +108,8 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
 
     WhenISubmitFormWithBlankFields();
     ThenISeeErrors();
+
+    whenIClickLogOut();
   });
 
   it("allows a ward staff to cancel a virtual visit", () => {
@@ -121,6 +125,8 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     cy.audit();
     WhenIClickReturnToVirtualVisits();
     ThenIDoNotSeeTheVirtualVisit(newFirstName);
+
+    whenIClickLogOut();
   });
 
   function WhenIClickOnYesCancelThisVisit() {

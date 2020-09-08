@@ -18,11 +18,6 @@ import {
 } from "./trustAdminCommonSteps";
 
 describe("As a trust admin, I want to add, edit and delete  a ward so that ward staff can book virtual visits.", () => {
-  afterEach(() => {
-    // ensures state is clean for next test to run
-    whenIClickLogOut();
-  });
-
   it("allows a trust admin to add, edit and delete a ward", () => {
     GivenIAmLoggedInAsATrustAdmin();
     WhenIClickHospitalsOnTheNavigationBar();
@@ -74,6 +69,8 @@ describe("As a trust admin, I want to add, edit and delete  a ward so that ward 
     WhenIClickToReturnToThePageForTheHospital();
     ThenISeeThePageForTheHospital();
     AndIDoNotSeeTheDeletedWard(newWardName);
+
+    whenIClickLogOut();
   });
 });
 
