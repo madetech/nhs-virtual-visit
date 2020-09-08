@@ -1,4 +1,4 @@
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 import {
   AndISubmitTheAddWardForm,
   AndISubmitTheEditWardForm,
@@ -70,7 +70,7 @@ describe("As a trust admin, I want to add, edit and delete  a ward so that ward 
     ThenISeeThePageForTheHospital();
     AndIDoNotSeeTheDeletedWard(newWardName);
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 });
 

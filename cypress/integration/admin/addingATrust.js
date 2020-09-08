@@ -1,4 +1,4 @@
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 import {
   GivenIAmLoggedInAsAnAdmin,
   ThenISeeTheSiteAdministrationPage,
@@ -23,7 +23,7 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
     ThenISeeTheSiteAdministrationPage();
     AndISeeTheAddedTrust();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   it("displays errors when fields have been left blank", () => {
@@ -34,7 +34,7 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
     WhenISubmitFormWithoutFillingAnythingOut();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   function WhenIClickOnAddATrust() {

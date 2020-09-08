@@ -1,4 +1,4 @@
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 
 describe("As an admin, I want to log in so that I can access the service.", () => {
   after(() => {
@@ -17,7 +17,7 @@ describe("As an admin, I want to log in so that I can access the service.", () =
 
     cy.audit();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
     ThenISeeTheAdminLogInPage();
   });
 

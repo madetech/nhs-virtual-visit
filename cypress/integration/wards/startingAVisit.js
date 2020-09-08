@@ -1,5 +1,5 @@
 import { GivenIAmLoggedInAsAWardStaff } from "./wardCommonSteps";
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 
 describe("As a ward staff, I want to start a virtual visit so that patients can speak with their loved ones.", () => {
   it("allows a ward staff to start a virtual visit", () => {
@@ -19,7 +19,7 @@ describe("As a ward staff, I want to start a virtual visit so that patients can 
     ThenISeeTheVirtualVisitsPage();
     AndISeeTheVirtualVisitMarkedAsComplete();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   function WhenIClickOnAVirtualVisit() {

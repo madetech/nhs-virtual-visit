@@ -5,7 +5,7 @@ import {
   WhenIClickHospitalsOnTheNavigationBar,
   WhenIClickOnAHospital,
 } from "./trustAdminCommonSteps";
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 
 describe("As a trust admin, I want to edit a ward so that I can modify the details of a ward.", () => {
   it("displays errors when fields have been left blank", () => {
@@ -22,7 +22,7 @@ describe("As a trust admin, I want to edit a ward so that I can modify the detai
     WhenISubmitFormWithoutFillingAnythingOut();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   function ThenISeeTheHospitalsPage() {

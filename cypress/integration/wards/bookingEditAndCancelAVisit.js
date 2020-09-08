@@ -1,4 +1,4 @@
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 import {
   GivenIAmLoggedInAsAWardStaff,
   ThenISeeTheBookAVirtualVisitForm,
@@ -62,7 +62,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     AndISeeTheBookedVirtualVisitInTheList(first);
     cy.log("* 17 bookingAVisit integration test ***", new Date().toISOString());
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   it("displays errors when fields have been left blank when creating a visit", () => {
@@ -76,7 +76,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     WhenISubmitFormWithoutFillingAnythingOut();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   it("allows a ward staff to edit a virtual visit", () => {
@@ -97,7 +97,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     ThenISeeTheVirtualVisitsPage();
     AndISeeTheEditedVirtualVisitInTheList(newFirstName);
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   it("displays errors when fields have been left blank", () => {
@@ -109,7 +109,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     WhenISubmitFormWithBlankFields();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   it("allows a ward staff to cancel a virtual visit", () => {
@@ -126,7 +126,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     WhenIClickReturnToVirtualVisits();
     ThenIDoNotSeeTheVirtualVisit(newFirstName);
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   function WhenIClickOnYesCancelThisVisit() {

@@ -1,4 +1,4 @@
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 
 describe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
   function GivenIAmLoggedInAsAnAdmin() {
@@ -61,7 +61,7 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     WhenISubmitFormEmptyHospitalName();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   it("displays errors when survey url is invalid", () => {
@@ -75,7 +75,7 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     AndIClickTheEditHospitalButton();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   it("displays errors when support url is invalid", () => {
@@ -89,6 +89,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     AndIClickTheEditHospitalButton();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 });

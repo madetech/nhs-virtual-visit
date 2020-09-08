@@ -1,4 +1,4 @@
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 import {
   GivenIAmLoggedInAsATrustAdmin,
   ThenISeeTheHospitalsPage,
@@ -38,7 +38,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     AndIClickTheEditHospitalButton();
 
     ThenIShouldBeOnTheEditSuccessPageWithNewName(newName);
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   // it("allows an admin to edit a hospital", () => {
@@ -65,7 +65,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     WhenISubmitFormWithoutFillingAnythingOut();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   it("add hospital displays errors when survey url is invalid", () => {
@@ -80,7 +80,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     AndISubmitTheForm();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   it("add hospital displays errors when support url is invalid", () => {
@@ -95,7 +95,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     AndISubmitTheForm();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   function WhenIClickAddAHospital() {

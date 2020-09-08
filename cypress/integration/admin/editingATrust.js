@@ -1,14 +1,10 @@
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 import {
   GivenIAmLoggedInAsAnAdmin,
   ThenISeeTheSiteAdministrationPage,
 } from "./adminCommonSteps";
 
 describe("As an admin, I want to edit a trust so that I can update the details of a trust.", () => {
-  afterEach(() => {
-    whenIClickLogOut();
-  });
-
   it("allows an admin to edit a trust", () => {
     GivenIAmLoggedInAsAnAdmin();
     WhenIClickToEditATrust();
@@ -26,7 +22,7 @@ describe("As an admin, I want to edit a trust so that I can update the details o
     ThenISeeTheSiteAdministrationPage();
     AndISeeTheUpdatedTrust();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   function WhenIClickToEditATrust() {

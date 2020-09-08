@@ -1,4 +1,4 @@
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 import {
   GivenIAmLoggedInAsATrustAdmin,
   ThenISeeTheAddAWardForm,
@@ -24,7 +24,7 @@ describe("As a trust admin, I want to add a ward so that ward staff can book vir
     WhenISubmitFormWithoutFillingAnythingOut();
     ThenISeeErrors();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   // Displays errors when fields have been left blank

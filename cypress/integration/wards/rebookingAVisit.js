@@ -2,7 +2,7 @@ import {
   GivenIAmLoggedInAsAWardStaff,
   ThenISeeTheVirtualVisitIsBooked,
 } from "./wardCommonSteps";
-import { whenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 
 describe("As a ward staff, I want to easily rebook a visit from the list screen so that I can easily book a patient in for another visit.", () => {
   it("allows a ward staff to rebook a virtual visit", () => {
@@ -23,7 +23,7 @@ describe("As a ward staff, I want to easily rebook a visit from the list screen 
     WhenIClickUpcomingVisits();
     ThenISeeTheBookedVirtualVisitInTheList();
 
-    whenIClickLogOut();
+    thenIClickLogOut();
   });
 
   function WhenIClickOnAVirtualVisit() {
