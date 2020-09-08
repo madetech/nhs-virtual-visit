@@ -17,10 +17,7 @@ function ThenISeeTheCheckYourEditsPage() {
 }
 
 function ThenISeeTheVirtualVisitIsBooked() {
-  cy.get("h1", { timeout: cy.pageLoadTimeout }).should(
-    "contain",
-    "Virtual visit booked"
-  );
+  cy.get(`[data-testid=virtual-visit-booked]`);
 }
 
 function WhenIClickViewVirtualVisits() {
