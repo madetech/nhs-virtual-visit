@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import fetch from "isomorphic-unfetch";
 import Button from "../../src/components/Button";
 import ErrorSummary from "../../src/components/ErrorSummary";
@@ -12,9 +12,10 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Form from "../../src/components/Form";
 
 const Login = () => {
-  const [code, setCode] = useState("");
-  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
+
+  const codeRef = useRef();
+  const passwordRef = useRef();
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
@@ -26,6 +27,9 @@ const Login = () => {
 
   const onSubmit = async () => {
     const onSubmitErrors = [];
+
+    const code = codeRef.current.value;
+    const password = passwordRef.current.value;
 
     if (!code) {
       onSubmitErrors.push({
@@ -78,10 +82,10 @@ const Login = () => {
               <Input
                 id="code"
                 type="text"
+                ref={codeRef}
                 hasError={hasError("code")}
                 errorMessage={errorMessage("code")}
                 className="nhsuk-input--width-10"
-                onChange={(event) => setCode(event.target.value)}
                 name="code"
               />
             </FormGroup>
@@ -90,10 +94,10 @@ const Login = () => {
               <Input
                 id="password"
                 type="password"
+                ref={passwordRef}
                 hasError={hasError("password")}
                 errorMessage={errorMessage("password")}
                 className="nhsuk-input--width-10"
-                onChange={(event) => setPassword(event.target.value)}
                 name="password"
                 autoComplete="off"
               />
