@@ -1,5 +1,6 @@
 import { thenIClickLogOut } from "../commonSteps";
 import {
+  AndIClickBookAVirtualVisit,
   GivenIAmLoggedInAsAWardStaff,
   ThenISeeTheBookAVirtualVisitForm,
   ThenISeeTheCheckYourAnswersPage,
@@ -242,12 +243,6 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
 
   function WhenISubmitTheForm() {
     cy.get("button").contains("Continue").click();
-  }
-
-  function AndIClickBookAVirtualVisit() {
-    cy.get("button", { timeout: cy.pageLoadTimeout })
-      .contains("Book virtual visit")
-      .click();
   }
 
   function AndISeeTheBookedVirtualVisitInTheList(patientName) {

@@ -1,4 +1,5 @@
 import {
+  AndIClickBookAVirtualVisit,
   GivenIAmLoggedInAsAWardStaff,
   ThenISeeTheVirtualVisitIsBooked,
 } from "./wardCommonSteps";
@@ -14,7 +15,7 @@ describe("As a ward staff, I want to easily rebook a visit from the list screen 
     WhenISubmitTheForm();
     ThenISeeTheCheckYourAnswersPage();
 
-    WhenIClickBookAVirtualVisit();
+    AndIClickBookAVirtualVisit();
     ThenISeeTheVirtualVisitIsBooked();
 
     WhenIClickViewVirtualVisits();
@@ -53,12 +54,6 @@ describe("As a ward staff, I want to easily rebook a visit from the list screen 
       "contain",
       "Check your answers before booking a virtual visit"
     );
-  }
-
-  function WhenIClickBookAVirtualVisit() {
-    cy.get("button", { timeout: cy.pageLoadTimeout })
-      .contains("Book virtual visit")
-      .click();
   }
 
   function WhenIClickViewVirtualVisits() {

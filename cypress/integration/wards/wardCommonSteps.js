@@ -43,6 +43,10 @@ function WhenIClickReturnToVirtualVisits() {
   cy.get("a").contains("Return to virtual visits").click();
 }
 
+function AndIClickBookAVirtualVisit() {
+  cy.get(`[data-testid=book-virtual-visit]`).click();
+}
+
 module.exports = {
   ThenISeeTheBookAVirtualVisitForm,
   ThenISeeTheCheckYourAnswersPage,
@@ -53,4 +57,5 @@ module.exports = {
   GivenIAmLoggedInAsAWardStaff,
   WhenIClickOnAVirtualVisit,
   WhenIClickReturnToVirtualVisits,
+  AndIClickBookAVirtualVisit,
 };
