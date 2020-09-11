@@ -105,7 +105,12 @@ const ScheduleConfirmation = ({
               confirmation will be sent to them once you&apos;ve booked the
               visit.
             </Text>
-            <Button className="nhsuk-u-margin-top-5">Book virtual visit</Button>
+            <Button
+              data-testid="book-virtual-visit"
+              className="nhsuk-u-margin-top-5"
+            >
+              Book virtual visit
+            </Button>
           </Form>
         </GridColumn>
       </GridRow>

@@ -24,7 +24,7 @@ const EditAHospitalSuccess = ({ error, hospitalName, hospitalId }) => {
             className="nhsuk-panel nhsuk-panel--confirmation nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4"
             style={{ textAlign: "center" }}
           >
-            <h1 className="nhsuk-panel__title">
+            <h1 data-testid="name" className="nhsuk-panel__title">
               {hospitalName} has been updated
             </h1>
           </div>

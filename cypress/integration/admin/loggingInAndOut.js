@@ -1,11 +1,6 @@
-describe("As an admin, I want to log in so that I can access the service.", () => {
-  before(() => {
-    // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
-    );
-  });
+import { thenIClickLogOut } from "../commonSteps";
 
+describe("As an admin, I want to log in so that I can access the service.", () => {
   it("allows an admin to log in and out", () => {
     GivenIAmAnAdmin();
     WhenIVisitTheAdminLogInPage();
@@ -18,7 +13,7 @@ describe("As an admin, I want to log in so that I can access the service.", () =
 
     cy.audit();
 
-    WhenIClickLogOut();
+    thenIClickLogOut();
     ThenISeeTheAdminLogInPage();
   });
 
@@ -55,10 +50,6 @@ describe("As an admin, I want to log in so that I can access the service.", () =
   function ThenISeeTheAdminHomePage() {
     cy.contains("There is a problem").should("not.be.visible");
     cy.contains("Site administration").should("be.visible");
-  }
-
-  function WhenIClickLogOut() {
-    cy.get("a.nhsuk-header__navigation-link").contains("Log out").click();
   }
 
   function ThenISeeTheAdminLogInPage() {

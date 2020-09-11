@@ -1,11 +1,7 @@
-describe("As a ward staff, I want to start a virtual visit so that patients can speak with their loved ones.", () => {
-  before(() => {
-    // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
-    );
-  });
+import { GivenIAmLoggedInAsAWardStaff } from "./wardCommonSteps";
+import { thenIClickLogOut } from "../commonSteps";
 
+describe("As a ward staff, I want to start a virtual visit so that patients can speak with their loved ones.", () => {
   it("allows a ward staff to start a virtual visit", () => {
     GivenIAmLoggedInAsAWardStaff();
     WhenIClickOnAVirtualVisit();
@@ -22,14 +18,9 @@ describe("As a ward staff, I want to start a virtual visit so that patients can 
     WhenIClickToReturnToVirtualVisits();
     ThenISeeTheVirtualVisitsPage();
     AndISeeTheVirtualVisitMarkedAsComplete();
-  });
 
-  // Allows a ward staff to start a virtual visit
-  function GivenIAmLoggedInAsAWardStaff() {
-    cy.visit(Cypress.env("baseUrl"));
-    cy.get("input").type(Cypress.env("validWard"));
-    cy.get("button").contains("Log in").click();
-  }
+    thenIClickLogOut();
+  });
 
   function WhenIClickOnAVirtualVisit() {
     cy.get("summary.nhsuk-details__summary").contains("Alice").click();

@@ -1,11 +1,4 @@
 describe("As a patient's key contact, I want to attend a virtual visit so that I can speak with my loved one.", () => {
-  before(() => {
-    // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
-    );
-  });
-
   it("allows a key contact to attend a virtual visit", () => {
     GivenIAmAKeyContact();
     WhenIVisitTheAttendAVirtualVisitPageWithACallPassword();
