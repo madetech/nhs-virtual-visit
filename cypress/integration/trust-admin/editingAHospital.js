@@ -20,11 +20,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     cy.get("a.nhsuk-link").contains("Edit").click();
   }
 
-  function ThenIShouldBeOnTheEditHospitalPage() {
-    cy.url().should("include", "/trust-admin/hospitals/1/edit");
-    cy.get("input[name=hospital-name]").should("have.value", "Test Hospital");
-  }
-
   function WhenIFillOutTheFormWithBadSurveyUrl() {
     cy.get("input[name=hospital-name]").type("Scorpia Hospital");
     cy.get("input[name=hospital-survey-url]").type("https://www");
@@ -54,7 +49,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     ThenISeeTheHospitalList();
 
     WhenIClickOnTheEditLink();
-    ThenIShouldBeOnTheEditHospitalPage();
     cy.audit();
 
     WhenISubmitFormEmptyHospitalName();
@@ -69,7 +63,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     ThenISeeTheHospitalList();
 
     WhenIClickOnTheEditLink();
-    ThenIShouldBeOnTheEditHospitalPage();
 
     WhenIFillOutTheFormWithBadSurveyUrl();
     AndIClickTheEditHospitalButton();
@@ -84,7 +77,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     ThenISeeTheHospitalList();
 
     WhenIClickOnTheEditLink();
-    ThenIShouldBeOnTheEditHospitalPage();
 
     WhenIFillOutTheFormWithBadSupportUrl();
     AndIClickTheEditHospitalButton();
