@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.0.2",
+    "@testing-library/react": "^11.0.4",
     "babel-eslint": "^10.1.0",
     "cypress": "^5.1.0",
     "cypress-audit": "^0.2.2",
