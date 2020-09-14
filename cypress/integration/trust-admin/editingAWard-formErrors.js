@@ -8,6 +8,13 @@ import {
 import { thenIClickLogOut } from "../commonSteps";
 
 describe("As a trust admin, I want to edit a ward so that I can modify the details of a ward.", () => {
+  before(() => {
+    // reset and seed the database
+    cy.exec(
+      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+    );
+  });
+
   it("displays errors when fields have been left blank", () => {
     GivenIAmLoggedInAsATrustAdmin();
     WhenIClickHospitalsOnTheNavigationBar();

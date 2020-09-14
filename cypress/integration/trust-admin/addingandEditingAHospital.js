@@ -8,6 +8,13 @@ import {
 describe("As a trust admin, I want to add a hospital so that I can manage virtual visits per hospital.", () => {
   const hospitalName = "Scorpia Hospital";
 
+  before(() => {
+    // reset and seed the database
+    cy.exec(
+      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+    );
+  });
+
   it("allows a trust admin to add and edit  a hospital", () => {
     GivenIAmLoggedInAsATrustAdmin();
     WhenIClickHospitalsOnTheNavigationBar();

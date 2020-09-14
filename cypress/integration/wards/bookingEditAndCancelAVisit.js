@@ -16,6 +16,13 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
   const first = "Adora";
   const newFirstName = "Catra";
 
+  before(() => {
+    // reset and seed the database
+    cy.exec(
+      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+    );
+  });
+
   it("allows a ward staff to book a virtual visit", () => {
     cy.log("* 1 bookingAVisit integration test ***", new Date().toISOString());
     GivenIAmLoggedInAsAWardStaff();

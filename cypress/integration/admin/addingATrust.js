@@ -7,6 +7,13 @@ import {
 } from "./adminCommonSteps";
 
 describe("As an admin, I want to add a trust so that a trust can use the virtual visits service.", () => {
+  before(() => {
+    // reset and seed the database
+    cy.exec(
+      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+    );
+  });
+
   it("allows an admin to add a trust", () => {
     GivenIAmLoggedInAsAnAdmin();
     WhenIClickOnAddATrust();

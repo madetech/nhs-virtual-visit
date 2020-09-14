@@ -6,6 +6,13 @@ import {
 } from "./adminCommonSteps";
 
 describe("As an admin, I want to edit a trust so that I can update the details of a trust.", () => {
+  before(() => {
+    // reset and seed the database
+    cy.exec(
+      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+    );
+  });
+
   it("allows an admin to edit a trust", () => {
     GivenIAmLoggedInAsAnAdmin();
     WhenIClickToEditATrust();

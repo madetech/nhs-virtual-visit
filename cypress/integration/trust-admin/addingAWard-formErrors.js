@@ -10,6 +10,13 @@ import {
 } from "./trustAdminCommonSteps";
 
 describe("As a trust admin, I want to add a ward so that ward staff can book virtual visits.", () => {
+  before(() => {
+    // reset and seed the database
+    cy.exec(
+      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+    );
+  });
+
   it("displays errors when fields have been left blank", () => {
     GivenIAmLoggedInAsATrustAdmin();
     WhenIClickHospitalsOnTheNavigationBar();

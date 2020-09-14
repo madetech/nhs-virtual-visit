@@ -85,6 +85,6 @@ workflows:
           parallelism: 1 # across 3 machines
           group: "1x-electron on CircleCI" # name this group
           post-install:
-            - run: npm run test:migrate
+            - run: npm run dbmigratetest up
           start: "npm run test:server" # start server before running tests
           store_artifacts: true

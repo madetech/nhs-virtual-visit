@@ -1,6 +1,13 @@
 import { thenIClickLogOut } from "../commonSteps";
 
 describe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
+  before(() => {
+    // reset and seed the database
+    cy.exec(
+      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+    );
+  });
+
   function GivenIAmLoggedInAsAnAdmin() {
     cy.visit(Cypress.env("baseUrl") + "/trust-admin/login");
     cy.get("input[name=code]").type(Cypress.env("validTrustAdminCode"));

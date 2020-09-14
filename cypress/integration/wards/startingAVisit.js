@@ -2,6 +2,13 @@ import { GivenIAmLoggedInAsAWardStaff } from "./wardCommonSteps";
 import { thenIClickLogOut } from "../commonSteps";
 
 describe("As a ward staff, I want to start a virtual visit so that patients can speak with their loved ones.", () => {
+  before(() => {
+    // reset and seed the database
+    cy.exec(
+      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+    );
+  });
+
   it("allows a ward staff to start a virtual visit", () => {
     GivenIAmLoggedInAsAWardStaff();
     WhenIClickOnAVirtualVisit();

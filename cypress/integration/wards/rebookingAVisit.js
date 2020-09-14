@@ -6,6 +6,13 @@ import {
 import { thenIClickLogOut } from "../commonSteps";
 
 describe("As a ward staff, I want to easily rebook a visit from the list screen so that I can easily book a patient in for another visit.", () => {
+  before(() => {
+    // reset and seed the database
+    cy.exec(
+      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+    );
+  });
+
   it("allows a ward staff to rebook a virtual visit", () => {
     GivenIAmLoggedInAsAWardStaff();
     WhenIClickOnAVirtualVisit();
