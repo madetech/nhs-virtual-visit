@@ -68,7 +68,7 @@
     "babel-eslint": "^10.1.0",
     "cypress": "^5.2.0",
     "cypress-audit": "^0.2.3",
-    "eslint": "^7.9.0",
+    "eslint": "^7.10.0",
     "eslint-plugin-cypress": "^2.11.1",
     "eslint-plugin-react": "^7.21.2",
     "husky": "^4.3.0",
