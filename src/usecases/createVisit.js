@@ -1,8 +1,12 @@
 import { SCHEDULED } from "../../src/helpers/visitStatus";
 
-const createVisit = async (visit, db) => {
-  // const db = await getDb();
+const createVisit = ({ getDb }) => async (visit) => {
+  const db = await getDb();
+  const { id, call_id } = await insertVisit(db, visit);
+  return { id, callId: call_id };
+};
 
+const insertVisit = async (db, visit) => {
   const { id, call_id } = await db.one(
     `INSERT INTO scheduled_calls_table
       (id, patient_name, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
@@ -27,9 +31,3 @@ const createVisit = async (visit, db) => {
 };
 
 export default createVisit;
-
-/*
-product_catalogue
-warehouse
-website
-*/

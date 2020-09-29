@@ -2,9 +2,19 @@ import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import withContainer from "../../src/middleware/withContainer";
 import validateVisit from "../../src/helpers/validateVisit";
 import CallIdProvider from "../../src/providers/CallIdProvider";
-import createVisit from "../../src/usecases/createVisit";
+import logger from "../../logger";
 
 const ids = new RandomIdProvider();
+
+/*
+wep api adapter level - mvc / express / protobuff rpc, socket,  something
+  - takes some stuff and maps onto a command and returns response (or error codes)
+
+  Hex architecture
+  ports - delivery mechanism
+  domain
+  adapter - gateway - repo (entity io)
+*/
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -66,10 +76,9 @@ export default withContainer(
         throw error;
       }
 
-      const db = await container.getDb();
-
       const sendBookingNotification = container.getSendBookingNotification();
 
+      logger.debug("sending notification");
       const {
         success: bookingNotificationSuccess,
         errors: bookingNotificationErrors,
@@ -82,26 +91,29 @@ export default withContainer(
       });
 
       if (!bookingNotificationSuccess) {
+        logger.debug("sending notification failed", bookingNotificationErrors);
         res.status(400);
         res.end(JSON.stringify({ err: bookingNotificationErrors }));
         return;
       }
 
-      await createVisit(
-        {
-          patientName: body.patientName,
-          contactEmail: body.contactEmail,
-          contactNumber: body.contactNumber,
-          contactName: body.contactName,
-          callTime: body.callTime,
-          callTimeLocal: body.callTimeLocal,
-          callId: callId,
-          provider: trust.videoProvider,
-          wardId: ward.id,
-          callPassword: callPassword,
-        },
-        db
-      );
+      logger.debug("sending creating Visit (book-a-visit)");
+      const createVisit = await container.getCreateVisit();
+
+      console.log({ createVisit });
+      logger.debug(createVisit);
+      await createVisit({
+        patientName: body.patientName,
+        contactEmail: body.contactEmail,
+        contactNumber: body.contactNumber,
+        contactName: body.contactName,
+        callTime: body.callTime,
+        callTimeLocal: body.callTimeLocal,
+        callId: callId,
+        provider: trust.videoProvider,
+        wardId: ward.id,
+        callPassword: callPassword,
+      });
 
       await updateWardVisitTotals({ wardId: ward.id, date: body.callTime });
 

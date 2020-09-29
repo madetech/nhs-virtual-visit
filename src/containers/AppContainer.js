@@ -1,5 +1,6 @@
 import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
+import createVisit from "../usecases/createVisit";
 import deleteVisitByCallId from "../usecases/deleteVisitByCallId";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
@@ -52,9 +53,13 @@ class AppContainer {
     return Database.getInstance();
   };
 
-  // getCreateVisit = () => {
-  //   return createVisit(this);
-  // };
+  getNotifyClient = () => {
+    return GovNotify.getInstance();
+  };
+
+  getCreateVisit = () => {
+    return createVisit(this);
+  };
 
   getDeleteVisitByCallId = () => {
     return deleteVisitByCallId(this);
@@ -82,10 +87,6 @@ class AppContainer {
 
   getAdminIsAuthenticated = () => {
     return adminIsAuthenticated(this);
-  };
-
-  getNotifyClient = () => {
-    return GovNotify.getInstance();
   };
 
   getSendTextMessage = () => {
