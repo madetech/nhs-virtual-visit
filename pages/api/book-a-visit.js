@@ -38,7 +38,6 @@ export default withContainer(
       res.end(JSON.stringify({ err: errors }));
       return;
     }
-
     try {
       let { wardId, trustId } = userIsAuthenticatedResponse;
 
@@ -67,6 +66,25 @@ export default withContainer(
         throw error;
       }
 
+      const sendBookingNotification = container.getSendBookingNotification();
+
+      const {
+        success: bookingNotificationSuccess,
+        errors: bookingNotificationErrors,
+      } = await sendBookingNotification({
+        mobileNumber: body.contactNumber,
+        emailAddress: body.contactEmail,
+        wardName: ward.name,
+        hospitalName: ward.hospitalName,
+        visitDateAndTime: body.callTime,
+      });
+
+      if (!bookingNotificationSuccess) {
+        res.status(400);
+        res.end(JSON.stringify({ err: bookingNotificationErrors }));
+        return;
+      }
+
       await createVisit({
         patientName: body.patientName,
         contactEmail: body.contactEmail,
@@ -82,26 +100,8 @@ export default withContainer(
 
       await updateWardVisitTotals({ wardId: ward.id, date: body.callTime });
 
-      const sendBookingNotification = container.getSendBookingNotification();
-
-      const {
-        success: bookingNotificationSuccess,
-        errors: bookingNotificationErrors,
-      } = await sendBookingNotification({
-        mobileNumber: body.contactNumber,
-        emailAddress: body.contactEmail,
-        wardName: ward.name,
-        hospitalName: ward.hospitalName,
-        visitDateAndTime: body.callTime,
-      });
-
-      if (bookingNotificationSuccess) {
-        res.status(201);
-        res.end(JSON.stringify({ success: true }));
-      } else {
-        res.status(400);
-        res.end(JSON.stringify({ err: bookingNotificationErrors }));
-      }
+      res.status(201);
+      res.end(JSON.stringify({ success: true }));
     } catch (err) {
       console.error(err);
       res.status(500);
