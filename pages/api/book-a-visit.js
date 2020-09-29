@@ -2,6 +2,7 @@ import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import withContainer from "../../src/middleware/withContainer";
 import validateVisit from "../../src/helpers/validateVisit";
 import CallIdProvider from "../../src/providers/CallIdProvider";
+import createVisit from "../../src/usecases/createVisit";
 
 const ids = new RandomIdProvider();
 
@@ -55,7 +56,6 @@ export default withContainer(
       const callId = await callIdProvider.generate();
       let callPassword = ids.generate(10);
 
-      const createVisit = container.getCreateVisit();
       const updateWardVisitTotals = container.getUpdateWardVisitTotals();
 
       const { ward, error } = await container.getRetrieveWardById()(
@@ -65,6 +65,8 @@ export default withContainer(
       if (error) {
         throw error;
       }
+
+      const db = await container.getDb();
 
       const sendBookingNotification = container.getSendBookingNotification();
 
@@ -85,18 +87,21 @@ export default withContainer(
         return;
       }
 
-      await createVisit({
-        patientName: body.patientName,
-        contactEmail: body.contactEmail,
-        contactNumber: body.contactNumber,
-        contactName: body.contactName,
-        callTime: body.callTime,
-        callTimeLocal: body.callTimeLocal,
-        callId: callId,
-        provider: trust.videoProvider,
-        wardId: ward.id,
-        callPassword: callPassword,
-      });
+      await createVisit(
+        {
+          patientName: body.patientName,
+          contactEmail: body.contactEmail,
+          contactNumber: body.contactNumber,
+          contactName: body.contactName,
+          callTime: body.callTime,
+          callTimeLocal: body.callTimeLocal,
+          callId: callId,
+          provider: trust.videoProvider,
+          wardId: ward.id,
+          callPassword: callPassword,
+        },
+        db
+      );
 
       await updateWardVisitTotals({ wardId: ward.id, date: body.callTime });
 
