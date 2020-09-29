@@ -35,7 +35,11 @@ export default withContainer(
       return;
     }
 
+    let { wardId, trustId } = userIsAuthenticatedResponse;
+
+    // Validate
     res.setHeader("Content-Type", "application/json");
+
     const { validVisit, errors } = validateVisit({
       patientName: body.patientName,
       contactName: body.contactName,
@@ -44,14 +48,14 @@ export default withContainer(
       callTime: body.callTime,
     });
 
+    // handle validation response
     if (!validVisit) {
       res.status(400);
       res.end(JSON.stringify({ err: errors }));
       return;
     }
-    try {
-      let { wardId, trustId } = userIsAuthenticatedResponse;
 
+    try {
       const { trust, error: trustErr } = await container.getRetrieveTrustById()(
         trustId
       );
