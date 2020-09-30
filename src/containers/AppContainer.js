@@ -17,7 +17,7 @@ import retrieveVisits from "../usecases/retrieveVisits";
 import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 import verifyCallPassword from "../usecases/verifyCallPassword";
 import retrieveWards from "../usecases/retrieveWards";
-import updateWardVisitTotals from "../usecases/updateWardVisitTotals";
+import { updateWardVisitTotalsDb } from "../usecases/updateWardVisitTotals";
 import retrieveWardVisitTotals from "../usecases/retrieveWardVisitTotals";
 import updateWard from "../usecases/updateWard";
 import createHospital from "../usecases/createHospital";
@@ -47,6 +47,7 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
+import CallIdProvider from "../providers/CallIdProvider";
 
 class AppContainer {
   getDb = () => {
@@ -55,6 +56,11 @@ class AppContainer {
 
   getNotifyClient = () => {
     return GovNotify.getInstance();
+  };
+
+  getCallIdProvider = () => (trust, callTime) => {
+    const provider = new CallIdProvider(trust.videoProvider, callTime);
+    return provider.generate();
   };
 
   getCreateVisit = () => {
@@ -126,7 +132,7 @@ class AppContainer {
   };
 
   getUpdateWardVisitTotals = () => {
-    return updateWardVisitTotals(this);
+    return updateWardVisitTotalsDb(this);
   };
 
   getRetrieveWardVisitTotals = () => {
