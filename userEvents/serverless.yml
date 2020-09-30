@@ -60,16 +60,20 @@ provider:
 
 resources:
   Resources:
-    visitEvents:
+    visitEvents1:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: visitEvents
+        TableName: visitEvents1
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: stream_name
+            AttributeType: S
+          - AttributeName: created_on
             AttributeType: N
         KeySchema:
-          - AttributeName: id
+          - AttributeName: stream_name
             KeyType: HASH
+          - AttributeName: created_on
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
@@ -121,11 +125,11 @@ resources:
                     - dynamodb:PutItem
                   Resource:
                     - "Fn::GetAtt":
-                        - "visitEvents"
+                        - "visitEvents1"
                         - "Arn"
 functions:
   log_event:
-    handler: handler.lambda_entry
+    handler: event_logger.lambda_entry
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
