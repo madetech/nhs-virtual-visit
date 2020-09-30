@@ -1,6 +1,6 @@
 import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import withContainer from "../../src/middleware/withContainer";
-import validateVisit from "../../src/helpers/validateVisit";
+//import validateVisit from "../../src/helpers/validateVisit";
 import CallIdProvider from "../../src/providers/CallIdProvider";
 import logger from "../../logger";
 
@@ -40,21 +40,22 @@ export default withContainer(
     // Validate
     res.setHeader("Content-Type", "application/json");
 
-    const { validVisit, errors } = validateVisit({
-      patientName: body.patientName,
-      contactName: body.contactName,
-      contactEmail: body.contactEmail,
-      contactNumber: body.contactNumber,
-      callTime: body.callTime,
-    });
+    // const { validVisit, errors } = validateVisit({
+    //   patientName: body.patientName,
+    //   contactName: body.contactName,
+    //   contactEmail: body.contactEmail,
+    //   contactNumber: body.contactNumber,
+    //   callTime: body.callTime,
+    // });
 
-    // handle validation response
-    if (!validVisit) {
-      res.status(400);
-      res.end(JSON.stringify({ err: errors }));
-      return;
-    }
+    // // handle validation response
+    // if (!validVisit) {
+    //   res.status(400);
+    //   res.end(JSON.stringify({ err: errors }));
+    //   return;
+    // }
 
+    logger.debug("get retrieve trust by id function");
     try {
       const { trust, error: trustErr } = await container.getRetrieveTrustById()(
         trustId
@@ -68,10 +69,13 @@ export default withContainer(
         body.callTime
       );
       const callId = await callIdProvider.generate();
+
       let callPassword = ids.generate(10);
 
+      logger.debug("get update ward totals function function");
       const updateWardVisitTotals = container.getUpdateWardVisitTotals();
 
+      logger.debug("get retrieve ward by id function");
       const { ward, error } = await container.getRetrieveWardById()(
         wardId,
         trustId
@@ -79,7 +83,7 @@ export default withContainer(
       if (error) {
         throw error;
       }
-
+      logger.debug("getting sending notification function");
       const sendBookingNotification = container.getSendBookingNotification();
 
       logger.debug("sending notification");
@@ -106,7 +110,8 @@ export default withContainer(
 
       console.log({ createVisit });
       logger.debug(createVisit);
-      await createVisit({
+
+      const { success, err } = await createVisit({
         patientName: body.patientName,
         contactEmail: body.contactEmail,
         contactNumber: body.contactNumber,
@@ -118,6 +123,12 @@ export default withContainer(
         wardId: ward.id,
         callPassword: callPassword,
       });
+
+      if (!success) {
+        res.status(400);
+        res.end(JSON.stringify({ err }));
+        return;
+      }
 
       await updateWardVisitTotals({ wardId: ward.id, date: body.callTime });
 
