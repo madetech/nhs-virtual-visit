@@ -1,20 +1,4 @@
-import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import withContainer from "../../src/middleware/withContainer";
-//import validateVisit from "../../src/helpers/validateVisit";
-import CallIdProvider from "../../src/providers/CallIdProvider";
-import logger from "../../logger";
-
-const ids = new RandomIdProvider();
-
-/*
-wep api adapter level - mvc / express / protobuff rpc, socket,  something
-  - takes some stuff and maps onto a command and returns response (or error codes)
-
-  Hex architecture
-  ports - delivery mechanism
-  domain
-  adapter - gateway - repo (entity io)
-*/
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -37,100 +21,29 @@ export default withContainer(
 
     let { wardId, trustId } = userIsAuthenticatedResponse;
 
-    // Validate
     res.setHeader("Content-Type", "application/json");
 
-    // const { validVisit, errors } = validateVisit({
-    //   patientName: body.patientName,
-    //   contactName: body.contactName,
-    //   contactEmail: body.contactEmail,
-    //   contactNumber: body.contactNumber,
-    //   callTime: body.callTime,
-    // });
-
-    // // handle validation response
-    // if (!validVisit) {
-    //   res.status(400);
-    //   res.end(JSON.stringify({ err: errors }));
-    //   return;
-    // }
-
-    logger.debug("get retrieve trust by id function");
     try {
-      const { trust, error: trustErr } = await container.getRetrieveTrustById()(
-        trustId
-      );
-      if (trustErr) {
-        throw trustErr;
-      }
-
-      const callIdProvider = new CallIdProvider(
-        trust.videoProvider,
-        body.callTime
-      );
-      const callId = await callIdProvider.generate();
-
-      let callPassword = ids.generate(10);
-
-      logger.debug("get update ward totals function function");
-      const updateWardVisitTotals = container.getUpdateWardVisitTotals();
-
-      logger.debug("get retrieve ward by id function");
-      const { ward, error } = await container.getRetrieveWardById()(
-        wardId,
-        trustId
-      );
-      if (error) {
-        throw error;
-      }
-      logger.debug("getting sending notification function");
-      const sendBookingNotification = container.getSendBookingNotification();
-
-      logger.debug("sending notification");
-      const {
-        success: bookingNotificationSuccess,
-        errors: bookingNotificationErrors,
-      } = await sendBookingNotification({
-        mobileNumber: body.contactNumber,
-        emailAddress: body.contactEmail,
-        wardName: ward.name,
-        hospitalName: ward.hospitalName,
-        visitDateAndTime: body.callTime,
-      });
-
-      if (!bookingNotificationSuccess) {
-        logger.debug("sending notification failed", bookingNotificationErrors);
-        res.status(400);
-        res.end(JSON.stringify({ err: bookingNotificationErrors }));
-        return;
-      }
-
-      logger.debug("sending creating Visit (book-a-visit)");
       const createVisit = await container.getCreateVisit();
 
-      console.log({ createVisit });
-      logger.debug(createVisit);
-
-      const { success, err } = await createVisit({
-        patientName: body.patientName,
-        contactEmail: body.contactEmail,
-        contactNumber: body.contactNumber,
-        contactName: body.contactName,
-        callTime: body.callTime,
-        callTimeLocal: body.callTimeLocal,
-        callId: callId,
-        provider: trust.videoProvider,
-        wardId: ward.id,
-        callPassword: callPassword,
-      });
+      const { success, err } = await createVisit(
+        {
+          patientName: body.patientName,
+          contactEmail: body.contactEmail,
+          contactNumber: body.contactNumber,
+          contactName: body.contactName,
+          callTime: body.callTime,
+          callTimeLocal: body.callTimeLocal,
+        },
+        trustId,
+        wardId
+      );
 
       if (!success) {
         res.status(400);
         res.end(JSON.stringify({ err }));
         return;
       }
-
-      await updateWardVisitTotals({ wardId: ward.id, date: body.callTime });
 
       res.status(201);
       res.end(JSON.stringify({ success: true }));

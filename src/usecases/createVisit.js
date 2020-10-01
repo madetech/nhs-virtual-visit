@@ -2,35 +2,84 @@ import { SCHEDULED } from "../../src/helpers/visitStatus";
 import validateVisit from "../../src/helpers/validateVisit";
 import { updateWardVisitTotalsSql } from "./updateWardVisitTotals";
 import logger from "../../logger";
+import RandomIdProvider from "../providers/RandomIdProvider";
 
-const createVisit = ({ getDb }) => async (visit) => {
+const createVisit = (
+  getDb,
+  getCallIdProvider,
+  getRetrieveTrustById,
+  retrieveWardById,
+  sendBookingNotification,
+  insertVisitQuery
+) => async (visit, trustId, wardId) => {
   const db = await getDb();
 
-  const { validVisit, errors } = validateVisit({
-    patientName: visit.patientName,
-    contactName: visit.contactName,
-    contactEmail: visit.contactEmail,
-    contactNumber: visit.contactNumber,
-    callTime: visit.callTime,
-  });
+  logger.debug("validate visit on create");
+  const { validVisit, errors } = validateVisit(visit);
 
   if (!validVisit) {
-    logger.debug("invalid visit");
+    logger.error("invalid visit on create", { visit, errors });
     return { success: false, err: errors };
   }
+
+  const { trust, error: trustErr } = await getRetrieveTrustById(trustId);
+  if (trustErr) {
+    throw trustErr;
+  }
+
+  const { ward, error } = await retrieveWardById(wardId, trustId);
+  if (error) {
+    throw error;
+  }
+
+  const callId = await getCallIdProvider(trust, visit.callTime);
+
+  const ids = new RandomIdProvider();
+  const callPassword = ids.generate(10);
+  const populatedVisit = Object.assign({}, visit, {
+    callId,
+    callPassword,
+    provider: trust.videoProvider,
+    wardId,
+  });
+
   try {
     return await db.tx(async (t) => {
       logger.debug("inserting visit");
       // const { id, call_id } = await insertVisit(t, visit);
-      await insertVisit(t, visit);
+      await insertVisitQuery(t, populatedVisit);
       logger.debug("updating ward totals");
-      await updateWardVisitTotalsSql(t, visit.wardId, visit.callTime);
+      await updateWardVisitTotalsSql(
+        t,
+        populatedVisit.wardId,
+        populatedVisit.callTime
+      );
+
+      logger.debug("sending notification");
+      const {
+        success: bookingNotificationSuccess,
+        errors: bookingNotificationErrors,
+      } = await sendBookingNotification({
+        mobileNumber: visit.contactNumber,
+        emailAddress: visit.contactEmail,
+        wardName: ward.name,
+        hospitalName: ward.hospitalName,
+        visitDateAndTime: visit.callTime,
+      });
+
+      if (!bookingNotificationSuccess) {
+        logger.error("sending notification failed", {
+          populatedVisit,
+          bookingNotificationErrors,
+        });
+        throw "Failed to wend notification";
+      }
 
       return { success: true, err: undefined };
     });
-  } catch (error) {
-    logger.error("failed to create visit", error);
-    return { success: false, err: error };
+  } catch (err) {
+    logger.error("failed to create visit", err);
+    return { success: false, err: err };
   }
 };
 
@@ -58,4 +107,4 @@ const insertVisit = async (db, visit) => {
   return { id, callId: call_id };
 };
 
-export default createVisit;
+export { insertVisit, createVisit };

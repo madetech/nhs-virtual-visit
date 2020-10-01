@@ -1,16 +1,19 @@
-import createVisit from "./createVisit";
+import { insertVisit } from "./createVisit";
 import { SCHEDULED } from "../../src/helpers/visitStatus";
 
-describe("createVisit", () => {
+describe("createVisit sql test", () => {
   it("creates a visit in the db when valid", async () => {
     const oneSpy = jest.fn().mockResolvedValue({ id: 10, call_id: "12345" });
-    const container = {
-      async getDb() {
-        return {
-          one: oneSpy,
-        };
-      },
+    const db = {
+      one: oneSpy,
     };
+    // const container = {
+    //   async getDb() {
+    //     return {
+    //       one: oneSpy,
+    //     };
+    //   },
+    // };
 
     const request = {
       patientName: "Bob Smith",
@@ -24,7 +27,7 @@ describe("createVisit", () => {
       callPassword: "securePassword",
     };
 
-    const { id, callId } = await createVisit(container)(request);
+    const { id, callId } = await insertVisit(db, request);
 
     expect(id).toEqual(10);
     expect(callId).toEqual("12345");

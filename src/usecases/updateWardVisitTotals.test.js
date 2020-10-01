@@ -1,4 +1,4 @@
-import updateWardVisitTotals from "./updateWardVisitTotals";
+import { updateWardVisitTotalsDb } from "./updateWardVisitTotals";
 
 describe("updateWardVisitTotals", () => {
   const dateToInsert = "2020-05-05T10:10:10";
@@ -17,7 +17,7 @@ describe("updateWardVisitTotals", () => {
         },
       };
 
-      let response = await updateWardVisitTotals(container)({
+      let response = await updateWardVisitTotalsDb(container)({
         wardId: 1,
         date: dateToInsert,
       });
@@ -51,7 +51,7 @@ describe("updateWardVisitTotals", () => {
         },
       };
 
-      let response = await updateWardVisitTotals(container)({
+      let response = await updateWardVisitTotalsDb(container)({
         wardId: 1,
         date: dateToInsert,
       });
@@ -83,7 +83,7 @@ describe("updateWardVisitTotals", () => {
           };
         },
       };
-      let response = await updateWardVisitTotals(container)({
+      let response = await updateWardVisitTotalsDb(container)({
         wardId: 1,
         date: dateToInsert,
       });

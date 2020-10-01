@@ -1,6 +1,6 @@
 import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
-import createVisit from "../usecases/createVisit";
+import { createVisit, insertVisit } from "../usecases/createVisit";
 import deleteVisitByCallId from "../usecases/deleteVisitByCallId";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
@@ -58,13 +58,20 @@ class AppContainer {
     return GovNotify.getInstance();
   };
 
-  getCallIdProvider = () => (trust, callTime) => {
+  getCallIdProvider = () => async (trust, callTime) => {
     const provider = new CallIdProvider(trust.videoProvider, callTime);
-    return provider.generate();
+    return await provider.generate();
   };
 
   getCreateVisit = () => {
-    return createVisit(this);
+    return createVisit(
+      this.getDb,
+      this.getCallIdProvider(),
+      this.getRetrieveTrustById(),
+      this.getRetrieveWardById(),
+      this.getSendBookingNotification(),
+      insertVisit
+    );
   };
 
   getDeleteVisitByCallId = () => {
