@@ -4,26 +4,47 @@ var dynamodb = new AWS.DynamoDB({ apiVersion: "2012-08-10" });
 
 //When passing --data multiple times you'll just get event as an array
 //We then map this to streamName, eventType, id, correlationId, dateTime, event
-//We only need to specify streamName, eventType, correlationId, event
+//We only need to specify streamName, eventType, id, correlationId, event
 exports.lambda_entry = async function (event, context) {
-  if (event.length !== 4) {
+  if (event.length !== 5) {
     console.log(
-      "EVENT: This lambda requires 4 arguments: streamName, eventType, correlationId, event"
+      "EVENT: This lambda requires 5 arguments: streamName, eventType, id, correlationId, event"
     );
+    return {
+      status: "failure",
+    };
   }
   console.log("EVENT: \n" + JSON.stringify(event, null, 2));
   console.log("EVENT: \n" + JSON.stringify(context, null, 2));
-  await log_event(dynamodb, event[0], event[1], event[2], event[3], event[4]);
-  return "HELLO WORLD"; //context.logStreamName
+  await log_event(
+    dynamodb,
+    event[0],
+    event[1],
+    event[2],
+    event[3],
+    event[4],
+    event[5]
+  );
+  return {
+    status: "success",
+  }; //context.logStreamName
 };
 
-async function log_event(db, stream_name, event_type, correlation_id, event) {
+async function log_event(
+  db,
+  stream_name,
+  event_type,
+  id,
+  correlation_id,
+  event
+) {
   var params = {
     TableName: "visitEvents1",
     Item: {
       stream_name: { S: stream_name },
       created_on: { N: Date.now().toString() },
       event_type: { S: event_type },
+      id: { S: id },
       correlation_id: { N: correlation_id },
       event: { S: event },
     },
