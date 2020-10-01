@@ -16,18 +16,20 @@ exports.lambda_entry = async function (event, context) {
   }
   console.log("EVENT: \n" + JSON.stringify(event, null, 2));
   console.log("EVENT: \n" + JSON.stringify(context, null, 2));
+
+  let [stream_name, event_type, id, correlation_id, event_object] = event;
+
   await log_event(
     dynamodb,
-    event[0],
-    event[1],
-    event[2],
-    event[3],
-    event[4],
-    event[5]
+    stream_name,
+    event_type,
+    id,
+    correlation_id,
+    event_object
   );
   return {
     status: "success",
-  }; //context.logStreamName
+  };
 };
 
 async function log_event(
