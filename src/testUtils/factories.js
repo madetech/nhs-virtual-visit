@@ -56,7 +56,8 @@ export const setupVisit = async (args = {}) => {
     patientName: "Patient Name",
     contactEmail: "contact@example.com",
     contactName: "Contact Name",
-    callTime: new Date("2020-06-01 13:00"),
+    //we'll need to do something about this so we won't need to keep regularly bumping it up
+    callTime: new Date("2020-11-01 13:00"),
     callId: "TESTCALLID",
     provider: "TESTPROVIDER",
     callPassword: "TESTCALLPASSWORD",

@@ -26,18 +26,16 @@ export default withContainer(
     try {
       const createVisit = await container.getCreateVisit();
 
-      const { success, err } = await createVisit(
-        {
-          patientName: body.patientName,
-          contactEmail: body.contactEmail,
-          contactNumber: body.contactNumber,
-          contactName: body.contactName,
-          callTime: body.callTime,
-          callTimeLocal: body.callTimeLocal,
-        },
+      const { success, err } = await createVisit({
+        patientName: body.patientName,
+        contactEmail: body.contactEmail,
+        contactNumber: body.contactNumber,
+        contactName: body.contactName,
+        callTime: body.callTime,
+        callTimeLocal: body.callTimeLocal,
         trustId,
-        wardId
-      );
+        wardId,
+      });
 
       if (!success) {
         res.status(400);

@@ -30,8 +30,15 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
   });
 
   it("returns the average visit time for a Trust", async () => {
-    // A trust with a visit with 1 participant
+    //This previously didn't validate anything so this test would
+    //erroneously pass, however the validation has been placed inside it so
+    //it does now require that things validate
+    //a fair number of issues with setupVisit() have been sorted thus far
+    //how ever we're still passing strange values like TESTPROVIDER that
+    //the program doesn't know how to deal with, we'll probably need to give
+    //it a real value
     const { id: visitId } = await setupVisit({
+      trustId: trustId,
       wardId: wardId,
     });
 

@@ -11,10 +11,9 @@ const createVisit = (
   retrieveWardById,
   sendBookingNotification,
   insertVisitQuery
-) => async (visit, trustId, wardId) => {
+) => async (visit) => {
   const db = await getDb();
 
-  logger.debug("validate visit on create");
   const { validVisit, errors } = validateVisit(visit);
 
   if (!validVisit) {
@@ -22,12 +21,12 @@ const createVisit = (
     return { success: false, err: errors };
   }
 
-  const { trust, error: trustErr } = await getRetrieveTrustById(trustId);
+  const { trust, error: trustErr } = await getRetrieveTrustById(visit.trustId);
   if (trustErr) {
     throw trustErr;
   }
 
-  const { ward, error } = await retrieveWardById(wardId, trustId);
+  const { ward, error } = await retrieveWardById(visit.wardId, visit.trustId);
   if (error) {
     throw error;
   }
@@ -40,7 +39,7 @@ const createVisit = (
     callId,
     callPassword,
     provider: trust.videoProvider,
-    wardId,
+    wardId: visit.wardId,
   });
 
   try {
