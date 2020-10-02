@@ -7,13 +7,6 @@ describe("createVisit sql test", () => {
     const db = {
       one: oneSpy,
     };
-    // const container = {
-    //   async getDb() {
-    //     return {
-    //       one: oneSpy,
-    //     };
-    //   },
-    // };
 
     const request = {
       patientName: "Bob Smith",
