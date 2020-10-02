@@ -3675,7 +3675,7 @@ cypress-audit@^0.2.3:
     lighthouse "^6.3.0"
     pa11y "^5.3.0"
 
-cypress@^5.2.0:
+cypress@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/cypress/-/cypress-5.3.0.tgz#91122219ae66ab910058970dbf36619ab0fbde6c"
   integrity sha512-XgebyqL7Th6/8YenE1ddb7+d4EiCG2Jvg/5c8+HPfFFY/gXnOVhoCVUU3KW8qg3JL7g0B+iJbHd5hxuCqbd1RQ==
