@@ -1,8 +1,5 @@
 node_modules
 npm-debug.log
 userEvents
-cypress
 bin
 docs
-pageTests
-devenv
