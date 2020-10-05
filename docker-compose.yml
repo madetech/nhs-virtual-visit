@@ -1,6 +1,17 @@
 version: "3"
 
 services:
+  vv:
+    build: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres/nhs-virtual-visit-dev
+      - TEST_DATABASE_URL=postgresql://postgres:postgres@postgres/nhs-virtual-visit-test
   postgres:
     image: postgres:12
     environment:

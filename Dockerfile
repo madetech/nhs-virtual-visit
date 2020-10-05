@@ -1,5 +1,4 @@
 FROM node:12.16
-USER node
 
 WORKDIR /usr/src/app
 
