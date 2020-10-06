@@ -3,7 +3,7 @@ import logger from "../../logger";
 const createWard = ({ getDb }) => async (ward) => {
   const db = await getDb();
   try {
-    logger.info("Creating ward for ", ward);
+    logger.info(`Creating ward for ${JSON.stringify(ward)}`, ward);
     const createdWard = await db.one(
       `INSERT INTO wards
         (id, name, code, trust_id, hospital_id)

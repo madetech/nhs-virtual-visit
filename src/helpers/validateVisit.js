@@ -9,6 +9,8 @@ export const validateVisit = ({
   contactEmail,
   contactNumber,
   callTime,
+  trustId,
+  wardId,
 }) => {
   let errors = {};
 
@@ -18,6 +20,14 @@ export const validateVisit = ({
 
   if (!isPresent(contactName)) {
     errors.contactName = "contactName must be present";
+  }
+
+  if (!isPresent(trustId)) {
+    errors.trustId = "trustId must be present";
+  }
+
+  if (!isPresent(wardId)) {
+    errors.wardId = "wardId must be present";
   }
 
   if (!isPresent(callTime)) {

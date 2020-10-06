@@ -11,10 +11,11 @@ const createVisit = (
   retrieveWardById,
   sendBookingNotification,
   insertVisitQuery
-) => async (visit) => {
+) => async (visit, wardId, trustId) => {
   const db = await getDb();
 
-  const { validVisit, errors } = validateVisit(visit);
+  const newVisit = Object.assign(visit, { wardId, trustId });
+  const { validVisit, errors } = validateVisit(newVisit);
 
   if (!validVisit) {
     logger.error("invalid visit on create", { visit, errors });

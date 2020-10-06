@@ -5,20 +5,27 @@ describe("createVisit contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("creates a visit", async () => {
-    const { wardId } = await setupWardWithinHospitalAndTrust({ index: 1 });
-
-    const visit = await container.getCreateVisit()({
-      patientName: "Patient Name",
-      contactEmail: "contact@example.com",
-      contactName: "Contact Name",
-      callTime: new Date("2020-06-01 13:00"),
-      callId: "TESTCALLID",
-      provider: "TESTPROVIDER",
-      callPassword: "TESTCALLPASSWORD",
-      wardId,
+    const { wardId, trustId } = await setupWardWithinHospitalAndTrust({
+      index: 1,
     });
 
-    expect(visit.id).not.toBeNull();
-    expect(visit.callId).toEqual("TESTCALLID");
+    let date = new Date();
+    date.setDate(date.getDate() + 1);
+
+    const { success } = await container.getCreateVisit()(
+      {
+        patientName: "Patient Name",
+        contactEmail: "contact@example.com",
+        contactName: "Contact Name",
+        callTime: date,
+        callId: "two",
+        provider: "whereby",
+        callPassword: "DAVE",
+      },
+      wardId,
+      trustId
+    );
+
+    expect(success).toEqual(true);
   });
 });
