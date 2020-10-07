@@ -7,7 +7,7 @@ export const setupTrust = async (args = {}) => {
     name: "Test Trust",
     adminCode: "TESTCODE",
     password: "TESTPASSWORD",
-    videoProvider: "whereby",
+    videoProvider: "jitsi",
     ...args,
   });
 };
