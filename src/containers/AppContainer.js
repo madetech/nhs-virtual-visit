@@ -47,7 +47,9 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
+
 import CallIdProvider from "../providers/CallIdProvider";
+import RandomIdProvider from "../providers/RandomIdProvider";
 
 class AppContainer {
   getDb = () => {
@@ -63,9 +65,12 @@ class AppContainer {
     return await provider.generate();
   };
 
+  getRandomIdProvider = () => new RandomIdProvider();
+
   getCreateVisit = () => {
     return createVisit(
       this.getDb,
+      this.getRandomIdProvider,
       this.getCallIdProvider(),
       this.getRetrieveTrustById(),
       this.getRetrieveWardById(),

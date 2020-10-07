@@ -1,7 +1,7 @@
 import { insertVisit } from "./createVisit";
 import { SCHEDULED } from "../../src/helpers/visitStatus";
 
-describe("createVisit sql test", () => {
+describe("insertVisit sql test", () => {
   it("creates a visit in the db when valid", async () => {
     const oneSpy = jest.fn().mockResolvedValue({ id: 10, call_id: "12345" });
     const db = {
