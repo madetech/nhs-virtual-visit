@@ -14,6 +14,9 @@ const createVisit = (
 ) => async (visit, wardId, trustId) => {
   const db = await getDb();
 
+  if (!wardId) throw "creating visit with no wardId";
+  if (!trustId) throw "creating visit with no trustId";
+
   const newVisit = Object.assign(visit, { wardId, trustId });
   const { validVisit, errors } = validateVisit(newVisit);
 
