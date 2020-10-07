@@ -19,7 +19,7 @@ describe("createVisit contract tests", () => {
         contactName: "Contact Name",
         callTime: date,
         callId: "two",
-        provider: "whereby",
+        provider: "jitsi",
         callPassword: "DAVE",
       },
       wardId,
