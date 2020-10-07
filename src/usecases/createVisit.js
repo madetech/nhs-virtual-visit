@@ -2,10 +2,10 @@ import { SCHEDULED } from "../../src/helpers/visitStatus";
 import validateVisit from "../../src/helpers/validateVisit";
 import { updateWardVisitTotalsSql } from "./updateWardVisitTotals";
 import logger from "../../logger";
-import RandomIdProvider from "../providers/RandomIdProvider";
 
 const createVisit = (
   getDb,
+  getRandomIdProvider,
   getCallIdProvider,
   getRetrieveTrustById,
   retrieveWardById,
@@ -37,8 +37,7 @@ const createVisit = (
 
   const callId = await getCallIdProvider(trust, visit.callTime);
 
-  const ids = new RandomIdProvider();
-  const callPassword = ids.generate(10);
+  const callPassword = getRandomIdProvider().generate(10);
   const populatedVisit = Object.assign({}, visit, {
     callId,
     callPassword,
@@ -49,7 +48,6 @@ const createVisit = (
   try {
     return await db.tx(async (t) => {
       logger.debug("inserting visit");
-      // const { id, call_id } = await insertVisit(t, visit);
       await insertVisitQuery(t, populatedVisit);
       logger.debug("updating ward totals");
       await updateWardVisitTotalsSql(
@@ -75,7 +73,7 @@ const createVisit = (
           populatedVisit,
           bookingNotificationErrors,
         });
-        throw "Failed to wend notification";
+        throw "Failed to send notification";
       }
 
       return { success: true, err: undefined };
