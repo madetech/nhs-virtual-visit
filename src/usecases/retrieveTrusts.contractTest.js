@@ -21,13 +21,13 @@ describe("retrieveTrusts contract tests", () => {
         id: trustId1,
         name: "Test Trust",
         adminCode: "code1",
-        videoProvider: "whereby",
+        videoProvider: "jitsi",
       },
       {
         id: trustId2,
         name: "Test Trust 2",
         adminCode: "code2",
-        videoProvider: "whereby",
+        videoProvider: "jitsi",
       },
     ]);
   });
