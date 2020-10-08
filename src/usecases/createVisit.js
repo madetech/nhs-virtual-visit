@@ -17,20 +17,19 @@ const createVisit = (
   if (!wardId) throw "creating visit with no wardId";
   if (!trustId) throw "creating visit with no trustId";
 
-  const newVisit = Object.assign(visit, { wardId, trustId });
-  const { validVisit, errors } = validateVisit(newVisit);
+  const { validVisit, errors } = validateVisit(visit);
 
   if (!validVisit) {
     logger.error("invalid visit on create", { visit, errors });
     return { success: false, err: errors };
   }
 
-  const { trust, error: trustErr } = await getRetrieveTrustById(visit.trustId);
+  const { trust, error: trustErr } = await getRetrieveTrustById(trustId);
   if (trustErr) {
     throw trustErr;
   }
 
-  const { ward, error } = await retrieveWardById(visit.wardId, visit.trustId);
+  const { ward, error } = await retrieveWardById(wardId, trustId);
   if (error) {
     throw error;
   }
@@ -42,19 +41,15 @@ const createVisit = (
     callId,
     callPassword,
     provider: trust.videoProvider,
-    wardId: visit.wardId,
   });
 
   try {
     return await db.tx(async (t) => {
       logger.debug("inserting visit");
-      await insertVisitQuery(t, populatedVisit);
+      // const { id, call_id } = await insertVisit(t, visit);
+      await insertVisitQuery(t, populatedVisit, wardId);
       logger.debug("updating ward totals");
-      await updateWardVisitTotalsSql(
-        t,
-        populatedVisit.wardId,
-        populatedVisit.callTime
-      );
+      await updateWardVisitTotalsSql(t, wardId, populatedVisit.callTime);
 
       logger.debug("sending notification");
       const {
@@ -84,7 +79,7 @@ const createVisit = (
   }
 };
 
-const insertVisit = async (db, visit) => {
+const insertVisit = async (db, visit, wardId) => {
   const { id, call_id } = await db.one(
     `INSERT INTO scheduled_calls_table
       (id, patient_name, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
@@ -99,7 +94,7 @@ const insertVisit = async (db, visit) => {
       visit.callTime,
       visit.callId,
       visit.provider,
-      visit.wardId,
+      wardId,
       visit.callPassword,
       SCHEDULED,
     ]
