@@ -9,7 +9,7 @@ export default (() => {
     getInstance: async () => {
       if (!instance) {
         if (process.env.APP_ENV === "test") {
-          instance = new FakeNotifyClient("apiKey");
+          instance = new FakeNotifyClient();
         } else {
           const apiKey = process.env.API_KEY;
           instance = new NotifyClient(apiKey);
