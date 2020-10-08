@@ -46,7 +46,7 @@ const createVisit = (
   try {
     return await db.tx(async (t) => {
       logger.debug("inserting visit");
-      // const { id, call_id } = await insertVisit(t, visit);
+
       await insertVisitQuery(t, populatedVisit, wardId);
       logger.debug("updating ward totals");
       await updateWardVisitTotalsSql(t, wardId, populatedVisit.callTime);
