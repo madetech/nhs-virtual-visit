@@ -19,8 +19,8 @@ describe("insertVisit sql test", () => {
       wardId: 1,
       callPassword: "securePassword",
     };
-
-    const { id, callId } = await insertVisit(db, request);
+    const wardId = "wardId";
+    const { id, callId } = await insertVisit(db, request, wardId);
 
     expect(id).toEqual(10);
     expect(callId).toEqual("12345");
@@ -33,7 +33,7 @@ describe("insertVisit sql test", () => {
       request.callTime,
       request.callId,
       request.provider,
-      request.wardId,
+      wardId,
       request.callPassword,
       SCHEDULED,
     ]);

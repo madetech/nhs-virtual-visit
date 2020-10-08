@@ -30,57 +30,69 @@ describe("retrieveVisits contract tests", () => {
       trustId: trustId,
     });
 
-    await insertVisit(db, {
-      wardId: wardId,
-      trustId: trustId,
-      provider: "whereby",
-      callPassword: "test",
-      patientName: "past visit",
-      callTime: moment().subtract(2, "hours"),
-      contactEmail: "contact@example.com",
-      contactName: "Contact Name",
-      callId: "two",
-    });
+    await insertVisit(
+      db,
+      {
+        trustId: trustId,
+        provider: "whereby",
+        callPassword: "test",
+        patientName: "past visit",
+        callTime: moment().subtract(2, "hours"),
+        contactEmail: "contact@example.com",
+        contactName: "Contact Name",
+        callId: "two",
+      },
+      wardId
+    );
 
-    await insertVisit(db, {
-      wardId: wardId,
-      trustId: trustId,
-      provider: "test",
-      callPassword: "test",
-      patientName: "future visit",
-      callTime: moment().add(2, "hours"),
-      contactEmail: "contact@example.com",
-      contactName: "Contact Name",
-      callId: "three",
-    });
+    await insertVisit(
+      db,
+      {
+        trustId: trustId,
+        provider: "test",
+        callPassword: "test",
+        patientName: "future visit",
+        callTime: moment().add(2, "hours"),
+        contactEmail: "contact@example.com",
+        contactName: "Contact Name",
+        callId: "three",
+      },
+      wardId
+    );
 
     // Cancelled visits are not returned
-    const visitToBeCancelled = await insertVisit(db, {
-      wardId: wardId,
-      trustId: trustId,
-      provider: "test",
-      callPassword: "test",
-      callId: "cancelledVisit",
-      patientName: "cancelled visit",
-      callTime: moment().add(2, "hours"),
-      contactEmail: "contact@example.com",
-      contactName: "Contact Name",
-    });
+    const visitToBeCancelled = await insertVisit(
+      db,
+      {
+        trustId: trustId,
+        provider: "test",
+        callPassword: "test",
+        callId: "cancelledVisit",
+        patientName: "cancelled visit",
+        callTime: moment().add(2, "hours"),
+        contactEmail: "contact@example.com",
+        contactName: "Contact Name",
+      },
+      wardId
+    );
 
     await deleteVisitByCallId(container)(visitToBeCancelled.callId);
 
     // Visits from other wards are not returned
-    await insertVisit(db, {
-      wardId: wardId2,
-      trustId: trustId,
-      provider: "test",
-      callPassword: "test",
-      patientName: "different ward visit",
-      callTime: moment().add(2, "hours"),
-      contactEmail: "contact@example.com",
-      contactName: "Contact Name",
-      callId: "five",
-    });
+    await insertVisit(
+      db,
+      {
+        trustId: trustId,
+        provider: "test",
+        callPassword: "test",
+        patientName: "different ward visit",
+        callTime: moment().add(2, "hours"),
+        contactEmail: "contact@example.com",
+        contactName: "Contact Name",
+        callId: "five",
+      },
+      wardId2
+    );
 
     const { scheduledCalls } = await container.getRetrieveVisits()({ wardId });
     expect(scheduledCalls).toEqual([
