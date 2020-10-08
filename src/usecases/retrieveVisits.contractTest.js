@@ -33,7 +33,6 @@ describe("retrieveVisits contract tests", () => {
     await insertVisit(
       db,
       {
-        trustId: trustId,
         provider: "whereby",
         callPassword: "test",
         patientName: "past visit",
@@ -48,7 +47,6 @@ describe("retrieveVisits contract tests", () => {
     await insertVisit(
       db,
       {
-        trustId: trustId,
         provider: "test",
         callPassword: "test",
         patientName: "future visit",
@@ -64,7 +62,6 @@ describe("retrieveVisits contract tests", () => {
     const visitToBeCancelled = await insertVisit(
       db,
       {
-        trustId: trustId,
         provider: "test",
         callPassword: "test",
         callId: "cancelledVisit",
@@ -82,7 +79,6 @@ describe("retrieveVisits contract tests", () => {
     await insertVisit(
       db,
       {
-        trustId: trustId,
         provider: "test",
         callPassword: "test",
         patientName: "different ward visit",
