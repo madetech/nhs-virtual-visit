@@ -73,6 +73,11 @@ jobs:
 
       - name: "Create Zip"
         run: zip -r package.zip .
+
+      - name: "Login to Azure via CLI"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       
       - name: "Deploy Zip to Azure App Service"
         run: az webapp deployment source config-zip --resource-group virtualvisits --name virtualvisitsdemo --src clouddrive/package.zip
