@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy Node.js app to Azure Web App - virtualvisitsdemo
+name: Build and deploy Virtual Visits (Docker)
 
 on:
   push:
@@ -15,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Set up Node.js version
+      - name: Set up Node.js
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
@@ -34,9 +31,17 @@ jobs:
           npm run build --if-present
           npm run test --if-present
 
-      - name: "Deploy to Azure Web App"
-        uses: azure/webapps-deploy@v2
+      - name: "Login to Azure via CLI"
+        uses: azure/login@1
         with:
-          app-name: "virtualvisitsdemo"
-          slot-name: "production"
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_f4ad9a0a96794bb19d35fdfed6570caf }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Build and push Docker image to ACR"
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.ACR_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - run: |
+          docker build . -t ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
+          docker push ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
