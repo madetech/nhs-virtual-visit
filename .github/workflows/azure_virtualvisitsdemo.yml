@@ -27,7 +27,7 @@ jobs:
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
           SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
         run: |
-          npm install --ignore-scripts
+          npm install
           npm run build --if-present
           npm run test --if-present
 
