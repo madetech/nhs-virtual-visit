@@ -67,12 +67,14 @@ jobs:
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
           SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
         run: |
-          npm install
+          NONPMPOSTINSTALL=1 npm install
           npm run test
-          npm run build
+
+      - name: "Remove node_modules"
+        run: rm -rf node_modules
 
       - name: "Create Zip"
-        run: zip -r package.zip .
+        run: zip -r package.zip . -x \*node_modules\*
 
       - name: "Login to Azure via CLI"
         uses: azure/login@v1
