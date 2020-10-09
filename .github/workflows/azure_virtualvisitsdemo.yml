@@ -72,7 +72,7 @@ jobs:
           npm run build
 
       - name: "Create Zip"
-        run: su zip -r package.zip .
+        run: zip -r package.zip .
       
       - name: "Deploy Zip to Azure App Service"
-        run: su zip -r package.zip .
+        run: az webapp deployment source config-zip --resource-group virtualvisits --name virtualvisitsdemo --src clouddrive/package.zip
