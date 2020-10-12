@@ -32,7 +32,7 @@ describe("updateVisitById contract tests", () => {
     await setupWardWithinHospitalAndTrust();
 
     const { visit, error } = await container.getUpdateVisitById()({
-      id: "fakeId",
+      id: "4321",
       patientName: "Aang",
       recipientName: "Katara",
       recipientEmail: "katara@example.com",
