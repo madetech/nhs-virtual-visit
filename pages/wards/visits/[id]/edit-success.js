@@ -30,6 +30,16 @@ const EditVisitSuccess = () => (
           virtual visit.
         </Text>
 
+        <Text>
+          Please ensure that the key contact has received an email or text
+          confirming their virtual visit.
+        </Text>
+
+        <Text>
+          If a confirmation is not received please edit the visit to ensure the
+          email and phone number are correct.
+        </Text>
+
         <ActionLink href={`/wards/book-a-visit`}>
           Book a virtual visit
         </ActionLink>
