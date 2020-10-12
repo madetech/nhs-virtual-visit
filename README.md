@@ -4,6 +4,10 @@ This service allows ward staff to schedule a visit for a patient. Allowing face 
 
 It includes an Administration panel which provides self-service functionality for adding new Trusts, Hospitals, and Wards.
 
+## Development
+
+Please read our separate [Development Guide](./docs/development/README.md).
+
 ## User flows
 
 ### Scheduling a visit
@@ -53,10 +57,6 @@ providers are currently supported:
 - [Jitsi Meet](https://github.com/jitsi/jitsi-meet/blob/master/doc/README.md)
 
 For error monitoring and logging, [Sentry](https://sentry.io) is used.
-
-## Development
-
-Please read our separate [Development Guide](./docs/development/README.md).
 
 ## Contributing
 
