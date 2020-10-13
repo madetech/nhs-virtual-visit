@@ -1,6 +1,7 @@
 import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
-import { createVisit, insertVisit } from "../usecases/createVisit";
+import insertVisit from "../gateways/insertVisit";
+import createVisit from "../usecases/createVisit";
 import deleteVisitByCallId from "../usecases/deleteVisitByCallId";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
@@ -261,6 +262,10 @@ class AppContainer {
 
   getUpdateTrust = () => {
     return updateTrust(this);
+  };
+
+  getInsertVisit = () => {
+    return insertVisit(this);
   };
 }
 
