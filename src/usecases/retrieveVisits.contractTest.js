@@ -1,7 +1,6 @@
 import AppContainer from "../containers/AppContainer";
 import moment from "moment";
 import deleteVisitByCallId from "./deleteVisitByCallId";
-import { insertVisit } from "./createVisit";
 import { setupTrust } from "../testUtils/factories";
 
 describe("retrieveVisits contract tests", () => {
@@ -30,7 +29,7 @@ describe("retrieveVisits contract tests", () => {
       trustId: trustId,
     });
 
-    await insertVisit(
+    await container.getInsertVisit()(
       db,
       {
         provider: "whereby",
@@ -44,7 +43,7 @@ describe("retrieveVisits contract tests", () => {
       wardId
     );
 
-    await insertVisit(
+    await container.getInsertVisit()(
       db,
       {
         provider: "test",
@@ -59,7 +58,7 @@ describe("retrieveVisits contract tests", () => {
     );
 
     // Cancelled visits are not returned
-    const visitToBeCancelled = await insertVisit(
+    const visitToBeCancelled = await container.getInsertVisit()(
       db,
       {
         provider: "test",
@@ -76,7 +75,7 @@ describe("retrieveVisits contract tests", () => {
     await deleteVisitByCallId(container)(visitToBeCancelled.callId);
 
     // Visits from other wards are not returned
-    await insertVisit(
+    await container.getInsertVisit()(
       db,
       {
         provider: "test",

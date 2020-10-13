@@ -1,5 +1,4 @@
 import AppContainer from "../containers/AppContainer";
-import { insertVisit } from "../usecases/createVisit";
 const container = AppContainer.getInstance();
 
 export const setupTrust = async (args = {}) => {
@@ -64,5 +63,5 @@ export const setupVisit = async (args = {}) => {
     callPassword: "TESTCALLPASSWORD",
     ...args,
   };
-  return await insertVisit(db, visit, args.wardId);
+  return await container.getInsertVisit()(db, visit, args.wardId);
 };
