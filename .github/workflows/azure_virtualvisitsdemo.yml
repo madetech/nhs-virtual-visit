@@ -40,8 +40,8 @@ jobs:
           docker build . -t ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
           docker push ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
         
-      - name: "Deploy Docker iamge to Azure App Service"
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'virtualvisitsdocker'
-          images: '${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}'
+      # - name: "Deploy Docker iamge to Azure App Service"
+      #   uses: azure/webapps-deploy@v2
+      #   with:
+      #     app-name: 'virtualvisitsdocker'
+      #     images: '${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}'
