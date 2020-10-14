@@ -63,5 +63,5 @@ export const setupVisit = async (args = {}) => {
     callPassword: "TESTCALLPASSWORD",
     ...args,
   };
-  return await container.getInsertVisit()(db, visit, args.wardId);
+  return await container.getInsertVisitGateway()(db, visit, args.wardId);
 };

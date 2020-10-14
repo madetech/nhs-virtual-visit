@@ -2,7 +2,7 @@ import logger from "../../../logger";
 
 const createVisitUnitOfWork = ({
   getDb,
-  getInsertVisit,
+  getInsertVisitGateway,
   getUpdateWardVisitTotalsGateway,
   getSendBookingNotification,
 }) => async (visit, ward) => {
@@ -13,7 +13,7 @@ const createVisitUnitOfWork = ({
     errors: bookingNotificationErrors,
   } = await db.tx(async (t) => {
     logger.debug("inserting visit");
-    await getInsertVisit()(t, visit, ward.id);
+    await getInsertVisitGateway()(t, visit, ward.id);
 
     logger.debug("updating ward totals");
     await getUpdateWardVisitTotalsGateway()(t, ward.id, visit.callTime);

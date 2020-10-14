@@ -29,7 +29,7 @@ describe("retrieveVisits contract tests", () => {
       trustId: trustId,
     });
 
-    await container.getInsertVisit()(
+    await container.getInsertVisitGateway()(
       db,
       {
         provider: "whereby",
@@ -43,7 +43,7 @@ describe("retrieveVisits contract tests", () => {
       wardId
     );
 
-    await container.getInsertVisit()(
+    await container.getInsertVisitGateway()(
       db,
       {
         provider: "test",
@@ -58,7 +58,7 @@ describe("retrieveVisits contract tests", () => {
     );
 
     // Cancelled visits are not returned
-    const visitToBeCancelled = await container.getInsertVisit()(
+    const visitToBeCancelled = await container.getInsertVisitGateway()(
       db,
       {
         provider: "test",
@@ -75,7 +75,7 @@ describe("retrieveVisits contract tests", () => {
     await deleteVisitByCallId(container)(visitToBeCancelled.callId);
 
     // Visits from other wards are not returned
-    await container.getInsertVisit()(
+    await container.getInsertVisitGateway()(
       db,
       {
         provider: "test",

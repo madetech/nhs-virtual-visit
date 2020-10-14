@@ -20,7 +20,7 @@ describe("insertVisit contract tests", () => {
       provider: "jitsi",
       callPassword: "securePassword",
     };
-    await container.getInsertVisit()(db, visit, wardId);
+    await container.getInsertVisitGateway()(db, visit, wardId);
 
     const anotherVisit = {
       patientName: "Test Patient",
@@ -32,7 +32,7 @@ describe("insertVisit contract tests", () => {
       provider: "jitsi",
       callPassword: "securePassword",
     };
-    await container.getInsertVisit()(db, anotherVisit, wardId);
+    await container.getInsertVisitGateway()(db, anotherVisit, wardId);
 
     const { scheduledCalls } = await container.getRetrieveVisits()({ wardId });
     expect(scheduledCalls).toEqual([
