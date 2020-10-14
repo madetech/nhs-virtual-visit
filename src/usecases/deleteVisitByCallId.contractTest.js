@@ -22,7 +22,7 @@ describe("deleteVisitByCallId contract tests", () => {
       expect.objectContaining({ patientName: "Test patient" }),
     ]);
 
-    await deleteVisitByCallId(container)(callId);
+    await container.getDeleteVisitByCallId()(callId);
 
     const {
       scheduledCalls: scheduledCallsAfterDelete,
