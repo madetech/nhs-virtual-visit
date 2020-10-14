@@ -18,10 +18,7 @@ import retrieveVisits from "../usecases/retrieveVisits";
 import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 import verifyCallPassword from "../usecases/verifyCallPassword";
 import retrieveWards from "../usecases/retrieveWards";
-import {
-  updateWardVisitTotalsDb,
-  updateWardVisitTotalsSql,
-} from "../usecases/updateWardVisitTotals";
+import updateWardVisitTotalsDb from "../usecases/updateWardVisitTotals";
 import retrieveWardVisitTotals from "../usecases/retrieveWardVisitTotals";
 import updateWard from "../usecases/updateWard";
 import createHospital from "../usecases/createHospital";
@@ -51,7 +48,8 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
-import createVisitUnitOfWork from "../gateways/createVisitUnitOfWork";
+import createVisitUnitOfWork from "../gateways/unitsOfWork/createVisitUnitOfWork";
+import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
 
 import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
@@ -148,10 +146,6 @@ class AppContainer {
 
   getUpdateWardVisitTotals = () => {
     return updateWardVisitTotalsDb(this);
-  };
-
-  getUpdateWardVisitTotalsSql = () => {
-    return updateWardVisitTotalsSql;
   };
 
   getRetrieveWardVisitTotals = () => {
@@ -276,6 +270,10 @@ class AppContainer {
 
   getCreateVisitUnitOfWork = () => {
     return createVisitUnitOfWork(this);
+  };
+
+  getUpdateWardVisitTotalsGateway = () => {
+    return updateWardVisitTotals;
   };
 }
 
