@@ -1,5 +1,5 @@
-import AppContainer from "../containers/AppContainer";
-import { setupWardWithinHospitalAndTrust } from "../testUtils/factories";
+import AppContainer from "../../containers/AppContainer";
+import { setupWardWithinHospitalAndTrust } from "../../testUtils/factories";
 
 describe("createVisitUnitOfWork tests", () => {
   const container = AppContainer.getInstance();
