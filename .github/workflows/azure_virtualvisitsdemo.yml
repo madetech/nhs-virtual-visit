@@ -37,9 +37,10 @@ jobs:
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
           SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
       - run: |
+          bin/write_environment.sh
           docker build . -t ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
           docker push ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
-        
+
       # - name: "Deploy Docker iamge to Azure App Service"
       #   uses: azure/webapps-deploy@v2
       #   with:
