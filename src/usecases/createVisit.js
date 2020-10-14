@@ -1,18 +1,13 @@
 import validateVisit from "../../src/helpers/validateVisit";
-import { updateWardVisitTotalsSql } from "./updateWardVisitTotals";
 import logger from "../../logger";
 
 const createVisit = (
-  getDb,
   getRandomIdProvider,
   getCallIdProvider,
   getRetrieveTrustById,
   retrieveWardById,
-  sendBookingNotification,
-  insertVisitQuery
+  createVisitUnitOfWork
 ) => async (visit, wardId, trustId) => {
-  const db = await getDb();
-
   if (!wardId) throw "creating visit with no wardId";
   if (!trustId) throw "creating visit with no trustId";
 
@@ -43,35 +38,20 @@ const createVisit = (
   });
 
   try {
-    return await db.tx(async (t) => {
-      logger.debug("inserting visit");
+    const {
+      bookingNotificationSuccess,
+      bookingNotificationErrors,
+    } = await createVisitUnitOfWork(populatedVisit, ward);
 
-      await insertVisitQuery(t, populatedVisit, wardId);
-      logger.debug("updating ward totals");
-      await updateWardVisitTotalsSql(t, wardId, populatedVisit.callTime);
-
-      logger.debug("sending notification");
-      const {
-        success: bookingNotificationSuccess,
-        errors: bookingNotificationErrors,
-      } = await sendBookingNotification({
-        mobileNumber: visit.contactNumber,
-        emailAddress: visit.contactEmail,
-        wardName: ward.name,
-        hospitalName: ward.hospitalName,
-        visitDateAndTime: visit.callTime,
+    if (!bookingNotificationSuccess) {
+      logger.error("sending notification failed", {
+        populatedVisit,
+        bookingNotificationErrors,
       });
+      throw "Failed to send notification";
+    }
 
-      if (!bookingNotificationSuccess) {
-        logger.error("sending notification failed", {
-          populatedVisit,
-          bookingNotificationErrors,
-        });
-        throw "Failed to send notification";
-      }
-
-      return { success: true, err: undefined };
-    });
+    return { success: true, err: undefined };
   } catch (err) {
     logger.error("failed to create visit", err);
     return { success: false, err: err };
