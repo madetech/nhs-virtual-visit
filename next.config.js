@@ -20,6 +20,8 @@ const {
   NODE_ENV,
 } = process.env;
 
+console.log(`DATABASE URL: ${process.env.DATABASE_URL}`);
+
 module.exports = withNextEnv(
   withSass(
     withSourceMaps({
