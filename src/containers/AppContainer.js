@@ -264,12 +264,12 @@ class AppContainer {
     return updateTrust(this);
   };
 
-  getInsertVisit = () => {
-    return insertVisit(this);
-  };
-
   getCreateVisitUnitOfWork = () => {
     return createVisitUnitOfWork(this);
+  };
+
+  getInsertVisitGateway = () => {
+    return insertVisit(this);
   };
 
   getUpdateWardVisitTotalsGateway = () => {
