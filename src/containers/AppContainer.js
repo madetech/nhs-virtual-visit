@@ -48,7 +48,7 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
-import createVisitUnitOfWork from "../gateways/unitsOfWork/createVisitUnitOfWork";
+import createVisitUnitOfWork from "../gateways/UnitsOfWork/createVisitUnitOfWork";
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
 
 import CallIdProvider from "../providers/CallIdProvider";
