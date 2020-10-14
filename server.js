@@ -8,6 +8,8 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
+console.log(`DATABASE URL: ${process.env.DATABASE_URL}`);
+
 app
   .prepare()
   .then(() => {
