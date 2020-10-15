@@ -37,6 +37,7 @@ jobs:
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
           SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
       - run: |
+          echo "API KEY SIZE: ${#API_KEY}"
           bin/write_environment.sh
           docker build . -t ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
           docker push ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
