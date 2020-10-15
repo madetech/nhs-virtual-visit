@@ -9,9 +9,6 @@ export default function Custom404() {
     <Layout title="We can’t find the page you’re looking for">
       <GridRow>
         <GridColumn width="two-thirds">
-          <Text>
-            EMAIL_INITIAL_TEMPLATE_ID: {process.env.EMAIL_INITIAL_TEMPLATE_ID}{" "}
-          </Text>
           <Heading>We can’t find the page you’re looking for</Heading>
           <Text>If you typed the web address, check it is correct.</Text>
           <Text>
