@@ -33,5 +33,5 @@ ENABLE_SENTRY=$ENABLE_SENTRY
 SHOW_NAVIGATION_BAR=$SHOW_NAVIGATION_BAR
 EOF
 
-echo "ENVIRONMENT FILE CONTENTS, SEE WIP:"
-cat .env
+echo "Environment file written"
+wc -c .env
