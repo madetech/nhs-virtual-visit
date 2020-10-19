@@ -1,30 +1,14 @@
 import TemplateStore from "../../gateways/GovNotify/TemplateStore";
 import fillObjectWithStrings from "../../testUtils/fillObjectWithStrings";
 
-const { NotifyClient: RealNotifyClient } = jest.requireActual(
-  "notifications-node-client"
-);
 const { NotifyClient: FakeNotifyClient } = jest.requireMock(
   "notifications-node-client"
 );
 
 const contractTestClient = (testCallback) => () => {
-  const apiKey = process.env.API_KEY;
-  const clients = [
-    {
-      label: "Real",
-      client: new RealNotifyClient(apiKey),
-    },
-    {
-      label: "Fake",
-      client: new FakeNotifyClient(),
-    },
-  ];
-
-  clients.forEach(({ label, client }) => {
-    describe(`with a ${label} GovNotify client`, () => {
-      testCallback({ label, client });
-    });
+  describe(`with a Fake GovNotify client`, () => {
+    const client = new FakeNotifyClient();
+    testCallback({ client });
   });
 };
 

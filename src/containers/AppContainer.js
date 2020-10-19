@@ -1,5 +1,6 @@
 import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
+import insertVisit from "../gateways/insertVisit";
 import createVisit from "../usecases/createVisit";
 import deleteVisitByCallId from "../usecases/deleteVisitByCallId";
 import createWard from "../usecases/createWard";
@@ -17,7 +18,7 @@ import retrieveVisits from "../usecases/retrieveVisits";
 import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 import verifyCallPassword from "../usecases/verifyCallPassword";
 import retrieveWards from "../usecases/retrieveWards";
-import updateWardVisitTotals from "../usecases/updateWardVisitTotals";
+import updateWardVisitTotalsDb from "../usecases/updateWardVisitTotals";
 import retrieveWardVisitTotals from "../usecases/retrieveWardVisitTotals";
 import updateWard from "../usecases/updateWard";
 import createHospital from "../usecases/createHospital";
@@ -47,14 +48,36 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
+import createVisitUnitOfWork from "../gateways/UnitsOfWork/createVisitUnitOfWork";
+import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
+
+import CallIdProvider from "../providers/CallIdProvider";
+import RandomIdProvider from "../providers/RandomIdProvider";
 
 class AppContainer {
   getDb = () => {
     return Database.getInstance();
   };
 
+  getNotifyClient = () => {
+    return GovNotify.getInstance();
+  };
+
+  getCallIdProvider = () => async (trust, callTime) => {
+    const provider = new CallIdProvider(trust.videoProvider, callTime);
+    return await provider.generate();
+  };
+
+  getRandomIdProvider = () => new RandomIdProvider();
+
   getCreateVisit = () => {
-    return createVisit(this);
+    return createVisit(
+      this.getRandomIdProvider,
+      this.getCallIdProvider(),
+      this.getRetrieveTrustById(),
+      this.getRetrieveWardById(),
+      this.getCreateVisitUnitOfWork()
+    );
   };
 
   getDeleteVisitByCallId = () => {
@@ -83,10 +106,6 @@ class AppContainer {
 
   getAdminIsAuthenticated = () => {
     return adminIsAuthenticated(this);
-  };
-
-  getNotifyClient = () => {
-    return GovNotify.getInstance();
   };
 
   getSendTextMessage = () => {
@@ -126,7 +145,7 @@ class AppContainer {
   };
 
   getUpdateWardVisitTotals = () => {
-    return updateWardVisitTotals(this);
+    return updateWardVisitTotalsDb(this);
   };
 
   getRetrieveWardVisitTotals = () => {
@@ -243,6 +262,18 @@ class AppContainer {
 
   getUpdateTrust = () => {
     return updateTrust(this);
+  };
+
+  getCreateVisitUnitOfWork = () => {
+    return createVisitUnitOfWork(this);
+  };
+
+  getInsertVisitGateway = () => {
+    return insertVisit(this);
+  };
+
+  getUpdateWardVisitTotalsGateway = () => {
+    return updateWardVisitTotals;
   };
 }
 

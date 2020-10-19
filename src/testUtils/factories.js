@@ -6,7 +6,7 @@ export const setupTrust = async (args = {}) => {
     name: "Test Trust",
     adminCode: "TESTCODE",
     password: "TESTPASSWORD",
-    videoProvider: "TESTPROVIDER",
+    videoProvider: "jitsi",
     ...args,
   });
 };
@@ -52,14 +52,16 @@ export const setupWardWithinHospitalAndTrust = async (
 };
 
 export const setupVisit = async (args = {}) => {
-  return await container.getCreateVisit()({
+  const db = await container.getDb();
+  const visit = {
     patientName: "Patient Name",
     contactEmail: "contact@example.com",
     contactName: "Contact Name",
     callTime: new Date("2020-06-01 13:00"),
     callId: "TESTCALLID",
-    provider: "TESTPROVIDER",
+    provider: "whereby",
     callPassword: "TESTCALLPASSWORD",
     ...args,
-  });
+  };
+  return await container.getInsertVisitGateway()(db, visit, args.wardId);
 };

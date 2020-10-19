@@ -9,7 +9,11 @@ const createHospital = ({ getDb }) => async ({
   const db = await getDb();
 
   try {
-    logger.info("Creating hospital for", name);
+    logger.info(
+      `Creating hospital for ${name}, trust: ${trustId}`,
+      name,
+      trustId
+    );
     const createdHospital = await db.one(
       `INSERT INTO hospitals
           (id, name, trust_id, support_url, survey_url)

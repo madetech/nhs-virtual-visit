@@ -25,7 +25,7 @@ describe("retrieveVisitById contract tests", () => {
       recipientEmail: "contact@example.com",
       callTime: new Date("2020-06-01 13:00"),
       callId: "TESTCALLID",
-      provider: "TESTPROVIDER",
+      provider: "whereby",
       callPassword: "TESTCALLPASSWORD",
       status: SCHEDULED,
       id,

@@ -17,7 +17,7 @@ const createTrust = ({ getDb }) => async ({
   }
 
   try {
-    logger.info("Creating trust", name);
+    logger.info(`Creating trust ${name}`, name);
 
     var salt = bcrypt.genSaltSync(10);
     var hashedPassword = bcrypt.hashSync(password, salt);

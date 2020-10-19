@@ -8,6 +8,7 @@ describe("retrieveVisits contract tests", () => {
 
   it("retrieves all Visits from the db", async () => {
     const { trustId } = await setupTrust();
+    const db = await container.getDb();
 
     const { hospitalId } = await container.getCreateHospital()({
       name: "Test Hospital",
@@ -28,44 +29,67 @@ describe("retrieveVisits contract tests", () => {
       trustId: trustId,
     });
 
-    await container.getCreateVisit()({
-      wardId: wardId,
-      provider: "test",
-      callPassword: "test",
-      patientName: "past visit",
-      callTime: moment().subtract(2, "hours"),
-    });
+    await container.getInsertVisitGateway()(
+      db,
+      {
+        provider: "whereby",
+        callPassword: "test",
+        patientName: "past visit",
+        callTime: moment().subtract(2, "hours"),
+        contactEmail: "contact@example.com",
+        contactName: "Contact Name",
+        callId: "two",
+      },
+      wardId
+    );
 
-    await container.getCreateVisit()({
-      wardId: wardId,
-      provider: "test",
-      callPassword: "test",
-      patientName: "future visit",
-      callTime: moment().add(2, "hours"),
-    });
+    await container.getInsertVisitGateway()(
+      db,
+      {
+        provider: "test",
+        callPassword: "test",
+        patientName: "future visit",
+        callTime: moment().add(2, "hours"),
+        contactEmail: "contact@example.com",
+        contactName: "Contact Name",
+        callId: "three",
+      },
+      wardId
+    );
 
     // Cancelled visits are not returned
-    await container.getCreateVisit()({
-      wardId: wardId,
-      provider: "test",
-      callPassword: "test",
-      callId: "cancelledVisit",
-      patientName: "cancelled visit",
-      callTime: moment().add(2, "hours"),
-    });
-    await deleteVisitByCallId(container)("cancelledVisit");
+    const visitToBeCancelled = await container.getInsertVisitGateway()(
+      db,
+      {
+        provider: "test",
+        callPassword: "test",
+        callId: "cancelledVisit",
+        patientName: "cancelled visit",
+        callTime: moment().add(2, "hours"),
+        contactEmail: "contact@example.com",
+        contactName: "Contact Name",
+      },
+      wardId
+    );
+
+    await deleteVisitByCallId(container)(visitToBeCancelled.callId);
 
     // Visits from other wards are not returned
-    await container.getCreateVisit()({
-      wardId: wardId2,
-      provider: "test",
-      callPassword: "test",
-      patientName: "different ward visit",
-      callTime: moment().add(2, "hours"),
-    });
+    await container.getInsertVisitGateway()(
+      db,
+      {
+        provider: "test",
+        callPassword: "test",
+        patientName: "different ward visit",
+        callTime: moment().add(2, "hours"),
+        contactEmail: "contact@example.com",
+        contactName: "Contact Name",
+        callId: "five",
+      },
+      wardId2
+    );
 
     const { scheduledCalls } = await container.getRetrieveVisits()({ wardId });
-
     expect(scheduledCalls).toEqual([
       expect.objectContaining({ patientName: "past visit" }),
       expect.objectContaining({ patientName: "future visit" }),

@@ -9,9 +9,8 @@ describe("markVisitAsComplete contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("retrieves a visit by id", async () => {
-    const { wardId } = await setupWardWithinHospitalAndTrust();
-
-    const { id } = await setupVisit({ wardId });
+    const { wardId, trustId } = await setupWardWithinHospitalAndTrust();
+    const { id } = await setupVisit({ wardId, trustId });
 
     const {
       id: scheduledCallId,
