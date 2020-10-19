@@ -1,10 +1,17 @@
 import React from "react";
 import classnames from "classnames";
 
-const Button = ({ children, className, type = "submit", ...others }) => (
+const Button = ({
+  children,
+  className,
+  ariaLabel,
+  type = "submit",
+  ...others
+}) => (
   <button
     type={type}
     className={classnames("nhsuk-button", className)}
+    aria-label={ariaLabel}
     {...others}
   >
     {children}
