@@ -24,41 +24,4 @@ if (!hasDb) {
   global[DB_KEY] = pgp(options);
 }
 
-const singleton = {};
-Object.defineProperty(singleton, "instance", {
-  get: () => global[DB_KEY],
-});
-
-// Exporting the database object for shared use:
-export default { getInstance: () => singleton.instance };
-
-/*
-export default (() => {
-  let instance;
-
-  return {
-    getInstance: async () => {
-      if (!instance) {
-        const { default: pgp } = await import("pg-promise");
-
-        let options = {
-          connectionString: process.env.DATABASE_URL,
-        };
-
-        if (process.env.NODE_ENV === "test" || process.env.APP_ENV === "test") {
-          options.connectionString = process.env.TEST_DATABASE_URL;
-        }
-
-        if (process.env.NODE_ENV === "production") {
-          options.ssl = { rejectUnauthorized: false };
-        }
-
-        instance = pgp()(options);
-        delete instance.constructor;
-      }
-
-      return instance;
-    },
-  };
-})();
- */
+export default { getInstance: () => global[DB_KEY] };
