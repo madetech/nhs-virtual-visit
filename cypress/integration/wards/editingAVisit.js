@@ -77,9 +77,7 @@ describe("As a ward staff, I want to edit a visit from the list screen so that I
   }
 
   function WhenIClickEditAVirtualVisit() {
-    cy.get("button", { timeout: cy.pageLoadTimeout })
-      .contains("Edit virtual visit")
-      .click();
+    cy.get("[data-testid=save-and-continue]").click();
   }
 
   function ThenISeeTheVirtualVisitIsUpdated() {

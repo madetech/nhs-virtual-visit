@@ -121,6 +121,7 @@ const EditAVisitConfirmation = ({
             <Button
               ariaLabel="Save and continue"
               className="nhsuk-u-margin-top-5"
+              data-testid="save-and-continue"
             >
               Save and continue
             </Button>
