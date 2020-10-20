@@ -16,7 +16,7 @@ const Success = () => {
       showNavigationBarForType={WARD_STAFF}
       showNavigationBar={true}
     >
-      <GridRow>
+      <GridRow data-testid="virtual-visit-booked">
         <GridColumn width="two-thirds">
           <Heading>Virtual visit booked</Heading>
 

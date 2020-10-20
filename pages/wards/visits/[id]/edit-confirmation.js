@@ -119,9 +119,9 @@ const EditAVisitConfirmation = ({
               ensure we set up the virtual visit with the correct person.
             </Text>
             <Button
-              ariaLabel="Save and continue"
+              data-testId="save-and-continue"
               className="nhsuk-u-margin-top-5"
-              data-testid="save-and-continue"
+              ariaLabel="Save and continue"
             >
               Save and continue
             </Button>
