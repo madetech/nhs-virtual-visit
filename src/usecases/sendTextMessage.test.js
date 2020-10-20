@@ -3,7 +3,8 @@ import TemplateStore from "../gateways/GovNotify/TemplateStore";
 import sendTextMessage from "./sendTextMessage";
 import fillObjectWithStrings from "../testUtils/fillObjectWithStrings";
 
-describe("sendTextMessage", () => {
+//SMOKE TESTS
+describe.skip("sendTextMessage", () => {
   const { templateId, personalisationKeys } = TemplateStore().firstText;
   const personalisation = fillObjectWithStrings(personalisationKeys);
 
