@@ -201,7 +201,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
   }
 
   function WhenIClickEditAVirtualVisit() {
-    cy.get("[data-testid=edit-button]").click();
+    cy.get("[data-testid=save-and-continue]").click();
   }
 
   function WhenIEditTheVisit(firstName) {
