@@ -1,16 +1,13 @@
 import validateVisit from "../../src/helpers/validateVisit";
 import logger from "../../logger";
 
-const createVisit = (
-  getRandomIdProvider,
-  getCallIdProvider,
-  getRetrieveTrustById,
-  retrieveWardById,
-  createVisitUnitOfWork
-) => async (visit, wardId, trustId) => {
-  if (!wardId) throw "creating visit with no wardId";
-  if (!trustId) throw "creating visit with no trustId";
-
+const createVisit = (createVisitUnitOfWork) => async (
+  visit,
+  ward,
+  callId,
+  callPassword,
+  videoProvider
+) => {
   const { validVisit, errors } = validateVisit(visit);
 
   if (!validVisit) {
@@ -18,37 +15,20 @@ const createVisit = (
     return { success: false, err: errors };
   }
 
-  const { trust, error: trustErr } = await getRetrieveTrustById(trustId);
-  if (trustErr) {
-    throw trustErr;
-  }
-
-  const { ward, error } = await retrieveWardById(wardId, trustId);
-  if (error) {
-    throw error;
-  }
-
-  const callId = await getCallIdProvider(trust, visit.callTime);
-
-  const callPassword = getRandomIdProvider().generate(10);
   const populatedVisit = Object.assign({}, visit, {
     callId,
     callPassword,
-    provider: trust.videoProvider,
+    provider: videoProvider,
   });
 
   try {
-    const {
-      bookingNotificationSuccess,
-      bookingNotificationErrors,
-    } = await createVisitUnitOfWork(populatedVisit, ward);
+    const { success, error } = await createVisitUnitOfWork(
+      populatedVisit,
+      ward
+    );
 
-    if (!bookingNotificationSuccess) {
-      logger.error("sending notification failed", {
-        populatedVisit,
-        bookingNotificationErrors,
-      });
-      throw "Failed to send notification";
+    if (!success) {
+      return { success: false, err: error };
     }
 
     return { success: true, err: undefined };

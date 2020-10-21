@@ -71,13 +71,7 @@ class AppContainer {
   getRandomIdProvider = () => new RandomIdProvider();
 
   getCreateVisit = () => {
-    return createVisit(
-      this.getRandomIdProvider,
-      this.getCallIdProvider(),
-      this.getRetrieveTrustById(),
-      this.getRetrieveWardById(),
-      this.getCreateVisitUnitOfWork()
-    );
+    return createVisit(this.getCreateVisitUnitOfWork());
   };
 
   getDeleteVisitByCallId = () => {
