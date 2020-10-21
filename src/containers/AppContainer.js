@@ -269,7 +269,7 @@ class AppContainer {
   };
 
   getInsertVisitGateway = () => {
-    return insertVisit(this);
+    return insertVisit;
   };
 
   getUpdateWardVisitTotalsGateway = () => {
