@@ -1,4 +1,16 @@
 import withContainer from "../../src/middleware/withContainer";
+import {
+  createVisit,
+  retrieveWardById,
+  retrieveTrustById,
+  CallIdProvider,
+  RandomIdProvider,
+} from "../../src/containers/CreateVisitContainer";
+import sendTextMessage from "../../src/usecases/sendTextMessage";
+import sendEmail from "../../src/usecases/sendEmail";
+import sendBookingNotification from "../../src/usecases/sendBookingNotification";
+import createVisitUnitOfWork from "../../src/gateways/UnitsOfWork/createVisitUnitOfWork";
+import GovNotify from "../../src/gateways/GovNotify";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -8,8 +20,9 @@ export default withContainer(
       return;
     }
 
-    const userIsAuthenticated = container.getUserIsAuthenticated();
-    const userIsAuthenticatedResponse = await userIsAuthenticated(
+    const userIsAuthenticatedInstance = container.getUserIsAuthenticated();
+    // ^^ still using container here for now because it has dependencies passed in via its constructor (reliant on app container)
+    const userIsAuthenticatedResponse = await userIsAuthenticatedInstance(
       headers.cookie
     );
 
@@ -18,15 +31,59 @@ export default withContainer(
       res.end(JSON.stringify({ err: "Unauthorized" }));
       return;
     }
-
     let { wardId, trustId } = userIsAuthenticatedResponse;
+    if (!trustId) {
+      res.status(400);
+      res.end(JSON.stringify({ err: "no trustId" }));
+    }
+    if (!wardId) {
+      res.status(400);
+      res.end(JSON.stringify({ err: "no wardId" }));
+    }
 
     res.setHeader("Content-Type", "application/json");
 
-    try {
-      const createVisit = await container.getCreateVisit();
+    const getNotifyClient = () => {
+      return GovNotify.getInstance();
+    };
+    const getSendTextMessage = () => {
+      return sendTextMessage({ getNotifyClient });
+    };
+    const getSendEmail = () => {
+      return sendEmail({ getNotifyClient });
+    };
+    //  ^^ better way to handle this? dont want to change sendBookingnotification constructor bcos it's used elsewhere by update visit
 
-      const { success, err } = await createVisit(
+    const sendBookingNotificationTest = sendBookingNotification({
+      getSendTextMessage,
+      getSendEmail,
+    });
+
+    try {
+      const { trust, error: trustErr } = await retrieveTrustById(trustId);
+      if (trustErr) {
+        res.status(400);
+        res.end(JSON.stringify({ trustErr }));
+        return;
+      }
+      const { ward, error: wardErr } = await retrieveWardById(wardId, trustId);
+      if (wardErr) {
+        res.status(400);
+        res.end(JSON.stringify({ wardErr }));
+        return;
+      }
+
+      const randomIdProvider = new RandomIdProvider();
+      const callPassword = randomIdProvider.generate(10);
+      const provider = new CallIdProvider(trust.videoProvider, body.callTime);
+      const callId = await provider.generate();
+
+      const createVisitUnitOfWorkInstance = createVisitUnitOfWork(
+        sendBookingNotificationTest
+      );
+      const createVisitInstance = createVisit(createVisitUnitOfWorkInstance);
+
+      const { success, err } = await createVisitInstance(
         {
           patientName: body.patientName,
           contactEmail: body.contactEmail,
@@ -35,8 +92,10 @@ export default withContainer(
           callTime: body.callTime,
           callTimeLocal: body.callTimeLocal,
         },
-        wardId,
-        trustId
+        ward,
+        callId,
+        callPassword,
+        trust.videoProvider
       );
 
       if (!success) {
