@@ -1,6 +1,6 @@
 import { SCHEDULED } from "../../src/helpers/visitStatus";
 
-const insertVisit = () => async (db, visit, wardId) => {
+const insertVisit = async (db, visit, wardId) => {
   const { id, call_id } = await db.one(
     `INSERT INTO scheduled_calls_table
       (id, patient_name, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status)

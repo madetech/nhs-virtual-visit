@@ -20,7 +20,7 @@ describe("insertVisit tests", () => {
       callPassword: "securePassword",
     };
     const wardId = "wardId";
-    const { id, callId } = await insertVisit()(db, request, wardId);
+    const { id, callId } = await insertVisit(db, request, wardId);
 
     expect(id).toEqual(10);
     expect(callId).toEqual("12345");

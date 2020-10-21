@@ -1,11 +1,13 @@
 import AppContainer from "../containers/AppContainer";
+import insertVisit from "./insertVisit";
+import Database from "./Database";
 import { setupTrust, setupWard } from "../testUtils/factories";
 
 describe("insertVisit contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("inserts visit into the db", async () => {
-    const db = await container.getDb();
+    const db = await Database.getInstance();
 
     const { trustId } = await setupTrust();
     const { wardId } = await setupWard({ trustId: trustId });
@@ -20,7 +22,7 @@ describe("insertVisit contract tests", () => {
       provider: "jitsi",
       callPassword: "securePassword",
     };
-    await container.getInsertVisitGateway()(db, visit, wardId);
+    await insertVisit(db, visit, wardId);
 
     const anotherVisit = {
       patientName: "Test Patient",
@@ -32,7 +34,7 @@ describe("insertVisit contract tests", () => {
       provider: "jitsi",
       callPassword: "securePassword",
     };
-    await container.getInsertVisitGateway()(db, anotherVisit, wardId);
+    await insertVisit(db, anotherVisit, wardId);
 
     const { scheduledCalls } = await container.getRetrieveVisits()({ wardId });
     expect(scheduledCalls).toEqual([
