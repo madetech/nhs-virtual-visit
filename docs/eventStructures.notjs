@@ -1,0 +1,47 @@
+
+// I guess middleware (client side) will copy session id across or create if not existing
+// correlation id in front end will get set as part of api call
+
+const eventMetadata = {
+  sessionId: 'someUUID',
+  correlationId: 'someUUID-commandName',
+  createdOn: Date.now(),
+  streamName: 'ward-id'
+}
+
+const loginEvent = {
+  wardId: 0
+}
+
+const visitBooked = {
+  visitDateTime: Date.now(),
+  wardId: 'wardId',
+  visitId: 'visitId',
+  patientId: 'patientId',
+  type: 'email / text',
+  recipientId: 'recipientId'  // this is not implemented -= goes into the auth as well as database tweaks convo.
+}
+
+const visitStarted = {
+  visitId: 'visitId'
+}
+
+const visitAttended = {
+  visitId: 'visitId'
+}
+
+const visitEnded = {
+  visitId: 'visitId'
+}
+
+const visitRebooked = {
+  visitDateTime: Date.now(),
+  wardId: 'wardId',
+  visitId: 'visitId',
+  patientId: 'patientId',
+  type: 'email / text',
+  recipientId: 'recipientId',  // this is not implemented -= goes into the auth as well as database tweaks convo.
+  lastVisitId: 'visitId'
+}
+
+
