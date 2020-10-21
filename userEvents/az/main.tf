@@ -1,11 +1,13 @@
-# Configure the Azure Provider
+variable "log_event_code_zip" {
+    type = "string"
+    default = "../build/log_event_code.zip"
+}
+
 provider "azurerm" {
-  # whilst the `version` attribute is optional, we recommend pinning to a given version of the Provider
   version = "=2.20.0"
   features {}
 }
 
-# Create a resource group
 resource "azurerm_resource_group" "rg" {
   name     = "nhs_virtual_visit_terraform"
   location = "UK South"
@@ -66,7 +68,7 @@ resource "azurerm_storage_account" "event_logger_storage" {
 }
 
 data "azurerm_storage_account_sas" "sas" {
-  connection_string = "${azurerm_storage_account.storage.primary_connection_string}"
+  connection_string = "${azurerm_storage_account.event_logger_storage.primary_connection_string}"
   https_only = true
   start = "2020-10-01"
   expiry = "2021-12-31"
@@ -94,12 +96,18 @@ data "azurerm_storage_account_sas" "sas" {
   }
 }
 
-resource "azurerm_storage_blob" "log_events" {
+resource "azurerm_storage_container" "event_logger_storage_container" {
+    name = "function-releases"
+    storage_account_name = "${azurerm_storage_account.event_logger_storage.name}"
+    container_access_type = "private"
+}
+
+resource "azurerm_storage_blob" "log_events_code" {
     name = "log_events.zip"
-    storage_account_name = "${azurerm_storage_account.storage.name}"
-    storage_container_name = "${azurerm_storage_container.deployments.name}"
+    storage_account_name = "${azurerm_storage_account.event_logger_storage.name}"
+    storage_container_name = "${azurerm_storage_container.event_logger_storage_container.name}"
     type = "block"
-    source = "${var.functionapp}"
+    source = "${var.log_event_code_zip}"
 }
 
 resource "azurerm_function_app" "log_events" {
@@ -117,7 +125,7 @@ resource "azurerm_function_app" "log_events" {
     FUNCTIONS_WORKER_RUNTIME = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE = "readwrite"
-    HASH = "${base64encode(filesha256("${var.functionapp}"))}"
-    WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.storage.name}.blob.core.windows.net/${azurerm_storage_container.deployments.name}/${azurerm_storage_blob.appcode.name}${data.azurerm_storage_account_sas.sas.sas}"
+    HASH = "${base64encode(filesha256("${var.log_event_code_zip}"))}"
+    WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.event_logger_storage.name}.blob.core.windows.net/${azurerm_storage_container.event_logger_storage_container.name}/${azurerm_storage_blob.log_events_code.name}${data.azurerm_storage_account_sas.sas.sas}"
   }
 }
