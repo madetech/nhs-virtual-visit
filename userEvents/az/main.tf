@@ -50,6 +50,7 @@ resource "azurerm_app_service_plan" "event_logger_service_plan" {
   location = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   kind = "FunctionApp"
+  reserved = true
 
   sku {
     tier = "Standard"
@@ -69,6 +70,8 @@ resource "azurerm_function_app" "log_events" {
   name = "log-events"
   location = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
+  os_type = "linux"
+  https_only = true
   
   app_service_plan_id        = azurerm_app_service_plan.event_logger_service_plan.id
   storage_account_name       = azurerm_storage_account.event_logger_storage.name
