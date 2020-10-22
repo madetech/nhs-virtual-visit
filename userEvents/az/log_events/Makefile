@@ -1,2 +1,2 @@
-../build/log_events.zip: *
-	zip ../build/log_events.zip *
+../functions/log_events.zip: *
+	zip ../functions/log_events.zip *

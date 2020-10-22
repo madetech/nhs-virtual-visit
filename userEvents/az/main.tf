@@ -1,7 +1,10 @@
-variable "log_event_code_zip" {
-    type = string
-    default = "build/log_event_code.zip"
+locals {
+  functions_dir = "functions"
+  log_events_filename = "log_events"
+  log_event_code_zip = "${local.functions_dir}/${local.log_events_filename}.zip"
+  hashed_log_event_code_zip = "${local.functions_dir}/${local.log_events_filename}_${base64encode(filesha256(local.log_event_code_zip))}.zip"
 }
+
 
 provider "azurerm" {
   version = "=2.20.0"
@@ -103,11 +106,12 @@ resource "azurerm_storage_container" "event_logger_storage_container" {
 }
 
 resource "azurerm_storage_blob" "log_events_code" {
-    name = "log_events.zip"
+    # We use a name composed of the filename and a hash of the file to ensure the blob is recreated when changed
+    name = local.hashed_log_event_code_zip
     storage_account_name = azurerm_storage_account.event_logger_storage.name
     storage_container_name = azurerm_storage_container.event_logger_storage_container.name
     type = "Block"
-    source = var.log_event_code_zip
+    source = local.log_event_code_zip
 }
 
 # This will be recreated every time, investigate later: 
@@ -127,7 +131,7 @@ resource "azurerm_function_app" "log_events" {
     FUNCTIONS_WORKER_RUNTIME = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE = "readwrite"
-    HASH = base64encode(filesha256(var.log_event_code_zip))
+    HASH = base64encode(filesha256(local.log_event_code_zip))
     WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.event_logger_storage.name}.blob.core.windows.net/${azurerm_storage_container.event_logger_storage_container.name}/${azurerm_storage_blob.log_events_code.name}${data.azurerm_storage_account_sas.sas.sas}"
   }
 }

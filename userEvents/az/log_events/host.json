@@ -1,7 +1,7 @@
 {
     "version": "2.0",
     "aggregator": {
-        "batchSize": 1000,
+        "batchSize": 10,
         "flushTimeout": "00:00:30"
     },
     "extensions": {
