@@ -8,6 +8,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%T')"
+
       - name: Checkout source code
         uses: actions/checkout@v1
 
@@ -36,5 +40,5 @@ jobs:
           application_name: virtualvisits-eb
           environment_name: VirtualvisitsEb-env
           region: eu-west-2
-          version_label: 12346
+          version_label: ${{ steps.date.outputs.date }}
           deployment_package: deploy.zip
