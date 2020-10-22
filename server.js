@@ -1,6 +1,6 @@
 const next = require("next");
 const express = require("express");
-const sslRedirect = require("heroku-ssl-redirect");
+// const sslRedirect = require("heroku-ssl-redirect");
 const log = require("./logger");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -12,7 +12,7 @@ app.prepare().then(() => {
   const server = express();
 
   // redirect to SSL
-  server.use(sslRedirect());
+  // server.use(sslRedirect());
 
   server.get("/health", (req, res) => {
     res.send("hello");
