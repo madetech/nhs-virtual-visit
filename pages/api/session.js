@@ -35,7 +35,11 @@ export default withContainer(
           trustId: verifyTrustAdminCodeResponse.trust.id,
           type: TRUST_ADMIN,
         });
-      } else if (verifyWardCodeResponse.validWardCode) {
+      } else if (
+        verifyWardCodeResponse.validWardCode &&
+        !verifyTrustAdminCodeResponse.validTrustAdminCode &&
+        !verifyAdminCodeResponse.validAdminCode
+      ) {
         const { ward } = verifyWardCodeResponse;
         token = tokens.generate({
           wardId: ward.id,
