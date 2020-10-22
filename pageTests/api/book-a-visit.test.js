@@ -70,12 +70,8 @@ describe("/api/book-a-visit", () => {
   it("calls createVisit with the correct arguments", async () => {
     const trust = { id: 1, videoProvider: "testVideoProvider" };
     const ward = { id: 10, name: "wardName", hospitalName: "hospitalName" };
-    retrieveTrustById.mockImplementation(() => {
-      return { trust, error: "" };
-    });
-    retrieveWardById.mockImplementation(() => {
-      return { ward, error: "" };
-    });
+    retrieveTrustById.mockResolvedValue({ trust, error: "" });
+    retrieveWardById.mockResolvedValue({ ward, error: "" });
 
     const createVisitSpy = jest
       .fn()
@@ -181,12 +177,8 @@ describe("/api/book-a-visit", () => {
       name: "anotherWardName",
       hospitalName: "anotherHospitalName",
     };
-    retrieveTrustById.mockImplementation(() => {
-      return { trust, error: "" };
-    });
-    retrieveWardById.mockImplementation(() => {
-      return { ward, error: "" };
-    });
+    retrieveTrustById.mockResolvedValue({ trust, error: "" });
+    retrieveWardById.mockResolvedValue({ ward, error: "" });
 
     const createVisitSpy = jest
       .fn()
@@ -227,12 +219,8 @@ describe("/api/book-a-visit", () => {
       name: "anotherWardName",
       hospitalName: "anotherHospitalName",
     };
-    retrieveTrustById.mockImplementation(() => {
-      return { trust, error: "" };
-    });
-    retrieveWardById.mockImplementation(() => {
-      return { ward, error: "" };
-    });
+    retrieveTrustById.mockResolvedValue({ trust, error: "" });
+    retrieveWardById.mockResolvedValue({ ward, error: "" });
 
     const createVisitSpy = jest.fn().mockImplementation(() => {
       throw "Some error!";
