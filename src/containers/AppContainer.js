@@ -1,7 +1,6 @@
 import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
 import insertVisit from "../gateways/insertVisit";
-import createVisit from "../usecases/createVisit";
 import deleteVisitByCallId from "../usecases/deleteVisitByCallId";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
@@ -48,7 +47,6 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
-import createVisitUnitOfWork from "../gateways/UnitsOfWork/createVisitUnitOfWork";
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
 
 import CallIdProvider from "../providers/CallIdProvider";
@@ -69,10 +67,6 @@ class AppContainer {
   };
 
   getRandomIdProvider = () => new RandomIdProvider();
-
-  getCreateVisit = () => {
-    return createVisit(this.getCreateVisitUnitOfWork());
-  };
 
   getDeleteVisitByCallId = () => {
     return deleteVisitByCallId(this);
@@ -256,10 +250,6 @@ class AppContainer {
 
   getUpdateTrust = () => {
     return updateTrust(this);
-  };
-
-  getCreateVisitUnitOfWork = () => {
-    return createVisitUnitOfWork(this);
   };
 
   getInsertVisitGateway = () => {
