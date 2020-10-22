@@ -2,11 +2,15 @@
 // I guess middleware (client side) will copy session id across or create if not existing
 // correlation id in front end will get set as part of api call
 
+const eventData = {...eventMetadata, ... someEvent}
+
 const eventMetadata = {
   sessionId: 'someUUID',
   correlationId: 'someUUID-commandName',
   createdOn: Date.now(),
-  streamName: 'ward-id'
+  streamName: 'ward-id',
+  trustId: 'trustId',
+  eventType: 'the name of the event'
 }
 
 const loginEvent = {
@@ -26,7 +30,13 @@ const visitStarted = {
   visitId: 'visitId'
 }
 
+ // this is probably the same qs visit started - doesnt add any valud
 const visitAttended = {
+  visitId: 'visitId'
+}
+
+const visitorAttendedVisit = {
+  visitorId: 'visitorId',
   visitId: 'visitId'
 }
 
