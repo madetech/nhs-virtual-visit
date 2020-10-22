@@ -25,6 +25,7 @@ const VisitsPanelList = ({ visits, title, showButtons }) => {
                 <div className="app-visit-card-body">
                   <details
                     className="nhsuk-details nhsuk-u-margin-0"
+                    data-testid={`details-summary-${visit.patientName}`}
                     nhsuk-polyfilled="true"
                     id="nhsuk-details0"
                   >
@@ -72,6 +73,7 @@ const VisitsPanelList = ({ visits, title, showButtons }) => {
                           </button>
 
                           <button
+                            data-testid={`edit-visit-button-${visit.patientName}`}
                             className="nhsuk-button nhsuk-u-margin-right-5 nhsuk-button--secondary"
                             onClick={() => {
                               Router.push(

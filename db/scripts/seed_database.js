@@ -6,9 +6,6 @@ async function getDb() {
   const connectionURL = process.env.TEST_DATABASE_URL;
   return pgp({
     connectionString: connectionURL,
-    ssl: {
-      rejectUnauthorized: false,
-    },
   });
 }
 

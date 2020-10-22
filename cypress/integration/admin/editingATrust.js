@@ -1,3 +1,10 @@
+import { thenIClickLogOut } from "../commonSteps";
+
+import {
+  GivenIAmLoggedInAsAnAdmin,
+  ThenISeeTheSiteAdministrationPage,
+} from "./adminCommonSteps";
+
 describe("As an admin, I want to edit a trust so that I can update the details of a trust.", () => {
   before(() => {
     // reset and seed the database
@@ -22,15 +29,9 @@ describe("As an admin, I want to edit a trust so that I can update the details o
     WhenIClickToReturnToSiteAdministration();
     ThenISeeTheSiteAdministrationPage();
     AndISeeTheUpdatedTrust();
-  });
 
-  // Allows an admin to edit a trust
-  function GivenIAmLoggedInAsAnAdmin() {
-    cy.visit(Cypress.env("baseUrl") + "/admin/login");
-    cy.get("input[name=code]").type(Cypress.env("validAdminCode"));
-    cy.get("input[name=password]").type(Cypress.env("validAdminPassword"));
-    cy.get("button").contains("Log in").click();
-  }
+    thenIClickLogOut();
+  });
 
   function WhenIClickToEditATrust() {
     cy.get("a.nhsuk-link").contains("Edit Test Trust").click();
@@ -54,10 +55,6 @@ describe("As an admin, I want to edit a trust so that I can update the details o
 
   function WhenIClickToReturnToSiteAdministration() {
     cy.get("a").contains("Return to site administration").click();
-  }
-
-  function ThenISeeTheSiteAdministrationPage() {
-    cy.get("h1").should("contain", "Site administration");
   }
 
   function AndISeeTheUpdatedTrust() {

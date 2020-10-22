@@ -1,5 +1,6 @@
 import React from "react";
 import AnchorLink from "../AnchorLink";
+import toLowerSnake from "../../helpers/toLowerSnake";
 
 const HospitalsTable = ({ hospitals }) => (
   <div className="nhsuk-table-responsive">
@@ -75,6 +76,7 @@ const HospitalsTable = ({ hospitals }) => (
               <AnchorLink
                 href="/trust-admin/hospitals/[id]/edit"
                 as={`/trust-admin/hospitals/${hospital.id}/edit`}
+                data-testid={`edit-${toLowerSnake(hospital.name)}`}
               >
                 Edit
                 <span className="nhsuk-u-visually-hidden">
