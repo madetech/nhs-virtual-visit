@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%T')"
+        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M%S')"
 
       - name: Checkout source code
         uses: actions/checkout@v1
