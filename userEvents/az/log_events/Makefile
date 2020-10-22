@@ -1,2 +1,4 @@
-../functions/log_events.zip: *
-	zip ../functions/log_events.zip *
+DEPENDENCIES := $(shell find . -mindepth 1 -print)
+
+../functions/log_events.zip: $(DEPENDENCIES)
+	zip ../functions/log_events.zip $(DEPENDENCIES)
