@@ -14,6 +14,10 @@ app.prepare().then(() => {
   // redirect to SSL
   server.use(sslRedirect());
 
+  server.get("/health", (req, res) => {
+    res.send("hello");
+  });
+
   server.all("*", (req, res) => {
     return handle(req, res);
   });
