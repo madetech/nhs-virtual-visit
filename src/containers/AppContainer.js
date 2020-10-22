@@ -9,7 +9,6 @@ import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import trustAdminIsAuthenticated from "../usecases/trustAdminIsAuthenticated";
 import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
-import retrieveWardById from "../usecases/retrieveWardById";
 import verifyWardCode from "../usecases/verifyWardCode";
 import verifyTrustAdminCode from "../usecases/verifyTrustAdminCode";
 import verifyAdminCode from "../usecases/verifyAdminCode";
@@ -23,7 +22,6 @@ import updateWard from "../usecases/updateWard";
 import createHospital from "../usecases/createHospital";
 import updateHospital from "../usecases/updateHospital";
 import retrieveHospitalsByTrustId from "../usecases/retrieveHospitalsByTrustId";
-import retrieveTrustById from "../usecases/retrieveTrustById";
 import retrieveHospitalById from "../usecases/retrieveHospitalById";
 import archiveWard from "../usecases/archiveWard";
 import validateEmailAddress from "../usecases/validateEmailAddress";
@@ -48,6 +46,8 @@ import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
+import retrieveWardById from "../gateways/retrieveWardById";
+import retrieveTrustById from "../gateways/retrieveTrustById";
 
 import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
@@ -77,7 +77,7 @@ class AppContainer {
   };
 
   getRetrieveWardById = () => {
-    return retrieveWardById(this);
+    return retrieveWardById;
   };
 
   getTokenProvider = () => {
@@ -157,7 +157,7 @@ class AppContainer {
   };
 
   getRetrieveTrustById = () => {
-    return retrieveTrustById(this);
+    return retrieveTrustById;
   };
 
   getRetrieveHospitalById = () => {
