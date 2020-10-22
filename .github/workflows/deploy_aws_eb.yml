@@ -36,5 +36,5 @@ jobs:
           application_name: virtualvisits-eb
           environment_name: VirtualvisitsEb-env
           region: eu-west-2
-          version_label: 12345
+          version_label: 12346
           deployment_package: deploy.zip
