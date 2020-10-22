@@ -21,7 +21,6 @@ export default withContainer(
     }
 
     const userIsAuthenticatedInstance = container.getUserIsAuthenticated();
-    // ^^ still using container here for now because it has dependencies passed in via its constructor (reliant on app container)
     const userIsAuthenticatedResponse = await userIsAuthenticatedInstance(
       headers.cookie
     );
@@ -35,13 +34,34 @@ export default withContainer(
     if (!trustId) {
       res.status(400);
       res.end(JSON.stringify({ err: "no trustId" }));
+      return;
     }
     if (!wardId) {
       res.status(400);
       res.end(JSON.stringify({ err: "no wardId" }));
+      return;
     }
 
     res.setHeader("Content-Type", "application/json");
+
+    const { trust, error: trustErr } = await retrieveTrustById(trustId);
+    if (trustErr) {
+      res.status(400);
+      res.end(JSON.stringify({ trustErr }));
+      return;
+    }
+
+    const { ward, error: wardErr } = await retrieveWardById(wardId, trustId);
+    if (wardErr) {
+      res.status(400);
+      res.end(JSON.stringify({ wardErr }));
+      return;
+    }
+
+    const randomIdProvider = new RandomIdProvider();
+    const callPassword = randomIdProvider.generate(10);
+    const provider = new CallIdProvider(trust.videoProvider, body.callTime);
+    const callId = await provider.generate();
 
     const getNotifyClient = () => {
       return GovNotify.getInstance();
@@ -52,37 +72,18 @@ export default withContainer(
     const getSendEmail = () => {
       return sendEmail({ getNotifyClient });
     };
-    //  ^^ better way to handle this? dont want to change sendBookingnotification constructor bcos it's used elsewhere by update visit
 
-    const sendBookingNotificationTest = sendBookingNotification({
+    const sendBookingNotificationInstance = sendBookingNotification({
       getSendTextMessage,
       getSendEmail,
     });
 
+    const createVisitUnitOfWorkInstance = createVisitUnitOfWork(
+      sendBookingNotificationInstance
+    );
+    const createVisitInstance = createVisit(createVisitUnitOfWorkInstance);
+
     try {
-      const { trust, error: trustErr } = await retrieveTrustById(trustId);
-      if (trustErr) {
-        res.status(400);
-        res.end(JSON.stringify({ trustErr }));
-        return;
-      }
-      const { ward, error: wardErr } = await retrieveWardById(wardId, trustId);
-      if (wardErr) {
-        res.status(400);
-        res.end(JSON.stringify({ wardErr }));
-        return;
-      }
-
-      const randomIdProvider = new RandomIdProvider();
-      const callPassword = randomIdProvider.generate(10);
-      const provider = new CallIdProvider(trust.videoProvider, body.callTime);
-      const callId = await provider.generate();
-
-      const createVisitUnitOfWorkInstance = createVisitUnitOfWork(
-        sendBookingNotificationTest
-      );
-      const createVisitInstance = createVisit(createVisitUnitOfWorkInstance);
-
       const { success, err } = await createVisitInstance(
         {
           patientName: body.patientName,

@@ -1,11 +1,29 @@
 import bookAVisit from "../../pages/api/book-a-visit";
-import fetch from "node-fetch";
 import moment from "moment";
+import {
+  createVisit,
+  retrieveWardById,
+  retrieveTrustById,
+  CallIdProvider,
+  RandomIdProvider,
+} from "../../src/containers/CreateVisitContainer";
+import sendBookingNotification from "../../src/usecases/sendBookingNotification";
+import createVisitUnitOfWork from "../../src/gateways/UnitsOfWork/createVisitUnitOfWork";
 
-jest.mock("node-fetch");
-fetch.mockReturnValue({
-  json: () => ({ roomUrl: "http://meow.cat/fakeUrl" }),
-});
+jest.mock("../../src/containers/CreateVisitContainer", () => ({
+  createVisit: jest.fn(),
+  retrieveTrustById: jest.fn(),
+  retrieveWardById: jest.fn(),
+  CallIdProvider: jest.fn(),
+  RandomIdProvider: jest.fn(),
+}));
+jest.mock("../../src/usecases/sendTextMessage", () => jest.fn());
+jest.mock("../../src/usecases/sendEmail", () => jest.fn());
+jest.mock("../../src/usecases/sendBookingNotification", () => jest.fn());
+jest.mock("../../src/gateways/UnitsOfWork/createVisitUnitOfWork", () =>
+  jest.fn()
+);
+jest.mock("../../src/gateways/GovNotify", () => jest.fn());
 
 const frozenTime = moment();
 
@@ -27,10 +45,10 @@ describe("/api/book-a-visit", () => {
     request = {
       method: "POST",
       body: {
-        patientName: "Bob Smith",
+        patientName: "Patient Name",
         contactNumber: "07123456789",
-        contactEmail: "bob@example.com",
-        contactName: "John Smith",
+        contactEmail: "contact@test.com",
+        contactName: "Contact Name",
         callTime: frozenTime,
       },
       headers: {
@@ -47,6 +65,63 @@ describe("/api/book-a-visit", () => {
     container = {
       getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
     };
+  });
+
+  it("calls createVisit with the correct arguments", async () => {
+    const trust = { id: 1, videoProvider: "testVideoProvider" };
+    const ward = { id: 10, name: "wardName", hospitalName: "hospitalName" };
+    retrieveTrustById.mockImplementation(() => {
+      return { trust, error: "" };
+    });
+    retrieveWardById.mockImplementation(() => {
+      return { ward, error: "" };
+    });
+
+    const createVisitSpy = jest
+      .fn()
+      .mockResolvedValue({ success: true, err: "" });
+    createVisit.mockReturnValue(createVisitSpy);
+
+    RandomIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("callPassword") };
+    });
+    CallIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("callId") };
+    });
+
+    await bookAVisit(request, response, { container });
+
+    const expectedVisit = {
+      patientName: "Patient Name",
+      contactEmail: "contact@test.com",
+      contactNumber: "07123456789",
+      contactName: "Contact Name",
+      callTime: frozenTime,
+    };
+
+    expect(createVisitSpy).toHaveBeenCalledWith(
+      expectedVisit,
+      ward,
+      "callId",
+      "callPassword",
+      trust.videoProvider
+    );
+    expect(response.status).toHaveBeenCalledWith(201);
+  });
+
+  it("sets up unitOfWork and createVisit correctly", async () => {
+    const sendBookingNotificationDouble = jest.fn();
+    sendBookingNotification.mockReturnValue(sendBookingNotificationDouble);
+    const createVisitUnitOfWorkDouble = jest.fn();
+    createVisitUnitOfWork.mockReturnValue(createVisitUnitOfWorkDouble);
+
+    await bookAVisit(request, response, { container });
+
+    expect(createVisitUnitOfWork).toHaveBeenCalledWith(
+      sendBookingNotificationDouble
+    );
+    expect(createVisit).toHaveBeenCalledWith(createVisitUnitOfWorkDouble);
+    expect(response.status).toHaveBeenCalledWith(201);
   });
 
   it("returns a 401 when user is not authenticated", async () => {
@@ -97,5 +172,97 @@ describe("/api/book-a-visit", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(userIsAuthenticatedSpy).toHaveBeenCalled();
+  });
+
+  it("returns a 400 when createVisit returns an error", async () => {
+    const trust = { id: 1, videoProvider: "anotherTestVideoProvider" };
+    const ward = {
+      id: 10,
+      name: "anotherWardName",
+      hospitalName: "anotherHospitalName",
+    };
+    retrieveTrustById.mockImplementation(() => {
+      return { trust, error: "" };
+    });
+    retrieveWardById.mockImplementation(() => {
+      return { ward, error: "" };
+    });
+
+    const createVisitSpy = jest
+      .fn()
+      .mockResolvedValue({ success: false, err: "Some error!" });
+    createVisit.mockReturnValue(createVisitSpy);
+
+    RandomIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("anotherCallPassword") };
+    });
+    CallIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("anotherCallId") };
+    });
+
+    await bookAVisit(request, response, { container });
+
+    const expectedVisit = {
+      patientName: "Patient Name",
+      contactEmail: "contact@test.com",
+      contactNumber: "07123456789",
+      contactName: "Contact Name",
+      callTime: frozenTime,
+    };
+
+    expect(createVisitSpy).toHaveBeenCalledWith(
+      expectedVisit,
+      ward,
+      "anotherCallId",
+      "anotherCallPassword",
+      trust.videoProvider
+    );
+    expect(response.status).toHaveBeenCalledWith(400);
+  });
+
+  it("returns a 500 when createVisit throws error", async () => {
+    const trust = { id: 1, videoProvider: "anotherTestVideoProvider" };
+    const ward = {
+      id: 10,
+      name: "anotherWardName",
+      hospitalName: "anotherHospitalName",
+    };
+    retrieveTrustById.mockImplementation(() => {
+      return { trust, error: "" };
+    });
+    retrieveWardById.mockImplementation(() => {
+      return { ward, error: "" };
+    });
+
+    const createVisitSpy = jest.fn().mockImplementation(() => {
+      throw "Some error!";
+    });
+    createVisit.mockReturnValue(createVisitSpy);
+
+    RandomIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("anotherCallPassword") };
+    });
+    CallIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("anotherCallId") };
+    });
+
+    await bookAVisit(request, response, { container });
+
+    const expectedVisit = {
+      patientName: "Patient Name",
+      contactEmail: "contact@test.com",
+      contactNumber: "07123456789",
+      contactName: "Contact Name",
+      callTime: frozenTime,
+    };
+
+    expect(createVisitSpy).toHaveBeenCalledWith(
+      expectedVisit,
+      ward,
+      "anotherCallId",
+      "anotherCallPassword",
+      trust.videoProvider
+    );
+    expect(response.status).toHaveBeenCalledWith(500);
   });
 });
