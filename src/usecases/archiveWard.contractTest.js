@@ -1,5 +1,5 @@
 import archiveWard from "./archiveWard";
-import retrieveWardById from "./retrieveWardById";
+import retrieveWardById from "../gateways/retrieveWardById";
 import AppContainer from "../containers/AppContainer";
 import retrieveVisits from "./retrieveVisits";
 import {
@@ -23,7 +23,7 @@ describe("archiveWard contract tests", () => {
     const {
       ward: preArchiveWard,
       error: preArchiveWardError,
-    } = await retrieveWardById(container)(wardId, trustId);
+    } = await retrieveWardById(wardId, trustId);
 
     expect(preArchiveWardError).toBeNull();
     expect(preArchiveWard).toBeDefined();
@@ -40,7 +40,7 @@ describe("archiveWard contract tests", () => {
     const {
       ward: postArchiveWard,
       error: postArchiveWardError,
-    } = await retrieveWardById(container)(wardId, trustId);
+    } = await retrieveWardById(wardId, trustId);
 
     expect(postArchiveWardError).toBeDefined();
     expect(postArchiveWard).toBeNull();
