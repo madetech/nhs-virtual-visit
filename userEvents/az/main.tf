@@ -1,10 +1,9 @@
 locals {
-  functions_dir = "functions"
-  log_events_filename = "log_events"
-  log_event_code_zip = "${local.functions_dir}/${local.log_events_filename}.zip"
-  hashed_log_event_code_zip = "${local.functions_dir}/${local.log_events_filename}_${base64encode(filesha256(local.log_event_code_zip))}.zip"
+  functions_dir = "build"
+  nhs_virtual_visits_filename = "nhs_virtual_visits_functions"
+  log_event_code_zip = "${local.functions_dir}/${local.nhs_virtual_visits_filename}.zip"
+  hashed_log_event_code_zip = "${local.functions_dir}/${local.nhs_virtual_visits_filename}_${base64encode(filesha256(local.log_event_code_zip))}.zip"
 }
-
 
 provider "azurerm" {
   version = "=2.20.0"
@@ -105,7 +104,7 @@ resource "azurerm_storage_container" "event_logger_storage_container" {
     container_access_type = "private"
 }
 
-resource "azurerm_storage_blob" "log_events_code" {
+resource "azurerm_storage_blob" "nhs_virtual_visits_code" {
     # We use a name composed of the filename and a hash of the file to ensure the blob is recreated when changed
     name = local.hashed_log_event_code_zip
     storage_account_name = azurerm_storage_account.event_logger_storage.name
@@ -116,8 +115,8 @@ resource "azurerm_storage_blob" "log_events_code" {
 
 # This will be recreated every time, investigate later: 
 # https://github.com/terraform-providers/terraform-provider-azurerm/issues/1966
-resource "azurerm_function_app" "log_events" {
-  name = "log-events"
+resource "azurerm_function_app" "nhs_virtual_visits" {
+  name = "nhs-virtual-visits"
   location = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   os_type = "linux"
@@ -132,6 +131,6 @@ resource "azurerm_function_app" "log_events" {
     WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE = "readwrite"
     HASH = base64encode(filesha256(local.log_event_code_zip))
-    WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.event_logger_storage.name}.blob.core.windows.net/${azurerm_storage_container.event_logger_storage_container.name}/${azurerm_storage_blob.log_events_code.name}${data.azurerm_storage_account_sas.sas.sas}"
+    WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.event_logger_storage.name}.blob.core.windows.net/${azurerm_storage_container.event_logger_storage_container.name}/${azurerm_storage_blob.nhs_virtual_visits_code.name}${data.azurerm_storage_account_sas.sas.sas}"
   }
 }
