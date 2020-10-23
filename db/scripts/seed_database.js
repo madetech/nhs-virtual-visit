@@ -27,6 +27,10 @@ async function seedDatabase() {
     "INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST2', (SELECT id FROM trusts WHERE name='Test Trust')) RETURNING id"
   );
 
+  await db.one(
+    "INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'super', (SELECT id FROM trusts WHERE name='Test Trust')) RETURNING id"
+  );
+
   await db.result(
     `INSERT INTO scheduled_calls_table
     (patient_name, recipient_email, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
