@@ -11,7 +11,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "nhs_virtual_visit_terraform"
+  name = "nhs_virtual_visit_terraform"
   location = "UK South"
 }
 
@@ -115,14 +115,14 @@ resource "azurerm_storage_blob" "nhs_virtual_visits_code" {
 
 # This will be recreated every time, investigate later: 
 # https://github.com/terraform-providers/terraform-provider-azurerm/issues/1966
-resource "azurerm_function_app" "nhs_virtual_visits" {
-  name = "nhs-virtual-visits"
+resource "azurerm_function_app" "nhs_virtual_visits_functions" {
+  name = "nhs-virtual-visits-functions"
   location = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   os_type = "linux"
   
-  app_service_plan_id        = azurerm_app_service_plan.event_logger_service_plan.id
-  storage_account_name       = azurerm_storage_account.event_logger_storage.name
+  app_service_plan_id = azurerm_app_service_plan.event_logger_service_plan.id
+  storage_account_name = azurerm_storage_account.event_logger_storage.name
   storage_account_access_key = azurerm_storage_account.event_logger_storage.primary_access_key
   
   app_settings = {
