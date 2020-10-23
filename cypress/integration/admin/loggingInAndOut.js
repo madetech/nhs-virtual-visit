@@ -31,12 +31,31 @@ describe("As an admin, I want to log in so that I can access the service.", () =
     ThenISeeAnError();
   });
 
+  it("allows an admin to log in and out when a ward code and admin code are the same", () => {
+    GivenTheSameWardCodeAsAdminCode();
+    GivenIAmAnAdmin();
+    WhenIVisitTheAdminLogInPage();
+
+    cy.audit();
+
+    AndIEnterAValidAdminCodeAndPassword();
+    AndISubmitTheForm();
+    ThenISeeTheAdminHomePage();
+
+    cy.audit();
+
+    thenIClickLogOut();
+    ThenISeeTheAdminLogInPage();
+  });
+
   it("displays an error for an invalid password", () => {
     WhenIVisitTheAdminLogInPage();
     AndIEnterAnInvalidPassword();
     AndISubmitTheForm();
     ThenISeeAnError();
   });
+
+  function GivenTheSameWardCodeAsAdminCode() {}
 
   function WhenIVisitTheAdminLogInPage() {
     cy.visit(Cypress.env("baseUrl") + "/admin/login");
