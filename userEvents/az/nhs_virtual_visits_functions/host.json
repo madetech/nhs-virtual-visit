@@ -41,7 +41,7 @@
     "logging": {
         "fileLoggingMode": "debugOnly",
         "logLevel": {
-          "Function.MyFunction": "Information",
+          "Function.log_events": "Information",
           "default": "None"
         },
         "applicationInsights": {
@@ -102,5 +102,5 @@
       "lockAcquisitionTimeout": "00:01:00",
       "lockAcquisitionPollingInterval": "00:00:03"
     },
-    "watchDirectories": [ "Shared", "Test" ]
+    "watchDirectories": [ "log_events" ]
 }
