@@ -5,7 +5,7 @@
             "authLevel": "function",
             "type": "httpTrigger",
             "direction": "in",
-            "methods": [ "get" ],
+            "methods": [ "get", "post" ],
             "name": "req"
         },
         {
