@@ -1,5 +1,5 @@
 const featureIsEnabled = (feature) => {
-  return process.env[feature] === "yes" ? true : false;
+  return process.env[feature] === "true";
 };
 
 export default featureIsEnabled;
