@@ -1,14 +1,18 @@
 import logger from "../../logger";
+import Database from "./Database";
 
-const retrieveTrustById = ({ getDb }) => async (trustId) => {
-  const db = await getDb();
+const retrieveTrustById = async (trustId) => {
+  const db = await Database.getInstance();
+
   logger.info(`Retrieving trust for ${trustId}`);
-  if (!trustId) throw "Attempting to retrieve trust with no trust Id set";
   try {
+    if (!trustId) throw "Attempting to retrieve trust with no trust Id set";
     const trust = await db.oneOrNone(
       "SELECT * FROM trusts WHERE id = $1 LIMIT 1",
       trustId
     );
+
+    if (!trust) throw "Trust not found for id";
 
     return {
       trust: {
