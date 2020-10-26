@@ -1,7 +1,9 @@
 import logger from "../../logger";
+import Database from "./Database";
 
-const retrieveWardById = ({ getDb }) => async (wardId, trustId) => {
-  const db = await getDb();
+const retrieveWardById = async (wardId, trustId) => {
+  const db = await Database.getInstance();
+
   try {
     const ward = await db.one(
       `SELECT

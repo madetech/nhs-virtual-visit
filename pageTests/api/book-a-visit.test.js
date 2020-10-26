@@ -1,8 +1,29 @@
 import bookAVisit from "../../pages/api/book-a-visit";
-import fetch from "node-fetch";
 import moment from "moment";
+import {
+  createVisit,
+  retrieveWardById,
+  retrieveTrustById,
+  CallIdProvider,
+  RandomIdProvider,
+} from "../../src/containers/CreateVisitContainer";
+import sendBookingNotification from "../../src/usecases/sendBookingNotification";
+import createVisitUnitOfWork from "../../src/gateways/UnitsOfWork/createVisitUnitOfWork";
 
-jest.mock("node-fetch");
+jest.mock("../../src/containers/CreateVisitContainer", () => ({
+  createVisit: jest.fn(),
+  retrieveTrustById: jest.fn(),
+  retrieveWardById: jest.fn(),
+  CallIdProvider: jest.fn(),
+  RandomIdProvider: jest.fn(),
+}));
+jest.mock("../../src/usecases/sendTextMessage", () => jest.fn());
+jest.mock("../../src/usecases/sendEmail", () => jest.fn());
+jest.mock("../../src/usecases/sendBookingNotification", () => jest.fn());
+jest.mock("../../src/gateways/UnitsOfWork/createVisitUnitOfWork", () =>
+  jest.fn()
+);
+jest.mock("../../src/gateways/GovNotify", () => jest.fn());
 
 const frozenTime = moment();
 
@@ -10,7 +31,9 @@ describe("/api/book-a-visit", () => {
   let request;
   let response;
   let container;
-  let createVisitSpy;
+
+  let date = new Date();
+  date.setDate(date.getDate() + 1);
 
   const validUserIsAuthenticatedSpy = jest.fn().mockResolvedValue({
     wardId: 10,
@@ -18,52 +41,14 @@ describe("/api/book-a-visit", () => {
     trustId: 1,
   });
 
-  const updateWardVisitTotalsSpy = jest.fn(() => ({
-    success: true,
-  }));
-
-  const getRetrieveWardByIdSpy = jest.fn(() => ({
-    ward: {
-      id: 10,
-      name: "Fake Ward",
-      hospitalName: "Fake Hospital",
-      code: "MEOW",
-    },
-    error: null,
-  }));
-
-  const getRetrieveWherebyTrustByIdSpy = jest.fn().mockResolvedValue({
-    trust: {
-      id: 1,
-      name: "Test trust",
-      videoProvider: "whereby",
-    },
-    error: null,
-  });
-
-  const getRetrieveJitsiTrustByIdSpy = jest.fn().mockResolvedValue({
-    trust: {
-      id: 1,
-      name: "Test trust",
-      videoProvider: "jitsi",
-    },
-    error: null,
-  });
-
-  const sendBookingNotificationSpy = jest.fn().mockResolvedValue({
-    success: true,
-    errors: null,
-  });
-
   beforeEach(() => {
-    createVisitSpy = jest.fn();
     request = {
       method: "POST",
       body: {
-        patientName: "Bob Smith",
+        patientName: "Patient Name",
         contactNumber: "07123456789",
-        contactEmail: "bob@example.com",
-        contactName: "John Smith",
+        contactEmail: "contact@test.com",
+        contactName: "Contact Name",
         callTime: frozenTime,
       },
       headers: {
@@ -77,257 +62,195 @@ describe("/api/book-a-visit", () => {
       end: jest.fn(),
     };
 
-    // const insertVisit = jest.fn();
-    //
-    // const appContainer = AppContainer.getInstance();
-    // const getDb = () =>{
-    //   tx:
-    // }
-
-    const successVisit = jest.fn(() => ({ success: true, err: undefined }));
-    // const failVisit = jest.fn(()=>{success:false, err:'error'});
-
     container = {
-      getCreateVisit: () => successVisit,
-      getRetrieveWardById: () => getRetrieveWardByIdSpy,
       getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
-      getRetrieveTrustById: () => getRetrieveWherebyTrustByIdSpy,
-      getDb: jest.fn().mockResolvedValue(() => {}),
-      getUpdateWardVisitTotals: () => updateWardVisitTotalsSpy,
-      getValidateMobileNumber: () => () => true,
-      getValidateEmailAddress: () => () => true,
-      getSendBookingNotification: () => sendBookingNotificationSpy,
     };
-
-    process.env.WHEREBY_API_KEY = "meow";
-
-    fetch.mockReturnValue({
-      json: () => ({ roomUrl: "http://meow.cat/fakeUrl" }),
-    });
   });
 
-  // it("sends a booking notification", async () => {
-  //   await bookAVisit(request, response, { container });
-  //
-  //   expect(response.status).toHaveBeenCalledWith(201);
-  //   expect(sendBookingNotificationSpy).toHaveBeenCalledWith({
-  //     mobileNumber: "07123456789",
-  //     emailAddress: "bob@example.com",
-  //     wardName: "Fake Ward",
-  //     hospitalName: "Fake Hospital",
-  //     visitDateAndTime: frozenTime,
-  //   });
-  // });
+  it("calls createVisit with the correct arguments", async () => {
+    const trust = { id: 1, videoProvider: "testVideoProvider" };
+    const ward = { id: 10, name: "wardName", hospitalName: "hospitalName" };
+    retrieveTrustById.mockResolvedValue({ trust, error: "" });
+    retrieveWardById.mockResolvedValue({ ward, error: "" });
 
-  // it("returns a 400 status if unable to send booking notification", async () => {
-  //   const sendBookingNotificationError = jest.fn().mockResolvedValue({
-  //     success: false,
-  //     errors: {
-  //       textMessageError: "Failed to send text message!",
-  //       emailError: "Failed to send email!",
-  //     },
-  //   });
-  //
-  //   await bookAVisit(request, response, {
-  //     container: {
-  //       ...container,
-  //       getSendBookingNotification: () => sendBookingNotificationError,
-  //     },
-  //   });
-  //
-  //   expect(response.status).toHaveBeenCalledWith(400);
-  //   expect(response.end).toHaveBeenCalledWith(
-  //     JSON.stringify({
-  //       err: {
-  //         textMessageError: "Failed to send text message!",
-  //         emailError: "Failed to send email!",
-  //       },
-  //     })
-  //   );
-  // });
+    const createVisitSpy = jest
+      .fn()
+      .mockResolvedValue({ success: true, err: "" });
+    createVisit.mockReturnValue(createVisitSpy);
 
-  // it("updates the ward visit totals", async () => {
-  //   await bookAVisit(request, response, { container });
-  //
-  //   expect(updateWardVisitTotalsSpy).toHaveBeenCalledWith({
-  //     wardId: 10,
-  //     date: frozenTime,
-  //   });
-  // });
+    RandomIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("callPassword") };
+    });
+    CallIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("callId") };
+    });
 
-  it("returns a 401 when there is no token provided", async () => {
+    await bookAVisit(request, response, { container });
+
+    const expectedVisit = {
+      patientName: "Patient Name",
+      contactEmail: "contact@test.com",
+      contactNumber: "07123456789",
+      contactName: "Contact Name",
+      callTime: frozenTime,
+    };
+
+    expect(createVisitSpy).toHaveBeenCalledWith(
+      expectedVisit,
+      ward,
+      "callId",
+      "callPassword",
+      trust.videoProvider
+    );
+    expect(response.status).toHaveBeenCalledWith(201);
+  });
+
+  it("sets up unitOfWork and createVisit correctly", async () => {
+    const sendBookingNotificationDouble = jest.fn();
+    sendBookingNotification.mockReturnValue(sendBookingNotificationDouble);
+    const createVisitUnitOfWorkDouble = jest.fn();
+    createVisitUnitOfWork.mockReturnValue(createVisitUnitOfWorkDouble);
+
+    await bookAVisit(request, response, { container });
+
+    expect(createVisitUnitOfWork).toHaveBeenCalledWith(
+      sendBookingNotificationDouble
+    );
+    expect(createVisit).toHaveBeenCalledWith(createVisitUnitOfWorkDouble);
+    expect(response.status).toHaveBeenCalledWith(201);
+  });
+
+  it("returns a 401 when user is not authenticated", async () => {
     const userIsAuthenticatedSpy = jest.fn().mockResolvedValue(false);
 
-    await bookAVisit(
-      {
-        method: "POST",
-        body: {
-          patientName: "Bob Smith",
-          contactNumber: "07123456789",
-          callTime: "2020-04-05T10:10:10",
-        },
-        headers: {},
+    await bookAVisit(request, response, {
+      container: {
+        ...container,
+        getUserIsAuthenticated: () => userIsAuthenticatedSpy,
       },
-      response,
-      {
-        container: {
-          ...container,
-          getUserIsAuthenticated: () => userIsAuthenticatedSpy,
-        },
-      }
-    );
+    });
 
     expect(response.status).toHaveBeenCalledWith(401);
     expect(userIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
-  // it("inserts a visit if valid with a mobile number", async () => {
-  //   await bookAVisit(request, response, { container });
-  //
-  //   expect(response.status).toHaveBeenCalledWith(201);
-  //   expect(createVisitSpy).toHaveBeenCalled();
-  //   expect(createVisitSpy).toHaveBeenCalledWith(
-  //     expect.objectContaining({
-  //       patientName: "Bob Smith",
-  //       contactNumber: "07123456789",
-  //       callId: "fakeUrl",
-  //       provider: "whereby",
-  //     })
-  //   );
-  // });
-
-  // it("inserts a visit if valid with an email address", async () => {
-  //   request.body = {
-  //     patientName: "Bob Smith",
-  //     contactEmail: "john.smith@madetech.com",
-  //     contactName: "John Smith",
-  //     callTime: frozenTime,
-  //   };
-  //
-  //   await bookAVisit(request, response, { container });
-  //
-  //   expect(response.status).toHaveBeenCalledWith(201);
-  //   expect(createVisitSpy).toHaveBeenCalled();
-  //   expect(createVisitSpy).toHaveBeenCalledWith(
-  //     expect.objectContaining({
-  //       patientName: "Bob Smith",
-  //       contactEmail: "john.smith@madetech.com",
-  //       callId: "fakeUrl",
-  //       provider: "whereby",
-  //     })
-  //   );
-  // });
-  //
-  // it("rejects if email is invalid", async () => {
-  //   request.body = {
-  //     patientName: "Bob Smith",
-  //     contactEmail: "INVALID_EMAIL",
-  //     contactName: "John Smith",
-  //     callTime: frozenTime,
-  //   };
-  //   await bookAVisit(request, response, {
-  //     container: {
-  //       ...container,
-  //       getValidateEmailAddress: () => () => false,
-  //     },
-  //   });
-  //
-  //   expect(response.status).toHaveBeenCalledWith(400);
-  //   expect(createVisitSpy).not.toHaveBeenCalled();
-  //   expect(response.end).toHaveBeenCalledWith(
-  //     JSON.stringify({
-  //       err: { contactEmail: "contactEmail must be a valid email address" },
-  //     })
-  //   );
-  // });
-
-  // it("inserts rejects if phone number is invalid", async () => {
-  //   request.body = {
-  //     patientName: "Bob Smith",
-  //     contactNumber: "INVALID_NUMBER",
-  //     contactName: "John Smith",
-  //     callTime: frozenTime,
-  //   };
-  //   await bookAVisit(request, response, {
-  //     container: {
-  //       ...container,
-  //       getValidateMobileNumber: () => () => false,
-  //     },
-  //   });
-  //
-  //   expect(response.status).toHaveBeenCalledWith(400);
-  //   expect(createVisitSpy).not.toHaveBeenCalled();
-  //   expect(response.end).toHaveBeenCalledWith(
-  //     JSON.stringify({
-  //       err: { contactNumber: "contactNumber must be a valid mobile number" },
-  //     })
-  //   );
-  // });
-
-  // it("inserts rejects if neither email nor phone number are present", async () => {
-  //   request.body = {
-  //     patientName: "Bob Smith",
-  //     contactName: "John Smith",
-  //     callTime: frozenTime,
-  //   };
-  //   await bookAVisit(request, response, { container });
-  //
-  //   expect(response.status).toHaveBeenCalledWith(400);
-  //   expect(createVisitSpy).not.toHaveBeenCalled();
-  //   expect(response.end).toHaveBeenCalledWith(
-  //     JSON.stringify({
-  //       err: {
-  //         contactEmail: "contactNumber or contactEmail must be present",
-  //         contactNumber: "contactNumber or contactEmail must be present",
-  //       },
-  //     })
-  //   );
-  // });
-
-  xdescribe("Whereby", () => {
-    it("Provides the correct bearer token", async () => {
-      await bookAVisit(request, response, {
-        container: {
-          ...container,
-          getCreateVisit: () => createVisitSpy,
-        },
-      });
-
-      expect(fetch).toHaveBeenCalledWith(
-        expect.anything(),
-        expect.objectContaining({
-          headers: {
-            authorization: "Bearer meow",
-            "content-type": "application/json",
-          },
-        })
-      );
+  it("returns a 400 when no trust id", async () => {
+    const userIsAuthenticatedSpy = jest.fn().mockResolvedValue({
+      wardId: 10,
+      ward: "MEOW",
+      trustId: undefined,
     });
+
+    await bookAVisit(request, response, {
+      container: {
+        ...container,
+        getUserIsAuthenticated: () => userIsAuthenticatedSpy,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(userIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
-  xdescribe("Select provider", () => {
-    it("Uses jitsi when whereby is not enabled", async () => {
-      container.getRetrieveTrustById = () => getRetrieveJitsiTrustByIdSpy;
-
-      await bookAVisit(request, response, { container });
-
-      expect(createVisitSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          provider: "jitsi",
-        })
-      );
+  it("returns a 400 when no ward id", async () => {
+    const userIsAuthenticatedSpy = jest.fn().mockResolvedValue({
+      wardId: undefined,
+      ward: "MEOW",
+      trustId: 7,
     });
 
-    it("Uses whereby when enabled", async () => {
-      container.getRetrieveTrustById = () => getRetrieveWherebyTrustByIdSpy;
-
-      await bookAVisit(request, response, { container });
-
-      expect(createVisitSpy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          provider: "whereby",
-        })
-      );
+    await bookAVisit(request, response, {
+      container: {
+        ...container,
+        getUserIsAuthenticated: () => userIsAuthenticatedSpy,
+      },
     });
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(userIsAuthenticatedSpy).toHaveBeenCalled();
+  });
+
+  it("returns a 400 when createVisit returns an error", async () => {
+    const trust = { id: 1, videoProvider: "anotherTestVideoProvider" };
+    const ward = {
+      id: 10,
+      name: "anotherWardName",
+      hospitalName: "anotherHospitalName",
+    };
+    retrieveTrustById.mockResolvedValue({ trust, error: "" });
+    retrieveWardById.mockResolvedValue({ ward, error: "" });
+
+    const createVisitSpy = jest
+      .fn()
+      .mockResolvedValue({ success: false, err: "Some error!" });
+    createVisit.mockReturnValue(createVisitSpy);
+
+    RandomIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("anotherCallPassword") };
+    });
+    CallIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("anotherCallId") };
+    });
+
+    await bookAVisit(request, response, { container });
+
+    const expectedVisit = {
+      patientName: "Patient Name",
+      contactEmail: "contact@test.com",
+      contactNumber: "07123456789",
+      contactName: "Contact Name",
+      callTime: frozenTime,
+    };
+
+    expect(createVisitSpy).toHaveBeenCalledWith(
+      expectedVisit,
+      ward,
+      "anotherCallId",
+      "anotherCallPassword",
+      trust.videoProvider
+    );
+    expect(response.status).toHaveBeenCalledWith(400);
+  });
+
+  it("returns a 500 when createVisit throws error", async () => {
+    const trust = { id: 1, videoProvider: "anotherTestVideoProvider" };
+    const ward = {
+      id: 10,
+      name: "anotherWardName",
+      hospitalName: "anotherHospitalName",
+    };
+    retrieveTrustById.mockResolvedValue({ trust, error: "" });
+    retrieveWardById.mockResolvedValue({ ward, error: "" });
+
+    const createVisitSpy = jest.fn().mockImplementation(() => {
+      throw "Some error!";
+    });
+    createVisit.mockReturnValue(createVisitSpy);
+
+    RandomIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("anotherCallPassword") };
+    });
+    CallIdProvider.mockImplementation(() => {
+      return { generate: jest.fn().mockReturnValue("anotherCallId") };
+    });
+
+    await bookAVisit(request, response, { container });
+
+    const expectedVisit = {
+      patientName: "Patient Name",
+      contactEmail: "contact@test.com",
+      contactNumber: "07123456789",
+      contactName: "Contact Name",
+      callTime: frozenTime,
+    };
+
+    expect(createVisitSpy).toHaveBeenCalledWith(
+      expectedVisit,
+      ward,
+      "anotherCallId",
+      "anotherCallPassword",
+      trust.videoProvider
+    );
+    expect(response.status).toHaveBeenCalledWith(500);
   });
 });

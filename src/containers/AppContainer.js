@@ -1,7 +1,6 @@
 import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
 import insertVisit from "../gateways/insertVisit";
-import createVisit from "../usecases/createVisit";
 import deleteVisitByCallId from "../usecases/deleteVisitByCallId";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
@@ -10,7 +9,6 @@ import userIsAuthenticated from "../usecases/userIsAuthenticated";
 import trustAdminIsAuthenticated from "../usecases/trustAdminIsAuthenticated";
 import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
-import retrieveWardById from "../usecases/retrieveWardById";
 import verifyWardCode from "../usecases/verifyWardCode";
 import verifyTrustAdminCode from "../usecases/verifyTrustAdminCode";
 import verifyAdminCode from "../usecases/verifyAdminCode";
@@ -24,7 +22,6 @@ import updateWard from "../usecases/updateWard";
 import createHospital from "../usecases/createHospital";
 import updateHospital from "../usecases/updateHospital";
 import retrieveHospitalsByTrustId from "../usecases/retrieveHospitalsByTrustId";
-import retrieveTrustById from "../usecases/retrieveTrustById";
 import retrieveHospitalById from "../usecases/retrieveHospitalById";
 import archiveWard from "../usecases/archiveWard";
 import validateEmailAddress from "../usecases/validateEmailAddress";
@@ -48,8 +45,9 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
-import createVisitUnitOfWork from "../gateways/UnitsOfWork/createVisitUnitOfWork";
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
+import retrieveWardById from "../gateways/retrieveWardById";
+import retrieveTrustById from "../gateways/retrieveTrustById";
 
 import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
@@ -70,16 +68,6 @@ class AppContainer {
 
   getRandomIdProvider = () => new RandomIdProvider();
 
-  getCreateVisit = () => {
-    return createVisit(
-      this.getRandomIdProvider,
-      this.getCallIdProvider(),
-      this.getRetrieveTrustById(),
-      this.getRetrieveWardById(),
-      this.getCreateVisitUnitOfWork()
-    );
-  };
-
   getDeleteVisitByCallId = () => {
     return deleteVisitByCallId(this);
   };
@@ -89,7 +77,7 @@ class AppContainer {
   };
 
   getRetrieveWardById = () => {
-    return retrieveWardById(this);
+    return retrieveWardById;
   };
 
   getTokenProvider = () => {
@@ -169,7 +157,7 @@ class AppContainer {
   };
 
   getRetrieveTrustById = () => {
-    return retrieveTrustById(this);
+    return retrieveTrustById;
   };
 
   getRetrieveHospitalById = () => {
@@ -264,12 +252,8 @@ class AppContainer {
     return updateTrust(this);
   };
 
-  getCreateVisitUnitOfWork = () => {
-    return createVisitUnitOfWork(this);
-  };
-
   getInsertVisitGateway = () => {
-    return insertVisit(this);
+    return insertVisit;
   };
 
   getUpdateWardVisitTotalsGateway = () => {

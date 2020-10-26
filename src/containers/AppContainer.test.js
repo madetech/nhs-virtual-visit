@@ -26,10 +26,6 @@ describe("AppContainer", () => {
     expect(await container.getDb()).toBeDefined();
   });
 
-  it("returns createVisit", () => {
-    expect(container.getCreateVisit()).toBeDefined();
-  });
-
   it("returns getTokenProvider", () => {
     expect(container.getTokenProvider()).toBeDefined();
   });
