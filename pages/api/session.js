@@ -4,8 +4,11 @@ import { WARD_STAFF, TRUST_ADMIN, ADMIN } from "../../src/helpers/userTypes";
 export default withContainer(
   async ({ body: { code, password }, method }, res, { container }) => {
     if (method === "POST") {
-      const verifyWardCode = container.getVerifyWardCode();
-      const verifyWardCodeResponse = await verifyWardCode(code);
+      let verifyWardCodeResponse = {};
+      if (password === undefined) {
+        const verifyWardCode = container.getVerifyWardCode();
+        verifyWardCodeResponse = await verifyWardCode(code);
+      }
 
       const verifyTrustAdminCode = container.getVerifyTrustAdminCode();
       const verifyTrustAdminCodeResponse = await verifyTrustAdminCode(
