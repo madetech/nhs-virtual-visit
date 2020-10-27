@@ -127,7 +127,8 @@ resource "azurerm_function_app" "nhs_virtual_visits_functions" {
   
   app_settings = {
     https_only = true
-    LOG_EVENTS_DB = "${azurerm_cosmosdb_account.log_events_db.endpoint};AccountKey=${azurerm_cosmosdb_account.log_events_db.primary_master_key};"
+    LOG_EVENTS_DB_ENDPOINT = azurerm_cosmosdb_account.log_events_db.endpoint
+    LOG_EVENTS_DB_KEY = azurerm_cosmosdb_account.log_events_db.primary_master_key
     FUNCTIONS_WORKER_RUNTIME = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE = "readwrite"
