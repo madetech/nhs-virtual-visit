@@ -15,8 +15,8 @@ resource "azurerm_resource_group" "rg" {
   location = "UK South"
 }
 
-resource "azurerm_cosmosdb_account" "visit_events_db" {
-  name = "visit-events"
+resource "azurerm_cosmosdb_account" "log_events_db" {
+  name = "event-log"
   location = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   offer_type = "Standard"
@@ -127,6 +127,7 @@ resource "azurerm_function_app" "nhs_virtual_visits_functions" {
   
   app_settings = {
     https_only = true
+    LOG_EVENTS_DB = "${azurerm_cosmosdb_account.log_events_db.endpoint};AccountKey=${azurerm_cosmosdb_account.log_events_db.primary_master_key};"
     FUNCTIONS_WORKER_RUNTIME = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE = "readwrite"
