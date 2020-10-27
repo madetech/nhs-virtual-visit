@@ -5,7 +5,7 @@ name: Virtual Visits CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, gha-ci ]
   pull_request:
     branches: [ master ]
 
