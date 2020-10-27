@@ -17,18 +17,18 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
 
     const { id: visitId } = await setupVisit({ wardId });
 
-    const sessionId = uuidv4();
+    const callSessionId = uuidv4();
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId,
-      sessionId,
+      callSessionId,
     });
 
     await container.getCaptureEvent()({
       action: "leave-visit",
       visitId,
-      sessionId,
+      callSessionId,
     });
 
     // A trust with a visit with 1 participant, one with 2 participants and
@@ -50,18 +50,18 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
       callId: "testCallId2",
     });
 
-    const sessionId2 = uuidv4();
+    const callSessionId2 = uuidv4();
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId: visitId2,
-      sessionId: sessionId2,
+      callSessionId: callSessionId2,
     });
 
     await container.getCaptureEvent()({
       action: "leave-visit",
       visitId: visitId2,
-      sessionId: sessionId2,
+      callSessionId: callSessionId2,
     });
 
     const { id: visitId3 } = await setupVisit({
@@ -69,32 +69,32 @@ describe("retrieveAverageVisitsPerDay contract tests", () => {
       callId: "testCallId3",
     });
 
-    const sessionId3 = uuidv4();
+    const callSessionId3 = uuidv4();
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId: visitId3,
-      sessionId: sessionId3,
+      callSessionId: callSessionId3,
     });
 
     await container.getCaptureEvent()({
       action: "leave-visit",
       visitId: visitId3,
-      sessionId: sessionId3,
+      callSessionId: callSessionId3,
     });
 
-    const sessionId4 = uuidv4();
+    const callSessionId4 = uuidv4();
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId: visitId3,
-      sessionId: sessionId4,
+      callSessionId: callSessionId4,
     });
 
     await container.getCaptureEvent()({
       action: "leave-visit",
       visitId: visitId3,
-      sessionId: sessionId4,
+      callSessionId: callSessionId4,
     });
 
     // Has no events so shouldn't be counted

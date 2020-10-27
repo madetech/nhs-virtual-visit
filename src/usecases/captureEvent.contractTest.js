@@ -12,7 +12,7 @@ describe("captureEvent contract tests", () => {
     const joinRequest = {
       action: null,
       visitId: null,
-      sessionId: null,
+      callSessionId: null,
     };
 
     const { event, error } = await captureEvent(container)(joinRequest);
@@ -29,7 +29,7 @@ describe("captureEvent contract tests", () => {
     const joinRequest = {
       action: "join-visit",
       visitId: visitId,
-      sessionId: "57033d3d-3266-4932-a5a7-144ee16cc04e",
+      callSessionId: "57033d3d-3266-4932-a5a7-144ee16cc04e",
     };
 
     const { event, error } = await captureEvent(container)(joinRequest);
