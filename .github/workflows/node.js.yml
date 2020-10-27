@@ -45,6 +45,6 @@ jobs:
     - name: contract tests
       run: npm run test:contract
       env: 
-        TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/nhs-virtual-visit-test
-
+        #TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/nhs-virtual-visit-test
+        TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
       
