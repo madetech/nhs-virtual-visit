@@ -42,9 +42,11 @@ jobs:
       run: npm ci
     - name: unit tests
       run: npm test
+    - name: setup test postgres
+      run: npm run dbmigratetest up
     - name: contract tests
       run: npm run test:contract
       env: 
         #TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/nhs-virtual-visit-test
-        TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/postgres
+        TEST_DATABASE_URL: postgresql://postgres:postgres@postgres/nhs-virtual-visit-test
       
