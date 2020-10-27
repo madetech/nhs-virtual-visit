@@ -56,8 +56,8 @@ jobs:
       env: 
         TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
         APP_ENV: test   
-    - name: Cypress run
-      uses: cypress-io/github-action@v2 
-      env: 
-        TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
-        APP_ENV: test    
+#    - name: Cypress run
+#      uses: cypress-io/github-action@v2 
+#      env: 
+#        TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+#        APP_ENV: test    
