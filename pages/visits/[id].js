@@ -12,7 +12,7 @@ const Call = ({
   visitId,
   callId,
   callPassword,
-  sessionId,
+  callSessionId,
   name,
   provider,
   error,
@@ -26,7 +26,7 @@ const Call = ({
     const body = {
       action: action,
       visitId: visitId,
-      sessionId: sessionId,
+      callSessionId: callSessionId,
       callId,
       callPassword,
     };
@@ -93,7 +93,7 @@ export const getServerSideProps = propsWithContainer(
     if (validCallPassword || authenticationToken) {
       const { scheduledCall, error } = await retrieveVisitByCallId(callId);
       const provider = scheduledCall.provider;
-      const sessionId = uuidv4();
+      const callSessionId = uuidv4();
       const visitId = scheduledCall.id;
 
       return {
@@ -101,7 +101,7 @@ export const getServerSideProps = propsWithContainer(
           visitId,
           callId,
           callPassword: callPassword || "",
-          sessionId,
+          callSessionId,
           name,
           provider,
           error,

@@ -85,7 +85,7 @@ describe("call", () => {
       expect(props.error).toEqual("Unauthorized");
     });
 
-    it("returns sessionId", async () => {
+    it("returns callSessionId", async () => {
       const { props } = await getServerSideProps({
         query: {
           callPassword: "securePassword",
@@ -96,7 +96,7 @@ describe("call", () => {
         req,
       });
 
-      expect(isGuid(props.sessionId)).toBeTruthy();
+      expect(isGuid(props.callSessionId)).toBeTruthy();
     });
 
     it("returns visitId", async () => {

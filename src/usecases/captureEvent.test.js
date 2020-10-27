@@ -17,7 +17,7 @@ describe("captureEvent", () => {
     const joinRequest = {
       action: null,
       visitId: null,
-      sessionId: null,
+      callSessionId: null,
     };
 
     const { event, error } = await captureEvent(container)(joinRequest);
@@ -46,7 +46,7 @@ describe("captureEvent", () => {
     const joinRequest = {
       action: "join-visit",
       visitId: 1,
-      sessionId: "c30c27f0-abb1-432e-8b87-44c41af1d76c",
+      callSessionId: "c30c27f0-abb1-432e-8b87-44c41af1d76c",
     };
 
     const { event, error } = await captureEvent(container)(joinRequest);

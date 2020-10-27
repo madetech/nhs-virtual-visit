@@ -24,7 +24,7 @@ describe("/api/capture-event", () => {
       time: "2020-06-01-12:00:00Z",
       action: "join-visit",
       visitId: 1,
-      sessionId: "75011638-baab-4f68-af52-c6a85e8c8081",
+      callSessionId: "75011638-baab-4f68-af52-c6a85e8c8081",
     },
     error: null,
   }));
@@ -35,7 +35,7 @@ describe("/api/capture-event", () => {
       body: {
         action: "join-visit",
         visitId: "1",
-        sessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
+        callSessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -152,7 +152,7 @@ describe("/api/capture-event", () => {
       ...request,
       body: {
         visitId: "1",
-        sessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
+        callSessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
       },
     };
 
@@ -167,7 +167,7 @@ describe("/api/capture-event", () => {
       body: {
         action: "frewge",
         visitId: "1",
-        sessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
+        callSessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
       },
     };
 
@@ -181,7 +181,7 @@ describe("/api/capture-event", () => {
       ...request,
       body: {
         action: "join-visit",
-        sessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
+        callSessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
       },
     };
 
@@ -196,7 +196,7 @@ describe("/api/capture-event", () => {
       body: {
         action: "join-visit",
         visitId: "ijoij",
-        sessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
+        callSessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
       },
     };
 
@@ -205,7 +205,7 @@ describe("/api/capture-event", () => {
     expect(response.status).toHaveBeenCalledWith(400);
   });
 
-  it("returns 400 if sessionId missing", async () => {
+  it("returns 400 if callSessionId missing", async () => {
     const badRequest = {
       ...request,
       body: {
@@ -219,13 +219,13 @@ describe("/api/capture-event", () => {
     expect(response.status).toHaveBeenCalledWith(400);
   });
 
-  it("returns 400 if sessionId not valid", async () => {
+  it("returns 400 if callSessionId not valid", async () => {
     const badRequest = {
       ...request,
       body: {
         action: "join-visit",
         visitId: "1",
-        sessionId: "ceew",
+        callSessionId: "ceew",
       },
     };
 
@@ -265,7 +265,7 @@ describe("/api/capture-event", () => {
           callPassword: "securePassword",
           action: "join-visit",
           visitId: "1",
-          sessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
+          callSessionId: "1023ea12-670c-40e1-bc90-33b4d490a048",
         },
       },
       response,

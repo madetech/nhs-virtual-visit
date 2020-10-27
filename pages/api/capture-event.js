@@ -41,9 +41,9 @@ export default withContainer(
       return;
     }
 
-    if (!body.sessionId || !isGuid(body.sessionId)) {
+    if (!body.callSessionId || !isGuid(body.callSessionId)) {
       res.status(400);
-      res.end(JSON.stringify({ err: "sessionId must be present" }));
+      res.end(JSON.stringify({ err: "callSessionId must be present" }));
       return;
     }
 
@@ -54,7 +54,7 @@ export default withContainer(
     const { eventId, error } = await captureEvent({
       action: body.action,
       visitId: body.visitId,
-      sessionId: body.sessionId,
+      callSessionId: body.callSessionId,
     });
 
     if (error) {

@@ -42,14 +42,14 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       wardId: wardId,
     });
 
-    const sessionId = uuidv4();
+    const callSessionId = uuidv4();
 
     MockDate.set(new Date("2020-06-01 13:00"));
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId,
-      sessionId,
+      callSessionId,
     });
 
     MockDate.set(new Date("2020-06-01 14:30"));
@@ -57,7 +57,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     await container.getCaptureEvent()({
       action: "leave-visit",
       visitId: visitId,
-      sessionId,
+      callSessionId,
     });
 
     const { id: visit2Id } = await setupVisit({
@@ -65,14 +65,14 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       callId: "TESTCALLID2",
     });
 
-    const session2Id = uuidv4();
+    const callSession2Id = uuidv4();
 
     MockDate.set(new Date("2020-06-01 12:00"));
 
     const { error: error1 } = await container.getCaptureEvent()({
       action: "join-visit",
       visitId: visit2Id,
-      sessionId: session2Id,
+      callSessionId: callSession2Id,
     });
 
     expect(error1).toBeNull();
@@ -81,7 +81,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     const { error: error2 } = await container.getCaptureEvent()({
       action: "leave-visit",
       visitId: visit2Id,
-      sessionId: session2Id,
+      callSessionId: callSession2Id,
     });
 
     expect(error2).toBeNull();
@@ -112,14 +112,14 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       wardId: wardId,
     });
 
-    const sessionId = uuidv4();
+    const callSessionId = uuidv4();
 
     MockDate.set(new Date("2020-06-01 13:00"));
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId,
-      sessionId,
+      callSessionId,
     });
 
     const {
@@ -142,7 +142,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId,
-      sessionId: uuidv4(),
+      callSessionId: uuidv4(),
     });
 
     MockDate.set(new Date("2020-06-01 13:10"));
@@ -150,7 +150,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId,
-      sessionId: uuidv4(),
+      callSessionId: uuidv4(),
     });
 
     const {
@@ -168,14 +168,14 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       wardId: wardId,
     });
 
-    const sessionId = uuidv4();
+    const callSessionId = uuidv4();
 
     MockDate.set(new Date("2020-06-01 13:00"));
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId,
-      sessionId,
+      callSessionId,
     });
 
     MockDate.set(new Date("2020-06-01 14:30"));
@@ -183,7 +183,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     await container.getCaptureEvent()({
       action: "leave-visit",
       visitId: visitId,
-      sessionId,
+      callSessionId,
     });
 
     const { id: visit2Id } = await setupVisit({
@@ -191,14 +191,14 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       callId: "TESTCALLID2",
     });
 
-    const session2Id = uuidv4();
+    const callSessionId2 = uuidv4();
 
     MockDate.set(new Date("2020-06-01 12:00"));
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId: visit2Id,
-      sessionId: session2Id,
+      callSessionId: callSessionId2,
     });
 
     const {

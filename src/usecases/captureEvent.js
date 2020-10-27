@@ -1,7 +1,11 @@
 import moment from "moment";
 import logger from "../../logger";
 
-const captureEvent = ({ getDb }) => async ({ action, visitId, sessionId }) => {
+const captureEvent = ({ getDb }) => async ({
+  action,
+  visitId,
+  callSessionId,
+}) => {
   const db = await getDb();
   const timestamp = moment().utc().toISOString();
 
@@ -11,7 +15,7 @@ const captureEvent = ({ getDb }) => async ({ action, visitId, sessionId }) => {
           (id, time, action, visit_id, session_id)
           VALUES (default, $1, $2, $3, $4)
           RETURNING id`,
-      [timestamp, action, visitId, sessionId]
+      [timestamp, action, visitId, callSessionId]
     );
 
     return {
@@ -20,7 +24,7 @@ const captureEvent = ({ getDb }) => async ({ action, visitId, sessionId }) => {
         time: timestamp,
         action: action,
         visitId: visitId,
-        sessionId: sessionId,
+        callSessionId: callSessionId,
       },
       error: null,
     };
