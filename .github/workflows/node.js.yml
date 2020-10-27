@@ -38,6 +38,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm test
-    - run: npm run test:contract 
+    - name: npm install ci
+      run: npm ci
+    - name: unit tests
+      run: npm test
+    - name: contract tests
+      run: npm run test:contract
+      env: 
+        TEST_DATABASE_URL: postgresql://postgres:postgres@localhost/nhs-virtual-visit-test
+
+      
