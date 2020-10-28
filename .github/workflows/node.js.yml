@@ -26,7 +26,7 @@ jobs:
       - name: npm install ci
         run: npm ci
 
-      - name: unit tests
+      - name: run unit tests
         run: npm run test
 
   contract-tests:
@@ -70,7 +70,7 @@ jobs:
         env:
           TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
           APP_ENV: test
-      - name: contract tests
+      - name: run contract tests
         run: npm run test:contract
         env:
           TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
@@ -113,18 +113,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: npm install ci
-        run: npm ci
-
-      - name: setup test postgres
-        run: npm run dbmigratetest up
-        env:
-          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
-          APP_ENV: test
-
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
+          build: npm run dbmigratetest up
           start: npm run test:server
         env:
           TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
