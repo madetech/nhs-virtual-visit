@@ -127,9 +127,10 @@ resource "azurerm_function_app" "nhs_virtual_visits_functions" {
   
   app_settings = {
     https_only = true
-    LOG_EVENTS_DB = "${azurerm_cosmosdb_account.log_events_db.endpoint};AccountKey=${azurerm_cosmosdb_account.log_events_db.primary_master_key};"
+    LOG_EVENTS_DB_ENDPOINT = azurerm_cosmosdb_account.log_events_db.endpoint
+    LOG_EVENTS_DB_KEY = azurerm_cosmosdb_account.log_events_db.primary_master_key
     FUNCTIONS_WORKER_RUNTIME = "node"
-    WEBSITE_NODE_DEFAULT_VERSION = "~12"
+    WEBSITE_NODE_DEFAULT_VERSION = "12-lts"
     FUNCTION_APP_EDIT_MODE = "readwrite"
     HASH = base64encode(filesha256(local.log_event_code_zip))
     WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.event_logger_storage.name}.blob.core.windows.net/${azurerm_storage_container.event_logger_storage_container.name}/${azurerm_storage_blob.nhs_virtual_visits_code.name}${data.azurerm_storage_account_sas.sas.sas}"
