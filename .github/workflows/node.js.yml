@@ -13,16 +13,11 @@ jobs:
   unit-tests:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 12
       - name: npm install ci
         run: npm ci
 
@@ -31,10 +26,6 @@ jobs:
 
   contract-tests:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x]
 
     services:
       # Label used to access the service container
@@ -57,10 +48,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 12
 
       - name: npm install ci
         run: npm ci
@@ -83,10 +73,6 @@ jobs:
   e2e-tests:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     services:
       # Label used to access the service container
       postgres:
@@ -108,10 +94,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 12
 
       - name: Cypress run
         uses: cypress-io/github-action@v2
