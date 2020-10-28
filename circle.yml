@@ -26,8 +26,8 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
-            - run: npm install
-            #- run: npm rebuild node-sass
+            - run: npm ci
+            - run: npm rebuild node-sass
             - run: npm run build
   test:
     docker:
