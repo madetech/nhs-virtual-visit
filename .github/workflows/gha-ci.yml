@@ -49,6 +49,7 @@ jobs:
       - name: npm install ci
         run: npm ci
 
+        if: (github.repository == 'madetech/nhs-virtual-visit')
       - name: run contract tests
         run: |
           npm run dbmigratetest up
@@ -86,6 +87,7 @@ jobs:
         with:
           node-version: 12
 
+        if: (github.repository == 'madetech/nhs-virtual-visit')
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
