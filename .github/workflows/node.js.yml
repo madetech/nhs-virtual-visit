@@ -5,9 +5,9 @@ name: Virtual Visits CI
 
 on:
   push:
-    branches: [ master, gha-ci ]
+    branches: [master, gha-ci]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
@@ -35,29 +35,33 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: npm install ci
-      run: npm ci
-    - name: unit tests
-      run: npm test
-    - name: setup test postgres
-      run: npm run dbmigratetest up
-      env: 
-        TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
-        APP_ENV: test  
-    - name: contract tests
-      run: npm run test:contract
-      env: 
-        TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
-        APP_ENV: test   
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install ci
+        run: npm ci
+      - name: unit tests
+        run: npm test
+      - name: setup test postgres
+        run: npm run dbmigratetest up
+        env:
+          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+          APP_ENV: test
+      - name: contract tests
+        run: npm run test:contract
+        env:
+          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+          APP_ENV: test
+          SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
+          SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
+          EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
+          EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
 #    - name: Cypress run
-#      uses: cypress-io/github-action@v2 
-#      env: 
+#      uses: cypress-io/github-action@v2
+#      env:
 #        TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
-#        APP_ENV: test    
+#        APP_ENV: test
