@@ -1,16 +1,23 @@
 const { CosmosClient } = require("@azure/cosmos");
 
-const endpoint = process.env.LOG_EVENTS_DB_ENDPOINT;
-const key = process.env.LOG_EVENTS_DB_KEY;
-
 module.exports = function (context, req) {
   try {
+    const endpoint = process.env.LOG_EVENTS_DB_ENDPOINT;
+    const key = process.env.LOG_EVENTS_DB_KEY;
     const client = new CosmosClient({ endpoint, key });
     console.log(client);
   } catch (e) {
+    //This is failing because the Node version is like 6 when it should at least be 8
     context.res = {
       status: 500,
-      body: `INTERNAL ERROR Environment: LOG_EVENTS_DB_KEY = ${process.env.LOG_EVENTS_DB_KEY}; LOG_EVENTS_DB_ENDPOINT = ${process.env.LOG_EVENTS_DB_ENDPOINT}; ${e}`,
+      body: `INTERNAL ERROR NODEJS version: ${
+        process.version
+      }; url type: ${typeof require("url")
+        .URL}; Environment: LOG_EVENTS_DB_KEY = ${
+        process.env.LOG_EVENTS_DB_KEY
+      }; LOG_EVENTS_DB_ENDPOINT = ${
+        process.env.LOG_EVENTS_DB_ENDPOINT
+      }; ${e}& ${e.stack}`,
     };
     context.done();
     return;
