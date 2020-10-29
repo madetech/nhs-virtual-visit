@@ -34,6 +34,7 @@ To get the application running like current NHS trusts:
 1. [Setting up your repository](./01-setting-up-your-repo.md)
 1. [GOV.UK Notify Templates](./02-govuk-notify-templates.md)
 1. [Setting up CircleCI](./03-setting-up-circle-ci.md)
+1. Setting up Github Actions CI
 1. [Setting up Sentry](./04-setting-up-sentry.md)
 1. [Setting up Whereby](./05-setting-up-whereby.md)
 1. [Deploying to Heroku](./06-deploying-to-heroku.md)
