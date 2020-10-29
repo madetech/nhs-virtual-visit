@@ -124,7 +124,7 @@ resource "azurerm_function_app" "nhs_virtual_visits_functions" {
   app_service_plan_id = azurerm_app_service_plan.event_logger_service_plan.id
   storage_account_name = azurerm_storage_account.event_logger_storage.name
   storage_account_access_key = azurerm_storage_account.event_logger_storage.primary_access_key
-  version = "~2"
+  version = "~3"
   
   site_config {
     always_on = false
@@ -133,12 +133,12 @@ resource "azurerm_function_app" "nhs_virtual_visits_functions" {
   app_settings = {
     APPINSIGHTS_INSTRUMENTATIONKEY = "7a5ab617-310d-45e3-b1e5-52ca92b397d2"
     APPLICATIONINSIGHTS_CONNECTION_STRING = "InstrumentationKey=7a5ab617-310d-45e3-b1e5-52ca92b397d2;IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
-    FUNCTIONS_EXTENSION_VERSION = "~2"
+    FUNCTIONS_EXTENSION_VERSION = "~3"
     https_only = true
     LOG_EVENTS_DB_ENDPOINT = azurerm_cosmosdb_account.log_events_db.endpoint
     LOG_EVENTS_DB_KEY = azurerm_cosmosdb_account.log_events_db.primary_master_key
     FUNCTIONS_WORKER_RUNTIME = "node"
-    WEBSITE_NODE_DEFAULT_VERSION = "~10"
+    WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE = "readwrite"
     HASH = base64encode(filesha256(local.log_event_code_zip))
     WEBSITE_RUN_FROM_PACKAGE = "https://${azurerm_storage_account.event_logger_storage.name}.blob.core.windows.net/${azurerm_storage_container.event_logger_storage_container.name}/${azurerm_storage_blob.nhs_virtual_visits_code.name}${data.azurerm_storage_account_sas.sas.sas}"
