@@ -15,13 +15,13 @@ resource "azurerm_resource_group" "rg" {
   location = "UK South"
 }
 
-resource "azurerm_cosmosdb_account" "log_events_db" {
-  name = "event-log"
+resource "azurerm_cosmosdb_account" "log_events_account" {
+  name = "log-events-account"
   location = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   offer_type = "Standard"
   enable_free_tier = true
-  kind = "GlobalDocumentDB"
+  kind = "MongoDB"
 
   enable_automatic_failover = false
   
@@ -31,6 +31,10 @@ resource "azurerm_cosmosdb_account" "log_events_db" {
 
   capabilities {
     name = "mongoEnableDocLevelTTL"
+  }
+  
+  capabilities {
+    name = "EnableMongo"
   }
 
   capabilities {
@@ -47,6 +51,13 @@ resource "azurerm_cosmosdb_account" "log_events_db" {
     location = azurerm_resource_group.rg.location
     failover_priority = 0
   }
+}
+
+resource "azurerm_cosmosdb_mongo_database" "log_events_db" {
+  name                = "log_events_db"
+  resource_group_name = azurerm_resource_group.rg.name
+  account_name        = azurerm_cosmosdb_account.log_events_account.name
+  throughput          = 400
 }
 
 resource "azurerm_app_service_plan" "event_logger_service_plan" {
@@ -135,8 +146,11 @@ resource "azurerm_function_app" "nhs_virtual_visits_functions" {
     APPLICATIONINSIGHTS_CONNECTION_STRING = "InstrumentationKey=7a5ab617-310d-45e3-b1e5-52ca92b397d2;IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
     FUNCTIONS_EXTENSION_VERSION = "~3"
     https_only = true
-    LOG_EVENTS_DB_ENDPOINT = azurerm_cosmosdb_account.log_events_db.endpoint
-    LOG_EVENTS_DB_KEY = azurerm_cosmosdb_account.log_events_db.primary_master_key
+    
+    LOG_EVENTS_DB_ACCOUNT_ENDPOINT = azurerm_cosmosdb_account.log_events_account.endpoint
+    LOG_EVENTS_DB_ACCOUNT_KEY = azurerm_cosmosdb_account.log_events_account.primary_master_key
+    LOG_EVENTS_DB_ID = azurerm_cosmosdb_mongo_database.log_events_db.id
+    
     FUNCTIONS_WORKER_RUNTIME = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "~12"
     FUNCTION_APP_EDIT_MODE = "readwrite"

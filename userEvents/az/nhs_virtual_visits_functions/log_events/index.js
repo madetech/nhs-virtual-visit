@@ -1,41 +1,30 @@
 const { CosmosClient } = require("@azure/cosmos");
 
 module.exports = function (context, req) {
-  try {
-    const endpoint = process.env.LOG_EVENTS_DB_ENDPOINT;
-    const key = process.env.LOG_EVENTS_DB_KEY;
-    const client = new CosmosClient({ endpoint, key });
-    console.log(client);
-  } catch (e) {
-    context.res = {
-      status: 500,
-      body: `INTERNAL ERROR NODEJS version: ${
-        process.version
-      }; url type: ${typeof require("url")
-        .URL}; Environment: LOG_EVENTS_DB_KEY = ${
-        process.env.LOG_EVENTS_DB_KEY
-      }; LOG_EVENTS_DB_ENDPOINT = ${
-        process.env.LOG_EVENTS_DB_ENDPOINT
-      }; ${e}& ${e.stack}`,
-    };
-    context.done();
-    return;
-  }
+  const endpoint = process.env.LOG_EVENTS_DB_ACCOUNT_ENDPOINT;
+  const key = process.env.LOG_EVENTS_DB_ACCOUNT_KEY;
+  const db_id = process.env.LOG_EVENTS_DB_ID;
+  /*const client = */ new CosmosClient({ endpoint, key });
 
-  context.log(
-    "Node.js HTTP trigger function processed a request. RequestUri=%s",
-    req.originalUrl
-  );
-
-  if (req.query.name || (req.body && req.body.name)) {
+  if (
+    req.body.sessionId &&
+    req.body.correlationId &&
+    req.body.createdOn &&
+    req.body.streamName &&
+    req.body.trustId &&
+    req.body.eventType &&
+    req.body.event
+  ) {
     context.res = {
-      // status defaults to 200 */
-      body: "Hello " + (req.query.name || req.body.name),
+      status: 201,
+      body: `Created; body = ${JSON.stringify(
+        req.body
+      )}; db_id = ${db_id}; endpoint = ${endpoint}; key = ${key}`,
     };
   } else {
     context.res = {
       status: 400,
-      body: `Please pass a name on the query string or in the request body. Environment: LOG_EVENTS_DB_KEY = ${process.env.LOG_EVENTS_DB_KEY}; LOG_EVENTS_DB_ENDPOINT = ${process.env.LOG_EVENTS_DB_ENDPOINT}`,
+      body: `Data missing from request, need data in the format: { sessionId: string, correlationId: string, createdOn: string, streamName: string, trustId: string, eventType: string, event: object }`,
     };
   }
   context.done();
