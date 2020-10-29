@@ -7,7 +7,6 @@ module.exports = function (context, req) {
     const client = new CosmosClient({ endpoint, key });
     console.log(client);
   } catch (e) {
-    //This is failing because the Node version is like 6 when it should at least be 8
     context.res = {
       status: 500,
       body: `INTERNAL ERROR NODEJS version: ${
