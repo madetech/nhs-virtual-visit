@@ -1,61 +1,8 @@
 const { CosmosClient } = require("@azure/cosmos");
 
-module.exports = async function (context, req) {
+module.exports = async function (context, request) {
   try {
-    const endpoint = process.env.LOG_EVENTS_DB_ACCOUNT_ENDPOINT;
-    const key = process.env.LOG_EVENTS_DB_ACCOUNT_KEY;
-    const db_id = process.env.LOG_EVENTS_DB_ID;
-
-    const client = new CosmosClient({ endpoint, key });
-    const db = client.database(db_id);
-
-    const { container } = await db.containers.createIfNotExists(
-      {
-        id: "event-container",
-      },
-      { offerThroughput: 400 }
-    );
-
-    const {
-      sessionId,
-      correlationId,
-      createdOn,
-      streamName,
-      trustId,
-      eventType,
-      event,
-    } = req.body;
-    if (
-      sessionId &&
-      correlationId &&
-      createdOn &&
-      streamName &&
-      trustId &&
-      eventType &&
-      event
-    ) {
-      const result = await container.items.create({
-        sessionId,
-        correlationId,
-        createdOn,
-        streamName,
-        trustId,
-        eventType,
-        event,
-      });
-
-      context.res = {
-        status: 201,
-        body: `Created; body = ${JSON.stringify(
-          req.body
-        )}; result = ${result}; db_id = ${db_id}; endpoint = ${endpoint}; key = ${key};`,
-      };
-    } else {
-      context.res = {
-        status: 400,
-        body: `Data missing from request, need data in the format: { sessionId: string, correlationId: string, createdOn: string, streamName: string, trustId: string, eventType: string, event: object }`,
-      };
-    }
+    await main(context, request, process.env);
   } catch (e) {
     context.res = {
       status: 500,
@@ -64,3 +11,65 @@ module.exports = async function (context, req) {
   }
   context.done();
 };
+
+async function main(context, request, env) {
+  const endpoint = env.LOG_EVENTS_DB_ACCOUNT_ENDPOINT;
+  const key = env.LOG_EVENTS_DB_ACCOUNT_KEY;
+  const db_id = env.LOG_EVENTS_DB_ID;
+
+  const container = await prepare_container(endpoint, key, db_id);
+
+  if (!(await write_event(container.items, request.body))) {
+    context.res = {
+      status: 400,
+      body: "Data missing from request",
+    };
+    return;
+  }
+
+  context.res = {
+    status: 201,
+    body: "Created",
+  };
+}
+
+async function prepare_container(endpoint, key, db_id) {
+  const client = new CosmosClient({ endpoint, key });
+  const db = client.database(db_id);
+
+  const { container } = await db.containers.createIfNotExists(
+    {
+      id: "event-container",
+    },
+    { offerThroughput: 400 }
+  );
+
+  return container;
+}
+
+async function write_event(
+  items,
+  { sessionId, correlationId, createdOn, streamName, trustId, eventType, event }
+) {
+  if (
+    sessionId &&
+    correlationId &&
+    createdOn &&
+    streamName &&
+    trustId &&
+    eventType &&
+    event
+  ) {
+    await items.create({
+      sessionId,
+      correlationId,
+      createdOn,
+      streamName,
+      trustId,
+      eventType,
+      event,
+    });
+    return true;
+  }
+  return false;
+}
