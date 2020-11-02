@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import fetch from "isomorphic-unfetch";
 import Button from "../../src/components/Button";
 import ErrorSummary from "../../src/components/ErrorSummary";
 import FormGroup from "../../src/components/FormGroup";
@@ -10,8 +9,10 @@ import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Form from "../../src/components/Form";
+import { v4 as uuidv4 } from "uuid";
+import fetchEndpointWithCorrelationId from "../../src/helpers/fetchEndpointWithCorrelationId";
 
-const Login = () => {
+const Login = ({ correlationId }) => {
   const [errors, setErrors] = useState([]);
 
   const codeRef = useRef();
@@ -46,13 +47,13 @@ const Login = () => {
     }
 
     if (onSubmitErrors.length === 0) {
-      const response = await fetch("/api/session", {
-        method: "POST",
-        body: JSON.stringify({ code, password }),
-        headers: {
-          "content-type": "application/json",
-        },
-      });
+      const body = JSON.stringify({ code, password });
+      const response = await fetchEndpointWithCorrelationId(
+        "POST",
+        "/api/session",
+        body,
+        correlationId
+      );
 
       if (response.status === 201) {
         window.location.href = `/trust-admin`;
@@ -126,6 +127,8 @@ export const getServerSideProps = propsWithContainer(
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
     const adminToken = adminIsAuthenticated(headers.cookie);
 
+    const correlationId = `trust-admin-login-${uuidv4()}`;
+
     if (trustAdminToken) {
       res.writeHead(307, { Location: `/trust-admin` }).end();
     } else if (userToken && userToken.ward) {
@@ -134,6 +137,6 @@ export const getServerSideProps = propsWithContainer(
       res.writeHead(307, { Location: `/admin` }).end();
     }
 
-    return { props: {} };
+    return { props: { correlationId } };
   }
 );

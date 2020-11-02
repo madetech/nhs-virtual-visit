@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Button from "../../../src/components/Button";
 import FormGroup from "../../../src/components/FormGroup";
@@ -14,8 +14,12 @@ import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import Error from "next/error";
 import Form from "../../../src/components/Form";
 import logger from "../../../logger";
+import { v4 as uuidv4 } from "uuid";
 
-const Name = ({ callId, error, callPassword }) => {
+const Name = ({ callId, error, callPassword, correlationId }) => {
+  useEffect(() => {
+    console.log(correlationId);
+  }, []);
   const router = useRouter();
   if (error) {
     return <Error />;
@@ -117,6 +121,8 @@ export const getServerSideProps = propsWithContainer(
       callPassword
     );
 
+    const correlationId = `${uuidv4()}-visitor-attended-visit`;
+
     if (error) {
       logger.error(`Call password invalid in name.js`, error);
     }
@@ -125,7 +131,7 @@ export const getServerSideProps = propsWithContainer(
       return { props: { error: "Unauthorized" } };
     }
 
-    return { props: { callId, error, callPassword } };
+    return { props: { callId, error, callPassword, correlationId } };
   }
 );
 
