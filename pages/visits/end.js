@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../../src/components/Layout";
 import ActionLinkSection from "../../src/components/ActionLinkSection";
 import ActionLink from "../../src/components/ActionLink";
 import AnchorLink from "../../src/components/AnchorLink";
 import InsetText from "../../src/components/InsetText";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import { v4 as uuidv4 } from "uuid";
 
-const End = ({ wardId, callId, surveyUrl, supportUrl }) => {
+const End = ({ wardId, callId, surveyUrl, supportUrl, correlationId }) => {
+  useEffect(() => {
+    console.log(correlationId);
+  }, []);
   return (
     <Layout title="Your virtual visit has completed" isBookService={false}>
       <div className="nhsuk-grid-row">
@@ -89,6 +93,7 @@ export const getServerSideProps = propsWithContainer(
     const userIsAuthenticated = container.getUserIsAuthenticated();
 
     const token = await userIsAuthenticated(headers.cookie);
+    const correlationId = `${uuidv4()}-visit-ended`;
 
     const {
       surveyUrl,
@@ -110,6 +115,7 @@ export const getServerSideProps = propsWithContainer(
         callId: query.callId,
         surveyUrl,
         supportUrl,
+        correlationId,
       },
     };
   }

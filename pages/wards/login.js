@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import fetch from "isomorphic-unfetch";
 import Button from "../../src/components/Button";
 import ErrorSummary from "../../src/components/ErrorSummary";
 import FormGroup from "../../src/components/FormGroup";
@@ -11,8 +10,10 @@ import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import Form from "../../src/components/Form";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import { v4 as uuidv4 } from "uuid";
+import fetchEndpointWithCorrelationId from "../../src/helpers/fetchEndpointWithCorrelationId";
 
-const Login = () => {
+const Login = ({ correlationId }) => {
   const [code, setCode] = useState("");
   const [errors, setErrors] = useState([]);
 
@@ -27,13 +28,13 @@ const Login = () => {
     }
 
     if (errors.length === 0) {
-      const response = await fetch("/api/session", {
-        method: "POST",
-        body: JSON.stringify({ code }),
-        headers: {
-          "content-type": "application/json",
-        },
-      });
+      const body = JSON.stringify({ code });
+      const response = await fetchEndpointWithCorrelationId(
+        "POST",
+        "/api/session",
+        body,
+        correlationId
+      );
 
       if (response.status === 201) {
         window.location.href = `/wards/visits`;
@@ -94,12 +95,13 @@ export const getServerSideProps = propsWithContainer(
   async ({ req: { headers }, res, container }) => {
     const userIsAuthenticated = container.getUserIsAuthenticated();
     const userToken = await userIsAuthenticated(headers.cookie);
-
     const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
 
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
     const adminToken = adminIsAuthenticated(headers.cookie);
+
+    const correlationId = `${uuidv4()}-ward-login`;
 
     if (trustAdminToken) {
       res.writeHead(307, { Location: `/trust-admin` }).end();
@@ -109,6 +111,6 @@ export const getServerSideProps = propsWithContainer(
       res.writeHead(307, { Location: `/admin` }).end();
     }
 
-    return { props: {} };
+    return { props: { correlationId } };
   }
 );
