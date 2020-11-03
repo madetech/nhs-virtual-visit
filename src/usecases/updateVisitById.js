@@ -10,28 +10,30 @@ const updateVisitById = ({ getDb }) => async ({
   try {
     const updatedVisit = await db.one(
       `UPDATE scheduled_calls_table
-      SET patient_name = $1,
-          recipient_name = $2,
-          recipient_email = $3,
-          recipient_number = $4,
-          call_time = $5
+      SET recipient_name = $1,
+          recipient_email = $2,
+          recipient_number = $3,
+          call_time = $4
       WHERE
-          id = $6
+          id = $5
       RETURNING *`,
-      [
-        patientName,
-        recipientName,
-        recipientEmail,
-        recipientNumber,
-        callTime,
-        id,
-      ]
+      [recipientName, recipientEmail, recipientNumber, callTime, id]
+    );
+
+    const updatedPatientDetails = await db.one(
+      `
+        UPDATE patient_details
+        SET patient_name = $1
+        WHERE id = $2
+        RETURNING *
+      `,
+      [patientName, updatedVisit.patient_details_id]
     );
 
     return {
       visit: {
         id: updatedVisit.id,
-        patientName: updatedVisit.patient_name,
+        patientName: updatedPatientDetails.patient_name,
         recipientName: updatedVisit.recipient_name,
         recipientNumber: updatedVisit.recipient_number,
         recipientEmail: updatedVisit.recipient_email,
