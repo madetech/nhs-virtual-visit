@@ -27,6 +27,10 @@ describe("insertVisit tests", () => {
 
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.patientName,
+      wardId,
+    ]);
+
+    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.contactEmail,
       request.contactNumber,
       request.contactName,
@@ -36,6 +40,7 @@ describe("insertVisit tests", () => {
       wardId,
       request.callPassword,
       SCHEDULED,
+      10,
     ]);
   });
 });
