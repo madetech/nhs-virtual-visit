@@ -3,53 +3,70 @@ function random_suffix() {
   head -c 5 /dev/urandom | base32 | awk '{print tolower($0)}'
 }
 
-function find_azure_terraform_state() {
-  az group list --output tsv | grep -Po "${PREFIX}tfstate([a-z0-9]+)" | head -1 | sed "s/^${PREFIX}tfstate//"
+function generate_azure_terraform_state_storage_account_name() {
+  local suffix="$1"
+  echo "tfstate$(random_suffix)"
 }
 
-PREFIX="vv"
-SUFFIX="$(find_azure_terraform_state)"
+function find_azure_terraform_state_storage_account() {
+  az storage account list --output "tsv" | grep -Po "tfstate([a-z0-9]+)" | head -1
+}
 
-if [ -z "$SUFFIX" ]
-then
-  echo "This script will:"
-  echo " - Create the resources needed to store terraform's state on your Azure account"
-  echo " - Initialize NHS Virtual Visits on your Azure account"
-  echo " - Procure and setup the infrastructure for NHS Virtual Visits"
-  echo "Press enter to continue"
-  read
-  echo "No terraform state found in Azure, creating..."
-  SUFFIX="$(random_suffix)"
+function find_azure_terraform_state_blob() {
+  local account_key="$1"
+  local prefix="$2"
+  local storage_account_name="$3"
+  local container_name="$4"
   
-  RESOURCE_GROUP_NAME="${PREFIX}tfstate${SUFFIX}"
-  STORAGE_ACCOUNT_NAME="${PREFIX}tfstate${SUFFIX}"
-  CONTAINER_NAME="${PREFIX}tfstate${SUFFIX}"
+  az storage blob list --account-name "$storage_account_name" --container-name "$container_name" --account-key "$account_key" -o "tsv" |
+  grep -Po "${prefix}tfstate" |
+  head -1
+}
 
-  export TF_DATA_DIR=".${PREFIX}terraform${SUFFIX}"
+function get_account_key() {
+  local resource_group_name="$1"
+  local storage_account_name="$2"
+  
+  az storage account keys list --resource-group "$resource_group_name" --account-name "$storage_account_name" --query "[0].value" -o "tsv"
+}
 
+prefix="vv"
+
+resource_group_name="tfstate"
+container_name="tfstate"
+storage_account_name="$(find_azure_terraform_state_storage_account)"
+account_key="$(get_account_key "$resource_group_name" "$storage_account_name")"
+blob_name="$(find_azure_terraform_state_blob "$account_key" "$prefix" "$storage_account_name" "tfstate")"
+
+#create the storage account if it's missing
+if [ -z "$storage_account_name" ]
+then
+  echo "No storage account for Terraform found, creating..."
+  storage_account_name="$(generate_azure_terraform_state_storage_account_name)"
+  
+  echo "Creating resource group"
   # Create resource group
-  az group create --name $RESOURCE_GROUP_NAME --location uksouth
+  az group create --name "$resource_group_name" --location "uksouth"
 
+  echo "Creating storage account"
   # Create storage account
-  az storage account create --resource-group $RESOURCE_GROUP_NAME --name $STORAGE_ACCOUNT_NAME --sku Standard_LRS --encryption-services blob
-    
-  # Get storage account key
-  ACCOUNT_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $STORAGE_ACCOUNT_NAME --query "[0].value" -o tsv)
+  az storage account create --resource-group "$resource_group_name" --name "$storage_account_name" --sku "Standard_LRS" --encryption-services "blob"
+  
+  account_key="$(get_account_key "$resource_group_name" "$storage_account_name")"
+  
+  echo "Creating storage container"
+  az storage container create --name $container_name --account-name $storage_account_name --account-key $account_key
+fi
 
-  echo account key $ACCOUNT_KEY
-  # Create blob container
-  az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME --account-key $ACCOUNT_KEY
-
-  terraform init -backend-config=resource_group_name=$RESOURCE_GROUP_NAME -backend-config=storage_account_name=$STORAGE_ACCOUNT_NAME -backend-config=container_name=$CONTAINER_NAME -backend-config=key=terraform.tfstate
+# Initialize terraform if the state is missing
+if [ -z "$blob_name" ] 
+then
+  echo "No Terraform state found, initializing"
+  blob_name="${prefix}tfstate"
+  terraform init -backend-config=resource_group_name="$resource_group_name" -backend-config=storage_account_name="$storage_account_name" -backend-config=container_name="$container_name" -backend-config=key="$blob_name"
   terraform apply
 else
-  RESOURCE_GROUP_NAME="${PREFIX}tfstate${SUFFIX}"
-  STORAGE_ACCOUNT_NAME="${PREFIX}tfstate${SUFFIX}"
-  CONTAINER_NAME="${PREFIX}tfstate${SUFFIX}"
-
-  export TF_DATA_DIR=".${PREFIX}terraform${SUFFIX}"
-  echo $TF_DATA_DIR
-
   echo "Existing terraform state found, applying any changes"
+
   terraform apply
 fi
