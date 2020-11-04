@@ -48,6 +48,7 @@ import updateTrust from "../usecases/updateTrust";
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
 import retrieveWardById from "../gateways/retrieveWardById";
 import retrieveTrustById from "../gateways/retrieveTrustById";
+import logEvent from "../gateways/logEvent";
 
 import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
@@ -258,6 +259,12 @@ class AppContainer {
 
   getUpdateWardVisitTotalsGateway = () => {
     return updateWardVisitTotals;
+  };
+  getLogEventGateway = () => {
+    return logEvent(
+      process.env.AZURE_FUNCTION_KEY,
+      process.env.AZURE_FUNCTION_URL
+    );
   };
 }
 

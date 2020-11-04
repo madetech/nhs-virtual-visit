@@ -100,6 +100,8 @@ jobs:
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
           EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
           EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
+          AZURE_FUNCTION_KEY: ${{secrets.AZURE_FUNCTION_KEY}}
+          AZURE_FUNCTION_URL: ${{secrets.AZURE_FUNCTION_URL}}
 
   migration-tests:
     runs-on: ubuntu-latest
