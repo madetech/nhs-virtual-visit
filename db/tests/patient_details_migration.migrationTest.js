@@ -16,16 +16,16 @@ describe("patient details migration", () => {
     const downAllMigrations = execSync("npm run dbmigratetest reset");
     console.log(downAllMigrations.toString());
 
-    // run all migrations up until 24/07/2020 (which is just before the Patient Details migration)
+    // run all migrations up until 24/07/2020 (which is just before the patient details migration)
     const runMigrationsToBeforePatientDetailsMigration = execSync(
       "npm run dbmigratetest up 20200724000000"
     );
     console.log(runMigrationsToBeforePatientDetailsMigration.toString());
 
     const { wardId } = await setupWardWithinHospitalAndTrust();
-
     const db = await container.getDb();
 
+    // inserting a visit into the db
     const { id } = await db.one(
       `INSERT INTO scheduled_calls_table
         (id, patient_name, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
@@ -46,7 +46,29 @@ describe("patient details migration", () => {
       ]
     );
 
-    const visit = await db.one(
+    // inserting another visit into the db
+    const { id: secondVisitId } = await db.one(
+      `INSERT INTO scheduled_calls_table
+        (id, patient_name, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
+        VALUES (default, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        RETURNING id, call_id
+      `,
+      [
+        "Alice",
+        "bob@example.com",
+        "",
+        "Bob",
+        date,
+        "123abc",
+        "whereby",
+        wardId,
+        "CALLP4SSWORD",
+        SCHEDULED,
+      ]
+    );
+
+    // retrieving the visit from the db
+    const visits = await db.any(
       `SELECT * FROM scheduled_calls_table
       WHERE ward_id = $1
       AND status = ANY(ARRAY[$2,$3]::text[])
@@ -55,23 +77,39 @@ describe("patient details migration", () => {
       [id, wardId, SCHEDULED, COMPLETE]
     );
 
-    // checking that, before the Patient Details migration is run, the visit contains the patient name
-    expect(visit).toEqual({
-      patient_name: "Patient Name",
-      recipient_name: "Contact Name",
-      recipient_number: "",
-      recipient_email: "contact@example.com",
-      call_time: date,
-      call_id: "TESTCALLID",
-      provider: "whereby",
-      call_password: "TESTCALLPASSWORD",
-      status: SCHEDULED,
-      id,
-      pii_cleared_at: null,
-      ward_id: wardId,
-    });
+    // checking the visits exists before the patient details migration is run
+    expect(visits).toEqual([
+      expect.objectContaining({
+        patient_name: "Patient Name",
+        recipient_name: "Contact Name",
+        recipient_number: "",
+        recipient_email: "contact@example.com",
+        call_time: date,
+        call_id: "TESTCALLID",
+        provider: "whereby",
+        call_password: "TESTCALLPASSWORD",
+        status: SCHEDULED,
+        id,
+        pii_cleared_at: null,
+        ward_id: wardId,
+      }),
+      expect.objectContaining({
+        patient_name: "Alice",
+        recipient_name: "Bob",
+        recipient_number: "",
+        recipient_email: "bob@example.com",
+        call_time: date,
+        call_id: "123abc",
+        provider: "whereby",
+        call_password: "CALLP4SSWORD",
+        status: SCHEDULED,
+        id: secondVisitId,
+        pii_cleared_at: null,
+        ward_id: wardId,
+      }),
+    ]);
 
-    // running patient_details migration
+    // running the rest of the migrations
     execSync("npm run dbmigratetest up");
 
     // checking patient_details table exists
@@ -110,6 +148,13 @@ describe("patient details migration", () => {
       [id]
     );
 
+    const [
+      { patient_details_id: patientDetailsIdForSecondVisit },
+    ] = await db.any(
+      "SELECT patient_details_id FROM scheduled_calls_table WHERE id = $1",
+      [secondVisitId]
+    );
+
     const patientDetails = await db.any(
       "SELECT * FROM patient_details WHERE id = $1",
       [patientDetailsId]
@@ -122,12 +167,24 @@ describe("patient details migration", () => {
       },
     ]);
 
+    const patientDetailsForSecondVisit = await db.any(
+      "SELECT * FROM patient_details WHERE id = $1",
+      [patientDetailsIdForSecondVisit]
+    );
+    expect(patientDetailsForSecondVisit).toEqual([
+      {
+        id: patientDetailsIdForSecondVisit,
+        patient_name: "Alice",
+        ward_id: wardId,
+      },
+    ]);
+
     const { scheduledCall, error } = await container.getRetrieveVisitById()({
       id,
       wardId,
     });
 
-    // checking visit is still there
+    // checking first visit is still there
     expect(scheduledCall).toEqual({
       patientName: "Patient Name",
       recipientName: "Contact Name",
@@ -141,22 +198,45 @@ describe("patient details migration", () => {
       id,
     });
     expect(error).toBeNull();
+
+    const {
+      scheduledCall: secondVisit,
+      error: errorForSecondVisit,
+    } = await container.getRetrieveVisitById()({
+      id: secondVisitId,
+      wardId,
+    });
+
+    // checking second visit is still there
+    expect(secondVisit).toEqual({
+      patientName: "Alice",
+      recipientName: "Bob",
+      recipientNumber: "",
+      recipientEmail: "bob@example.com",
+      callTime: date,
+      callId: "123abc",
+      provider: "whereby",
+      callPassword: "CALLP4SSWORD",
+      status: SCHEDULED,
+      id: secondVisitId,
+    });
+    expect(errorForSecondVisit).toBeNull();
   });
 
   it("migrates the patient details data from the patient_details table to the visits table on the down migration", async () => {
     const downAllMigrations = execSync("npm run dbmigratetest reset");
     console.log(downAllMigrations.toString());
 
-    // run all migrations up until 31/10/2020 (which is just after the Patient Details migration)
+    // run all migrations up until 31/10/2020 (ust after the patient details migration)
     const runMigrationsToJustAfterPatientDetailsMigration = execSync(
       "npm run dbmigratetest up 20201031000000"
     );
     console.log(runMigrationsToJustAfterPatientDetailsMigration.toString());
 
     const { wardId } = await setupWardWithinHospitalAndTrust();
-
     const db = await container.getDb();
 
+    // adding visit to db
     const { id } = await container.getInsertVisitGateway()(
       db,
       {
@@ -167,6 +247,21 @@ describe("patient details migration", () => {
         contactEmail: "anothercontact@example.com",
         contactName: "Another Contact Name",
         callId: "TESTCALLID2",
+      },
+      wardId
+    );
+
+    // adding a second visit to db
+    const { id: secondVisitId } = await container.getInsertVisitGateway()(
+      db,
+      {
+        provider: "whereby",
+        callPassword: "TESTCALLPASSWORD3",
+        patientName: "Mary",
+        callTime: date,
+        contactEmail: "mae@example.com",
+        contactName: "Mae",
+        callId: "TESTCALLID3",
       },
       wardId
     );
@@ -191,6 +286,26 @@ describe("patient details migration", () => {
       },
     ]);
 
+    // checking patient details for second in new table
+    const [
+      { patient_details_id: patientDetailsIdForSecondVisit },
+    ] = await db.any(
+      "SELECT patient_details_id FROM scheduled_calls_table WHERE id = $1",
+      [secondVisitId]
+    );
+
+    const patientDetailsForSecondVisit = await db.any(
+      "SELECT * FROM patient_details WHERE id = $1",
+      [patientDetailsIdForSecondVisit]
+    );
+    expect(patientDetailsForSecondVisit).toEqual([
+      {
+        id: patientDetailsIdForSecondVisit,
+        patient_name: "Mary",
+        ward_id: wardId,
+      },
+    ]);
+
     let { scheduledCall, error } = await container.getRetrieveVisitById()({
       id,
       wardId,
@@ -211,10 +326,33 @@ describe("patient details migration", () => {
     });
     expect(error).toBeNull();
 
-    // rolling back the patient_details migration
+    let {
+      scheduledCall: secondVisit,
+      error: errorForSecondVisit,
+    } = await container.getRetrieveVisitById()({
+      id: secondVisitId,
+      wardId,
+    });
+
+    // checking second visit
+    expect(secondVisit).toEqual({
+      patientName: "Mary",
+      recipientName: "Mae",
+      recipientNumber: "",
+      recipientEmail: "mae@example.com",
+      callTime: date,
+      callId: "TESTCALLID3",
+      provider: "whereby",
+      callPassword: "TESTCALLPASSWORD3",
+      status: SCHEDULED,
+      id: secondVisitId,
+    });
+    expect(errorForSecondVisit).toBeNull();
+
+    // rolling back the patient details migration
     execSync("npm run dbmigratetest down");
 
-    const visit = await db.one(
+    const visits = await db.any(
       `SELECT * FROM scheduled_calls_table
       WHERE ward_id = $1
       AND status = ANY(ARRAY[$2,$3]::text[])
@@ -224,20 +362,36 @@ describe("patient details migration", () => {
     );
 
     // checking that the visit is there
-    expect(visit).toEqual({
-      patient_name: "Another Patient Name",
-      recipient_name: "Another Contact Name",
-      recipient_number: "",
-      recipient_email: "anothercontact@example.com",
-      call_time: date,
-      call_id: "TESTCALLID2",
-      provider: "whereby",
-      call_password: "TESTCALLPASSWORD2",
-      status: SCHEDULED,
-      id,
-      pii_cleared_at: null,
-      ward_id: wardId,
-    });
+    expect(visits).toEqual([
+      expect.objectContaining({
+        patient_name: "Another Patient Name",
+        recipient_name: "Another Contact Name",
+        recipient_number: "",
+        recipient_email: "anothercontact@example.com",
+        call_time: date,
+        call_id: "TESTCALLID2",
+        provider: "whereby",
+        call_password: "TESTCALLPASSWORD2",
+        status: SCHEDULED,
+        id,
+        pii_cleared_at: null,
+        ward_id: wardId,
+      }),
+      expect.objectContaining({
+        patient_name: "Mary",
+        recipient_name: "Mae",
+        recipient_number: "",
+        recipient_email: "mae@example.com",
+        call_time: date,
+        call_id: "TESTCALLID3",
+        provider: "whereby",
+        call_password: "TESTCALLPASSWORD3",
+        status: SCHEDULED,
+        id: secondVisitId,
+        pii_cleared_at: null,
+        ward_id: wardId,
+      }),
+    ]);
 
     // checking patient_details table does not exist
     const [{ exists: patientDetailsTableExists }] = await db.any(
@@ -256,7 +410,7 @@ describe("patient details migration", () => {
     );
     expect(patientDetailsColumnExists).toEqual(false);
 
-    // check that patient name column exisits on the visits table
+    // check that patient name column exists on the visits table
     const [{ exists: patientNameColumnExists }] = await db.any(
       `SELECT EXISTS
       (
