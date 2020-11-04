@@ -30,7 +30,7 @@ const visitStarted = {
   visitId: 'visitId'
 }
 
- // this is probably the same qs visit started - doesnt add any valud
+ // this is probably the same qs visit started - doesnt add any valud (currently recording this and not the visit started)
 const visitAttended = {
   visitId: 'visitId'
 }
