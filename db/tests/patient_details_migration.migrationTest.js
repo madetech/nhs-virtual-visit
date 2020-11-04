@@ -117,7 +117,7 @@ describe("patient details migration", () => {
     expect(patientDetails).toEqual([
       {
         id: patientDetailsId,
-        patient_name: "Patient Name",
+        patient_name: "incorrect name",
         ward_id: wardId,
       },
     ]);
@@ -225,7 +225,7 @@ describe("patient details migration", () => {
 
     // checking that the visit is there
     expect(visit).toEqual({
-      patient_name: "Another Patient Name",
+      patient_name: "",
       recipient_name: "Another Contact Name",
       recipient_number: "",
       recipient_email: "anothercontact@example.com",
