@@ -1,6 +1,7 @@
 import withContainer from "../../src/middleware/withContainer";
 import { WARD_STAFF, TRUST_ADMIN, ADMIN } from "../../src/helpers/userTypes";
 import { v4 as uuidv4 } from "uuid";
+import logger from "../../logger";
 
 export default withContainer(async (req, res, { container }) => {
   const { code, password } = req.body;
@@ -56,6 +57,22 @@ export default withContainer(async (req, res, { container }) => {
         trustId: ward.trustId,
         type: WARD_STAFF,
       });
+      const event = {
+        sessionId: sessionId,
+        correlationId: req.headers["x-correlation-id"],
+        createdOn: Date.now(),
+        streamName: `ward-${ward.id}`,
+        trustId: ward.trustId,
+        eventType: "logged-in-ward-staff",
+        event: {
+          wardId: ward.id,
+        },
+      };
+      const logEvent = container.getLogEventGateway(event);
+      const logEventResponse = await logEvent(event);
+      if (logEventResponse && logEventResponse.status == 201) {
+        logger.info(`The login event has been recorded`);
+      }
     }
 
     const expiryHours = 14;
