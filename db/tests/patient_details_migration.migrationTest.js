@@ -25,7 +25,7 @@ describe("patient details migration", () => {
     const { wardId } = await setupWardWithinHospitalAndTrust();
     const db = await container.getDb();
 
-    // inserting a visits into the db
+    // inserting visits into the db
     const { id: firstVisitId } = await insertVisit(
       "Patient Name",
       "Contact Name",
@@ -47,7 +47,7 @@ describe("patient details migration", () => {
       date
     );
 
-    // retrieving the visit from the db
+    // retrieving visits from the db
     const visits = await retrieveVisits(wardId, db);
 
     // checking the visits exists before the patient details migration is run
@@ -92,9 +92,9 @@ describe("patient details migration", () => {
     expect(patientDetailsTableExists).toEqual(true);
 
     // checking patient_details_id fields exists on visits table
-    const [{ exists: patientDetailsColumnExists }] = await patientDetailsColumn(
-      db
-    );
+    const [
+      { exists: patientDetailsColumnExists },
+    ] = await patientDetailsIdColumn(db);
     expect(patientDetailsColumnExists).toEqual(true);
 
     // checking patient_name field no longer exist on visits table
@@ -135,7 +135,7 @@ describe("patient details migration", () => {
       wardId,
     });
 
-    // checking first visit is still there
+    // checking first visit
     expect(scheduledCall).toEqual({
       patientName: "Patient Name",
       recipientName: "Contact Name",
@@ -158,7 +158,7 @@ describe("patient details migration", () => {
       wardId,
     });
 
-    // checking second visit is still there
+    // checking second visit
     expect(secondVisit).toEqual({
       patientName: "Alice",
       recipientName: "Bob",
@@ -231,7 +231,7 @@ describe("patient details migration", () => {
       },
     ]);
 
-    // checking patient details for second in new table
+    // checking patient details for second visit in new table
     const [
       { patient_details_id: patientDetailsIdForSecondVisit },
     ] = await retrievePatientDetailsId(secondVisitId, db);
@@ -296,7 +296,7 @@ describe("patient details migration", () => {
 
     const visits = await retrieveVisits(wardId, db);
 
-    // checking that the visit is there
+    // checking visits
     expect(visits).toEqual([
       expect.objectContaining({
         patient_name: "Another Patient Name",
@@ -335,12 +335,12 @@ describe("patient details migration", () => {
     expect(patientDetailsTableExists).toEqual(false);
 
     // checking patient_details_id field does not exist on visits table
-    const [{ exists: patientDetailsColumnExists }] = await patientDetailsColumn(
-      db
-    );
+    const [
+      { exists: patientDetailsColumnExists },
+    ] = await patientDetailsIdColumn(db);
     expect(patientDetailsColumnExists).toEqual(false);
 
-    // check that patient name column exists on the visits table
+    // checking that patient name column exists on the visits table
     const [{ exists: patientNameColumnExists }] = await patientNameColumn(db);
     expect(patientNameColumnExists).toEqual(true);
   });
@@ -389,7 +389,7 @@ const retrieveVisits = async (wardId, db) => {
   );
 };
 
-const patientDetailsColumn = async (db) => {
+const patientDetailsIdColumn = async (db) => {
   return await db.any(
     `SELECT EXISTS
     (
