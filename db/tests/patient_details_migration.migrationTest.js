@@ -25,57 +25,30 @@ describe("patient details migration", () => {
     const { wardId } = await setupWardWithinHospitalAndTrust();
     const db = await container.getDb();
 
-    // inserting a visit into the db
-    const { id } = await db.one(
-      `INSERT INTO scheduled_calls_table
-        (id, patient_name, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
-        VALUES (default, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-        RETURNING id, call_id
-      `,
-      [
-        "Patient Name",
-        "contact@example.com",
-        "",
-        "Contact Name",
-        date,
-        "TESTCALLID",
-        "whereby",
-        wardId,
-        "TESTCALLPASSWORD",
-        SCHEDULED,
-      ]
+    // inserting a visits into the db
+    const { id: firstVisitId } = await insertVisit(
+      "Patient Name",
+      "Contact Name",
+      "contact@example.com",
+      "TESTCALLID",
+      "TESTCALLPASSWORD",
+      db,
+      wardId,
+      date
     );
-
-    // inserting another visit into the db
-    const { id: secondVisitId } = await db.one(
-      `INSERT INTO scheduled_calls_table
-        (id, patient_name, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
-        VALUES (default, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-        RETURNING id, call_id
-      `,
-      [
-        "Alice",
-        "bob@example.com",
-        "",
-        "Bob",
-        date,
-        "123abc",
-        "whereby",
-        wardId,
-        "CALLP4SSWORD",
-        SCHEDULED,
-      ]
+    const { id: secondVisitId } = await insertVisit(
+      "Alice",
+      "Bob",
+      "bob@example.com",
+      "123abc",
+      "CALLP4SSWORD",
+      db,
+      wardId,
+      date
     );
 
     // retrieving the visit from the db
-    const visits = await db.any(
-      `SELECT * FROM scheduled_calls_table
-      WHERE ward_id = $1
-      AND status = ANY(ARRAY[$2,$3]::text[])
-      AND pii_cleared_at IS NULL
-      `,
-      [id, wardId, SCHEDULED, COMPLETE]
-    );
+    const visits = await retrieveVisits(wardId, db);
 
     // checking the visits exists before the patient details migration is run
     expect(visits).toEqual([
@@ -89,7 +62,7 @@ describe("patient details migration", () => {
         provider: "whereby",
         call_password: "TESTCALLPASSWORD",
         status: SCHEDULED,
-        id,
+        id: firstVisitId,
         pii_cleared_at: null,
         ward_id: wardId,
       }),
@@ -119,46 +92,24 @@ describe("patient details migration", () => {
     expect(patientDetailsTableExists).toEqual(true);
 
     // checking patient_details_id fields exists on visits table
-    const [{ exists: patientDetailsColumnExists }] = await db.any(
-      `SELECT EXISTS
-      (
-        SELECT FROM information_schema.columns
-        WHERE table_name = 'scheduled_calls_table'
-        AND column_name = 'patient_details_id'
-      )`
+    const [{ exists: patientDetailsColumnExists }] = await patientDetailsColumn(
+      db
     );
     expect(patientDetailsColumnExists).toEqual(true);
 
     // checking patient_name field no longer exist on visits table
-    const [{ exists: patientNameColumnExists }] = await db.any(
-      `SELECT EXISTS
-      (
-        SELECT FROM information_schema.columns
-        WHERE table_name = 'scheduled_calls_table'
-        AND column_name = 'patient_name'
-      )`
-    );
+    const [{ exists: patientNameColumnExists }] = await patientNameColumn(db);
     expect(patientNameColumnExists).toEqual(false);
 
     // checking patient details in new table
     const [
       { patient_details_id: patientDetailsId },
-    ] = await db.any(
-      "SELECT patient_details_id FROM scheduled_calls_table WHERE id = $1",
-      [id]
-    );
-
+    ] = await retrievePatientDetailsId(firstVisitId, db);
     const [
       { patient_details_id: patientDetailsIdForSecondVisit },
-    ] = await db.any(
-      "SELECT patient_details_id FROM scheduled_calls_table WHERE id = $1",
-      [secondVisitId]
-    );
+    ] = await retrievePatientDetailsId(secondVisitId, db);
 
-    const patientDetails = await db.any(
-      "SELECT * FROM patient_details WHERE id = $1",
-      [patientDetailsId]
-    );
+    const patientDetails = await retrievePatientDetails(patientDetailsId, db);
     expect(patientDetails).toEqual([
       {
         id: patientDetailsId,
@@ -167,9 +118,9 @@ describe("patient details migration", () => {
       },
     ]);
 
-    const patientDetailsForSecondVisit = await db.any(
-      "SELECT * FROM patient_details WHERE id = $1",
-      [patientDetailsIdForSecondVisit]
+    const patientDetailsForSecondVisit = await retrievePatientDetails(
+      patientDetailsIdForSecondVisit,
+      db
     );
     expect(patientDetailsForSecondVisit).toEqual([
       {
@@ -180,7 +131,7 @@ describe("patient details migration", () => {
     ]);
 
     const { scheduledCall, error } = await container.getRetrieveVisitById()({
-      id,
+      id: firstVisitId,
       wardId,
     });
 
@@ -195,7 +146,7 @@ describe("patient details migration", () => {
       provider: "whereby",
       callPassword: "TESTCALLPASSWORD",
       status: SCHEDULED,
-      id,
+      id: firstVisitId,
     });
     expect(error).toBeNull();
 
@@ -269,15 +220,9 @@ describe("patient details migration", () => {
     // checking patient details in new table
     const [
       { patient_details_id: patientDetailsId },
-    ] = await db.any(
-      "SELECT patient_details_id FROM scheduled_calls_table WHERE id = $1",
-      [id]
-    );
+    ] = await retrievePatientDetailsId(id, db);
 
-    const patientDetails = await db.any(
-      "SELECT * FROM patient_details WHERE id = $1",
-      [patientDetailsId]
-    );
+    const patientDetails = await retrievePatientDetails(patientDetailsId, db);
     expect(patientDetails).toEqual([
       {
         id: patientDetailsId,
@@ -289,14 +234,11 @@ describe("patient details migration", () => {
     // checking patient details for second in new table
     const [
       { patient_details_id: patientDetailsIdForSecondVisit },
-    ] = await db.any(
-      "SELECT patient_details_id FROM scheduled_calls_table WHERE id = $1",
-      [secondVisitId]
-    );
+    ] = await retrievePatientDetailsId(secondVisitId, db);
 
-    const patientDetailsForSecondVisit = await db.any(
-      "SELECT * FROM patient_details WHERE id = $1",
-      [patientDetailsIdForSecondVisit]
+    const patientDetailsForSecondVisit = await retrievePatientDetails(
+      patientDetailsIdForSecondVisit,
+      db
     );
     expect(patientDetailsForSecondVisit).toEqual([
       {
@@ -352,14 +294,7 @@ describe("patient details migration", () => {
     // rolling back the patient details migration
     execSync("npm run dbmigratetest down");
 
-    const visits = await db.any(
-      `SELECT * FROM scheduled_calls_table
-      WHERE ward_id = $1
-      AND status = ANY(ARRAY[$2,$3]::text[])
-      AND pii_cleared_at IS NULL
-      `,
-      [id, wardId, SCHEDULED, COMPLETE]
-    );
+    const visits = await retrieveVisits(wardId, db);
 
     // checking that the visit is there
     expect(visits).toEqual([
@@ -394,31 +329,103 @@ describe("patient details migration", () => {
     ]);
 
     // checking patient_details table does not exist
-    const [{ exists: patientDetailsTableExists }] = await db.any(
-      "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'patient_details')"
+    const [{ exists: patientDetailsTableExists }] = await patientDetailsTable(
+      db
     );
     expect(patientDetailsTableExists).toEqual(false);
 
     // checking patient_details_id field does not exist on visits table
-    const [{ exists: patientDetailsColumnExists }] = await db.any(
-      `SELECT EXISTS
-      (
-        SELECT FROM information_schema.columns
-        WHERE table_name = 'scheduled_calls_table'
-        AND column_name = 'patient_details_id'
-      )`
+    const [{ exists: patientDetailsColumnExists }] = await patientDetailsColumn(
+      db
     );
     expect(patientDetailsColumnExists).toEqual(false);
 
     // check that patient name column exists on the visits table
-    const [{ exists: patientNameColumnExists }] = await db.any(
-      `SELECT EXISTS
-      (
-        SELECT FROM information_schema.columns
-        WHERE table_name = 'scheduled_calls_table'
-        AND column_name = 'patient_name'
-      )`
-    );
+    const [{ exists: patientNameColumnExists }] = await patientNameColumn(db);
     expect(patientNameColumnExists).toEqual(true);
   });
 });
+
+const insertVisit = async (
+  patientName,
+  recipientName,
+  recipientEmail,
+  callId,
+  callPassword,
+  db,
+  wardId,
+  date
+) => {
+  const { id } = await db.one(
+    `INSERT INTO scheduled_calls_table
+        (id, patient_name, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
+        VALUES (default, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        RETURNING id, call_id
+      `,
+    [
+      patientName,
+      recipientEmail,
+      "",
+      recipientName,
+      date,
+      callId,
+      "whereby",
+      wardId,
+      callPassword,
+      SCHEDULED,
+    ]
+  );
+  return { id };
+};
+
+const retrieveVisits = async (wardId, db) => {
+  return await db.any(
+    `SELECT * FROM scheduled_calls_table
+    WHERE ward_id = $1
+    AND status = ANY(ARRAY[$2,$3]::text[])
+    AND pii_cleared_at IS NULL
+    `,
+    [wardId, SCHEDULED, COMPLETE]
+  );
+};
+
+const patientDetailsColumn = async (db) => {
+  return await db.any(
+    `SELECT EXISTS
+    (
+      SELECT FROM information_schema.columns
+      WHERE table_name = 'scheduled_calls_table'
+      AND column_name = 'patient_details_id'
+    )`
+  );
+};
+
+const patientNameColumn = async (db) => {
+  return await db.any(
+    `SELECT EXISTS
+    (
+      SELECT FROM information_schema.columns
+      WHERE table_name = 'scheduled_calls_table'
+      AND column_name = 'patient_name'
+    )`
+  );
+};
+
+const patientDetailsTable = async (db) => {
+  return await db.any(
+    "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'patient_details')"
+  );
+};
+
+const retrievePatientDetailsId = async (visitId, db) => {
+  return await db.any(
+    "SELECT patient_details_id FROM scheduled_calls_table WHERE id = $1",
+    [visitId]
+  );
+};
+
+const retrievePatientDetails = async (patientDetailsId, db) => {
+  return await db.any("SELECT * FROM patient_details WHERE id = $1", [
+    patientDetailsId,
+  ]);
+};
