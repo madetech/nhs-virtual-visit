@@ -86,12 +86,11 @@ describe("retrieveVisits", () => {
       wardId: 1,
     });
 
-    expect(anySpy).toHaveBeenCalledWith(
-      `SELECT * FROM scheduled_calls_table
-                 WHERE ward_id = $1 AND status = ANY(ARRAY[$2,$3]::text[]) AND pii_cleared_at IS NULL
-                 ORDER BY call_time ASC`,
-      [1, "scheduled", "complete"]
-    );
+    expect(anySpy).toHaveBeenCalledWith(expect.anything(), [
+      1,
+      "scheduled",
+      "complete",
+    ]);
   });
 
   it("returns an error object on db exception", async () => {
