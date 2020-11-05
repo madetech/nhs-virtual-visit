@@ -25,7 +25,7 @@ async function cleanupScheduledCalls() {
 
   const scheduledCalls = await db.result(
     `UPDATE scheduled_calls_table
-     SET recipient_number = null, recipient_name = null, recipient_email = null, status = $1, pii_cleared_at = NOW()
+     SET status = $1, pii_cleared_at = NOW()
      WHERE call_time < (now() - INTERVAL '1 DAY') AND (status = $1 OR status = $2) AND pii_cleared_at IS NULL`,
     [status.COMPLETE, status.SCHEDULED]
   );
@@ -41,9 +41,22 @@ async function cleanupScheduledCalls() {
     [status.COMPLETE, status.SCHEDULED]
   );
 
+  await db.result(
+    `UPDATE visitor_details
+     SET recipient_name = null,
+         recipient_email = null,
+         recipient_number = null
+     FROM scheduled_calls_table
+     WHERE scheduled_calls_table.call_time < (now() - INTERVAL '1 DAY')
+     AND (scheduled_calls_table.status = $1 OR scheduled_calls_table.status = $2)
+     AND scheduled_calls_table.pii_cleared_at IS NULL
+     AND scheduled_calls_table.visitor_details_id = visitor_details.id`,
+    [status.COMPLETE, status.SCHEDULED]
+  );
+
   const archivedCalls = await db.result(
     `UPDATE scheduled_calls_table
-     SET recipient_number = null, recipient_name = null, recipient_email = null, pii_cleared_at = NOW()
+     SET pii_cleared_at = NOW()
      WHERE status = $1 AND pii_cleared_at IS NULL`,
     status.ARCHIVED
   );
@@ -58,9 +71,21 @@ async function cleanupScheduledCalls() {
     status.ARCHIVED
   );
 
+  await db.result(
+    `UPDATE visitor_details
+     SET recipient_name = null,
+         recipient_email = null,
+         recipient_number = null
+     FROM scheduled_calls_table
+     WHERE scheduled_calls_table.status = $1
+     AND scheduled_calls_table.pii_cleared_at IS NULL
+     AND scheduled_calls_table.visitor_details_id = visitor_details.id`,
+    status.ARCHIVED
+  );
+
   const cancelledCalls = await db.result(
     `UPDATE scheduled_calls_table
-     SET recipient_number = null, recipient_name = null, recipient_email = null, pii_cleared_at = NOW()
+     SET pii_cleared_at = NOW()
      WHERE status = $1 AND pii_cleared_at IS NULL`,
     status.CANCELLED
   );
@@ -72,6 +97,18 @@ async function cleanupScheduledCalls() {
      WHERE scheduled_calls_table.status = $1
      AND scheduled_calls_table.pii_cleared_at IS NULL
      AND scheduled_calls_table.patient_details_id = patient_details.id`,
+    status.CANCELLED
+  );
+
+  await db.result(
+    `UPDATE visitor_details
+     SET recipient_name = null,
+         recipient_email = null,
+         recipient_number = null
+     FROM scheduled_calls_table
+     WHERE scheduled_calls_table.status = $1
+     AND scheduled_calls_table.pii_cleared_at IS NULL
+     AND scheduled_calls_table.visitor_details_id = visitor_details.id`,
     status.CANCELLED
   );
 
