@@ -21,7 +21,7 @@ describe("retrieveVisitById contract tests", () => {
     expect(scheduledCall).toEqual({
       patientName: "Patient Name",
       recipientName: "Contact Name",
-      recipientNumber: "",
+      recipientNumber: null,
       recipientEmail: "contact@example.com",
       callTime: new Date("2020-06-01 13:00"),
       callId: "TESTCALLID",
