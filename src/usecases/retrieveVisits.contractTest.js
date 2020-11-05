@@ -1,5 +1,4 @@
 import AppContainer from "../containers/AppContainer";
-import moment from "moment";
 import deleteVisitByCallId from "./deleteVisitByCallId";
 import { setupTrust } from "../testUtils/factories";
 
@@ -29,13 +28,15 @@ describe("retrieveVisits contract tests", () => {
       trustId: trustId,
     });
 
-    await container.getInsertVisitGateway()(
+    let pastDate = new Date();
+    pastDate.setDate(pastDate.getDate() + 1);
+    const pastVisit = await container.getInsertVisitGateway()(
       db,
       {
         provider: "whereby",
         callPassword: "test",
         patientName: "past visit",
-        callTime: moment().subtract(2, "hours"),
+        callTime: pastDate,
         contactEmail: "contact@example.com",
         contactName: "Contact Name",
         callId: "two",
@@ -43,15 +44,18 @@ describe("retrieveVisits contract tests", () => {
       wardId
     );
 
-    await container.getInsertVisitGateway()(
+    let futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + 1);
+    const futureVisit = await container.getInsertVisitGateway()(
       db,
       {
         provider: "test",
         callPassword: "test",
         patientName: "future visit",
-        callTime: moment().add(2, "hours"),
-        contactEmail: "contact@example.com",
-        contactName: "Contact Name",
+        callTime: futureDate,
+        contactEmail: "contact2@example.com",
+        contactName: "Test Name",
+        contactNumber: "07899123456",
         callId: "three",
       },
       wardId
@@ -65,7 +69,7 @@ describe("retrieveVisits contract tests", () => {
         callPassword: "test",
         callId: "cancelledVisit",
         patientName: "cancelled visit",
-        callTime: moment().add(2, "hours"),
+        callTime: new Date(),
         contactEmail: "contact@example.com",
         contactName: "Contact Name",
       },
@@ -81,9 +85,10 @@ describe("retrieveVisits contract tests", () => {
         provider: "test",
         callPassword: "test",
         patientName: "different ward visit",
-        callTime: moment().add(2, "hours"),
+        callTime: new Date(),
         contactEmail: "contact@example.com",
         contactName: "Contact Name",
+        contactNumber: "",
         callId: "five",
       },
       wardId2
@@ -91,8 +96,28 @@ describe("retrieveVisits contract tests", () => {
 
     const { scheduledCalls } = await container.getRetrieveVisits()({ wardId });
     expect(scheduledCalls).toEqual([
-      expect.objectContaining({ patientName: "past visit" }),
-      expect.objectContaining({ patientName: "future visit" }),
+      {
+        id: pastVisit.id,
+        patientName: "past visit",
+        recipientName: "Contact Name",
+        recipientEmail: "contact@example.com",
+        recipientNumber: null,
+        callTime: pastDate.toISOString(),
+        callId: "two",
+        provider: "whereby",
+        status: "scheduled",
+      },
+      {
+        id: futureVisit.id,
+        patientName: "future visit",
+        recipientName: "Test Name",
+        recipientEmail: "contact2@example.com",
+        recipientNumber: "07899123456",
+        callTime: futureDate.toISOString(),
+        callId: "three",
+        provider: "test",
+        status: "scheduled",
+      },
     ]);
   });
 });

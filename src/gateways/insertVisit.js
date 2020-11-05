@@ -10,16 +10,22 @@ const insertVisit = async (db, visit, wardId) => {
     [visit.patientName, wardId]
   );
 
+  const { id: visitorDetailsId } = await db.one(
+    `INSERT INTO visitor_details
+      (id, recipient_name, recipient_email, recipient_number, ward_id)
+      VALUES (default, $1, $2, $3, $4)
+      RETURNING id
+    `,
+    [visit.contactName, visit.contactEmail, visit.contactNumber, wardId]
+  );
+
   const { id, call_id } = await db.one(
     `INSERT INTO scheduled_calls_table
-      (id, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status, patient_details_id)
-      VALUES (default, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      (id, call_time, call_id, provider, ward_id, call_password, status, patient_details_id, visitor_details_id)
+      VALUES (default, $1, $2, $3, $4, $5, $6, $7, $8)
       RETURNING id, call_id
     `,
     [
-      visit.contactEmail || "",
-      visit.contactNumber || "",
-      visit.contactName || "",
       visit.callTime,
       visit.callId,
       visit.provider,
@@ -27,6 +33,7 @@ const insertVisit = async (db, visit, wardId) => {
       visit.callPassword,
       SCHEDULED,
       patientDetailsId,
+      visitorDetailsId,
     ]
   );
 

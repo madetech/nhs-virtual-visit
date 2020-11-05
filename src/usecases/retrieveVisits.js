@@ -9,7 +9,22 @@ const retrieveVisits = ({ getDb }) => async ({ wardId }) => {
                    SELECT patient_name
                    FROM patient_details
                    WHERE scheduled_calls_table.patient_details_id = id
-                 ) as patient_name
+                 ),
+                 (
+                  SELECT recipient_name
+                  FROM visitor_details
+                  WHERE scheduled_calls_table.visitor_details_id = id
+                 ),
+                 (
+                  SELECT recipient_email
+                  FROM visitor_details
+                  WHERE scheduled_calls_table.visitor_details_id = id
+                 ),
+                 (
+                  SELECT recipient_number
+                  FROM visitor_details
+                  WHERE scheduled_calls_table.visitor_details_id = id
+                 ) as recipient_number
                  FROM scheduled_calls_table
                  WHERE scheduled_calls_table.ward_id = $1 AND status = ANY(ARRAY[$2,$3]::text[])
                  AND pii_cleared_at IS NULL

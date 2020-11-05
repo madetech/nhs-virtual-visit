@@ -14,7 +14,7 @@ describe("insertVisit contract tests", () => {
 
     const visit = {
       patientName: "Patient Test",
-      contactEmail: "test@testemail.com",
+      contactEmail: "test1@testemail.com",
       contactName: "Contact Test",
       contactNumber: "07123456789",
       callTime: new Date(),
@@ -26,9 +26,9 @@ describe("insertVisit contract tests", () => {
 
     const anotherVisit = {
       patientName: "Test Patient",
-      contactEmail: "test@testemail.com",
+      contactEmail: "test2@testemail.com",
       contactName: "Test Contact",
-      contactNumber: "07123456789",
+      contactNumber: "07123456788",
       callTime: new Date(),
       callId: "456",
       provider: "jitsi",
@@ -38,8 +38,18 @@ describe("insertVisit contract tests", () => {
 
     const { scheduledCalls } = await container.getRetrieveVisits()({ wardId });
     expect(scheduledCalls).toEqual([
-      expect.objectContaining({ patientName: "Patient Test" }),
-      expect.objectContaining({ patientName: "Test Patient" }),
+      expect.objectContaining({
+        patientName: "Patient Test",
+        recipientName: "Contact Test",
+        recipientEmail: "test1@testemail.com",
+        recipientNumber: "07123456789",
+      }),
+      expect.objectContaining({
+        patientName: "Test Patient",
+        recipientName: "Test Contact",
+        recipientEmail: "test2@testemail.com",
+        recipientNumber: "07123456788",
+      }),
     ]);
   });
 });
