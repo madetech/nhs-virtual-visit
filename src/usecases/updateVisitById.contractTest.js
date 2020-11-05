@@ -11,7 +11,7 @@ describe("updateVisitById contract tests", () => {
     const { wardId } = await setupWardWithinHospitalAndTrust();
     const { id } = await setupVisit({ wardId });
 
-    const { visit, error } = await container.getUpdateVisitById()({
+    await container.getUpdateVisitById()({
       id,
       patientName: "Aang",
       recipientName: "Katara",
@@ -20,11 +20,16 @@ describe("updateVisitById contract tests", () => {
       callTime: new Date("2020-08-01 18:00"),
     });
 
-    expect(visit.patientName).toEqual("Aang");
-    expect(visit.recipientName).toEqual("Katara");
-    expect(visit.recipientEmail).toEqual("katara@example.com");
-    expect(visit.recipientNumber).toEqual("07123456789");
-    expect(visit.callTime).toEqual(new Date("2020-08-01 18:00"));
+    const { scheduledCall, error } = await container.getRetrieveVisitById()({
+      id,
+      wardId,
+    });
+
+    expect(scheduledCall.patientName).toEqual("Aang");
+    expect(scheduledCall.recipientName).toEqual("Katara");
+    expect(scheduledCall.recipientEmail).toEqual("katara@example.com");
+    expect(scheduledCall.recipientNumber).toEqual("07123456789");
+    expect(scheduledCall.callTime).toEqual(new Date("2020-08-01 18:00"));
     expect(error).toBeNull();
   });
 
