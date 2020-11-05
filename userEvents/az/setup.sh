@@ -9,7 +9,7 @@ function generate_azure_terraform_state_storage_account_name() {
 }
 
 function find_azure_terraform_state_storage_account() {
-  az storage account list --output "tsv" | grep -Po "tfstate([a-z0-9]+)" | head -1
+  az storage account list --output "tsv" 2>/dev/null | grep -Po "tfstate([a-z0-9]+)" | head -1
 }
 
 function find_azure_terraform_state_blob() {
@@ -18,7 +18,7 @@ function find_azure_terraform_state_blob() {
   local storage_account_name="$3"
   local container_name="$4"
   
-  az storage blob list --account-name "$storage_account_name" --container-name "$container_name" --account-key "$account_key" -o "tsv" |
+  az storage blob list --account-name "$storage_account_name" --container-name "$container_name" --account-key "$account_key" -o "tsv" 2>/dev/null |
   grep -Po "${prefix}tfstate" |
   head -1
 }
@@ -27,7 +27,7 @@ function get_account_key() {
   local resource_group_name="$1"
   local storage_account_name="$2"
   
-  az storage account keys list --resource-group "$resource_group_name" --account-name "$storage_account_name" --query "[0].value" -o "tsv"
+  az storage account keys list --resource-group "$resource_group_name" --account-name "$storage_account_name" --query "[0].value" -o "tsv" 2>/dev/null
 }
 
 prefix="vv"
@@ -44,13 +44,19 @@ then
   echo "No storage account for Terraform found, creating..."
   storage_account_name="$(generate_azure_terraform_state_storage_account_name)"
   
-  echo "Creating resource group"
-  # Create resource group
-  az group create --name "$resource_group_name" --location "uksouth"
+  if [ -z "$(az group list --output "tsv" | grep "tfstate")" ]
+  then
+    echo "Creating resource group"
+    # Create resource group
+    az group create --name "$resource_group_name" --location "uksouth"
+  fi
 
-  echo "Creating storage account"
-  # Create storage account
-  az storage account create --resource-group "$resource_group_name" --name "$storage_account_name" --sku "Standard_LRS" --encryption-services "blob"
+  if [ -z "$(az group list --output "tsv" | grep -P "tfstate([a-z0-9]+)")" ]
+  then
+    echo "Creating storage account"
+    # Create storage account
+    az storage account create --resource-group "$resource_group_name" --name "$storage_account_name" --sku "Standard_LRS" --encryption-services "blob"
+  fi
   
   account_key="$(get_account_key "$resource_group_name" "$storage_account_name")"
   
