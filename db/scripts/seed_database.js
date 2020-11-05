@@ -45,17 +45,31 @@ async function seedDatabase() {
     [wardId]
   );
 
+  const {
+    id: visitorDetailsId,
+  } = await db.one(
+    "INSERT INTO visitor_details (recipient_name, recipient_email, ward_id) VALUES ('Bob', 'bob@example.com', $1) RETURNING id",
+    [wardId]
+  );
+
+  const {
+    id: secondVisitorDetailsId,
+  } = await db.one(
+    "INSERT INTO visitor_details (recipient_name, recipient_email, ward_id) VALUES ('Darlene', 'darlene@example.com', $1) RETURNING id",
+    [wardId]
+  );
+
   await db.result(
     `INSERT INTO scheduled_calls_table
-    (recipient_email, recipient_name, call_time, call_id, provider, ward_id, call_password, status, patient_details_id)
-    VALUES ('bob@example.com', 'Bob', CURRENT_TIMESTAMP + interval '1 hour', '123', 'whereby', $1, 'password', 'scheduled', $2)`,
-    [wardId, patientDetailsId]
+    (call_time, call_id, provider, ward_id, call_password, status, patient_details_id, visitor_details_id)
+    VALUES (CURRENT_TIMESTAMP + interval '1 hour', '123', 'whereby', $1, 'password', 'scheduled', $2, $3)`,
+    [wardId, patientDetailsId, visitorDetailsId]
   );
   await db.result(
     `INSERT INTO scheduled_calls_table
-    (recipient_email, recipient_name, call_time, call_id, provider, ward_id, call_password, status, patient_details_id)
-    VALUES ('darlene@example.com', 'Darlene', CURRENT_TIMESTAMP + interval '1 hour', '456', 'whereby', $1, 'password', 'scheduled', $2)`,
-    [wardId, secondPatientDetailsId]
+    (call_time, call_id, provider, ward_id, call_password, status, patient_details_id, visitor_details_id)
+    VALUES (CURRENT_TIMESTAMP + interval '1 hour', '456', 'whereby', $1, 'password', 'scheduled', $2, $3)`,
+    [wardId, secondPatientDetailsId, secondVisitorDetailsId]
   );
   db.$pool.end();
 }
