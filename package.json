@@ -20,7 +20,7 @@
     "test:ci": "npm run format:check && npm run test:contract -- --runInBand && npm run test -- --runInBand",
     "test:migrate": "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed",
     "test:e2e2:open": "npm run test:e2e:open",
-    "test:migration": "jest --config ./jest.migrations.config.js",
+    "test:migration": "jest --config ./jest.migrations.config.js --runInBand",
     "build": "next build",
     "dev": "NODE_ENV=development node server.js",
     "start": "NODE_ENV=production node server.js",
