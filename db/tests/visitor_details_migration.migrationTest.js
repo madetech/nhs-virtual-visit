@@ -3,7 +3,7 @@ import AppContainer from "../../src/containers/AppContainer";
 import { setupWardWithinHospitalAndTrust } from "../../src/testUtils/factories";
 import { COMPLETE, SCHEDULED } from "../../src/helpers/visitStatus";
 
-describe("patient details migration", () => {
+describe("visitor details migration", () => {
   const container = AppContainer.getInstance();
   let date;
 
@@ -12,34 +12,39 @@ describe("patient details migration", () => {
     date.setDate(date.getDate() + 1);
   });
 
-  it("migrates the patient details data from the visits table to the patient_details table", async () => {
+  it("migrates the visitor details data from the visits table to the visitor_details table", async () => {
     const downAllMigrations = execSync("npm run dbmigratetest reset");
     console.log(downAllMigrations.toString());
 
-    // run all migrations up until 24/07/2020 (which is just before the patient details migration)
-    const runMigrationsToBeforePatientDetailsMigration = execSync(
-      "npm run dbmigratetest up 20200724000000"
+    // run all migrations up until 31/10/2020 (which is just before the visitor details migration)
+    const runMigrationsToBeforeVisitorDetailsMigration = execSync(
+      "npm run dbmigratetest up 20201031000000"
     );
-    console.log(runMigrationsToBeforePatientDetailsMigration.toString());
+    console.log(runMigrationsToBeforeVisitorDetailsMigration.toString());
 
     const { wardId } = await setupWardWithinHospitalAndTrust();
     const db = await container.getDb();
 
     // inserting visits into the db
-    const { id: firstVisitId } = await insertVisit(
+    const { id: firstVisitId, patientDetailsId } = await insertVisit(
       "Patient Name",
       "Contact Name",
       "contact@example.com",
+      "07899123456",
       "TESTCALLID",
       "TESTCALLPASSWORD",
       db,
       wardId,
       date
     );
-    const { id: secondVisitId } = await insertVisit(
+    const {
+      id: secondVisitId,
+      patientDetailsId: secondPatientDetailsId,
+    } = await insertVisit(
       "Alice",
       "Bob",
       "bob@example.com",
+      "07899456890",
       "123abc",
       "CALLP4SSWORD",
       db,
@@ -50,12 +55,12 @@ describe("patient details migration", () => {
     // retrieving visits from the db
     const visits = await retrieveVisits(wardId, db);
 
-    // checking the visits exists before the patient details migration is run
+    // checking the visits exists before the visitor details migration is run
     expect(visits).toEqual([
       expect.objectContaining({
-        patient_name: "Patient Name",
+        patient_details_id: patientDetailsId,
         recipient_name: "Contact Name",
-        recipient_number: null,
+        recipient_number: "07899123456",
         recipient_email: "contact@example.com",
         call_time: date,
         call_id: "TESTCALLID",
@@ -67,9 +72,9 @@ describe("patient details migration", () => {
         ward_id: wardId,
       }),
       expect.objectContaining({
-        patient_name: "Alice",
+        patient_details_id: secondPatientDetailsId,
         recipient_name: "Bob",
-        recipient_number: null,
+        recipient_number: "07899456890",
         recipient_email: "bob@example.com",
         call_time: date,
         call_id: "123abc",
@@ -85,47 +90,51 @@ describe("patient details migration", () => {
     // running the rest of the migrations
     execSync("npm run dbmigratetest up");
 
-    // checking patient_details table exists
-    const [{ exists: patientDetailsTableExists }] = await patientDetailsTable(
+    // checking visitor_details table exists
+    const [{ exists: visitorDetailsTableExists }] = await visitorDetailsTable(
       db
     );
-    expect(patientDetailsTableExists).toEqual(true);
+    expect(visitorDetailsTableExists).toEqual(true);
 
-    // checking patient_details_id fields exists on visits table
+    // checking visitor_details_id fields exists on visits table
     const [
-      { exists: patientDetailsColumnExists },
-    ] = await patientDetailsIdColumn(db);
-    expect(patientDetailsColumnExists).toEqual(true);
+      { exists: visitorDetailsColumnExists },
+    ] = await visitorDetailsIdColumn(db);
+    expect(visitorDetailsColumnExists).toEqual(true);
 
-    // checking patient_name field no longer exist on visits table
-    const [{ exists: patientNameColumnExists }] = await patientNameColumn(db);
-    expect(patientNameColumnExists).toEqual(false);
+    // checking recipient_name field no longer exist on visits table NEED TO CHECK OTHER 2 FIELDS TOO
+    const [{ exists: visitorNameColumnExists }] = await visitorNameColumn(db);
+    expect(visitorNameColumnExists).toEqual(false);
 
-    // checking patient details in new table
+    // checking visitor details in new table
     const [
-      { patient_details_id: patientDetailsId },
-    ] = await retrievePatientDetailsId(firstVisitId, db);
+      { visitor_details_id: visitorDetailsId },
+    ] = await retrieveVisitorDetailsId(firstVisitId, db);
     const [
-      { patient_details_id: patientDetailsIdForSecondVisit },
-    ] = await retrievePatientDetailsId(secondVisitId, db);
+      { visitor_details_id: visitorDetailsIdForSecondVisit },
+    ] = await retrieveVisitorDetailsId(secondVisitId, db);
 
-    const patientDetails = await retrievePatientDetails(patientDetailsId, db);
-    expect(patientDetails).toEqual([
+    const visitorDetails = await retrieveVisitorDetails(visitorDetailsId, db);
+    expect(visitorDetails).toEqual([
       {
-        id: patientDetailsId,
-        patient_name: "Patient Name",
+        id: visitorDetailsId,
+        recipient_name: "Contact Name",
+        recipient_email: "contact@example.com",
+        recipient_number: "07899123456",
         ward_id: wardId,
       },
     ]);
 
-    const patientDetailsForSecondVisit = await retrievePatientDetails(
-      patientDetailsIdForSecondVisit,
+    const visitorDetailsForSecondVisit = await retrieveVisitorDetails(
+      visitorDetailsIdForSecondVisit,
       db
     );
-    expect(patientDetailsForSecondVisit).toEqual([
+    expect(visitorDetailsForSecondVisit).toEqual([
       {
-        id: patientDetailsIdForSecondVisit,
-        patient_name: "Alice",
+        id: visitorDetailsIdForSecondVisit,
+        recipient_name: "Bob",
+        recipient_email: "bob@example.com",
+        recipient_number: "07899456890",
         ward_id: wardId,
       },
     ]);
@@ -139,7 +148,7 @@ describe("patient details migration", () => {
     expect(scheduledCall).toEqual({
       patientName: "Patient Name",
       recipientName: "Contact Name",
-      recipientNumber: null,
+      recipientNumber: "07899123456",
       recipientEmail: "contact@example.com",
       callTime: date,
       callId: "TESTCALLID",
@@ -162,7 +171,7 @@ describe("patient details migration", () => {
     expect(secondVisit).toEqual({
       patientName: "Alice",
       recipientName: "Bob",
-      recipientNumber: null,
+      recipientNumber: "07899456890",
       recipientEmail: "bob@example.com",
       callTime: date,
       callId: "123abc",
@@ -174,15 +183,15 @@ describe("patient details migration", () => {
     expect(errorForSecondVisit).toBeNull();
   });
 
-  it("migrates the patient details data from the patient_details table to the visits table on the down migration", async () => {
+  it("migrates the visitor details data from the visitor_details table to the visits table on the down migration", async () => {
     const downAllMigrations = execSync("npm run dbmigratetest reset");
     console.log(downAllMigrations.toString());
 
     // run all migrations up until 06/11/2020 (just after the visitor details migration)
-    const runMigrationsToJustAfterPatientDetailsMigration = execSync(
+    const runMigrationsToJustAfterVisitorDetailsMigration = execSync(
       "npm run dbmigratetest up 20201106000000"
     );
-    console.log(runMigrationsToJustAfterPatientDetailsMigration.toString());
+    console.log(runMigrationsToJustAfterVisitorDetailsMigration.toString());
 
     const { wardId } = await setupWardWithinHospitalAndTrust();
     const db = await container.getDb();
@@ -196,6 +205,7 @@ describe("patient details migration", () => {
         patientName: "Another Patient Name",
         callTime: date,
         contactEmail: "anothercontact@example.com",
+        contactNumber: "07778123456",
         contactName: "Another Contact Name",
         callId: "TESTCALLID2",
       },
@@ -211,39 +221,44 @@ describe("patient details migration", () => {
         patientName: "Mary",
         callTime: date,
         contactEmail: "mae@example.com",
+        contactNumber: "07778789345",
         contactName: "Mae",
         callId: "TESTCALLID3",
       },
       wardId
     );
 
-    // checking patient details in new table
+    // checking visitor details in new table
     const [
-      { patient_details_id: patientDetailsId },
-    ] = await retrievePatientDetailsId(id, db);
+      { visitor_details_id: visitorDetailsId },
+    ] = await retrieveVisitorDetailsId(id, db);
 
-    const patientDetails = await retrievePatientDetails(patientDetailsId, db);
-    expect(patientDetails).toEqual([
+    const visitorDetails = await retrieveVisitorDetails(visitorDetailsId, db);
+    expect(visitorDetails).toEqual([
       {
-        id: patientDetailsId,
-        patient_name: "Another Patient Name",
+        id: visitorDetailsId,
+        recipient_name: "Another Contact Name",
+        recipient_email: "anothercontact@example.com",
+        recipient_number: "07778123456",
         ward_id: wardId,
       },
     ]);
 
-    // checking patient details for second visit in new table
+    // checking visitor details for second visit in new table
     const [
-      { patient_details_id: patientDetailsIdForSecondVisit },
-    ] = await retrievePatientDetailsId(secondVisitId, db);
+      { visitor_details_id: visitorDetailsIdForSecondVisit },
+    ] = await retrieveVisitorDetailsId(secondVisitId, db);
 
-    const patientDetailsForSecondVisit = await retrievePatientDetails(
-      patientDetailsIdForSecondVisit,
+    const visitorDetailsForSecondVisit = await retrieveVisitorDetails(
+      visitorDetailsIdForSecondVisit,
       db
     );
-    expect(patientDetailsForSecondVisit).toEqual([
+    expect(visitorDetailsForSecondVisit).toEqual([
       {
-        id: patientDetailsIdForSecondVisit,
-        patient_name: "Mary",
+        id: visitorDetailsIdForSecondVisit,
+        recipient_name: "Mae",
+        recipient_email: "mae@example.com",
+        recipient_number: "07778789345",
         ward_id: wardId,
       },
     ]);
@@ -257,7 +272,7 @@ describe("patient details migration", () => {
     expect(scheduledCall).toEqual({
       patientName: "Another Patient Name",
       recipientName: "Another Contact Name",
-      recipientNumber: null,
+      recipientNumber: "07778123456",
       recipientEmail: "anothercontact@example.com",
       callTime: date,
       callId: "TESTCALLID2",
@@ -280,7 +295,7 @@ describe("patient details migration", () => {
     expect(secondVisit).toEqual({
       patientName: "Mary",
       recipientName: "Mae",
-      recipientNumber: null,
+      recipientNumber: "07778789345",
       recipientEmail: "mae@example.com",
       callTime: date,
       callId: "TESTCALLID3",
@@ -291,18 +306,25 @@ describe("patient details migration", () => {
     });
     expect(errorForSecondVisit).toBeNull();
 
-    // rolling back the visitor details + patient details migration
-    execSync("npm run dbmigratetest down");
+    // rolling back the patient details migration
     execSync("npm run dbmigratetest down");
 
     const visits = await retrieveVisits(wardId, db);
 
     // checking visits
+    const [
+      { patient_details_id: patientDetailsId },
+    ] = await retrievePatientDetailsId(id, db);
+
+    const [
+      { patient_details_id: patientDetailsIdForSecondVisit },
+    ] = await retrievePatientDetailsId(secondVisitId, db);
+
     expect(visits).toEqual([
       expect.objectContaining({
-        patient_name: "Another Patient Name",
+        patient_details_id: patientDetailsId,
         recipient_name: "Another Contact Name",
-        recipient_number: null,
+        recipient_number: "07778123456",
         recipient_email: "anothercontact@example.com",
         call_time: date,
         call_id: "TESTCALLID2",
@@ -314,9 +336,9 @@ describe("patient details migration", () => {
         ward_id: wardId,
       }),
       expect.objectContaining({
-        patient_name: "Mary",
+        patient_details_id: patientDetailsIdForSecondVisit,
         recipient_name: "Mae",
-        recipient_number: null,
+        recipient_number: "07778789345",
         recipient_email: "mae@example.com",
         call_time: date,
         call_id: "TESTCALLID3",
@@ -329,21 +351,27 @@ describe("patient details migration", () => {
       }),
     ]);
 
-    // checking patient_details table does not exist
-    const [{ exists: patientDetailsTableExists }] = await patientDetailsTable(
+    // checking visitor_details table does not exist
+    const [{ exists: visitorDetailsTableExists }] = await visitorDetailsTable(
       db
     );
-    expect(patientDetailsTableExists).toEqual(false);
+    expect(visitorDetailsTableExists).toEqual(false);
 
-    // checking patient_details_id field does not exist on visits table
+    // checking visitor_details_id field does not exist on visits table
     const [
-      { exists: patientDetailsColumnExists },
-    ] = await patientDetailsIdColumn(db);
-    expect(patientDetailsColumnExists).toEqual(false);
+      { exists: visitorDetailsColumnExists },
+    ] = await visitorDetailsIdColumn(db);
+    expect(visitorDetailsColumnExists).toEqual(false);
 
-    // checking that patient name column exists on the visits table
-    const [{ exists: patientNameColumnExists }] = await patientNameColumn(db);
-    expect(patientNameColumnExists).toEqual(true);
+    // checking that visitor details column exists on the visits table
+    const [{ exists: visitorNameColumnExists }] = await visitorNameColumn(db);
+    const [{ exists: visitorEmailColumnExists }] = await visitorEmailColumn(db);
+    const [{ exists: visitorNumberColumnExists }] = await visitorNumberColumn(
+      db
+    );
+    expect(visitorNameColumnExists).toEqual(true);
+    expect(visitorEmailColumnExists).toEqual(true);
+    expect(visitorNumberColumnExists).toEqual(true);
   });
 });
 
@@ -351,22 +379,31 @@ const insertVisit = async (
   patientName,
   recipientName,
   recipientEmail,
+  recipientNumber,
   callId,
   callPassword,
   db,
   wardId,
   date
 ) => {
+  const { id: patientDetailsId } = await db.one(
+    `INSERT INTO patient_details
+      (id, patient_name, ward_id)
+      VALUES (default, $1, $2)
+      RETURNING id
+    `,
+    [patientName, wardId]
+  );
+
   const { id } = await db.one(
     `INSERT INTO scheduled_calls_table
-        (id, patient_name, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status)
+        (id, recipient_email, recipient_number, recipient_name, call_time, call_id, provider, ward_id, call_password, status, patient_details_id)
         VALUES (default, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
         RETURNING id, call_id
       `,
     [
-      patientName,
       recipientEmail,
-      null,
+      recipientNumber,
       recipientName,
       date,
       callId,
@@ -374,9 +411,10 @@ const insertVisit = async (
       wardId,
       callPassword,
       SCHEDULED,
+      patientDetailsId,
     ]
   );
-  return { id };
+  return { id, patientDetailsId };
 };
 
 const retrieveVisits = async (wardId, db) => {
@@ -390,32 +428,67 @@ const retrieveVisits = async (wardId, db) => {
   );
 };
 
-const patientDetailsIdColumn = async (db) => {
+const visitorDetailsIdColumn = async (db) => {
   return await db.any(
     `SELECT EXISTS
     (
       SELECT FROM information_schema.columns
       WHERE table_name = 'scheduled_calls_table'
-      AND column_name = 'patient_details_id'
+      AND column_name = 'visitor_details_id'
     )`
   );
 };
 
-const patientNameColumn = async (db) => {
+const visitorNameColumn = async (db) => {
   return await db.any(
     `SELECT EXISTS
     (
       SELECT FROM information_schema.columns
       WHERE table_name = 'scheduled_calls_table'
-      AND column_name = 'patient_name'
+      AND column_name = 'recipient_name'
     )`
   );
 };
 
-const patientDetailsTable = async (db) => {
+const visitorEmailColumn = async (db) => {
   return await db.any(
-    "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'patient_details')"
+    `SELECT EXISTS
+    (
+      SELECT FROM information_schema.columns
+      WHERE table_name = 'scheduled_calls_table'
+      AND column_name = 'recipient_email'
+    )`
   );
+};
+
+const visitorNumberColumn = async (db) => {
+  return await db.any(
+    `SELECT EXISTS
+    (
+      SELECT FROM information_schema.columns
+      WHERE table_name = 'scheduled_calls_table'
+      AND column_name = 'recipient_number'
+    )`
+  );
+};
+
+const visitorDetailsTable = async (db) => {
+  return await db.any(
+    "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'visitor_details')"
+  );
+};
+
+const retrieveVisitorDetailsId = async (visitId, db) => {
+  return await db.any(
+    "SELECT visitor_details_id FROM scheduled_calls_table WHERE id = $1",
+    [visitId]
+  );
+};
+
+const retrieveVisitorDetails = async (visitorDetailsId, db) => {
+  return await db.any("SELECT * FROM visitor_details WHERE id = $1", [
+    visitorDetailsId,
+  ]);
 };
 
 const retrievePatientDetailsId = async (visitId, db) => {
@@ -423,10 +496,4 @@ const retrievePatientDetailsId = async (visitId, db) => {
     "SELECT patient_details_id FROM scheduled_calls_table WHERE id = $1",
     [visitId]
   );
-};
-
-const retrievePatientDetails = async (patientDetailsId, db) => {
-  return await db.any("SELECT * FROM patient_details WHERE id = $1", [
-    patientDetailsId,
-  ]);
 };
