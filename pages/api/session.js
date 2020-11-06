@@ -57,6 +57,7 @@ export default withContainer(async (req, res, { container }) => {
         trustId: ward.trustId,
         type: WARD_STAFF,
       });
+
       const event = {
         sessionId: sessionId,
         correlationId: req.headers["x-correlation-id"],
@@ -68,6 +69,11 @@ export default withContainer(async (req, res, { container }) => {
           wardId: ward.id,
         },
       };
+
+      if (process.env.TEST_EVENT === "TRUE") {
+        event.test = true;
+      }
+
       const logEvent = container.getLogEventGateway(event);
       const logEventResponse = await logEvent(event);
       if (logEventResponse && logEventResponse.status == 201) {
