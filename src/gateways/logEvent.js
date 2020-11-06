@@ -15,7 +15,6 @@ const logEvent = (key, url) => async (event) => {
   } catch {
     (error) => {
       console.error("Error (log event):", error);
-      console.log(`the url is ${url}`);
       response.error = error;
       return response;
     };
