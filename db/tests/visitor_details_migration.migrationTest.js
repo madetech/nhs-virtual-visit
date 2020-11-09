@@ -13,14 +13,10 @@ describe("visitor details migration", () => {
   });
 
   it("migrates the visitor details data from the visits table to the visitor_details table", async () => {
-    const downAllMigrations = execSync("npm run dbmigratetest reset");
-    console.log(downAllMigrations.toString());
+    execSync("npm run dbmigratetest reset");
 
     // run all migrations up until 31/10/2020 (which is just before the visitor details migration)
-    const runMigrationsToBeforeVisitorDetailsMigration = execSync(
-      "npm run dbmigratetest up 20201031000000"
-    );
-    console.log(runMigrationsToBeforeVisitorDetailsMigration.toString());
+    execSync("npm run dbmigratetest up 20201031000000");
 
     const { wardId } = await setupWardWithinHospitalAndTrust();
     const db = await container.getDb();
@@ -55,7 +51,7 @@ describe("visitor details migration", () => {
     // retrieving visits from the db
     const visits = await retrieveVisits(wardId, db);
 
-    // checking the visits exists before the visitor details migration is run
+    // checking the visits exist
     expect(visits).toEqual([
       expect.objectContaining({
         patient_details_id: patientDetailsId,
@@ -102,9 +98,15 @@ describe("visitor details migration", () => {
     ] = await visitorDetailsIdColumn(db);
     expect(visitorDetailsColumnExists).toEqual(true);
 
-    // checking recipient_name field no longer exist on visits table NEED TO CHECK OTHER 2 FIELDS TOO
+    // checking visitor fields no longer exist on visits table
     const [{ exists: visitorNameColumnExists }] = await visitorNameColumn(db);
+    const [{ exists: visitorEmailColumnExists }] = await visitorEmailColumn(db);
+    const [{ exists: visitorNumberColumnExists }] = await visitorNumberColumn(
+      db
+    );
     expect(visitorNameColumnExists).toEqual(false);
+    expect(visitorEmailColumnExists).toEqual(false);
+    expect(visitorNumberColumnExists).toEqual(false);
 
     // checking visitor details in new table
     const [
@@ -184,14 +186,10 @@ describe("visitor details migration", () => {
   });
 
   it("migrates the visitor details data from the visitor_details table to the visits table on the down migration", async () => {
-    const downAllMigrations = execSync("npm run dbmigratetest reset");
-    console.log(downAllMigrations.toString());
+    execSync("npm run dbmigratetest reset");
 
     // run all migrations up until 06/11/2020 (just after the visitor details migration)
-    const runMigrationsToJustAfterVisitorDetailsMigration = execSync(
-      "npm run dbmigratetest up 20201106000000"
-    );
-    console.log(runMigrationsToJustAfterVisitorDetailsMigration.toString());
+    execSync("npm run dbmigratetest up 20201106000000");
 
     const { wardId } = await setupWardWithinHospitalAndTrust();
     const db = await container.getDb();
@@ -306,7 +304,7 @@ describe("visitor details migration", () => {
     });
     expect(errorForSecondVisit).toBeNull();
 
-    // rolling back the patient details migration
+    // rolling back the visitor details migration
     execSync("npm run dbmigratetest down");
 
     const visits = await retrieveVisits(wardId, db);
