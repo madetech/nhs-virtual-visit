@@ -74,5 +74,6 @@ then
 else
   echo "Existing terraform state found, applying any changes"
 
+  terraform init -backend-config=resource_group_name="$resource_group_name" -backend-config=storage_account_name="$storage_account_name" -backend-config=container_name="$container_name" -backend-config=key="$blob_name"
   terraform apply
 fi
