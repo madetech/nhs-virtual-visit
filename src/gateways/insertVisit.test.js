@@ -23,11 +23,9 @@ describe("insertVisit tests", () => {
       callPassword: "securePassword",
     };
     const wardId = "wardId";
-    const { id, callId } = await insertVisit(db, request, wardId);
+    const { id } = await insertVisit(db, request, wardId);
 
     expect(id).toEqual(6);
-    expect(callId).toEqual("12345");
-
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.patientName,
       wardId,

@@ -9,7 +9,7 @@ describe("deleteVisitByCallId contract tests", () => {
     const { trustId } = await setupTrust();
     const { wardId } = await setupWard({ trustId: trustId });
 
-    const { callId } = await setupVisit({ wardId });
+    await setupVisit({ wardId, callId: "CALLID" });
     await setupVisit({
       wardId,
       patientName: "Test patient",
@@ -22,7 +22,7 @@ describe("deleteVisitByCallId contract tests", () => {
       expect.objectContaining({ patientName: "Test patient" }),
     ]);
 
-    await container.getDeleteVisitByCallId()(callId);
+    await container.getDeleteVisitByCallId()("CALLID");
 
     const {
       scheduledCalls: scheduledCallsAfterDelete,

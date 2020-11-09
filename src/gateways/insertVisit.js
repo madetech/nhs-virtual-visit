@@ -19,7 +19,7 @@ const insertVisit = async (db, visit, wardId) => {
     [visit.contactName, visit.contactEmail, visit.contactNumber, wardId]
   );
 
-  const { id, call_id } = await db.one(
+  const { id } = await db.one(
     `INSERT INTO scheduled_calls_table
       (id, call_time, call_id, provider, ward_id, call_password, status, patient_details_id, visitor_details_id)
       VALUES (default, $1, $2, $3, $4, $5, $6, $7, $8)
@@ -37,7 +37,7 @@ const insertVisit = async (db, visit, wardId) => {
     ]
   );
 
-  return { id, callId: call_id };
+  return { id };
 };
 
 export default insertVisit;
