@@ -1,5 +1,6 @@
 import React from "react";
 import AnchorLink from "../AnchorLink";
+import toLowerSnake from "../../helpers/toLowerSnake";
 
 const WardsTable = ({ wards, wardVisitTotals }) => (
   <div className="nhsuk-table-responsive">
@@ -50,6 +51,7 @@ const WardsTable = ({ wards, wardVisitTotals }) => (
             </td>
             <td className="nhsuk-table__cell">
               <AnchorLink
+                data-testid={`delete-${toLowerSnake(ward.name)}`}
                 href="/trust-admin/wards/[id]/archive-confirmation"
                 as={`/trust-admin/wards/${ward.id}/archive-confirmation`}
               >

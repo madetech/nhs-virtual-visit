@@ -20,7 +20,7 @@ yourself.
 
 ### Automatically updating your fork
 
-We have set up the repository to work instantly with the [Pull app by Wei](https://github.com/wei/pull). To install the app, visit [github.com/apps/pull](https://github.com/apps/pull) and click install, pointing the app to your newly created fork.
+You can set up the repository to work instantly with the [Pull app by Wei](https://github.com/wei/pull). To install the app, visit [github.com/apps/pull](https://github.com/apps/pull) and click install, pointing the app to your newly created fork. Doing this requires careful consideraton. Whilst always being up to date it excellent, doing so will require any code to go through your own continuous delivery pipeline in order to validate it meets your standards.
 
 ### Manually updating your fork
 

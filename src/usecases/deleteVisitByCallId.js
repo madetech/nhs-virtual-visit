@@ -16,7 +16,7 @@ const deleteVisitByCallId = ({ getDb }) => async (callId) => {
       error: null,
     };
   } catch (error) {
-    logger.error(error);
+    logger.error(JSON.stringify(error));
     return {
       success: false,
       error: error.toString(),

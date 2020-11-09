@@ -1,3 +1,5 @@
+import { thenIClickLogOut } from "../commonSteps";
+
 describe("As an admin, I want to log in so that I can access the service.", () => {
   before(() => {
     // reset and seed the database
@@ -18,7 +20,7 @@ describe("As an admin, I want to log in so that I can access the service.", () =
 
     cy.audit();
 
-    WhenIClickLogOut();
+    thenIClickLogOut();
     ThenISeeTheAdminLogInPage();
   });
 
@@ -29,12 +31,31 @@ describe("As an admin, I want to log in so that I can access the service.", () =
     ThenISeeAnError();
   });
 
+  it("allows an admin to log in and out when a ward code and admin code are the same", () => {
+    GivenTheSameWardCodeAsAdminCode();
+    GivenIAmAnAdmin();
+    WhenIVisitTheAdminLogInPage();
+
+    cy.audit();
+
+    AndIEnterAValidAdminCodeAndPassword();
+    AndISubmitTheForm();
+    ThenISeeTheAdminHomePage();
+
+    cy.audit();
+
+    thenIClickLogOut();
+    ThenISeeTheAdminLogInPage();
+  });
+
   it("displays an error for an invalid password", () => {
     WhenIVisitTheAdminLogInPage();
     AndIEnterAnInvalidPassword();
     AndISubmitTheForm();
     ThenISeeAnError();
   });
+
+  function GivenTheSameWardCodeAsAdminCode() {}
 
   function WhenIVisitTheAdminLogInPage() {
     cy.visit(Cypress.env("baseUrl") + "/admin/login");
@@ -55,10 +76,6 @@ describe("As an admin, I want to log in so that I can access the service.", () =
   function ThenISeeTheAdminHomePage() {
     cy.contains("There is a problem").should("not.be.visible");
     cy.contains("Site administration").should("be.visible");
-  }
-
-  function WhenIClickLogOut() {
-    cy.get("a.nhsuk-header__navigation-link").contains("Log out").click();
   }
 
   function ThenISeeTheAdminLogInPage() {

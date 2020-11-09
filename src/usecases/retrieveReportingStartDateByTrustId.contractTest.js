@@ -24,14 +24,14 @@ describe("retrieveReportingStartDateByTrustId contract tests", () => {
       callId: "callId1",
     });
 
-    const sessionId = uuidv4();
+    const callSessionId = uuidv4();
 
     MockDate.set(new Date("2020-06-01 13:00"));
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId,
-      sessionId,
+      callSessionId,
     });
 
     const { id: visitId2 } = await setupVisit({
@@ -39,14 +39,14 @@ describe("retrieveReportingStartDateByTrustId contract tests", () => {
       callId: "callId2",
     });
 
-    const sessionId2 = uuidv4();
+    const callSessionId2 = uuidv4();
 
     MockDate.set(new Date("2020-06-15 13:00"));
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId: visitId2,
-      sessionId: sessionId2,
+      callSessionId: callSessionId2,
     });
 
     // Another trust with 1 event
@@ -59,14 +59,14 @@ describe("retrieveReportingStartDateByTrustId contract tests", () => {
       callId: "callId3",
     });
 
-    const sessionId3 = uuidv4();
+    const callSessionId3 = uuidv4();
 
     MockDate.set(new Date("2020-06-01 13:00"));
 
     await container.getCaptureEvent()({
       action: "join-visit",
       visitId: visitId3,
-      sessionId: sessionId3,
+      callSessionId: callSessionId3,
     });
 
     const {

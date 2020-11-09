@@ -1,3 +1,5 @@
+import { thenIClickLogOut } from "../commonSteps";
+
 describe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
   before(() => {
     // reset and seed the database
@@ -25,21 +27,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     cy.get("a.nhsuk-link").contains("Edit").click();
   }
 
-  function ThenIShouldBeOnTheEditHospitalPage() {
-    cy.url().should("include", "/trust-admin/hospitals/1/edit");
-    cy.get("input[name=hospital-name]").should("have.value", "Test Hospital");
-  }
-
-  function WhenIFillOutTheForm() {
-    cy.get("input[name=hospital-name]").type(" updated");
-    cy.get("input[name=hospital-survey-url]").type(
-      "https://www.survey.example.com"
-    );
-    cy.get("input[name=hospital-support-url]").type(
-      "https://www.support.example.com"
-    );
-  }
-
   function WhenIFillOutTheFormWithBadSurveyUrl() {
     cy.get("input[name=hospital-name]").type("Scorpia Hospital");
     cy.get("input[name=hospital-survey-url]").type("https://www");
@@ -52,14 +39,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
 
   function AndIClickTheEditHospitalButton() {
     cy.get("button[type=submit]").contains("Edit hospital").click();
-  }
-
-  function ThenIShouldBeOnTheEditSuccessPageWithNewName() {
-    cy.url().should("include", "/trust-admin/hospitals/1/edit-success");
-    cy.get("h1.nhsuk-panel__title").should(
-      "contain",
-      "Test Hospital updated has been updated"
-    );
   }
 
   function WhenISubmitFormEmptyHospitalName() {
@@ -77,11 +56,12 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     ThenISeeTheHospitalList();
 
     WhenIClickOnTheEditLink();
-    ThenIShouldBeOnTheEditHospitalPage();
     cy.audit();
 
     WhenISubmitFormEmptyHospitalName();
     ThenISeeErrors();
+
+    thenIClickLogOut();
   });
 
   it("displays errors when survey url is invalid", () => {
@@ -90,11 +70,12 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     ThenISeeTheHospitalList();
 
     WhenIClickOnTheEditLink();
-    ThenIShouldBeOnTheEditHospitalPage();
 
     WhenIFillOutTheFormWithBadSurveyUrl();
     AndIClickTheEditHospitalButton();
     ThenISeeErrors();
+
+    thenIClickLogOut();
   });
 
   it("displays errors when support url is invalid", () => {
@@ -103,23 +84,11 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     ThenISeeTheHospitalList();
 
     WhenIClickOnTheEditLink();
-    ThenIShouldBeOnTheEditHospitalPage();
 
     WhenIFillOutTheFormWithBadSupportUrl();
     AndIClickTheEditHospitalButton();
     ThenISeeErrors();
-  });
 
-  it("allows an admin to edit a hospital", () => {
-    GivenIAmLoggedInAsAnAdmin();
-    WhenIClickOnHospitals();
-    ThenISeeTheHospitalList();
-
-    WhenIClickOnTheEditLink();
-    ThenIShouldBeOnTheEditHospitalPage();
-
-    WhenIFillOutTheForm();
-    AndIClickTheEditHospitalButton();
-    ThenIShouldBeOnTheEditSuccessPageWithNewName();
+    thenIClickLogOut();
   });
 });

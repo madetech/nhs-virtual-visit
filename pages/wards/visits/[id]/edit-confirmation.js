@@ -118,7 +118,13 @@ const EditAVisitConfirmation = ({
               Please double check the contact information of the key contact to
               ensure we set up the virtual visit with the correct person.
             </Text>
-            <Button className="nhsuk-u-margin-top-5">Edit virtual visit</Button>
+            <Button
+              data-testId="save-and-continue"
+              className="nhsuk-u-margin-top-5"
+              ariaLabel="Save and continue"
+            >
+              Save and continue
+            </Button>
           </Form>
         </GridColumn>
       </GridRow>

@@ -4,13 +4,14 @@ import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import fetch from "isomorphic-unfetch";
 import { useState } from "react";
 import Error from "next/error";
 import formatDate from "../../src/helpers/formatDate";
 import formatTime from "../../src/helpers/formatTime";
 import verifyToken from "../../src/usecases/verifyToken";
 import { WARD_STAFF } from "../../src/helpers/userTypes";
+import { v4 as uuidv4 } from "uuid";
+import fetchEndpointWithCorrelationId from "../../src/helpers/fetchEndpointWithCorrelationId";
 
 const VisitStart = ({
   patientName,
@@ -20,22 +21,24 @@ const VisitStart = ({
   callId,
   error,
   callPassword,
+  correlationId,
 }) => {
   const [userError, setUserError] = useState(error);
 
   const startCall = async () => {
-    const response = await fetch("/api/send-visit-ready-notification", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        callId,
-        contactNumber,
-        contactEmail,
-        callPassword,
-      }),
+    const body = JSON.stringify({
+      callId,
+      contactNumber,
+      contactEmail,
+      callPassword,
     });
+
+    const response = await fetchEndpointWithCorrelationId(
+      "POST",
+      "/api/send-visit-ready-notification",
+      body,
+      correlationId
+    );
 
     const { callUrl, err } = await response.json();
 
@@ -109,6 +112,8 @@ export const getServerSideProps = propsWithContainer(
     const callTime = formatTime(scheduledCall.callTime, "HH:mm");
     const callDate = formatDate(scheduledCall.callTime);
 
+    const correlationId = `${uuidv4()}-visit-attended`;
+
     return {
       props: {
         patientName: scheduledCall.patientName,
@@ -120,6 +125,7 @@ export const getServerSideProps = propsWithContainer(
         callId,
         error,
         callPassword: scheduledCall.callPassword,
+        correlationId,
       },
     };
   })

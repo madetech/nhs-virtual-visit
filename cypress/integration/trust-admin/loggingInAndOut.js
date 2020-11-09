@@ -27,12 +27,29 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     ThenISeeAnError();
   });
 
+  it("allows a trust admin to log in and out when the ward code and trust admin code are the same", () => {
+    GivenTheSameWardCodeAsAdminCode();
+    GivenIAmATrustAdmin();
+    WhenIVisitTheTrustAdminLogInPage();
+    cy.audit();
+
+    AndIEnterAValidTrustAdminCodeAndPassword();
+    AndISubmitTheForm();
+    ThenISeeTheTrustAdminHomePage();
+    cy.audit();
+
+    WhenIClickLogOut();
+    ThenISeeTheTrustAdminLogInPage();
+  });
+
   it("displays an error for an invalid password", () => {
     WhenIVisitTheTrustAdminLogInPage();
     AndIEnterAnInvalidPassword();
     AndISubmitTheForm();
     ThenISeeAnError();
   });
+
+  function GivenTheSameWardCodeAsAdminCode() {}
 
   function WhenIVisitTheTrustAdminLogInPage() {
     cy.visit(Cypress.env("baseUrl") + "/trust-admin/login");

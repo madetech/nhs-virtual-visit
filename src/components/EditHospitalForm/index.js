@@ -28,22 +28,22 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const onSubmit = async () => {
     let onSubmitErrors = [];
 
-    const setHospitalNameError = (errors) => {
-      errors.push({
+    const setHospitalNameError = (e) => {
+      e.push({
         id: "hospital-name-error",
         message: "Enter a hospital name",
       });
     };
 
-    const setHospitalSurveyUrlInvalidError = (errors) => {
-      errors.push({
+    const setHospitalSurveyUrlInvalidError = (e) => {
+      e.push({
         id: "hospital-survey-url-error",
         message: "Enter a valid survey URL",
       });
     };
 
-    const setHospitalSupportUrlInvalidError = (errors) => {
-      errors.push({
+    const setHospitalSupportUrlInvalidError = (e) => {
+      e.push({
         id: "hospital-support-url-error",
         message: "Enter a valid support URL",
       });
@@ -133,7 +133,9 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
         />
       </FormGroup>
 
-      <Button className="nhsuk-u-margin-top-5">{action} hospital</Button>
+      <Button data-testid="editHospital" className="nhsuk-u-margin-top-5">
+        {action} hospital
+      </Button>
     </Form>
   );
 };

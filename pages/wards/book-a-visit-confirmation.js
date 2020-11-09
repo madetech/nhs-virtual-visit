@@ -5,13 +5,14 @@ import Text from "../../src/components/Text";
 import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
 import Form from "../../src/components/Form";
-import fetch from "isomorphic-unfetch";
 import moment from "moment";
 import Router from "next/router";
 import verifyToken from "../../src/usecases/verifyToken";
 import VisitSummaryList from "../../src/components/VisitSummaryList";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import { WARD_STAFF } from "../../src/helpers/userTypes";
+import { v4 as uuidv4 } from "uuid";
+import fetchEndpointWithCorrelationId from "../../src/helpers/fetchEndpointWithCorrelationId";
 
 const ScheduleConfirmation = ({
   patientName,
@@ -19,6 +20,7 @@ const ScheduleConfirmation = ({
   contactNumber,
   contactEmail,
   callTime,
+  correlationId,
 }) => {
   const changeLink = () => {
     Router.push({
@@ -47,14 +49,13 @@ const ScheduleConfirmation = ({
       if (contactEmail) {
         body.contactEmail = contactEmail;
       }
-
-      const response = await fetch("/api/book-a-visit", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
+      body = JSON.stringify(body);
+      let response = await fetchEndpointWithCorrelationId(
+        "POST",
+        "/api/book-a-visit",
+        body,
+        correlationId
+      );
 
       const { success, err } = await response.json();
 
@@ -105,7 +106,12 @@ const ScheduleConfirmation = ({
               confirmation will be sent to them once you&apos;ve booked the
               visit.
             </Text>
-            <Button className="nhsuk-u-margin-top-5">Book virtual visit</Button>
+            <Button
+              data-testid="book-virtual-visit"
+              className="nhsuk-u-margin-top-5"
+            >
+              Book virtual visit
+            </Button>
           </Form>
         </GridColumn>
       </GridRow>
@@ -128,6 +134,8 @@ export const getServerSideProps = propsWithContainer(
     } = query;
     const callTime = { day, month, year, hour, minute };
 
+    const correlationId = `${uuidv4()}-visit-booked`;
+
     return {
       props: {
         patientName,
@@ -135,6 +143,7 @@ export const getServerSideProps = propsWithContainer(
         contactNumber: contactNumber || null,
         contactEmail: contactEmail || null,
         callTime,
+        correlationId,
       },
     };
   })

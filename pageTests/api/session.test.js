@@ -21,6 +21,9 @@ describe("api/session", () => {
           body: {
             code: "WOOF",
           },
+          headers: {
+            "x-correlation-id": "correlationId",
+          },
         };
 
         const response = { statusCode: 0, end: jest.fn() };
@@ -46,11 +49,14 @@ describe("api/session", () => {
     });
 
     describe("Given a valid code", () => {
-      it("Returns the generated token in the response", async () => {
+      it("Returns the generated token and sessionId in the response", async () => {
         const validRequest = {
           method: "POST",
           body: {
             code: "MEOW",
+          },
+          headers: {
+            "x-correlation-id": "correlationId",
           },
         };
 
@@ -90,19 +96,25 @@ describe("api/session", () => {
         expect(response.writeHead).toHaveBeenCalledWith(
           201,
           expect.objectContaining({
-            "Set-Cookie": expect.stringContaining("generatedToken"),
+            "Set-Cookie": [
+              expect.stringContaining("generatedToken"),
+              expect.stringContaining("sessionId"),
+            ],
           })
         );
       });
     });
 
     describe("Given a valid trust admin code", () => {
-      it("Returns the generated token in the response", async () => {
+      it("Returns the generated token and sessionId in the response", async () => {
         const validRequest = {
           method: "POST",
           body: {
             code: "trust_admin_code",
             password: "trust_admin_password",
+          },
+          headers: {
+            "x-correlation-id": "correlationId",
           },
         };
 
@@ -149,19 +161,25 @@ describe("api/session", () => {
         expect(response.writeHead).toHaveBeenCalledWith(
           201,
           expect.objectContaining({
-            "Set-Cookie": expect.stringContaining("generatedToken"),
+            "Set-Cookie": [
+              expect.stringContaining("generatedToken"),
+              expect.stringContaining("sessionId"),
+            ],
           })
         );
       });
     });
 
     describe("Given a valid admin code", () => {
-      it("Returns the generated token in the response", async () => {
+      it("Returns the generated token and sessionId in the response", async () => {
         const validRequest = {
           method: "POST",
           body: {
             code: "admin_code",
             password: "password",
+          },
+          headers: {
+            "x-correlation-id": "correlationId",
           },
         };
 
@@ -206,7 +224,10 @@ describe("api/session", () => {
         expect(response.writeHead).toHaveBeenCalledWith(
           201,
           expect.objectContaining({
-            "Set-Cookie": expect.stringContaining("generatedToken"),
+            "Set-Cookie": [
+              expect.stringContaining("generatedToken"),
+              expect.stringContaining("sessionId"),
+            ],
           })
         );
       });
@@ -228,7 +249,10 @@ describe("api/session", () => {
         expect(response.writeHead).toHaveBeenCalledWith(
           201,
           expect.objectContaining({
-            "Set-Cookie": `token=''; httpOnly; path=/; expires=${new Date(0)}`,
+            "Set-Cookie": [
+              `token=''; httpOnly; path=/; expires=${new Date(0)}`,
+              `sessionId=''; httpOnly; path=/; expires=${new Date(0)}`,
+            ],
           })
         );
       });
