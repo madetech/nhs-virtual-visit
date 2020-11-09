@@ -13,14 +13,10 @@ describe("patient details migration", () => {
   });
 
   it("migrates the patient details data from the visits table to the patient_details table", async () => {
-    const downAllMigrations = execSync("npm run dbmigratetest reset");
-    console.log(downAllMigrations.toString());
+    execSync("npm run dbmigratetest reset");
 
     // run all migrations up until 24/07/2020 (which is just before the patient details migration)
-    const runMigrationsToBeforePatientDetailsMigration = execSync(
-      "npm run dbmigratetest up 20200724000000"
-    );
-    console.log(runMigrationsToBeforePatientDetailsMigration.toString());
+    execSync("npm run dbmigratetest up 20200724000000");
 
     const { wardId } = await setupWardWithinHospitalAndTrust();
     const db = await container.getDb();
@@ -175,14 +171,10 @@ describe("patient details migration", () => {
   });
 
   it("migrates the patient details data from the patient_details table to the visits table on the down migration", async () => {
-    const downAllMigrations = execSync("npm run dbmigratetest reset");
-    console.log(downAllMigrations.toString());
+    execSync("npm run dbmigratetest reset");
 
     // run all migrations up until 06/11/2020 (just after the visitor details migration)
-    const runMigrationsToJustAfterPatientDetailsMigration = execSync(
-      "npm run dbmigratetest up 20201106000000"
-    );
-    console.log(runMigrationsToJustAfterPatientDetailsMigration.toString());
+    execSync("npm run dbmigratetest up 20201106000000");
 
     const { wardId } = await setupWardWithinHospitalAndTrust();
     const db = await container.getDb();
