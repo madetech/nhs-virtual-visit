@@ -3,7 +3,10 @@ import { SCHEDULED } from "../helpers/visitStatus";
 
 describe("insertVisit tests", () => {
   it("creates a visit in the db when valid", async () => {
-    const oneSpy = jest.fn().mockResolvedValue({ id: 10, call_id: "12345" });
+    const oneSpy = jest.fn();
+    oneSpy.mockResolvedValueOnce({ id: 10 });
+    oneSpy.mockResolvedValueOnce({ id: 8 });
+    oneSpy.mockResolvedValue({ id: 6, call_id: "12345" });
     const db = {
       one: oneSpy,
     };
@@ -22,7 +25,7 @@ describe("insertVisit tests", () => {
     const wardId = "wardId";
     const { id, callId } = await insertVisit(db, request, wardId);
 
-    expect(id).toEqual(10);
+    expect(id).toEqual(6);
     expect(callId).toEqual("12345");
 
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
@@ -31,9 +34,13 @@ describe("insertVisit tests", () => {
     ]);
 
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
+      request.contactName,
       request.contactEmail,
       request.contactNumber,
-      request.contactName,
+      wardId,
+    ]);
+
+    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.callTime,
       request.callId,
       request.provider,
@@ -41,6 +48,7 @@ describe("insertVisit tests", () => {
       request.callPassword,
       SCHEDULED,
       10,
+      8,
     ]);
   });
 });
