@@ -15,5 +15,5 @@ RUN apk --no-cache --virtual build-dependencies add \
 
 RUN npm run build
 EXPOSE 3000
-RUN npm run dbmigrate
+RUN npm run dbmigrate up
 CMD npm run start
