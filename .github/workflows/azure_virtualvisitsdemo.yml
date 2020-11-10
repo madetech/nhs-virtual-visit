@@ -6,6 +6,7 @@ on:
       - master
 
 jobs:
+  if: (github.repository == 'madetech/nhs-virtual-visit')
   docker:
     runs-on: ubuntu-latest
 
