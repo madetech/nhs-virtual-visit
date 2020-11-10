@@ -11,22 +11,6 @@ describe("end", () => {
       expect(text).toBeInTheDocument();
     });
 
-    it("renders the survey section if there is a survey link", () => {
-      const { getByText } = render(
-        <EndOfVisit surveyUrl="https://www.survey.example.com" />
-      );
-      const text = getByText(/Help improve virtual visits/i);
-
-      expect(text).toBeInTheDocument();
-    });
-
-    it("does not render the survey section if there is no survey link", () => {
-      const { queryByText } = render(<EndOfVisit surveyUrl={null} />);
-      const text = queryByText(/Help improve virtual visits/i);
-
-      expect(text).toBeNull();
-    });
-
     it("renders the support section if there is a support link", () => {
       const { getByText } = render(
         <EndOfVisit supportUrl="https://www.support.example.com" />
@@ -91,13 +75,7 @@ describe("end", () => {
 
     const callId = "TEST123";
     const query = { callId };
-    const surveyUrl = "https://www.survey.example.com";
     const supportUrl = "https://www.support.example.com";
-
-    const retrieveSurveyUrlByCallId = jest.fn().mockResolvedValue({
-      surveyUrl,
-      error: null,
-    });
 
     const retrieveSupportUrlByCallId = jest.fn().mockResolvedValue({
       supportUrl,
@@ -107,7 +85,6 @@ describe("end", () => {
     const container = {
       getUserIsAuthenticated: () =>
         jest.fn().mockResolvedValue({ ward: "test-ward-id" }),
-      getRetrieveSurveyUrlByCallId: () => retrieveSurveyUrlByCallId,
       getRetrieveSupportUrlByCallId: () => retrieveSupportUrlByCallId,
     };
 
@@ -136,17 +113,9 @@ describe("end", () => {
       expect(props.wardId).toBeNull();
     });
 
-    it("retrieves the survey link of the hospital", async () => {
-      const { props } = await getServerSideProps({ req, container, query });
-
-      expect(retrieveSurveyUrlByCallId).toHaveBeenCalledWith(callId);
-      expect(props.surveyUrl).toEqual(surveyUrl);
-    });
-
     it("retrieves the support link of the hospital", async () => {
       const { props } = await getServerSideProps({ req, container, query });
 
-      expect(retrieveSurveyUrlByCallId).toHaveBeenCalledWith(callId);
       expect(props.supportUrl).toEqual(supportUrl);
     });
   });

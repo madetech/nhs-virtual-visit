@@ -7,7 +7,7 @@ import InsetText from "../../src/components/InsetText";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import { v4 as uuidv4 } from "uuid";
 
-const End = ({ wardId, callId, surveyUrl, supportUrl, correlationId }) => {
+const EndOfVisit = ({ wardId, callId, supportUrl, correlationId }) => {
   useEffect(() => {
     console.log(correlationId);
   }, []);
@@ -54,11 +54,9 @@ const End = ({ wardId, callId, surveyUrl, supportUrl, correlationId }) => {
                 Your virtual visit has completed
               </h1>
 
-              <div className="nhsuk-panel__body">
-                <p className="nhsuk-u-margin-bottom-0">
-                  Thank you for using the virtual visit service.
-                </p>
-              </div>
+              <p className="nhsuk-u-margin-bottom-0">
+                Thank you for using the virtual visit service.
+              </p>
             </div>
 
             <InsetText>
@@ -71,22 +69,64 @@ const End = ({ wardId, callId, surveyUrl, supportUrl, correlationId }) => {
               linkText="Get support from this hospital"
             />
 
-            <ActionLinkSection
-              heading="Help improve virtual visits"
-              link={surveyUrl}
-              linkText="Take a survey"
-            >
-              <p>
-                We’d welcome your feedback. Can you answer some questions about
-                your virtual visit today?
-              </p>
-            </ActionLinkSection>
+            <UrQuestion />
           </div>
         )}
       </div>
     </Layout>
   );
 };
+
+function UrQuestion(/*prop*/) {
+  return (
+    <div className="nhsuk-panel__body">
+      <div className="nhsuk-form-group">
+        <fieldset className="nhsuk-fieldset">
+          <legend className="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
+            <h1 className="nhsuk-fieldset__heading">
+              If this service was no longer available would you be
+              dissappointed/upset?
+            </h1>
+          </legend>
+
+          <div className="nhsuk-radios">
+            <div className="nhsuk-radios__item">
+              <input
+                className="nhsuk-radios__input"
+                id="ur-question-radio-yes"
+                name="ur-question-radio-yes"
+                type="radio"
+                value="yes"
+              />
+              <label
+                className="nhsuk-label nhsuk-radios__label"
+                htmlFor="ur-question-radio-yes"
+              >
+                Yes
+              </label>
+            </div>
+
+            <div className="nhsuk-radios__item">
+              <input
+                className="nhsuk-radios__input"
+                id="ur-question-radio-no"
+                name="ur-question-radio-no"
+                type="radio"
+                value="no"
+              />
+              <label
+                className="nhsuk-label nhsuk-radios__label"
+                htmlFor="ur-question-radio-no"
+              >
+                No
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  );
+}
 
 export const getServerSideProps = propsWithContainer(
   async ({ req: { headers }, container, query }) => {
@@ -121,4 +161,4 @@ export const getServerSideProps = propsWithContainer(
   }
 );
 
-export default End;
+export default EndOfVisit;
