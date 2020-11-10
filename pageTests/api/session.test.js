@@ -73,9 +73,7 @@ describe("api/session", () => {
           validTrustAdminCode: false,
         }));
         const tokenGeneratorSpy = jest.fn(() => "generatedToken");
-        const logEventSpy = jest.fn(async () => ({
-          logEventResponse: true,
-        }));
+
         const container = {
           getTokenProvider: jest.fn(() => ({
             generate: tokenGeneratorSpy,
@@ -84,7 +82,6 @@ describe("api/session", () => {
           getVerifyTrustAdminCode: () => verifyTrustAdminCodeSpy,
           getVerifyAdminCode: () =>
             jest.fn().mockReturnValue({ validAdminCode: false }),
-          getLogEventGateway: () => logEventSpy,
         };
 
         await session(validRequest, response, { container });
