@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  if: github.repository_owner == 'madetech'
   docker:
+    if: github.repository_owner == 'madetech'
     runs-on: ubuntu-latest
 
     steps:
