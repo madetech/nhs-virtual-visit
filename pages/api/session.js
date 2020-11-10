@@ -74,10 +74,9 @@ export default withContainer(async (req, res, { container }) => {
       if (featureIsEnabled("EVENT_LOGGING")) {
         const logEvent = container.getLogEventGateway(event);
         const logEventResponse = await logEvent(event);
-        if (!logEventResponse.ok) {
+        if (logEventResponse.status != 201) {
           logger.error(`Failed to record login event for ward id ${ward.id}`);
-        }
-        if (logEventResponse && logEventResponse.status == 201) {
+        } else if (logEventResponse.status == 201) {
           logger.info(`The login event has been recorded`);
         }
       }
