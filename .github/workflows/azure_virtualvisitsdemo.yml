@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  if: ${{ github.repository_owner == 'madetech' }}
+  if: github.repository_owner == 'madetech'
   docker:
     runs-on: ubuntu-latest
 
