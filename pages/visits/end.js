@@ -136,16 +136,11 @@ export const getServerSideProps = propsWithContainer(
     const correlationId = `${uuidv4()}-visit-ended`;
 
     const {
-      surveyUrl,
-      error: surveyUrlError,
-    } = await container.getRetrieveSurveyUrlByCallId()(query.callId);
-
-    const {
       supportUrl,
       error: supportUrlError,
     } = await container.getRetrieveSupportUrlByCallId()(query.callId);
 
-    const error = surveyUrlError || supportUrlError;
+    const error = supportUrlError;
 
     if (error) console.error(error);
 
@@ -153,7 +148,6 @@ export const getServerSideProps = propsWithContainer(
       props: {
         wardId: token?.ward || null,
         callId: query.callId,
-        surveyUrl,
         supportUrl,
         correlationId,
       },
