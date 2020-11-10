@@ -15,7 +15,6 @@ describe("logEvent", () => {
       wardId: "wardId",
     },
   };
-  // look into why we need this scope
 
   it("sends log event request", async () => {
     const scope = nock(process.env.AZURE_FUNCTION_URL, {
