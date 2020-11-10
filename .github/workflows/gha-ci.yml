@@ -60,7 +60,6 @@ jobs:
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
           EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
           EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
-          TEST_EVENT: ${{secrets.TEST_EVENT}}
 
   e2e-tests:
     runs-on: ubuntu-latest
@@ -101,9 +100,9 @@ jobs:
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
           EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
           EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
-          AZURE_FUNCTION_KEY: ${{secrets.AZURE_FUNCTION_KEY}}
-          AZURE_FUNCTION_URL: ${{secrets.AZURE_FUNCTION_URL}}
-          TEST_EVENT: ${{secrets.TEST_EVENT}}
+          AZURE_FUNCTION_KEY: ${{ secrets.AZURE_FUNCTION_KEY }}
+          AZURE_FUNCTION_URL: ${{ secrets.AZURE_FUNCTION_URL }}
+          EVENT_LOGGING: ${{ secrets.ENABLE_EVENT_LOGGING_IN_TESTS }}
 
   migration-tests:
     runs-on: ubuntu-latest
