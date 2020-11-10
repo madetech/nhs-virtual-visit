@@ -1,10 +1,10 @@
 import fetch from "isomorphic-unfetch";
+import logger from "../../logger";
 
 const logEvent = (key, url) => async (event) => {
-  let response;
   const body = JSON.stringify(event);
   try {
-    response = await fetch(url, {
+    const response = await fetch(url, {
       method: "POST",
       body: body,
       headers: {
@@ -12,12 +12,9 @@ const logEvent = (key, url) => async (event) => {
       },
     });
     return response;
-  } catch {
-    (error) => {
-      console.error("Error (log event):", error);
-      response.error = error;
-      return response;
-    };
+  } catch (error) {
+    logger.error("Error (log event):", error);
+    return { status: 500, error };
   }
 };
 
