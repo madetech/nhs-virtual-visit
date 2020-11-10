@@ -106,7 +106,66 @@ describe("api/session", () => {
           })
         );
       });
+
       it("logs a login event when a user has logged in", async () => {
+        process.env.EVENT_LOGGING = true;
+
+        const validRequest = {
+          method: "POST",
+          body: {
+            code: "ward_code",
+          },
+          headers: {
+            "x-correlation-id": "correlationId",
+          },
+        };
+        const response = {
+          writeHead: jest.fn(),
+          end: jest.fn(),
+        };
+
+        const verifyWardCodeSpy = jest.fn(async () => ({
+          validWardCode: true,
+          ward: { id: 10, code: "MEOW", trustId: 1 },
+        }));
+
+        const tokenGeneratorSpy = jest.fn(() => "generatedToken");
+
+        const logEventSpy = jest.fn(async () => ({
+          logEventResponse: { error: "some error!" },
+        }));
+
+        const container = {
+          getTokenProvider: jest.fn(() => ({
+            generate: tokenGeneratorSpy,
+          })),
+          getVerifyWardCode: () => verifyWardCodeSpy,
+          getVerifyTrustAdminCode: () => () =>
+            jest.fn().mockReturnValue({ validAdminCode: false }),
+          getVerifyAdminCode: () =>
+            jest.fn().mockReturnValue({ validAdminCode: false }),
+          getLogEventGateway: () => logEventSpy,
+        };
+        await session(validRequest, response, { container });
+
+        expect(logEventSpy).toHaveBeenCalledWith(
+          expect.objectContaining({
+            sessionId: expect.stringContaining("-"),
+            correlationId: "correlationId",
+            createdOn: expect.anything(),
+            streamName: `ward-${10}`,
+            trustId: 1,
+            eventType: "logged-in-ward-staff",
+            event: {
+              wardId: 10,
+            },
+          })
+        );
+      });
+
+      it("does not logs a login event when the event logging feature flag is false", async () => {
+        process.env.EVENT_LOGGING = false;
+
         const validRequest = {
           method: "POST",
           body: {
@@ -145,35 +204,7 @@ describe("api/session", () => {
         };
         await session(validRequest, response, { container });
 
-        expect(verifyWardCodeSpy).toHaveBeenCalledWith("ward_code");
-        expect(tokenGeneratorSpy).toHaveBeenCalledWith({
-          wardId: 10,
-          wardCode: "MEOW",
-          trustId: 1,
-          type: "wardStaff",
-        });
-        expect(response.writeHead).toHaveBeenCalledWith(
-          201,
-          expect.objectContaining({
-            "Set-Cookie": [
-              expect.stringContaining("generatedToken"),
-              expect.stringContaining("sessionId"),
-            ],
-          })
-        );
-        expect(logEventSpy).toHaveBeenCalledWith(
-          expect.objectContaining({
-            sessionId: expect.stringContaining("-"),
-            correlationId: "correlationId",
-            createdOn: expect.anything(),
-            streamName: `ward-${10}`,
-            trustId: 1,
-            eventType: "logged-in-ward-staff",
-            event: {
-              wardId: 10,
-            },
-          })
-        );
+        expect(logEventSpy).toHaveBeenCalledTimes(0);
       });
     });
 

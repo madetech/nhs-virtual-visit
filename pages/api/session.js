@@ -2,6 +2,7 @@ import withContainer from "../../src/middleware/withContainer";
 import { WARD_STAFF, TRUST_ADMIN, ADMIN } from "../../src/helpers/userTypes";
 import { v4 as uuidv4 } from "uuid";
 import logger from "../../logger";
+import featureIsEnabled from "../../src/helpers/featureFlag";
 
 export default withContainer(async (req, res, { container }) => {
   const { code, password } = req.body;
@@ -70,14 +71,15 @@ export default withContainer(async (req, res, { container }) => {
         },
       };
 
-      if (process.env.TEST_EVENT === "TRUE") {
-        event.test = true;
-      }
-
-      const logEvent = container.getLogEventGateway(event);
-      const logEventResponse = await logEvent(event);
-      if (logEventResponse && logEventResponse.status == 201) {
-        logger.info(`The login event has been recorded`);
+      if (featureIsEnabled("EVENT_LOGGING")) {
+        const logEvent = container.getLogEventGateway(event);
+        const logEventResponse = await logEvent(event);
+        if (!logEventResponse.ok) {
+          logger.error(`Failed to record login event for ward id ${ward.id}`);
+        }
+        if (logEventResponse && logEventResponse.status == 201) {
+          logger.info(`The login event has been recorded`);
+        }
       }
     }
 
