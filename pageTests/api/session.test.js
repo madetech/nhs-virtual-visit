@@ -132,7 +132,8 @@ describe("api/session", () => {
         const tokenGeneratorSpy = jest.fn(() => "generatedToken");
 
         const logEventSpy = jest.fn(async () => ({
-          logEventResponse: { error: "some error!" },
+          status: 201,
+          body: "Created",
         }));
 
         const container = {
@@ -188,7 +189,8 @@ describe("api/session", () => {
         const tokenGeneratorSpy = jest.fn(() => "generatedToken");
 
         const logEventSpy = jest.fn(async () => ({
-          logEventResponse: true,
+          status: 201,
+          body: "Created",
         }));
 
         const container = {
