@@ -260,6 +260,7 @@ class AppContainer {
   getUpdateWardVisitTotalsGateway = () => {
     return updateWardVisitTotals;
   };
+
   getLogEventGateway = () => {
     return logEvent(
       process.env.AZURE_FUNCTION_KEY,
