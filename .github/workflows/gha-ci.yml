@@ -141,6 +141,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [contract-tests, build-and-unit-tests, migration-tests, e2e-tests]
     steps:
+      - uses: actions/checkout@v2
       - name: Conventional Changelog Action
         uses: TriPSs/conventional-changelog-action@v3
         with:
