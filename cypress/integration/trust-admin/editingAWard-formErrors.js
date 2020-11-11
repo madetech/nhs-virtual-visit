@@ -7,7 +7,7 @@ import {
 } from "./trustAdminCommonSteps";
 import { thenIClickLogOut } from "../commonSteps";
 
-describe("As a trust admin, I want to edit a ward so that I can modify the details of a ward.", () => {
+xdescribe("As a trust admin, I want to edit a ward so that I can modify the details of a ward.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(
