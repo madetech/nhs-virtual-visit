@@ -21,9 +21,6 @@ const verifyWardCode = ({ getDb }) => async (wardCode) => {
       return { validWardCode: false, error: null };
     }
   } catch (error) {
-    logger.error("VERIFY WARD CODE ERROR");
-    logger.error(error);
-    logger.error(error.name + ": " + error.message);
     logger.error(JSON.stringify(error));
 
     return {
