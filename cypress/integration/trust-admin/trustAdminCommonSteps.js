@@ -20,7 +20,7 @@ function WhenIClickToReturnToThePageForTheHospital() {
 }
 
 function ThenISeeThePageForTheHospital() {
-  cy.get("h1").should("contain", "Test Hospital");
+  cy.get("h1", { timeout: 7000 }).should("contain", "Test Hospital");
 }
 
 function WhenIClickOnAHospital() {
