@@ -1,6 +1,6 @@
 CREATE TABLE visitor_details (
     id serial PRIMARY KEY,
-    recipient_name varchar(255) NOT NULL,
+    recipient_name varchar(255),
     recipient_email varchar(255),
     recipient_number varchar(255),
     ward_id integer NOT NULL REFERENCES wards (id),
