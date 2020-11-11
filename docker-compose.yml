@@ -11,8 +11,8 @@ services:
     links:
       - postgres
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@postgres/nhs-virtual-visit-dev
-      - TEST_DATABASE_URL=postgresql://postgres:postgres@postgres/nhs-virtual-visit-test
+      - DATABASE_URL=postgresql://postgres:postgres@postgres/postgres
+      - TEST_DATABASE_URL=postgresql://postgres:postgres@postgres/postgres
   postgres:
     image: postgres:12
     environment:
@@ -21,6 +21,3 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - 5432:5432
-    volumes:
-      - ./db:/db
-      - ./db/docker-data:/var/lib/postgresql/data
