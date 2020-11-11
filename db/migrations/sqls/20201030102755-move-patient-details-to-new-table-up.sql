@@ -1,6 +1,6 @@
 CREATE TABLE patient_details (
     id serial PRIMARY KEY,
-    patient_name varchar(255) NOT NULL,
+    patient_name varchar(255),
     ward_id integer NOT NULL REFERENCES wards (id),
     visit_id integer NOT NULL REFERENCES scheduled_calls_table (id)
 );
