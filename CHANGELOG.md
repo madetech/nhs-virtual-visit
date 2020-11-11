@@ -1,3 +1,14 @@
+## [0.3.2](https://github.com/madetech/nhs-virtual-visit/compare/v0.3.1...v0.3.2) (2020-11-11)
+
+
+### Bug Fixes
+
+* Remove not null constraint from patient_name field ([e0a0a4f](https://github.com/madetech/nhs-virtual-visit/commit/e0a0a4f2f2c45888460a46b335e9bf87974951b1))
+* Remove not null constraint from visitor_name field ([6f7fa34](https://github.com/madetech/nhs-virtual-visit/commit/6f7fa347693a636680685ae766bb38c2233040db))
+* Try inncreasing timeout for flaky cypress test ([d3fbd15](https://github.com/madetech/nhs-virtual-visit/commit/d3fbd156bc35bb5d39cb0936d1e4a09f5dc25928))
+
+
+
 ## [0.3.1](https://github.com/madetech/nhs-virtual-visit/compare/v0.3.0...v0.3.1) (2020-11-11)
 
 
