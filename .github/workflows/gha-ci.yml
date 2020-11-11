@@ -150,7 +150,7 @@ jobs:
         id: changelog
         with:
           github-token: ${{ secrets.github_token }}
-          output-file: 'CHANGELOG.md'
+          output-file: "CHANGELOG.md"
       - name: Create Release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
@@ -160,4 +160,3 @@ jobs:
           tag_name: ${{ steps.changelog.outputs.tag }}
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
-          
