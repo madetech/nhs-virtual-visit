@@ -137,3 +137,11 @@ jobs:
         env:
           TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
           APP_ENV: test
+  tagAndRelease:
+    runs-on: ubuntu--latest
+    
+    steps:
+      - name: Conventional Changelog Action
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.github_token }}
