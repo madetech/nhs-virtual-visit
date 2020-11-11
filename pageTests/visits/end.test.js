@@ -76,9 +76,15 @@ describe("end", () => {
     const callId = "TEST123";
     const query = { callId };
     const supportUrl = "https://www.support.example.com";
+    const urQuestionUrl = "https://www.support.example.com";
 
     const retrieveSupportUrlByCallId = jest.fn().mockResolvedValue({
       supportUrl,
+      error: null,
+    });
+
+    const retrieveUrQuestionUrl = jest.fn().mockResolvedValue({
+      urQuestionUrl,
       error: null,
     });
 
@@ -86,6 +92,7 @@ describe("end", () => {
       getUserIsAuthenticated: () =>
         jest.fn().mockResolvedValue({ ward: "test-ward-id" }),
       getRetrieveSupportUrlByCallId: () => retrieveSupportUrlByCallId,
+      getRetrieveUrQuestionUrl: () => retrieveUrQuestionUrl,
     };
 
     it("provides the call id", async () => {
@@ -117,6 +124,12 @@ describe("end", () => {
       const { props } = await getServerSideProps({ req, container, query });
 
       expect(props.supportUrl).toEqual(supportUrl);
+    });
+
+    it("retrieves the ur question submission url", async () => {
+      const { props } = await getServerSideProps({ req, container, query });
+
+      expect(props.urQuestionUrl).toEqual(urQuestionUrl);
     });
   });
 });
