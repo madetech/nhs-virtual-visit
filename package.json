@@ -74,6 +74,8 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "babel-eslint": "^10.1.0",
     "cypress": "^5.6.0",
     "cypress-audit": "^0.2.3",
@@ -88,7 +90,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "npx commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
