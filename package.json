@@ -1,6 +1,6 @@
 {
   "name": "nhs-visit-app",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -23,6 +23,8 @@
     "test:migration": "jest --config ./jest.migrations.config.js --runInBand",
     "build": "next build",
     "dev": "NODE_ENV=development node server.js",
+    "prepare-db-and-start": "npm run create-dev-db; npm run dbmigrate up && npm run start",
+    "create-dev-db": "db-migrate db:create \"nhs-virtual-visit-dev\"",
     "start": "NODE_ENV=production node server.js",
     "cleandb": "node db/scripts/cleanup_scheduled_calls.js",
     "db:seed": "node db/scripts/seed_database.js",

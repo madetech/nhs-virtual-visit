@@ -13,10 +13,6 @@ async function getDb() {
         : process.env.DATABASE_URL,
   };
 
-  if (process.env.NODE_ENV === "production") {
-    options.ssl = { rejectUnauthorized: false };
-  }
-
   return pgp(options);
 }
 

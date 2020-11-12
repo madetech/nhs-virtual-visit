@@ -93,7 +93,7 @@ function UrQuestion(/*prop*/) {
             <input
               className="nhsuk-radios__input"
               id="ur-question-radio-yes"
-              name="ur-question-radio-yes"
+              name="ur-question-radio"
               type="radio"
               value="yes"
             />
@@ -109,7 +109,7 @@ function UrQuestion(/*prop*/) {
             <input
               className="nhsuk-radios__input"
               id="ur-question-radio-no"
-              name="ur-question-radio-no"
+              name="ur-question-radio"
               type="radio"
               value="no"
             />
@@ -120,10 +120,10 @@ function UrQuestion(/*prop*/) {
               No
             </label>
           </div>
-          <button className="nhsuk-button" type="submit">
-            Submit feedback
-          </button>
         </div>
+        <button className="nhsuk-button" type="submit">
+          Submit feedback
+        </button>
       </fieldset>
     </div>
   );
@@ -132,6 +132,9 @@ function UrQuestion(/*prop*/) {
 export const getServerSideProps = propsWithContainer(
   async ({ req: { headers }, container, query }) => {
     const userIsAuthenticated = container.getUserIsAuthenticated();
+    //We'll need to have the submit button be able to send a request to the events logging thing
+    //We'll then need to have it move on to another page
+    //What if we stuck another part into the workflow between the end and this page?
 
     const token = await userIsAuthenticated(headers.cookie);
     const correlationId = `${uuidv4()}-visit-ended`;
@@ -151,6 +154,7 @@ export const getServerSideProps = propsWithContainer(
         callId: query.callId,
         supportUrl,
         correlationId,
+        urQuestionUrl: "TEST",
       },
     };
   }
