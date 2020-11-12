@@ -129,6 +129,7 @@ describe("end", () => {
     it("retrieves the ur question submission url", async () => {
       const { props } = await getServerSideProps({ req, container, query });
 
+      expect(retrieveUrQuestionUrl).toHaveBeenCalled();
       expect(props.urQuestionUrl).toEqual(urQuestionUrl);
     });
   });

@@ -144,6 +144,8 @@ export const getServerSideProps = propsWithContainer(
       error: supportUrlError,
     } = await container.getRetrieveSupportUrlByCallId()(query.callId);
 
+    const { urQuestionUrl } = await container.getRetrieveUrQuestionUrl()();
+
     const error = supportUrlError;
 
     if (error) console.error(error);
@@ -154,7 +156,7 @@ export const getServerSideProps = propsWithContainer(
         callId: query.callId,
         supportUrl,
         correlationId,
-        urQuestionUrl: "TEST",
+        urQuestionUrl,
       },
     };
   }
