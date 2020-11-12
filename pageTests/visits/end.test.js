@@ -3,6 +3,13 @@ import { render, queryByAttribute } from "@testing-library/react";
 import EndOfVisit, { getServerSideProps } from "../../pages/visits/end";
 
 describe("end", () => {
+  beforeAll(() => {
+    process.env.UR_QUESTION = true;
+  });
+
+  afterAll(() => {
+    process.env.UR_QUESTION = false;
+  });
   describe("for a key contact", () => {
     it("renders end of visit message", () => {
       const { getByText } = render(<EndOfVisit />);

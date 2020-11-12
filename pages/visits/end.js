@@ -5,6 +5,7 @@ import ActionLink from "../../src/components/ActionLink";
 import AnchorLink from "../../src/components/AnchorLink";
 import InsetText from "../../src/components/InsetText";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
+import featureIsEnabled from "../../src/helpers/featureFlag";
 import { v4 as uuidv4 } from "uuid";
 
 const EndOfVisit = ({ wardId, callId, supportUrl, correlationId }) => {
@@ -69,7 +70,7 @@ const EndOfVisit = ({ wardId, callId, supportUrl, correlationId }) => {
               linkText="Get support from this hospital"
             />
 
-            <UrQuestion />
+            {featureIsEnabled("UR_QUESTION") && <UrQuestion />}
           </div>
         )}
       </div>
@@ -144,7 +145,12 @@ export const getServerSideProps = propsWithContainer(
       error: supportUrlError,
     } = await container.getRetrieveSupportUrlByCallId()(query.callId);
 
-    const { urQuestionUrl } = await container.getRetrieveUrQuestionUrl()();
+    let urQuestionUrl = null;
+
+    if (featureIsEnabled("UR_QUESTION")) {
+      urQuestionUrl = (await container.getRetrieveUrQuestionUrl()())
+        .urQuestionUrl;
+    }
 
     const error = supportUrlError;
 
