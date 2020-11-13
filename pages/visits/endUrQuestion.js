@@ -4,7 +4,10 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 import { v4 as uuidv4 } from "uuid";
 
 export default function EndUrQuestion({ correlationId, callId }) {
-  const onSubmit = async () => {};
+  const onSubmit = async () => {
+    //stand in for actual behaviour
+    window.location.href = `/visits/end?callId=${callId}`;
+  };
   const onClickSkip = async () => {
     window.location.href = `/visits/end?callId=${callId}`;
   };
@@ -85,6 +88,7 @@ export const getServerSideProps = propsWithContainer(
 
     if (token?.ward || null) {
       res.writeHead(302, { Location: `/visits/end?callId=${callId}` }).end();
+      return {};
     } else {
       res.status(200);
       return { props: { correlationId, callId } };
