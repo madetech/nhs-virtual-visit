@@ -1,3 +1,12 @@
+# [0.5.0](https://github.com/madetech/nhs-virtual-visit/compare/v0.4.0...v0.5.0) (2020-11-12)
+
+
+### Features
+
+* add redirection behaviour for dedicated UR question page ([d0f6e0f](https://github.com/madetech/nhs-virtual-visit/commit/d0f6e0f46365f2fd28b067f3fe1be3ebe4bf303d))
+
+
+
 # [0.4.0](https://github.com/madetech/nhs-virtual-visit/compare/v0.3.0...v0.4.0) (2020-11-12)
 
 
