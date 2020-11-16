@@ -2,7 +2,7 @@
 
 ## Architecture Diagrams
 
-![Virtual Visits Azure Architecture](https://github.com/madetech/nhs-virtual-visit/tree/master/docs/development/vv-cloud-architecture.png)
+![alt text](./vv-cloud-architecture.png "Virtual Visits Azure Cloud Architecture Diagram")
 
 ## Requirements:
 
