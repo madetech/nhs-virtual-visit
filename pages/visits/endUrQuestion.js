@@ -28,49 +28,50 @@ export default function EndUrQuestion({ correlationId, callId }) {
     <Layout title="Submit feedback" isBookService={false}>
       <div className="nhsuk-form-group">
         <form onSubmit={onSubmit}>
-          <fieldset className="nhsuk-fieldset">
-            <legend className="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
-              <h1 className="nhsuk-fieldset__heading">
-                If this service was no longer available would you be
-                dissappointed/upset?
-              </h1>
-            </legend>
+          <div className="nhsuk-form-group">
+            <fieldset className="nhsuk-fieldset">
+              <legend className="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
+                <h1 className="nhsuk-fieldset__heading">
+                  If this service was no longer available would you be
+                  dissappointed/upset?
+                </h1>
+              </legend>
 
-            <div className="nhsuk-radios">
-              <div className="nhsuk-radios__item">
-                <input
-                  className="nhsuk-radios__input"
-                  id="ur-question-radio-yes"
-                  name="ur-question-radio"
-                  type="radio"
-                  value="yes"
-                />
-                <label
-                  className="nhsuk-label nhsuk-radios__label"
-                  htmlFor="ur-question-radio-yes"
-                >
-                  Yes
-                </label>
+              <div className="nhsuk-radios">
+                <div className="nhsuk-radios__item">
+                  <input
+                    className="nhsuk-radios__input"
+                    id="ur-question-radio-yes"
+                    name="ur-question-radio"
+                    type="radio"
+                    value="yes"
+                  />
+                  <label
+                    className="nhsuk-label nhsuk-radios__label"
+                    htmlFor="ur-question-radio-yes"
+                  >
+                    Yes
+                  </label>
+                </div>
+
+                <div className="nhsuk-radios__item">
+                  <input
+                    className="nhsuk-radios__input"
+                    id="ur-question-radio-no"
+                    name="ur-question-radio"
+                    type="radio"
+                    value="no"
+                  />
+                  <label
+                    className="nhsuk-label nhsuk-radios__label"
+                    htmlFor="ur-question-radio-no"
+                  >
+                    No
+                  </label>
+                </div>
               </div>
-
-              <div className="nhsuk-radios__item">
-                <input
-                  className="nhsuk-radios__input"
-                  id="ur-question-radio-no"
-                  name="ur-question-radio"
-                  type="radio"
-                  value="no"
-                />
-                <label
-                  className="nhsuk-label nhsuk-radios__label"
-                  htmlFor="ur-question-radio-no"
-                >
-                  No
-                </label>
-              </div>
-            </div>
-          </fieldset>
-
+            </fieldset>
+          </div>
           <button className="nhsuk-button" type="submit">
             Submit feedback
           </button>
