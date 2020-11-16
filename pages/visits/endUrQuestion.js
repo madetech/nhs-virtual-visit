@@ -3,6 +3,13 @@ import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import { v4 as uuidv4 } from "uuid";
 
+/*
+The end UR question is a page that should be navigated to after a call ends but
+before the final call end page. The result of this question should be submitted
+to the event logging system - this is distinct from console logging and concerns
+things to do with the user journey so that journeys can be tracked and we can 
+identify potential issues with the service.
+*/
 export default function EndUrQuestion({ correlationId, callId }) {
   const onSubmit = async () => {
     //stand in for actual behaviour
