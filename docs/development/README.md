@@ -1,6 +1,10 @@
 # Development
 
-Requirements:
+## Architecture Diagrams
+
+![alt text](./vv-cloud-architecture.png "Virtual Visits Azure Cloud Architecture Diagram")
+
+## Requirements:
 
 - PostgreSQL 12
 - Node LTS (Currently Node 12. There is a known issue with db-migrate and Node 14)
