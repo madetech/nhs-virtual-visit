@@ -1,3 +1,12 @@
+## [0.5.1](https://github.com/madetech/nhs-virtual-visit/compare/v0.5.0...v0.5.1) (2020-11-16)
+
+
+### Bug Fixes
+
+* make setup dev db work for docker-compose ([58f228d](https://github.com/madetech/nhs-virtual-visit/commit/58f228df9783b82b56bc1379168cd35cbd08847d))
+
+
+
 # [0.5.0](https://github.com/madetech/nhs-virtual-visit/compare/v0.4.0...v0.5.0) (2020-11-12)
 
 
