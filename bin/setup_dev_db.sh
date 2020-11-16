@@ -1,6 +1,7 @@
 #!/bin/bash
 
-dropdb nhs-virtual-visit-dev
-createdb nhs-virtual-visit-dev
+#password is 'postgres'
+dropdb -U "postgres" -h "localhost" -p "5432"  nhs-virtual-visit-dev
+createdb -U "postgres" -h "localhost" -p "5432"  nhs-virtual-visit-dev
 npm run dbmigrate up
-cat db/seeds.sql | psql nhs-virtual-visit-dev
+cat db/seeds.sql | psql -U "postgres" -h "localhost" -p "5432" -d "nhs-virtual-visit-dev"
