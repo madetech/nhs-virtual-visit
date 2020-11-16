@@ -11,9 +11,10 @@ things to do with the user journey so that journeys can be tracked and we can
 identify potential issues with the service.
 */
 export default function EndUrQuestion({ correlationId, callId }) {
-  const onSubmit = async () => {
+  const onSubmit = async (event) => {
     //stand in for actual behaviour
     window.location.href = `/visits/end?callId=${callId}`;
+    event.preventDefault();
   };
   const onClickSkip = async () => {
     window.location.href = `/visits/end?callId=${callId}`;
