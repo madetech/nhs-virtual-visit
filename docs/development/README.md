@@ -1,6 +1,10 @@
 # Development
 
-Requirements:
+## Architecture Diagrams
+
+![Virtual Visits Azure Architecture](https://github.com/madetech/nhs-virtual-visit/tree/master/docs/development/vv-cloud-architecture.png)
+
+## Requirements:
 
 - PostgreSQL 12
 - Node LTS (Currently Node 12. There is a known issue with db-migrate and Node 14)
