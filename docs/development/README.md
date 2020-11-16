@@ -192,3 +192,9 @@ After this is done you can use Terraform as usual.
 Code pertaining to function apps in the setup is stored under `./nhs_virtual_visit_terraform/`, each individual function is stored in its own folder. Running `make` will build these functions as zips in the folder `./build`.
 
 Terraform will recreate functions as needed when changes are detected in the files under `./build` by comparing the SHA256 hash of the local zip and the one that is currently stored in the Azure storage account as it is added on to the name at the end and Terraform recreates function resources when their names are changed.
+
+## Manually managed cloud architecture
+
+Manually managed cloud architecture currently refers to the infrastructure that is used to deploy docker images built using GitHub actions when CI passes.
+
+This is workflow is currently hard coded to only run on Made Tech's repository and requires that all required environment variables are set as GitHub secrets as well as `AZURE_CREDENTIALS`, `ACR_SERVER`, `ACR_USERNAME` and `ACR_PASSWORD` where 'ACR' refers to an Azure Cloud Registry instance.
