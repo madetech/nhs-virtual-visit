@@ -1,3 +1,4 @@
+import fetchEndpointWithCorrelationId from "../../src/helpers/fetchEndpointWithCorrelationId";
 import React, { useEffect } from "react";
 import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
@@ -13,6 +14,12 @@ identify potential issues with the service.
 export default function EndUrQuestion({ correlationId, callId }) {
   const onSubmit = async (event) => {
     //stand in for actual behaviour
+    await fetchEndpointWithCorrelationId(
+      "POST",
+      "/api/submit-ur-question",
+      {},
+      correlationId
+    );
     window.location.href = `/visits/end?callId=${callId}`;
     event.preventDefault();
   };
@@ -27,7 +34,7 @@ export default function EndUrQuestion({ correlationId, callId }) {
   return (
     <Layout title="Submit feedback" isBookService={false}>
       <div className="nhsuk-form-group">
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} data-testid="ur-question-form">
           <div className="nhsuk-form-group">
             <fieldset className="nhsuk-fieldset">
               <legend className="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
@@ -72,7 +79,11 @@ export default function EndUrQuestion({ correlationId, callId }) {
               </div>
             </fieldset>
           </div>
-          <button className="nhsuk-button" type="submit">
+          <button
+            className="nhsuk-button"
+            data-testid="submit-ur-question-button"
+            type="submit"
+          >
             Submit feedback
           </button>
         </form>

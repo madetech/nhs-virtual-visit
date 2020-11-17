@@ -1,15 +1,43 @@
-//import React from "react";
-//import { render, queryByAttribute } from "@testing-library/react";
-//import EndUrQuestion from "../../pages/visits/endUrQuestion";
-import { getServerSideProps } from "../../pages/visits/endUrQuestion";
+import React from "react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
+import EndUrQuestion, {
+  getServerSideProps,
+} from "../../pages/visits/endUrQuestion";
+import nock from "nock";
 
 describe("end UR question", () => {
   beforeAll(() => {
     process.env.UR_QUESTION = true;
   });
 
+  let correlationId;
+  let urQuestionEndpointStub;
+
+  beforeEach(() => {
+    correlationId = 1;
+    urQuestionEndpointStub = nock("http://localhost:3001", {
+      reqheaders: {
+        "X-Correlation-ID": correlationId,
+        "content-type": "application/json",
+      },
+      allowUnmocked: true,
+    })
+      .post("/api/submit-ur-question", {})
+      .reply(201);
+  });
+
   afterAll(() => {
     process.env.UR_QUESTION = false;
+  });
+
+  describe("<EndUrQuestion/>", () => {
+    it("submits the results of the ur question", async () => {
+      render(<EndUrQuestion />);
+      await act(async () => {
+        fireEvent.submit(screen.getByTestId("ur-question-form"));
+      });
+      expect(urQuestionEndpointStub.isDone()).toBeTruthy();
+    });
   });
 
   describe("getServerSideProps", () => {
