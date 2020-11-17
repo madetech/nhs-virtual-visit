@@ -2,7 +2,13 @@
 
 ## Architecture Diagrams
 
-![Virtual Visits Azure Architecture](https://github.com/madetech/nhs-virtual-visit/tree/master/docs/development/vv-cloud-architecture.png)
+Manually setup:
+
+![virtual visits manually managed cloud architecture diagram](./vv-cloud-architecture.png "Virtual Visits Azure Cloud Architecture Diagram")
+
+Terraform:
+
+![virtual visits terraform managed cloud architecture diagram](./azure_userEvents.png)
 
 ## Requirements:
 
@@ -54,18 +60,19 @@ ENABLE_SENTRY=
 
 #### Setup the database with docker
 
-Run `docker-compose up -d` to create the container.
+Run `docker-compose up postgres -d` to create the container.
 
-Set `DATABASE_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` in your `.env` file.
+Set `DATABASE_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` and `TEST_DATABASE_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` in your `.env` file.
 
 Run `./bin/setup_dev_db_docker.sh`
 
+You will be prompted for a password, enter 'postgres'
+
 Notes:
 
-- You may have to run this as root (using `sudo`) under Linux.
 - If you omit the `--no-start` flag it'll start the container in an interactive shell, which will kill the container when you exit.
-- You may stop the container with `docker-compose stop`.
-- You may start the container again with `docker-compose start`.
+- You may stop the container with `docker-compose stop postgres`.
+- You may start the container again with `docker-compose start postgres`.
 - You may destroy the container with `docker-compose down`.
 
 #### Setup the database installed locally
@@ -176,3 +183,18 @@ You can do a dry-run to view the changes that will be applied without making any
 ```bash
 npm run dbmigratedry up
 ```
+
+## Terraform managed cloud architecture
+
+Terraform managed cloud architecture currently only refers to things under `userEvents/az`, there you will find the script `./setup.sh` which when executed will look for existing Terraform state in Azure, if it is not found it will create it otherwise it will establish a connection to it.
+
+After this is done you can use Terraform as usual.  
+Code pertaining to function apps in the setup is stored under `./nhs_virtual_visit_terraform/`, each individual function is stored in its own folder. Running `make` will build these functions as zips in the folder `./build`.
+
+Terraform will recreate functions as needed when changes are detected in the files under `./build` by comparing the SHA256 hash of the local zip and the one that is currently stored in the Azure storage account as it is added on to the name at the end and Terraform recreates function resources when their names are changed.
+
+## Manually managed cloud architecture
+
+Manually managed cloud architecture currently refers to the infrastructure that is used to deploy docker images built using GitHub actions when CI passes.
+
+This is workflow is currently hard coded to only run on Made Tech's repository and requires that all required environment variables are set as GitHub secrets as well as `AZURE_CREDENTIALS`, `ACR_SERVER`, `ACR_USERNAME` and `ACR_PASSWORD` where 'ACR' refers to an Azure Cloud Registry instance.
