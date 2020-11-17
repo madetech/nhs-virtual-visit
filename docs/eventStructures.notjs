@@ -13,10 +13,18 @@ const eventMetadata = {
   eventType: 'the name of the event'
 }
 
+// this is ward stream
 const loginEvent = {
   wardId: 0
 }
 
+// this is ward stream - it points to the visit
+const visitCreated = {
+  wardId: 'wardId',
+  visitId: 'visitId'
+}
+
+// this is visit stream
 const visitBooked = {
   visitDateTime: Date.now(),
   wardId: 'wardId',
@@ -26,32 +34,38 @@ const visitBooked = {
   visitorId: 'visitorId'  // this is not implemented -= goes into the auth as well as database tweaks convo.
 }
 
+// this is visit stream
 const visitStarted = {
   visitId: 'visitId'
 }
 
+// this is visit stream
  // this is probably the same qs visit started - doesnt add any valud (currently recording this and not the visit started)
 const visitAttended = {
   visitId: 'visitId'
 }
 
+// this is visit stream
 const visitorAttendedVisit = {
   visitorId: 'visitorId',
   visitId: 'visitId'
 }
 
+// this is visit stream
 const visitEnded = {
   visitId: 'visitId'
 }
 
-const visitRebooked = {
-  visitDateTime: Date.now(),
-  wardId: 'wardId',
-  visitId: 'visitId',
-  patientId: 'patientId',
-  type: 'email / text',
-  visitorId: 'visitorId',  // this is not implemented -= goes into the auth as well as database tweaks convo.
-  lastVisitId: 'visitId'
-}
 
+// then we get into rebooking the visit
+
+/ We could handle this in 2 ways - using a visitRebooked event means there are now types of visits
+// but there are not really. We actually care about 2 seperate events 1) rebook visit requested and 2) visitBooked
+
+// this is ward stream (if we care about which visits get rebooked)
+const visitRebookingRequested = {
+  wardId: 'wardId'
+  newBookingId: 'visitId'
+  oldbookingId: 'visitId'
+}
 
