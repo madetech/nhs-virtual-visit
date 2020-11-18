@@ -18,7 +18,7 @@ describe("end UR question", () => {
     })
       .matchHeader("X-Correlation-ID", "1-ur-question")
       .matchHeader("content-type", "application/json")
-      .post("/api/submit-ur-question", "{}")
+      .post("/api/submit-ur-answer", "{}")
       .reply(201);
   });
 

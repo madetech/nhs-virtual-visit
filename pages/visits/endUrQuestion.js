@@ -13,10 +13,10 @@ identify potential issues with the service.
 */
 export default function EndUrQuestion({ correlationId, callId }) {
   const onSubmit = async (event) => {
-    //stand in for actual behaviour
+    //doesn't currently send the actual results data to the api
     await fetchEndpointWithCorrelationId(
       "POST",
-      "http://localhost:3001/api/submit-ur-question",
+      "http://localhost:3001/api/submit-ur-answer",
       JSON.stringify({}),
       correlationId
     );
@@ -53,6 +53,7 @@ export default function EndUrQuestion({ correlationId, callId }) {
                     name="ur-question-radio"
                     type="radio"
                     value="yes"
+                    data-testid="ur-question-radio-yes"
                   />
                   <label
                     className="nhsuk-label nhsuk-radios__label"
@@ -69,6 +70,7 @@ export default function EndUrQuestion({ correlationId, callId }) {
                     name="ur-question-radio"
                     type="radio"
                     value="no"
+                    data-testid="ur-question-radio-no"
                   />
                   <label
                     className="nhsuk-label nhsuk-radios__label"
