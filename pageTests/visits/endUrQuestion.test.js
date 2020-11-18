@@ -10,18 +10,6 @@ describe("end UR question", () => {
     process.env.UR_QUESTION = true;
   });
 
-  let urQuestionEndpointStub;
-
-  beforeEach(() => {
-    urQuestionEndpointStub = nock("http://localhost:3001", {
-      //allowUnmocked: true,
-    })
-      .matchHeader("X-Correlation-ID", "1-ur-question")
-      .matchHeader("content-type", "application/json")
-      .post("/api/submit-ur-answer", "{}")
-      .reply(201);
-  });
-
   afterEach(() => {});
 
   afterAll(() => {
@@ -29,12 +17,39 @@ describe("end UR question", () => {
   });
 
   describe("<EndUrQuestion/>", () => {
-    it("submits the results of the ur question", async () => {
-      render(<EndUrQuestion correlationId="1-ur-question" />);
-      await act(async () => {
-        fireEvent.submit(screen.getByTestId("ur-question-form"));
+    function stubUrQuestionApiEndpoint(desiredAnswer) {
+      return nock("http://localhost:3001", {})
+        .matchHeader("X-Correlation-ID", "1-ur-question")
+        .matchHeader("content-type", "application/json")
+        .post("/api/submit-ur-answer", {
+          "would miss nhs vv": desiredAnswer,
+        })
+        .reply(201);
+    }
+
+    describe("when 'yes' is selected", () => {
+      let urQuestionEndpointStub = stubUrQuestionApiEndpoint("yes");
+
+      it("submits the results of the ur question", async () => {
+        render(<EndUrQuestion correlationId="1-ur-question" />);
+        await act(async () => {
+          fireEvent.click(screen.getByTestId("ur-question-radio-yes"));
+          fireEvent.submit(screen.getByTestId("ur-question-form"));
+        });
+        expect(urQuestionEndpointStub.isDone()).toBeTruthy();
       });
-      expect(urQuestionEndpointStub.isDone()).toBeTruthy();
+    });
+    describe("when 'no' is selected", () => {
+      let urQuestionEndpointStub = stubUrQuestionApiEndpoint("no");
+
+      it("submits the results of the ur question", async () => {
+        render(<EndUrQuestion correlationId="1-ur-question" />);
+        await act(async () => {
+          fireEvent.click(screen.getByTestId("ur-question-radio-no"));
+          fireEvent.submit(screen.getByTestId("ur-question-form"));
+        });
+        expect(urQuestionEndpointStub.isDone()).toBeTruthy();
+      });
     });
   });
 

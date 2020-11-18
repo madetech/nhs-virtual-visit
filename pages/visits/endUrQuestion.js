@@ -12,12 +12,20 @@ things to do with the user journey so that journeys can be tracked and we can
 identify potential issues with the service.
 */
 export default function EndUrQuestion({ correlationId, callId }) {
+  let selectedFeedback;
+
+  const selectFeedbackOption = (option) => async (/*event*/) => {
+    selectedFeedback = option;
+  };
+
   const onSubmit = async (event) => {
     //doesn't currently send the actual results data to the api
     await fetchEndpointWithCorrelationId(
       "POST",
       "http://localhost:3001/api/submit-ur-answer",
-      JSON.stringify({}),
+      JSON.stringify({
+        "would miss nhs vv": selectedFeedback,
+      }),
       correlationId
     );
 
@@ -45,7 +53,10 @@ export default function EndUrQuestion({ correlationId, callId }) {
                 </h1>
               </legend>
 
-              <div className="nhsuk-radios">
+              <div
+                data-testid="ur-question-radio-buttons"
+                className="nhsuk-radios"
+              >
                 <div className="nhsuk-radios__item">
                   <input
                     className="nhsuk-radios__input"
@@ -54,6 +65,7 @@ export default function EndUrQuestion({ correlationId, callId }) {
                     type="radio"
                     value="yes"
                     data-testid="ur-question-radio-yes"
+                    onClick={selectFeedbackOption("yes")}
                   />
                   <label
                     className="nhsuk-label nhsuk-radios__label"
@@ -71,6 +83,7 @@ export default function EndUrQuestion({ correlationId, callId }) {
                     type="radio"
                     value="no"
                     data-testid="ur-question-radio-no"
+                    onClick={selectFeedbackOption("no")}
                   />
                   <label
                     className="nhsuk-label nhsuk-radios__label"
