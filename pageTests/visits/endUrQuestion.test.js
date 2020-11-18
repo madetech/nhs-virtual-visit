@@ -10,21 +10,19 @@ describe("end UR question", () => {
     process.env.UR_QUESTION = true;
   });
 
-  let correlationId;
   let urQuestionEndpointStub;
 
   beforeEach(() => {
-    correlationId = 1;
     urQuestionEndpointStub = nock("http://localhost:3001", {
-      reqheaders: {
-        "X-Correlation-ID": correlationId,
-        "content-type": "application/json",
-      },
-      allowUnmocked: true,
+      //allowUnmocked: true,
     })
-      .post("/api/submit-ur-question", {})
+      .matchHeader("X-Correlation-ID", "1-ur-question")
+      .matchHeader("content-type", "application/json")
+      .post("/api/submit-ur-question", "{}")
       .reply(201);
   });
+
+  afterEach(() => {});
 
   afterAll(() => {
     process.env.UR_QUESTION = false;
@@ -32,7 +30,7 @@ describe("end UR question", () => {
 
   describe("<EndUrQuestion/>", () => {
     it("submits the results of the ur question", async () => {
-      render(<EndUrQuestion />);
+      render(<EndUrQuestion correlationId="1-ur-question" />);
       await act(async () => {
         fireEvent.submit(screen.getByTestId("ur-question-form"));
       });

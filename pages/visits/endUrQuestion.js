@@ -16,10 +16,11 @@ export default function EndUrQuestion({ correlationId, callId }) {
     //stand in for actual behaviour
     await fetchEndpointWithCorrelationId(
       "POST",
-      "/api/submit-ur-question",
-      {},
+      "http://localhost:3001/api/submit-ur-question",
+      JSON.stringify({}),
       correlationId
     );
+
     window.location.href = `/visits/end?callId=${callId}`;
     event.preventDefault();
   };

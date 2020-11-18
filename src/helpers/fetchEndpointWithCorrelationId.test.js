@@ -15,7 +15,7 @@ describe("fetchEndpointWithCorrelationId", () => {
         "X-Correlation-ID": correlationId,
         "content-type": "application/json",
       },
-      allowUnmocked: true,
+      //allowUnmocked: true,
     })
       .post(endpoint, body)
       .reply(201);
@@ -28,6 +28,6 @@ describe("fetchEndpointWithCorrelationId", () => {
       correlationId
     );
     expect(response.status).toBe(201);
-    scope.isDone();
+    expect(scope.isDone()).toBeTruthy();
   });
 });
