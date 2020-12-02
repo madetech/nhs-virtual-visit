@@ -1,6 +1,14 @@
 name: Virtual Visits CI
 
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+      - "README.md"
+      - "docs/**"
+  pull_request:
+    paths-ignore:
+      - "README.md"
+      - "docs/**"
 
 jobs:
   build-and-unit-tests:
@@ -160,7 +168,7 @@ jobs:
           tag_name: ${{ steps.changelog.outputs.tag }}
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
-          
+
   azure-docker-build-push:
     needs: tag-and-release
     if: github.repository_owner == 'madetech'
@@ -209,4 +217,4 @@ jobs:
       - run: |
           docker build . -t ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
           docker push ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
-          
+
