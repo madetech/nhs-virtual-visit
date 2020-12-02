@@ -15,6 +15,7 @@ Terraform:
 - PostgreSQL 12
 - Node LTS (Currently Node 12. There is a known issue with db-migrate and Node 14)
 - GOV.UK Notify API keys
+- Docker
 
 _NOTE_ Use `nvm install` to automatically set node version.
 
@@ -118,11 +119,11 @@ Contract tests can be run with
 npm run test:contract
 ```
 
-Note: A test database is required to run contract tests. You can quickly set one up using `bin/setup_test_db.sh`
+Note: A test database is required to run contract tests. You can quickly set one up using `bin/setup_test_db.sh` or `bin/setup_test_db_docker.sh` depending on your database setup.
 
 ## Running end to end (E2E) tests
 
-To run E2E tests you need a test server running
+To run E2E tests you need a test server running and test database populated.
 
 ```bash
 npm run test:server
