@@ -8,8 +8,12 @@ describe("api/submit-ur-answer", () => {
     };
     let request = {
       headers: {},
-      body: {},
+      body: {
+        "would miss nhs vv": "yes",
+        trustId: "trust id",
+      },
     };
+
     await submitUrAnswer(request, {}, { container });
     expect(container.getLogEventGateway).toHaveBeenCalled();
     expect(logEventStub).toHaveBeenCalledWith({
@@ -17,11 +21,11 @@ describe("api/submit-ur-answer", () => {
       correlationId: undefined,
       createdOn: expect.anything(),
       event: {
-        answer: undefined,
+        answer: "yes",
       },
       eventType: "ur-question-answered",
       streamName: "ward-undefined",
-      trustId: undefined,
+      trustId: "trust id",
     });
   });
 });
