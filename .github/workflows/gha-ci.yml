@@ -158,7 +158,7 @@ jobs:
         id: changelog
         with:
           github-token: ${{ secrets.github_token }}
-          output-file: 'CHANGELOG.md'
+          output-file: "CHANGELOG.md"
       - name: Create Release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
@@ -196,6 +196,7 @@ jobs:
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           ENABLE_SENTRY: ${{ secrets.ENABLE_SENTRY }}
+          ENABLE_UR_QUESTION: ${{ secrets.ENABLE_UR_QUESTION }}
         run: |
           bin/write_environment.sh
       - name: Set up Node.js
@@ -217,4 +218,3 @@ jobs:
       - run: |
           docker build . -t ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
           docker push ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
-

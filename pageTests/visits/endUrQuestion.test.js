@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
-import EndUrQuestion, {
+import {
+  endUrQuestionConstructor,
   getServerSideProps,
 } from "../../pages/visits/endUrQuestion";
 import nock from "nock";
@@ -17,6 +18,8 @@ describe("end UR question", () => {
   });
 
   describe("<EndUrQuestion/>", () => {
+    const EndUrQuestion = endUrQuestionConstructor({ router: [] });
+
     function stubUrQuestionApiEndpoint(desiredAnswer) {
       return nock("http://localhost:3001", {})
         .matchHeader("X-Correlation-ID", "1-ur-question")
@@ -31,7 +34,14 @@ describe("end UR question", () => {
       let urQuestionEndpointStub = stubUrQuestionApiEndpoint("yes");
 
       it("submits the results of the ur question", async () => {
-        render(<EndUrQuestion correlationId="1-ur-question" />);
+        render(
+          <EndUrQuestion
+            correlationId="1-ur-question"
+            router={[]}
+            protocol="http:"
+            host="localhost:3001"
+          />
+        );
         await act(async () => {
           fireEvent.click(screen.getByTestId("ur-question-radio-yes"));
           fireEvent.submit(screen.getByTestId("ur-question-form"));
@@ -43,7 +53,14 @@ describe("end UR question", () => {
       let urQuestionEndpointStub = stubUrQuestionApiEndpoint("no");
 
       it("submits the results of the ur question", async () => {
-        render(<EndUrQuestion correlationId="1-ur-question" />);
+        render(
+          <EndUrQuestion
+            correlationId="1-ur-question"
+            router={[]}
+            protocol="http:"
+            host="localhost:3001"
+          />
+        );
         await act(async () => {
           fireEvent.click(screen.getByTestId("ur-question-radio-no"));
           fireEvent.submit(screen.getByTestId("ur-question-form"));
