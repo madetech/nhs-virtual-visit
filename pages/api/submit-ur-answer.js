@@ -10,7 +10,7 @@ export default withContainer(async (req, res, { container }) => {
     correlationId: req.headers["x-correlation-id"],
     createdOn: Date.now(),
     streamName: `ward-${undefined}`,
-    trustId: req.body.trustId /*ward.trustId*/,
+    trustId: undefined /*ward.trustId*/,
     eventType: "ur-question-answered",
     event: {
       answer: req.body["would miss nhs vv"],
