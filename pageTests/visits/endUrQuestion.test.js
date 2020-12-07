@@ -17,21 +17,24 @@ describe("end UR question", () => {
   });
 
   describe("<EndUrQuestion/>", () => {
-    function stubUrQuestionApiEndpoint(desiredAnswer) {
+    function stubUrQuestionApiEndpoint(desiredAnswer, trustId) {
       return nock("http://localhost:3001", {})
         .matchHeader("X-Correlation-ID", "1-ur-question")
         .matchHeader("content-type", "application/json")
         .post("/api/submit-ur-answer", {
           "would miss nhs vv": desiredAnswer,
+          trustId,
         })
         .reply(201);
     }
 
     describe("when 'yes' is selected", () => {
-      let urQuestionEndpointStub = stubUrQuestionApiEndpoint("yes");
+      let urQuestionEndpointStub = stubUrQuestionApiEndpoint("yes", "Ward 1");
 
       it("submits the results of the ur question", async () => {
-        render(<EndUrQuestion correlationId="1-ur-question" />);
+        render(
+          <EndUrQuestion correlationId="1-ur-question" trustId="Ward 1" />
+        );
         await act(async () => {
           fireEvent.click(screen.getByTestId("ur-question-radio-yes"));
           fireEvent.submit(screen.getByTestId("ur-question-form"));
@@ -40,10 +43,12 @@ describe("end UR question", () => {
       });
     });
     describe("when 'no' is selected", () => {
-      let urQuestionEndpointStub = stubUrQuestionApiEndpoint("no");
+      let urQuestionEndpointStub = stubUrQuestionApiEndpoint("no", "Ward 2");
 
       it("submits the results of the ur question", async () => {
-        render(<EndUrQuestion correlationId="1-ur-question" />);
+        render(
+          <EndUrQuestion correlationId="1-ur-question" trustId="Ward 2" />
+        );
         await act(async () => {
           fireEvent.click(screen.getByTestId("ur-question-radio-no"));
           fireEvent.submit(screen.getByTestId("ur-question-form"));
