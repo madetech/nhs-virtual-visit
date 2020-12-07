@@ -31,7 +31,7 @@ const Jitsi = ({ callId, name, onEnd }) => {
       api.executeCommand("displayName", name);
       api.on("readyToClose", () => {
         onEnd();
-        Router.push(`/visits/end?callId=${callId}`);
+        Router.push(`/visits/endUrQuestion?callId=${callId}`);
       });
     }
   }, [jitsiLoaded]);

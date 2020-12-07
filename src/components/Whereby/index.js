@@ -19,7 +19,7 @@ const Whereby = ({ callId, displayName, onEnd, wherebySubdomain }) => (
       type="submit"
       onClick={() => {
         onEnd();
-        Router.push(`/visits/end?callId=${callId}`);
+        Router.push(`/visits/endUrQuestion?callId=${callId}`);
       }}
     >
       End call

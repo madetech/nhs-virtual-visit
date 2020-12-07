@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import { v4 as uuidv4 } from "uuid";
+import Router from "next/router";
 
 /*
 The end UR question is a page that should be navigated to after a call ends but
@@ -28,11 +29,11 @@ export default function EndUrQuestion({ correlationId, callId }) {
       correlationId
     );
 
-    window.location.href = `/visits/end?callId=${callId}`;
+    Router.push(`/visits/end?callId=${callId}`);
     event.preventDefault();
   };
   const onClickSkip = async () => {
-    window.location.href = `/visits/end?callId=${callId}`;
+    Router.push(`/visits/end?callId=${callId}`);
   };
 
   useEffect(() => {
