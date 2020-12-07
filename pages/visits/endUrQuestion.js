@@ -128,7 +128,7 @@ export const getServerSideProps = propsWithContainer(
     const { headers } = req;
     const { callId } = query;
 
-    if (process.env.ENABLE_UR_QUESTION === "no") {
+    if (process.env.ENABLE_UR_QUESTION !== "yes") {
       res.writeHead(302, { Location: `/visits/end?callId=${callId}` }).end();
       return {};
     }
