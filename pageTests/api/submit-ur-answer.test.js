@@ -7,21 +7,23 @@ describe("api/submit-ur-answer", () => {
       getLogEventGateway: jest.fn(() => logEventStub),
     };
     let request = {
-      headers: {},
+      headers: {
+        "x-correlation-id": "25565",
+      },
       body: {},
     };
     await submitUrAnswer(request, {}, { container });
     expect(container.getLogEventGateway).toHaveBeenCalled();
     expect(logEventStub).toHaveBeenCalledWith({
       sessionId: expect.anything(),
-      correlationId: undefined,
+      correlationId: "25565",
       createdOn: expect.anything(),
       event: {
         answer: undefined,
       },
       eventType: "ur-question-answered",
-      streamName: "ward-undefined",
-      trustId: undefined,
+      streamName: "user research",
+      trustId: "not applicable",
     });
   });
 });

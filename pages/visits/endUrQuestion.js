@@ -14,12 +14,11 @@ identify potential issues with the service.
 export default function EndUrQuestion({ correlationId, callId }) {
   let selectedFeedback;
 
-  const selectFeedbackOption = (option) => async (/*event*/) => {
+  const selectFeedbackOption = (option) => (/*event*/) => {
     selectedFeedback = option;
   };
 
   const onSubmit = async (event) => {
-    //doesn't currently send the actual results data to the api
     await fetchEndpointWithCorrelationId(
       "POST",
       "http://localhost:3001/api/submit-ur-answer",
