@@ -11,7 +11,7 @@ to the event logging system - this is distinct from console logging and concerns
 things to do with the user journey so that journeys can be tracked and we can 
 identify potential issues with the service.
 */
-export default function EndUrQuestion({ correlationId, callId, trustId }) {
+export default function EndUrQuestion({ correlationId, callId }) {
   let selectedFeedback;
 
   const selectFeedbackOption = (option) => async (/*event*/) => {
@@ -25,7 +25,6 @@ export default function EndUrQuestion({ correlationId, callId, trustId }) {
       "http://localhost:3001/api/submit-ur-answer",
       JSON.stringify({
         "would miss nhs vv": selectedFeedback,
-        trustId,
       }),
       correlationId
     );
