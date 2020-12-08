@@ -8,13 +8,11 @@ import nock from "nock";
 
 describe("end UR question", () => {
   beforeAll(() => {
-    process.env.UR_QUESTION = true;
+    process.env.ENABLE_UR_QUESTION = "yes";
   });
 
-  afterEach(() => {});
-
   afterAll(() => {
-    process.env.UR_QUESTION = false;
+    process.env.ENABLE_UR_QUESTION = "no";
   });
 
   describe("<EndUrQuestion/>", () => {

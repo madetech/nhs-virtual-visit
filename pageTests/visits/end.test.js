@@ -4,11 +4,11 @@ import EndOfVisit, { getServerSideProps } from "../../pages/visits/end";
 
 describe("end", () => {
   beforeAll(() => {
-    process.env.UR_QUESTION = true;
+    process.env.ENABLE_UR_QUESTION = "yes";
   });
 
   afterAll(() => {
-    process.env.UR_QUESTION = false;
+    process.env.ENABLE_UR_QUESTION = "no";
   });
 
   describe("for a key contact", () => {
