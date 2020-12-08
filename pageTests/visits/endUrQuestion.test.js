@@ -2,19 +2,11 @@ import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import {
   endUrQuestionConstructor,
-  getServerSideProps,
+  getServerSidePropsConstructor,
 } from "../../pages/visits/endUrQuestion";
 import nock from "nock";
 
 describe("end UR question", () => {
-  beforeAll(() => {
-    process.env.ENABLE_UR_QUESTION = "yes";
-  });
-
-  afterAll(() => {
-    process.env.ENABLE_UR_QUESTION = "no";
-  });
-
   describe("<EndUrQuestion/>", () => {
     const EndUrQuestion = endUrQuestionConstructor({ router: [] });
 
@@ -69,6 +61,10 @@ describe("end UR question", () => {
   });
 
   describe("getServerSideProps", () => {
+    const getServerSideProps = getServerSidePropsConstructor({
+      ENABLE_UR_QUESTION: "yes",
+    });
+
     it("redirects to the end screen for staff members", async () => {
       //If there is a wardId we're a staff member
       const container = {

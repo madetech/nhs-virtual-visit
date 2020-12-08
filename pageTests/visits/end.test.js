@@ -3,14 +3,6 @@ import { render, queryByAttribute } from "@testing-library/react";
 import EndOfVisit, { getServerSideProps } from "../../pages/visits/end";
 
 describe("end", () => {
-  beforeAll(() => {
-    process.env.ENABLE_UR_QUESTION = "yes";
-  });
-
-  afterAll(() => {
-    process.env.ENABLE_UR_QUESTION = "no";
-  });
-
   describe("for a key contact", () => {
     it("renders end of visit message", () => {
       const { getByText } = render(<EndOfVisit />);
@@ -132,13 +124,6 @@ describe("end", () => {
       const { props } = await getServerSideProps({ req, container, query });
 
       expect(props.supportUrl).toEqual(supportUrl);
-    });
-
-    it("retrieves the ur question submission url", async () => {
-      const { props } = await getServerSideProps({ req, container, query });
-
-      expect(retrieveUrQuestionUrl).toHaveBeenCalled();
-      expect(props.urQuestionUrl).toEqual(urQuestionUrl);
     });
   });
 });

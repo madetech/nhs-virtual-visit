@@ -5,7 +5,6 @@ import ActionLink from "../../src/components/ActionLink";
 import AnchorLink from "../../src/components/AnchorLink";
 import InsetText from "../../src/components/InsetText";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-import featureIsEnabled from "../../src/helpers/featureFlag";
 import { v4 as uuidv4 } from "uuid";
 
 const EndOfVisit = ({ wardId, callId, supportUrl, correlationId }) => {
@@ -69,66 +68,12 @@ const EndOfVisit = ({ wardId, callId, supportUrl, correlationId }) => {
               link={supportUrl}
               linkText="Get support from this hospital"
             />
-
-            {featureIsEnabled("UR_QUESTION") && <UrQuestion />}
           </div>
         )}
       </div>
     </Layout>
   );
 };
-
-function UrQuestion(/*prop*/) {
-  return (
-    <div className="nhsuk-form-group">
-      <fieldset className="nhsuk-fieldset">
-        <legend className="nhsuk-fieldset__legend nhsuk-fieldset__legend--l">
-          <h1 className="nhsuk-fieldset__heading">
-            If this service was no longer available would you be
-            dissappointed/upset?
-          </h1>
-        </legend>
-
-        <div className="nhsuk-radios">
-          <div className="nhsuk-radios__item">
-            <input
-              className="nhsuk-radios__input"
-              id="ur-question-radio-yes"
-              name="ur-question-radio"
-              type="radio"
-              value="yes"
-            />
-            <label
-              className="nhsuk-label nhsuk-radios__label"
-              htmlFor="ur-question-radio-yes"
-            >
-              Yes
-            </label>
-          </div>
-
-          <div className="nhsuk-radios__item">
-            <input
-              className="nhsuk-radios__input"
-              id="ur-question-radio-no"
-              name="ur-question-radio"
-              type="radio"
-              value="no"
-            />
-            <label
-              className="nhsuk-label nhsuk-radios__label"
-              htmlFor="ur-question-radio-no"
-            >
-              No
-            </label>
-          </div>
-        </div>
-        <button className="nhsuk-button" type="submit">
-          Submit feedback
-        </button>
-      </fieldset>
-    </div>
-  );
-}
 
 export const getServerSideProps = propsWithContainer(
   async ({ req: { headers }, container, query }) => {
@@ -145,13 +90,6 @@ export const getServerSideProps = propsWithContainer(
       error: supportUrlError,
     } = await container.getRetrieveSupportUrlByCallId()(query.callId);
 
-    let urQuestionUrl = null;
-
-    if (featureIsEnabled("UR_QUESTION")) {
-      urQuestionUrl = (await container.getRetrieveUrQuestionUrl()())
-        .urQuestionUrl;
-    }
-
     const error = supportUrlError;
 
     if (error) console.error(error);
@@ -162,7 +100,6 @@ export const getServerSideProps = propsWithContainer(
         callId: query.callId,
         supportUrl,
         correlationId,
-        urQuestionUrl,
       },
     };
   }

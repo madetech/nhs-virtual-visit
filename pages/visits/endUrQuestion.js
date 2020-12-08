@@ -123,27 +123,33 @@ export const endUrQuestionConstructor = ({ router }) =>
 
 export default endUrQuestionConstructor({ router: Router });
 
-export const getServerSideProps = propsWithContainer(
-  async ({ req, res, container, query }) => {
-    const { headers } = req;
-    const { callId } = query;
+export const getServerSidePropsConstructor = ({
+  ENABLE_UR_QUESTION,
+}) => async ({ req, res, container, query }) => {
+  const { headers } = req;
+  const { callId } = query;
 
-    if (process.env.ENABLE_UR_QUESTION !== "yes") {
-      res.writeHead(302, { Location: `/visits/end?callId=${callId}` }).end();
-      return {};
-    }
-
-    const userIsAuthenticated = container.getUserIsAuthenticated();
-    const token = await userIsAuthenticated(headers.cookie);
-    const correlationId = `${uuidv4()}-ur-question`;
-    const { protocol, host } = absoluteUrl(req, "localhost:3001");
-
-    if (token?.ward || null) {
-      res.writeHead(302, { Location: `/visits/end?callId=${callId}` }).end();
-      return {};
-    } else {
-      res.status(200);
-      return { props: { correlationId, callId, protocol, host } };
-    }
+  if (ENABLE_UR_QUESTION !== "yes") {
+    res.writeHead(302, { Location: `/visits/end?callId=${callId}` }).end();
+    return {};
   }
+
+  const userIsAuthenticated = container.getUserIsAuthenticated();
+  const token = await userIsAuthenticated(headers.cookie);
+  const correlationId = `${uuidv4()}-ur-question`;
+  const { protocol, host } = absoluteUrl(req, "localhost:3001");
+
+  if (token?.ward || null) {
+    res.writeHead(302, { Location: `/visits/end?callId=${callId}` }).end();
+    return {};
+  } else {
+    res.status(200);
+    return { props: { correlationId, callId, protocol, host } };
+  }
+};
+
+export const getServerSideProps = propsWithContainer(
+  getServerSidePropsConstructor({
+    ENABLE_UR_QUESTION: process.env.ENABLE_UR_QUESTION,
+  })
 );
