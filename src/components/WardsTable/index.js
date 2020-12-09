@@ -31,7 +31,7 @@ const WardsTable = ({ wards, wardVisitTotals }) => (
       </thead>
       <tbody className="nhsuk-table__body">
         {wards.map((ward) => (
-          <tr key={ward.callId} className="nhsuk-table__row">
+          <tr key={ward.id} className="nhsuk-table__row">
             {!wardVisitTotals && (
               <td className="nhsuk-table__cell">{ward.hospitalName}</td>
             )}
