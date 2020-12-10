@@ -13,7 +13,7 @@ const TrustAdminsNavigationBar = () => {
     },
     {
       text: "Log out",
-      href: "#",
+      href: "/trust-admin",
       onClick: logout,
     },
   ];
@@ -23,7 +23,6 @@ const TrustAdminsNavigationBar = () => {
 
 const logout = async () => {
   await fetch("/api/session", { method: "DELETE" });
-
   window.location.href = "/trust-admin/login";
 };
 
