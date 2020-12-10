@@ -60,6 +60,7 @@ const Login = ({ correlationId }) => {
         return true;
       } else {
         onSubmitErrors.push({
+          id: "code-or-password-error",
           message: "The code or password you entered was not recognised",
         });
       }

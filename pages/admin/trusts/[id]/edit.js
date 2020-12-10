@@ -62,6 +62,7 @@ const EditTrust = ({ trust }) => {
           return true;
         } else {
           onSubmitErrors.push({
+            id: "generic-error",
             message: "Something went wrong, please try again later.",
           });
           setErrors(onSubmitErrors);

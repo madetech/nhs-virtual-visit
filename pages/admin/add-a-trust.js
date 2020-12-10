@@ -145,6 +145,7 @@ const AddATrust = () => {
           setAdminCodeUniqueError(onSubmitErrors, err);
         } else {
           onSubmitErrors.push({
+            id: "generic-error",
             message: "Something went wrong, please try again later.",
           });
           setErrors(onSubmitErrors);
