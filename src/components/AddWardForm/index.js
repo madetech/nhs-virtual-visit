@@ -132,16 +132,15 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
       <Form onSubmit={onSubmit}>
         <Heading>Add a ward</Heading>
         <FormGroup>
-          <Label htmlFor="ward-name" className="nhsuk-label--l">
+          <Label htmlFor="ward-name" className="nhsuk-label--m">
             What is the ward name?
           </Label>
           <Input
             id="ward-name"
             type="text"
+            className="nhsuk-u-width-two-thirds"
             hasError={hasError("ward-name")}
             errorMessage={errorMessage("ward-name")}
-            className="nhsuk-u-font-size-32 nhsuk-input--width-10"
-            style={{ padding: "16px!important", height: "64px" }}
             onChange={(event) => setWardName(event.target.value)}
             name="ward-name"
             autoComplete="off"
@@ -149,12 +148,12 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="hospital-id" className="nhsuk-label--l">
+          <Label htmlFor="hospital-id" className="nhsuk-label--m">
             What is the hospital name?
           </Label>
           <Select
             id="hospital-id"
-            className="nhsuk-input--width-10 nhsuk-u-width-one-half"
+            className="nhsuk-input--width-10"
             prompt="Choose a hospital"
             options={hospitals}
             onChange={(event) => {
@@ -166,7 +165,7 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="ward-code" className="nhsuk-label--l">
+          <Label htmlFor="ward-code" className="nhsuk-label--m">
             Create a ward code
           </Label>
           <Input
@@ -174,8 +173,7 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
             type="text"
             hasError={hasError("ward-code")}
             errorMessage={errorMessage("ward-code")}
-            className="nhsuk-u-font-size-32 nhsuk-input--width-10"
-            style={{ padding: "16px!important", height: "64px" }}
+            className="nhsuk-input--width-10"
             onChange={(event) => setWardCode(event.target.value)}
             name="ward-code"
             autoComplete="off"
@@ -183,7 +181,7 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="ward-code-confirmation" className="nhsuk-label--l">
+          <Label htmlFor="ward-code-confirmation" className="nhsuk-label--m">
             Confirm the ward code
           </Label>
           <Input
@@ -191,8 +189,7 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
             type="text"
             hasError={hasError("ward-code-confirmation")}
             errorMessage={errorMessage("ward-code-confirmation")}
-            className="nhsuk-u-font-size-32 nhsuk-input--width-10"
-            style={{ padding: "16px!important", height: "64px" }}
+            className="nhsuk-input--width-10"
             onChange={(event) => setWardCodeConfirmation(event.target.value)}
             name="ward-code-confirmation"
             autoComplete="off"

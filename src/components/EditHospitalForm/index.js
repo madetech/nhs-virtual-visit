@@ -76,7 +76,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
     <Form onSubmit={onSubmit}>
       <Heading>{action} a hospital</Heading>
       <FormGroup>
-        <Label htmlFor="hospital-name" className="nhsuk-label--l">
+        <Label htmlFor="hospital-name" className="nhsuk-label--m">
           What is the hospital name?
         </Label>
         <Input
@@ -84,8 +84,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           type="text"
           hasError={hasError("hospital-name")}
           errorMessage={errorMessage("hospital-name")}
-          className="nhsuk-u-font-size-32"
-          style={{ padding: "16px!important", height: "64px" }}
+          className="nhsuk-u-width-three-quarters"
           onChange={(event) => setHospitalName(event.target.value)}
           name="hospital-name"
           autoComplete="off"
@@ -94,7 +93,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       </FormGroup>
 
       <FormGroup>
-        <Label htmlFor="hospital-survey-url" className="nhsuk-label--l">
+        <Label htmlFor="hospital-survey-url" className="nhsuk-label--m">
           Key contact survey URL (optional)
         </Label>
         <span className="nhsuk-hint" id="hospital-survey-url-hint">
@@ -105,8 +104,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           type="url"
           hasError={hasError("hospital-survey-url")}
           errorMessage={errorMessage("hospital-survey-url")}
-          className="nhsuk-u-font-size-32"
-          style={{ padding: "16px!important", height: "64px" }}
           onChange={(event) => setHospitalSurveyUrl(event.target.value)}
           name="hospital-survey-url"
           value={hospitalSurveyUrl || ""}
@@ -114,7 +111,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       </FormGroup>
 
       <FormGroup>
-        <Label htmlFor="hospital-support-url" className="nhsuk-label--l">
+        <Label htmlFor="hospital-support-url" className="nhsuk-label--m">
           Key contact support URL (optional)
         </Label>
         <span className="nhsuk-hint" id="hospital-support-url-hint">
@@ -125,8 +122,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           type="url"
           hasError={hasError("hospital-support-url")}
           errorMessage={errorMessage("hospital-support-url")}
-          className="nhsuk-u-font-size-32"
-          style={{ padding: "16px!important", height: "64px" }}
           onChange={(event) => setHospitalSupportUrl(event.target.value)}
           name="hospital-support-url"
           value={hospitalSupportUrl || ""}

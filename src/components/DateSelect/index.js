@@ -39,7 +39,7 @@ const DateSelect = ({
   return (
     <>
       <FormGroup>
-        <Label className="nhsuk-label--l">
+        <Label className="nhsuk-label--m">
           What is the date of their virtual visit?
         </Label>
         <Hint>For example, 1&zwj;6&zwj; 4&zwj; 2&zwj;0&zwj;2&zwj;0</Hint>
@@ -48,13 +48,12 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="day">Day</Label>
             <Input
-              style={{ padding: "16px!important", height: "64px" }}
               type="number"
               hasError={hasDateError}
               onChange={(event) => {
                 setDate({ ...date, day: parseInt(event.target.value) });
               }}
-              className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-u-font-size-32 nhsuk-input--width-10"
+              className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-input--width-10"
               id="day"
               name="day"
               value={date.day}
@@ -66,10 +65,9 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="month">Month</Label>
             <Input
-              style={{ padding: "16px!important", height: "64px" }}
               type="number"
               hasError={hasDateError}
-              className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-u-font-size-32 nhsuk-input--width-10"
+              className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-input--width-10"
               id="month"
               name="month"
               onChange={(event) => {
@@ -84,10 +82,9 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="year">Year</Label>
             <Input
-              style={{ padding: "16px!important", height: "64px" }}
               type="number"
               hasError={hasDateError}
-              className="nhsuk-input--width-4 nhsuk-u-font-size-32 nhsuk-input--width-10"
+              className="nhsuk-input--width-4 nhsuk-input--width-10"
               id="year"
               name="year"
               onChange={(event) => {
@@ -100,7 +97,7 @@ const DateSelect = ({
         </div>
       </FormGroup>
       <FormGroup>
-        <Label className="nhsuk-label--l">
+        <Label className="nhsuk-label--m">
           What is the time of their virtual visit?
         </Label>
         <Hint>For example, 15 00</Hint>
@@ -109,10 +106,9 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="hour">Hour</Label>
             <Input
-              style={{ padding: "16px!important", height: "64px" }}
               type="number"
               hasError={hasTimeError}
-              className="nhsuk-input--width-2 nhsuk-u-font-size-32"
+              className="nhsuk-input--width-2"
               id="hour"
               name="hour"
               onChange={(event) => {
@@ -127,10 +123,9 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="minute">Minutes</Label>
             <Input
-              style={{ padding: "16px!important", height: "64px" }}
               type="number"
               hasError={hasTimeError}
-              className="nhsuk-input--width-2 nhsuk-u-font-size-32"
+              className="nhsuk-input--width-2"
               id="minute"
               name="minute"
               onChange={(event) => {

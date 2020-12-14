@@ -102,7 +102,7 @@ const EditWardForm = ({
       <Form onSubmit={onSubmit}>
         <Heading>Edit a ward</Heading>
         <FormGroup>
-          <Label htmlFor="ward-name" className="nhsuk-label--l">
+          <Label htmlFor="ward-name" className="nhsuk-label--m">
             What is the ward name?
           </Label>
           <Input
@@ -110,8 +110,7 @@ const EditWardForm = ({
             type="text"
             hasError={hasError("ward-name")}
             errorMessage={errorMessage("ward-name")}
-            className="nhsuk-u-font-size-32 nhsuk-input--width-10"
-            style={{ padding: "16px!important", height: "64px" }}
+            className="nhsuk-input--width-10"
             onChange={(event) => setWardName(event.target.value)}
             name="ward-name"
             autoComplete="off"
@@ -120,7 +119,7 @@ const EditWardForm = ({
         </FormGroup>
 
         <FormGroup>
-          <Label htmlFor="hospital-id" className="nhsuk-label--l">
+          <Label htmlFor="hospital-id" className="nhsuk-label--m">
             What is the hospital name?
           </Label>
           <Select

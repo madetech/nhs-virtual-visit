@@ -135,7 +135,7 @@ const VisitForm = ({
     <form onSubmit={onSubmit}>
       <Heading>{heading}</Heading>
       <FormGroup>
-        <Label htmlFor="patient-name" className="nhsuk-label--l">
+        <Label htmlFor="patient-name" className="nhsuk-label--m">
           What is the patient&apos;s name?
         </Label>
         <Input
@@ -143,8 +143,7 @@ const VisitForm = ({
           type="text"
           hasError={hasError("patient-name")}
           errorMessage="Enter the patient's name"
-          className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
-          style={{ padding: "16px!important", height: "64px" }}
+          className="nhsuk-input--width-20"
           onChange={(event) => setPatientName(event.target.value)}
           name="patient-name"
           autoComplete="off"
@@ -152,7 +151,7 @@ const VisitForm = ({
         />
       </FormGroup>
       <FormGroup>
-        <Label htmlFor="contact-name" className="nhsuk-label--l">
+        <Label htmlFor="contact-name" className="nhsuk-label--m">
           What is the key contact&apos;s name?
         </Label>
         <Input
@@ -160,8 +159,7 @@ const VisitForm = ({
           type="text"
           hasError={hasError("contact-name")}
           errorMessage="Enter the key contact's name"
-          className="nhsuk-u-font-size-32 nhsuk-input--width-10 nhsuk-u-margin-bottom-5"
-          style={{ padding: "16px!important", height: "64px" }}
+          className="nhsuk-input--width-20"
           onChange={(event) => setContactName(event.target.value)}
           name="contact-name"
           autoComplete="off"

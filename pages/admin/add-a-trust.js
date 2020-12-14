@@ -172,7 +172,7 @@ const AddATrust = () => {
           <Form onSubmit={onSubmit}>
             <Heading>Add a trust</Heading>
             <FormGroup>
-              <Label htmlFor="trust-name" className="nhsuk-label--l">
+              <Label htmlFor="trust-name" className="nhsuk-label--m">
                 What is the trust name?
               </Label>
               <Input
@@ -180,8 +180,7 @@ const AddATrust = () => {
                 type="text"
                 hasError={hasError("trust-name")}
                 errorMessage={errorMessage("trust-name")}
-                className="nhsuk-u-font-size-32 nhsuk-input--width-10"
-                style={{ padding: "16px!important", height: "64px" }}
+                className="nhsuk-input--width-10"
                 onChange={(event) => setName(event.target.value)}
                 name="trust-name"
                 autoComplete="off"
@@ -189,12 +188,12 @@ const AddATrust = () => {
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="video-provider" className="nhsuk-label--l">
+              <Label htmlFor="video-provider" className="nhsuk-label--m">
                 Which video provider would you like to use?
               </Label>
               <Select
                 id="video-provider"
-                className="nhsuk-input--width-10 nhsuk-u-width-one-half"
+                className="nhsuk-u-width-one-half"
                 prompt="Choose a provider"
                 options={VIDEO_PROVIDER_OPTIONS}
                 onChange={(event) => {
@@ -206,7 +205,7 @@ const AddATrust = () => {
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="trust-admin-code" className="nhsuk-label--l">
+              <Label htmlFor="trust-admin-code" className="nhsuk-label--m">
                 Create a trust admin code
               </Label>
               <Input
@@ -214,8 +213,7 @@ const AddATrust = () => {
                 type="text"
                 hasError={hasError("trust-admin-code")}
                 errorMessage={errorMessage("trust-admin-code")}
-                className="nhsuk-u-font-size-32 nhsuk-input--width-10"
-                style={{ padding: "16px!important", height: "64px" }}
+                className="nhsuk-input--width-10"
                 onChange={(event) => setAdminCode(event.target.value)}
                 name="trust-admin-code"
                 autoComplete="off"
@@ -223,7 +221,7 @@ const AddATrust = () => {
               />
             </FormGroup>
             <FormGroup>
-              <Label htmlFor="trust-password" className="nhsuk-label--l">
+              <Label htmlFor="trust-password" className="nhsuk-label--m">
                 Create a password
               </Label>
               <Input
@@ -231,8 +229,7 @@ const AddATrust = () => {
                 type="password"
                 hasError={hasError("trust-password")}
                 errorMessage={errorMessage("trust-password")}
-                className="nhsuk-u-font-size-32 nhsuk-input--width-10"
-                style={{ padding: "16px!important", height: "64px" }}
+                className="nhsuk-input--width-10"
                 onChange={(event) => setPassword(event.target.value)}
                 name="trust-password"
                 autoComplete="off"
@@ -242,7 +239,7 @@ const AddATrust = () => {
             <FormGroup>
               <Label
                 htmlFor="trust-password-confirmation"
-                className="nhsuk-label--l"
+                className="nhsuk-label--m"
               >
                 Confirm the password
               </Label>
@@ -251,8 +248,7 @@ const AddATrust = () => {
                 type="password"
                 hasError={hasError("trust-password-confirmation")}
                 errorMessage={errorMessage("trust-password-confirmation")}
-                className="nhsuk-u-font-size-32 nhsuk-input--width-10"
-                style={{ padding: "16px!important", height: "64px" }}
+                className="nhsuk-input--width-10"
                 onChange={(event) =>
                   setPasswordConfirmation(event.target.value)
                 }

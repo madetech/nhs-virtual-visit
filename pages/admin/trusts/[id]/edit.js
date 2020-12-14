@@ -90,12 +90,12 @@ const EditTrust = ({ trust }) => {
             <Heading>{`Edit ${trust.name}`}</Heading>
 
             <FormGroup>
-              <Label htmlFor="video-provider" className="nhsuk-label--l">
+              <Label htmlFor="video-provider" className="nhsuk-label--m">
                 Which video provider would you like to use?
               </Label>
               <Select
                 id="video-provider"
-                className="nhsuk-input--width-10 nhsuk-u-width-one-half"
+                className="nhsuk-u-width-one-half"
                 prompt="Choose a provider"
                 options={VIDEO_PROVIDER_OPTIONS}
                 onChange={(event) => {

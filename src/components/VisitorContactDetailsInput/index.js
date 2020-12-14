@@ -20,7 +20,7 @@ const VisitorContactDetailsInput = ({
   return (
     <FormGroup hasError={hasContactMethodUncheckedError}>
       <fieldset className="nhsuk-fieldset">
-        <Label className="nhsuk-label--l">
+        <Label className="nhsuk-label--m">
           How does the key contact want to be notified?
         </Label>
 
@@ -59,8 +59,7 @@ const VisitorContactDetailsInput = ({
                 Mobile phone number
               </Label>
               <Input
-                className="nhsuk-u-font-size-32 nhsuk-input--width-10"
-                style={{ padding: "16px!important", height: "64px" }}
+                className="nhsuk-input--width-10"
                 id="contact-number"
                 data-testid="contact-number"
                 name="contact-number"
@@ -104,8 +103,7 @@ const VisitorContactDetailsInput = ({
                 Email address
               </Label>
               <Input
-                className="nhsuk-u-font-size-32"
-                style={{ padding: "16px!important", height: "64px" }}
+                className="nhsuk-input--width-20"
                 id="email-address"
                 data-testid="email-address"
                 name="email-address"
