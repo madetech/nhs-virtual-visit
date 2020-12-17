@@ -8,4 +8,4 @@ export const formatTime = (time, timeFormat = "h:mma") =>
 export const formatDateAndTime = (time, timeFormat = "h:mma") =>
   moment(time).format(`D MMMM YYYY, ${timeFormat}`);
 
-  export default formatDate;
+export default formatDate;
