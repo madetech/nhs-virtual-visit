@@ -1,0 +1,9 @@
+id, name, created_at, hospital_id, ward_code
+, Ward 1, , 1, WARD1H1
+, Ward 2, , 1, WARD2H1
+, Ward 3, , 1, WARD3H1
+, Ward 1, , 2, WARD1H2
+, Ward 2, , 2, WARD2H2
+, Ward 3, , 2, WARD3H2
+, Ward 4, , 2, WARD4H2
+, Ward 5, , 2, WARD5H2
