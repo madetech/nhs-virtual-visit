@@ -7,7 +7,7 @@ import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
 import deleteVisitByCallId from "../../src/usecases/deleteVisitByCallId";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Error from "next/error";
-import formatDateAndTime from "../../src/helpers/formatDateAndTime";
+import formatDateAndTime from "../../src/helpers/formatDatesAndTimes";
 import { WARD_STAFF } from "../../src/helpers/userTypes";
 
 const deleteVisitSuccess = ({

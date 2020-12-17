@@ -1,7 +1,6 @@
 import React from "react";
 import SummaryList from "../SummaryList";
-import formatDate from "../../../src/helpers/formatDate";
-import formatTime from "../../../src/helpers/formatTime";
+import { formatDate, formatTime } from "../../../src/helpers/formatDatesAndTimes";
 
 const VisitSummaryList = ({
   patientName,

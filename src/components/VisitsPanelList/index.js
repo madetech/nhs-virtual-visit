@@ -1,7 +1,7 @@
 import React from "react";
 import "./styles.scss";
 import Router from "next/router";
-import formatDateAndTime from "../../helpers/formatDateAndTime";
+import formatDateAndTime from "../../helpers/formatDatesAndTimes";
 import VisitSummaryList from "../VisitSummaryList";
 import TimeFromNow from "../TimeFromNow";
 import Text from "../Text";
