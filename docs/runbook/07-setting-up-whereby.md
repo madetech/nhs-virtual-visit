@@ -1,16 +1,8 @@
 # 5. Setting up Whereby
 
-[Whereby](https://whereby.com/) is one of the two video providers that the
-application supports, the other is [Jitsi Meet](https://github.com/jitsi/jitsi-meet/blob/master/doc/README.md). The
-difference is that Whereby is a paid solution, whereas Jitsi Meet is free and
-open source. From our testing, we've found that Whereby provides a more seamless
-experience as it doesn't require the user to download an app and works all
-within the browser unlike Jitsi. Consequently, current trusts have opted to use
-Whereby as their video provider (although it's possible to switch video
-providers on a per trust level).
-
-If you want to use Whereby, you'll need to contact their sales team and get an
-account with them. Once you have one set up, you can follow the below to get it
+[Whereby](https://whereby.com/) is used to to facilitate video calling functionality,
+you'll need to contact their sales team and get an account with them.
+Once you have one set up, you can follow the instructions below to get it
 configured for usage in your Heroku apps.
 
 ## Adding Whereby environment variables

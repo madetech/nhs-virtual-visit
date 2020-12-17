@@ -38,7 +38,7 @@ describe("createVisit contract tests", () => {
 
     const callId = "123abc";
     const callPassword = "testpassword";
-    const videoProvider = "jitsi";
+    const videoProvider = "whereby";
 
     let date = new Date();
     date.setDate(date.getDate() + 1);
@@ -50,7 +50,7 @@ describe("createVisit contract tests", () => {
         contactName: "Contact Name",
         callTime: date,
         callId: "two",
-        provider: "jitsi",
+        provider: "whereby",
         callPassword: "DAVE",
       },
       ward,
@@ -87,7 +87,7 @@ describe("createVisit contract tests", () => {
 
     const callId = "123abc";
     const callPassword = "testpassword";
-    const videoProvider = "jitsi";
+    const videoProvider = "whereby";
 
     let date = new Date();
     date.setDate(date.getDate() + 1);
@@ -99,7 +99,7 @@ describe("createVisit contract tests", () => {
         contactName: "Contact Name",
         callTime: date,
         callId: "two",
-        provider: "jitsi",
+        provider: "whereby",
         callPassword: "DAVE",
       },
       ward,

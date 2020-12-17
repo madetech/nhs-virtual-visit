@@ -11,7 +11,7 @@ describe("retrieveTrustById", () => {
     expect(trust).toEqual({
       id: trustId,
       name: "Test Trust",
-      videoProvider: "jitsi",
+      videoProvider: "whereby",
     });
   });
 

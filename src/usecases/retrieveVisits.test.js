@@ -23,7 +23,7 @@ describe("retrieveVisits", () => {
         recipient_email: "bob@bob.com",
         recipient_name: "Bob",
         call_id: "cb238rfv23cuv3",
-        provider: "jitsi",
+        provider: "whereby",
         status: COMPLETE,
       },
     ]);
@@ -66,7 +66,7 @@ describe("retrieveVisits", () => {
       recipientEmail: "bob@bob.com",
       recipientName: "Bob",
       callId: "cb238rfv23cuv3",
-      provider: "jitsi",
+      provider: "whereby",
       status: COMPLETE,
     });
   });

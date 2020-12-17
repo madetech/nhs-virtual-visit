@@ -17,7 +17,6 @@ describe("call", () => {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
       end: jest.fn(),
     };
-    window.JitsiMeetExternalAPI = spy;
   });
 
   describe("with a call id", () => {
