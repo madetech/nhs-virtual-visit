@@ -18,7 +18,7 @@ describe("insertVisit tests", () => {
       contactNumber: "07123456789",
       callTime: new Date(),
       callId: "12345",
-      provider: "jitsi",
+      provider: "whereby",
       wardId: 1,
       callPassword: "securePassword",
     };

@@ -14,10 +14,8 @@ updates from Made Tech. This consists of the following dependencies:
 - [CircleCI](https://circleci.com/) - to run automated tests on a pull request
 - [GOV.UK Notify](https://www.notifications.service.gov.uk) - to send text
   messages and emails
-- [Jitsi Meet](https://github.com/jitsi/jitsi-meet/blob/master/doc/README.md) -
-  to enable video calls (open source solution)
 - [Whereby](https://whereby.com/information/product-api/) - to enable video
-  calls (paid solution)
+  calls
 - [Sentry](https://sentry.io) - to log and monitor uncaught errors and
   exceptions
 

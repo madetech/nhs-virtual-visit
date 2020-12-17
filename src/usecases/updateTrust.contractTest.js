@@ -4,7 +4,7 @@ import AppContainer from "../containers/AppContainer";
 describe("updateTrust contract test", () => {
   it("updates the video provider", async () => {
     const container = AppContainer.getInstance();
-    const { trustId } = await setupTrust({ videoProvider: "jitsi" });
+    const { trustId } = await setupTrust({ videoProvider: "whereby" });
     const updateTrust = container.getUpdateTrust();
 
     const { id: updatedTrustId } = await updateTrust({

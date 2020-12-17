@@ -54,7 +54,6 @@ To enable video call capabilities, a video provider is used. The following
 providers are currently supported:
 
 - [Whereby](https://whereby.com/information/product-api/)
-- [Jitsi Meet](https://github.com/jitsi/jitsi-meet/blob/master/doc/README.md)
 
 For error monitoring and logging, [Sentry](https://sentry.io) is used.
 

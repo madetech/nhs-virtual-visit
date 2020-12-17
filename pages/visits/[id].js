@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from "react";
 import Layout from "../../src/components/Layout";
-import Jitsi from "../../src/components/Jitsi";
 import Whereby from "../../src/components/Whereby";
 import Error from "next/error";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
@@ -14,7 +13,6 @@ const Call = ({
   callPassword,
   callSessionId,
   name,
-  provider,
   error,
   wherebySubdomain,
 }) => {
@@ -61,16 +59,12 @@ const Call = ({
 
   return (
     <Layout title="Virtual visit" isBookService={false} mainStyleOverride>
-      {provider === "whereby" ? (
-        <Whereby
-          callId={callId}
-          displayName={name}
-          onEnd={leaveVisit}
-          wherebySubdomain={wherebySubdomain}
-        />
-      ) : (
-        <Jitsi callId={callId} name={name} onEnd={leaveVisit} />
-      )}
+      <Whereby
+        callId={callId}
+        displayName={name}
+        onEnd={leaveVisit}
+        wherebySubdomain={wherebySubdomain}
+      />
     </Layout>
   );
 };
@@ -92,7 +86,6 @@ export const getServerSideProps = propsWithContainer(
 
     if (validCallPassword || authenticationToken) {
       const { scheduledCall, error } = await retrieveVisitByCallId(callId);
-      const provider = scheduledCall.provider;
       const callSessionId = uuidv4();
       const visitId = scheduledCall.id;
 
@@ -103,7 +96,6 @@ export const getServerSideProps = propsWithContainer(
           callPassword: callPassword || "",
           callSessionId,
           name,
-          provider,
           error,
           wherebySubdomain: process.env.WHEREBY_SUBDOMAIN || null,
         },
