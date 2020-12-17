@@ -1,4 +1,4 @@
-import formatDate from "../helpers/formatDate";
+import formatDate from "../helpers/formatDatesAndTimes";
 
 const retrieveWardVisitTotalsStartDateByTrustId = ({ getDb }) => async (
   trustId

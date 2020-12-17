@@ -1,6 +1,6 @@
 import React from "react";
 import Router from "next/router";
-import formatDateAndTime from "../../helpers/formatDateAndTime";
+import formatDateAndTime from "../../helpers/formatDatesAndTimes";
 
 const Visits = ({ visits }) => (
   <div className="nhsuk-table-responsive">

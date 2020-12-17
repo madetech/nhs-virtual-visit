@@ -1,7 +1,5 @@
 import TemplateStore from "../gateways/GovNotify/TemplateStore";
-import formatDateAndTime from "../../src/helpers/formatDateAndTime";
-import formatDate from "../../src/helpers/formatDate";
-import formatTime from "../../src/helpers/formatTime";
+import { formatDateAndTime, formatDate, formatTime } from "../../src/helpers/formatDatesAndTimes";
 import ConsoleNotifyProvider from "../providers/ConsoleNotifyProvider";
 
 export const NEW_NOTIFICATION = "new";
