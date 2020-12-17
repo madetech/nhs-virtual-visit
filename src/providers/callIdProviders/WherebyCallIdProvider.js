@@ -23,6 +23,10 @@ class WherebyCallIdProvider {
     });
 
     let jsonResponse = await response.json();
+    console.error(`API KEY: ${process.env.WHEREBY_API_KEY}`);
+    console.error(
+      `RESPONSE TO WHEREBY REQUEST: ${JSON.stringify(jsonResponse)}`
+    );
     let roomUrl = new URL(jsonResponse.roomUrl);
     return roomUrl.pathname.slice(1);
   }

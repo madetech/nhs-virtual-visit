@@ -16,6 +16,7 @@ describe("retrieveTrusts contract tests", () => {
 
     const { trusts } = await container.getRetrieveTrusts()();
 
+    //this will sometimes come out of order but still correct causing it to fail, we should fix that, perhaps a custom matcher is needed?
     expect(trusts).toEqual([
       {
         id: trustId1,
