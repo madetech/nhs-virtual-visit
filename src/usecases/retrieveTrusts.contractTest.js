@@ -16,7 +16,7 @@ describe("retrieveTrusts contract tests", () => {
 
     const { trusts } = await container.getRetrieveTrusts()();
 
-    expect(trusts).toEqual([
+    expect(trusts).orderlessEqual([
       {
         id: trustId1,
         name: "Test Trust",
