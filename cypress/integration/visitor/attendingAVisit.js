@@ -84,8 +84,8 @@ describe("As a patient's key contact, I want to attend a virtual visit so that I
   }
 
   function AndIDoNotSeeLinksForWardStaff() {
-    cy.get("Return to virtual visits").should("not.be.visible");
-    cy.get("Rebook another virtual visit").should("not.be.visible");
+    cy.get("Return to virtual visits").should("not.exist");
+    cy.get("Rebook another virtual visit").should("not.exist");
   }
 
   // Displays errors when fields have been left blank

@@ -74,7 +74,7 @@ describe("As an admin, I want to log in so that I can access the service.", () =
   }
 
   function ThenISeeTheAdminHomePage() {
-    cy.contains("There is a problem").should("not.be.visible");
+    cy.contains("There is a problem").should("not.exist");
     cy.contains("Site administration").should("be.visible");
   }
 

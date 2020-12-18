@@ -43,9 +43,7 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
   }
 
   function ThenISeeTheWardHomePage() {
-    cy.contains("The code you entered was not recognised").should(
-      "not.be.visible"
-    );
+    cy.contains("The code you entered was not recognised").should("not.exist");
     cy.get("h1").should("contain", "Virtual visits");
   }
 
