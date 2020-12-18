@@ -64,6 +64,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
         name: hospitalName,
         code: hospitalCode,
         status: hospitalStatus,
+
       });
     } else setErrors(onSubmitErrors);
   };
@@ -87,6 +88,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           value={hospitalName || ""}
         />
       </FormGroup>
+
       {action === "Add" && (
         <FormGroup>
           <Label htmlFor="hospital-code" className="nhsuk-label--m">
