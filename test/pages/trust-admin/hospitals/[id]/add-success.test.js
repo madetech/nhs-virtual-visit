@@ -36,6 +36,11 @@ describe("/trust-admin/hospitals/[id]/add-success", () => {
 
     describe("with hospitalId parameter", () => {
       it("retrieves a hospital by the hospitalId parameter", async () => {
+        const retrieveTrustByIdSpy = jest.fn(async () => ({
+          trust: { name: "Doggo Trust" },
+          error: null,
+        }));
+
         const retrieveHospitalByIdSpy = jest.fn().mockReturnValue({
           hospital: {
             id: 1,
@@ -45,6 +50,7 @@ describe("/trust-admin/hospitals/[id]/add-success", () => {
         });
 
         const container = {
+          getRetrieveTrustById: () => retrieveTrustByIdSpy,
           getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
           getTokenProvider: () => tokenProvider,
           getRegenerateToken: () => jest.fn().mockReturnValue({}),
@@ -63,6 +69,11 @@ describe("/trust-admin/hospitals/[id]/add-success", () => {
       });
 
       it("set a hospital prop based on the retrieved hospital", async () => {
+        const retrieveTrustByIdSpy = jest.fn(async () => ({
+          trust: { name: "Doggo Trust" },
+          error: null,
+        }));
+
         const retrieveHospitalByIdSpy = jest.fn().mockReturnValue({
           hospital: {
             id: 1,
@@ -72,6 +83,7 @@ describe("/trust-admin/hospitals/[id]/add-success", () => {
         });
 
         const container = {
+          getRetrieveTrustById: () => retrieveTrustByIdSpy,
           getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
           getTokenProvider: () => tokenProvider,
           getRegenerateToken: () => jest.fn().mockReturnValue({}),

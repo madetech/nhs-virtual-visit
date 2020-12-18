@@ -6,8 +6,10 @@ import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
 import ActionLink from "../../../../src/components/ActionLink";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
+import { GridRow, GridColumn } from "../../../../src/components/Grid";
+import Heading from "../../../../src/components/Heading";
 
-const AddAHospitalSuccess = ({ error, name, id }) => {
+const AddAHospitalSuccess = ({ trust, error, name, id }) => {
   if (error) {
     return <Error />;
   }
@@ -18,6 +20,17 @@ const AddAHospitalSuccess = ({ error, name, id }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
+      <GridRow>
+        <GridColumn width="two-thirds">
+          <Heading>
+            <span className="nhsuk-caption-l">
+              {trust.name}
+              <span className="nhsuk-u-visually-hidden">-</span>
+            </span>
+            Hospitals
+          </Heading>
+        </GridColumn>
+      </GridRow>
       <div className="nhsuk-grid-row">
         <div className="nhsuk-grid-column-two-thirds">
           <div
@@ -45,6 +58,10 @@ const AddAHospitalSuccess = ({ error, name, id }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
+    const trustResponse = await container.getRetrieveTrustById()(
+      authenticationToken.trustId
+    );
+
     const getRetrieveHospitalById = container.getRetrieveHospitalById();
     const { hospital, error } = await getRetrieveHospitalById(
       query.id,
@@ -59,6 +76,7 @@ export const getServerSideProps = propsWithContainer(
           error: error,
           name: hospital.name,
           id: hospital.id,
+          trust: { name: trustResponse.trust?.name },
         },
       };
     }
