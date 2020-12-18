@@ -14,7 +14,7 @@ describe("As an admin, I want to log in so that I can access the service.", () =
 
     cy.audit();
 
-    AndIEnterAValidAdminCodeAndPassword();
+    AndIEnterAValidAdminEmailAndPassword();
     AndISubmitTheForm();
     ThenISeeTheAdminHomePage();
 
@@ -38,7 +38,7 @@ describe("As an admin, I want to log in so that I can access the service.", () =
 
     cy.audit();
 
-    AndIEnterAValidAdminCodeAndPassword();
+    AndIEnterAValidAdminEmailAndPassword();
     AndISubmitTheForm();
     ThenISeeTheAdminHomePage();
 
@@ -68,8 +68,8 @@ describe("As an admin, I want to log in so that I can access the service.", () =
   // Allows an admin to log in and out
   function GivenIAmAnAdmin() {}
 
-  function AndIEnterAValidAdminCodeAndPassword() {
-    cy.get("input[name=code]").type(Cypress.env("validAdminCode"));
+  function AndIEnterAValidAdminEmailAndPassword() {
+    cy.get("input[name=email]").type(Cypress.env("validAdminEmail"));
     cy.get("input[name=password]").type(Cypress.env("validAdminPassword"));
   }
 
@@ -84,19 +84,19 @@ describe("As an admin, I want to log in so that I can access the service.", () =
 
   // Displays an error for an invalid code
   function AndIEnterAnInvalidCode() {
-    cy.get("input[name=code]").type("wrong");
+    cy.get("input[name=email]").type("wrong@email.com");
     cy.get("input[name=password]").type(Cypress.env("validAdminPassword"));
   }
 
   // Displays an error for an invalid code
   function AndIEnterAnInvalidPassword() {
-    cy.get("input[name=code]").type(Cypress.env("validAdminCode"));
+    cy.get("input[name=email]").type(Cypress.env("validAdminEmail"));
     cy.get("input[name=password]").type("wrong");
   }
 
   function ThenISeeAnError() {
     cy.contains("There is a problem").should("be.visible");
-    cy.contains("The code or password you entered was not recognised").should(
+    cy.contains("The email or password you entered was not recognised").should(
       "be.visible"
     );
   }
