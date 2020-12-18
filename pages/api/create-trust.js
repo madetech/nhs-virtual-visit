@@ -1,5 +1,8 @@
 import withContainer from "../../src/middleware/withContainer";
-import validateHttpMethod from "../../src/helpers/apiErrorHandler";
+import {
+  validateHttpMethod,
+  checkIfAuthorised,
+} from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -7,11 +10,7 @@ export default withContainer(
 
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
 
-    if (!adminIsAuthenticated(headers.cookie)) {
-      res.status(401);
-      res.end(JSON.stringify({ err: "not authenticated" }));
-      return;
-    }
+    checkIfAuthorised(adminIsAuthenticated(headers.cookie), res);
 
     if (!body.name) {
       res.status(409);

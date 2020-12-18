@@ -1,6 +1,9 @@
 import { VIDEO_PROVIDERS } from "../../src/providers/CallIdProvider";
 import withContainer from "../../src/middleware/withContainer";
-import validateHttpMethod from "../../src/helpers/apiErrorHandler";
+import {
+  validateHttpMethod,
+  checkIfAuthorised,
+} from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(async (req, res, { container }) => {
   validateHttpMethod("PATCH", req.method, res);
@@ -9,9 +12,7 @@ export default withContainer(async (req, res, { container }) => {
 
   const token = adminIsAuthenticated(req.headers.cookie);
 
-  if (!token) {
-    return res.status(401).end();
-  }
+  checkIfAuthorised(token, res);
 
   const { id, videoProvider } = req.body;
 

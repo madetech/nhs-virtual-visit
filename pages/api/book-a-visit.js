@@ -11,7 +11,10 @@ import sendEmail from "../../src/usecases/sendEmail";
 import sendBookingNotification from "../../src/usecases/sendBookingNotification";
 import createVisitUnitOfWork from "../../src/gateways/UnitsOfWork/createVisitUnitOfWork";
 import GovNotify from "../../src/gateways/GovNotify";
-import validateHttpMethod from "../../src/helpers/apiErrorHandler";
+import {
+  validateHttpMethod,
+  checkIfAuthorised,
+} from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -22,11 +25,8 @@ export default withContainer(
       headers.cookie
     );
 
-    if (!userIsAuthenticatedResponse) {
-      res.status(401);
-      res.end(JSON.stringify({ err: "Unauthorized" }));
-      return;
-    }
+    checkIfAuthorised(userIsAuthenticatedResponse, res);
+
     let { wardId, trustId } = userIsAuthenticatedResponse;
     if (!trustId) {
       res.status(400);
