@@ -12,8 +12,6 @@ describe("/api/update-a-visit", () => {
       end: jest.fn(),
     };
 
-    // const container = {};
-
     await updateAVisit(request, response);
     expect(response.status).toHaveBeenCalledWith(405);
   });
