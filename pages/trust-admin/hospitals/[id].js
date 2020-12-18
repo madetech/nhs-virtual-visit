@@ -14,6 +14,7 @@ import HospitalSummaryList from "../../../src/components/HospitalSummaryList";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const ShowHospital = ({
+  trust,
   hospital,
   wards,
   error,
@@ -34,7 +35,13 @@ const ShowHospital = ({
     >
       <GridRow>
         <GridColumn width="full">
-          <Heading>{hospital.name}</Heading>
+          <Heading>
+            <span className="nhsuk-caption-l">
+              {trust.name}
+              <span className="nhsuk-u-visually-hidden">-</span>
+            </span>
+            {hospital.name}
+          </Heading>
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn
               className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
@@ -108,6 +115,10 @@ export const getServerSideProps = propsWithContainer(
     const { id: hospitalId } = query;
     const trustId = authenticationToken.trustId;
 
+    const trustResponse = await container.getRetrieveTrustById()(
+      authenticationToken.trustId
+    );
+
     const {
       hospital,
       error: hospitalError,
@@ -134,6 +145,7 @@ export const getServerSideProps = propsWithContainer(
 
     return {
       props: {
+        trust: { name: trustResponse.trust?.name },
         hospital,
         wards,
         error: hospitalError || wardsError,
