@@ -1,3 +1,12 @@
+## [0.5.6](https://github.com/madetech/nhs-virtual-visit/compare/v0.5.5...v0.5.6) (2020-12-18)
+
+
+### Bug Fixes
+
+* e2e tests should have access to environment variables ([f87080c](https://github.com/madetech/nhs-virtual-visit/commit/f87080cfb4255f759dbe6938f4459000ca422822))
+
+
+
 ## [0.5.5](https://github.com/madetech/nhs-virtual-visit/compare/v0.5.4...v0.5.5) (2020-12-18)
 
 
@@ -34,15 +43,6 @@
 * default ENABLE_UR_QUESTION to be disabled unless explicitly set to 'yes' ([3109710](https://github.com/madetech/nhs-virtual-visit/commit/31097108692d17b60d934d9bf4efddac919d8a31))
 * navigate after submitting ur question results, improve testability, correct page formatting ([b488cd7](https://github.com/madetech/nhs-virtual-visit/commit/b488cd76406caf547d15f5e7c8c5e36b361d231d))
 * stop ci failing due to environment variables not being correctly set ([15b9214](https://github.com/madetech/nhs-virtual-visit/commit/15b921428d23097e4d6f626e7944313dda470d87))
-
-
-
-## [0.5.1](https://github.com/madetech/nhs-virtual-visit/compare/v0.5.0...v0.5.1) (2020-11-16)
-
-
-### Bug Fixes
-
-* make setup dev db work for docker-compose ([58f228d](https://github.com/madetech/nhs-virtual-visit/commit/58f228df9783b82b56bc1379168cd35cbd08847d))
 
 
 
