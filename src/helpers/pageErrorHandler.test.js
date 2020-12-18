@@ -1,4 +1,4 @@
-import { hasError, getErrorMessage } from "./pageErrorHandler";
+import { hasError, errorMessage } from "./pageErrorHandler";
 
 describe("hasError", () => {
   it("returns the item when an error exists for the given field", () => {
@@ -12,19 +12,19 @@ describe("hasError", () => {
   });
 });
 
-describe("getErrorMessage", () => {
+describe("errorMessage", () => {
   it("returns the error message of the error when specified field has an error", () => {
     const errors = [
       { id: "test-id-error", message: "Mandatory field" },
       { id: "other-id-error", message: "Other mandatory field" },
     ];
 
-    expect(getErrorMessage(errors, "test-id")).toEqual("Mandatory field");
+    expect(errorMessage(errors, "test-id")).toEqual("Mandatory field");
   });
 
   it("returns empty string an error exists for the given field", () => {
     const errors = [{ id: "other-id-error", message: "Other mandatory field" }];
 
-    expect(getErrorMessage(errors, "test-id")).toEqual("");
+    expect(errorMessage(errors, "test-id")).toEqual("");
   });
 });

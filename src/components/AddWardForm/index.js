@@ -8,6 +8,7 @@ import Label from "../Label";
 import Router from "next/router";
 import Form from "../../components/Form";
 import isPresent from "../../helpers/isPresent";
+import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 
 const AddWardForm = ({ errors, setErrors, hospital }) => {
   const [wardName, setWardName] = useState("");
@@ -16,13 +17,13 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
   const [wardPin, setWardPin] = useState("");
   const [wardPinConfirmation, setWardPinConfirmation] = useState("");
 
-  const hasError = (field) =>
-    errors.find((error) => error.id === `${field}-error`);
+  // const hasError = (field) =>
+  //   errors.find((error) => error.id === `${field}-error`);
 
-  const errorMessage = (field) => {
-    const error = errors.filter((err) => err.id === `${field}-error`);
-    return error.length === 1 ? error[0].message : "";
-  };
+  // const errorMessage = (field) => {
+  //   const error = errors.filter((err) => err.id === `${field}-error`);
+  //   return error.length === 1 ? error[0].message : "";
+  // };
 
   const onSubmit = async () => {
     const onSubmitErrors = [];
@@ -174,8 +175,8 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
             id="ward-name"
             type="text"
             className="nhsuk-u-width-two-thirds"
-            hasError={hasError("ward-name")}
-            errorMessage={errorMessage("ward-name")}
+            hasError={hasError(errors, "ward-name")}
+            errorMessage={errorMessage(errors, "ward-name")}
             onChange={(event) => setWardName(event.target.value)}
             name="ward-name"
             autoComplete="off"
@@ -189,8 +190,8 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
           <Input
             id="ward-code"
             type="text"
-            hasError={hasError("ward-code")}
-            errorMessage={errorMessage("ward-code")}
+            hasError={hasError(errors, "ward-code")}
+            errorMessage={errorMessage(errors, "ward-code")}
             className="nhsuk-input--width-10"
             onChange={(event) => setWardCode(event.target.value)}
             name="ward-code"
@@ -205,8 +206,8 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
           <Input
             id="ward-code-confirmation"
             type="text"
-            hasError={hasError("ward-code-confirmation")}
-            errorMessage={errorMessage("ward-code-confirmation")}
+            hasError={hasError(errors, "ward-code-confirmation")}
+            errorMessage={errorMessage(errors, "ward-code-confirmation")}
             className="nhsuk-input--width-10"
             onChange={(event) => setWardCodeConfirmation(event.target.value)}
             name="ward-code-confirmation"
@@ -221,8 +222,8 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
           <Input
             id="ward-pin"
             type="text"
-            hasError={hasError("ward-pin")}
-            errorMessage={errorMessage("ward-pin")}
+            hasError={hasError(errors, "ward-pin")}
+            errorMessage={errorMessage(errors, "ward-pin")}
             className="nhsuk-input--width-10"
             onChange={(event) => setWardPin(event.target.value)}
             name="ward-pin"
@@ -237,8 +238,8 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
           <Input
             id="ward-pin-confirmation"
             type="text"
-            hasError={hasError("ward-pin-confirmation")}
-            errorMessage={errorMessage("ward-pin-confirmation")}
+            hasError={hasError(errors, "ward-pin-confirmation")}
+            errorMessage={errorMessage(errors, "ward-pin-confirmation")}
             className="nhsuk-input--width-10"
             onChange={(event) => setWardPinConfirmation(event.target.value)}
             name="ward-pin-confirmation"
