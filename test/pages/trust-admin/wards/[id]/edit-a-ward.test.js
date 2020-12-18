@@ -36,6 +36,11 @@ describe("/trust-admin/wards/[id]/edit", () => {
 
     describe("with wardId parameter", () => {
       it("retrieves a ward by the wardId parameter", async () => {
+        const retrieveTrustByIdSpy = jest.fn(async () => ({
+          trust: { name: "Doggo Trust" },
+          error: null,
+        }));
+
         const retrieveWardByIdSpy = jest.fn().mockReturnValue({
           ward: {
             id: 1,
@@ -46,6 +51,7 @@ describe("/trust-admin/wards/[id]/edit", () => {
         });
 
         const container = {
+          getRetrieveTrustById: () => retrieveTrustByIdSpy,
           getRetrieveWardById: () => retrieveWardByIdSpy,
           getRetrieveHospitalsByTrustId: () =>
             jest.fn().mockReturnValue({
@@ -69,6 +75,11 @@ describe("/trust-admin/wards/[id]/edit", () => {
       });
 
       it("set a ward prop based on the retrieved ward", async () => {
+        const retrieveTrustByIdSpy = jest.fn(async () => ({
+          trust: { name: "Doggo Trust" },
+          error: null,
+        }));
+
         const retrieveWardByIdSpy = jest.fn().mockReturnValue({
           ward: {
             id: 1,
@@ -79,6 +90,7 @@ describe("/trust-admin/wards/[id]/edit", () => {
         });
 
         const container = {
+          getRetrieveTrustById: () => retrieveTrustByIdSpy,
           getRetrieveWardById: () => retrieveWardByIdSpy,
           getRetrieveHospitalsByTrustId: () =>
             jest.fn().mockReturnValue({
