@@ -42,7 +42,7 @@ function AndISubmitTheAddWardForm() {
 }
 
 function ThenISeeTheAddAWardForm() {
-  cy.get("h1").should("contain", "Add a ward");
+  cy.get("h2").should("contain", "Add a ward");
 }
 
 function WhenIClickToEditAWard(name) {
