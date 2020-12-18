@@ -16,6 +16,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalSupportUrl, setHospitalSupportUrl] = useState(
     hospital.supportUrl
   );
+  const [hospitalCode, setHospitalCode] = useState(hospital.code);
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
@@ -32,6 +33,13 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       e.push({
         id: "hospital-name-error",
         message: "Enter a hospital name",
+      });
+    };
+
+    const setHospitalCodeError = (e) => {
+      e.push({
+        id: "hospital-code-error",
+        message: "Enter a hospital code",
       });
     };
 
@@ -53,6 +61,10 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       setHospitalNameError(onSubmitErrors);
     }
 
+    if (!isPresent(hospitalCode)) {
+      setHospitalCodeError(onSubmitErrors);
+    }
+
     if (isPresent(hospitalSurveyUrl) && !validateUrl(hospitalSurveyUrl)) {
       setHospitalSurveyUrlInvalidError(onSubmitErrors);
     }
@@ -66,6 +78,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
         name: hospitalName,
         surveyUrl: hospitalSurveyUrl,
         supportUrl: hospitalSupportUrl,
+        code: hospitalCode,
       });
     } else setErrors(onSubmitErrors);
   };
@@ -91,7 +104,22 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           value={hospitalName || ""}
         />
       </FormGroup>
-
+      <FormGroup>
+        <Label htmlFor="hospital-code" className="nhsuk-label--m">
+          Create a hospital code
+        </Label>
+        <Input
+          id="hospital-code"
+          type="text"
+          hasError={hasError("hospital-code")}
+          errorMessage={errorMessage("hospital-code")}
+          className="nhsuk-input--width-10"
+          onChange={(event) => setHospitalCode(event.target.value)}
+          name="hospital-code"
+          autoComplete="off"
+          value={hospitalCode || ""}
+        />
+      </FormGroup>
       <FormGroup>
         <Label htmlFor="hospital-survey-url" className="nhsuk-label--m">
           Key contact survey URL (optional)
