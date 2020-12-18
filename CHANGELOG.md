@@ -1,3 +1,12 @@
+# [0.6.0](https://github.com/madetech/nhs-virtual-visit/compare/v0.5.4...v0.6.0) (2020-12-18)
+
+
+### Features
+
+* start of new pageErrorHandler ([cbf27c4](https://github.com/madetech/nhs-virtual-visit/commit/cbf27c4fed319d91a99b606a74f94c825b1f980e))
+
+
+
 ## [0.5.4](https://github.com/madetech/nhs-virtual-visit/compare/v0.5.3...v0.5.4) (2020-12-10)
 
 
@@ -34,15 +43,6 @@
 ### Bug Fixes
 
 * make setup dev db work for docker-compose ([58f228d](https://github.com/madetech/nhs-virtual-visit/commit/58f228df9783b82b56bc1379168cd35cbd08847d))
-
-
-
-# [0.5.0](https://github.com/madetech/nhs-virtual-visit/compare/v0.4.0...v0.5.0) (2020-11-12)
-
-
-### Features
-
-* add redirection behaviour for dedicated UR question page ([d0f6e0f](https://github.com/madetech/nhs-virtual-visit/commit/d0f6e0f46365f2fd28b067f3fe1be3ebe4bf303d))
 
 
 
