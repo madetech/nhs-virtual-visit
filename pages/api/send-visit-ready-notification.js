@@ -1,7 +1,10 @@
 import ConsoleNotifyProvider from "../../src/providers/ConsoleNotifyProvider";
 import withContainer from "../../src/middleware/withContainer";
 import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
-import validateHttpMethod from "../../src/helpers/apiErrorHandler";
+import {
+  validateHttpMethod,
+  checkIfAuthorised,
+} from "../../src/helpers/apiErrorHandler";
 
 const notifier = new ConsoleNotifyProvider();
 
@@ -13,12 +16,7 @@ export default withContainer(async (req, res, { container }) => {
   const authenticationToken = await userIsAuthenticated(cookie);
 
   validateHttpMethod("POST", method, res);
-
-  if (!authenticationToken) {
-    res.status(401);
-    res.end();
-    return;
-  }
+  checkIfAuthorised(authenticationToken, res);
 
   let { callId, contactNumber, contactEmail, callPassword } = body;
 

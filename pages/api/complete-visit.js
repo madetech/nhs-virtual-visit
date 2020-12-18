@@ -1,5 +1,8 @@
 import withContainer from "../../src/middleware/withContainer";
-import validateHttpMethod from "../../src/helpers/apiErrorHandler";
+import {
+  validateHttpMethod,
+  checkIfAuthorised,
+} from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -10,11 +13,7 @@ export default withContainer(
       headers?.cookie
     );
 
-    if (!userIsAuthenticatedResponse) {
-      res.status(401);
-      res.end(JSON.stringify({ err: "Unauthorized" }));
-      return;
-    }
+    checkIfAuthorised(userIsAuthenticatedResponse, res);
 
     if (!body.callId) {
       res.status(400);

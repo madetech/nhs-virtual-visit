@@ -1,5 +1,8 @@
 import withContainer from "../../src/middleware/withContainer";
-import validateHttpMethod from "../../src/helpers/apiErrorHandler";
+import {
+  validateHttpMethod,
+  checkIfAuthorised,
+} from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -9,11 +12,7 @@ export default withContainer(
 
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
 
-    if (!trustAdminToken) {
-      res.status(401);
-      res.end();
-      return;
-    }
+    checkIfAuthorised(trustAdminToken, res);
 
     if (!body || !body.id || !body.name) {
       res.status(400);
