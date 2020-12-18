@@ -1,7 +1,7 @@
 import updateAVisit from "../../../pages/api/update-a-visit";
 import moment from "moment";
 
-describe("/api/book-a-visit", () => {
+describe("/api/update-a-visit", () => {
   it("returns a 405 when incorrect method is used", async () => {
     const request = {
       method: "POST",
@@ -12,9 +12,9 @@ describe("/api/book-a-visit", () => {
       end: jest.fn(),
     };
 
-    const container = {};
+    // const container = {};
 
-    await updateAVisit(request, response, { container });
+    await updateAVisit(request, response);
     expect(response.status).toHaveBeenCalledWith(405);
   });
 

@@ -8,6 +8,7 @@ export default withContainer(async (req, res, { container }) => {
   const { code, password } = req.body;
 
   const method = req.method;
+
   if (method === "POST") {
     const sessionId = uuidv4();
     let verifyWardCodeResponse = {};
@@ -114,7 +115,7 @@ export default withContainer(async (req, res, { container }) => {
     res.end(JSON.stringify({ wardId: code }));
     return;
   } else {
-    res.statusCode = 406;
+    res.statusCode = 405;
     res.end();
     return;
   }

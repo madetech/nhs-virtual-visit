@@ -1,11 +1,9 @@
 import { VIDEO_PROVIDERS } from "../../src/providers/CallIdProvider";
 import withContainer from "../../src/middleware/withContainer";
+import validateHttpMethod from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(async (req, res, { container }) => {
-  if (req.method !== "PATCH") {
-    res.status(405).end();
-    return;
-  }
+  validateHttpMethod("PATCH", req.method, res);
 
   const adminIsAuthenticated = container.getAdminIsAuthenticated();
 

@@ -1,16 +1,13 @@
 import withContainer from "../../src/middleware/withContainer";
 import isGuid from "../../src/helpers/isGuid";
 import { JOIN_VISIT, LEAVE_VISIT } from "../../src/helpers/eventActions";
+import validateHttpMethod from "../../src/helpers/apiErrorHandler";
 
 const actions = [JOIN_VISIT, LEAVE_VISIT];
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
-    if (method !== "POST") {
-      res.status(405);
-      res.end(JSON.stringify({ err: "method not allowed" }));
-      return;
-    }
+    validateHttpMethod("POST", method, res);
 
     const userIsAuthenticated = container.getUserIsAuthenticated();
     const userIsAuthenticatedResponse = await userIsAuthenticated(

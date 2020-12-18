@@ -2,13 +2,13 @@ import session from "../../../pages/api/session";
 
 describe("api/session", () => {
   describe("Given incorrect method", () => {
-    it("Returns a 406", async () => {
+    it("Returns a 405", async () => {
       let invalidRequest = { method: "GET", body: { code: "MEOW" } };
       let response = { statusCode: 0, end: jest.fn() };
 
       await session(invalidRequest, response, {});
 
-      expect(response.statusCode).toEqual(406);
+      expect(response.statusCode).toEqual(405);
       expect(response.end).toHaveBeenCalled();
     });
   });

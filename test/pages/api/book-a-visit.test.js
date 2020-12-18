@@ -170,6 +170,18 @@ describe("/api/book-a-visit", () => {
     expect(userIsAuthenticatedSpy).toHaveBeenCalled();
   });
 
+  it("returns a 405 when method is not POST", async () => {
+    request.method = "GET";
+
+    await bookAVisit(request, response, {
+      container: {
+        ...container,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(405);
+  });
+
   it("returns a 400 when createVisit returns an error", async () => {
     const trust = { id: 1, videoProvider: "anotherTestVideoProvider" };
     const ward = {
