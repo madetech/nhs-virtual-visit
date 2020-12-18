@@ -50,7 +50,7 @@ function WhenIClickToEditAWard(name) {
 }
 
 function ThenISeeTheEditAWardForm() {
-  cy.get("h1").should("contain", "Edit a ward");
+  cy.get("h2").should("contain", "Edit a ward");
 }
 
 function AndISubmitTheEditWardForm() {
