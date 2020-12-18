@@ -37,6 +37,7 @@ const createTrust = ({ getDb }) => async ({
     };
   } catch (error) {
     logger.error(error);
+
     return {
       trustId: null,
       error: error.toString(),

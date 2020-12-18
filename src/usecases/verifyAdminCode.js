@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import logger from "../../logger";
 
-const verifyAdminCode = ({ getDb }) => async (code, password) => {
+const verifyAdminCode = ({ getDb }) => async (email, password) => {
   const db = await getDb();
 
   if (!password) {
@@ -13,8 +13,8 @@ const verifyAdminCode = ({ getDb }) => async (code, password) => {
 
   try {
     const dbResponse = await db.any(
-      `SELECT id, password FROM admins WHERE code = $1 LIMIT 1`,
-      [code]
+      `SELECT id, password FROM admins WHERE email = $1 LIMIT 1`,
+      [email]
     );
 
     if (dbResponse.length > 0) {
@@ -23,7 +23,7 @@ const verifyAdminCode = ({ getDb }) => async (code, password) => {
       if (!bcrypt.compareSync(password, admin.password))
         return {
           validAdminCode: false,
-          error: "Incorrect trust admin code or password",
+          error: "Incorrect email or password",
         };
 
       return {
