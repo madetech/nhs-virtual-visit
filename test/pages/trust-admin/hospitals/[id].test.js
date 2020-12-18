@@ -35,7 +35,7 @@ describe("trust-admin/hospitals/[id]", () => {
       });
     });
 
-    it("provides the hospital and wards as props", async () => {
+    it("provides the trust, hospital and wards as props", async () => {
       const hospitalId = 1;
 
       const TrustSpy = jest.fn(async () => ({
