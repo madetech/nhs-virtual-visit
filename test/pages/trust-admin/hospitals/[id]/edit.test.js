@@ -38,6 +38,12 @@ describe("/trust-admin/hospitals/[id]/edit", () => {
 
     it("retrieves the hospital by ID", async () => {
       const hospitalId = 2;
+
+      const retrieveTrustByIdSpy = jest.fn(async () => ({
+        trust: { name: "Doggo Trust" },
+        error: null,
+      }));
+
       const retrieveHospitalByIdSpy = jest.fn().mockResolvedValue({
         hospital: {
           id: hospitalId,
@@ -49,6 +55,7 @@ describe("/trust-admin/hospitals/[id]/edit", () => {
       });
 
       const container = {
+        getRetrieveTrustById: () => retrieveTrustByIdSpy,
         getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
