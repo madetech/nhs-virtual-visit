@@ -3,6 +3,7 @@ import logger from "../../logger";
 const createHospital = ({ getDb }) => async ({
   name,
   trustId,
+  code,
   supportUrl = null,
   surveyUrl = null,
 }) => {
@@ -16,11 +17,11 @@ const createHospital = ({ getDb }) => async ({
     );
     const createdHospital = await db.one(
       `INSERT INTO hospitals
-          (id, name, trust_id, support_url, survey_url)
-          VALUES (default, $1, $2, $3, $4)
+          (id, name, trust_id, support_url, survey_url, code)
+          VALUES (default, $1, $2, $3, $4, $5)
           RETURNING id
         `,
-      [name, trustId, supportUrl, surveyUrl]
+      [name, trustId, supportUrl, surveyUrl, code]
     );
 
     return {

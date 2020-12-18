@@ -7,6 +7,7 @@ import {
 
 describe("As a trust admin, I want to add a hospital so that I can manage virtual visits per hospital.", () => {
   const hospitalName = "Scorpia Hospital";
+  const hospitalCode = "SCH";
 
   before(() => {
     // reset and seed the database
@@ -27,7 +28,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
     cy.audit();
 
-    WhenIFillOutTheForm(hospitalName);
+    WhenIFillOutTheForm(hospitalName, hospitalCode);
     AndISubmitTheForm();
     ThenISeeTheHospitalIsAdded(hospitalName);
     WhenIClickToGoToTheAddedHospital(hospitalName);
@@ -41,7 +42,8 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     WhenIClickOnTheEditLink(hospitalName);
     ThenIExpectTHeHospitalNameFieldToBePrePopulated(hospitalName);
     const newName = "new hopsital name";
-    WhenIFillOutTheForm(newName);
+    const newCode = "NHN";
+    WhenIFillOutTheForm(newName, newCode);
     AndIClickTheEditHospitalButton();
 
     ThenIShouldBeOnTheEditSuccessPageWithNewName(newName);
@@ -100,8 +102,9 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     cy.get("h2").should("contain", "Add a hospital");
   }
 
-  function WhenIFillOutTheForm(name) {
+  function WhenIFillOutTheForm(name, newCode) {
     cy.get("input[name=hospital-name]").clear().type(name);
+    cy.get("input[name=hospital-code]").clear().type(newCode);
     cy.get("input[name=hospital-survey-url]")
       .clear()
       .type("https://www.survey.example.com");

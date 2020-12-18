@@ -31,6 +31,7 @@ const AddAHospital = ({ trust, error, trustId }) => {
   };
 
   const submit = async (payload) => {
+    console.log(payload);
     payload.trustId = trustId;
     try {
       const response = await fetch("/api/create-hospital", {
