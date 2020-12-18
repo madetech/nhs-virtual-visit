@@ -47,7 +47,7 @@ const Login = ({ correlationId }) => {
     }
 
     if (onSubmitErrors.length === 0) {
-      const body = JSON.stringify({ code: email, password }); // change db to use email
+      const body = JSON.stringify({ code: email, password });
       const response = await fetchEndpointWithCorrelationId(
         "POST",
         "/api/session",
