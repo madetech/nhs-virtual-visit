@@ -11,20 +11,13 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Form from "../../src/components/Form";
 import { v4 as uuidv4 } from "uuid";
 import fetchEndpointWithCorrelationId from "../../src/helpers/fetchEndpointWithCorrelationId";
+import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
 
 const Login = ({ correlationId }) => {
   const [errors, setErrors] = useState([]);
 
   const codeRef = useRef();
   const passwordRef = useRef();
-
-  const hasError = (field) =>
-    errors.find((error) => error.id === `${field}-error`);
-
-  const errorMessage = (field) => {
-    const error = errors.filter((err) => err.id === `${field}-error`);
-    return error.length === 1 ? error[0].message : "";
-  };
 
   const onSubmit = async () => {
     const onSubmitErrors = [];
@@ -84,8 +77,8 @@ const Login = ({ correlationId }) => {
                 id="code"
                 type="text"
                 ref={codeRef}
-                hasError={hasError("code")}
-                errorMessage={errorMessage("code")}
+                hasError={hasError(errors, "code")}
+                errorMessage={errorMessage(errors, "code")}
                 className="nhsuk-input--width-10"
                 name="code"
               />
@@ -96,8 +89,8 @@ const Login = ({ correlationId }) => {
                 id="password"
                 type="password"
                 ref={passwordRef}
-                hasError={hasError("password")}
-                errorMessage={errorMessage("password")}
+                hasError={hasError(errors, "password")}
+                errorMessage={errorMessage(errors, "password")}
                 className="nhsuk-input--width-10"
                 name="password"
                 autoComplete="off"

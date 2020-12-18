@@ -7,6 +7,7 @@ import Label from "../Label";
 import Form from "../Form";
 import isPresent from "../../helpers/isPresent";
 import SelectStatus from "../../components/SelectStatus";
+import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 
 const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
@@ -17,15 +18,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   if (hospital.id) {
     action = "Edit";
   }
-
-
-  const hasError = (field) =>
-    errors.find((error) => error.id === `${field}-error`);
-
-  const errorMessage = (field) => {
-    const error = errors.filter((err) => err.id === `${field}-error`);
-    return error.length === 1 ? error[0].message : "";
-  };
 
   const onSubmit = async () => {
     let onSubmitErrors = [];
@@ -82,8 +74,8 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
         <Input
           id="hospital-name"
           type="text"
-          hasError={hasError("hospital-name")}
-          errorMessage={errorMessage("hospital-name")}
+          hasError={hasError(errors, "hospital-name")}
+          errorMessage={errorMessage(errors, "hospital-name")}
           className="nhsuk-u-width-three-quarters"
           onChange={(event) => setHospitalName(event.target.value)}
           name="hospital-name"
@@ -99,8 +91,8 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           <Input
             id="hospital-code"
             type="text"
-            hasError={hasError("hospital-code")}
-            errorMessage={errorMessage("hospital-code")}
+            hasError={hasError(errors, "hospital-code")}
+            errorMessage={errorMessage(errors, "hospital-code")}
             className="nhsuk-input--width-10"
             onChange={(event) => setHospitalCode(event.target.value)}
             name="hospital-code"
@@ -129,8 +121,8 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
               );
 
             }}
-            hasError={hasError("hospital-status")}
-            errorMessage={errorMessage("hospital-status")}
+            hasError={hasError(errors, "hospital-status")}
+            errorMessage={errorMessage(errors, "hospital-status")}
             defaultValue={hospitalStatus}
           />
         </FormGroup>

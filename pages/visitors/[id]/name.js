@@ -15,6 +15,7 @@ import Error from "next/error";
 import Form from "../../../src/components/Form";
 import logger from "../../../logger";
 import { v4 as uuidv4 } from "uuid";
+import { hasError } from "../../../src/helpers/pageErrorHandler";
 
 const Name = ({ callId, error, callPassword, correlationId }) => {
   useEffect(() => {
@@ -33,9 +34,6 @@ const Name = ({ callId, error, callPassword, correlationId }) => {
   const nameError = "Enter your name";
   const [name, setName] = useState("");
   const [errors, setErrors] = useState([]);
-
-  const hasError = (field) =>
-    errors.find((error) => error.id === `${field}-error`);
 
   const onSubmit = async () => {
     const errors = [];
@@ -90,7 +88,7 @@ const Name = ({ callId, error, callPassword, correlationId }) => {
                 id="name"
                 type="text"
                 onChange={(event) => setName(event.target.value)}
-                hasError={hasError("name")}
+                hasError={hasError(errors, "name")}
                 errorMessage={nameError}
                 name="name"
               />

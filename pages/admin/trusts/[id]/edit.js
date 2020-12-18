@@ -16,18 +16,14 @@ import {
   VIDEO_PROVIDER_OPTIONS,
   VIDEO_PROVIDERS,
 } from "../../../../src/providers/CallIdProvider";
+import {
+  hasError,
+  errorMessage,
+} from "../../../../src/helpers/pageErrorHandler";
 
 const EditTrust = ({ trust }) => {
   const [errors, setErrors] = useState([]);
   const [videoProvider, setVideoProvider] = useState(trust.videoProvider);
-
-  const hasError = (field) =>
-    errors.find((error) => error.id === `${field}-error`);
-
-  const getErrorMessage = (field) => {
-    const error = errors.filter((err) => err.id === `${field}-error`);
-    return error.length === 1 ? error[0].message : "";
-  };
 
   const onSubmit = async () => {
     const onSubmitErrors = [];
@@ -101,8 +97,8 @@ const EditTrust = ({ trust }) => {
                 onChange={(event) => {
                   setVideoProvider(event.target.value);
                 }}
-                hasError={hasError("video-provider")}
-                errorMessage={getErrorMessage("video-provider")}
+                hasError={hasError(errors, "video-provider")}
+                errorMessage={errorMessage(errors, "video-provider")}
                 name="video-provider"
                 defaultValue={
                   VIDEO_PROVIDERS.includes(videoProvider) ? videoProvider : null

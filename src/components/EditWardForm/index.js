@@ -9,6 +9,7 @@ import Label from "../Label";
 import Router from "next/router";
 import isPresent from "../../helpers/isPresent";
 import Form from "../Form";
+import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 
 const EditWardForm = ({
   errors,
@@ -21,14 +22,6 @@ const EditWardForm = ({
   const [wardName, setWardName] = useState(initialName);
   const [wardStatus, setWardStatus] = useState(status);
   let onSubmitErrors = [];
-
-  const hasError = (field) =>
-    errors.find((error) => error.id === `${field}-error`);
-
-  const errorMessage = (field) => {
-    const error = errors.filter((err) => err.id === `${field}-error`);
-    return error.length === 1 ? error[0].message : "";
-  };
 
   const submitAnswers = async () => {
     try {
@@ -96,8 +89,8 @@ const EditWardForm = ({
           <Input
             id="ward-name"
             type="text"
-            hasError={hasError("ward-name")}
-            errorMessage={errorMessage("ward-name")}
+            hasError={hasError(errors, "ward-name")}
+            errorMessage={errorMessage(errors, "ward-name")}
             className="nhsuk-input--width-10"
             onChange={(event) => setWardName(event.target.value)}
             name="ward-name"
@@ -117,8 +110,8 @@ const EditWardForm = ({
             onChange={(event) => {
               setWardStatus(event.target.value);
             }}
-            hasError={hasError("ward-status")}
-            errorMessage={errorMessage("ward-status")}
+            hasError={hasError(errors, "ward-status")}
+            errorMessage={errorMessage(errors, "ward-status")}
             defaultValue={wardStatus}
           />
         </FormGroup>
