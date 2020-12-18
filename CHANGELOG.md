@@ -1,3 +1,12 @@
+## [0.5.5](https://github.com/madetech/nhs-virtual-visit/compare/v0.5.4...v0.5.5) (2020-12-18)
+
+
+### Bug Fixes
+
+* e2e tests should have access to environment variables ([9d63818](https://github.com/madetech/nhs-virtual-visit/commit/9d63818eb159c642b3d27c6a549b46df95376d15))
+
+
+
 ## [0.5.4](https://github.com/madetech/nhs-virtual-visit/compare/v0.5.3...v0.5.4) (2020-12-10)
 
 
@@ -34,15 +43,6 @@
 ### Bug Fixes
 
 * make setup dev db work for docker-compose ([58f228d](https://github.com/madetech/nhs-virtual-visit/commit/58f228df9783b82b56bc1379168cd35cbd08847d))
-
-
-
-# [0.5.0](https://github.com/madetech/nhs-virtual-visit/compare/v0.4.0...v0.5.0) (2020-11-12)
-
-
-### Features
-
-* add redirection behaviour for dedicated UR question page ([d0f6e0f](https://github.com/madetech/nhs-virtual-visit/commit/d0f6e0f46365f2fd28b067f3fe1be3ebe4bf303d))
 
 
 
