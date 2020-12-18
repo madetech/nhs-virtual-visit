@@ -7,8 +7,4 @@ INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward One', (
 INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital 2'), 'TEST2', (SELECT id FROM trusts WHERE name='Test Trust'));
 INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test 2 Ward One', (SELECT id FROM hospitals WHERE name='Test 2 Hospital'), 'TEST22', (SELECT id FROM trusts WHERE name='Test 2 Trust'));
 INSERT INTO wards (name, hospital_id, code, trust_id, archived_at) VALUES ('Archived Ward',  (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TESTARC', (SELECT id FROM trusts WHERE name='Test Trust'), CURRENT_TIMESTAMP);
-<<<<<<< HEAD
 INSERT INTO admins (email, password) VALUES ('super@email.com', crypt('adminpassword', gen_salt('bf', 8)));
-=======
-INSERT INTO admins (email, password) VALUES ('super', crypt('adminpassword', gen_salt('bf', 8)));
->>>>>>> chore: change admins field name to email in seeds.sql
