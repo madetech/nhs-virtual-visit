@@ -8,7 +8,7 @@ import Layout from "../../../../src/components/Layout";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import EditHospitalForm from "../../../../src/components/EditHospitalForm";
 import ErrorSummary from "../../../../src/components/ErrorSummary";
-import Heading from "../../../../src/components/Heading";
+import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
 const EditHospital = ({ trust, hospital, error }) => {
   if (error) {
@@ -60,15 +60,10 @@ const EditHospital = ({ trust, hospital, error }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
+      <TrustAdminHeading trustName={trust.name} subHeading="Hospitals" />
+
       <GridRow>
         <GridColumn width="two-thirds">
-          <Heading>
-            <span className="nhsuk-caption-l">
-              {trust.name}
-              <span className="nhsuk-u-visually-hidden">-</span>
-            </span>
-            Hospitals
-          </Heading>
           <ErrorSummary errors={errors} />
           <EditHospitalForm
             errors={errors}

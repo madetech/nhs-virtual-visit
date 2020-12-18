@@ -4,7 +4,7 @@ import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
 import { GridRow, GridColumn } from "../../src/components/Grid";
-import Heading from "../../src/components/Heading";
+import TrustAdminHeading from "../../src/components/TrustAdminHeading";
 import NumberTile from "../../src/components/NumberTile";
 import Text from "../../src/components/Text";
 import AnchorLink from "../../src/components/AnchorLink";
@@ -35,16 +35,9 @@ const TrustAdmin = ({
       showNavigationBarForType={TRUST_ADMIN}
       showNavigationBar={true}
     >
+      <TrustAdminHeading trustName={trust.name} subHeading="Dashboard" />
       <GridRow>
         <GridColumn width="full">
-          <Heading>
-            <span className="nhsuk-caption-l">
-              {trust.name}
-              <span className="nhsuk-u-visually-hidden">-</span>
-            </span>
-            Dashboard
-          </Heading>
-
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn
               className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
