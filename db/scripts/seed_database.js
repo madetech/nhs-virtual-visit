@@ -18,7 +18,7 @@ async function seedDatabase() {
     "INSERT INTO trusts (name, admin_code, password, video_provider) VALUES ('Test Trust', 'admin', crypt('trustpassword', gen_salt('bf', 8)), 'whereby')"
   );
   await db.result(
-    "INSERT INTO hospitals (name, trust_id) VALUES ('Test Hospital', (SELECT id FROM trusts WHERE name='Test Trust'))"
+    "INSERT INTO hospitals (name, code, trust_id) VALUES ('Test Hospital', 'TBH', (SELECT id FROM trusts WHERE name='Test Trust'))"
   );
   const { id: wardId } = await db.one(
     "INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward One', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST1', (SELECT id FROM trusts WHERE name='Test Trust')) RETURNING id"
