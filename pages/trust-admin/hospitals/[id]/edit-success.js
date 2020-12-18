@@ -6,8 +6,7 @@ import AnchorLink from "../../../../src/components/AnchorLink";
 import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
-import { GridRow, GridColumn } from "../../../../src/components/Grid";
-import Heading from "../../../../src/components/Heading";
+import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
 const EditAHospitalSuccess = ({ trust, error, hospitalName, hospitalId }) => {
   if (error) {
@@ -20,17 +19,8 @@ const EditAHospitalSuccess = ({ trust, error, hospitalName, hospitalId }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <GridRow>
-        <GridColumn width="two-thirds">
-          <Heading>
-            <span className="nhsuk-caption-l">
-              {trust.name}
-              <span className="nhsuk-u-visually-hidden">-</span>
-            </span>
-            Hospitals
-          </Heading>
-        </GridColumn>
-      </GridRow>
+      <TrustAdminHeading trustName={trust.name} subHeading="Hospitals" />
+
       <div className="nhsuk-grid-row">
         <div className="nhsuk-grid-column-two-thirds">
           <div

@@ -5,7 +5,7 @@ import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
 import HospitalsTable from "../../../src/components/HospitalsTable";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
-import Heading from "../../../src/components/Heading";
+import TrustAdminHeading from "../../../src/components/TrustAdminHeading";
 import ActionLink from "../../../src/components/ActionLink";
 import Text from "../../../src/components/Text";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
@@ -21,15 +21,9 @@ const TrustAdmin = ({ hospitals, hospitalError, trust, trustError }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
+      <TrustAdminHeading trustName={trust.name} subHeading="Hospitals" />
       <GridRow>
         <GridColumn width="full">
-          <Heading>
-            <span className="nhsuk-caption-l">
-              {trust.name}
-              <span className="nhsuk-u-visually-hidden">-</span>
-            </span>
-            Hospitals
-          </Heading>
           <ActionLink href={`/trust-admin/hospitals/add`}>
             Add a hospital
           </ActionLink>
