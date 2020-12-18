@@ -28,7 +28,8 @@ describe("/trust-admin/wards/add", () => {
     });
   });
 
-  describe("AddAWard", () => {
+  /*** hospital drop down will be taken out skip test for now */
+  xdescribe("AddAWard", () => {
     it("does not throw a hospital error when default select hospital option", () => {
       render(
         <AddAWard

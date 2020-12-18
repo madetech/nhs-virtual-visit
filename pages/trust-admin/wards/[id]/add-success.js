@@ -5,9 +5,10 @@ import AnchorLink from "../../../../src/components/AnchorLink";
 import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
 import ActionLink from "../../../../src/components/ActionLink";
+import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 
-const AddAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
+const AddAWardSuccess = ({ trust, error, name, hospitalName, hospitalId }) => {
   if (error) {
     return <Error />;
   }
@@ -18,6 +19,7 @@ const AddAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
+      <TrustAdminHeading trustName={trust.name} subHeading={hospitalName} />
       <div className="nhsuk-grid-row">
         <div className="nhsuk-grid-column-two-thirds">
           <div
@@ -50,6 +52,10 @@ const AddAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
+    const trustResponse = await container.getRetrieveTrustById()(
+      authenticationToken.trustId
+    );
+
     const getRetrieveWardById = container.getRetrieveWardById();
     const { ward, error } = await getRetrieveWardById(
       query.id,
@@ -61,6 +67,7 @@ export const getServerSideProps = propsWithContainer(
         name: ward.name,
         hospitalName: ward.hospitalName,
         hospitalId: ward.hospitalId,
+        trust: { name: trustResponse.trust?.name },
       },
     };
   })
