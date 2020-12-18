@@ -11,14 +11,11 @@ import sendEmail from "../../src/usecases/sendEmail";
 import sendBookingNotification from "../../src/usecases/sendBookingNotification";
 import createVisitUnitOfWork from "../../src/gateways/UnitsOfWork/createVisitUnitOfWork";
 import GovNotify from "../../src/gateways/GovNotify";
+import validateHttpMethod from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
-    if (method !== "POST") {
-      res.status(406);
-      res.end();
-      return;
-    }
+    validateHttpMethod("POST", method, res);
 
     const userIsAuthenticatedInstance = container.getUserIsAuthenticated();
     const userIsAuthenticatedResponse = await userIsAuthenticatedInstance(

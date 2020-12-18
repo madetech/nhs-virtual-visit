@@ -1,12 +1,9 @@
 import withContainer from "../../src/middleware/withContainer";
+import validateHttpMethod from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
-    if (method !== "POST") {
-      res.status(405);
-      res.end(JSON.stringify({ err: "Method not allowed" }));
-      return;
-    }
+    validateHttpMethod("POST", method, res);
 
     const userIsAuthenticated = container.getUserIsAuthenticated();
     const userIsAuthenticatedResponse = await userIsAuthenticated(

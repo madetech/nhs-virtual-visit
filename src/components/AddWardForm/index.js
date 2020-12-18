@@ -17,14 +17,6 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
   const [wardPin, setWardPin] = useState("");
   const [wardPinConfirmation, setWardPinConfirmation] = useState("");
 
-  // const hasError = (field) =>
-  //   errors.find((error) => error.id === `${field}-error`);
-
-  // const errorMessage = (field) => {
-  //   const error = errors.filter((err) => err.id === `${field}-error`);
-  //   return error.length === 1 ? error[0].message : "";
-  // };
-
   const onSubmit = async () => {
     const onSubmitErrors = [];
 

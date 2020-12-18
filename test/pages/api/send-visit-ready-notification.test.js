@@ -75,14 +75,14 @@ describe("send-visit-ready-notification", () => {
       };
     });
 
-    it("returns 406 if not POST method", async () => {
+    it("returns 405 if not POST method", async () => {
       requestWithToken.method = "GET";
 
       await sendVisitReadyNotification(requestWithToken, response, {
         container,
       });
 
-      expect(response.status).toHaveBeenCalledWith(406);
+      expect(response.status).toHaveBeenCalledWith(405);
     });
 
     describe("when a phone number is provided", () => {
