@@ -104,22 +104,25 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           value={hospitalName || ""}
         />
       </FormGroup>
-      <FormGroup>
-        <Label htmlFor="hospital-code" className="nhsuk-label--m">
-          Create a hospital code
-        </Label>
-        <Input
-          id="hospital-code"
-          type="text"
-          hasError={hasError("hospital-code")}
-          errorMessage={errorMessage("hospital-code")}
-          className="nhsuk-input--width-10"
-          onChange={(event) => setHospitalCode(event.target.value)}
-          name="hospital-code"
-          autoComplete="off"
-          value={hospitalCode || ""}
-        />
-      </FormGroup>
+      {action === "Add" && (
+        <FormGroup>
+          <Label htmlFor="hospital-code" className="nhsuk-label--m">
+            Create a hospital code
+          </Label>
+          <Input
+            id="hospital-code"
+            type="text"
+            hasError={hasError("hospital-code")}
+            errorMessage={errorMessage("hospital-code")}
+            className="nhsuk-input--width-10"
+            onChange={(event) => setHospitalCode(event.target.value)}
+            name="hospital-code"
+            autoComplete="off"
+            value={hospitalCode || ""}
+          />
+        </FormGroup>
+      )}
+
       <FormGroup>
         <Label htmlFor="hospital-survey-url" className="nhsuk-label--m">
           Key contact survey URL (optional)
