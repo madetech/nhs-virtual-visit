@@ -107,6 +107,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           />
         </FormGroup>
       )}
+
       {action === "Edit" && (
         <FormGroup>
           <Label htmlFor="hospital-status" className="nhsuk-label--m">
