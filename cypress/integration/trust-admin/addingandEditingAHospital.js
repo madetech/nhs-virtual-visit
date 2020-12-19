@@ -41,7 +41,9 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
     WhenIClickOnTheEditLink(hospitalName);
     ThenIExpectTHeHospitalNameFieldToBePrePopulated(hospitalName);
+
     const newName = "new hospital name";
+
     WhenIFillOutTheEditForm(newName);
     AndIClickTheEditHospitalButton();
 
