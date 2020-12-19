@@ -16,7 +16,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     );
   });
 
-  it("allows a trust admin to add and edit  a hospital", () => {
+  it("allows a trust admin to add and edit a hospital", () => {
     GivenIAmLoggedInAsATrustAdmin();
     WhenIClickHospitalsOnTheNavigationBar();
     ThenISeeTheHospitalsPage();
@@ -28,7 +28,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
     cy.audit();
 
-    WhenIFillOutTheForm(hospitalName, hospitalCode);
+    WhenIFillOutTheAddForm(hospitalName, hospitalCode);
     AndISubmitTheForm();
     ThenISeeTheHospitalIsAdded(hospitalName);
     WhenIClickToGoToTheAddedHospital(hospitalName);
@@ -42,8 +42,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     WhenIClickOnTheEditLink(hospitalName);
     ThenIExpectTHeHospitalNameFieldToBePrePopulated(hospitalName);
     const newName = "new hopsital name";
-    const newCode = "NHN";
-    WhenIFillOutTheForm(newName, newCode);
+    WhenIFillOutTheEditForm(newName);
     AndIClickTheEditHospitalButton();
 
     ThenIShouldBeOnTheEditSuccessPageWithNewName(newName);
@@ -102,9 +101,19 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     cy.get("h2").should("contain", "Add a hospital");
   }
 
-  function WhenIFillOutTheForm(name, newCode) {
+  function WhenIFillOutTheAddForm(name, newCode) {
     cy.get("input[name=hospital-name]").clear().type(name);
     cy.get("input[name=hospital-code]").clear().type(newCode);
+    cy.get("input[name=hospital-survey-url]")
+      .clear()
+      .type("https://www.survey.example.com");
+    cy.get("input[name=hospital-support-url]")
+      .clear()
+      .type("https://www.support.example.com");
+  }
+
+  function WhenIFillOutTheEditForm(name) {
+    cy.get("input[name=hospital-name]").clear().type(name);
     cy.get("input[name=hospital-survey-url]")
       .clear()
       .type("https://www.survey.example.com");
