@@ -94,9 +94,10 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   }
 
   function ThenISeeAnError() {
-    cy.contains("There is a problem").should("be.visible");
-    cy.contains("The code or password you entered was not recognised").should(
-      "be.visible"
+    cy.get(".nhsuk-error-summary").should("exist");
+    cy.get("#error-summary-title").contains("There is a problem");
+    cy.get("li > a").contains(
+      "The code or password you entered was not recognised"
     );
   }
 });
