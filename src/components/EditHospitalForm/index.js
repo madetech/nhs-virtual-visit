@@ -18,6 +18,8 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   );
   const [hospitalCode, setHospitalCode] = useState(hospital.code);
 
+  const action = hospital.id ? "Edit" : "Add";
+
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
 
@@ -61,7 +63,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       setHospitalNameError(onSubmitErrors);
     }
 
-    if (!isPresent(hospitalCode)) {
+    if (!isPresent(hospitalCode) && action == "Add") {
       setHospitalCodeError(onSubmitErrors);
     }
 
@@ -82,8 +84,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       });
     } else setErrors(onSubmitErrors);
   };
-
-  const action = hospital.id ? "Edit" : "Add";
 
   return (
     <Form onSubmit={onSubmit}>
