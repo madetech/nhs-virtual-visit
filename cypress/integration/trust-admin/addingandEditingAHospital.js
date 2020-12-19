@@ -28,7 +28,10 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
     cy.audit();
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> chore: edited e2e test and EditForm to separate edit and add hospital functionality
     WhenIFillOutTheAddForm(hospitalName, hospitalCode);
     AndISubmitTheForm();
     ThenISeeTheHospitalIsAdded(hospitalName);
@@ -42,8 +45,12 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
     WhenIClickOnTheEditLink(hospitalName);
     ThenIExpectTHeHospitalNameFieldToBePrePopulated(hospitalName);
+<<<<<<< HEAD
 
     const newName = "new hospital name";
+=======
+    const newName = "new hopsital name";
+>>>>>>> chore: edited e2e test and EditForm to separate edit and add hospital functionality
     WhenIFillOutTheEditForm(newName);
     AndIClickTheEditHospitalButton();
 
@@ -80,7 +87,26 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
   function WhenIFillOutTheEditForm(name) {
     cy.get("input[name=hospital-name]").clear().type(name);
+<<<<<<< HEAD
     cy.get("#nhs-dropdown-menu").select("2");
+=======
+    cy.get("input[name=hospital-survey-url]")
+      .clear()
+      .type("https://www.survey.example.com");
+    cy.get("input[name=hospital-support-url]")
+      .clear()
+      .type("https://www.support.example.com");
+  }
+
+  function WhenIFillOutTheFormWithBadSurveyUrl() {
+    cy.get("input[name=hospital-name]").type("Scorpia Hospital");
+    cy.get("input[name=hospital-survey-url]").type("https://www");
+  }
+
+  function WhenIFillOutTheFormWithBadSupportUrl() {
+    cy.get("input[name=hospital-name]").type("Scorpia Hospital");
+    cy.get("input[name=hospital-support-url]").type("https://www");
+>>>>>>> chore: edited e2e test and EditForm to separate edit and add hospital functionality
   }
 
   function AndISubmitTheForm() {
