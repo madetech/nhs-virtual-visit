@@ -32,7 +32,9 @@ const EditAWardSuccess = ({ error, name, hospitalName, hospitalId, trust }) => {
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/trust-admin/wards/add`}>Add a ward</ActionLink>
+          <ActionLink href={`/trust-admin/wards/add?hospitalId=${hospitalId}`}>
+            Add a ward for {hospitalName}
+          </ActionLink>
 
           <p>
             <AnchorLink
