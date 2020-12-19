@@ -19,6 +19,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
     action = "Edit";
   }
 
+
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
 
