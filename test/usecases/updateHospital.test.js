@@ -13,6 +13,7 @@ describe("updateHospital", () => {
     const request = {
       id: 10,
       name: "Hospital",
+      status: "active",
     };
     const { id, error } = await updateHospital(container)(request);
     expect(id).toEqual(10);
@@ -22,6 +23,7 @@ describe("updateHospital", () => {
       request.id,
       null,
       null,
+      "active",
     ]);
   });
 
@@ -37,6 +39,8 @@ describe("updateHospital", () => {
     const request = {
       id: 10,
       name: "Hospital",
+      code: "HHH",
+      status: "active",
       supportUrl: "https://www.support.example.com",
       surveyUrl: "https://www.survey.example.com",
     };
@@ -48,6 +52,7 @@ describe("updateHospital", () => {
       request.id,
       "https://www.support.example.com",
       "https://www.survey.example.com",
+      "active",
     ]);
   });
 

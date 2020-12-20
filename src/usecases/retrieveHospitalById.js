@@ -13,6 +13,8 @@ const retrieveHospitalById = ({ getDb }) => async (hospitalId, trustId) => {
       hospital: {
         id: hospital.id,
         name: hospital.name,
+        code: hospital.code,
+        status: hospital.status,
         supportUrl: hospital.support_url,
         surveyUrl: hospital.survey_url,
       },

@@ -7,9 +7,11 @@ import Label from "../Label";
 import Form from "../Form";
 import validateUrl from "../../helpers/validateUrl";
 import isPresent from "../../helpers/isPresent";
+import Select from "../../components/Select";
 
 const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
+  const [hospitalStatus, setHospitalStatus] = useState(hospital.status);
   const [hospitalSurveyUrl, setHospitalSurveyUrl] = useState(
     hospital.surveyUrl
   );
@@ -35,6 +37,13 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       e.push({
         id: "hospital-name-error",
         message: "Enter a hospital name",
+      });
+    };
+
+    const setHospitalStatusError = (e) => {
+      e.push({
+        id: "hospital-status-error",
+        message: "Enter a hospital status",
       });
     };
 
@@ -67,6 +76,10 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       setHospitalCodeError(onSubmitErrors);
     }
 
+    if (!isPresent(hospitalStatus) && action == "Edit") {
+      setHospitalStatusError(onSubmitErrors);
+    }
+
     if (isPresent(hospitalSurveyUrl) && !validateUrl(hospitalSurveyUrl)) {
       setHospitalSurveyUrlInvalidError(onSubmitErrors);
     }
@@ -81,6 +94,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
         surveyUrl: hospitalSurveyUrl,
         supportUrl: hospitalSupportUrl,
         code: hospitalCode,
+        status: hospitalStatus,
       });
     } else setErrors(onSubmitErrors);
   };
@@ -119,6 +133,30 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
             name="hospital-code"
             autoComplete="off"
             value={hospitalCode || ""}
+          />
+        </FormGroup>
+      )}
+      {action === "Edit" && (
+        <FormGroup>
+          <Label htmlFor="hospital-status" className="nhsuk-label--m">
+            Hospital Status
+          </Label>
+          <Select
+            id="hospital-status"
+            className="nhsuk-input--width-10 nhsuk-u-width-one-half"
+            prompt="Choose a hospital status"
+            options={[
+              { id: 1, name: "active" },
+              { id: 2, name: "disabled" },
+            ]}
+            onChange={(event) => {
+              setHospitalStatus(
+                event.target.value == 1 ? "active" : "disabled"
+              );
+            }}
+            hasError={hasError("hospital-status")}
+            errorMessage={errorMessage("hospital-status")}
+            defaultValue={hospitalStatus === "active" ? 1 : 2}
           />
         </FormGroup>
       )}
