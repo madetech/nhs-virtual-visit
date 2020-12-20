@@ -39,6 +39,18 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
     };
 
     const setHospitalStatusError = (e) => {
+      e.push({
+        id: "hospital-status-error",
+        message: "Enter a hospital status",
+      });
+    };
+
+    const setHospitalCodeError = (e) => {
+      e.push({
+        id: "hospital-code-error",
+        message: "Enter a hospital code",
+      });
+    };
 
       e.push({
         id: "hospital-status-error",
@@ -70,7 +82,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
         name: hospitalName,
         code: hospitalCode,
         status: hospitalStatus,
-
       });
     } else setErrors(onSubmitErrors);
   };
@@ -112,7 +123,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           />
         </FormGroup>
       )}
-
+     
       {action === "Edit" && (
         <FormGroup>
           <Label htmlFor="hospital-status" className="nhsuk-label--m">
