@@ -27,16 +27,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     cy.get("a.nhsuk-link").contains("Edit").click();
   }
 
-  function WhenIFillOutTheFormWithBadSurveyUrl() {
-    cy.get("input[name=hospital-name]").type("Scorpia Hospital");
-    cy.get("input[name=hospital-survey-url]").type("https://www");
-  }
-
-  function WhenIFillOutTheFormWithBadSupportUrl() {
-    cy.get("input[name=hospital-name]").type("Scorpia Hospital");
-    cy.get("input[name=hospital-support-url]").type("https://www");
-  }
-
   function AndIClickTheEditHospitalButton() {
     cy.get("button[type=submit]").contains("Edit hospital").click();
   }
@@ -59,34 +49,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     cy.audit();
 
     WhenISubmitFormEmptyHospitalName();
-    ThenISeeErrors();
-
-    thenIClickLogOut();
-  });
-
-  it("displays errors when survey url is invalid", () => {
-    GivenIAmLoggedInAsAnAdmin();
-    WhenIClickOnHospitals();
-    ThenISeeTheHospitalList();
-
-    WhenIClickOnTheEditLink();
-
-    WhenIFillOutTheFormWithBadSurveyUrl();
-    AndIClickTheEditHospitalButton();
-    ThenISeeErrors();
-
-    thenIClickLogOut();
-  });
-
-  it("displays errors when support url is invalid", () => {
-    GivenIAmLoggedInAsAnAdmin();
-    WhenIClickOnHospitals();
-    ThenISeeTheHospitalList();
-
-    WhenIClickOnTheEditLink();
-
-    WhenIFillOutTheFormWithBadSupportUrl();
-    AndIClickTheEditHospitalButton();
     ThenISeeErrors();
 
     thenIClickLogOut();

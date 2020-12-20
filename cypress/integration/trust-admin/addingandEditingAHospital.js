@@ -41,7 +41,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
     WhenIClickOnTheEditLink(hospitalName);
     ThenIExpectTHeHospitalNameFieldToBePrePopulated(hospitalName);
-    const newName = "new hopsital name";
+    const newName = "new hospital name";
     WhenIFillOutTheEditForm(newName);
     AndIClickTheEditHospitalButton();
 
@@ -63,36 +63,6 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     thenIClickLogOut();
   });
 
-  it("add hospital displays errors when survey url is invalid", () => {
-    GivenIAmLoggedInAsATrustAdmin();
-    WhenIClickHospitalsOnTheNavigationBar();
-    ThenISeeTheHospitalsPage();
-
-    WhenIClickAddAHospital();
-    ThenISeeTheAddAHospitalForm();
-
-    WhenIFillOutTheFormWithBadSurveyUrl();
-    AndISubmitTheForm();
-    ThenISeeErrors();
-
-    thenIClickLogOut();
-  });
-
-  it("add hospital displays errors when support url is invalid", () => {
-    GivenIAmLoggedInAsATrustAdmin();
-    WhenIClickHospitalsOnTheNavigationBar();
-    ThenISeeTheHospitalsPage();
-
-    WhenIClickAddAHospital();
-    ThenISeeTheAddAHospitalForm();
-
-    WhenIFillOutTheFormWithBadSupportUrl();
-    AndISubmitTheForm();
-    ThenISeeErrors();
-
-    thenIClickLogOut();
-  });
-
   function WhenIClickAddAHospital() {
     cy.get("a").contains("Add a hospital").click();
   }
@@ -104,32 +74,11 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
   function WhenIFillOutTheAddForm(name, newCode) {
     cy.get("input[name=hospital-name]").clear().type(name);
     cy.get("input[name=hospital-code]").clear().type(newCode);
-    cy.get("input[name=hospital-survey-url]")
-      .clear()
-      .type("https://www.survey.example.com");
-    cy.get("input[name=hospital-support-url]")
-      .clear()
-      .type("https://www.support.example.com");
   }
 
   function WhenIFillOutTheEditForm(name) {
     cy.get("input[name=hospital-name]").clear().type(name);
-    cy.get("input[name=hospital-survey-url]")
-      .clear()
-      .type("https://www.survey.example.com");
-    cy.get("input[name=hospital-support-url]")
-      .clear()
-      .type("https://www.support.example.com");
-  }
-
-  function WhenIFillOutTheFormWithBadSurveyUrl() {
-    cy.get("input[name=hospital-name]").type("Scorpia Hospital");
-    cy.get("input[name=hospital-survey-url]").type("https://www");
-  }
-
-  function WhenIFillOutTheFormWithBadSupportUrl() {
-    cy.get("input[name=hospital-name]").type("Scorpia Hospital");
-    cy.get("input[name=hospital-support-url]").type("https://www");
+    cy.get("#nhs-dropdown-menu").select("2");
   }
 
   function AndISubmitTheForm() {
