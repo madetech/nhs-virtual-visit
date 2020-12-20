@@ -10,12 +10,15 @@ describe("updateHospital contract tests", () => {
 
     const { hospitalId } = await container.getCreateHospital()({
       name: "Test Hospital",
+      code: "TH2",
       trustId: trustId,
     });
 
     const request = {
       name: "Test Hospital 2",
       id: hospitalId,
+      code: "TH2",
+      status: "active",
       supportUrl: "https://www.support.example.com",
       surveyUrl: "https://www.survey.example.com",
     };
@@ -30,8 +33,10 @@ describe("updateHospital contract tests", () => {
     );
 
     expect(hospital).toEqual({
+      code: "TH2",
       id: hospitalId,
       name: "Test Hospital 2",
+      status: "active",
       supportUrl: "https://www.support.example.com",
       surveyUrl: "https://www.survey.example.com",
     });
