@@ -15,6 +15,8 @@ const retrieveHospitalsByTrustId = ({ getDb }) => async (
     hospitals = hospitals.map((row) => ({
       id: row.id,
       name: row.name,
+      code: row.code,
+      status: row.status,
       surveyUrl: row.survey_url,
       supportUrl: row.support_url,
     }));
@@ -30,6 +32,8 @@ const retrieveHospitalsByTrustId = ({ getDb }) => async (
           return {
             id: hospital.id,
             name: hospital.name,
+            code: hospital.code,
+            status: hospital.status,
             surveyUrl: hospital.surveyUrl,
             supportUrl: hospital.supportUrl,
             wards: wards.map((ward) => ({ id: ward.id, name: ward.name })),
