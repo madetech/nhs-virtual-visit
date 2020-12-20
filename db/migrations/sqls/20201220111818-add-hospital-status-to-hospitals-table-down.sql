@@ -1,0 +1,1 @@
+ALTER TABLE hospitals DROP COLUMN status;
