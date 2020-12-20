@@ -52,19 +52,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       });
     };
 
-      e.push({
-        id: "hospital-status-error",
-        message: "Enter a hospital status",
-      });
-    };
-
-    const setHospitalCodeError = (e) => {
-      e.push({
-        id: "hospital-code-error",
-        message: "Enter a hospital code",
-      });
-    };
-
     if (!isPresent(hospitalName)) {
       setHospitalNameError(onSubmitErrors);
     }
