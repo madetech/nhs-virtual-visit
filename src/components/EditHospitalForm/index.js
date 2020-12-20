@@ -5,19 +5,12 @@ import FormHeading from "../FormHeading";
 import Input from "../Input";
 import Label from "../Label";
 import Form from "../Form";
-import validateUrl from "../../helpers/validateUrl";
 import isPresent from "../../helpers/isPresent";
 import Select from "../../components/Select";
 
 const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
   const [hospitalStatus, setHospitalStatus] = useState(hospital.status);
-  const [hospitalSurveyUrl, setHospitalSurveyUrl] = useState(
-    hospital.surveyUrl
-  );
-  const [hospitalSupportUrl, setHospitalSupportUrl] = useState(
-    hospital.supportUrl
-  );
   const [hospitalCode, setHospitalCode] = useState(hospital.code);
 
   const action = hospital.id ? "Edit" : "Add";
@@ -54,20 +47,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       });
     };
 
-    const setHospitalSurveyUrlInvalidError = (e) => {
-      e.push({
-        id: "hospital-survey-url-error",
-        message: "Enter a valid survey URL",
-      });
-    };
-
-    const setHospitalSupportUrlInvalidError = (e) => {
-      e.push({
-        id: "hospital-support-url-error",
-        message: "Enter a valid support URL",
-      });
-    };
-
     if (!isPresent(hospitalName)) {
       setHospitalNameError(onSubmitErrors);
     }
@@ -80,19 +59,9 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       setHospitalStatusError(onSubmitErrors);
     }
 
-    if (isPresent(hospitalSurveyUrl) && !validateUrl(hospitalSurveyUrl)) {
-      setHospitalSurveyUrlInvalidError(onSubmitErrors);
-    }
-
-    if (isPresent(hospitalSupportUrl) && !validateUrl(hospitalSupportUrl)) {
-      setHospitalSupportUrlInvalidError(onSubmitErrors);
-    }
-
     if (onSubmitErrors.length === 0) {
       return await submit({
         name: hospitalName,
-        surveyUrl: hospitalSurveyUrl,
-        supportUrl: hospitalSupportUrl,
         code: hospitalCode,
         status: hospitalStatus,
       });
@@ -160,43 +129,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           />
         </FormGroup>
       )}
-
-      <FormGroup>
-        <Label htmlFor="hospital-survey-url" className="nhsuk-label--m">
-          Key contact survey URL (optional)
-        </Label>
-        <span className="nhsuk-hint" id="hospital-survey-url-hint">
-          The survey URL will appear at the end of a visit for a key contact.
-        </span>
-        <Input
-          id="hospital-survey-url"
-          type="url"
-          hasError={hasError("hospital-survey-url")}
-          errorMessage={errorMessage("hospital-survey-url")}
-          onChange={(event) => setHospitalSurveyUrl(event.target.value)}
-          name="hospital-survey-url"
-          value={hospitalSurveyUrl || ""}
-        />
-      </FormGroup>
-
-      <FormGroup>
-        <Label htmlFor="hospital-support-url" className="nhsuk-label--m">
-          Key contact support URL (optional)
-        </Label>
-        <span className="nhsuk-hint" id="hospital-support-url-hint">
-          The support URL will appear at the end of a visit for a key contact.
-        </span>
-        <Input
-          id="hospital-support-url"
-          type="url"
-          hasError={hasError("hospital-support-url")}
-          errorMessage={errorMessage("hospital-support-url")}
-          onChange={(event) => setHospitalSupportUrl(event.target.value)}
-          name="hospital-support-url"
-          value={hospitalSupportUrl || ""}
-        />
-      </FormGroup>
-
       <Button data-testid="editHospital" className="nhsuk-u-margin-top-5">
         {action} hospital
       </Button>
