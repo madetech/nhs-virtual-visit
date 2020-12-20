@@ -8,6 +8,7 @@ import Form from "../Form";
 import isPresent from "../../helpers/isPresent";
 import SelectStatus from "../../components/SelectStatus";
 
+
 const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
   const [hospitalStatus, setHospitalStatus] = useState(hospital.status);
@@ -64,7 +65,6 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
         name: hospitalName,
         code: hospitalCode,
         status: hospitalStatus,
-
       });
     } else setErrors(onSubmitErrors);
   };
