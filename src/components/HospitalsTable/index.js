@@ -12,16 +12,16 @@ const HospitalsTable = ({ hospitals }) => (
             Name
           </th>
           <th className="nhsuk-table__header" scope="col">
+            Code
+          </th>
+          <th className="nhsuk-table__header" scope="col">
+            Status
+          </th>
+          <th className="nhsuk-table__header" scope="col">
             Number of wards
           </th>
           <th className="nhsuk-table__header" scope="col">
             Booked visits
-          </th>
-          <th className="nhsuk-table__header" scope="col">
-            Survey URL
-          </th>
-          <th className="nhsuk-table__header" scope="col">
-            Support URL
           </th>
           <th className="nhsuk-table__header" scope="col" colSpan="2">
             <span className="nhsuk-u-visually-hidden">Actions</span>
@@ -32,34 +32,10 @@ const HospitalsTable = ({ hospitals }) => (
         {hospitals.map((hospital) => (
           <tr key={hospital.name} className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{hospital.name}</td>
+            <td className="nhsuk-table__cell">{hospital.code}</td>
+            <td className="nhsuk-table__cell">{hospital.status}</td>
             <td className="nhsuk-table__cell">{hospital.wards.length}</td>
             <td className="nhsuk-table__cell">{hospital.bookedVisits}</td>
-            <td className="nhsuk-table__cell">
-              {hospital.surveyUrl ? (
-                <a href={hospital.surveyUrl}>
-                  Link
-                  <span className="nhsuk-u-visually-hidden">
-                    {" "}
-                    for {hospital.name} survey
-                  </span>
-                </a>
-              ) : (
-                "None"
-              )}
-            </td>
-            <td className="nhsuk-table__cell">
-              {hospital.supportUrl ? (
-                <a href={hospital.supportUrl}>
-                  Link
-                  <span className="nhsuk-u-visually-hidden">
-                    {" "}
-                    for {hospital.name} support
-                  </span>
-                </a>
-              ) : (
-                "None"
-              )}
-            </td>
             <td className="nhsuk-table__cell">
               <AnchorLink
                 href="/trust-admin/hospitals/[id]"

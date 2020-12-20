@@ -14,6 +14,7 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
     const { hospitalId } = await setupHospital({
       name: "Test Hospital",
       trustId: trustId,
+      code: "TTH",
       surveyUrl: "https://www.survey.example.com",
       supportUrl: "https://www.support.example.com",
     });
@@ -21,6 +22,7 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
     const { hospitalId: hospital2Id } = await setupHospital({
       name: "Test Hospital 2",
       trustId: trustId,
+      code: "TH2",
       surveyUrl: null,
       supportUrl: null,
     });
@@ -34,12 +36,16 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
       {
         id: hospitalId,
         name: "Test Hospital",
+        code: "TTH",
+        status: "active",
         surveyUrl: "https://www.survey.example.com",
         supportUrl: "https://www.support.example.com",
       },
       {
         id: hospital2Id,
         name: "Test Hospital 2",
+        code: "TH2",
+        status: "active",
         surveyUrl: null,
         supportUrl: null,
       },
@@ -53,6 +59,7 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
     const { hospitalId } = await setupHospital({
       name: "Test Hospital",
       trustId: trustId,
+      code: "TTH",
       surveyUrl: "https://www.survey.example.com",
       supportUrl: "https://www.support.example.com",
     });
@@ -60,6 +67,7 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
     const { hospitalId: hospital2Id } = await setupHospital({
       name: "Test Hospital 2",
       trustId: trustId,
+      code: "TH2",
       surveyUrl: null,
       supportUrl: null,
     });
@@ -105,6 +113,8 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
       {
         id: hospitalId,
         name: "Test Hospital",
+        code: "TTH",
+        status: "active",
         surveyUrl: "https://www.survey.example.com",
         supportUrl: "https://www.support.example.com",
         wards: [
@@ -115,6 +125,8 @@ describe("retrieveHospitalsByTrustId contract tests", () => {
       {
         id: hospital2Id,
         name: "Test Hospital 2",
+        code: "TH2",
+        status: "active",
         surveyUrl: null,
         supportUrl: null,
         wards: [{ id: ward3Id, name: "Test Ward 3" }],
