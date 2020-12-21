@@ -1,0 +1,1 @@
+ALTER TABLE wards ADD pin VARCHAR(4);
