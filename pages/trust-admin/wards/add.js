@@ -9,6 +9,7 @@ import Error from "next/error";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const AddAWard = ({ trust, hospitals, error, hospitalId }) => {
+
   if (error) {
     return <Error />;
   }
@@ -28,8 +29,7 @@ const AddAWard = ({ trust, hospitals, error, hospitalId }) => {
           <AddWardForm
             errors={errors}
             setErrors={setErrors}
-            hospitals={hospitals}
-            defaultHospitalId={hospitalId}
+            hospital={hospital}
           />
         </GridColumn>
       </GridRow>
@@ -46,7 +46,6 @@ export const getServerSideProps = propsWithContainer(
     const { hospitals, error } = await retrieveHospitalsByTrustId(
       authenticationToken.trustId
     );
-    const hospitalId = query.hospitalId || null;
 
     return {
       props: {

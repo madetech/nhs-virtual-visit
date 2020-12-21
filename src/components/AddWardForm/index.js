@@ -6,12 +6,11 @@ import Input from "../Input";
 import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
 import Router from "next/router";
-import Select from "../../components/Select";
-import Form from "../Form";
+import Form from "../../components/Form";
 import isPresent from "../../helpers/isPresent";
 
-const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
-  const [hospitalId, setHospitalId] = useState(defaultHospitalId);
+const AddWardForm = ({ errors, setErrors, hospital }) => {
+  console.log(hospital);
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
   const [wardCodeConfirmation, setWardCodeConfirmation] = useState("");
@@ -31,13 +30,6 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
       errors.push({
         id: "ward-name-error",
         message: "Enter a ward name",
-      });
-    };
-
-    const setHospitalIdError = (errors) => {
-      errors.push({
-        id: "hospital-id-error",
-        message: "Select a hospital",
       });
     };
 
@@ -72,9 +64,6 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
     if (!isPresent(wardName)) {
       setWardNameError(onSubmitErrors);
     }
-    if (!isPresent(hospitalId)) {
-      setHospitalIdError(onSubmitErrors);
-    }
     if (!isPresent(wardCode)) {
       setWardCodeError(onSubmitErrors);
     }
@@ -99,7 +88,7 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
           body: JSON.stringify({
             name,
             code,
-            hospitalId,
+            hospitalId: hospital.id,
           }),
         });
 
@@ -145,23 +134,6 @@ const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {
             name="ward-name"
             autoComplete="off"
             value={wardName || ""}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label htmlFor="hospital-id" className="nhsuk-label--m">
-            What is the hospital name?
-          </Label>
-          <Select
-            id="hospital-id"
-            className="nhsuk-input--width-10"
-            prompt="Choose a hospital"
-            options={hospitals}
-            onChange={(event) => {
-              setHospitalId(event.target.value);
-            }}
-            hasError={hasError("hospital-id")}
-            errorMessage={errorMessage("hospital-id")}
-            defaultValue={defaultHospitalId}
           />
         </FormGroup>
         <FormGroup>
