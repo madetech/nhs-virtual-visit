@@ -109,7 +109,7 @@ const EditWardForm = ({
           <Label htmlFor="ward-status" className="nhsuk-label--m">
             Ward Status
           </Label>
-          <Select
+          <SelectStatus
             id="ward-status"
             className="nhsuk-input--width-10 nhsuk-u-width-one-half"
             prompt="Choose a ward status"
