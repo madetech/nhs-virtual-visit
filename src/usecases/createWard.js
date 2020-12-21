@@ -6,11 +6,11 @@ const createWard = ({ getDb }) => async (ward) => {
     logger.info(`Creating ward for ${JSON.stringify(ward)}`, ward);
     const createdWard = await db.one(
       `INSERT INTO wards
-        (id, name, code, trust_id, hospital_id)
-        VALUES (default, $1, $2, $3, $4)
+        (id, name, code, trust_id, hospital_id, pin)
+        VALUES (default, $1, $2, $3, $4, $5)
         RETURNING id
       `,
-      [ward.name, ward.code, ward.trustId, ward.hospitalId]
+      [ward.name, ward.code, ward.trustId, ward.hospitalId, ward.pin]
     );
 
     return {
