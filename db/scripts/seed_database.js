@@ -21,14 +21,14 @@ async function seedDatabase() {
     "INSERT INTO hospitals (name, code, trust_id) VALUES ('Test Hospital', 'TBH', (SELECT id FROM trusts WHERE name='Test Trust'))"
   );
   const { id: wardId } = await db.one(
-    "INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward One', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST1', (SELECT id FROM trusts WHERE name='Test Trust')) RETURNING id"
+    "INSERT INTO wards (name, hospital_id, code, trust_id, pin) VALUES ('Test Ward One', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST1', (SELECT id FROM trusts WHERE name='Test Trust'), '1234') RETURNING id"
   );
   await db.one(
-    "INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST2', (SELECT id FROM trusts WHERE name='Test Trust')) RETURNING id"
+    "INSERT INTO wards (name, hospital_id, code, trust_id, pin) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TEST2', (SELECT id FROM trusts WHERE name='Test Trust'), '1234') RETURNING id"
   );
 
   await db.one(
-    "INSERT INTO wards (name, hospital_id, code, trust_id) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'super', (SELECT id FROM trusts WHERE name='Test Trust')) RETURNING id"
+    "INSERT INTO wards (name, hospital_id, code, trust_idm pin) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'super', (SELECT id FROM trusts WHERE name='Test Trust'), '1234') RETURNING id"
   );
 
   const {
