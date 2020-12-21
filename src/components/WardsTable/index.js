@@ -2,7 +2,7 @@ import React from "react";
 import AnchorLink from "../AnchorLink";
 import toLowerSnake from "../../helpers/toLowerSnake";
 
-const WardsTable = ({ wards, wardVisitTotals }) => (
+const WardsTable = ({ wards, wardVisitTotals, hospitalId }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
       <caption className="nhsuk-table__caption">List of wards</caption>
@@ -42,8 +42,8 @@ const WardsTable = ({ wards, wardVisitTotals }) => (
             )}
             <td className="nhsuk-table__cell">
               <AnchorLink
-                href="/trust-admin/wards/[id]/edit"
-                as={`/trust-admin/wards/${ward.id}/edit`}
+                href={`/trust-admin/wards/[id]/edit?hospitalId=${hospitalId}`}
+                as={`/trust-admin/wards/${ward.id}/edit?hospitalId=${hospitalId}`}
               >
                 Edit
                 <span className="nhsuk-u-visually-hidden"> {ward.name}</span>

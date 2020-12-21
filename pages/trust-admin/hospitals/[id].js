@@ -73,7 +73,6 @@ const ShowHospital = ({
           </GridRow>
 
           <WardsTable wards={wards} wardVisitTotals={wardVisitTotals} />
-
           <Button
             className="nhsuk-button"
             onClick={() => {

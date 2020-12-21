@@ -6,22 +6,10 @@ import Input from "../Input";
 import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
 import Router from "next/router";
-import Select from "../../components/Select";
 import isPresent from "../../helpers/isPresent";
 import Form from "../Form";
 
-const EditWardForm = ({
-  errors,
-  setErrors,
-  id,
-  initialName,
-  initialHospitalId,
-  hospitals,
-}) => {
-  const hospital = hospitals.find(
-    (hospital) => hospital.id === initialHospitalId
-  );
-  const [hospitalId, setHospitalId] = useState(hospital.id);
+const EditWardForm = ({ errors, setErrors, id, initialName, hospitalId }) => {
   const [wardName, setWardName] = useState(initialName);
   let onSubmitErrors = [];
 
@@ -77,18 +65,8 @@ const EditWardForm = ({
       });
     };
 
-    const setHospitalIdError = (errors) => {
-      errors.push({
-        id: "hospital-id-error",
-        message: "Select a hospital",
-      });
-    };
-
     if (!isPresent(wardName)) {
       setWardNameError(onSubmitErrors);
-    }
-    if (!isPresent(hospitalId)) {
-      setHospitalIdError(onSubmitErrors);
     }
     if (onSubmitErrors.length === 0) {
       await submitAnswers();
@@ -117,25 +95,6 @@ const EditWardForm = ({
             value={wardName || ""}
           />
         </FormGroup>
-
-        <FormGroup>
-          <Label htmlFor="hospital-id" className="nhsuk-label--m">
-            What is the hospital name?
-          </Label>
-          <Select
-            id="hospital-id"
-            className="nhsuk-input--width-10 nhsuk-u-width-one-half"
-            prompt="Choose a hospital"
-            options={hospitals}
-            onChange={(event) => {
-              setHospitalId(event.target.value);
-            }}
-            hasError={hasError("hospital-id")}
-            errorMessage={errorMessage("hospital-id")}
-            defaultValue={hospital.id}
-          />
-        </FormGroup>
-
         <Button data-testid="edit-ward-button" className="nhsuk-u-margin-top-5">
           Edit ward
         </Button>
