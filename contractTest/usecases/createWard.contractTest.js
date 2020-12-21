@@ -14,6 +14,7 @@ describe("createWard contract tests", () => {
       name: "Defoe Ward",
       hospitalName: "Test Hospital",
       code: "WardCode",
+      pin: "1234",
       trustId,
       hospitalId,
     };
@@ -27,6 +28,7 @@ describe("createWard contract tests", () => {
       name: "Defoe Ward",
       hospitalId,
       hospitalName: "Test Hospital",
+      status: "active",
     });
 
     expect(error).toBeNull();
