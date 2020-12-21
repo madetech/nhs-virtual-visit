@@ -14,6 +14,8 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
   const [wardCodeConfirmation, setWardCodeConfirmation] = useState("");
+  const [wardPin, setWardPin] = useState("");
+  const [wardPinConfirmation, setWardPinConfirmation] = useState("");
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
@@ -60,6 +62,33 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
         message: "This ward code already exists. Enter a unique ward code",
       });
     };
+    const setWardPinError = (errors) => {
+      errors.push({
+        id: "ward-pin-error",
+        message: "Enter a pin code",
+      });
+    };
+
+    const setWardPinLengthError = (errors) => {
+      errors.push({
+        id: "ward-pin-length-error",
+        message: "Ward pin is only 4 characters",
+      });
+    };
+
+    const setWardPinConfirmationError = (errors) => {
+      errors.push({
+        id: "ward-pin-confirmation-error",
+        message: "Confirm the ward pin",
+      });
+    };
+
+    const setWardPinConfirmationMismatchError = (errors) => {
+      errors.push({
+        id: "ward-pin-confirmation-error",
+        message: "Ward pin confirmation does not match",
+      });
+    };
 
     if (!isPresent(wardName)) {
       setWardNameError(onSubmitErrors);
@@ -73,6 +102,22 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
       }
     } else {
       setWardCodeConfirmationError(onSubmitErrors);
+    }
+
+    if (isPresent(wardPin)) {
+      if (wardPin.length > 4) {
+        setWardPinLengthError(onSubmitErrors);
+      }
+    } else {
+      setWardPinError(onSubmitErrors);
+    }
+
+    if (isPresent(wardPinConfirmation)) {
+      if (wardPin !== wardPinConfirmation) {
+        setWardPinConfirmationMismatchError(onSubmitErrors);
+      }
+    } else {
+      setWardPinConfirmationError(onSubmitErrors);
     }
 
     if (onSubmitErrors.length === 0) {
@@ -166,6 +211,38 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
             name="ward-code-confirmation"
             autoComplete="off"
             value={wardCodeConfirmation || ""}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="ward-pin" className="nhsuk-label--m">
+            Create a ward pin
+          </Label>
+          <Input
+            id="ward-pin"
+            type="text"
+            hasError={hasError("ward-pin")}
+            errorMessage={errorMessage("ward-pin")}
+            className="nhsuk-input--width-10"
+            onChange={(event) => setWardPin(event.target.value)}
+            name="ward-pin"
+            autoComplete="off"
+            value={wardPin || ""}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="ward-pin-confirmation" className="nhsuk-label--m">
+            Confirm the ward pin
+          </Label>
+          <Input
+            id="ward-pin-confirmation"
+            type="text"
+            hasError={hasError("ward-pin-confirmation")}
+            errorMessage={errorMessage("ward-pin-confirmation")}
+            className="nhsuk-input--width-10"
+            onChange={(event) => setWardPinConfirmation(event.target.value)}
+            name="ward-pin-confirmation"
+            autoComplete="off"
+            value={wardPinConfirmation || ""}
           />
         </FormGroup>
         <Button className="nhsuk-u-margin-top-5">Add ward</Button>
