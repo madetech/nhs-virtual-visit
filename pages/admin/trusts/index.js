@@ -24,7 +24,11 @@ const Admin = ({ organizations, error }) => {
       <GridRow>
         <GridColumn width="full">
           <Heading>List of all trusts</Heading>
+<<<<<<< HEAD
           <ActionLink href="trusts/add-a-trust">Add a trust</ActionLink>
+=======
+          <ActionLink href="trusts/add-a-trust">Add a new Trust</ActionLink>
+>>>>>>> chore: list of all trusts created, add form able to add trusts to the list
 
           {organizations.length > 0 ? (
             <TrustsTable trusts={organizations} />
@@ -42,7 +46,11 @@ export const getServerSideProps = propsWithContainer(
     const {
       organizations,
       error,
+<<<<<<< HEAD
     } = await container.getRetrieveOrganizations()();
+=======
+    } = await container.getRetrieveAllOrganizations()();
+>>>>>>> chore: list of all trusts created, add form able to add trusts to the list
 
     return {
       props: { organizations, error },
