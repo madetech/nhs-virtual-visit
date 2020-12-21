@@ -24,7 +24,6 @@ export const setupWard = async (args = {}) => {
   return await container.getCreateWard()({
     name: "Test Ward",
     code: "wardCode",
-    pin: "1233",
     ...args,
   });
 };
