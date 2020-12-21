@@ -3,7 +3,6 @@ import logger from "../../logger";
 export default ({ getDb }) => async (ward) => {
   const db = await getDb();
   try {
-    console.log(ward);
     const updatedWard = await db.one(
       `UPDATE wards
       SET name = $1,
@@ -20,7 +19,6 @@ export default ({ getDb }) => async (ward) => {
       error: null,
     };
   } catch (error) {
-    console.log(error.toString());
     logger.error(error);
     return {
       wardId: null,

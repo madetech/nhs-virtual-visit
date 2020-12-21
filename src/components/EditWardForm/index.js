@@ -121,7 +121,6 @@ const EditWardForm = ({
             errorMessage={errorMessage("ward-status")}
             defaultValue={wardStatus}
           />
-          {console.log(wardStatus)}
         </FormGroup>
         <Button data-testid="edit-ward-button" className="nhsuk-u-margin-top-5">
           Edit ward
