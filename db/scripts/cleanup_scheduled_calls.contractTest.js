@@ -6,7 +6,7 @@ import {
   setupHospital,
   setupWard,
   setupVisit,
-} from "../../src/testUtils/factories";
+} from "../../test/testUtils/factories";
 import { COMPLETE } from "../../src/helpers/visitStatus";
 
 describe("test cleanup script", () => {
