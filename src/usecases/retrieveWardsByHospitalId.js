@@ -7,6 +7,7 @@ const retrieveWardsByHospitalId = ({ getDb }) => async (hospitalId) => {
       `SELECT
         id as ward_id,
         name as ward_name,
+        status as ward_status,
         (
           SELECT
             name
@@ -34,6 +35,7 @@ const retrieveWardsByHospitalId = ({ getDb }) => async (hospitalId) => {
         name: ward.ward_name,
         hospitalName: ward.hospital_name,
         code: ward.ward_code,
+        status: ward.ward_status,
       })),
       error: null,
     };
