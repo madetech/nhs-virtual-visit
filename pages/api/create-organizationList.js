@@ -26,16 +26,17 @@ export default withContainer(
 
     const createOrganizationList = container.getCreateOrganizationList();
 
-    const { trustId, error } = await createOrganizationList({
+    const { organizationId, error } = await createOrganizationList({
       name: body.name,
     });
 
     if (error) {
       res.status(409);
-      res.end(JSON.stringfiy({ err: "Trust name already exists" }));
+      console.log("here");
+      res.end(JSON.stringify({ err: "Trust name already exists" }));
     } else {
       res.status(201);
-      res.end(JSON.stringify({ trustId }));
+      res.end(JSON.stringify({ organizationId }));
     }
   }
 );
