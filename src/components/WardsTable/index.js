@@ -19,6 +19,9 @@ const WardsTable = ({ wards, wardVisitTotals, hospitalId }) => (
           <th className="nhsuk-table__header" scope="col">
             Ward code
           </th>
+          <th className="nhsuk-table__header" scope="col">
+            Ward status
+          </th>
           {wardVisitTotals && (
             <th className="nhsuk-table__header" scope="col">
               Booked visits
@@ -37,6 +40,7 @@ const WardsTable = ({ wards, wardVisitTotals, hospitalId }) => (
             )}
             <td className="nhsuk-table__cell">{ward.name}</td>
             <td className="nhsuk-table__cell">{ward.code}</td>
+            <td className="nhsuk-table__cell">{ward.status}</td>
             {wardVisitTotals && (
               <td className="nhsuk-table__cell">{wardVisitTotals[ward.id]}</td>
             )}

@@ -113,16 +113,13 @@ const EditWardForm = ({
             id="ward-status"
             className="nhsuk-input--width-10 nhsuk-u-width-one-half"
             prompt="Choose a ward status"
-            options={[
-              { id: 1, name: "active" },
-              { id: 2, name: "disabled" },
-            ]}
+            options={[{ name: "active" }, { name: "disabled" }]}
             onChange={(event) => {
-              setWardStatus(event.target.value === 1 ? "active" : "disabled");
+              setWardStatus(event.target.value);
             }}
             hasError={hasError("ward-status")}
             errorMessage={errorMessage("ward-status")}
-            defaultValue={wardStatus === "active" ? 1 : 2}
+            defaultValue={wardStatus}
           />
           {console.log(wardStatus)}
         </FormGroup>
