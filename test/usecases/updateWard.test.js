@@ -12,6 +12,7 @@ describe("updateWard", () => {
     };
     const request = {
       id: 10,
+      status: "active",
       name: "Defoe Ward",
       hospitalId: 1,
     };
@@ -21,6 +22,7 @@ describe("updateWard", () => {
     expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
       request.name,
       request.hospitalId,
+      request.status,
       request.id,
     ]);
   });
