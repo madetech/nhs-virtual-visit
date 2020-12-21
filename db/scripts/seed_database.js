@@ -28,7 +28,7 @@ async function seedDatabase() {
   );
 
   await db.one(
-    "INSERT INTO wards (name, hospital_id, code, trust_idm pin) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'super', (SELECT id FROM trusts WHERE name='Test Trust'), '1234') RETURNING id"
+    "INSERT INTO wards (name, hospital_id, code, trust_id, pin) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'super', (SELECT id FROM trusts WHERE name='Test Trust'), '1234') RETURNING id"
   );
 
   const {
