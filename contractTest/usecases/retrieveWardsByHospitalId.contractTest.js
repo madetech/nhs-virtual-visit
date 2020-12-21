@@ -50,12 +50,14 @@ describe("retrieveWardsByHospitalId contract tests", () => {
         name: "Test Ward 1",
         code: "wardCode1",
         hospitalName: "Test Hospital 1",
+        status: "active",
       },
       {
         id: ward2Id,
         name: "Test Ward 2",
         code: "wardCode2",
         hospitalName: "Test Hospital 1",
+        status: "active",
       },
     ]);
 
