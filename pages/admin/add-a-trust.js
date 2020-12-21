@@ -13,7 +13,7 @@ import Form from "../../src/components/Form";
 import Router from "next/router";
 import { ADMIN } from "../../src/helpers/userTypes";
 
-const AddATrust = () => {
+const AddATrust = ({ organizations }) => {
   const [errors, setErrors] = useState([]);
   const [name, setName] = useState("");
 
@@ -25,6 +25,7 @@ const AddATrust = () => {
     return error.length === 1 ? error[0].message : "";
   };
 
+  console.log(organizations);
   const onSubmit = async () => {
     const onSubmitErrors = [];
 
@@ -121,7 +122,10 @@ const AddATrust = () => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(() => ({ props: {} }))
+  verifyAdminToken(async ({ container }) => {
+    const { organizations } = await container.getRetrieveAllOrganizations()();
+    return { props: { organizations } };
+  })
 );
 
 export default AddATrust;
