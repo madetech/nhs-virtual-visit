@@ -3,7 +3,7 @@ import AppContainer from "../../src/containers/AppContainer";
 import { setupWardWithinHospitalAndTrust } from "../../test/testUtils/factories";
 import { COMPLETE, SCHEDULED } from "../../src/helpers/visitStatus";
 
-describe("patient details migration", () => {
+describe.skip("patient details migration", () => {
   const container = AppContainer.getInstance();
   let date;
 
