@@ -32,7 +32,7 @@ describe("createVisitUnitOfWork tests", () => {
         contactName: "Contact Name",
         callTime: date,
         callId: "123",
-        provider: "jitsi",
+        provider: "whereby",
         callPassword: "DAVE",
       },
       ward
@@ -53,7 +53,7 @@ describe("createVisitUnitOfWork tests", () => {
         contactName: "Contact Name",
         callTime: date,
         callId: "two",
-        provider: "jitsi",
+        provider: "whereby",
         callPassword: "DAVE",
       },
       ward
@@ -66,7 +66,7 @@ describe("createVisitUnitOfWork tests", () => {
         contactName: "Test Contact",
         callTime: new Date(),
         callId: "456",
-        provider: "jitsi",
+        provider: "whereby",
         callPassword: "securePassword",
       },
       ward
@@ -87,7 +87,7 @@ describe("createVisitUnitOfWork tests", () => {
         contactName: "Contact Name",
         callTime: date,
         callId: "two",
-        provider: "jitsi",
+        provider: "whereby",
         callPassword: "testpassword",
       },
       ward
@@ -111,7 +111,7 @@ describe("createVisitUnitOfWork tests", () => {
         contactName: "Contact Name",
         callTime: date,
         callId: "two",
-        provider: "jitsi",
+        provider: "whereby",
         callPassword: "DAVE",
       },
       ward
@@ -143,7 +143,7 @@ describe("createVisitUnitOfWork tests", () => {
         contactName: "Contact Name",
         callTime: date,
         callId: "two",
-        provider: "jitsi",
+        provider: "whereby",
         callPassword: "DAVE",
       },
       ward

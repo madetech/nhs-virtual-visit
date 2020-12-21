@@ -23,6 +23,7 @@ class WherebyCallIdProvider {
     });
 
     let jsonResponse = await response.json();
+
     let roomUrl = new URL(jsonResponse.roomUrl);
     return roomUrl.pathname.slice(1);
   }

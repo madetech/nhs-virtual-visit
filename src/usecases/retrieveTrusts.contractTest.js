@@ -16,18 +16,18 @@ describe("retrieveTrusts contract tests", () => {
 
     const { trusts } = await container.getRetrieveTrusts()();
 
-    expect(trusts).toEqual([
+    expect(trusts).orderlessEqual([
       {
         id: trustId1,
         name: "Test Trust",
         adminCode: "code1",
-        videoProvider: "jitsi",
+        videoProvider: "whereby",
       },
       {
         id: trustId2,
         name: "Test Trust 2",
         adminCode: "code2",
-        videoProvider: "jitsi",
+        videoProvider: "whereby",
       },
     ]);
   });

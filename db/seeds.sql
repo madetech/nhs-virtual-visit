@@ -1,5 +1,5 @@
 INSERT INTO trusts (name, admin_code, password, video_provider) VALUES ('Test Trust', 'admin', crypt('trustpassword', gen_salt('bf', 8)), 'whereby');
-INSERT INTO trusts (name, admin_code, password, video_provider) VALUES ('Test 2 Trust', 'admin2', crypt('trustpassword', gen_salt('bf', 8)), 'jitsi');
+INSERT INTO trusts (name, admin_code, password, video_provider) VALUES ('Test 2 Trust', 'admin2', crypt('trustpassword', gen_salt('bf', 8)), 'whereby');
 INSERT INTO hospitals (name, trust_id, support_url, survey_url) VALUES ('Test Hospital',(SELECT id FROM trusts WHERE name='Test Trust'), 'http://place-puppy.com/', 'https://placekitten.com/');
 INSERT INTO hospitals (name, trust_id, support_url, survey_url) VALUES ('Test Hospital 2',(SELECT id FROM trusts WHERE name='Test Trust'), 'http://place-puppy.com/', 'https://placekitten.com/');
 INSERT INTO hospitals (name, trust_id, support_url, survey_url) VALUES ('Test 2 Hospital',(SELECT id FROM trusts WHERE name='Test 2 Trust'), 'http://place-puppy.com/', 'https://placekitten.com/');

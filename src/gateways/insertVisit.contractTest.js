@@ -19,7 +19,7 @@ describe("insertVisit contract tests", () => {
       contactNumber: "07123456789",
       callTime: new Date(),
       callId: "123",
-      provider: "jitsi",
+      provider: "whereby",
       callPassword: "securePassword",
     };
     await insertVisit(db, visit, wardId);
@@ -31,7 +31,7 @@ describe("insertVisit contract tests", () => {
       contactNumber: "07123456788",
       callTime: new Date(),
       callId: "456",
-      provider: "jitsi",
+      provider: "whereby",
       callPassword: "securePassword",
     };
     await insertVisit(db, anotherVisit, wardId);
