@@ -15,6 +15,7 @@ describe("update-a-ward", () => {
         name: "Joey Wheeler Ward",
         hospitalName: "Tristan Taylor Hospital",
         hospitalId: 1,
+        status: "active",
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -92,6 +93,7 @@ describe("update-a-ward", () => {
       expect.objectContaining({
         id: 123,
         name: "Joey Wheeler Ward",
+        status: "active",
         hospitalName: "Tristan Taylor Hospital",
         hospitalId: 1,
       })
