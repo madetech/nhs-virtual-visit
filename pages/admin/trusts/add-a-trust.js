@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import ErrorSummary from "../../src/components/ErrorSummary";
-import { GridRow, GridColumn } from "../../src/components/Grid";
-import Layout from "../../src/components/Layout";
-import verifyAdminToken from "../../src/usecases/verifyAdminToken";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
-import FormGroup from "../../src/components/FormGroup";
-import Heading from "../../src/components/Heading";
-import Input from "../../src/components/Input";
-import Label from "../../src/components/Label";
-import Button from "../../src/components/Button";
-import Form from "../../src/components/Form";
+import ErrorSummary from "../../../src/components/ErrorSummary";
+import { GridRow, GridColumn } from "../../../src/components/Grid";
+import Layout from "../../../src/components/Layout";
+import verifyAdminToken from "../../../src/usecases/verifyAdminToken";
+import propsWithContainer from "../../../src/middleware/propsWithContainer";
+import FormGroup from "../../../src/components/FormGroup";
+import Heading from "../../../src/components/Heading";
+import Input from "../../../src/components/Input";
+import Label from "../../../src/components/Label";
+import Button from "../../../src/components/Button";
+import Form from "../../../src/components/Form";
 import Router from "next/router";
-import { ADMIN } from "../../src/helpers/userTypes";
+import { ADMIN } from "../../../src/helpers/userTypes";
 
-const AddATrust = ({ organizations }) => {
+const AddATrust = () => {
   const [errors, setErrors] = useState([]);
   const [name, setName] = useState("");
 
@@ -25,7 +25,6 @@ const AddATrust = ({ organizations }) => {
     return error.length === 1 ? error[0].message : "";
   };
 
-  console.log(organizations);
   const onSubmit = async () => {
     const onSubmitErrors = [];
 
@@ -36,20 +35,13 @@ const AddATrust = ({ organizations }) => {
       });
     };
 
-    const setNameUniqueError = (errorsArr, err) => {
-      errorsArr.push({
-        id: "trust-name-existing-error",
-        message: err,
-      });
-    };
-
     if (name.length === 0) {
       setNameError(onSubmitErrors);
     }
 
     if (onSubmitErrors.length === 0) {
       const submitTrust = async (name) => {
-        const response = await fetch("/api/create-trust", {
+        const response = await fetch("/api/create-organizationList", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -62,22 +54,25 @@ const AddATrust = ({ organizations }) => {
         const status = response.status;
 
         if (status == 201) {
-          const { trustId } = await response.json();
+          const { organizationId } = await response.json();
           Router.push(
             "/admin/trusts/[id]/add-success",
-            `/admin/trusts/${trustId}/add-success`
+            `/admin/trusts/${organizationId}/add-success`
           );
           return true;
         } else if (status === 409) {
           const { err } = await response.json();
-          setNameUniqueError(onSubmitErrors, err);
+          onSubmitErrors.push({
+            id: "trust-name-existing-error",
+            message: err,
+          });
         } else {
           onSubmitErrors.push({
             id: "generic-error",
             message: "Something went wrong, please try again later.",
           });
-          setErrors(onSubmitErrors);
         }
+        setErrors(onSubmitErrors);
         return false;
       };
       return await submitTrust(name);
@@ -122,10 +117,7 @@ const AddATrust = ({ organizations }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ container }) => {
-    const { organizations } = await container.getRetrieveAllOrganizations()();
-    return { props: { organizations } };
-  })
+  verifyAdminToken(() => ({ props: {} }))
 );
 
 export default AddATrust;
