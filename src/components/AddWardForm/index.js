@@ -7,7 +7,7 @@ import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
 import Router from "next/router";
 import Select from "../../components/Select";
-import Form from "../../components/Form";
+import Form from "../Form";
 import isPresent from "../../helpers/isPresent";
 
 const AddWardForm = ({ errors, setErrors, hospitals, defaultHospitalId }) => {

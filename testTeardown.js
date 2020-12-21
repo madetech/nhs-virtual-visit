@@ -1,5 +1,5 @@
 import AppContainer from "./src/containers/AppContainer";
-import truncateAllTables from "./src/testUtils/truncateAllTables";
+import truncateAllTables from "./test/testUtils/truncateAllTables";
 
 const container = AppContainer.getInstance();
 

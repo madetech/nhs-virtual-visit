@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 import AppContainer from "../../src/containers/AppContainer";
-import { setupWardWithinHospitalAndTrust } from "../../src/testUtils/factories";
+import { setupWardWithinHospitalAndTrust } from "../../test/testUtils/factories";
 import { COMPLETE, SCHEDULED } from "../../src/helpers/visitStatus";
 
 describe("patient details migration", () => {
