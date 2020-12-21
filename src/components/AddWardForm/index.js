@@ -121,9 +121,10 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
     }
 
     if (onSubmitErrors.length === 0) {
-      const submitAnswers = async ({ wardName, wardCode }) => {
+      const submitAnswers = async ({ wardName, wardCode, wardPin }) => {
         let name = wardName;
         let code = wardCode;
+        let pin = wardPin;
 
         const response = await fetch("/api/create-ward", {
           method: "POST",
@@ -133,6 +134,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
           body: JSON.stringify({
             name,
             code,
+            pin,
             hospitalId: hospital.id,
           }),
         });
@@ -155,7 +157,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
         return false;
       };
 
-      return await submitAnswers({ wardName, wardCode });
+      return await submitAnswers({ wardName, wardCode, wardPin });
     }
     setErrors(onSubmitErrors);
   };

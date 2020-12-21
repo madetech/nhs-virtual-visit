@@ -15,6 +15,7 @@ describe("createWard", () => {
       name: "Defoe Ward",
       code: "WardCode",
       trustId: "1",
+      pin: "1234",
       hospitalId: "1",
     };
 
@@ -28,6 +29,7 @@ describe("createWard", () => {
       request.code,
       request.trustId,
       request.hospitalId,
+      request.pin,
     ]);
   });
 });

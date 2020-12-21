@@ -38,6 +38,7 @@ export default withContainer(
     const { wardId, error } = await createWard({
       name: body.name,
       code: body.code,
+      pin: body.pin,
       trustId: trustAdminAuthenticatedToken.trustId,
       hospitalId: body.hospitalId,
     });
