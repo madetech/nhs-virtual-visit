@@ -103,7 +103,7 @@ function WhenIFillOutTheForm(newName) {
 }
 
 function ThenISeeTheWardIsAdded(name) {
-  cy.get("h1").contains(`${name} has been added`);
+  cy.get(".nhsuk-panel__title").contains(`${name} has been added`);
 }
 
 function AndISeeTheAddedWard(name) {
