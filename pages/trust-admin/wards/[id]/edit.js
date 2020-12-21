@@ -31,6 +31,7 @@ const EditAWard = ({ trust, error, id, name, hospitalId, hospitals }) => {
             errors={errors}
             setErrors={setErrors}
             id={id}
+            status={status}
             initialName={name}
             hospitalId={hospitalId}
           />
@@ -62,6 +63,7 @@ export const getServerSideProps = propsWithContainer(
           error: error,
           id: getRetrieveWardByIdResponse.ward.id,
           name: getRetrieveWardByIdResponse.ward.name,
+          status: getRetrieveWardByIdResponse.ward.status,
           hospitalId: getRetrieveWardByIdResponse.ward.hospitalId,
           hospitals: retrieveHospitalsResponse.hospitals,
           trust: { name: trustResponse.trust?.name },

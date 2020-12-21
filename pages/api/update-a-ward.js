@@ -7,7 +7,7 @@ export default withContainer(
       res.end();
       return;
     }
-
+    console.log(body);
     const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
 
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
@@ -63,6 +63,7 @@ export default withContainer(
       id: body.id,
       name: body.name,
       hospitalName: body.hospitalName,
+      status: body.status,
       hospitalId: body.hospitalId,
     });
 
