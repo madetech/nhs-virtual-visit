@@ -47,6 +47,20 @@ async function seedDatabase() {
     "INSERT INTO organization (name, status) VALUES ('Test Trust 4', 0)"
   );
 
+  await db.result("INSERT INTO organization_list (name) VALUES ('Test Trust')");
+
+  await db.result(
+    "INSERT INTO organization_list (name) VALUES ('Test Trust 2')"
+  );
+
+  await db.result(
+    "INSERT INTO organization_list (name) VALUES ('Test Trust 3')"
+  );
+
+  await db.result(
+    "INSERT INTO organization_list (name) VALUES ('Test Trust 4')"
+  );
+
   const {
     id: patientDetailsId,
   } = await db.one(
