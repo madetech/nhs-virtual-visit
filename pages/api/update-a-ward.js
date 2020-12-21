@@ -7,7 +7,7 @@ export default withContainer(
       res.end();
       return;
     }
-    console.log(body);
+
     const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
 
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
