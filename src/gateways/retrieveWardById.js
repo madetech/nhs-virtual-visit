@@ -9,6 +9,7 @@ const retrieveWardById = async (wardId, trustId) => {
       `SELECT
         wards.id as ward_id,
         wards.name as ward_name,
+        wards.status as ward_status,
         (
           SELECT
             name
@@ -37,6 +38,7 @@ const retrieveWardById = async (wardId, trustId) => {
       ward: {
         id: ward.ward_id,
         name: ward.ward_name,
+        status: ward.ward_status,
         hospitalId: ward.hospital_id,
         hospitalName: ward.hospital_name,
       },

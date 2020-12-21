@@ -9,8 +9,16 @@ import Router from "next/router";
 import isPresent from "../../helpers/isPresent";
 import Form from "../Form";
 
-const EditWardForm = ({ errors, setErrors, id, initialName, hospitalId }) => {
+const EditWardForm = ({
+  errors,
+  setErrors,
+  id,
+  initialName,
+  hospitalId,
+  status,
+}) => {
   const [wardName, setWardName] = useState(initialName);
+  const [wardStatus, setWardStatus] = useState(status);
   let onSubmitErrors = [];
 
   const hasError = (field) =>
@@ -31,6 +39,8 @@ const EditWardForm = ({ errors, setErrors, id, initialName, hospitalId }) => {
         body: JSON.stringify({
           id,
           name: wardName,
+          hospitalName: initialName,
+          status: wardStatus,
           hospitalId,
         }),
       });
@@ -94,6 +104,27 @@ const EditWardForm = ({ errors, setErrors, id, initialName, hospitalId }) => {
             autoComplete="off"
             value={wardName || ""}
           />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="ward-status" className="nhsuk-label--m">
+            Ward Status
+          </Label>
+          <Select
+            id="ward-status"
+            className="nhsuk-input--width-10 nhsuk-u-width-one-half"
+            prompt="Choose a ward status"
+            options={[
+              { id: 1, name: "active" },
+              { id: 2, name: "disabled" },
+            ]}
+            onChange={(event) => {
+              setWardStatus(event.target.value === 1 ? "active" : "disabled");
+            }}
+            hasError={hasError("ward-status")}
+            errorMessage={errorMessage("ward-status")}
+            defaultValue={wardStatus === "active" ? 1 : 2}
+          />
+          {console.log(wardStatus)}
         </FormGroup>
         <Button data-testid="edit-ward-button" className="nhsuk-u-margin-top-5">
           Edit ward
