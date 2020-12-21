@@ -20,7 +20,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
   const onSubmit = async () => {
     const onSubmitErrors = [];
 
-    const setWardNameError = () => {
+    const setWardNameError = (errors) => {
       errors.push({
         id: "ward-name-error",
         message: "Enter a ward name",
@@ -34,21 +34,21 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
       });
     };
 
-    const setWardCodeConfirmationError = () => {
+    const setWardCodeConfirmationError = (errors) => {
       errors.push({
         id: "ward-code-confirmation-error",
         message: "Confirm the ward code",
       });
     };
 
-    const setWardCodeConfirmationMismatchError = () => {
+    const setWardCodeConfirmationMismatchError = (errors) => {
       errors.push({
         id: "ward-code-confirmation-error",
         message: "Ward code confirmation does not match",
       });
     };
 
-    const setUniqueWardCodeError = () => {
+    const setUniqueWardCodeError = (errors) => {
       errors.push({
         id: "ward-code-error",
         message: "This ward code already exists. Enter a unique ward code",
