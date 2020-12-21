@@ -45,9 +45,14 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
+<<<<<<< HEAD
 import findWardByCode from "../gateways/findWardByCode";
 import createOrganization from "../usecases/createOrganization";
 import retrieveOrganizations from "../usecases/retrieveOrganizations";
+=======
+import createOrganizationList from "../usecases/createOrganizationList";
+import retrieveAllOrganizations from "../usecases/retrieveAllOrganizations";
+>>>>>>> chore: create organization list table for database
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
 import retrieveWardById from "../gateways/retrieveWardById";
 import retrieveTrustById from "../gateways/retrieveTrustById";
@@ -266,6 +271,7 @@ class AppContainer {
     return updateTrust(this);
   };
 
+<<<<<<< HEAD
   getCreateOrganization = () => {
     return createOrganization(this);
   };
@@ -276,6 +282,14 @@ class AppContainer {
 
   getRetrieveOrganizationById = () => {
     return retrieveOrganizationById;
+=======
+  getCreateOrganizationList = () => {
+    return createOrganizationList(this);
+  };
+
+  getRetrieveAllOrganizations = () => {
+    return retrieveAllOrganizations(this);
+>>>>>>> chore: create organization list table for database
   };
 
   getInsertVisitGateway = () => {
