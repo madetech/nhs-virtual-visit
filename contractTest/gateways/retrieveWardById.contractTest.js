@@ -15,6 +15,7 @@ describe("retrieveWardById", () => {
     expect(ward).toEqual({
       id: wardId,
       name: "Test Ward",
+      status: "active",
       hospitalName: "Test Hospital",
       hospitalId: hospitalId,
     });

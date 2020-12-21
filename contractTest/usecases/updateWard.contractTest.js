@@ -23,6 +23,7 @@ describe("updateWard contract tests", () => {
     const request = {
       name: "Test Ward 2",
       hospitalId: hospitalId,
+      status: "disabled",
       id: existingWardId,
     };
 
@@ -40,6 +41,7 @@ describe("updateWard contract tests", () => {
       name: "Test Ward 2",
       hospitalId: hospitalId,
       hospitalName: "Test Hospital",
+      status: "disabled",
     });
 
     expect(error).toBeNull();
