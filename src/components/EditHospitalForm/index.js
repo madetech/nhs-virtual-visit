@@ -6,7 +6,7 @@ import Input from "../Input";
 import Label from "../Label";
 import Form from "../Form";
 import isPresent from "../../helpers/isPresent";
-import Select from "../../components/Select";
+import SelectStatus from "../../components/SelectStatus";
 
 const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
@@ -110,22 +110,17 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           <Label htmlFor="hospital-status" className="nhsuk-label--m">
             Hospital Status
           </Label>
-          <Select
+          <SelectStatus
             id="hospital-status"
             className="nhsuk-input--width-10 nhsuk-u-width-one-half"
             prompt="Choose a hospital status"
-            options={[
-              { id: 1, name: "active" },
-              { id: 2, name: "disabled" },
-            ]}
+            options={[{ name: "active" }, { name: "disabled" }]}
             onChange={(event) => {
-              setHospitalStatus(
-                event.target.value == 1 ? "active" : "disabled"
-              );
+              setHospitalStatus(event.target.value);
             }}
             hasError={hasError("hospital-status")}
             errorMessage={errorMessage("hospital-status")}
-            defaultValue={hospitalStatus === "active" ? 1 : 2}
+            defaultValue={hospitalStatus}
           />
         </FormGroup>
       )}
