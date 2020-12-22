@@ -22,6 +22,7 @@ const SelectStatus = ({
       <select
         defaultValue={defaultValue || DEFAULT_VALUE}
         id="nhs-dropdown-menu"
+
         className={classnames(
           {
             "nhsuk-select--error": hasError,
