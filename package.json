@@ -28,8 +28,12 @@
     "start": "NODE_ENV=production node server.js",
     "cleandb": "node db/scripts/cleanup_scheduled_calls.js",
     "db:seed": "node db/scripts/seed_database.js",
+<<<<<<< HEAD
     "dbmigrate": "db-migrate --migrations-dir 'db/migrations/'",
     "dbmigrate-dev-mssql": "db-migrate --migrations-dir 'db/migrations/' -e development-mssql",
+=======
+    "dbmigrate": "db-migrate --migrations-dir db/migrations/",
+>>>>>>> test: subject: update .env db properties across project
     "dbmigratetest": "db-migrate --migrations-dir 'db/migrations/' -e test",
     "dbmigratedry": "db-migrate --dry-run --migrations-dir 'db/migrations/'",
     "postinstall": "test -n \"$NONPMPOSTINSTALL\" || npm run build"
