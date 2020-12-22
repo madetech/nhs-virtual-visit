@@ -46,6 +46,7 @@ import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import findWardByCode from "../gateways/findWardByCode";
 import createOrganization from "../usecases/createOrganization";
 import retrieveOrganizations from "../usecases/retrieveOrganizations";
@@ -53,6 +54,10 @@ import retrieveOrganizations from "../usecases/retrieveOrganizations";
 import createOrganizationList from "../usecases/createOrganizationList";
 import retrieveAllOrganizations from "../usecases/retrieveAllOrganizations";
 >>>>>>> chore: create organization list table for database
+=======
+import createOrganization from "../usecases/createOrganization";
+import retrieveOrganizations from "../usecases/retrieveOrganizations";
+>>>>>>> chore: change oorganization_list to organization in db and all relevant files
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
 import retrieveWardById from "../gateways/retrieveWardById";
 import retrieveTrustById from "../gateways/retrieveTrustById";
@@ -272,6 +277,7 @@ class AppContainer {
   };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   getCreateOrganization = () => {
     return createOrganization(this);
   };
@@ -290,6 +296,14 @@ class AppContainer {
   getRetrieveAllOrganizations = () => {
     return retrieveAllOrganizations(this);
 >>>>>>> chore: create organization list table for database
+=======
+  getCreateOrganization = () => {
+    return createOrganization(this);
+  };
+
+  getRetrieveOrganizations = () => {
+    return retrieveOrganizations(this);
+>>>>>>> chore: change oorganization_list to organization in db and all relevant files
   };
 
   getInsertVisitGateway = () => {
