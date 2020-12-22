@@ -9,7 +9,6 @@
       "addons": ["heroku-postgresql:hobby-dev"],
       "scripts": {
         "postdeploy": "psql -f 'db/seeds.sql' $PG_DB_URL"
-
       }
     }
   },
