@@ -1,17 +1,17 @@
 const sql = require("mssql");
 
+const DEV_MSSQL = "development-mssql";
+const E2E_MSSQL = "e2e-mssql";
+
 function setPoolConfigPerEnvironment(config) {
-  if (
-    process.env.NODE_ENV === "development-mssql" ||
-    process.env.APP_ENV === "development-mssql"
-  ) {
+  if (process.env.NODE_ENV === DEV_MSSQL || process.env.APP_ENV === DEV_MSSQL) {
     config.user = process.env.MSQL_DEV_DB_USER;
     config.password = process.env.MSQL_DEV_DB_PASSWORD;
     config.server = process.env.MSQL_DEV_DB_SERVER;
     config.database = process.env.MSQL_DEV_DB_DATABASE;
   } else if (
-    process.env.NODE_ENV === "e2e-mssql" ||
-    process.env.APP_ENV === "e2e-mssql"
+    process.env.NODE_ENV === E2E_MSSQL ||
+    process.env.APP_ENV === E2E_MSSQL
   ) {
     config.user = process.env.MSQL_E2E_DB_USER;
     config.password = process.env.MSQL_E2E_DB_PASSWORD;
