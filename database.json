@@ -1,12 +1,72 @@
 {
+  "local-mssql": {
+    "driver": {
+      "ENV": "MSQL_DB_DRIVER"
+    },
+    "user": {
+      "ENV": "MSQL_DB_USER"
+    },
+    "password": {
+      "ENV": "MSQL_DB_PASSWORD"
+    },
+    "server": {
+      "ENV": "MSQL_DB_SERVER"
+    },
+    "database": {
+      "ENV": "MSQL_DB_DATABASE"
+    },
+    "port": 1433,
+    "options": {
+      "encrypt": true,
+      "validateBulkLoadParameters": false,
+      "trustedConnection": true,
+      "enableArithAbort": true,
+      "integratedSecurity": true,
+      "trustServerCertificate": true,
+      "rowCollectionOnDone": true
+    }
+  },
+  "development-mssql": {
+    "driver": {
+      "ENV": "MSQL_DB_DRIVER"
+    },
+    "user": {
+      "ENV": "MSQL_DEV_DB_USER"
+    },
+    "password": {
+      "ENV": "MSQL_DEV_DB_PASSWORD"
+    },
+    "server": {
+      "ENV": "MSQL_DEV_DB_SERVER"
+    },
+    "database": {
+      "ENV": "MSQL_DEV_DB_DATABASE"
+    },
+    "port": 1433,
+    "options": {
+      "encrypt": true,
+      "validateBulkLoadParameters": false,
+      "trustedConnection": true,
+      "enableArithAbort": true,
+      "integratedSecurity": true,
+      "trustServerCertificate": true,
+      "rowCollectionOnDone": true
+    }
+  },
   "test": {
-    "url": { "ENV": "PG_TEST_DB_URL" }
+    "url": {
+      "ENV": "PG_TEST_DB_URL"
+    }
   },
   "development": {
-    "url": { "ENV": "PG_DB_URL" }
+    "url": {
+      "ENV": "PG_DB_URL"
+    }
   },
   "production": {
-    "url": { "ENV": "PG_DB_URL" },
+    "url": {
+      "ENV": "PG_DB_URL"
+    },
     "ssl": {
       "rejectUnauthorized": false
     }
