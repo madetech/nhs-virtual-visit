@@ -29,11 +29,15 @@
     "cleandb": "node db/scripts/cleanup_scheduled_calls.js",
     "db:seed": "node db/scripts/seed_database.js",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "dbmigrate": "db-migrate --migrations-dir 'db/migrations/'",
     "dbmigrate-dev-mssql": "db-migrate --migrations-dir 'db/migrations/' -e development-mssql",
 =======
     "dbmigrate": "db-migrate --migrations-dir db/migrations/",
 >>>>>>> test: subject: update .env db properties across project
+=======
+    "dbmigrate": "db-migrate --migrations-dir 'db/migrations/'",
+>>>>>>> test: subject: updating env variables and fix docker local scripts
     "dbmigratetest": "db-migrate --migrations-dir 'db/migrations/' -e test",
     "dbmigratedry": "db-migrate --dry-run --migrations-dir 'db/migrations/'",
     "postinstall": "test -n \"$NONPMPOSTINSTALL\" || npm run build"
