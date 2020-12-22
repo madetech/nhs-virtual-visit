@@ -7,7 +7,10 @@ import Label from "../Label";
 import Form from "../Form";
 import isPresent from "../../helpers/isPresent";
 import SelectStatus from "../../components/SelectStatus";
+<<<<<<< HEAD
 
+=======
+>>>>>>> chore: added SelectStatus and used component in EditHospitalForm
 
 const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);

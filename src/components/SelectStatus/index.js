@@ -36,6 +36,7 @@ const SelectStatus = ({
         </option>
         {options.map((option) => (
           <option key={option.name} value={option.name}>
+
             {option.name}
           </option>
         ))}
