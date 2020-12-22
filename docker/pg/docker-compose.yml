@@ -15,6 +15,7 @@ services:
       - PG_TEST_DB_URL=postgresql://postgres:postgres@postgres/postgres
   postgres:
     image: postgres:12
+    container_name: postgres
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres

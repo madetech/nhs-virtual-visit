@@ -9,8 +9,8 @@ async function getDb() {
   let options = {
     connectionString:
       process.env.NODE_ENV === "test" || process.env.APP_ENV === "test"
-        ? process.env.TEST_DATABASE_URL
-        : process.env.DATABASE_URL,
+        ? process.env.PG_TEST_DB_URL
+        : process.env.PG_DB_URL,
   };
 
   return pgp(options);
