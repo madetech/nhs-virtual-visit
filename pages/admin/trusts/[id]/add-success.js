@@ -28,7 +28,9 @@ const AddATrustSuccess = ({ error, name }) => {
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/admin/add-a-trust`}>Add another trust</ActionLink>
+          <ActionLink href={`/admin/trusts/add-a-trust`}>
+            Add another trust
+          </ActionLink>
 
           <p>
             <AnchorLink href="/admin">Return to site administration</AnchorLink>
