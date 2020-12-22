@@ -45,6 +45,7 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
+import findWardByCode from "../gateways/findWardByCode";
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
 import retrieveWardById from "../gateways/retrieveWardById";
 import retrieveTrustById from "../gateways/retrieveTrustById";
@@ -131,6 +132,10 @@ class AppContainer {
 
   getRetrieveWards = () => {
     return retrieveWards(this);
+  };
+
+  getFindWardByCode = () => {
+    return findWardByCode(this);
   };
 
   getUpdateWardVisitTotals = () => {
