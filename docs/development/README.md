@@ -96,8 +96,6 @@ Run `./bin/setup_local_mssql_docker.sh`
 
 #### Setup the database with docker
 
-Run `docker-compose up postgres -d` to create the container.
-
 Set `PG_DB_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` and `PG_TEST_DB_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` in your `.env` file.
 
 Run `./bin/setup_dev_db_docker.sh`
