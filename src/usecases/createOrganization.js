@@ -1,18 +1,18 @@
 import logger from "../../logger";
 
-const createOrganizationList = ({ getDb }) => async ({ name }) => {
+const createOrganization = ({ getDb }) => async ({ name, status }) => {
   const db = await getDb();
 
   try {
     logger.info(`Adding organization ${name} to list`, name);
 
     const addedOrganization = await db.one(
-      `INSERT INTO organization_list
-        (id, name)
-        VALUES (default, $1)
+      `INSERT INTO organization
+        (id, name, status)
+        VALUES (default, $1, $2)
         RETURNING id
       `,
-      [name]
+      [name, status]
     );
 
     return {
@@ -28,4 +28,4 @@ const createOrganizationList = ({ getDb }) => async ({ name }) => {
   }
 };
 
-export default createOrganizationList;
+export default createOrganization;
