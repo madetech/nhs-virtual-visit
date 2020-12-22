@@ -17,7 +17,10 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
   it("allows an admin to add a trust", () => {
     GivenIAmLoggedInAsAnAdmin();
     WhenIClickOnViewAllTrusts();
+<<<<<<< HEAD
     ThenISeeAListOfTrusts();
+=======
+>>>>>>> chore: create retrieveOrganization tests
     WhenIClickOnAddATrust();
     ThenISeeTheAddATrustForm();
 
@@ -40,7 +43,10 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
   it("displays errors when fields have been left blank", () => {
     GivenIAmLoggedInAsAnAdmin();
     WhenIClickOnViewAllTrusts();
+<<<<<<< HEAD
     ThenISeeAListOfTrusts();
+=======
+>>>>>>> chore: create retrieveOrganization tests
     WhenIClickOnAddATrust();
     ThenISeeTheAddATrustForm();
 

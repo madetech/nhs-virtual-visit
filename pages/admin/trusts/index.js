@@ -42,11 +42,7 @@ export const getServerSideProps = propsWithContainer(
     const {
       organizations,
       error,
-<<<<<<< HEAD
     } = await container.getRetrieveOrganizations()();
-=======
-    } = await container.getRetrieveAllOrganizations()();
->>>>>>> chore: list of all trusts created, add form able to add trusts to the list
 
     return {
       props: { organizations, error },
