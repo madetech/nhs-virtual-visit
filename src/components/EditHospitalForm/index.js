@@ -8,7 +8,6 @@ import Form from "../Form";
 import isPresent from "../../helpers/isPresent";
 import SelectStatus from "../../components/SelectStatus";
 
-
 const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
   const [hospitalStatus, setHospitalStatus] = useState(hospital.status);
@@ -128,6 +127,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
               setHospitalStatus(
                 event.target.value
               );
+
             }}
             hasError={hasError("hospital-status")}
             errorMessage={errorMessage("hospital-status")}

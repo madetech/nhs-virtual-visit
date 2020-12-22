@@ -35,8 +35,12 @@ const SelectStatus = ({
           {prompt}
         </option>
         {options.map((option) => (
+<<<<<<< HEAD
           <option key={option.name} value={option.name}>
 
+=======
+          <option key={option.id} value={option.name}>
+>>>>>>> chore: added SelectStatus and used component in EditHospitalForm
             {option.name}
           </option>
         ))}
