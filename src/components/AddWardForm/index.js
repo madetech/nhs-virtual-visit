@@ -10,7 +10,6 @@ import Form from "../../components/Form";
 import isPresent from "../../helpers/isPresent";
 
 const AddWardForm = ({ errors, setErrors, hospital }) => {
-  console.log(hospital);
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
   const [wardCodeConfirmation, setWardCodeConfirmation] = useState("");
