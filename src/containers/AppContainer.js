@@ -59,7 +59,7 @@ class AppContainer {
     return Database.getInstance();
   };
 
-  getMsSqlDb = () => {
+  getMsSqlConnPool = () => {
     return MsSQL.getConnectionPool();
   };
 
