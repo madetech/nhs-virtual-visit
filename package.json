@@ -28,7 +28,7 @@
     "start": "NODE_ENV=production node server.js",
     "cleandb": "node db/scripts/cleanup_scheduled_calls.js",
     "db:seed": "node db/scripts/seed_database.js",
-    "dbmigrate": "db-migrate --migrations-dir 'db/migrations/'",
+    "dbmigrate": "db-migrate --migrations-dir db/migrations/",
     "dbmigratetest": "db-migrate --migrations-dir 'db/migrations/' -e test",
     "dbmigratedry": "db-migrate --dry-run --migrations-dir 'db/migrations/'",
     "postinstall": "test -n \"$NONPMPOSTINSTALL\" || npm run build"
