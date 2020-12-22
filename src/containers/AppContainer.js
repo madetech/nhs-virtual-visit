@@ -52,10 +52,15 @@ import logEvent from "../gateways/logEvent";
 
 import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
+import MsSQL from "../gateways/MsSQL";
 
 class AppContainer {
   getDb = () => {
     return Database.getInstance();
+  };
+
+  getMsSqlDb = () => {
+    return MsSQL.getConnectionPool();
   };
 
   getNotifyClient = () => {
