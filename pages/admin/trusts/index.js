@@ -42,7 +42,7 @@ export const getServerSideProps = propsWithContainer(
     const {
       organizations,
       error,
-    } = await container.getRetrieveAllOrganizations()();
+    } = await container.getRetrieveOrganizations()();
 
     return {
       props: { organizations, error },

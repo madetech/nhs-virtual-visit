@@ -1,4 +1,4 @@
-import createOrganizationList from "./createOrganizationList";
+import createOrganization from "./createOrganization";
 
 describe("createOrganizationList", () => {
   it("create an Organization", async () => {
@@ -11,14 +11,14 @@ describe("createOrganizationList", () => {
       },
     };
 
-    const request = { name: "Test Trust" };
+    const request = { name: "Test Trust", status: 0 };
 
-    const { organizationId, error } = await createOrganizationList(container)(
+    const { organizationId, error } = await createOrganization(container)(
       request
     );
     expect(organizationId).toEqual(1);
     expect(error).toBeNull();
-    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), ["Test Trust"]);
+    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), ["Test Trust", 0]);
   });
 
   it("returns an error object on db exception", async () => {
@@ -32,7 +32,7 @@ describe("createOrganizationList", () => {
       },
     };
 
-    const { organizationId, error } = await createOrganizationList(container)({
+    const { organizationId, error } = await createOrganization(container)({
       name: "Test Trust",
     });
 

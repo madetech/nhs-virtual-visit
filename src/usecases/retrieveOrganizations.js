@@ -1,20 +1,22 @@
 import logger from "../../logger";
 
-const retrieveAllOrganizations = ({ getDb }) => async () => {
+const retrieveOrganizations = ({ getDb }) => async () => {
   const db = await getDb();
   try {
     const organizations = await db.any(
       `SELECT
         id as id,
-        name as name
+        name as name,
+        status as status
       FROM
-        organization_list`
+        organization`
     );
 
     return {
       organizations: organizations.map((organization) => ({
         id: organization.id,
         name: organization.name,
+        status: organization.status,
       })),
       error: null,
     };
@@ -27,4 +29,4 @@ const retrieveAllOrganizations = ({ getDb }) => async () => {
   }
 };
 
-export default retrieveAllOrganizations;
+export default retrieveOrganizations;

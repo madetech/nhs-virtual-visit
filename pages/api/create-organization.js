@@ -24,10 +24,11 @@ export default withContainer(
 
     res.setHeader("Content-Type", "application/json");
 
-    const createOrganizationList = container.getCreateOrganizationList();
+    const createOrganization = container.getCreateOrganization();
 
-    const { organizationId, error } = await createOrganizationList({
+    const { organizationId, error } = await createOrganization({
       name: body.name,
+      status: body.status,
     });
 
     if (error) {
