@@ -13,7 +13,7 @@ const AddAWard = ({ trust, hospitals, error, hospitalId }) => {
     return <Error />;
   }
   const [errors, setErrors] = useState([]);
-  const hospital = hospitals.filter((hospital) => hospital.id == hospitalId)[0];
+  const hospital = hospitals.find((hospital) => hospital.id == hospitalId);
 
   return (
     <Layout
