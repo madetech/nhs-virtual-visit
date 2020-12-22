@@ -1,4 +1,4 @@
-# NHS Virtual Visit
+# NHS Virtual Visit 
 
 This service allows ward staff to schedule a visit for a patient. Allowing face to face visits for visitors who are unable to visit in person.
 
