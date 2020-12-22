@@ -78,7 +78,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
   function WhenIFillOutTheEditForm(name) {
     cy.get("input[name=hospital-name]").clear().type(name);
-    cy.get("#nhs-dropdown-menu").select("active");
+    cy.get("#nhs-dropdown-menu").select("2");
   }
 
   function AndISubmitTheForm() {
