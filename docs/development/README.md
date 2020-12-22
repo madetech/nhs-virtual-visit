@@ -29,9 +29,9 @@ In order to run this app locally you will need to create a `.env` file in the ro
 # GOV.UK Notify API Key
 API_KEY=
 # Postgres Connection String
-DATABASE_URL=
+PG_DB_URL=
 # Postgres Connection String for the test database
-TEST_DATABASE_URL=
+PG_TEST_DB_URL=
 # GOV.UK Notify SMS Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
 # GOV.UK Notify SMS Updated Visit Template ID
@@ -63,7 +63,7 @@ ENABLE_SENTRY=
 
 Run `docker-compose up postgres -d` to create the container.
 
-Set `DATABASE_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` and `TEST_DATABASE_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` in your `.env` file.
+Set `PG_DB_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` and `PG_TEST_DB_URL=postgresql://postgres:postgres@localhost/nhs-virtual-visit-dev` in your `.env` file.
 
 Run `./bin/setup_dev_db_docker.sh`
 
@@ -83,7 +83,7 @@ If you are installing a local instance of PostgreSQL on Ubuntu, see the steps in
 1. Add the database URL as an environment variable in `.env`. On Linux you may need to provide a username and password.
    ```bash
    cat <<<EOF >> .env
-   DATABASE_URL=postgresql://localhost/nhs-virtual-visit-dev
+   PG_DB_URL=postgresql://localhost/nhs-virtual-visit-dev
    EOF
    ```
 1. Run the database setup script
