@@ -7,10 +7,7 @@ import Label from "../Label";
 import Form from "../Form";
 import isPresent from "../../helpers/isPresent";
 import SelectStatus from "../../components/SelectStatus";
-<<<<<<< HEAD
 
-=======
->>>>>>> chore: added SelectStatus and used component in EditHospitalForm
 
 const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
@@ -120,9 +117,14 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
             id="hospital-status"
             className="nhsuk-input--width-10 nhsuk-u-width-one-half"
             prompt="Choose a hospital status"
-            options={[{ name: "active" }, { name: "disabled" }]}
+            options={[
+              { name: "active" },
+              { name: "disabled" },
+            ]}
             onChange={(event) => {
-              setHospitalStatus(event.target.value);
+              setHospitalStatus(
+                event.target.value
+              );
             }}
             hasError={hasError("hospital-status")}
             errorMessage={errorMessage("hospital-status")}
