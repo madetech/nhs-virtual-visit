@@ -53,6 +53,33 @@
       "rowCollectionOnDone": true
     }
   },
+  "e2e-mssql": {
+    "driver": {
+      "ENV": "MSQL_DB_DRIVER"
+    },
+    "user": {
+      "ENV": "MSQL_E2E_DB_USER"
+    },
+    "password": {
+      "ENV": "MSQL_E2E_DB_PASSWORD"
+    },
+    "server": {
+      "ENV": "MSQL_E2E_DB_SERVER"
+    },
+    "database": {
+      "ENV": "MSQL_E2E_DB_DATABASE"
+    },
+    "port": 1433,
+    "options": {
+      "encrypt": true,
+      "validateBulkLoadParameters": false,
+      "trustedConnection": true,
+      "enableArithAbort": true,
+      "integratedSecurity": true,
+      "trustServerCertificate": true,
+      "rowCollectionOnDone": true
+    }
+  },
   "test": {
     "url": {
       "ENV": "PG_TEST_DB_URL"
