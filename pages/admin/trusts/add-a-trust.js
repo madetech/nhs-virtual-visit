@@ -41,21 +41,15 @@ const AddATrust = () => {
 
     if (onSubmitErrors.length === 0) {
       const submitTrust = async (name) => {
-<<<<<<< HEAD
+
         const response = await fetch("/api/create-organization", {
-=======
-        const response = await fetch("/api/create-organizationList", {
->>>>>>> chore: list of all trusts created, add form able to add trusts to the list
           method: "POST",
           headers: {
             "content-type": "application/json",
           },
           body: JSON.stringify({
             name,
-<<<<<<< HEAD
             status: 0,
-=======
->>>>>>> chore: list of all trusts created, add form able to add trusts to the list
           }),
         });
 

@@ -47,18 +47,20 @@ async function seedDatabase() {
     "INSERT INTO organization (name, status) VALUES ('Test Trust 4', 0)"
   );
 
-  await db.result("INSERT INTO organization_list (name) VALUES ('Test Trust')");
-
   await db.result(
-    "INSERT INTO organization_list (name) VALUES ('Test Trust 2')"
+    "INSERT INTO organization (name, status) VALUES ('Test Trust', 0)"
   );
 
   await db.result(
-    "INSERT INTO organization_list (name) VALUES ('Test Trust 3')"
+    "INSERT INTO organization (name, status) VALUES ('Test Trust 2', 0)"
   );
 
   await db.result(
-    "INSERT INTO organization_list (name) VALUES ('Test Trust 4')"
+    "INSERT INTO organization (name, status) VALUES ('Test Trust 3', 0)"
+  );
+
+  await db.result(
+    "INSERT INTO organization (name, status) VALUES ('Test Trust 4', 0)"
   );
 
   const {
