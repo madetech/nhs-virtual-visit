@@ -4,11 +4,11 @@ const pgp = require("pg-promise")({
 });
 
 let options = {
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.PG_DB_URL,
 };
 
 if (process.env.NODE_ENV === "test" || process.env.APP_ENV === "test") {
-  options.connectionString = process.env.TEST_DATABASE_URL;
+  options.connectionString = process.env.PG_TEST_DB_URL;
 }
 
 // from https://www.codeoftheprogrammer.com/2020/01/16/postgresql-from-nextjs-api-route/

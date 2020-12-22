@@ -1,12 +1,12 @@
 {
   "test": {
-    "url": { "ENV": "TEST_DATABASE_URL" }
+    "url": { "ENV": "PG_TEST_DB_URL" }
   },
   "development": {
-    "url": { "ENV": "DATABASE_URL" }
+    "url": { "ENV": "PG_DB_URL" }
   },
   "production": {
-    "url": { "ENV": "DATABASE_URL" },
+    "url": { "ENV": "PG_DB_URL" },
     "ssl": {
       "rejectUnauthorized": false
     }

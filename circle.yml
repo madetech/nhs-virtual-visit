@@ -15,7 +15,7 @@ executors:
           POSTGRES_DB: nhs-virtual-visit-test
     environment:
       APP_ENV: test
-      TEST_DATABASE_URL: postgresql://root@localhost/nhs-virtual-visit-test
+      PG_TEST_DB_URL: postgresql://root@localhost/nhs-virtual-visit-test
       JWT_SIGNING_KEY: UdGgQx0pGBV0yvM6Chxp6h/cIFLwuYy/2XDR/1lQX5CpcFWnA==
 
 jobs:
@@ -40,7 +40,7 @@ jobs:
         image: "circleci/postgres:12.2"
     environment:
       APP_ENV: test
-      TEST_DATABASE_URL: postgresql://root@localhost/nhs-virtual-visit-test
+      PG_TEST_DB_URL: postgresql://root@localhost/nhs-virtual-visit-test
     executor:
       name: node/default
     steps:
