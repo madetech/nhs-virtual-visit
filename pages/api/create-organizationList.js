@@ -32,7 +32,6 @@ export default withContainer(
 
     if (error) {
       res.status(409);
-      console.log("here");
       res.end(JSON.stringify({ err: "Trust name already exists" }));
     } else {
       res.status(201);
