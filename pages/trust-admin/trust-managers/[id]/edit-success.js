@@ -28,11 +28,10 @@ const EditATrustManagerSuccess = ({ error, trustManager, trust }) => {
         <GridColumn width="two-thirds">
           <PanelUpdateSuccess name={`${trustManager.email}`} />
           <h2>What happens next</h2>
-          <p>
-            <ActionLink href="/trust-admin/trust-managers">
-              Return to Trust Managers
-            </ActionLink>
-          </p>
+
+          <ActionLink href="/trust-admin/trust-managers">
+            Return to Trust Managers
+          </ActionLink>
         </GridColumn>
       </GridRow>
     </Layout>
