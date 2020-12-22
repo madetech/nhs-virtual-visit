@@ -1,22 +1,21 @@
 #!/bin/bash
 
-wait_time=15
+if [[ "$OSTYPE" == "linux-gnu"* && $EUID != 0 ]]
+then
+	commandPrefix="sudo"
+else
+	commandPrefix=
+fi
 
-cd docker 
-docker-compose up -d 
+# Start docker yml from path and detached.
+docker-compose -f docker/mssql/docker-compose.yml up -d
 
-# wait for SQL Server to come up
-echo waiting database to start in $(eval echo $wait_time)s...
-for i in $(eval echo {$wait_time..01})
-do
-tput cup 4 $l
-echo -n "$i"
-sleep 1
-done
-echo
+wait_time=5s
+
+# Wait for PostgreSQL Server to come up.
+echo waiting database to start in $wait_time...
+sleep $wait_time
 echo database started...
 
-cd ..
-echo start running migrations...
-npm run dbmigrate-up-local 
-echo end running migrations...
+# Run create tables scripts.
+npm run dbmigrate-local-mssql up:mssql
