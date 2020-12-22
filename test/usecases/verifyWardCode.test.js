@@ -2,19 +2,28 @@ import verifyWardCode from "../../src/usecases/verifyWardCode";
 
 describe("verifyWardCode", () => {
   describe("Given a matching ward code", () => {
-    it("Returns true with the matching ward ID", async () => {
+    it("Calls the findWardByCode gateway", async () => {
+      const findWardByCodeGateway = jest.fn(async () => ({
+        wardId: 1,
+        wardCode: "14p+",
+        trustId: 1,
+      }));
       const container = {
-        getDb: async () => ({
-          any: jest.fn(async () => [
-            {
-              id: 1,
-              name: "Ward name",
-              hospital_name: "London Meowdical Hospital",
-              code: "MEOW",
-              trust_id: 1,
-            },
-          ]),
-        }),
+        getFindWardByCodeGateway: () => findWardByCodeGateway,
+      };
+
+      await verifyWardCode(container)("14p+");
+      expect(findWardByCodeGateway).toHaveBeenCalledWith("14p+");
+    });
+
+    it("Returns true with the matching ward ID", async () => {
+      const findWardByCodeGateway = jest.fn(async () => ({
+        wardId: 1,
+        wardCode: "MEOW",
+        trustId: 1,
+      }));
+      const container = {
+        getFindWardByCodeGateway: () => findWardByCodeGateway,
       };
 
       let response = await verifyWardCode(container)("MEOW");
@@ -30,7 +39,7 @@ describe("verifyWardCode", () => {
   describe("Given a non matching ward code", () => {
     it("Returns false", async () => {
       const container = {
-        getDb: async () => ({
+        getFindWardByCodeGateway: async () => ({
           any: jest.fn(async () => []),
         }),
       };
@@ -43,12 +52,8 @@ describe("verifyWardCode", () => {
   describe("Given a DB error", () => {
     it("Returns an error", async () => {
       const container = {
-        async getDb() {
-          return {
-            any: jest.fn(() => {
-              throw new Error("DB Error!");
-            }),
-          };
+        getFindWardByCodeGateway: () => async () => {
+          throw new Error("DB Error!");
         },
       };
 
