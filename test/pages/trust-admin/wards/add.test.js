@@ -38,6 +38,7 @@ describe("/trust-admin/wards/add", () => {
             { id: "2", name: "Catra Hospital" },
           ]}
           hospitalId={1}
+          trust={{ name: "Trust Test" }}
         />
       );
 
