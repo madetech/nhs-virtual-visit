@@ -1,5 +1,5 @@
 {
-  "local-mssql": {
+  "development-mssql": {
     "driver": {
       "ENV": "MSQL_DB_DRIVER"
     },
@@ -24,36 +24,14 @@
       "integratedSecurity": true,
       "trustServerCertificate": true,
       "rowCollectionOnDone": true
+    },
+    "pool": {
+      "max": 15,
+      "min": 5,
+      "idleTimeoutMillis": 30000
     }
   },
-  "development-mssql": {
-    "driver": {
-      "ENV": "MSQL_DB_DRIVER"
-    },
-    "user": {
-      "ENV": "MSQL_DEV_DB_USER"
-    },
-    "password": {
-      "ENV": "MSQL_DEV_DB_PASSWORD"
-    },
-    "server": {
-      "ENV": "MSQL_DEV_DB_SERVER"
-    },
-    "database": {
-      "ENV": "MSQL_DEV_DB_DATABASE"
-    },
-    "port": 1433,
-    "options": {
-      "encrypt": true,
-      "validateBulkLoadParameters": false,
-      "trustedConnection": true,
-      "enableArithAbort": true,
-      "integratedSecurity": true,
-      "trustServerCertificate": true,
-      "rowCollectionOnDone": true
-    }
-  },
-  "e2e-mssql": {
+  "test-e2e-mssql": {
     "driver": {
       "ENV": "MSQL_DB_DRIVER"
     },
@@ -78,6 +56,11 @@
       "integratedSecurity": true,
       "trustServerCertificate": true,
       "rowCollectionOnDone": true
+    },
+    "pool": {
+      "max": 15,
+      "min": 5,
+      "idleTimeoutMillis": 30000
     }
   },
   "test": {
