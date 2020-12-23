@@ -40,7 +40,7 @@ async function initPool() {
 
   setPoolConfigPerEnvironment(config);
 
-  const DB_KEY = Symbol.for("MyApp.db");
+  const DB_KEY = Symbol.for("MsSQL.db");
   const globalSymbols = Object.getOwnPropertySymbols(global);
   const hasDb = globalSymbols.indexOf(DB_KEY) > -1;
 
