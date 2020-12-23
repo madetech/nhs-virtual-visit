@@ -17,6 +17,7 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
   it("allows an admin to add a trust", () => {
     GivenIAmLoggedInAsAnAdmin();
     WhenIClickOnViewAllTrusts();
+    ThenISeeAListOfTrusts();
     WhenIClickOnAddATrust();
     ThenISeeTheAddATrustForm();
 
@@ -30,6 +31,7 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
 
     WhenIClickToReturnToSiteAdministration();
     ThenISeeTheSiteAdministrationPage();
+    WhenIClickOnViewAllTrusts();
     AndISeeTheAddedTrust();
 
     thenIClickLogOut();
@@ -38,6 +40,7 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
   it("displays errors when fields have been left blank", () => {
     GivenIAmLoggedInAsAnAdmin();
     WhenIClickOnViewAllTrusts();
+    ThenISeeAListOfTrusts();
     WhenIClickOnAddATrust();
     ThenISeeTheAddATrustForm();
 
@@ -69,6 +72,10 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
 
   function ThenISeeTheTrustIsAdded() {
     cy.get("h1").should("contain", "Bow Trust has been added");
+  }
+
+  function ThenISeeAListOfTrusts() {
+    cy.get("h1").should("contain", "List of all trusts");
   }
 
   function AndISeeTheAddedTrust() {
