@@ -14,7 +14,7 @@ const EditAWard = ({ trust, error, id, name, hospitalId, hospitals }) => {
   }
 
   const [errors, setErrors] = useState([]);
-  const hospital = hospitals.filter((hospital) => hospital.id == hospitalId)[0];
+  const hospital = hospitals.find((hospital) => hospital.id == hospitalId);
 
   return (
     <Layout
