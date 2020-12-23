@@ -31,9 +31,6 @@ describe("db-migrate database setup ready", () => {
         status: 1,
       },
     ]);
-
-    // close resource else blocks process.
-    pool.close();
   });
 
   // TODO create test for organisations, check if the table as more than one record.
