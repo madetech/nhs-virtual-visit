@@ -28,16 +28,8 @@
     "start": "NODE_ENV=production node server.js",
     "cleandb": "node db/scripts/cleanup_scheduled_calls.js",
     "db:seed": "node db/scripts/seed_database.js",
-<<<<<<< HEAD
-<<<<<<< HEAD
     "dbmigrate": "db-migrate --migrations-dir 'db/migrations/'",
     "dbmigrate-dev-mssql": "db-migrate --migrations-dir 'db/migrations/' -e development-mssql",
-=======
-    "dbmigrate": "db-migrate --migrations-dir db/migrations/",
->>>>>>> test: subject: update .env db properties across project
-=======
-    "dbmigrate": "db-migrate --migrations-dir 'db/migrations/'",
->>>>>>> test: subject: updating env variables and fix docker local scripts
     "dbmigratetest": "db-migrate --migrations-dir 'db/migrations/' -e test",
     "dbmigratedry": "db-migrate --dry-run --migrations-dir 'db/migrations/'",
     "postinstall": "test -n \"$NONPMPOSTINSTALL\" || npm run build"
@@ -68,6 +60,7 @@
     "mockdate": "^2.0.5",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
+    "mssql": "^6.3.0",
     "nanoid": "^3.1.20",
     "next": "^10.0.4",
     "next-absolute-url": "^1.2.2",
