@@ -2,11 +2,19 @@ import AppContainer from "../../src/containers/AppContainer";
 const container = AppContainer.getInstance();
 
 export const setupTrust = async (args = {}) => {
-  return await container.get()({
+  return await container.getCreateTrust()({
     name: "Test Trust",
     adminCode: "TESTCODE",
     password: "TESTPASSWORD",
     videoProvider: "whereby",
+    ...args,
+  });
+};
+
+export const setupOrganization = async (args = {}) => {
+  return await container.getCreateOrganization()({
+    name: "Test Trust",
+    status: 0,
     ...args,
   });
 };
