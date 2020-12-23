@@ -1,5 +1,4 @@
 import React from "react";
-import AnchorLink from "../AnchorLink";
 import Link from "next/link";
 
 const TrustManagersTable = ({ trustManagers }) => (
@@ -38,7 +37,16 @@ const TrustManagersTable = ({ trustManagers }) => (
               </Link>
             </td>
             <td className="nhsuk-table__cell">
-              <AnchorLink href="">Delete</AnchorLink>
+              <Link
+                className="nhsuk-link"
+                href={{
+                  pathname: `/trust-admin/trust-managers/[id]/archive-confirmation`,
+                  query: { id: info.id },
+                }}
+                as={`/trust-admin/trust-managers/${info.id}/archive-confirmation`}
+              >
+                Delete
+              </Link>
             </td>
           </tr>
         ))}
