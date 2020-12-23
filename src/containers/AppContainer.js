@@ -306,6 +306,10 @@ class AppContainer {
 >>>>>>> chore: change oorganization_list to organization in db and all relevant files
   };
 
+  getRetrieveOrganizationById = () => {
+    return retrieveOrganizationById;
+  };
+
   getInsertVisitGateway = () => {
     return insertVisit;
   };
