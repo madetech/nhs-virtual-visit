@@ -7,12 +7,12 @@ describe("verifyAdminCode contract tests", () => {
 
   it("verifies if a admin code and password match an existing trust", async () => {
     await setupAdmin(container)({
-      code: "TESTCODE",
+      email: "test@email.com",
       password: "TESTPASSWORD",
     });
 
     const { validAdminCode, error } = await verifyAdminCode(container)(
-      "TESTCODE",
+      "test@email.com",
       "TESTPASSWORD"
     );
 
@@ -22,7 +22,7 @@ describe("verifyAdminCode contract tests", () => {
 
   it("is not valid if the password is not provided", async () => {
     await setupAdmin(container)({
-      code: "TESTCODE",
+      email: "test@email.com",
       password: "TESTPASSWORD",
     });
 
@@ -34,14 +34,14 @@ describe("verifyAdminCode contract tests", () => {
     expect(error).toBe("password is not defined");
   });
 
-  it("is not valid if the code is incorrect", async () => {
+  it("is not valid if the email is incorrect", async () => {
     await setupAdmin(container)({
-      code: "TESTCODE",
+      email: "test@email.com",
       password: "TESTPASSWORD",
     });
 
     const { validAdminCode, error } = await verifyAdminCode(container)(
-      "WRONGCODE",
+      "wrong@email.com",
       "TESTPASSWORD"
     );
 
@@ -51,16 +51,16 @@ describe("verifyAdminCode contract tests", () => {
 
   it("is not valid if the password is incorrect", async () => {
     await setupAdmin(container)({
-      code: "TESTCODE",
+      email: "test@email.com",
       password: "TESTPASSWORD",
     });
 
     const { validAdminCode, error } = await verifyAdminCode(container)(
-      "TESTCODE",
+      "test@email.com",
       "WRONGPASSWORD"
     );
 
     expect(validAdminCode).toEqual(false);
-    expect(error).toBe("Incorrect trust admin code or password");
+    expect(error).toBe("Incorrect email or password");
   });
 });

@@ -8,7 +8,7 @@ function ThenISeeTheSiteAdministrationPage() {
 
 const GivenIAmLoggedInAsAnAdmin = () => {
   cy.visit(Cypress.env("baseUrl") + "/admin/login");
-  cy.get("input[name=code]").type(Cypress.env("validAdminCode"));
+  cy.get("input[name=email]").type(Cypress.env("validAdminEmail"));
   cy.get("input[name=password]").type(Cypress.env("validAdminPassword"));
   cy.get("button").contains("Log in").click();
 };

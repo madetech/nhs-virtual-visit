@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 const Login = ({ correlationId }) => {
   const [errors, setErrors] = useState([]);
 
-  const codeRef = useRef();
+  const emailRef = useRef();
   const passwordRef = useRef();
 
   const hasError = (field) =>
@@ -29,13 +29,13 @@ const Login = ({ correlationId }) => {
   const onSubmit = async () => {
     const onSubmitErrors = [];
 
-    const code = codeRef.current.value;
+    const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    if (!code) {
+    if (!email) {
       onSubmitErrors.push({
-        id: "code-error",
-        message: "Enter an admin code",
+        id: "email-error",
+        message: "Enter an email",
       });
     }
 
@@ -47,7 +47,8 @@ const Login = ({ correlationId }) => {
     }
 
     if (onSubmitErrors.length === 0) {
-      const body = JSON.stringify({ code, password });
+      const body = JSON.stringify({ code: email, password });
+
       const response = await fetchEndpointWithCorrelationId(
         "POST",
         "/api/session",
@@ -60,8 +61,8 @@ const Login = ({ correlationId }) => {
         return true;
       } else {
         onSubmitErrors.push({
-          id: "code-or-password-error",
-          message: "The code or password you entered was not recognised",
+          id: "email-or-password-error",
+          message: "The email or password you entered was not recognised",
         });
       }
     }
@@ -80,15 +81,15 @@ const Login = ({ correlationId }) => {
 
           <Form onSubmit={onSubmit}>
             <FormGroup>
-              <Label htmlFor="code">Admin code</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
-                id="code"
-                type="text"
-                ref={codeRef}
-                hasError={hasError("code")}
-                errorMessage={errorMessage("code")}
-                className="nhsuk-input--width-10"
-                name="code"
+                id="email"
+                type="email"
+                ref={emailRef}
+                hasError={hasError("email")}
+                errorMessage={errorMessage("email")}
+                className="nhsuk-input--width-20"
+                name="email"
               />
             </FormGroup>
             <FormGroup>
@@ -99,7 +100,7 @@ const Login = ({ correlationId }) => {
                 ref={passwordRef}
                 hasError={hasError("password")}
                 errorMessage={errorMessage("password")}
-                className="nhsuk-input--width-10"
+                className="nhsuk-input--width-20"
                 name="password"
                 autoComplete="off"
               />

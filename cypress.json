@@ -5,7 +5,7 @@
     "validWard": "TEST1",
     "validTrustAdminCode": "admin",
     "validTrustAdminPassword": "trustpassword",
-    "validAdminCode": "super",
+    "validAdminEmail": "super@email.com",
     "validAdminPassword": "adminpassword",
     "fakeWard": "FAKENHS",
     "baseUrl": "http://localhost:3001"

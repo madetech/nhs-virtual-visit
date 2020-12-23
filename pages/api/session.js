@@ -6,6 +6,7 @@ import featureIsEnabled from "../../src/helpers/featureFlag";
 
 export default withContainer(async (req, res, { container }) => {
   const { code, password } = req.body;
+
   const method = req.method;
   if (method === "POST") {
     const sessionId = uuidv4();
