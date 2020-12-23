@@ -4,7 +4,7 @@ import ErrorMessage from "../ErrorMessage";
 
 const DEFAULT_VALUE = "DEFAULT";
 
-const Select = ({
+const SelectStatus = ({
   id,
   className,
   prompt,
@@ -35,7 +35,7 @@ const Select = ({
           {prompt}
         </option>
         {options.map((option) => (
-          <option key={option.id} value={option.id}>
+          <option key={option.name} value={option.name}>
             {option.name}
           </option>
         ))}
@@ -44,4 +44,4 @@ const Select = ({
   );
 };
 
-export default Select;
+export default SelectStatus;

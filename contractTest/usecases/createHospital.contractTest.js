@@ -10,6 +10,8 @@ describe("createHospital contract tests", () => {
     const { hospitalId } = await container.getCreateHospital()({
       trustId,
       name: "Test Hospital",
+      status: "active",
+      code: "TH1",
       supportUrl: "https://www.support.example.com",
       surveyUrl: "https://www.survey.example.com",
     });
@@ -23,6 +25,8 @@ describe("createHospital contract tests", () => {
     expect(hospital).toEqual({
       id: hospitalId,
       name: "Test Hospital",
+      status: "active",
+      code: "TH1",
       supportUrl: "https://www.support.example.com",
       surveyUrl: "https://www.survey.example.com",
     });

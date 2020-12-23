@@ -7,6 +7,7 @@ import {
 
 describe("As a trust admin, I want to add a hospital so that I can manage virtual visits per hospital.", () => {
   const hospitalName = "Scorpia Hospital";
+  const hospitalCode = "SCH";
 
   before(() => {
     // reset and seed the database
@@ -15,19 +16,17 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     );
   });
 
-  it("allows a trust admin to add and edit  a hospital", () => {
+  it("allows a trust admin to add and edit a hospital", () => {
     GivenIAmLoggedInAsATrustAdmin();
     WhenIClickHospitalsOnTheNavigationBar();
     ThenISeeTheHospitalsPage();
-
     cy.audit();
 
     WhenIClickAddAHospital();
     ThenISeeTheAddAHospitalForm();
-
     cy.audit();
 
-    WhenIFillOutTheForm(hospitalName);
+    WhenIFillOutTheAddForm(hospitalName, hospitalCode);
     AndISubmitTheForm();
     ThenISeeTheHospitalIsAdded(hospitalName);
     WhenIClickToGoToTheAddedHospital(hospitalName);
@@ -40,8 +39,9 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
 
     WhenIClickOnTheEditLink(hospitalName);
     ThenIExpectTHeHospitalNameFieldToBePrePopulated(hospitalName);
-    const newName = "new hopsital name";
-    WhenIFillOutTheForm(newName);
+
+    const newName = "new hospital name";
+    WhenIFillOutTheEditForm(newName);
     AndIClickTheEditHospitalButton();
 
     ThenIShouldBeOnTheEditSuccessPageWithNewName(newName);
@@ -62,36 +62,6 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     thenIClickLogOut();
   });
 
-  it("add hospital displays errors when survey url is invalid", () => {
-    GivenIAmLoggedInAsATrustAdmin();
-    WhenIClickHospitalsOnTheNavigationBar();
-    ThenISeeTheHospitalsPage();
-
-    WhenIClickAddAHospital();
-    ThenISeeTheAddAHospitalForm();
-
-    WhenIFillOutTheFormWithBadSurveyUrl();
-    AndISubmitTheForm();
-    ThenISeeErrors();
-
-    thenIClickLogOut();
-  });
-
-  it("add hospital displays errors when support url is invalid", () => {
-    GivenIAmLoggedInAsATrustAdmin();
-    WhenIClickHospitalsOnTheNavigationBar();
-    ThenISeeTheHospitalsPage();
-
-    WhenIClickAddAHospital();
-    ThenISeeTheAddAHospitalForm();
-
-    WhenIFillOutTheFormWithBadSupportUrl();
-    AndISubmitTheForm();
-    ThenISeeErrors();
-
-    thenIClickLogOut();
-  });
-
   function WhenIClickAddAHospital() {
     cy.get("a").contains("Add a hospital").click();
   }
@@ -100,24 +70,14 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     cy.get("h2").should("contain", "Add a hospital");
   }
 
-  function WhenIFillOutTheForm(name) {
+  function WhenIFillOutTheAddForm(name, newCode) {
     cy.get("input[name=hospital-name]").clear().type(name);
-    cy.get("input[name=hospital-survey-url]")
-      .clear()
-      .type("https://www.survey.example.com");
-    cy.get("input[name=hospital-support-url]")
-      .clear()
-      .type("https://www.support.example.com");
+    cy.get("input[name=hospital-code]").clear().type(newCode);
   }
 
-  function WhenIFillOutTheFormWithBadSurveyUrl() {
-    cy.get("input[name=hospital-name]").type("Scorpia Hospital");
-    cy.get("input[name=hospital-survey-url]").type("https://www");
-  }
-
-  function WhenIFillOutTheFormWithBadSupportUrl() {
-    cy.get("input[name=hospital-name]").type("Scorpia Hospital");
-    cy.get("input[name=hospital-support-url]").type("https://www");
+  function WhenIFillOutTheEditForm(name) {
+    cy.get("input[name=hospital-name]").clear().type(name);
+    cy.get("#nhs-dropdown-menu").select("active");
   }
 
   function AndISubmitTheForm() {
