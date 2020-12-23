@@ -39,11 +39,27 @@ describe("db-migrate database setup ready", () => {
     ]);
   });
 
-  // TODO create test for organisations, check if the table as more than one record.
+  it("do we have organisations on organisarion table", async () => {
+    pool = await container.getMsSqlConnPool();
+
+    expect(pool).toBeDefined();
+
+    const countOrgs = await retrieveOrganisations(pool);
+
+    expect(countOrgs).toBeDefined();
+    expect(countOrgs.recordset).toBeDefined();
+    expect(countOrgs.recordset[0].count).toBeGreaterThan(0);
+  });
 });
 
 const retrieveAdminUser = async (pool) => {
   return await pool
     .request()
-    .query("select * from dbo.[user] where type='admin'");
+    .query("select * from [dbo].[user] where type='admin'");
+};
+
+const retrieveOrganisations = async (pool) => {
+  return await pool
+    .request()
+    .query("select count(id) as 'count' FROM [dbo].[organisation]");
 };
