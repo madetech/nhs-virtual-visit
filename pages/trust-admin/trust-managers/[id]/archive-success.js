@@ -6,6 +6,8 @@ import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToke
 import AnchorLink from "../../../../src/components/AnchorLink";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
+import { GridRow, GridColumn } from "../../../../src/components/Grid";
+import PanelUpdateSuccess from "../../../../src/components/PanelUpdateSuccess";
 
 const archiveATrustManagerSuccess = ({ trust, trustManager, error }) => {
   if (error) {
@@ -19,26 +21,19 @@ const archiveATrustManagerSuccess = ({ trust, trustManager, error }) => {
       showNavigationBarForType={TRUST_ADMIN}
     >
       <TrustAdminHeading trustName={trust.name} subHeading="Trust Managers" />
-      <div className="nhsuk-grid-row">
-        <div className="nhsuk-grid-column-two-thirds">
-          <div
-            className="nhsuk-panel nhsuk-panel--confirmation nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4"
-            style={{ textAlign: "center" }}
-          >
-            <h1 className="nhsuk-panel__title">
-              {trustManager.email} has been deleted
-            </h1>
-          </div>
+      <GridRow>
+        <GridColumn width="two-thirds">
+          <PanelUpdateSuccess name={`${trustManager.email}`} action="deleted" />
           <p>
             <AnchorLink
               href="/trust-admin/trust-managers"
               as={`/trust-admin/trust-managers`}
             >
-              {`Return to Trust Managers`}
+              Return to Trust Managers
             </AnchorLink>
           </p>
-        </div>
-      </div>
+        </GridColumn>
+      </GridRow>
     </Layout>
   );
 };

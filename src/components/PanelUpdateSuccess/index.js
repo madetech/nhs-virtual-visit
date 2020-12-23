@@ -1,6 +1,6 @@
 import React from "react";
 
-const PanelUpdateSuccess = ({ name }) => {
+const PanelUpdateSuccess = ({ name, action }) => {
   return (
     <>
       <div
@@ -8,7 +8,7 @@ const PanelUpdateSuccess = ({ name }) => {
         style={{ textAlign: "center" }}
       >
         <h1 data-testid="name" className="nhsuk-panel__title">
-          {name} has been updated
+          {name} has been {action}
         </h1>
       </div>
     </>
