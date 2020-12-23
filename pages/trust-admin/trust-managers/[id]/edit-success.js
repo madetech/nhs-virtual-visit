@@ -3,7 +3,7 @@ import Error from "next/error";
 import Layout from "../../../../src/components/Layout";
 import ActionLink from "../../../../src/components/ActionLink";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
-import PanelUpdateSuccess from "../../../../src/components/PanelUpdateSuccess";
+import PanelSuccess from "../../../../src/components/PanelSuccess";
 import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
@@ -26,7 +26,7 @@ const EditATrustManagerSuccess = ({ error, trustManager, trust }) => {
       />
       <GridRow>
         <GridColumn width="two-thirds">
-          <PanelUpdateSuccess name={`${trustManager.email}`} action="updated" />
+          <PanelSuccess name={`${trustManager.email}`} action="updated" />
           <h2>What happens next</h2>
 
           <ActionLink href="/trust-admin/trust-managers">
