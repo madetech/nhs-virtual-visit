@@ -14,4 +14,7 @@ afterEach(async () => {
 afterAll(async () => {
   const db = await container.getDb();
   db.$pool.end();
+
+  const mssqlPool = container.getMsSqlConnPool();
+  mssqlPool.close();
 });
