@@ -72,6 +72,24 @@ SENTRY_AUTH_TOKEN=
 ENABLE_SENTRY=
 ```
 
+### MSSQL
+
+#### Setup the database with docker
+
+Set in your `.env` file the following properties.
+
+MSQL_DB_DRIVER=mssql\
+MSQL_DB_PORT=1433\
+MSQL_DB_POOL_MAX=15\
+MSQL_DB_POOL_MIN=5\
+MSQL_DB_POOL_IDLE_TIMEOUT=30000\
+MSQL_DB_USER=sa\
+MSQL_DB_PASSWORD=P@55w0rd\
+MSQL_DB_SERVER=localhost\
+MSQL_DB_DATABASE=nhs_virtual_visit_dev
+
+Run `sudo ./bin/setup_local_mssql_docker.sh`
+
 ### PostgreSQL 12
 
 #### Setup the database with docker
