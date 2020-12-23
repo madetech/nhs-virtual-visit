@@ -7,6 +7,10 @@ const findWardQuery = async (db, wardCode) =>
   await db.any(`SELECT id, code, trust_id FROM wards WHERE code = $1 LIMIT 1`, [
     wardCode,
   ]);
+const ifDefined = async (value, func) =>
+  (value !== undefined && (await func(value))) || null;
 
 export default ({ getDb }) => async (wardCode) =>
-  recordToDomain((await findWardQuery(await getDb(), wardCode))[0]);
+  ifDefined((await findWardQuery(await getDb(), wardCode))[0], async (record) =>
+    recordToDomain(record)
+  );

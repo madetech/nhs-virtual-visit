@@ -139,7 +139,7 @@ class AppContainer {
     return retrieveWards(this);
   };
 
-  getFindWardByCode = () => {
+  getFindWardByCodeGateway = () => {
     return findWardByCode(this);
   };
 
