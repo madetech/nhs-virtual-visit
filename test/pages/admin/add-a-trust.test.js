@@ -1,4 +1,8 @@
+<<<<<<< HEAD:test/pages/admin/add-a-trust.test.js
 import { getServerSideProps } from "../../../pages/admin/add-a-trust";
+=======
+import { getServerSideProps } from "../../pages/admin/trusts/add-a-trust";
+>>>>>>> test: retrieveOrganizationById.contractTest.js added:pageTests/admin/add-a-trust.test.js
 
 describe("/trust-admin/add-a-trust", () => {
   const anonymousReq = {
