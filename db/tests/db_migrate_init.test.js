@@ -7,7 +7,7 @@ beforeAll(async () => {
   pool = await container.getMsSqlConnPool();
 });
 
-afterAll(async () => {
+afterAll(() => {
   // Close pool after tests are done.
   pool.close();
 });
