@@ -4,7 +4,7 @@ import Router from "next/router";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
 import Button from "../../../src/components/Button";
-import Heading from "../../../src/components/Heading";
+import TrustAdminHeading from "../../../src/components/TrustAdminHeading";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Layout from "../../../src/components/Layout";
 import WardsTable from "../../../src/components/WardsTable";
@@ -14,6 +14,7 @@ import HospitalSummaryList from "../../../src/components/HospitalSummaryList";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const ShowHospital = ({
+  trust,
   hospital,
   wards,
   error,
@@ -32,9 +33,10 @@ const ShowHospital = ({
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
+      <TrustAdminHeading trustName={trust.name} subHeading={hospital.name} />
+
       <GridRow>
         <GridColumn width="full">
-          <Heading>{hospital.name}</Heading>
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn
               className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
@@ -108,6 +110,10 @@ export const getServerSideProps = propsWithContainer(
     const { id: hospitalId } = query;
     const trustId = authenticationToken.trustId;
 
+    const trustResponse = await container.getRetrieveTrustById()(
+      authenticationToken.trustId
+    );
+
     const {
       hospital,
       error: hospitalError,
@@ -134,6 +140,7 @@ export const getServerSideProps = propsWithContainer(
 
     return {
       props: {
+        trust: { name: trustResponse.trust?.name },
         hospital,
         wards,
         error: hospitalError || wardsError,

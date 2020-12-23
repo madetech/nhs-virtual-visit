@@ -6,8 +6,9 @@ import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
 import ActionLink from "../../../../src/components/ActionLink";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
+import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
-const EditAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
+const EditAWardSuccess = ({ error, name, hospitalName, hospitalId, trust }) => {
   if (error) {
     return <Error />;
   }
@@ -18,6 +19,7 @@ const EditAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
+      <TrustAdminHeading trustName={trust.name} subHeading={hospitalName} />
       <div className="nhsuk-grid-row">
         <div className="nhsuk-grid-column-two-thirds">
           <div
@@ -30,7 +32,9 @@ const EditAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/trust-admin/wards/add`}>Add a ward</ActionLink>
+          <ActionLink href={`/trust-admin/wards/add?hospitalId=${hospitalId}`}>
+            Add a ward for {hospitalName}
+          </ActionLink>
 
           <p>
             <AnchorLink
@@ -48,6 +52,9 @@ const EditAWardSuccess = ({ error, name, hospitalName, hospitalId }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
+    const trustResponse = await container.getRetrieveTrustById()(
+      authenticationToken.trustId
+    );
     const getRetrieveWardById = container.getRetrieveWardById();
     const { ward, error } = await getRetrieveWardById(
       query.id,
@@ -60,6 +67,7 @@ export const getServerSideProps = propsWithContainer(
         name: ward.name,
         hospitalName: ward.hospitalName,
         hospitalId: ward.hospitalId,
+        trust: { name: trustResponse.trust?.name },
       },
     };
   })

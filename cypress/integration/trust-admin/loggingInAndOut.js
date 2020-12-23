@@ -78,7 +78,7 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   }
 
   function ThenISeeTheTrustAdminLogInPage() {
-    cy.get("h1").should("contain", "Log in to manage your trust");
+    cy.get("h1.nhsuk-heading-xl").contains("Log in to manage your trust");
   }
 
   // Displays an error for an invalid code

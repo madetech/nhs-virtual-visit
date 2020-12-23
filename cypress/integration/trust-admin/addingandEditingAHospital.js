@@ -97,7 +97,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
   }
 
   function ThenISeeTheAddAHospitalForm() {
-    cy.get("h1").should("contain", "Add a hospital");
+    cy.get("h2").should("contain", "Add a hospital");
   }
 
   function WhenIFillOutTheForm(name) {

@@ -6,13 +6,15 @@ import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToke
 import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import EditWardForm from "../../../../src/components/EditWardForm";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
+import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
-const EditAWard = ({ error, id, name, hospitalId, hospitals }) => {
+const EditAWard = ({ trust, error, id, name, hospitalId, hospitals }) => {
   if (error) {
     return <Error />;
   }
 
   const [errors, setErrors] = useState([]);
+  const hospital = hospitals.find((hospital) => hospital.id == hospitalId);
 
   return (
     <Layout
@@ -21,6 +23,7 @@ const EditAWard = ({ error, id, name, hospitalId, hospitals }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
+      <TrustAdminHeading trustName={trust.name} subHeading={hospital.name} />
       <GridRow>
         <GridColumn width="two-thirds">
           <EditWardForm
@@ -40,6 +43,9 @@ const EditAWard = ({ error, id, name, hospitalId, hospitals }) => {
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
     const getRetrieveWardById = container.getRetrieveWardById();
+    const trustResponse = await container.getRetrieveTrustById()(
+      authenticationToken.trustId
+    );
 
     let error = null;
     const getRetrieveWardByIdResponse = await getRetrieveWardById(
@@ -64,6 +70,7 @@ export const getServerSideProps = propsWithContainer(
           name: getRetrieveWardByIdResponse.ward.name,
           hospitalId: getRetrieveWardByIdResponse.ward.hospitalId,
           hospitals: retrieveHospitalsResponse.hospitals,
+          trust: { name: trustResponse.trust?.name },
         },
       };
     }

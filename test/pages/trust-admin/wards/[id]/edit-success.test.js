@@ -36,6 +36,10 @@ describe("/trust-admin/wards/[id]/edit-success", () => {
 
     describe("with wardId parameter", () => {
       it("retrieves a ward by the wardId parameter", async () => {
+        const retrieveTrustByIdSpy = jest.fn(async () => ({
+          trust: { name: "Doggo Trust" },
+          error: null,
+        }));
         const retrieveWardByIdSpy = jest.fn().mockReturnValue({
           ward: {
             id: 1,
@@ -46,6 +50,7 @@ describe("/trust-admin/wards/[id]/edit-success", () => {
         });
 
         const container = {
+          getRetrieveTrustById: () => retrieveTrustByIdSpy,
           getRetrieveWardById: () => retrieveWardByIdSpy,
           getTokenProvider: () => tokenProvider,
           getRegenerateToken: () => jest.fn().mockReturnValue({}),
@@ -64,6 +69,11 @@ describe("/trust-admin/wards/[id]/edit-success", () => {
       });
 
       it("set a ward prop based on the retrieved ward", async () => {
+        const retrieveTrustByIdSpy = jest.fn(async () => ({
+          trust: { name: "Doggo Trust" },
+          error: null,
+        }));
+
         const retrieveWardByIdSpy = jest.fn().mockReturnValue({
           ward: {
             id: 1,
@@ -74,6 +84,7 @@ describe("/trust-admin/wards/[id]/edit-success", () => {
         });
 
         const container = {
+          getRetrieveTrustById: () => retrieveTrustByIdSpy,
           getRetrieveWardById: () => retrieveWardByIdSpy,
           getTokenProvider: () => tokenProvider,
           getRegenerateToken: () => jest.fn().mockReturnValue({}),

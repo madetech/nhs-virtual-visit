@@ -35,9 +35,13 @@ describe("trust-admin/hospitals/[id]", () => {
       });
     });
 
-    it("provides the hospital and wards as props", async () => {
+    it("provides the trust, hospital and wards as props", async () => {
       const hospitalId = 1;
 
+      const TrustSpy = jest.fn(async () => ({
+        trust: { name: "Doggo Trust" },
+        error: null,
+      }));
       const wardsSpy = jest.fn(async () => ({
         wards: [{ id: 1 }, { id: 2 }],
         error: null,
@@ -64,6 +68,7 @@ describe("trust-admin/hospitals/[id]", () => {
       });
 
       const container = {
+        getRetrieveTrustById: () => TrustSpy,
         getRetrieveWardsByHospitalId: () => wardsSpy,
         getRetrieveHospitalById: () => hospitalSpy,
         getRetrieveHospitalVisitTotals: () => visitTotalsSpy,

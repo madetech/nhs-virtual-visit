@@ -8,8 +8,9 @@ import Layout from "../../../../src/components/Layout";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import EditHospitalForm from "../../../../src/components/EditHospitalForm";
 import ErrorSummary from "../../../../src/components/ErrorSummary";
+import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
-const EditHospital = ({ hospital, error }) => {
+const EditHospital = ({ trust, hospital, error }) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -59,6 +60,8 @@ const EditHospital = ({ hospital, error }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
+      <TrustAdminHeading trustName={trust.name} subHeading="Hospitals" />
+
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
@@ -78,7 +81,9 @@ export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ authenticationToken, container, query }) => {
     const { id: hospitalId } = query;
     const trustId = authenticationToken.trustId;
-
+    const trustResponse = await container.getRetrieveTrustById()(
+      authenticationToken.trustId
+    );
     const {
       hospital,
       error: hospitalError,
@@ -88,6 +93,7 @@ export const getServerSideProps = propsWithContainer(
       props: {
         hospital,
         error: hospitalError,
+        trust: { name: trustResponse.trust?.name },
       },
     };
   })
