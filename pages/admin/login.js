@@ -35,7 +35,7 @@ const Login = ({ correlationId }) => {
     if (!email) {
       onSubmitErrors.push({
         id: "email-error",
-        message: "Enter an email code",
+        message: "Enter an email",
       });
     }
 
