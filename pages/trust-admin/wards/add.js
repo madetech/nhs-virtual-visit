@@ -41,7 +41,7 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-    const hospitalId = query.id;
+    const hospitalId = query.hospitalId || null;
     const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId;
     const { hospitals, error } = await retrieveHospitalsByTrustId(
       authenticationToken.trustId
