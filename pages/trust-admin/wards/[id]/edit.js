@@ -45,20 +45,19 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-
     let error = null;
     const getRetrieveWardByIdResponse = await getRetrieveWardById(
       query.id,
       authenticationToken.trustId
     );
-    const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId;
+    error = error || getRetrieveWardByIdResponse.error;
+
+    const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
     const retrieveHospitalsResponse = await retrieveHospitalsByTrustId(
       authenticationToken.trustId
     );
-    error =
-      error ||
-      getRetrieveWardByIdResponse.error ||
-      retrieveHospitalsResponse.error;
+
+    error = error || retrieveHospitalsResponse.error;
 
     if (error) {
       return { props: { error: error } };
