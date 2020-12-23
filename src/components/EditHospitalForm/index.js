@@ -14,7 +14,10 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalStatus, setHospitalStatus] = useState(hospital.status);
   const [hospitalCode, setHospitalCode] = useState(hospital.code);
 
-  const action = hospital.id ? "Edit" : "Add";
+  let action = "Add";
+  if (hospital.id) {
+    action = "Edit";
+  }
 
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
