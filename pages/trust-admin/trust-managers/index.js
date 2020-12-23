@@ -6,7 +6,7 @@ import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Text from "../../../src/components/Text";
 import TrustAdminHeading from "../../../src/components/TrustAdminHeading";
-import Table from "../../../src/components/TrustManagersTable";
+import TrustManagersTable from "../../../src/components/TrustManagersTable";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const TrustManager = ({ trustManagers, trust, error }) => {
@@ -27,7 +27,10 @@ const TrustManager = ({ trustManagers, trust, error }) => {
       <GridRow>
         <GridColumn width="full">
           {trustManagers.length > 0 ? (
-            <Table type="trust-manager" trustManagers={trustManagers} />
+            <TrustManagersTable
+              type="trust-manager"
+              trustManagers={trustManagers}
+            />
           ) : (
             <Text>There are no trust managers.</Text>
           )}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "../Button";
 import FormGroup from "../FormGroup";
-import Heading from "../Heading";
+import FormHeading from "../FormHeading";
 import Label from "../Label";
 import Form from "../Form";
 import SelectStatus from "../SelectStatus";
@@ -24,7 +24,7 @@ const TrustManagerForm = ({ errors, trustManager = {}, submit }) => {
 
   return (
     <Form onSubmit={onSubmit}>
-      <Heading>{action} a Trust Manager</Heading>
+      <FormHeading>{action} a Trust Manager</FormHeading>
 
       {action === "Edit" && (
         <FormGroup>
@@ -32,15 +32,15 @@ const TrustManagerForm = ({ errors, trustManager = {}, submit }) => {
             What is the status of {`${trustManager.email}`}?
           </Label>
           <SelectStatus
-            id="trust-manager-id"
+            id="tm-select-status"
             className="nhsuk-input--width-10"
             prompt="Choose a status"
             options={[{ name: "active" }, { name: "disabled" }]}
             onChange={(event) => {
               setStatus(event.target.value);
             }}
-            hasError={hasError("trust-manager-id")}
-            errorMessage={errorMessage("trust-manager-id")}
+            hasError={hasError("tm-select-status")}
+            errorMessage={errorMessage("tm-select-status")}
             defaultValue={status}
           />
         </FormGroup>
