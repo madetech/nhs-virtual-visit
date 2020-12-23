@@ -78,25 +78,19 @@ ENABLE_SENTRY=
 
 Set in your `.env` file the following properties.
 
-MSQL_DB_DRIVER=mssql\
-MSQL_DB_PORT=1433\
-MSQL_DB_POOL_MAX=15\
-MSQL_DB_POOL_MIN=5\
-MSQL_DB_POOL_IDLE_TIMEOUT=30000\
-MSQL_DB_USER=sa\
-MSQL_DB_PASSWORD=P@55w0rd\
-MSQL_DB_SERVER=localhost\
+```bash
+MSQL_DB_DRIVER=mssql
+MSQL_DB_PORT=1433
+MSQL_DB_POOL_MAX=15
+MSQL_DB_POOL_MIN=5
+MSQL_DB_POOL_IDLE_TIMEOUT=30000
+MSQL_DB_USER=sa
+MSQL_DB_PASSWORD=P@55w0rd
+MSQL_DB_SERVER=localhost
 MSQL_DB_DATABASE=nhs_virtual_visit_dev
+```
 
-Run `sudo ./bin/setup_local_mssql_docker.sh`
-
-<<<<<<< HEAD
-Notes:
-The script will create the database and populate with an admin user and organisation data.
-
-=======
-
-> > > > > > > test: subject: update readme file
+Run `./bin/setup_local_mssql_docker.sh`
 
 ### PostgreSQL 12
 
