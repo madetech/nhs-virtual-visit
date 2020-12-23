@@ -38,6 +38,8 @@ async function initPool() {
     },
   };
 
+  console.log("CONFIG:  ", config);
+
   setPoolConfigPerEnvironment(config);
 
   const DB_KEY = Symbol.for("MyApp.db");
