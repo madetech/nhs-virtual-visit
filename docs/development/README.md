@@ -96,7 +96,7 @@ Notes:
 The script will create the database and populate with an admin user and organisation data.
 
 Notes:
-The script will create a database and populate with an admin user and organisation data.
+The script will create the database and populate with an admin user and organisation data.
 
 ### PostgreSQL 12
 
