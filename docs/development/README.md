@@ -95,6 +95,9 @@ Run `./bin/setup_local_mssql_docker.sh`
 Notes:
 The script will create the database and populate with an admin user and organisation data.
 
+Notes:
+The script will create a database and populate with an admin user and organisation data.
+
 ### PostgreSQL 12
 
 #### Setup the database with docker
