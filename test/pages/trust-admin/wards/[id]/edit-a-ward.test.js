@@ -110,9 +110,9 @@ describe("/trust-admin/wards/[id]/edit", () => {
           container,
         });
 
-        expect(props.id).toEqual(1);
-        expect(props.name).toEqual("Defoe Ward");
-        expect(props.hospitalId).toEqual("1");
+        expect(props.ward.id).toEqual(1);
+        expect(props.ward.name).toEqual("Defoe Ward");
+        expect(props.ward.hospitalId).toEqual("1");
       });
     });
   });
