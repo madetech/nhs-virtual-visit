@@ -10,9 +10,7 @@ import {
 describe("findWardByCode() contract", () => {
   const container = AppContainer.getInstance();
 
-  it("inserts visit into the db", async () => {
-    //const db = await Database.getInstance();
-
+  it("returns the appropriate ward", async () => {
     const wardCode = "32p+";
     const wardName = "Deutsche ward";
     const { trustId } = await setupTrust();
@@ -29,5 +27,20 @@ describe("findWardByCode() contract", () => {
       wardId,
       trustId,
     });
+  });
+
+  it("returns null when the ward code can't be found", async () => {
+    const wardCode = "32p+";
+    const wardName = "Deutsche ward";
+    const { trustId } = await setupTrust();
+    const { hospitalId } = await setupHospital({ trustId });
+    await setupWard({
+      trustId,
+      code: wardCode,
+      name: wardName,
+      hospital_id: hospitalId,
+    });
+
+    expect(await findWardByCode(container)("14p+")).toBeNull();
   });
 });
