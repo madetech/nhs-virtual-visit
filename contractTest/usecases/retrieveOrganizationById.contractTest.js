@@ -1,10 +1,9 @@
-import retrieveOrganizationById from "./retrieveOrganizationById";
+import retrieveOrganizationById from "../../src/gateways/retrieveOrganizationById";
 import { setupOrganization } from "../testUtils/factories";
 
 describe("retrieveOrganizationById", () => {
   it("returns an object containing the organization", async () => {
     const { organizationId } = await setupOrganization();
-
     const { organization, error } = await retrieveOrganizationById(
       organizationId
     );
