@@ -9,7 +9,6 @@ import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
 const EditAWard = ({ trust, error, id, name, hospitalId, hospitals }) => {
-
   if (error) {
     return <Error />;
   }
@@ -31,7 +30,6 @@ const EditAWard = ({ trust, error, id, name, hospitalId, hospitals }) => {
             errors={errors}
             setErrors={setErrors}
             id={id}
-            status={status}
             initialName={name}
             hospitalId={hospitalId}
           />
@@ -53,7 +51,14 @@ export const getServerSideProps = propsWithContainer(
       query.id,
       authenticationToken.trustId
     );
-    error = error || getRetrieveWardByIdResponse.error;
+    const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId;
+    const retrieveHospitalsResponse = await retrieveHospitalsByTrustId(
+      authenticationToken.trustId
+    );
+    error =
+      error ||
+      getRetrieveWardByIdResponse.error ||
+      retrieveHospitalsResponse.error;
 
     if (error) {
       return { props: { error: error } };
@@ -63,7 +68,6 @@ export const getServerSideProps = propsWithContainer(
           error: error,
           id: getRetrieveWardByIdResponse.ward.id,
           name: getRetrieveWardByIdResponse.ward.name,
-          status: getRetrieveWardByIdResponse.ward.status,
           hospitalId: getRetrieveWardByIdResponse.ward.hospitalId,
           hospitals: retrieveHospitalsResponse.hospitals,
           trust: { name: trustResponse.trust?.name },
