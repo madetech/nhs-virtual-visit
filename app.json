@@ -8,11 +8,7 @@
     "review": {
       "addons": ["heroku-postgresql:hobby-dev"],
       "scripts": {
-<<<<<<< HEAD
         "postdeploy": "psql -f 'db/migrations/seed/sqls/20201222000000-seeds.sql' $PG_DB_URL"
-=======
-        "postdeploy": "psql -f 'db/seeds.sql' $PG_DB_URL"
->>>>>>> 34e7ed614a205be019c1b1ff9f133f75f302bc67
       }
     }
   },
