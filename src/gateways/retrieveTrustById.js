@@ -8,16 +8,17 @@ const retrieveTrustById = async (trustId) => {
   try {
     if (!trustId) throw "Attempting to retrieve trust with no trust Id set";
     const trust = await db.oneOrNone(
-      "SELECT * FROM organization WHERE id = $1 LIMIT 1",
+      "SELECT * FROM trusts WHERE id = $1 LIMIT 1",
       trustId
     );
 
-    if (!trust) throw " for id";
+    if (!trust) throw "Trust not found for id";
 
     return {
       trust: {
         id: trust.id,
         name: trust.name,
+        videoProvider: trust.video_provider,
       },
       error: null,
     };
