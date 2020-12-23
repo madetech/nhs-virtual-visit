@@ -64,6 +64,7 @@
     }
   },
   "test": {
+<<<<<<< HEAD
     "url": {
       "ENV": "PG_TEST_DB_URL"
     }
@@ -77,6 +78,15 @@
     "url": {
       "ENV": "PG_DB_URL"
     },
+=======
+    "url": { "ENV": "PG_TEST_DB_URL" }
+  },
+  "development": {
+    "url": { "ENV": "PG_DB_URL" }
+  },
+  "production": {
+    "url": { "ENV": "PG_DB_URL" },
+>>>>>>> test: subject: update .env db properties across project
     "ssl": {
       "rejectUnauthorized": false
     }
