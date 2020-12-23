@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import AnchorLink from "../../../src/components/AnchorLink";
 
 const TrustManagersTable = ({ trustManagers }) => (
   <div className="nhsuk-table-responsive">
@@ -25,28 +25,30 @@ const TrustManagersTable = ({ trustManagers }) => (
             <td className="nhsuk-table__cell">{info.status}</td>
 
             <td className="nhsuk-table__cell">
-              <Link
+              <AnchorLink
                 className="nhsuk-link"
                 href={{
                   pathname: `/trust-admin/trust-managers/[id]/edit`,
                   query: { id: info.id },
                 }}
                 as={`/trust-admin/trust-managers/${info.id}/edit`}
+                id="edit-tm-link"
               >
                 Edit
-              </Link>
+              </AnchorLink>
             </td>
             <td className="nhsuk-table__cell">
-              <Link
+              <AnchorLink
                 className="nhsuk-link"
                 href={{
                   pathname: `/trust-admin/trust-managers/[id]/archive-confirmation`,
                   query: { id: info.id },
                 }}
                 as={`/trust-admin/trust-managers/${info.id}/archive-confirmation`}
+                id="delete-tm-link"
               >
                 Delete
-              </Link>
+              </AnchorLink>
             </td>
           </tr>
         ))}

@@ -20,6 +20,7 @@ const SelectStatus = ({
         <ErrorMessage id={`${id}-error`}>{errorMessage}</ErrorMessage>
       ) : null}
       <select
+        id={id}
         defaultValue={defaultValue || DEFAULT_VALUE}
         id="nhs-dropdown-menu"
 
