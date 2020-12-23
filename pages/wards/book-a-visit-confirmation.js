@@ -35,6 +35,7 @@ const ScheduleConfirmation = ({
     });
   };
   const onSubmit = async () => {
+    console.log("here");
     const submitAnswers = async () => {
       let body = {
         patientName,
@@ -50,13 +51,14 @@ const ScheduleConfirmation = ({
         body.contactEmail = contactEmail;
       }
       body = JSON.stringify(body);
+
       let response = await fetchEndpointWithCorrelationId(
         "POST",
         "/api/book-a-visit",
         body,
         correlationId
       );
-
+      console.log(response);
       const { success, err } = await response.json();
 
       if (success) {

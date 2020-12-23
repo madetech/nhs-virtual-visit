@@ -20,7 +20,7 @@ class CallIdProvider {
         callIdProvider = new WherebyCallIdProvider(this.callTime);
         break;
       default:
-        throw `Provider ${this.provider} not supported`;
+        throw `Provider ${this.provider} `;
     }
 
     return await callIdProvider.generate();

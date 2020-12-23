@@ -51,6 +51,7 @@ import retrieveOrganizations from "../usecases/retrieveOrganizations";
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
 import retrieveWardById from "../gateways/retrieveWardById";
 import retrieveTrustById from "../gateways/retrieveTrustById";
+import retrieveOrganizationById from "../gateways/retrieveOrganizationById";
 import logEvent from "../gateways/logEvent";
 
 import CallIdProvider from "../providers/CallIdProvider";
@@ -271,6 +272,10 @@ class AppContainer {
 
   getRetrieveOrganizations = () => {
     return retrieveOrganizations(this);
+  };
+
+  getRetrieveOrganizationById = () => {
+    return retrieveOrganizationById;
   };
 
   getInsertVisitGateway = () => {
