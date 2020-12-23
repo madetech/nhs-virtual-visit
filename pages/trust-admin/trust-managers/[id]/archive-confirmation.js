@@ -5,7 +5,7 @@ import Layout from "../../../../src/components/Layout";
 import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
 import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import SummaryList from "../../../../src/components/SummaryList";
-import Heading from "../../../../src/components/Heading";
+import FormHeading from "../../../../src/components/FormHeading";
 import Button from "../../../../src/components/Button";
 import BackLink from "../../../../src/components/BackLink";
 import Router from "next/router";
@@ -39,7 +39,9 @@ const ArchiveATrustManagerConfirmation = ({ trust, trustManager, error }) => {
       <TrustAdminHeading trustName={trust.name} subHeading="Trust Managers" />
       <GridRow>
         <GridColumn width="full">
-          <Heading>Are you sure you want to delete this trust manager?</Heading>
+          <FormHeading>
+            Are you sure you want to delete this trust manager?
+          </FormHeading>
         </GridColumn>
       </GridRow>
       <GridRow>

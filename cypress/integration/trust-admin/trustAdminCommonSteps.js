@@ -68,6 +68,14 @@ function ThenISeeTheWardIsDeleted(name) {
   cy.get("h1").should("contain", `${name} has been deleted`);
 }
 
+function WhenIClickOnTrustManagersOnTheNavigationBar() {
+  cy.get("a.nhsuk-header__navigation-link").contains("Trust Managers").click();
+}
+
+function ThenISeeTheTrustManagersList() {
+  cy.get("caption").should("contain", "List of Trust Managers");
+}
+
 module.exports = {
   GivenIAmLoggedInAsATrustAdmin,
   WhenIClickHospitalsOnTheNavigationBar,
@@ -84,4 +92,6 @@ module.exports = {
   AndISubmitTheEditWardForm,
   WhenIClickToDeleteAWard,
   ThenISeeTheWardIsDeleted,
+  WhenIClickOnTrustManagersOnTheNavigationBar,
+  ThenISeeTheTrustManagersList,
 };
