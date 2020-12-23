@@ -26,7 +26,7 @@ const EditATrustManagerSuccess = ({ error, trustManager, trust }) => {
       />
       <GridRow>
         <GridColumn width="two-thirds">
-          <PanelUpdateSuccess name={`${trustManager.email}`} />
+          <PanelUpdateSuccess name={`${trustManager.email}`} action="updated" />
           <h2>What happens next</h2>
 
           <ActionLink href="/trust-admin/trust-managers">
