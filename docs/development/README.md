@@ -92,8 +92,13 @@ MSQL_DB_DATABASE=nhs_virtual_visit_dev
 
 Run `./bin/setup_local_mssql_docker.sh`
 
+<<<<<<< HEAD
 Notes:
 The script will create the database and populate with an admin user and organisation data.
+
+=======
+
+> > > > > > > test: subject: update readme file
 
 ### PostgreSQL 12
 
