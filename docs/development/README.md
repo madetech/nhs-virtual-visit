@@ -32,7 +32,6 @@ API_KEY=
 PG_DB_URL=
 # Postgres Connection String for the test database
 PG_TEST_DB_URL=
-<<<<<<< HEAD
 # MSSQL
 MSQL_DB_DRIVER=
 MSQL_DB_PORT=
@@ -48,8 +47,6 @@ MSQL_E2E_DB_USER=
 MSQL_E2E_DB_PASSWORD=
 MSQL_E2E_DB_SERVER=
 MSQL_E2E_DB_DATABASE=
-=======
->>>>>>> 591d18cd4e5317a52aa7d726ea00580f942c0ad4
 # GOV.UK Notify SMS Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
 # GOV.UK Notify SMS Updated Visit Template ID
