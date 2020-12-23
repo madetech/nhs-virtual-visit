@@ -1,6 +1,6 @@
 import AppContainer from "../../src/containers/AppContainer";
 import findWardByCode from "../../src/gateways/findWardByCode";
-//import Database from "../../src/gateways/Database";
+
 import {
   setupTrust,
   setupWard,
