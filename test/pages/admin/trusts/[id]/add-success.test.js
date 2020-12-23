@@ -34,10 +34,10 @@ describe("/admin/trusts/[id]/add-success", () => {
       });
     });
 
-    describe("with trustId parameter", () => {
-      it("retrieves a trust by the trustId parameter", async () => {
-        const retrieveTrustByIdSpy = jest.fn().mockReturnValue({
-          trust: {
+    describe("with organizationId parameter", () => {
+      it("retrieves an organization by the organizationId parameter", async () => {
+        const retrieveOrganizationByIdSpy = jest.fn().mockReturnValue({
+          organization: {
             id: 1,
             name: "Northwick Park Trust",
           },
@@ -45,7 +45,7 @@ describe("/admin/trusts/[id]/add-success", () => {
         });
 
         const container = {
-          getRetrieveTrustById: () => retrieveTrustByIdSpy,
+          getRetrieveOrganizationById: () => retrieveOrganizationByIdSpy,
           getTokenProvider: () => tokenProvider,
           getRegenerateToken: () => jest.fn().mockReturnValue({}),
         };
@@ -59,12 +59,12 @@ describe("/admin/trusts/[id]/add-success", () => {
           container,
         });
 
-        expect(retrieveTrustByIdSpy).toHaveBeenCalledWith("trust ID");
+        expect(retrieveOrganizationByIdSpy).toHaveBeenCalledWith("trust ID");
       });
 
-      it("set a trust prop based on the retrieved trust", async () => {
-        const retrieveTrustByIdSpy = jest.fn().mockReturnValue({
-          trust: {
+      it("set a organization prop based on the retrieved organization", async () => {
+        const retrieveOrganizationByIdSpy = jest.fn().mockReturnValue({
+          organization: {
             id: 1,
             name: "Northwick Park Trust",
           },
@@ -72,7 +72,7 @@ describe("/admin/trusts/[id]/add-success", () => {
         });
 
         const container = {
-          getRetrieveTrustById: () => retrieveTrustByIdSpy,
+          getRetrieveOrganizationById: () => retrieveOrganizationByIdSpy,
           getTokenProvider: () => tokenProvider,
           getRegenerateToken: () => jest.fn().mockReturnValue({}),
         };
@@ -81,7 +81,7 @@ describe("/admin/trusts/[id]/add-success", () => {
           req: authenticatedReq,
           res,
           query: {
-            trustId: "trust ID",
+            id: "trust ID",
           },
           container,
         });
