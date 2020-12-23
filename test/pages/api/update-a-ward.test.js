@@ -13,7 +13,6 @@ describe("update-a-ward", () => {
       body: {
         id: 123,
         name: "Joey Wheeler Ward",
-        hospitalName: "Tristan Taylor Hospital",
         hospitalId: 1,
         status: "active",
       },
@@ -94,7 +93,6 @@ describe("update-a-ward", () => {
         id: 123,
         name: "Joey Wheeler Ward",
         status: "active",
-        hospitalName: "Tristan Taylor Hospital",
         hospitalId: 1,
       })
     );

@@ -4,7 +4,7 @@ import FormGroup from "../FormGroup";
 import FormHeading from "../FormHeading";
 import Input from "../Input";
 import ErrorSummary from "../ErrorSummary";
-import SelectStatus from "../ErrorSummary";
+import SelectStatus from "../SelectStatus";
 import Label from "../Label";
 import Router from "next/router";
 import isPresent from "../../helpers/isPresent";
@@ -32,6 +32,7 @@ const EditWardForm = ({
 
   const submitAnswers = async () => {
     try {
+      console.log(id);
       const response = await fetch("/api/update-a-ward", {
         method: "PATCH",
         headers: {
@@ -40,7 +41,6 @@ const EditWardForm = ({
         body: JSON.stringify({
           id,
           name: wardName,
-          hospitalName: initialName,
           status: wardStatus,
           hospitalId,
         }),

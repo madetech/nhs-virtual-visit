@@ -62,7 +62,6 @@ export default withContainer(
     const { wardId, error } = await updateWard({
       id: body.id,
       name: body.name,
-      hospitalName: body.hospitalName,
       status: body.status,
       hospitalId: body.hospitalId,
     });

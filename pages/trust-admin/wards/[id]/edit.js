@@ -8,13 +8,14 @@ import EditWardForm from "../../../../src/components/EditWardForm";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
-const EditAWard = ({ trust, error, id, name, hospitalId, hospitals }) => {
+const EditAWard = ({ trust, error, ward, hospitals }) => {
+  console.log(ward);
   if (error) {
     return <Error />;
   }
 
   const [errors, setErrors] = useState([]);
-  const hospital = hospitals.find((hospital) => hospital.id == hospitalId);
+  const hospital = hospitals.find((hosp) => hosp.id == ward.hospitalId);
 
   return (
     <Layout
@@ -29,9 +30,10 @@ const EditAWard = ({ trust, error, id, name, hospitalId, hospitals }) => {
           <EditWardForm
             errors={errors}
             setErrors={setErrors}
-            id={id}
-            initialName={name}
-            hospitalId={hospitalId}
+            id={ward.id}
+            initialName={ward.name}
+            hospitalId={ward.hospitalId}
+            status={ward.status}
           />
         </GridColumn>
       </GridRow>
@@ -45,29 +47,23 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-    let error = null;
-    const getRetrieveWardByIdResponse = await getRetrieveWardById(
+    const { ward, error } = await getRetrieveWardById(
       query.id,
       authenticationToken.trustId
     );
-    error = error || getRetrieveWardByIdResponse.error;
 
     const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
     const retrieveHospitalsResponse = await retrieveHospitalsByTrustId(
       authenticationToken.trustId
     );
-
-    error = error || retrieveHospitalsResponse.error;
-
+    console.log(retrieveHospitalsResponse.hospitals);
     if (error) {
       return { props: { error: error } };
     } else {
       return {
         props: {
           error: error,
-          id: getRetrieveWardByIdResponse.ward.id,
-          name: getRetrieveWardByIdResponse.ward.name,
-          hospitalId: getRetrieveWardByIdResponse.ward.hospitalId,
+          ward: ward,
           hospitals: retrieveHospitalsResponse.hospitals,
           trust: { name: trustResponse.trust?.name },
         },
