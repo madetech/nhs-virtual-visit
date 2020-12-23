@@ -21,7 +21,7 @@ async function initPool() {
     password: process.env.MSQL_DB_PASSWORD,
     server: process.env.MSQL_DB_SERVER,
     database: process.env.MSQL_DB_DATABASE,
-    port: process.env.MSQL_DB_PORT,
+    port: process.env.MSQL_DB_PORT * 1,
     options: {
       encrypt: true,
       validateBulkLoadParameters: false,
@@ -32,9 +32,9 @@ async function initPool() {
       rowCollectionOnDone: true,
     },
     pool: {
-      max: process.env.MSQL_DB_POOL_MAX,
-      min: process.env.MSQL_DB_POOL_MIN,
-      idleTimeoutMillis: process.env.MSQL_DB_POOL_IDLE_TIMEOUT,
+      max: process.env.MSQL_DB_POOL_MAX * 1,
+      min: process.env.MSQL_DB_POOL_MIN * 1,
+      idleTimeoutMillis: process.env.MSQL_DB_POOL_IDLE_TIMEOUT * 1,
     },
   };
 

@@ -1,18 +1,24 @@
 import AppContainer from "../../src/containers/AppContainer";
 
-describe("db-migrate database setup ready", () => {
-  const container = AppContainer.getInstance();
+const container = AppContainer.getInstance();
+let pool;
 
+beforeAll(async () => {
+  pool = await container.getMsSqlConnPool();
+});
+
+afterAll(async () => {
+  // Close pool after tests are done.
+  pool.close();
+});
+
+describe("db-migrate database setup ready", () => {
   it("do we have an admin user on user table", async () => {
-    const pool = await container.getMsSqlConnPool();
+    pool = await container.getMsSqlConnPool();
 
     expect(pool).toBeDefined();
 
-    console.log("POOL: ", pool);
-
     const adminUser = await retrieveAdminUser(pool);
-
-    console.log("POOL: ", pool);
 
     expect(adminUser).toBeDefined();
     expect(adminUser.recordset).toBeDefined();
@@ -37,7 +43,7 @@ describe("db-migrate database setup ready", () => {
 });
 
 const retrieveAdminUser = async (pool) => {
-  return await pool.query("select * from dbo.[user] where type='admin'");
-
-  //return await pool.request().query("select * from dbo.[user] where type='admin'")
+  return await pool
+    .request()
+    .query("select * from dbo.[user] where type='admin'");
 };
