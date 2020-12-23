@@ -9,12 +9,11 @@ import Error from "next/error";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const AddAWard = ({ trust, hospitals, error, hospitalId }) => {
-
   if (error) {
     return <Error />;
   }
   const [errors, setErrors] = useState([]);
-  const hospital = hospitals.find((hospital) => hospital.id == hospitalId);
+  const hospital = hospitals.find((hosp) => hosp.id == hospitalId);
 
   return (
     <Layout
@@ -42,7 +41,8 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-    const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
+    const hospitalId = query.id;
+    const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId;
     const { hospitals, error } = await retrieveHospitalsByTrustId(
       authenticationToken.trustId
     );
