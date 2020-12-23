@@ -15,7 +15,7 @@ describe("CallIdProvider", () => {
     try {
       await prov.generate();
     } catch (e) {
-      expect(e).toEqual("Provider notsupported not supported");
+      expect(e).toEqual("Provider notsupported ");
     }
   });
 });
