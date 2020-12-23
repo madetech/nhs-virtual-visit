@@ -7,7 +7,7 @@ import AnchorLink from "../../../../src/components/AnchorLink";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
-import PanelUpdateSuccess from "../../../../src/components/PanelUpdateSuccess";
+import PanelSuccess from "../../../../src/components/PanelSuccess";
 
 const archiveATrustManagerSuccess = ({ trust, trustManager, error }) => {
   if (error) {
@@ -23,7 +23,7 @@ const archiveATrustManagerSuccess = ({ trust, trustManager, error }) => {
       <TrustAdminHeading trustName={trust.name} subHeading="Trust Managers" />
       <GridRow>
         <GridColumn width="two-thirds">
-          <PanelUpdateSuccess name={`${trustManager.email}`} action="deleted" />
+          <PanelSuccess name={`${trustManager.email}`} action="deleted" />
           <p>
             <AnchorLink
               href="/trust-admin/trust-managers"

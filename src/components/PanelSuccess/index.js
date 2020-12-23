@@ -1,6 +1,6 @@
 import React from "react";
 
-const PanelUpdateSuccess = ({ name, action }) => {
+const PanelSuccess = ({ name, action }) => {
   return (
     <>
       <div
@@ -15,4 +15,4 @@ const PanelUpdateSuccess = ({ name, action }) => {
   );
 };
 
-export default PanelUpdateSuccess;
+export default PanelSuccess;
