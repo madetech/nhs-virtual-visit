@@ -32,7 +32,6 @@ const EditWardForm = ({
 
   const submitAnswers = async () => {
     try {
-      console.log(id);
       const response = await fetch("/api/update-a-ward", {
         method: "PATCH",
         headers: {

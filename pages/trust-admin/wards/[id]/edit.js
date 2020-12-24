@@ -9,7 +9,6 @@ import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
 const EditAWard = ({ trust, error, ward, hospitals }) => {
-  console.log(ward);
   if (error) {
     return <Error />;
   }
@@ -56,7 +55,6 @@ export const getServerSideProps = propsWithContainer(
     const retrieveHospitalsResponse = await retrieveHospitalsByTrustId(
       authenticationToken.trustId
     );
-    console.log(retrieveHospitalsResponse.hospitals);
     if (error) {
       return { props: { error: error } };
     } else {
