@@ -9,6 +9,7 @@ const Button = ({
   ...others
 }) => (
   <button
+    data-cy="button"
     type={type}
     className={classnames("nhsuk-button", className)}
     aria-label={ariaLabel}

@@ -23,7 +23,7 @@ const SelectStatus = ({
         id={id}
         defaultValue={defaultValue || DEFAULT_VALUE}
         id="nhs-dropdown-menu"
-
+        data-cy="select-status"
         className={classnames(
           {
             "nhsuk-select--error": hasError,

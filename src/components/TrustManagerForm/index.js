@@ -46,7 +46,9 @@ const TrustManagerForm = ({ errors, trustManager = {}, submit }) => {
         </FormGroup>
       )}
 
-      <Button className="nhsuk-u-margin-top-5">{action} a Trust Manager</Button>
+      <Button className="nhsuk-u-margin-top-5" data-cy="tm-form-submit">
+        {action} a Trust Manager
+      </Button>
     </Form>
   );
 };
