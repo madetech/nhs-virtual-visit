@@ -1,7 +1,7 @@
 import React from "react";
 
 const FormHeading = ({ children }) => (
-  <h2 className="nhsuk-heading-l" id="tm-form-heading">
+  <h2 className="nhsuk-heading-l" data-cy="form-heading">
     {children}
   </h2>
 );

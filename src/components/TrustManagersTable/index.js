@@ -32,7 +32,7 @@ const TrustManagersTable = ({ trustManagers }) => (
                   query: { id: info.id },
                 }}
                 as={`/trust-admin/trust-managers/${info.id}/edit`}
-                id="edit-tm-link"
+                data-cy="edit-tm-link"
               >
                 Edit
               </AnchorLink>
@@ -45,7 +45,7 @@ const TrustManagersTable = ({ trustManagers }) => (
                   query: { id: info.id },
                 }}
                 as={`/trust-admin/trust-managers/${info.id}/archive-confirmation`}
-                id="delete-tm-link"
+                data-cy="delete-tm-link"
               >
                 Delete
               </AnchorLink>

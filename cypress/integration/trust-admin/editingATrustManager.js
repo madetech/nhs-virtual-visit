@@ -35,21 +35,21 @@ describe("As an admin, I want to edit a trust manager so that I can keep trust m
   });
 
   function WhenIClickOnTheEditLink() {
-    cy.get("#edit-tm-link").contains("Edit").click();
+    cy.get("[data-cy=edit-tm-link]").contains("Edit").click();
   }
 
   function ThenISeeAnEditTrustManagerForm() {
-    cy.get("#tm-form-heading").contains("Edit a Trust Manager");
+    cy.get("[data-cy=form-heading]").contains("Edit a Trust Manager");
   }
 
   function WhenIFillOutTheEditTMForm(status) {
-    cy.get("#tm-select-status").select(status);
+    cy.get("[data-cy=select-status]").select(status);
   }
   function AndIClickTheEditTrustManagerButton() {
-    cy.get("button[type=submit]").contains("Edit a Trust Manager").click();
+    cy.get("[data-cy=tm-form-submit]").contains("Edit a Trust Manager").click();
   }
 
   function ThenISeeTheTrustManagerIsUpdatedPage() {
-    cy.get("#panel-updated-success").contains("has been updated");
+    cy.get("[data-cy=panel-success-header]").contains("has been updated");
   }
 });
