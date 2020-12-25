@@ -27,22 +27,22 @@ describe("As an admin, I want to delete a trust manager so that I can remove a t
   });
 
   function WhenIClickOnTheDeleteLink() {
-    cy.get("#delete-tm-link").contains("Delete").click();
+    cy.get("[data-cy=delete-tm-link]").contains("Delete").click();
   }
 
   function ThenISeeADeleteTrustManagerPage() {
-    cy.get("#tm-form-heading").contains(
+    cy.get("[data-cy=form-heading]").contains(
       "Are you sure you want to delete this trust manager?"
     );
   }
 
   function WhenIClickTheDeleteTrustManagerButton() {
-    cy.get("button[type=submit]")
+    cy.get("[data-cy=button]")
       .contains("Yes, delete this trust manager")
       .click();
   }
 
   function ThenISeeTheTrustManagerIsDeletedPage() {
-    cy.get("#panel-deleted-success").contains("has been deleted");
+    cy.get("[data-cy=panel-success-header]").contains("has been deleted");
   }
 });
