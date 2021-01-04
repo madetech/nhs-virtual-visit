@@ -2,6 +2,7 @@ import React from "react";
 import Error from "next/error";
 import Layout from "../../../src/components/Layout";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
+import retrieveOrgManagerByOrgId from "../../../src/gateways/MsSQL/retrieveOrgManagerByOrgId";
 import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Text from "../../../src/components/Text";
@@ -13,7 +14,7 @@ const TrustManager = ({ trustManagers, trust, error }) => {
   if (error) {
     return <Error err={error} />;
   }
-
+  console.log(trustManagers.length);
   return (
     <Layout
       title={`Trust Managers for ${trust.name}`}
@@ -45,30 +46,16 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-    /*** Trust Manager Array needs to swapped out with info from db once available *****/
-    const trustManagers = [
-      {
-        id: "1",
-        email: "abc@nhs.co.uk",
-        status: "active",
-      },
-      {
-        id: "2",
-        email: "def@nhs.co.uk",
-        status: "active",
-      },
-      {
-        id: "3",
-        email: "ghi@nhs.co.uk",
-        status: "active",
-      },
-    ];
+
+    const { trustManagers, error } = await retrieveOrgManagerByOrgId(
+      authenticationToken.trustId
+    );
 
     return {
       props: {
         trustManagers,
         trust: { name: trustResponse.trust?.name },
-        error: trustResponse.error,
+        error: trustResponse.error || error,
       },
     };
   })
