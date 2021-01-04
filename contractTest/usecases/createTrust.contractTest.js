@@ -50,7 +50,7 @@ describe("createTrust contract tests", () => {
 
     expect(trustId).toBeNull();
     expect(error.toString()).toEqual(
-      'error: null value in column "video_provider" violates not-null constraint'
+      'error: null value in column "video_provider" of relation "trusts" violates not-null constraint'
     );
   });
 });
