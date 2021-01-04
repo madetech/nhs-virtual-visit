@@ -1,5 +1,3 @@
-USE nhs_virtual_visit_dev
-
 ALTER TABLE dbo.[user] ADD CONSTRAINT FK_user_organisation FOREIGN KEY ([organisation_id]) REFERENCES dbo.[organisation] ([id])
 
 ALTER TABLE dbo.[organisation] ADD CONSTRAINT FK_organisation_user FOREIGN KEY ([created_by]) REFERENCES dbo.[user] ([id])
