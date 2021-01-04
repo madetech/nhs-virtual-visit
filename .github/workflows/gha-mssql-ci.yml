@@ -164,20 +164,20 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: nhs-virtual-visit-test
-        ports:
-          - 5432:5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+      # postgres:
+      #   image: postgres:12
+      #   env:
+      #     POSTGRES_USER: postgres
+      #     POSTGRES_PASSWORD: postgres
+      #     POSTGRES_DB: nhs-virtual-visit-test
+      #   ports:
+      #     - 5432:5432
+      #   # Set health checks to wait until postgres has started
+      #   options: >-
+      #     --health-cmd pg_isready
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
       # MSSQL configuration - REMOVE POSTGRES when full migration done.
       # mssql:
       #   image: microsoft/mssql-server-linux:latest
@@ -197,19 +197,24 @@ jobs:
       - name: npm install ci
         run: npm ci
 
-      - name: run migration tests
-        run: |
-          npm run dbmigratetest up
-          npm run test:migration
-        env:
-          PG_TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
-          APP_ENV: test
+      # - name: run migration tests
+      #   run: |
+      #     npm run dbmigratetest up
+      #     npm run test:migration
+      #   env:
+      #     PG_TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+      #     APP_ENV: test
 
       - name: run mssql migration tests
         run: |
           bin/setup_test_mssql_docker.sh
         env:
           APP_ENV: test-mssql
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
 
   # tag-and-release:
   #   runs-on: ubuntu-latest
