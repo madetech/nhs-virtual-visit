@@ -10,18 +10,9 @@ const TrustsTable = ({ trusts }) => (
           <th className="nhsuk-table__header" scope="col">
             Trust name
           </th>
-<<<<<<< HEAD
-<<<<<<< HEAD
           <th className="nhsuk-table__header" scope="col">
             Status
           </th>
-=======
->>>>>>> chore: list of all trusts created, add form able to add trusts to the list
-=======
-          <th className="nhsuk-table__header" scope="col">
-            Status
-          </th>
->>>>>>> chore: change oorganization_list to organization in db and all relevant files
           <th className="nhsuk-table__header" scope="col" colSpan="2">
             <span className="nhsuk-u-visually-hidden">Actions</span>
           </th>
@@ -38,18 +29,10 @@ const TrustsTable = ({ trusts }) => (
               data-testid={trustKey}
             >
               <td className="nhsuk-table__cell">{trust.name}</td>
-<<<<<<< HEAD
-<<<<<<< HEAD
+
               <td className="nhsuk-table__cell">
                 {trust.status == 0 ? "Disabled" : "Enabled"}
               </td>
-=======
->>>>>>> chore: list of all trusts created, add form able to add trusts to the list
-=======
-              <td className="nhsuk-table__cell">
-                {trust.status == 0 ? "Disabled" : "Enabled"}
-              </td>
->>>>>>> chore: change oorganization_list to organization in db and all relevant files
               <td className="nhsuk-table__cell" style={{ textAlign: "center" }}>
                 <AnchorLink
                   href="/admin/trusts/[id]/edit"
