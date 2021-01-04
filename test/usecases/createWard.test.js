@@ -30,6 +30,7 @@ describe("createWard", () => {
       request.trustId,
       request.hospitalId,
       request.pin,
+      null,
     ]);
   });
 });

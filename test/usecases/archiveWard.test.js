@@ -1,12 +1,15 @@
-import moment from "moment";
 import archiveWard from "../../src/usecases/archiveWard";
+import { ARCHIVED } from "../../src/helpers/visitStatus";
 
 describe("archiveWard", () => {
   let container;
-  let resultSpy = jest.fn().mockReturnValue({ rowCount: 1 });
+  let updateCallStatusesByWardIdSpy = jest.fn();
+  let updateWardArchiveTimeByIdSpy = jest.fn();
 
   beforeEach(() => {
     container = {
+      getUpdateWardArchiveTimeByIdGateway: () => updateWardArchiveTimeByIdSpy,
+      getUpdateCallStatusesByWardIdGateway: () => updateCallStatusesByWardIdSpy,
       getRetrieveWardById: () => (wardId, trustId) => {
         if (wardId === 1 && trustId === 1) {
           return {
@@ -21,30 +24,26 @@ describe("archiveWard", () => {
           error: "Ward does not exist",
         };
       },
-      getDb: () =>
-        Promise.resolve({
-          result: resultSpy,
-        }),
     };
   });
 
   it("returns success if a valid request and delete was successful", async () => {
-    const timeBefore = moment();
     await expect(archiveWard(container)(1, 1)).resolves.toEqual({
       success: true,
       error: null,
     });
-    expect(resultSpy).toHaveBeenCalledWith(
-      expect.stringMatching(/UPDATE scheduled_calls_table/i),
-      ["archived", 1]
+    expect(updateCallStatusesByWardIdSpy).toHaveBeenCalledWith(1, ARCHIVED);
+    expect(updateWardArchiveTimeByIdSpy).toHaveBeenCalledWith(
+      1,
+      expect.anything()
     );
-    const [sql, [wardId, date]] = resultSpy.mock.calls[1];
-    expect(sql).toMatch(/update wards/i), expect(wardId).toEqual(1);
-    expect(moment(date).isAfter(timeBefore));
   });
 
   it("returns an error if ward cannot be removed from db", async () => {
-    resultSpy.mockResolvedValueOnce({}).mockRejectedValueOnce({ error: true });
+    container.getUpdateWardArchiveTimeByIdGateway = () =>
+      jest.fn(() => {
+        throw Error();
+      });
 
     return expect(archiveWard(container)(1, 1)).resolves.toEqual({
       success: false,
@@ -53,7 +52,10 @@ describe("archiveWard", () => {
   });
 
   it("returns an error if visits cannot be removed from db", async () => {
-    resultSpy.mockRejectedValueOnce({ error: true });
+    container.getUpdateCallStatusesByWardIdGateway = () =>
+      jest.fn(() => {
+        throw Error();
+      });
 
     return expect(archiveWard(container)(1, 1)).resolves.toEqual({
       success: false,
