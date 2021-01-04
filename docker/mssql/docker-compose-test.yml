@@ -14,6 +14,6 @@ services:
     working_dir: /usr/src/app
     # run the entrypoint.sh that will import the data AND sqlserver
     command: sh -c ' chmod +x ./entrypoint-test.sh; ./entrypoint-test.sh & /opt/mssql/bin/sqlservr;'
-    environment:
+    env:
       ACCEPT_EULA: Y
       SA_PASSWORD: P@55w0rd
