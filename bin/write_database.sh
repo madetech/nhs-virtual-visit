@@ -6,7 +6,7 @@ cat << EOF > database.json
     "user": "sa",
     "password": "abcdef",
     "server": "localhost",
-    "database": "nhs_virtual_visit_dev",
+    "database": "nhs_virtual_visit_test",
     "port": 1433,
     "options": {
       "encrypt": true,
