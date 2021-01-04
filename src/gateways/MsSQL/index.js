@@ -16,7 +16,7 @@ function setPoolConfigPerEnvironment(config) {
 
 async function initPool() {
   let config = {
-    driver: process.env.MSQL_DB_USER,
+    driver: process.env.MSQL_DB_DRIVER,
     user: process.env.MSQL_DB_USER,
     password: process.env.MSQL_DB_PASSWORD,
     server: process.env.MSQL_DB_SERVER,
