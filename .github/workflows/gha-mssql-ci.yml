@@ -213,8 +213,8 @@ jobs:
           MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
           MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
           MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_USER: sa
+          MSQL_TEST_DB_PASSWORD: P@55w0rd
           MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
           MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
         run: |
@@ -231,8 +231,8 @@ jobs:
           MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
           MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
           MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_USER: sa
+          MSQL_TEST_DB_PASSWORD: P@55w0rd
           MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
           MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
 
