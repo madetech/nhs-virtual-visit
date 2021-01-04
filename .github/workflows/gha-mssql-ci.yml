@@ -224,6 +224,11 @@ jobs:
         run: |
           bin/write_database.sh
 
+      - name: Sleep for 10 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: "10s"
+
       - name: run mssql migration tests
         run: |
           npm run dbmigrate-test-mssql up:mssql
