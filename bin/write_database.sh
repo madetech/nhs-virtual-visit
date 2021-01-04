@@ -2,21 +2,11 @@
 cat << EOF > database.json
 {
 "test-mssql": {
-    "driver": {
-      "ENV": "mssql"
-    },
-    "user": {
-      "ENV": "sa"
-    },
-    "password": {
-      "ENV": "abcdef"
-    },
-    "server": {
-      "ENV": "localhost"
-    },
-    "database": {
-      "ENV": "nhs_virtual_visit_dev"
-    },
+    "driver": "mssql",
+    "user": "sa",
+    "password": "abcdef",
+    "server": "localhost",
+    "database": "nhs_virtual_visit_dev",
     "port": 1433,
     "options": {
       "encrypt": true,
