@@ -1,4 +1,4 @@
-INSERT INTO [dbo].[organisation] ([name], [created_by], [type], [status]) VALUES('Airedale NHS Foundation Trust', (select id from [dbo].[user] where email = 'nhs-admin@nhs.co.uk' and type = 'admin'), 'trust', 0);
+INSERT INTO [dbo].[organisation] ([name], [created_by], [type], [status]) VALUES('Airedale NHS Foundation Trust', (select id from [dbo].[user] where email = 'nhs-admin@nhs.co.uk' and type = 'admin'), 'trust', 1);
 INSERT INTO [dbo].[organisation] ([name], [created_by], [type], [status]) VALUES('Alder Hey Children''s NHS Foundation Trust', (select id from [dbo].[user] where email = 'nhs-admin@nhs.co.uk' and type = 'admin'), 'trust', 0);
 INSERT INTO [dbo].[organisation] ([name], [created_by], [type], [status]) VALUES('Ashford and St Peter''s Hospitals NHS Foundation Trust', (select id from [dbo].[user] where email = 'nhs-admin@nhs.co.uk' and type = 'admin'), 'trust', 0);
 INSERT INTO [dbo].[organisation] ([name], [created_by], [type], [status]) VALUES('Avon and Wiltshire Mental Health Partnership NHS Trust', (select id from [dbo].[user] where email = 'nhs-admin@nhs.co.uk' and type = 'admin'), 'trust', 0);
