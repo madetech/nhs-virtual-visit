@@ -1,4 +1,4 @@
-import createOrganization from "./createOrganization";
+import createOrganization from "../../src/usecases/createOrganization";
 
 describe("createOrganizationList", () => {
   it("create an Organization", async () => {

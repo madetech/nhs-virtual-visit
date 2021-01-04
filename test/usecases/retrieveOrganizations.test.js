@@ -1,4 +1,4 @@
-import retrieveOrganizations from "./retrieveOrganizations";
+import retrieveOrganizations from "../../src/usecases/retrieveOrganizations";
 
 describe("retrieveOrganizations", () => {
   it("returns a json object containing the Organizations", async () => {
