@@ -164,28 +164,28 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-    # postgres:
-    #   image: postgres:12
-    #   env:
-    #     POSTGRES_USER: postgres
-    #     POSTGRES_PASSWORD: postgres
-    #     POSTGRES_DB: nhs-virtual-visit-test
-    #   ports:
-    #     - 5432:5432
-    #   # Set health checks to wait until postgres has started
-    #   options: >-
-    #     --health-cmd pg_isready
-    #     --health-interval 10s
-    #     --health-timeout 5s
-    #     --health-retries 5
-    # MSSQL configuration - REMOVE POSTGRES when full migration done.
-    mssql:
-      image: microsoft/mssql-server-linux:latest
-      env:
-        ACCEPT_EULA: Y
-        SA_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-      ports:
-        - 1433:1433
+      # postgres:
+      #   image: postgres:12
+      #   env:
+      #     POSTGRES_USER: postgres
+      #     POSTGRES_PASSWORD: postgres
+      #     POSTGRES_DB: nhs-virtual-visit-test
+      #   ports:
+      #     - 5432:5432
+      #   # Set health checks to wait until postgres has started
+      #   options: >-
+      #     --health-cmd pg_isready
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
+      # MSSQL configuration - REMOVE POSTGRES when full migration done.
+      mssql:
+        image: microsoft/mssql-server-linux:latest
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+        ports:
+          - 1433:1433
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
     steps:
