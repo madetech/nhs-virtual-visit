@@ -189,7 +189,7 @@ jobs:
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
     steps:
-      - uses: actions/checkout@v2b
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
