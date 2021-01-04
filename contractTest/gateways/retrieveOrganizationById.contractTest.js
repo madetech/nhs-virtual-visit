@@ -1,9 +1,5 @@
 import retrieveOrganizationById from "../../src/gateways/retrieveOrganizationById";
-<<<<<<< HEAD:contractTest/usecases/retrieveOrganizationById.contractTest.js
-import { setupOrganization } from "../testUtils/factories";
-=======
 import { setupOrganization } from "../../test/testUtils/factories";
->>>>>>> fix: fixing database seeding:contractTest/gateways/retrieveOrganizationById.contractTest.js
 
 describe("retrieveOrganizationById", () => {
   it("returns an object containing the organization", async () => {
