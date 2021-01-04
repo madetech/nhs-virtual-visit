@@ -163,7 +163,7 @@ jobs:
   migration-tests:
     runs-on: ubuntu-latest
 
-    # services:
+    services:
     # postgres:
     #   image: postgres:12
     #   env:
@@ -179,13 +179,13 @@ jobs:
     #     --health-timeout 5s
     #     --health-retries 5
     # MSSQL configuration - REMOVE POSTGRES when full migration done.
-    # mssql:
-    #   image: microsoft/mssql-server-linux:latest
-    #   env:
-    #     ACCEPT_EULA: Y
-    #     SA_PASSWORD: ${{ secrets.MSSQL_PASSWORD }}
-    #   ports:
-    #     - 1433:1433
+    mssql:
+      image: microsoft/mssql-server-linux:latest
+      env:
+        ACCEPT_EULA: Y
+        SA_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+      ports:
+        - 1433:1433
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
     steps:
@@ -222,7 +222,8 @@ jobs:
 
       - name: run mssql migration tests
         run: |
-          bin/setup_test_mssql_docker.sh
+          npm run dbmigrate-test-mssql up:mssql
+
         env:
           APP_ENV: test-mssql
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
