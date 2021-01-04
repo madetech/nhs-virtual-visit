@@ -45,7 +45,7 @@ const ArchiveAWardConfirmation = ({
       }),
     });
     if (response.status === 200) {
-      await Router.push(
+      Router.push(
         `/trust-admin/wards/archive-success?name=${name}&hospitalName=${hospitalName}&hospitalId=${hospitalId}`
       );
       return true;
@@ -69,10 +69,7 @@ const ArchiveAWardConfirmation = ({
       <GridRow>
         <GridColumn width="two-thirds">
           <Form onSubmit={onSubmit}>
-            <SummaryList
-              list={wardSummaryList}
-              withActions={false}
-            ></SummaryList>
+            <SummaryList list={wardSummaryList} withActions={false} />
             <p>All booked visits for this ward will be cancelled.</p>
 
             <Button>Yes, delete this ward</Button>
