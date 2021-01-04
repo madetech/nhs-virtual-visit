@@ -220,6 +220,10 @@ jobs:
         run: |
           bin/write_environment.sh
 
+      - name: "Write database json"
+        run: |
+          bin/write_database.sh
+
       - name: run mssql migration tests
         run: |
           bin/setup_test_mssql_docker.sh
