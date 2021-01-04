@@ -5,7 +5,7 @@ cat << EOF > database.json
     "driver": "mssql",
     "user": "sa",
     "password": "abcdef",
-    "server": "localhost",
+    "server": "127.0.0.1",
     "database": "nhs_virtual_visit_test",
     "port": 1433,
     "options": {
