@@ -5,6 +5,7 @@ const retrieveOrganizationById = async (organizationId) => {
   const db = await Database.getInstance();
 
   logger.info(`Retrieving organization for ${organizationId}`);
+
   try {
     if (!organizationId)
       throw "Attempting to retrieve trust with no trust Id set";
