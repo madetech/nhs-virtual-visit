@@ -161,7 +161,7 @@ jobs:
   #         EVENT_LOGGING: ${{ secrets.ENABLE_EVENT_LOGGING_IN_TESTS }}
 
   migration-tests:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     services:
       # postgres:
@@ -180,7 +180,7 @@ jobs:
       #     --health-retries 5
       # MSSQL configuration - REMOVE POSTGRES when full migration done.
       mssql:
-        image: microsoft/mssql-server-linux:latest
+        image: mcr.microsoft.com/mssql/server:latest
         env:
           ACCEPT_EULA: Y
           SA_PASSWORD: abcdef
