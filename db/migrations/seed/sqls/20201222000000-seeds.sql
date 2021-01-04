@@ -8,3 +8,7 @@ INSERT INTO wards (name, hospital_id, code, trust_id, pin) VALUES ('Test Ward Tw
 INSERT INTO wards (name, hospital_id, code, trust_id, pin) VALUES ('Test 2 Ward One', (SELECT id FROM hospitals WHERE name='Test 2 Hospital'), 'TEST22', (SELECT id FROM trusts WHERE name='Test 2 Trust'), '1234');
 INSERT INTO wards (name, hospital_id, code, trust_id, archived_at, pin) VALUES ('Archived Ward',  (SELECT id FROM hospitals WHERE name='Test Hospital'), 'TESTARC', (SELECT id FROM trusts WHERE name='Test Trust'), CURRENT_TIMESTAMP);
 INSERT INTO admins (email, password) VALUES ('super@email.com', crypt('adminpassword', gen_salt('bf', 8)));
+INSERT INTO organization (name, status) VALUES ('Test Trust', 0);
+INSERT INTO organization (name, status) VALUES ('Test Trust 2', 0);
+INSERT INTO organization (name, status) VALUES ('Test Trust 3', 0);
+INSERT INTO organization (name, status) VALUES ('Test Trust 4', 0);
