@@ -1,5 +1,3 @@
-USE nhs_virtual_visit_dev
-
 CREATE TABLE dbo.[user] (
   [id] int IDENTITY(1, 1) NOT NULL,
   [email] nvarchar(255) NOT NULL,

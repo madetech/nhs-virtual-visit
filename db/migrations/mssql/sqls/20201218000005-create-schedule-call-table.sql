@@ -1,5 +1,3 @@
-use nhs_virtual_visit_dev;
-
 CREATE TABLE dbo.[scheduled_call] (
   [id] int IDENTITY(1, 1) NOT NULL,
   [patient_name] nvarchar(255),

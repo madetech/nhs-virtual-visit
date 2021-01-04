@@ -1,5 +1,3 @@
-use nhs_virtual_visit_dev;
-
 CREATE TABLE dbo.[user_verification] (
   [id] int IDENTITY(1, 1),
   [created_at] datetime NOT NULL DEFAULT GETDATE(),
