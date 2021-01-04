@@ -226,7 +226,7 @@ jobs:
 
       - name: run mssql migration tests
         run: |
-          bin/setup_test_mssql_docker.sh
+          npm run dbmigrate-test-mssql up:mssql
 
         env:
           APP_ENV: test-mssql
