@@ -12,7 +12,7 @@ Terraform:
 
 ## Requirements:
 
-- PostgreSQL 12
+- PostgreSQL 12 / MSSQL
 - Node LTS (Currently Node 12. There is a known issue with db-migrate and Node 14)
 - GOV.UK Notify API keys
 - Docker
@@ -41,12 +41,12 @@ MSQL_DB_POOL_IDLE_TIMEOUT=
 MSQL_DB_USER=
 MSQL_DB_PASSWORD=
 MSQL_DB_SERVER=
-MSQL_DB_DATABASE=
-# MSSQL E2E Test
-MSQL_E2E_DB_USER=
-MSQL_E2E_DB_PASSWORD=
-MSQL_E2E_DB_SERVER=
-MSQL_E2E_DB_DATABASE=
+MSQL_DB_NAME=
+# MSSQL Test
+MSQL_TEST_DB_USER=
+MSQL_TEST_DB_PASSWORD=
+MSQL_TEST_DB_SERVER=
+MSQL_TEST_DB_NAME=
 # GOV.UK Notify SMS Initial Template ID
 SMS_INITIAL_TEMPLATE_ID=
 # GOV.UK Notify SMS Updated Visit Template ID
@@ -87,7 +87,7 @@ MSQL_DB_POOL_IDLE_TIMEOUT=30000
 MSQL_DB_USER=sa
 MSQL_DB_PASSWORD=P@55w0rd
 MSQL_DB_SERVER=localhost
-MSQL_DB_DATABASE=nhs_virtual_visit_dev
+MSQL_DB_NAME=nhs_virtual_visit_dev
 ```
 
 Run `./bin/setup_local_mssql_docker.sh`

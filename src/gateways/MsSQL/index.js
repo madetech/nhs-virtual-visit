@@ -1,16 +1,16 @@
 const sql = require("mssql");
 
-const TEST_E2E_MSSQL = "test-e2e-mssql";
+const TEST_MSSQL = "test-mssql";
 
 function setPoolConfigPerEnvironment(config) {
   if (
-    process.env.NODE_ENV === TEST_E2E_MSSQL ||
-    process.env.APP_ENV === TEST_E2E_MSSQL
+    process.env.NODE_ENV === TEST_MSSQL ||
+    process.env.APP_ENV === TEST_MSSQL
   ) {
-    config.user = process.env.MSQL_E2E_DB_USER;
-    config.password = process.env.MSQL_E2E_DB_PASSWORD;
-    config.server = process.env.MSQL_E2E_DB_SERVER;
-    config.database = process.env.MSQL_E2E_DB_DATABASE;
+    config.user = process.env.MSQL_TEST_DB_USER;
+    config.password = process.env.MSQL_TEST_DB_PASSWORD;
+    config.server = process.env.MSQL_TEST_DB_SERVER;
+    config.database = process.env.MSQL_TEST_DB_NAME;
   }
 }
 
@@ -20,7 +20,7 @@ async function initPool() {
     user: process.env.MSQL_DB_USER,
     password: process.env.MSQL_DB_PASSWORD,
     server: process.env.MSQL_DB_SERVER,
-    database: process.env.MSQL_DB_DATABASE,
+    database: process.env.MSQL_DB_NAME,
     port: process.env.MSQL_DB_PORT,
     options: {
       encrypt: true,
