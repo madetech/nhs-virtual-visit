@@ -161,7 +161,7 @@ jobs:
   #         EVENT_LOGGING: ${{ secrets.ENABLE_EVENT_LOGGING_IN_TESTS }}
 
   migration-tests:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     services:
       # postgres:
