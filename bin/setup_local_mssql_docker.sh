@@ -8,7 +8,7 @@ else
 fi
 
 # Start docker yml from path and detached.
-docker-compose -f docker/mssql/docker-compose.yml up -d
+docker-compose -f docker/mssql/local/docker-compose.yml up -d
 
 wait_time=5s
 
