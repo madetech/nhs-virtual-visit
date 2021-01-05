@@ -179,7 +179,6 @@ jobs:
           MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
         run: |
           bin/write_environment.sh
-          cat .env
           bin/setup_test_mssql_docker.sh
         # npm run test:migration:mssql
 
@@ -189,17 +188,17 @@ jobs:
           npm run test:migration:mssql
         # bin/setup_test_mssql_docker.sh
         # npm run test:migration
-        # env:
-        #   APP_ENV: testmssql
-        #   MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-        #   MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-        #   MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-        #   MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-        #   MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-        #   MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-        #   MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-        #   MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-        #   MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+        env:
+          APP_ENV: testmssql
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
 
   # tag-and-release:
   #   runs-on: ubuntu-latest
