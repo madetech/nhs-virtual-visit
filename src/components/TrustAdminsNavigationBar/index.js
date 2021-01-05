@@ -5,7 +5,7 @@ const TrustAdminsNavigationBar = () => {
   const links = [
     {
       text: "Home",
-      href: "/",
+      href: "/trust-admin/",
     },
     {
       text: "Trust Managers",
