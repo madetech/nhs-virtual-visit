@@ -16,7 +16,7 @@ RUN chmod +x /usr/src/app/run-initialisation.sh
 ENV SA_PASSWORD P@55w0rd
 ENV ACCEPT_EULA Y
 # Enable if MSSQL Express is a requirement
-ENV MSSQL_PID Express
+#ENV MSSQL_PID Express
 
 # Expose port 1433 in case accesing from other container
 EXPOSE 1433
