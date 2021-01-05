@@ -57,6 +57,7 @@ import logEvent from "../gateways/logEvent";
 import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
 import MsSQL from "../gateways/MsSQL";
+import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
 
 class AppContainer {
   getDb = () => {
@@ -291,6 +292,11 @@ class AppContainer {
       process.env.AZURE_FUNCTION_KEY,
       process.env.AZURE_FUNCTION_URL
     );
+  };
+
+  // MsSQL database gateways
+  getVerifyUserLogin = () => {
+    return verifyUserLogin;
   };
 }
 

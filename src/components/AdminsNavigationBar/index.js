@@ -9,7 +9,7 @@ const AdminsNavigationBar = () => {
     },
     {
       text: "Log out",
-      href: "#",
+      href: "/admin#",
       onClick: logout,
     },
   ];

@@ -55,9 +55,9 @@ const Login = ({ correlationId }) => {
         body,
         correlationId
       );
-      console.log(response.body);
+
       if (response.status === 201) {
-        window.location.href = `/admin`;
+        window.location.href = `/login`;
         return true;
       } else {
         onSubmitErrors.push({
