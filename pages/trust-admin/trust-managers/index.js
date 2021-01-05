@@ -2,7 +2,6 @@ import React from "react";
 import Error from "next/error";
 import Layout from "../../../src/components/Layout";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
-import retrieveOrgManagerByOrgId from "../../../src/gateways/MsSQL/retrieveOrgManagerByOrgId";
 import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Text from "../../../src/components/Text";
@@ -14,7 +13,7 @@ const TrustManager = ({ trustManagers, trust, error }) => {
   if (error) {
     return <Error err={error} />;
   }
-  console.log(trustManagers.length);
+
   return (
     <Layout
       title={`Trust Managers for ${trust.name}`}
@@ -47,7 +46,10 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId
     );
 
-    const { trustManagers, error } = await retrieveOrgManagerByOrgId(
+    const {
+      trustManagers,
+      error,
+    } = await container.getRetrieveOrgManagerByOrgId()(
       authenticationToken.trustId
     );
 
