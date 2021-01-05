@@ -231,6 +231,7 @@ jobs:
 
       - name: run mssql migration tests
         run: |
+          npm run create-test-db
           npm run dbmigrate-test-mssql up:mssql
 
         env:
