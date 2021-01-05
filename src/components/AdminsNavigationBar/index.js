@@ -20,7 +20,7 @@ const AdminsNavigationBar = () => {
 const logout = async () => {
   await fetch("/api/session", { method: "DELETE" });
 
-  window.location.href = "/admin/login";
+  window.location.href = "/login";
 };
 
 export default AdminsNavigationBar;
