@@ -16,11 +16,36 @@ const EditTrustManager = ({ error, trustManager, trust }) => {
   }
   console.log();
   const [errors, setErrors] = useState([]);
-  const submit = () => {
-    Router.push({
-      pathname: "/trust-admin/trust-managers/[id]/edit-success",
-      query: { uuid: trustManager.uuid },
-    });
+  const submit = async (payload) => {
+    payload.uuid = trustManager.uuid;
+
+    try {
+      const response = await fetch("/api/update-a-trust-manager-status", {
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.status === 200) {
+        const json = await response.json();
+        Router.push({
+          pathname: `/trust-admin/trust-managers/${json.uuid}/edit-success`,
+          query: { uuid: trustManager.uuid },
+        });
+      } else {
+        throw new Error(response.status);
+      }
+    } catch (e) {
+      const onSubmitErrors = [
+        {
+          id: "trust-manager-update-error",
+          message: "There was a problem saving your changes",
+        },
+      ];
+      setErrors(onSubmitErrors);
+    }
   };
 
   return (
