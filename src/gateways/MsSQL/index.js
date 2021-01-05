@@ -7,17 +7,10 @@ function setPoolConfigPerEnvironment(config) {
     process.env.NODE_ENV === TEST_MSSQL ||
     process.env.APP_ENV === TEST_MSSQL
   ) {
-    console.log("MSSQL::TEST::CONFIG");
-
-    // config.user = process.env.MSQL_TEST_DB_USER;
-    // config.password = process.env.MSQL_TEST_DB_PASSWORD;
-    // config.server = process.env.MSQL_TEST_DB_SERVER;
-    // config.database = process.env.MSQL_TEST_DB_NAME;
-
-    config.user = "sa";
-    config.password = "P@55w0rd";
-    config.server = "localhost";
-    config.database = "nhs_virtual_visit_test";
+    config.user = process.env.MSQL_TEST_DB_USER;
+    config.password = process.env.MSQL_TEST_DB_PASSWORD;
+    config.server = process.env.MSQL_TEST_DB_SERVER;
+    config.database = process.env.MSQL_TEST_DB_NAME;
   }
 }
 
@@ -46,8 +39,6 @@ async function initPool() {
   };
 
   setPoolConfigPerEnvironment(config);
-
-  console.log("MSSQL::CONFIG::", config);
 
   const DB_KEY = Symbol.for("MsSQL.db");
   const globalSymbols = Object.getOwnPropertySymbols(global);

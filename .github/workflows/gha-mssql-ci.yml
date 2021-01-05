@@ -184,7 +184,7 @@ jobs:
         run: |
           bin/setup_test_mssql_docker.sh
           npm run test:migration:mssql
-          npm run test:migration
+        # npm run test:migration
         env:
           APP_ENV: test-mssql
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
