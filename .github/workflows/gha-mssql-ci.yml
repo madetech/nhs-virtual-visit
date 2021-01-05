@@ -185,6 +185,7 @@ jobs:
       - name: run mssql migration tests
         run: |
           cat .env
+          printenv
           npm run test:migration:mssql
         # bin/setup_test_mssql_docker.sh
         # npm run test:migration
