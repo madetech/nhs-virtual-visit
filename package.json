@@ -21,7 +21,7 @@
     "test:migrate": "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed",
     "test:e2e2:open": "npm run test:e2e:open",
     "test:migration": "jest --config ./jest.migrations.config.js --runInBand",
-    "test:migration:mssql": "APP_ENV=test-mssql jest --config ./jest.migrations.config.js --runInBand --setupFiles dotenv/config",
+    "test:migration:mssql": "APP_ENV=test-mssql jest --config ./jest.migrations.config.js --runInBand --env=test-mssql",
     "build": "next build",
     "dev": "NODE_ENV=development node server.js",
     "prepare-db-and-start": "npm run create-dev-db; npm run dbmigrate up && npm run start",
