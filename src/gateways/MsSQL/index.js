@@ -21,8 +21,7 @@ async function initPool() {
     password: process.env.MSQL_DB_PASSWORD,
     server: process.env.MSQL_DB_SERVER,
     database: process.env.MSQL_DB_NAME,
-    // port: process.env.MSQL_DB_PORT * 1,
-    port: 1433,
+    port: process.env.MSQL_DB_PORT * 1,
     options: {
       encrypt: true,
       validateBulkLoadParameters: false,
@@ -40,8 +39,6 @@ async function initPool() {
   };
 
   setPoolConfigPerEnvironment(config);
-
-  console.log("MSSQL::CONFIG::", config);
 
   const DB_KEY = Symbol.for("MsSQL.db");
   const globalSymbols = Object.getOwnPropertySymbols(global);

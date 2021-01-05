@@ -179,6 +179,10 @@ jobs:
           MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
         run: |
           bin/write_environment.sh
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
 
       - name: run mssql migration tests
         run: |
