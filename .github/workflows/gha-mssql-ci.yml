@@ -15,23 +15,23 @@ on:
       - "docs/**"
 
 jobs:
-  # build-and-unit-tests:
-  #   runs-on: ubuntu-latest
+  build-and-unit-tests:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 12
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
 
-  #     - name: npm install ci
-  #       run: npm ci
+      - name: npm install ci
+        run: npm ci
 
-  #     - name: build
-  #       run: npm run build
+      - name: build
+        run: npm run build
 
-  #     - name: run unit tests
-  #       run: npm run test
+      - name: run unit tests
+        run: npm run test
 
   # contract-tests:
   #   runs-on: ubuntu-latest
