@@ -30,14 +30,12 @@ describe("api/session", () => {
         const verifyWardCodeSpy = jest.fn(async () => ({
           validWardCode: false,
         }));
-        const verifyTrustAdminCodeSpy = jest.fn(async () => ({
-          validTrustAdminCode: false,
+        const verifyUserLoginSpy = jest.fn(async () => ({
+          validUser: false,
         }));
         const container = {
           getVerifyWardCode: () => verifyWardCodeSpy,
-          getVerifyTrustAdminCode: () => verifyTrustAdminCodeSpy,
-          getVerifyAdminCode: () =>
-            jest.fn().mockReturnValue({ validAdminCode: false }),
+          getVerifyUserLogin: () => verifyUserLoginSpy,
         };
 
         await session(invalidRequest, response, { container });
@@ -69,8 +67,8 @@ describe("api/session", () => {
           validWardCode: true,
           ward: { id: 10, code: "MEOW", trustId: 1 },
         }));
-        const verifyTrustAdminCodeSpy = jest.fn(async () => ({
-          validTrustAdminCode: false,
+        const verifyUserLoginSpy = jest.fn(async () => ({
+          validUser: false,
         }));
         const tokenGeneratorSpy = jest.fn(() => "generatedToken");
 
@@ -79,9 +77,7 @@ describe("api/session", () => {
             generate: tokenGeneratorSpy,
           })),
           getVerifyWardCode: () => verifyWardCodeSpy,
-          getVerifyTrustAdminCode: () => verifyTrustAdminCodeSpy,
-          getVerifyAdminCode: () =>
-            jest.fn().mockReturnValue({ validAdminCode: false }),
+          getVerifyUserLogin: () => verifyUserLoginSpy,
         };
 
         await session(validRequest, response, { container });
@@ -138,10 +134,8 @@ describe("api/session", () => {
             generate: tokenGeneratorSpy,
           })),
           getVerifyWardCode: () => verifyWardCodeSpy,
-          getVerifyTrustAdminCode: () => () =>
-            jest.fn().mockReturnValue({ validAdminCode: false }),
-          getVerifyAdminCode: () =>
-            jest.fn().mockReturnValue({ validAdminCode: false }),
+          getVerifyUserLogin: () => () =>
+            jest.fn().mockReturnValue({ validUser: false }),
           getLogEventGateway: () => logEventSpy,
         };
         await session(validRequest, response, { container });
@@ -195,10 +189,8 @@ describe("api/session", () => {
             generate: tokenGeneratorSpy,
           })),
           getVerifyWardCode: () => verifyWardCodeSpy,
-          getVerifyTrustAdminCode: () => () =>
-            jest.fn().mockReturnValue({ validAdminCode: false }),
-          getVerifyAdminCode: () =>
-            jest.fn().mockReturnValue({ validAdminCode: false }),
+          getVerifyUserLogin: () => () =>
+            jest.fn().mockReturnValue({ validUser: false }),
           getLogEventGateway: () => logEventSpy,
         };
         await session(validRequest, response, { container });
@@ -230,9 +222,10 @@ describe("api/session", () => {
           ward: {},
         }));
 
-        const verifyTrustAdminCodeSpy = jest.fn(async () => ({
-          validTrustAdminCode: true,
-          trust: { id: 1 },
+        const verifyUserLoginSpy = jest.fn(async () => ({
+          validUser: true,
+          trust_id: 1,
+          type: "manager",
           error: null,
         }));
 
@@ -243,14 +236,12 @@ describe("api/session", () => {
             generate: tokenGeneratorSpy,
           })),
           getVerifyWardCode: () => verifyWardCodeSpy,
-          getVerifyTrustAdminCode: () => verifyTrustAdminCodeSpy,
-          getVerifyAdminCode: () =>
-            jest.fn().mockReturnValue({ validAdminCode: false }),
+          getVerifyUserLogin: () => verifyUserLoginSpy,
         };
 
         await session(validRequest, response, { container });
 
-        expect(verifyTrustAdminCodeSpy).toHaveBeenCalledWith(
+        expect(verifyUserLoginSpy).toHaveBeenCalledWith(
           "trust_admin_code",
           "trust_admin_password"
         );
@@ -290,9 +281,9 @@ describe("api/session", () => {
           end: jest.fn(),
         };
 
-        const verifyAdminCodeSpy = jest
+        const verifyUserLoginSpy = jest
           .fn()
-          .mockReturnValue({ validAdminCode: true });
+          .mockReturnValue({ validUser: true, type: "admin" });
 
         const tokenGeneratorSpy = jest.fn(() => "generatedToken");
 
@@ -304,16 +295,12 @@ describe("api/session", () => {
             jest.fn(async () => ({
               validWardCode: false,
             })),
-          getVerifyTrustAdminCode: () =>
-            jest.fn(async () => ({
-              validTrustAdminCode: false,
-            })),
-          getVerifyAdminCode: () => verifyAdminCodeSpy,
+          getVerifyUserLogin: () => verifyUserLoginSpy,
         };
 
         await session(validRequest, response, { container });
 
-        expect(verifyAdminCodeSpy).toHaveBeenCalledWith(
+        expect(verifyUserLoginSpy).toHaveBeenCalledWith(
           "admin_code",
           "password"
         );
