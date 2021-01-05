@@ -180,10 +180,10 @@ jobs:
       #     --health-retries 5
       # MSSQL configuration - REMOVE POSTGRES when full migration done.
       mssql:
-        image: mcr.microsoft.com/mssql/server:latest
+        image: mcr.microsoft.com/mssql/server:2017-GA-ubuntu
         env:
           ACCEPT_EULA: Y
-          SA_PASSWORD: abcdef
+          SA_PASSWORD: P@55w0rd
         ports:
           - 1433:1433
 
@@ -214,20 +214,20 @@ jobs:
           MSQL_DB_POOL_MIN: 5
           MSQL_DB_POOL_IDLE_TIMEOUT: 30000
           MSQL_TEST_DB_USER: sa
-          MSQL_TEST_DB_PASSWORD: abcdef
-          MSQL_TEST_DB_SERVER: 127.0.0.1
+          MSQL_TEST_DB_PASSWORD: P@55w0rd
+          MSQL_TEST_DB_SERVER: localhost
           MSQL_TEST_DB_NAME: nhs_virtual_visit_test
         run: |
           bin/write_environment.sh
 
-      - name: "Write database json"
-        run: |
-          bin/write_database.sh
+      # - name: "Write database json"
+      #   run: |
+      #     bin/write_database.sh
 
-      - name: Sleep for 10 seconds
+      - name: Sleep for 5 seconds
         uses: jakejarvis/wait-action@master
         with:
-          time: "10s"
+          time: "5s"
 
       - name: run mssql migration tests
         run: |
@@ -241,8 +241,8 @@ jobs:
           MSQL_DB_POOL_MIN: 5
           MSQL_DB_POOL_IDLE_TIMEOUT: 30000
           MSQL_TEST_DB_USER: sa
-          MSQL_TEST_DB_PASSWORD: abcdef
-          MSQL_TEST_DB_SERVER: 127.0.0.1
+          MSQL_TEST_DB_PASSWORD: P@55w0rd
+          MSQL_TEST_DB_SERVER: localhost
           MSQL_TEST_DB_NAME: nhs_virtual_visit_test
 
   # tag-and-release:
