@@ -43,28 +43,18 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-    const trustManagerId = query.id;
+    const trustManagerId = query.uuid;
     /*** Trust Manager Array needs to swapped out with info from db once available *****/
     const trustManagers = [
       {
-        id: "1",
-        email: "abc@nhs.co.uk",
-        status: "active",
-      },
-      {
-        id: "2",
-        email: "def@nhs.co.uk",
-        status: "active",
-      },
-      {
-        id: "3",
-        email: "ghi@nhs.co.uk",
+        uuid: "8626856E-2AA4-4F19-89FD-9C0E6FD8EB0B",
+        email: "nhs-org2@nhs.co.uk",
         status: "active",
       },
     ];
     const error = "";
     const trustManager = trustManagers?.find(
-      (manager) => manager.id === trustManagerId
+      (manager) => manager.uuid === trustManagerId
     );
     if (error) {
       return {
