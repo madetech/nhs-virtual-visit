@@ -9,10 +9,15 @@ function setPoolConfigPerEnvironment(config) {
   ) {
     console.log("MSSQL::TEST::CONFIG");
 
-    config.user = process.env.MSQL_TEST_DB_USER;
-    config.password = process.env.MSQL_TEST_DB_PASSWORD;
-    config.server = process.env.MSQL_TEST_DB_SERVER;
-    config.database = process.env.MSQL_TEST_DB_NAME;
+    // config.user = process.env.MSQL_TEST_DB_USER;
+    // config.password = process.env.MSQL_TEST_DB_PASSWORD;
+    // config.server = process.env.MSQL_TEST_DB_SERVER;
+    // config.database = process.env.MSQL_TEST_DB_NAME;
+
+    config.user = "sa";
+    config.password = "P@55w0rd";
+    config.server = "localhost";
+    config.database = "nhs_virtual_visit_test";
   }
 }
 
