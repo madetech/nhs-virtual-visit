@@ -165,6 +165,9 @@ jobs:
       - name: npm install ci
         run: npm ci
 
+      - name: build
+        run: npm run build
+
       - name: "Write environment"
         env:
           APP_ENV: testmssql
