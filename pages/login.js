@@ -49,7 +49,7 @@ const Login = ({ correlationId }) => {
         body,
         correlationId
       );
-
+      console.log(response.body);
       if (response.status === 201) {
         const { userType } = await response.json();
 
