@@ -179,16 +179,12 @@ jobs:
           MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
         run: |
           bin/write_environment.sh
-          bin/setup_test_mssql_docker.sh
-        # npm run test:migration:mssql
 
       - name: run mssql migration tests
         run: |
+          bin/setup_test_mssql_docker.sh
           cat .env
-          printenv
           npm run test:migration:mssql
-        # bin/setup_test_mssql_docker.sh
-        # npm run test:migration
         env:
           APP_ENV: testmssql
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
