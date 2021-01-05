@@ -11,13 +11,14 @@ import BackLink from "../../../../src/components/BackLink";
 import Router from "next/router";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import Form from "../../../../src/components/Form";
+import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
 const ArchiveAWardConfirmation = ({
   error,
   id,
   name,
   hospitalName,
-  trustId,
+  trust,
   hospitalId,
 }) => {
   const [hasError, setHasError] = useState(error);
@@ -40,7 +41,7 @@ const ArchiveAWardConfirmation = ({
       body: JSON.stringify({
         name,
         hospitalName,
-        trustId,
+        trustId: trust.id,
         wardId: id,
       }),
     });
@@ -61,6 +62,10 @@ const ArchiveAWardConfirmation = ({
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
+      <TrustAdminHeading
+        trustName={`${trust.name}`}
+        subHeading="Trust Managers"
+      />
       <GridRow>
         <GridColumn width="full">
           <Heading>Are you sure you want to delete this ward?</Heading>
@@ -85,6 +90,9 @@ const ArchiveAWardConfirmation = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
+    const trustResponse = await container.getRetrieveTrustById()(
+      authenticationToken.trustId
+    );
     const getRetrieveWardById = container.getRetrieveWardById();
 
     const { ward, error } = await getRetrieveWardById(
@@ -101,7 +109,10 @@ export const getServerSideProps = propsWithContainer(
           id: ward.id,
           name: ward.name,
           hospitalName: ward.hospitalName,
-          trustId: authenticationToken.trustId,
+          trust: {
+            name: trustResponse.trust?.name,
+            id: authenticationToken.trustId,
+          },
           hospitalId: ward.hospitalId,
         },
       };
