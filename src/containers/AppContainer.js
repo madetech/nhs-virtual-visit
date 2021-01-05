@@ -62,6 +62,7 @@ import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
 import MsSQL from "../gateways/MsSQL";
 import insertHospital from "../gateways/PostgreSQL/insertHospital";
+import retrieveOrgManagerByOrgId from "../gateways/MsSQL/retrieveOrgManagerByOrgId";
 
 class AppContainer {
   getDb = () => {
@@ -316,6 +317,11 @@ class AppContainer {
       process.env.AZURE_FUNCTION_KEY,
       process.env.AZURE_FUNCTION_URL
     );
+  };
+
+  /* These uses the MsSQL DB */
+  getRetrieveOrgManagerByOrgId = () => {
+    return retrieveOrgManagerByOrgId;
   };
 }
 
