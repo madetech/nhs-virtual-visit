@@ -15,72 +15,64 @@ on:
       - "docs/**"
 
 jobs:
-  build-and-unit-tests:
-    runs-on: ubuntu-latest
+  # build-and-unit-tests:
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 12
 
-      - name: npm install ci
-        run: npm ci
+  #     - name: npm install ci
+  #       run: npm ci
 
-      - name: build
-        run: npm run build
+  #     - name: build
+  #       run: npm run build
 
-      - name: run unit tests
-        run: npm run test
+  #     - name: run unit tests
+  #       run: npm run test
 
-  contract-tests:
-    runs-on: ubuntu-latest
+  # contract-tests:
+  #   runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: nhs-virtual-visit-test
-        ports:
-          - 5432:5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      # MSSQL configuration - REMOVE POSTGRES when full migration done.
-      mssql:
-        image: microsoft/mssql-server-linux:latest
-        env:
-          ACCEPT_EULA: Y
-          SA_PASSWORD: ${{ secrets.MSSQL_PASSWORD }}
-        ports:
-          - 1433:1433
+  #   services:
+  #     postgres:
+  #       image: postgres:12
+  #       env:
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: postgres
+  #         POSTGRES_DB: nhs-virtual-visit-test
+  #       ports:
+  #         - 5432:5432
+  #       # Set health checks to wait until postgres has started
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
 
-    if: (github.repository == 'madetech/nhs-virtual-visit')
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
+  #   if: (github.repository == 'madetech/nhs-virtual-visit')
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 12
 
-      - name: npm install ci
-        run: npm ci
+  #     - name: npm install ci
+  #       run: npm ci
 
-      - name: run contract tests
-        run: |
-          npm run dbmigratetest up
-          npm run test:contract
-        env:
-          PG_TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
-          APP_ENV: test
-          SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
-          SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
-          EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
-          EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
+  #     - name: run contract tests
+  #       run: |
+  #         npm run dbmigratetest up
+  #         npm run test:contract
+  #       env:
+  #         PG_TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+  #         APP_ENV: test
+  #         SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
+  #         SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
+  #         EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
+  #         EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
 
   # e2e-tests:
   #   runs-on: ubuntu-latest
