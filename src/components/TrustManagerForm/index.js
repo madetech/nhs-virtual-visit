@@ -9,6 +9,8 @@ import SelectStatus from "../SelectStatus";
 const TrustManagerForm = ({ errors, trustManager = {}, submit }) => {
   const [status, setStatus] = useState(trustManager?.status);
 
+  const action = trustManager.uuid ? "Edit" : "Add";
+
   const hasError = (field) =>
     errors.find((error) => error.id === `${field}-error`);
 
@@ -16,12 +18,13 @@ const TrustManagerForm = ({ errors, trustManager = {}, submit }) => {
     const error = errors.filter((err) => err.id === `${field}-error`);
     return error.length === 1 ? error[0].message : "";
   };
-  const onSubmit = () => {
-    submit();
+
+  const onSubmit = async () => {
+    return await submit({
+      status,
+    });
   };
 
-  const action = trustManager.uuid ? "Edit" : "Add";
-  console.log(status);
   return (
     <Form onSubmit={onSubmit}>
       <FormHeading>{action} a Trust Manager</FormHeading>

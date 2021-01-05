@@ -43,32 +43,17 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-    const trustManagerId = query.id;
-    /*** Trust Manager Array needs to swapped out with info from db once available *****/
-    const trustManagers = [
-      {
-        id: "1",
-        email: "abc@nhs.co.uk",
-        status: "active",
-      },
-      {
-        id: "2",
-        email: "def@nhs.co.uk",
-        status: "active",
-      },
-      {
-        id: "3",
-        email: "ghi@nhs.co.uk",
-        status: "active",
-      },
-    ];
-    const trustManager = trustManagers?.find(
-      (manager) => manager.id === trustManagerId
-    );
+    const orgManagerUuid = query.uuid;
+    const {
+      trustManager,
+      error,
+    } = await container.getRetrieveOrgManagerByUuid()(orgManagerUuid);
+
     return {
       props: {
         trust: { name: trustResponse.trust?.name },
         trustManager,
+        error,
       },
     };
   })
