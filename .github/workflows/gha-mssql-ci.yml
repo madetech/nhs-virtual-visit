@@ -167,16 +167,6 @@ jobs:
 
       - name: "Write environment"
         env:
-          # APP_ENV: test-mssql
-          # MSQL_DB_DRIVER: mssql
-          # MSQL_DB_PORT: 1433
-          # MSQL_DB_POOL_MAX: 15
-          # MSQL_DB_POOL_MIN: 5
-          # MSQL_DB_POOL_IDLE_TIMEOUT: 30000
-          # MSQL_TEST_DB_USER: sa
-          # MSQL_TEST_DB_PASSWORD: P@55w0rd
-          # MSQL_TEST_DB_SERVER: localhost
-          # MSQL_TEST_DB_NAME: nhs_virtual_visit_test
           APP_ENV: test-mssql
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
@@ -193,18 +183,9 @@ jobs:
       - name: run mssql migration tests
         run: |
           bin/setup_test_mssql_docker.sh
+          npm run test:migration:mssql
           npm run test:migration
         env:
-          # APP_ENV: test-mssql
-          # MSQL_DB_DRIVER: mssql
-          # MSQL_DB_PORT: 1433
-          # MSQL_DB_POOL_MAX: 15
-          # MSQL_DB_POOL_MIN: 5
-          # MSQL_DB_POOL_IDLE_TIMEOUT: 30000
-          # MSQL_TEST_DB_USER: sa
-          # MSQL_TEST_DB_PASSWORD: P@55w0rd
-          # MSQL_TEST_DB_SERVER: localhost
-          # MSQL_TEST_DB_NAME: nhs_virtual_visit_test
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
           MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
