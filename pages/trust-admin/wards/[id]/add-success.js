@@ -7,6 +7,8 @@ import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToke
 import ActionLink from "../../../../src/components/ActionLink";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
+import { GridRow, GridColumn } from "../../../../src/components/Grid";
+import PanelSuccess from "../../../../src/components/PanelSuccess";
 
 const AddAWardSuccess = ({ trust, error, name, hospitalName, hospitalId }) => {
   if (error) {
@@ -20,22 +22,17 @@ const AddAWardSuccess = ({ trust, error, name, hospitalName, hospitalId }) => {
       showNavigationBarForType={TRUST_ADMIN}
     >
       <TrustAdminHeading trustName={trust.name} subHeading={hospitalName} />
-      <div className="nhsuk-grid-row">
-        <div className="nhsuk-grid-column-two-thirds">
-          <div
-            className="nhsuk-panel nhsuk-panel--confirmation nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4"
-            style={{ textAlign: "center" }}
-          >
-            <h1 className="nhsuk-panel__title">{name} has been added</h1>
-
-            <div className="nhsuk-panel__body">for {hospitalName}</div>
-          </div>
+      <GridRow>
+        <GridColumn width="two-thirds">
+          <PanelSuccess
+            name={`${name}`}
+            action={`added`}
+            subAction={`for ${hospitalName}`}
+          />
           <h2>What happens next</h2>
-
           <ActionLink href={`/trust-admin/wards/add?hospitalId=${hospitalId}`}>
             Add another ward for {hospitalName}
           </ActionLink>
-
           <p>
             <AnchorLink
               href="/trust-admin/hospitals/[id]"
@@ -44,8 +41,8 @@ const AddAWardSuccess = ({ trust, error, name, hospitalName, hospitalId }) => {
               {`Return to ${hospitalName}`}
             </AnchorLink>
           </p>
-        </div>
-      </div>
+        </GridColumn>
+      </GridRow>
     </Layout>
   );
 };

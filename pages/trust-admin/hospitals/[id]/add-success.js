@@ -7,6 +7,8 @@ import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToke
 import ActionLink from "../../../../src/components/ActionLink";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
+import { GridRow, GridColumn } from "../../../../src/components/Grid";
+import PanelSuccess from "../../../../src/components/PanelSuccess";
 
 const AddAHospitalSuccess = ({ trust, error, name, id }) => {
   if (error) {
@@ -21,27 +23,21 @@ const AddAHospitalSuccess = ({ trust, error, name, id }) => {
     >
       <TrustAdminHeading trustName={trust.name} subHeading="Hospitals" />
 
-      <div className="nhsuk-grid-row">
-        <div className="nhsuk-grid-column-two-thirds">
-          <div
-            className="nhsuk-panel nhsuk-panel--confirmation nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4"
-            style={{ textAlign: "center" }}
-          >
-            <h1 className="nhsuk-panel__title">{name} has been added</h1>
-          </div>
+      <GridRow>
+        <GridColumn width="two-thirds">
+          <PanelSuccess name={`${name}`} action={`added`} />
           <h2>What happens next</h2>
 
           <ActionLink href={`/trust-admin/hospitals/add`}>
             Add another hospital
           </ActionLink>
-
           <p>
             <AnchorLink href={`/trust-admin/hospitals/${id}`}>
               {`Go to ${name}`}
             </AnchorLink>
           </p>
-        </div>
-      </div>
+        </GridColumn>
+      </GridRow>
     </Layout>
   );
 };
