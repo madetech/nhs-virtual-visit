@@ -23,13 +23,14 @@
       "enableArithAbort": true,
       "integratedSecurity": true,
       "trustServerCertificate": true,
-      "rowCollectionOnDone": true
+      "rowCollectionOnDone": true,
+      "max": 15      
     },
     "pool": {
       "max": 15,
       "min": 5,
       "idleTimeoutMillis": 30000
-    }
+    } 
   },
   "test-mssql": {
     "driver": {
