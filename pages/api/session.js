@@ -17,19 +17,12 @@ export default withContainer(async (req, res, { container }) => {
       verifyWardCodeResponse = await verifyWardCode(code);
     }
 
-    const verifyTrustAdminCode = container.getVerifyTrustAdminCode();
-    const verifyTrustAdminCodeResponse = await verifyTrustAdminCode(
-      code,
-      password
-    );
-
-    const verifyAdminCode = container.getVerifyAdminCode();
-    const verifyAdminCodeResponse = await verifyAdminCode(code, password);
+    const verifyUserLogin = container.getVerifyUserLogin();
+    const verifyUserLoginResponse = await verifyUserLogin(code, password);
 
     if (
-      !verifyTrustAdminCodeResponse.validTrustAdminCode &&
-      !verifyWardCodeResponse.validWardCode &&
-      !verifyAdminCodeResponse.validAdminCode
+      !verifyUserLoginResponse.validUser &&
+      !verifyWardCodeResponse.validWardCode
     ) {
       res.statusCode = 401;
       res.end();
@@ -38,14 +31,20 @@ export default withContainer(async (req, res, { container }) => {
 
     let token = undefined;
     const tokens = container.getTokenProvider();
-    if (verifyTrustAdminCodeResponse.validTrustAdminCode) {
+    const trustManager =
+      verifyUserLoginResponse.validUser &&
+      verifyUserLoginResponse.type === "manager";
+    const admin =
+      verifyUserLoginResponse.validUser &&
+      verifyUserLoginResponse.type === "admin";
+    if (trustManager) {
       token = tokens.generate({
         wardId: undefined,
         wardCode: undefined,
-        trustId: verifyTrustAdminCodeResponse.trust.id,
+        trustId: verifyUserLoginResponse.trust_id,
         type: TRUST_ADMIN,
       });
-    } else if (verifyAdminCodeResponse.validAdminCode) {
+    } else if (admin) {
       token = tokens.generate({
         wardId: undefined,
         wardCode: undefined,
@@ -86,10 +85,7 @@ export default withContainer(async (req, res, { container }) => {
 
     const expiryHours = 14;
     let expiry = new Date();
-    if (
-      verifyTrustAdminCodeResponse.validTrustAdminCode ||
-      verifyAdminCodeResponse.validAdminCode
-    ) {
+    if (verifyUserLoginResponse.validUser) {
       expiry.setTime(expiry.getTime() + 1 * 60 * 60 * 1000);
     } else {
       expiry.setTime(expiry.getTime() + expiryHours * 60 * 60 * 1000);
@@ -101,6 +97,7 @@ export default withContainer(async (req, res, { container }) => {
         `sessionId=${sessionId}; httpOnly; path=/; expires=${expiry}`,
       ],
     });
+
     res.end(JSON.stringify({ wardId: code }));
     return;
   } else if (method === "DELETE") {
