@@ -20,8 +20,8 @@ const TrustManagerForm = ({ errors, trustManager = {}, submit }) => {
     submit();
   };
 
-  const action = trustManager.id ? "Edit" : "Add";
-
+  const action = trustManager.uuid ? "Edit" : "Add";
+  console.log(status);
   return (
     <Form onSubmit={onSubmit}>
       <FormHeading>{action} a Trust Manager</FormHeading>

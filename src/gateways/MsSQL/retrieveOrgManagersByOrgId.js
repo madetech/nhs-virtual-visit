@@ -1,7 +1,7 @@
 import logger from "../../../logger";
 import MsSQL from ".";
 
-const retrieveOrgManagerByOrgId = async (orgId) => {
+const retrieveOrgManagersByOrgId = async (orgId) => {
   const db = await MsSQL.getConnectionPool();
   let orgManagers = [];
   logger.info(`Retrieving organisation managers for ${orgId}`);
@@ -15,7 +15,7 @@ const retrieveOrgManagerByOrgId = async (orgId) => {
       .query("SELECT * FROM dbo.[user] WHERE organisation_id = @org_id");
 
     orgManagers = orgManagers.recordset.map((row) => ({
-      id: row.uuid,
+      uuid: row.uuid,
       email: row.email,
       status: row.status == 1 ? "active" : "disabled",
     }));
@@ -33,4 +33,4 @@ const retrieveOrgManagerByOrgId = async (orgId) => {
   }
 };
 
-export default retrieveOrgManagerByOrgId;
+export default retrieveOrgManagersByOrgId;

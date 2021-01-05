@@ -62,7 +62,8 @@ import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
 import MsSQL from "../gateways/MsSQL";
 import insertHospital from "../gateways/PostgreSQL/insertHospital";
-import retrieveOrgManagerByOrgId from "../gateways/MsSQL/retrieveOrgManagerByOrgId";
+import retrieveOrgManagersByOrgId from "../gateways/MsSQL/retrieveOrgManagersByOrgId";
+import retrieveOrgManagerByUuid from "../gateways/MsSQL/retrieveOrgManagerByUuid";
 
 class AppContainer {
   getDb = () => {
@@ -321,7 +322,11 @@ class AppContainer {
 
   /* These uses the MsSQL DB */
   getRetrieveOrgManagerByOrgId = () => {
-    return retrieveOrgManagerByOrgId;
+    return retrieveOrgManagersByOrgId;
+  };
+
+  getRetrieveOrgManagerByUuid = () => {
+    return retrieveOrgManagerByUuid;
   };
 }
 
