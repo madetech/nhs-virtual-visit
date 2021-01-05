@@ -1,10 +1,7 @@
 import "@testing-library/jest-dom";
-// import dotenvLoad from "dotenv-load";
+import dotenvLoad from "dotenv-load";
 
-const dotenvLoad = require("dotenv-load");
 dotenvLoad();
-
-// dotenvLoad();
 
 jest.mock(
   "./node_modules/nhsuk-frontend/packages/components/header/menuToggle",
