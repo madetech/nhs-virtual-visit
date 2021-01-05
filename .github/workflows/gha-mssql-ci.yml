@@ -211,6 +211,7 @@ jobs:
           MSQL_TEST_DB_NAME: nhs_virtual_visit_test
         run: |
           bin/write_environment.sh
+
       - name: Set up Node.js
         uses: actions/setup-node@v1
         with:
