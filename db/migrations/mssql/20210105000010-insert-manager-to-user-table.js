@@ -16,7 +16,7 @@ exports.up = function (db) {
   var filePath = path.join(
     __dirname,
     "sqls",
-    "20210104000010-insert-org-manager-to-user-table.sql"
+    "20210105000010-insert-manager-to-user-table.sql"
   );
   return new Promise(function (resolve, reject) {
     fs.readFile(filePath, { encoding: "utf-8" }, function (err, data) {
