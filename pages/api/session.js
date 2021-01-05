@@ -37,7 +37,7 @@ export default withContainer(async (req, res, { container }) => {
     const admin =
       verifyUserLoginResponse.validUser &&
       verifyUserLoginResponse.type === "admin";
-
+      
     if (trustManager) {
       token = tokens.generate({
         wardId: undefined,
