@@ -163,29 +163,29 @@ jobs:
   migration-tests:
     runs-on: ubuntu-latest
 
-    services:
-      # postgres:
-      #   image: postgres:12
-      #   env:
-      #     POSTGRES_USER: postgres
-      #     POSTGRES_PASSWORD: postgres
-      #     POSTGRES_DB: nhs-virtual-visit-test
-      #   ports:
-      #     - 5432:5432
-      #   # Set health checks to wait until postgres has started
-      #   options: >-
-      #     --health-cmd pg_isready
-      #     --health-interval 10s
-      #     --health-timeout 5s
-      #     --health-retries 5
-      # MSSQL configuration - REMOVE POSTGRES when full migration done.
-      mssql:
-        image: mcr.microsoft.com/mssql/server:2017-GA-ubuntu
-        env:
-          ACCEPT_EULA: Y
-          SA_PASSWORD: P@55w0rd
-        ports:
-          - 1433:1433
+    # services:
+    # postgres:
+    #   image: postgres:12
+    #   env:
+    #     POSTGRES_USER: postgres
+    #     POSTGRES_PASSWORD: postgres
+    #     POSTGRES_DB: nhs-virtual-visit-test
+    #   ports:
+    #     - 5432:5432
+    #   # Set health checks to wait until postgres has started
+    #   options: >-
+    #     --health-cmd pg_isready
+    #     --health-interval 10s
+    #     --health-timeout 5s
+    #     --health-retries 5
+    # MSSQL configuration - REMOVE POSTGRES when full migration done.
+    # mssql:
+    #   image: mcr.microsoft.com/mssql/server:2017-GA-ubuntu
+    #   env:
+    #     ACCEPT_EULA: Y
+    #     SA_PASSWORD: P@55w0rd
+    #   ports:
+    #     - 1433:1433
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
     steps:
@@ -204,47 +204,36 @@ jobs:
       #   env:
       #     PG_TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
       #     APP_ENV: test
-
-      - name: "Write environment"
-        env:
-          APP_ENV: test-mssql
-          MSQL_DB_DRIVER: mssql
-          MSQL_DB_PORT: 1433
-          MSQL_DB_POOL_MAX: 15
-          MSQL_DB_POOL_MIN: 5
-          MSQL_DB_POOL_IDLE_TIMEOUT: 30000
-          MSQL_TEST_DB_USER: sa
-          MSQL_TEST_DB_PASSWORD: P@55w0rd
-          MSQL_TEST_DB_SERVER: localhost
-          MSQL_TEST_DB_NAME: nhs_virtual_visit_test
-        run: |
-          bin/write_environment.sh
-
-      # - name: "Write database json"
+      # - name: "Write environment"
+      #   env:
+      #     APP_ENV: test-mssql
+      #     MSQL_DB_DRIVER: mssql
+      #     MSQL_DB_PORT: 1433
+      #     MSQL_DB_POOL_MAX: 15
+      #     MSQL_DB_POOL_MIN: 5
+      #     MSQL_DB_POOL_IDLE_TIMEOUT: 30000
+      #     MSQL_TEST_DB_USER: sa
+      #     MSQL_TEST_DB_PASSWORD: P@55w0rd
+      #     MSQL_TEST_DB_SERVER: localhost
+      #     MSQL_TEST_DB_NAME: nhs_virtual_visit_test
       #   run: |
-      #     bin/write_database.sh
-
-      - name: Sleep for 5 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: "5s"
-
+      #     bin/write_environment.sh
       - name: run mssql migration tests
         run: |
-          npm run create-test-db
-          npm run dbmigrate-test-mssql up:mssql
+          bin/setup_test_mssql_docker.sh
+        #     npm run test:migration
 
-        env:
-          APP_ENV: test-mssql
-          MSQL_DB_DRIVER: mssql
-          MSQL_DB_PORT: 1433
-          MSQL_DB_POOL_MAX: 15
-          MSQL_DB_POOL_MIN: 5
-          MSQL_DB_POOL_IDLE_TIMEOUT: 30000
-          MSQL_TEST_DB_USER: sa
-          MSQL_TEST_DB_PASSWORD: P@55w0rd
-          MSQL_TEST_DB_SERVER: localhost
-          MSQL_TEST_DB_NAME: nhs_virtual_visit_test
+        # env:
+        #   APP_ENV: test-mssql
+        #   MSQL_DB_DRIVER: mssql
+        #   MSQL_DB_PORT: 1433
+        #   MSQL_DB_POOL_MAX: 15
+        #   MSQL_DB_POOL_MIN: 5
+        #   MSQL_DB_POOL_IDLE_TIMEOUT: 30000
+        #   MSQL_TEST_DB_USER: sa
+        #   MSQL_TEST_DB_PASSWORD: P@55w0rd
+        #   MSQL_TEST_DB_SERVER: localhost
+        #   MSQL_TEST_DB_NAME: nhs_virtual_visit_test
 
   # tag-and-release:
   #   runs-on: ubuntu-latest
