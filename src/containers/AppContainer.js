@@ -64,7 +64,7 @@ import MsSQL from "../gateways/MsSQL";
 import insertHospital from "../gateways/PostgreSQL/insertHospital";
 import retrieveOrgManagersByOrgId from "../gateways/MsSQL/retrieveOrgManagersByOrgId";
 import retrieveOrgManagerByUuid from "../gateways/MsSQL/retrieveOrgManagerByUuid";
-
+import updateOrgManagerByUuid from "../gateways/MsSQL/updateOrgManagerByUuid";
 
 class AppContainer {
   getDb = () => {
@@ -328,6 +328,10 @@ class AppContainer {
 
   getRetrieveOrgManagerByUuid = () => {
     return retrieveOrgManagerByUuid;
+  };
+
+  getUpdateOrgManagerByUuid = () => {
+    return updateOrgManagerByUuid;
   };
 }
 
