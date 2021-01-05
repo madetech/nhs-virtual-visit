@@ -11,6 +11,14 @@ export const setupTrust = async (args = {}) => {
   });
 };
 
+export const setupOrganization = async (args = {}) => {
+  return await container.getCreateOrganization()({
+    name: "Test Trust",
+    status: 0,
+    ...args,
+  });
+};
+
 export const setupHospital = async (args = {}) => {
   return await container.getCreateHospital()({
     name: "Test Hospital",

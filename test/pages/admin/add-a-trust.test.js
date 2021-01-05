@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../../pages/admin/add-a-trust";
+import { getServerSideProps } from "../../../pages/admin/trusts/add-a-trust";
 
 describe("/trust-admin/add-a-trust", () => {
   const anonymousReq = {

@@ -31,6 +31,22 @@ async function seedDatabase() {
     "INSERT INTO wards (name, hospital_id, code, trust_id, pin) VALUES ('Test Ward Two', (SELECT id FROM hospitals WHERE name='Test Hospital'), 'super', (SELECT id FROM trusts WHERE name='Test Trust'), '1234') RETURNING id"
   );
 
+  await db.result(
+    "INSERT INTO organization (name, status) VALUES ('Test Trust', 0)"
+  );
+
+  await db.result(
+    "INSERT INTO organization (name, status) VALUES ('Test Trust 2', 0)"
+  );
+
+  await db.result(
+    "INSERT INTO organization (name, status) VALUES ('Test Trust 3', 0)"
+  );
+
+  await db.result(
+    "INSERT INTO organization (name, status) VALUES ('Test Trust 4', 0)"
+  );
+
   const {
     id: patientDetailsId,
   } = await db.one(

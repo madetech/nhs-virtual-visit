@@ -46,9 +46,12 @@ import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
 import findWardByCode from "../gateways/findWardByCode";
+import createOrganization from "../usecases/createOrganization";
+import retrieveOrganizations from "../usecases/retrieveOrganizations";
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
 import retrieveWardById from "../gateways/retrieveWardById";
 import retrieveTrustById from "../gateways/retrieveTrustById";
+import retrieveOrganizationById from "../gateways/retrieveOrganizationById";
 import logEvent from "../gateways/logEvent";
 
 import CallIdProvider from "../providers/CallIdProvider";
@@ -261,6 +264,18 @@ class AppContainer {
 
   getUpdateTrust = () => {
     return updateTrust(this);
+  };
+
+  getCreateOrganization = () => {
+    return createOrganization(this);
+  };
+
+  getRetrieveOrganizations = () => {
+    return retrieveOrganizations(this);
+  };
+
+  getRetrieveOrganizationById = () => {
+    return retrieveOrganizationById;
   };
 
   getInsertVisitGateway = () => {

@@ -45,6 +45,7 @@ export default withContainer(
     res.setHeader("Content-Type", "application/json");
 
     const { trust, error: trustErr } = await retrieveTrustById(trustId);
+
     if (trustErr) {
       res.status(400);
       res.end(JSON.stringify({ trustErr }));

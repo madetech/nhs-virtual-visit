@@ -28,7 +28,9 @@ const AddATrustSuccess = ({ error, name }) => {
           </div>
           <h2>What happens next</h2>
 
-          <ActionLink href={`/admin/add-a-trust`}>Add another trust</ActionLink>
+          <ActionLink href={`/admin/trusts/add-a-trust`}>
+            Add another trust
+          </ActionLink>
 
           <p>
             <AnchorLink href="/admin">Return to site administration</AnchorLink>
@@ -41,8 +43,8 @@ const AddATrustSuccess = ({ error, name }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyAdminToken(async ({ container, query }) => {
-    const getRetrieveTrustById = container.getRetrieveTrustById();
-    const { trust, error } = await getRetrieveTrustById(query.id);
+    const getRetrieveOrganizationById = container.getRetrieveOrganizationById();
+    const { organization, error } = await getRetrieveOrganizationById(query.id);
 
     if (error) {
       return { props: { error: error } };
@@ -50,7 +52,7 @@ export const getServerSideProps = propsWithContainer(
       return {
         props: {
           error: error,
-          name: trust.name,
+          name: organization.name,
         },
       };
     }

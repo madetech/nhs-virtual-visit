@@ -1,6 +1,6 @@
-import CallIdProvider from "../../src/providers/CallIdProvider";
-import WherebyCallIdProvider from "../../src/providers/callIdProviders/WherebyCallIdProvider";
-jest.mock("../../src/providers/callIdProviders/WherebyCallIdProvider");
+import CallIdProvider from "./CallIdProvider";
+import WherebyCallIdProvider from "./callIdProviders/WherebyCallIdProvider";
+jest.mock("./callIdProviders/WherebyCallIdProvider");
 
 describe("CallIdProvider", () => {
   it("returns a call ID for whereby", async () => {
@@ -10,7 +10,7 @@ describe("CallIdProvider", () => {
     expect(WherebyCallIdProvider).toHaveBeenCalledWith(callTime);
   });
 
-  it("throws an error if the video provider is not supported", async () => {
+  it("throws an error if the video provider is ", async () => {
     const prov = new CallIdProvider("notsupported");
     try {
       await prov.generate();

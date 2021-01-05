@@ -58,6 +58,6 @@ describe("As an admin, I want to edit a trust so that I can update the details o
   }
 
   function AndISeeTheUpdatedTrust() {
-    cy.get("[data-testid=test-trust]").should("contain", "Whereby");
+    cy.get("[data-testid=test-trust]").should("contain", "Enabled");
   }
 });
