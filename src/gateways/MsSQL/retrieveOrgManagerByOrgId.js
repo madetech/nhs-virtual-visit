@@ -19,7 +19,7 @@ const retrieveOrgManagerByOrgId = async (orgId) => {
       email: row.email,
       status: row.status == 1 ? "active" : "disabled",
     }));
-
+    //db.close();
     return {
       trustManagers: orgManagers,
       error: null,
