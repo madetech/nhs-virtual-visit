@@ -32,7 +32,7 @@
       "idleTimeoutMillis": 30000
     } 
   },
-  "test-mssql": {
+  "testmssql": {
     "driver": {
       "ENV": "MSQL_DB_DRIVER"
     },

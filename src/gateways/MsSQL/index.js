@@ -1,6 +1,6 @@
 const sql = require("mssql");
 
-const TEST_MSSQL = "test-mssql";
+const TEST_MSSQL = "testmssql";
 
 function setPoolConfigPerEnvironment(config) {
   if (
