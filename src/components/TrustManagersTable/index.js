@@ -20,7 +20,7 @@ const TrustManagersTable = ({ trustManagers }) => (
       </thead>
       <tbody className="nhsuk-table__body">
         {trustManagers?.map((info) => (
-          <tr key={info.id} className="nhsuk-table__row">
+          <tr key={info.uuid} className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{info.email}</td>
             <td className="nhsuk-table__cell">{info.status}</td>
 
@@ -29,9 +29,9 @@ const TrustManagersTable = ({ trustManagers }) => (
                 className="nhsuk-link"
                 href={{
                   pathname: `/trust-admin/trust-managers/[id]/edit`,
-                  query: { id: info.id },
+                  query: { uuid: info.uuid },
                 }}
-                as={`/trust-admin/trust-managers/${info.id}/edit`}
+                as={`/trust-admin/trust-managers/${info.uuid}/edit`}
                 data-cy="edit-tm-link"
               >
                 Edit
@@ -42,9 +42,9 @@ const TrustManagersTable = ({ trustManagers }) => (
                 className="nhsuk-link"
                 href={{
                   pathname: `/trust-admin/trust-managers/[id]/archive-confirmation`,
-                  query: { id: info.id },
+                  query: { uuid: info.uuid },
                 }}
-                as={`/trust-admin/trust-managers/${info.id}/archive-confirmation`}
+                as={`/trust-admin/trust-managers/${info.uuid}/archive-confirmation`}
                 data-cy="delete-tm-link"
               >
                 Delete

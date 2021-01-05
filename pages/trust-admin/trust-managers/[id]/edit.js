@@ -14,12 +14,12 @@ const EditTrustManager = ({ error, trustManager, trust }) => {
   if (error) {
     return <Error err={error} />;
   }
-
+  console.log();
   const [errors, setErrors] = useState([]);
   const submit = () => {
     Router.push({
       pathname: "/trust-admin/trust-managers/[id]/edit-success",
-      query: { id: trustManager.id },
+      query: { uuid: trustManager.uuid },
     });
   };
 
@@ -51,29 +51,12 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-    const trustManagerId = query.id;
+    const orgManagerUuid = query.uuid;
+    const {
+      trustManager,
+      error,
+    } = await container.getRetrieveOrgManagerByUuid()(orgManagerUuid);
 
-    const trustManagers = [
-      {
-        id: "1",
-        email: "abc@nhs.co.uk",
-        status: "active",
-      },
-      {
-        id: "2",
-        email: "def@nhs.co.uk",
-        status: "active",
-      },
-      {
-        id: "3",
-        email: "ghi@nhs.co.uk",
-        status: "active",
-      },
-    ];
-    const trustManager = trustManagers?.find(
-      (manager) => manager.id === trustManagerId
-    );
-    const error = "";
     return {
       props: {
         trustManager,
