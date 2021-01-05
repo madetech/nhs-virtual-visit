@@ -1,15 +1,15 @@
 import React, { useRef, useState } from "react";
-import Button from "../../src/components/Button";
-import ErrorSummary from "../../src/components/ErrorSummary";
-import FormGroup from "../../src/components/FormGroup";
-import { GridRow, GridColumn } from "../../src/components/Grid";
-import Heading from "../../src/components/Heading";
-import Input from "../../src/components/Input";
-import Label from "../../src/components/Label";
-import Layout from "../../src/components/Layout";
-import propsWithContainer from "../../src/middleware/propsWithContainer";
-import Form from "../../src/components/Form";
-import fetchEndpointWithCorrelationId from "../../src/helpers/fetchEndpointWithCorrelationId";
+import Button from "../src/components/Button";
+import ErrorSummary from "../src/components/ErrorSummary";
+import FormGroup from "../src/components/FormGroup";
+import { GridRow, GridColumn } from "../src/components/Grid";
+import Heading from "../src/components/Heading";
+import Input from "../src/components/Input";
+import Label from "../src/components/Label";
+import Layout from "../src/components/Layout";
+import propsWithContainer from "../src/middleware/propsWithContainer";
+import Form from "../src/components/Form";
+import fetchEndpointWithCorrelationId from "../src/helpers/fetchEndpointWithCorrelationId";
 import { v4 as uuidv4 } from "uuid";
 
 const Login = ({ correlationId }) => {
