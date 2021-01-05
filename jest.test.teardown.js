@@ -12,6 +12,10 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
+  // TODO Remove after migration to MSSQL
   const db = await container.getDb();
   db.$pool.end();
+
+  const mssqlPool = await container.getMsSqlConnPool();
+  mssqlPool.close();
 });
