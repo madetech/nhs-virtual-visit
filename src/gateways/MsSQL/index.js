@@ -7,6 +7,8 @@ function setPoolConfigPerEnvironment(config) {
     process.env.NODE_ENV === TEST_MSSQL ||
     process.env.APP_ENV === TEST_MSSQL
   ) {
+    console.log("MSSQL::TEST::CONFIG");
+
     config.user = process.env.MSQL_TEST_DB_USER;
     config.password = process.env.MSQL_TEST_DB_PASSWORD;
     config.server = process.env.MSQL_TEST_DB_SERVER;
