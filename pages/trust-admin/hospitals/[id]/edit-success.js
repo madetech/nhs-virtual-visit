@@ -7,6 +7,8 @@ import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
+import PanelSuccess from "../../../../src/components/PanelSuccess";
+import { GridRow, GridColumn } from "../../../../src/components/Grid";
 
 const EditAHospitalSuccess = ({ trust, error, hospitalName, hospitalId }) => {
   if (error) {
@@ -20,17 +22,9 @@ const EditAHospitalSuccess = ({ trust, error, hospitalName, hospitalId }) => {
       showNavigationBarForType={TRUST_ADMIN}
     >
       <TrustAdminHeading trustName={trust.name} subHeading="Hospitals" />
-
-      <div className="nhsuk-grid-row">
-        <div className="nhsuk-grid-column-two-thirds">
-          <div
-            className="nhsuk-panel nhsuk-panel--confirmation nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-4"
-            style={{ textAlign: "center" }}
-          >
-            <h1 data-testid="name" className="nhsuk-panel__title">
-              {hospitalName} has been updated
-            </h1>
-          </div>
+      <GridRow>
+        <GridColumn width="two-thirds">
+          <PanelSuccess name={`${hospitalName}`} action={`updated`} />
           <h2>What happens next</h2>
           <ActionLink href={`/trust-admin/hospitals/${hospitalId}`}>
             {`View ${hospitalName}`}
@@ -40,8 +34,8 @@ const EditAHospitalSuccess = ({ trust, error, hospitalName, hospitalId }) => {
               Return to Hospitals
             </AnchorLink>
           </p>
-        </div>
-      </div>
+        </GridColumn>
+      </GridRow>
     </Layout>
   );
 };
