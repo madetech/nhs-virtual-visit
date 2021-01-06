@@ -1,15 +1,11 @@
-name: Virtual Visits MSSQL CI
+name: Virtual Visits CI
 
 on:
   push:
-    branches:
-      - vv-81-github-actions-workflow
     paths-ignore:
       - "README.md"
       - "docs/**"
   pull_request:
-    branches:
-      - vv-81-github-actions-workflow
     paths-ignore:
       - "README.md"
       - "docs/**"
@@ -37,7 +33,6 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      # Remove after migration to MSSQL
       postgres:
         image: postgres:12
         env:
@@ -52,7 +47,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
     if: (github.repository == 'madetech/nhs-virtual-visit')
     steps:
       - uses: actions/checkout@v2
@@ -63,50 +57,22 @@ jobs:
       - name: npm install ci
         run: npm ci
 
-      - name: Create .env file
+      - name: run contract tests
+        run: |
+          npm run dbmigratetest up
+          npm run test:contract
         env:
-          APP_ENV: test,test-mssql
-          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
-          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+          PG_TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+          APP_ENV: test
           SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
           EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
           EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
-        run: bin/write_environment.sh
-
-      # Remove after migration to MSSQL
-      - name: run pg data migration
-        run: npm run dbmigratetest up
-
-      - name: start mssql container
-        run: bin/setup_test_mssql_docker.sh
-        env:
-          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
-
-      - name: run contract tests
-        run: npm run test:contract
 
   e2e-tests:
     runs-on: ubuntu-latest
 
     services:
-      # Remove after migration to MSSQL
       postgres:
         image: postgres:12
         env:
@@ -129,22 +95,8 @@ jobs:
         with:
           node-version: 12
 
-      - name: npm install ci
-        run: npm ci
-
-      - name: Create .env file
+      - name: "Write environment"
         env:
-          APP_ENV: test,test-mssql
-          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
-          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
           API_KEY: ${{ secrets.API_KEY }}
           EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
           EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
@@ -153,6 +105,8 @@ jobs:
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
           SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+          PG_DB_URL: ${{ secrets.DATABASE_URL }}
+          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
           WHEREBY_API_KEY: ${{ secrets.WHEREBY_API_KEY }}
           WHEREBY_SUBDOMAIN: ${{ secrets.WHEREBY_SUBDOMAIN }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
@@ -161,21 +115,8 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           ENABLE_SENTRY: ${{ secrets.ENABLE_SENTRY }}
           ENABLE_UR_QUESTION: ${{ secrets.ENABLE_UR_QUESTION }}
-        run: bin/write_environment.sh
-
-      - name: start mssql container
-        run: bin/setup_test_mssql_docker.sh
-        env:
-          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
-
+        run: |
+          bin/write_environment.sh
       - name: Set up Node.js
         uses: actions/setup-node@v1
         with:
@@ -187,8 +128,8 @@ jobs:
           build: npm run dbmigratetest up
           start: npm run test:server
         env:
-          APP_ENV: test,test-mssql
-          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
+          PG_TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+          APP_ENV: test
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
           SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
@@ -202,7 +143,6 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      # Remove after migration to MSSQL
       postgres:
         image: postgres:12
         env:
@@ -228,41 +168,13 @@ jobs:
       - name: npm install ci
         run: npm ci
 
-      - name: Create .env file
-        env:
-          APP_ENV: test,test-mssql
-          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
-          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
-        run: bin/write_environment.sh
-
-      # Remove after migration to MSSQL
-      - name: run pg data migration
-        run: npm run dbmigratetest up
-
-      - name: start mssql container
-        run: bin/setup_test_mssql_docker.sh
-        env:
-          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
-
       - name: run migration tests
-        run: npm run test:migration
-
+        run: |
+          npm run dbmigratetest up
+          npm run test:migration
+        env:
+          PG_TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+          APP_ENV: test
   tag-and-release:
     runs-on: ubuntu-latest
     needs: [contract-tests, build-and-unit-tests, migration-tests, e2e-tests]
@@ -284,25 +196,17 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
-  azure-build-and-deploy:
+  azure-docker-build-push:
     needs: tag-and-release
     if: github.repository_owner == 'madetech'
     runs-on: ubuntu-latest
 
     steps:
-      # checkout the repo
-      - name: "Checkout Github Action"
-        uses: actions/checkout@master
+      - uses: actions/checkout@master
 
-      - name: Create .env file
+      - name: "Write environment"
         env:
           API_KEY: ${{ secrets.API_KEY }}
-
-          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
           EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
           EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
           EMAIL_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.EMAIL_UPDATED_VISIT_TEMPLATE_ID }}
@@ -310,6 +214,8 @@ jobs:
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
           SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+          PG_DB_URL: ${{ secrets.DATABASE_URL }}
+          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
           WHEREBY_API_KEY: ${{ secrets.WHEREBY_API_KEY }}
           WHEREBY_SUBDOMAIN: ${{ secrets.WHEREBY_SUBDOMAIN }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
@@ -318,17 +224,24 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           ENABLE_SENTRY: ${{ secrets.ENABLE_SENTRY }}
           ENABLE_UR_QUESTION: ${{ secrets.ENABLE_UR_QUESTION }}
-        run: bin/write_environment.sh
-
-      - name: Set up Node 12
+        run: |
+          bin/write_environment.sh
+      - name: Set up Node.js
         uses: actions/setup-node@v1
         with:
           node-version: "12.x"
 
-      - name: "Run Azure webapp deploy action using publish profile credentials"
-        uses: azure/webapps-deploy@v2
+      - name: "Login to Azure via CLI"
+        uses: azure/login@v1
         with:
-          app-name: "virtualvisitscode"
-          slot-name: "production"
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
-          package: .
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Build and publish Docker image to Azure Container Registry"
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.ACR_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - run: |
+          docker build . -t ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
+          docker push ${{ secrets.ACR_SERVER }}/virtualvisits:${{ github.sha }}
