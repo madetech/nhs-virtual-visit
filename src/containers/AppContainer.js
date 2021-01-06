@@ -58,6 +58,7 @@ import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
+import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
 
 class AppContainer {
   getDb = () => {
@@ -297,6 +298,10 @@ class AppContainer {
   // MsSQL database gateways
   getVerifyUserLogin = () => {
     return verifyUserLogin;
+  };
+
+  getRetrieveEmail = () => {
+    return retrieveEmail;
   };
 }
 
