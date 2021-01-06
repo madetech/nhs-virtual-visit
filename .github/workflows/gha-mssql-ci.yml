@@ -20,7 +20,7 @@ jobs:
     steps:
       # checkout the repo
       - name: "Checkout Github Action"
-        uses: actions/checkout@vv-81-github-actions-workflow
+        uses: actions/checkout@master
 
       - name: Setup Node 12
         uses: actions/setup-node@v1
