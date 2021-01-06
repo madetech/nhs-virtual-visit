@@ -121,7 +121,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
   }
 
   function ThenIShouldBeOnTheEditSuccessPageWithNewName(name) {
-    cy.get('[data-testid="name"]').should(
+    cy.get('[data-cy="panel-success-header"]').should(
       "contain",
       `${name} has been updated`
     );
