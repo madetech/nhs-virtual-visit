@@ -174,12 +174,13 @@ jobs:
       - name: npm install ci
         run: npm ci
 
-      - name: npm install
-        run: npm install
+      # - name: npm install
+      #   run: npm install
 
       - name: Create .env file
         env:
           APP_ENV: test,test-mssql
+          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
           MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
@@ -194,15 +195,15 @@ jobs:
 
       - name: run pg data migration
         run: npm run dbmigratetest up
-        env:
-          APP_ENV: test,test-mssql
-          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+        # env:
+        #   APP_ENV: test
+        #   TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
 
       - name: start mssql container
         run: bin/setup_test_mssql_docker.sh
         env:
-          APP_ENV: test,test-mssql
-          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+          # APP_ENV: test,test-mssql
+          # TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
           MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
