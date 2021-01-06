@@ -6,7 +6,7 @@ import {
   WhenIClickToReturnToSiteAdministration,
 } from "./adminCommonSteps";
 
-describe("As an admin, I want to add a trust so that a trust can use the virtual visits service.", () => {
+xdescribe("As an admin, I want to add a trust so that a trust can use the virtual visits service.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(

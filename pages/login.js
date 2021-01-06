@@ -51,7 +51,7 @@ const Login = ({ correlationId }) => {
 
       if (response.status === 201) {
         const { userType } = await response.json();
-        // console.log(userType)
+
         if (userType === "admin") {
           window.location.href = `/admin`;
         } else if (userType === "manager") {

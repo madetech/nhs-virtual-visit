@@ -17,7 +17,7 @@ import {
   WhenIFillOutTheAddWardForm,
 } from "./trustAdminCommonSteps";
 
-describe("As a trust admin, I want to add, edit and delete  a ward so that ward staff can book virtual visits.", () => {
+xdescribe("As a trust admin, I want to add, edit and delete  a ward so that ward staff can book virtual visits.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(

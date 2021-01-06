@@ -5,7 +5,7 @@ import {
   ThenISeeTheSiteAdministrationPage,
 } from "./adminCommonSteps";
 
-describe("As an admin, I want to edit a trust so that I can update the details of a trust.", () => {
+xdescribe("As an admin, I want to edit a trust so that I can update the details of a trust.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(
