@@ -174,8 +174,8 @@ jobs:
       - name: npm install ci
         run: npm ci
 
-      - name: build
-        run: npm run build
+      - name: npm install
+        run: npm install
 
       - name: Create .env file
         env:
@@ -194,8 +194,11 @@ jobs:
 
       - name: run pg data migration
         run: npm run dbmigratetest up
+        env:
+          APP_ENV: test,test-mssql
+          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
 
-      - name: start mssql
+      - name: start mssql container
         run: bin/setup_test_mssql_docker.sh
         env:
           APP_ENV: test,test-mssql
