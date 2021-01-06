@@ -20,7 +20,7 @@
     "test:ci": "npm run format:check && npm run test:contract -- --runInBand && npm run test -- --runInBand",
     "test:migrate": "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed",
     "test:e2e2:open": "npm run test:e2e:open",
-    "test:migration": "APP_ENV=test,test-mssql jest --config ./jest.migrations.config.js --runInBand --verbose true",
+    "test:migration": "APP_ENV=test,test-mssql jest --config ./jest.migrations.config.js --runInBand",
     "build": "next build",
     "dev": "NODE_ENV=development node server.js",
     "prepare-db-and-start": "npm run create-dev-db; npm run dbmigrate up && npm run start",
