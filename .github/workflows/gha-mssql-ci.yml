@@ -189,11 +189,11 @@ jobs:
         run: |
           bin/write_environment.sh
 
-      - name: run migration tests
-        run: |
-          bin/setup_test_mssql_docker.sh
-          npm run dbmigratetest up
-          npm run test:migration
+      - name: run pg data migration
+        run: npm run dbmigratetest up
+
+      - name: start mssql
+        run: bin/setup_test_mssql_docker.sh
         env:
           APP_ENV: test,test-mssql
           TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
@@ -206,6 +206,9 @@ jobs:
           MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
           MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
           MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+
+      - name: run migration tests
+        run: npm run test:migration
 
   # tag-and-release:
   #   runs-on: ubuntu-latest
