@@ -1,19 +1,13 @@
 import { thenIClickLogOut } from "../commonSteps";
+import { GivenIAmLoggedInAsATrustAdmin } from "./trustAdminCommonSteps.js";
 
-describe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
+xdescribe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(
       "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
     );
   });
-
-  function GivenIAmLoggedInAsAnAdmin() {
-    cy.visit(Cypress.env("baseUrl") + "/trust-admin/login");
-    cy.get("input[name=code]").type(Cypress.env("validTrustAdminCode"));
-    cy.get("input[name=password]").type(Cypress.env("validTrustAdminPassword"));
-    cy.get("button").contains("Log in").click();
-  }
 
   function WhenIClickOnHospitals() {
     cy.get("a.nhsuk-header__navigation-link").contains("Hospitals").click();
@@ -41,7 +35,7 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
   }
 
   it("displays errors when fields have been left blank", () => {
-    GivenIAmLoggedInAsAnAdmin();
+    GivenIAmLoggedInAsATrustAdmin();
     WhenIClickOnHospitals();
     ThenISeeTheHospitalList();
 

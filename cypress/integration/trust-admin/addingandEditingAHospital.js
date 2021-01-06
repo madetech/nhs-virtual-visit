@@ -5,7 +5,7 @@ import {
   WhenIClickHospitalsOnTheNavigationBar,
 } from "./trustAdminCommonSteps";
 
-describe("As a trust admin, I want to add a hospital so that I can manage virtual visits per hospital.", () => {
+xdescribe("As a trust admin, I want to add a hospital so that I can manage virtual visits per hospital.", () => {
   const hospitalName = "Scorpia Hospital";
   const hospitalCode = "SCH";
 
