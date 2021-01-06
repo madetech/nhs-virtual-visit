@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .js",
     "test": "jest --silent",
     "test:watch": "jest --watch",
-    "test:contract": "APP_ENV=test jest --config ./jest.contract.config.js --runInBand",
+    "test:contract": "APP_ENV=test,test-mssql jest --config ./jest.contract.config.js --runInBand --verbose true",
     "test:contract:watch": "npm run test:contract -- --watch",
     "test:e2e": "cypress run --headless",
     "test:e2e:open": "NODE_ENV=development cypress open",
