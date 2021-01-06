@@ -15,31 +15,6 @@ on:
       - "docs/**"
 
 jobs:
-  create-env-file:
-    runs-on: ubuntu-latest
-
-    if: (github.repository == 'madetech/nhs-virtual-visit')
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-
-      - name: Create .env file
-        env:
-          APP_ENV: test,test-mssql
-          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
-          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
-        run: bin/write_environment.sh
-
   build-and-unit-tests:
     runs-on: ubuntu-latest
 
@@ -200,21 +175,20 @@ jobs:
       - name: npm install ci
         run: npm ci
 
-      # - name: Create .env file
-      #   env:
-      #     APP_ENV: test,test-mssql
-      #     PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
-      #     MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-      #     MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-      #     MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-      #     MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-      #     MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-      #     MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-      #     MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-      #     MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-      #     MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
-      #   run: |
-      #     bin/write_environment.sh
+      - name: Create .env file
+        env:
+          APP_ENV: test,test-mssql
+          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+        run: bin/write_environment.sh
 
       # Remove after migration to MSSQL
       - name: run pg data migration
