@@ -1,11 +1,13 @@
 const sql = require("mssql");
 
-const TEST_MSSQL = "testmssql";
+const TEST_MSSQL = "test-mssql";
 
 function setPoolConfigPerEnvironment(config) {
   if (
-    process.env.NODE_ENV === TEST_MSSQL ||
-    process.env.APP_ENV === TEST_MSSQL
+    (process.env.NODE_ENV !== undefined &&
+      process.env.NODE_ENV.indexOf(TEST_MSSQL)) !== -1 ||
+    (process.env.APP_ENV !== undefined &&
+      process.env.APP_ENV.indexOf(TEST_MSSQL) !== -1)
   ) {
     config.user = process.env.MSQL_TEST_DB_USER;
     config.password = process.env.MSQL_TEST_DB_PASSWORD;

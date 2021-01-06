@@ -7,7 +7,12 @@ let options = {
   connectionString: process.env.PG_DB_URL,
 };
 
-if (process.env.NODE_ENV === "test" || process.env.APP_ENV === "test") {
+if (
+  (process.env.NODE_ENV !== undefined &&
+    process.env.NODE_ENV.indexOf("test") !== -1) ||
+  (process.env.APP_ENV !== undefined &&
+    process.env.APP_ENV.indexOf("test") !== -1)
+) {
   options.connectionString = process.env.PG_TEST_DB_URL;
 }
 
