@@ -106,7 +106,7 @@ jobs:
           SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
           PG_DB_URL: ${{ secrets.DATABASE_URL }}
-          PG_TEST_DB_URL: ${{ secrets.TEST_DATABASE_URL }}
+          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
           WHEREBY_API_KEY: ${{ secrets.WHEREBY_API_KEY }}
           WHEREBY_SUBDOMAIN: ${{ secrets.WHEREBY_SUBDOMAIN }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
@@ -215,7 +215,7 @@ jobs:
           SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
           PG_DB_URL: ${{ secrets.DATABASE_URL }}
-          PG_TEST_DB_URL: ${{ secrets.TEST_DATABASE_URL }}
+          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
           WHEREBY_API_KEY: ${{ secrets.WHEREBY_API_KEY }}
           WHEREBY_SUBDOMAIN: ${{ secrets.WHEREBY_SUBDOMAIN }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}

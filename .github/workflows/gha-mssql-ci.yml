@@ -15,6 +15,31 @@ on:
       - "docs/**"
 
 jobs:
+  create-env-file:
+    runs-on: ubuntu-latest
+
+    if: (github.repository == 'madetech/nhs-virtual-visit')
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Create .env file
+        env:
+          APP_ENV: test,test-mssql
+          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+        run: bin/write_environment.sh
+
   build-and-unit-tests:
     runs-on: ubuntu-latest
 
@@ -37,6 +62,7 @@ jobs:
   #   runs-on: ubuntu-latest
 
   #   services:
+  #     # Remove after migration to MSSQL
   #     postgres:
   #       image: postgres:12
   #       env:
@@ -67,8 +93,8 @@ jobs:
   #         npm run dbmigratetest up
   #         npm run test:contract
   #       env:
-  #         PG_TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
   #         APP_ENV: test
+  #         PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
   #         SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
   #         SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
   #         EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
@@ -111,7 +137,7 @@ jobs:
   #         SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
   #         JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
   #         PG_DB_URL: ${{ secrets.DATABASE_URL }}
-  #         PG_TEST_DB_URL: ${{ secrets.TEST_DATABASE_URL }}
+  #         PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
   #         WHEREBY_API_KEY: ${{ secrets.WHEREBY_API_KEY }}
   #         WHEREBY_SUBDOMAIN: ${{ secrets.WHEREBY_SUBDOMAIN }}
   #         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
@@ -133,7 +159,7 @@ jobs:
   #         build: npm run dbmigratetest up
   #         start: npm run test:server
   #       env:
-  #         PG_TEST_DB_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
+  #         PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
   #         APP_ENV: test
   #         JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
   #         SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
@@ -174,36 +200,29 @@ jobs:
       - name: npm install ci
         run: npm ci
 
-      # - name: npm install
-      #   run: npm install
+      # - name: Create .env file
+      #   env:
+      #     APP_ENV: test,test-mssql
+      #     PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
+      #     MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+      #     MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+      #     MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+      #     MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+      #     MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+      #     MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+      #     MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+      #     MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+      #     MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+      #   run: |
+      #     bin/write_environment.sh
 
-      - name: Create .env file
-        env:
-          APP_ENV: test,test-mssql
-          TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
-          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
-        run: |
-          bin/write_environment.sh
-
+      # Remove after migration to MSSQL
       - name: run pg data migration
         run: npm run dbmigratetest up
-        # env:
-        #   APP_ENV: test
-        #   TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
 
       - name: start mssql container
         run: bin/setup_test_mssql_docker.sh
         env:
-          # APP_ENV: test,test-mssql
-          # TEST_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/nhs-virtual-visit-test
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
           MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
@@ -257,7 +276,7 @@ jobs:
   #         SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
   #         JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
   #         PG_DB_URL: ${{ secrets.DATABASE_URL }}
-  #         PG_TEST_DB_URL: ${{ secrets.TEST_DATABASE_URL }}
+  #         PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
   #         WHEREBY_API_KEY: ${{ secrets.WHEREBY_API_KEY }}
   #         WHEREBY_SUBDOMAIN: ${{ secrets.WHEREBY_SUBDOMAIN }}
   #         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
