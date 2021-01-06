@@ -8,8 +8,6 @@ export default withContainer(
       return;
     }
 
-    console.log("*BODY*");
-    console.log(body);
     const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
 
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
@@ -41,8 +39,7 @@ export default withContainer(
       );
       return;
     }
-    console.log("*EXISTINGORGMANAGER*");
-    console.log(existingOrgManager);
+
     const updateOrgManager = container.getUpdateOrgManagerByUuid();
 
     const { uuid, error } = await updateOrgManager({
