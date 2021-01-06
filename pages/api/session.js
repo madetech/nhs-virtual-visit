@@ -37,6 +37,7 @@ export default withContainer(async (req, res, { container }) => {
     const admin =
       verifyUserLoginResponse.validUser &&
       verifyUserLoginResponse.type === "admin";
+
     if (trustManager) {
       token = tokens.generate({
         wardId: undefined,
@@ -98,7 +99,9 @@ export default withContainer(async (req, res, { container }) => {
       ],
     });
 
-    res.end(JSON.stringify({ wardId: code }));
+    res.end(
+      JSON.stringify({ wardId: code, userType: verifyUserLoginResponse.type })
+    );
     return;
   } else if (method === "DELETE") {
     const expired = new Date(0);

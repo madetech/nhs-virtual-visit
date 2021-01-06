@@ -50,7 +50,13 @@ const Login = ({ correlationId }) => {
       );
 
       if (response.status === 201) {
-        window.location.href = `/login`;
+        const { userType } = await response.json();
+        // console.log(userType)
+        if (userType === "admin") {
+          window.location.href = `/admin`;
+        } else if (userType === "manager") {
+          window.location.href = `/trust-admin`;
+        }
         return true;
       } else {
         onSubmitErrors.push({
