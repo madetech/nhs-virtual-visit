@@ -15,92 +15,92 @@ on:
       - "docs/**"
 
 jobs:
-  # build-and-unit-tests:
-  #   runs-on: ubuntu-latest
+  build-and-unit-tests:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 12
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
 
-  #     - name: npm install ci
-  #       run: npm ci
+      - name: npm install ci
+        run: npm ci
 
-  #     - name: build
-  #       run: npm run build
+      - name: build
+        run: npm run build
 
-  #     - name: run unit tests
-  #       run: npm run test
+      - name: run unit tests
+        run: npm run test
 
-  # contract-tests:
-  #   runs-on: ubuntu-latest
+  contract-tests:
+    runs-on: ubuntu-latest
 
-  #   services:
-  #     # Remove after migration to MSSQL
-  #     postgres:
-  #       image: postgres:12
-  #       env:
-  #         POSTGRES_USER: postgres
-  #         POSTGRES_PASSWORD: postgres
-  #         POSTGRES_DB: nhs-virtual-visit-test
-  #       ports:
-  #         - 5432:5432
-  #       # Set health checks to wait until postgres has started
-  #       options: >-
-  #         --health-cmd pg_isready
-  #         --health-interval 10s
-  #         --health-timeout 5s
-  #         --health-retries 5
+    services:
+      # Remove after migration to MSSQL
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: nhs-virtual-visit-test
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
-  #   if: (github.repository == 'madetech/nhs-virtual-visit')
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 12
+    if: (github.repository == 'madetech/nhs-virtual-visit')
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
 
-  #     - name: npm install ci
-  #       run: npm ci
+      - name: npm install ci
+        run: npm ci
 
-  #     - name: Create .env file
-  #       env:
-  #         APP_ENV: test,test-mssql
-  #         PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
-  #         MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-  #         MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-  #         MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-  #         MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-  #         MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-  #         MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-  #         MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-  #         MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-  #         MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
-  #         SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
-  #         SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
-  #         EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
-  #         EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
-  #       run: bin/write_environment.sh
+      - name: Create .env file
+        env:
+          APP_ENV: test,test-mssql
+          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+          SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
+          SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
+          EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
+          EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
+        run: bin/write_environment.sh
 
-  #     # Remove after migration to MSSQL
-  #     - name: run pg data migration
-  #       run: npm run dbmigratetest up
+      # Remove after migration to MSSQL
+      - name: run pg data migration
+        run: npm run dbmigratetest up
 
-  #     - name: start mssql container
-  #       run: bin/setup_test_mssql_docker.sh
-  #       env:
-  #         MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-  #         MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-  #         MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-  #         MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-  #         MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-  #         MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-  #         MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-  #         MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-  #         MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+      - name: start mssql container
+        run: bin/setup_test_mssql_docker.sh
+        env:
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
 
-  #     - name: run contract tests
-  #       run: npm run test:contract
+      - name: run contract tests
+        run: npm run test:contract
 
   e2e-tests:
     runs-on: ubuntu-latest
@@ -135,8 +135,6 @@ jobs:
       - name: Create .env file
         env:
           APP_ENV: test,test-mssql
-          # PG_DB_URL: ${{ secrets.DATABASE_URL }}
-          # PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
           PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
@@ -200,70 +198,70 @@ jobs:
           AZURE_FUNCTION_URL: ${{ secrets.AZURE_FUNCTION_URL }}
           EVENT_LOGGING: ${{ secrets.ENABLE_EVENT_LOGGING_IN_TESTS }}
 
-  # migration-tests:
-  #   runs-on: ubuntu-latest
+  migration-tests:
+    runs-on: ubuntu-latest
 
-  #   services:
-  #     # Remove after migration to MSSQL
-  #     postgres:
-  #       image: postgres:12
-  #       env:
-  #         POSTGRES_USER: postgres
-  #         POSTGRES_PASSWORD: postgres
-  #         POSTGRES_DB: nhs-virtual-visit-test
-  #       ports:
-  #         - 5432:5432
-  #       # Set health checks to wait until postgres has started
-  #       options: >-
-  #         --health-cmd pg_isready
-  #         --health-interval 10s
-  #         --health-timeout 5s
-  #         --health-retries 5
+    services:
+      # Remove after migration to MSSQL
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: nhs-virtual-visit-test
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
-  #   if: (github.repository == 'madetech/nhs-virtual-visit')
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 12
+    if: (github.repository == 'madetech/nhs-virtual-visit')
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
 
-  #     - name: npm install ci
-  #       run: npm ci
+      - name: npm install ci
+        run: npm ci
 
-  #     - name: Create .env file
-  #       env:
-  #         APP_ENV: test,test-mssql
-  #         PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
-  #         MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-  #         MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-  #         MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-  #         MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-  #         MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-  #         MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-  #         MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-  #         MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-  #         MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
-  #       run: bin/write_environment.sh
+      - name: Create .env file
+        env:
+          APP_ENV: test,test-mssql
+          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+        run: bin/write_environment.sh
 
-  #     # Remove after migration to MSSQL
-  #     - name: run pg data migration
-  #       run: npm run dbmigratetest up
+      # Remove after migration to MSSQL
+      - name: run pg data migration
+        run: npm run dbmigratetest up
 
-  #     - name: start mssql container
-  #       run: bin/setup_test_mssql_docker.sh
-  #       env:
-  #         MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
-  #         MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
-  #         MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
-  #         MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
-  #         MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
-  #         MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
-  #         MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
-  #         MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
-  #         MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+      - name: start mssql container
+        run: bin/setup_test_mssql_docker.sh
+        env:
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
 
-  #     - name: run migration tests
-  #       run: npm run test:migration
+      - name: run migration tests
+        run: npm run test:migration
 
   # tag-and-release:
   #   runs-on: ubuntu-latest
