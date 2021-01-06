@@ -25,7 +25,7 @@ jobs:
       - name: Setup Node 12
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: "12.x"
       - name: "npm install, build, and test"
         run: |
           npm install
@@ -35,8 +35,10 @@ jobs:
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: azure/webapps-deploy@v2
         with:
-          app-name: nhs-virtual-visit
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F4AD9A0A96794BB19D35FDFED6570CAF }}
+          app-name: "virtualvisitscode"
+          slot-name: "development"
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
+          package: .
 
   # build-and-unit-tests:
   #   runs-on: ubuntu-latest
