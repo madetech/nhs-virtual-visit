@@ -35,7 +35,7 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: "virtualvisitscode"
-          slot-name: "development"
+          slot-name: "production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
           package: client/build/
 
