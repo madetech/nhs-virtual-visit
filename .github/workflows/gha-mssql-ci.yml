@@ -37,7 +37,7 @@ jobs:
           app-name: "virtualvisitscode"
           slot-name: "production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
-          package: client/build/
+          package: .
 
   # build-and-unit-tests:
   #   runs-on: ubuntu-latest
