@@ -12,6 +12,7 @@ import Form from "../src/components/Form";
 import fetchEndpointWithCorrelationId from "../src/helpers/fetchEndpointWithCorrelationId";
 import { v4 as uuidv4 } from "uuid";
 import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
+import AnchorLink from "../src/components/AnchorLink";
 
 const Login = ({ correlationId }) => {
   const [errors, setErrors] = useState([]);
@@ -103,8 +104,10 @@ const Login = ({ correlationId }) => {
                 name="password"
                 autoComplete="off"
               />
-              <br />
             </FormGroup>
+            <p>
+              <AnchorLink href="/reset-password">Reset password</AnchorLink>
+            </p>
             <Button className="nhsuk-u-margin-top-5" type="submit">
               Log in
             </Button>

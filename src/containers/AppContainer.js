@@ -68,6 +68,7 @@ import updateManagerByUuid from "../gateways/MsSQL/updateManagerByUuid";
 import archiveManagerByUuid from "../gateways/MsSQL/archiveManagerByUuid";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
 import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
+import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
 
 class AppContainer {
   getDb = () => {
@@ -349,6 +350,10 @@ class AppContainer {
   // MsSQL database gateways
   getVerifyUserLogin = () => {
     return verifyUserLogin;
+  };
+
+  getRetrieveEmail = () => {
+    return retrieveEmail;
   };
 }
 
