@@ -29,14 +29,13 @@ jobs:
       - name: "npm install, build, and test"
         run: |
           npm install
-          ll .next
-          npm run build --if-present
+          npm run build
 
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: azure/webapps-deploy@v2
         with:
           app-name: "virtualvisitscode"
-          slot-name: "production"
+          slot-name: "development"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
           package: .next
 
