@@ -65,6 +65,7 @@ import insertHospital from "../gateways/PostgreSQL/insertHospital";
 import retrieveOrgManagersByOrgId from "../gateways/MsSQL/retrieveOrgManagersByOrgId";
 import retrieveOrgManagerByUuid from "../gateways/MsSQL/retrieveOrgManagerByUuid";
 import updateOrgManagerByUuid from "../gateways/MsSQL/updateOrgManagerByUuid";
+import archiveManagerByUuid from "../gateways/MsSQL/archiveManagerByUuid";
 
 class AppContainer {
   getDb = () => {
@@ -332,6 +333,10 @@ class AppContainer {
 
   getUpdateOrgManagerByUuid = () => {
     return updateOrgManagerByUuid;
+  };
+
+  getArchiveManagerByUuid = () => {
+    return archiveManagerByUuid;
   };
 }
 
