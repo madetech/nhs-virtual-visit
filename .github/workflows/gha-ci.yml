@@ -322,10 +322,10 @@ jobs:
           npm install
           npm run build --if-present
 
-      # - name: "Run Azure webapp deploy action using publish profile credentials"
-      #   uses: azure/webapps-deploy@v2
-      #   with:
-      #     app-name: "virtualvisitscode"
-      #     slot-name: "production"
-      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
-      #     package: .
+      - name: "Run Azure webapp deploy action using publish profile credentials"
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: "virtualvisitscode"
+          slot-name: "production"
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
+          package: .
