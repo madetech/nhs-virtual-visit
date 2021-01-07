@@ -14,7 +14,7 @@ const EditTrustManager = ({ error, trustManager, trust }) => {
   if (error) {
     return <Error err={error} />;
   }
-  console.log();
+
   const [errors, setErrors] = useState([]);
   const submit = async (payload) => {
     payload.uuid = trustManager.uuid;

@@ -21,7 +21,9 @@ export default withContainer(
     if (!body || !body.uuid || !body.status) {
       res.status(400);
       res.end(
-        JSON.stringify({ err: "trust manager uuid and status must be present" })
+        JSON.stringify({
+          error: "Trust manager uuid and status must be present",
+        })
       );
       return;
     }
@@ -34,7 +36,7 @@ export default withContainer(
       res.status(404);
       res.end(
         JSON.stringify({
-          err: "Organisation Manager does not exist in current trust",
+          error: "Organisation Manager does not exist in current trust",
         })
       );
       return;
@@ -49,9 +51,7 @@ export default withContainer(
 
     if (error) {
       res.status(500);
-      res.end(
-        JSON.stringify({ error: "failed to update organisation manager" })
-      );
+      res.end(JSON.stringify({ error }));
     } else {
       res.status(200);
       res.end(JSON.stringify({ uuid }));

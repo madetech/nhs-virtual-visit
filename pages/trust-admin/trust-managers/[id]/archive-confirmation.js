@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Error from "next/error";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
+import ErrorSummary from "../../../../src/components/ErrorSummary";
 import Layout from "../../../../src/components/Layout";
 import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
 import propsWithContainer from "../../../../src/middleware/propsWithContainer";
@@ -15,19 +16,44 @@ import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
 const ArchiveATrustManagerConfirmation = ({ trust, trustManager, error }) => {
   if (error) {
-    return <Error />;
+    return <Error err={error} />;
   }
-
+  const [errors, setErrors] = useState([]);
   const trustManagerSummaryList = [
     { key: "Email", value: trustManager.email },
     { key: "Status", value: trustManager.status },
   ];
 
   const onSubmit = async () => {
-    Router.push({
-      pathname: `/trust-admin/trust-managers/${trustManager.id}/archive-success`,
-      query: { uuid: trustManager.uuid },
-    });
+    try {
+      const response = await fetch("/api/archive-manager", {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          uuid: trustManager.uuid,
+        }),
+      });
+
+      if (response.status === 200) {
+        Router.push({
+          pathname: `/trust-admin/trust-managers/${trustManager.uuid}/archive-success`,
+          query: { email: trustManager.email },
+        });
+      } else {
+        const { error } = await response.json();
+        throw new Error(error);
+      }
+    } catch (e) {
+      const onSubmitErrors = [
+        {
+          id: "manager-delete-error",
+          message: "There was a problem deleting a manager.",
+        },
+      ];
+      setErrors(onSubmitErrors);
+    }
   };
 
   return (
@@ -39,6 +65,7 @@ const ArchiveATrustManagerConfirmation = ({ trust, trustManager, error }) => {
       <TrustAdminHeading trustName={trust.name} subHeading="Trust Managers" />
       <GridRow>
         <GridColumn width="full">
+          <ErrorSummary errors={errors} />
           <FormHeading>
             Are you sure you want to delete this trust manager?
           </FormHeading>
@@ -68,30 +95,18 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-    const trustManagerId = query.uuid;
-    /*** Trust Manager Array needs to swapped out with info from db once available *****/
-    const trustManagers = [
-      {
-        uuid: "8626856E-2AA4-4F19-89FD-9C0E6FD8EB0B",
-        email: "nhs-org2@nhs.co.uk",
-        status: "active",
-      },
-    ];
-    const error = "";
-    const trustManager = trustManagers?.find(
-      (manager) => manager.uuid === trustManagerId
-    );
-    if (error) {
-      return {
-        props: {
-          error,
-        },
-      };
-    }
+    const orgManagerUuid = query.uuid;
+
+    const {
+      trustManager,
+      error,
+    } = await container.getRetrieveOrgManagerByUuid()(orgManagerUuid);
+
     return {
       props: {
         trust: { name: trustResponse.trust?.name },
         trustManager,
+        error,
       },
     };
   })
