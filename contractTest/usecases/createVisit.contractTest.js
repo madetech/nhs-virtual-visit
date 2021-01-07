@@ -3,14 +3,14 @@ import createVisit from "../../src/usecases/createVisit";
 import sendBookingNotification from "../../src/usecases/sendBookingNotification";
 import sendEmail from "../../src/usecases/sendEmail";
 import sendTextMessage from "../../src/usecases/sendTextMessage";
-import GovNotify from "../../src/gateways/GovNotify";
+import Notify from "../../src/gateways/Notify";
 
 import { setupWardWithinHospitalAndTrust } from "../../test/testUtils/factories";
 
 describe("createVisit contract tests", () => {
   it("creates a visit", async () => {
     const getNotifyClient = () => {
-      return GovNotify.getInstance();
+      return Notify.getInstance();
     };
     const getSendTextMessage = () => {
       return sendTextMessage({ getNotifyClient });
