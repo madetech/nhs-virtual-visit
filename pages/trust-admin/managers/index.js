@@ -6,10 +6,10 @@ import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
 import { GridRow, GridColumn } from "../../../src/components/Grid";
 import Text from "../../../src/components/Text";
 import TrustAdminHeading from "../../../src/components/TrustAdminHeading";
-import TrustManagersTable from "../../../src/components/TrustManagersTable";
+import ManagersTable from "../../../src/components/ManagersTable";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
-const TrustManager = ({ trustManagers, trust, error }) => {
+const Manager = ({ managers, trust, error }) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -20,19 +20,13 @@ const TrustManager = ({ trustManagers, trust, error }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading
-        trustName={`${trust.name}`}
-        subHeading="Trust Managers"
-      />
+      <TrustAdminHeading trustName={`${trust.name}`} subHeading="Managers" />
       <GridRow>
         <GridColumn width="full">
-          {trustManagers.length > 0 ? (
-            <TrustManagersTable
-              type="trust-manager"
-              trustManagers={trustManagers}
-            />
+          {managers.length > 0 ? (
+            <ManagersTable managers={managers} />
           ) : (
-            <Text>There are no trust managers.</Text>
+            <Text>There are no managers.</Text>
           )}
         </GridColumn>
       </GridRow>
@@ -46,16 +40,13 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId
     );
 
-    const {
-      trustManagers,
-      error,
-    } = await container.getRetrieveOrgManagerByOrgId()(
+    const { managers, error } = await container.getRetrieveManagerByOrgId()(
       authenticationToken.trustId
     );
 
     return {
       props: {
-        trustManagers,
+        managers,
         trust: { name: trustResponse.trust?.name },
         error: trustResponse.error || error,
       },
@@ -63,4 +54,4 @@ export const getServerSideProps = propsWithContainer(
   })
 );
 
-export default TrustManager;
+export default Manager;

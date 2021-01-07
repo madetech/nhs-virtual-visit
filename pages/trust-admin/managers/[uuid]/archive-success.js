@@ -9,7 +9,7 @@ import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import PanelSuccess from "../../../../src/components/PanelSuccess";
 
-const archiveATrustManagerSuccess = ({ trust, managerEmail, error }) => {
+const archiveAManagerSuccess = ({ trust, managerEmail, error }) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -20,16 +20,16 @@ const archiveATrustManagerSuccess = ({ trust, managerEmail, error }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading="Trust Managers" />
+      <TrustAdminHeading trustName={trust.name} subHeading="Managers" />
       <GridRow>
         <GridColumn width="two-thirds">
           <PanelSuccess name={`${managerEmail}`} action="deleted" />
           <p>
             <AnchorLink
-              href="/trust-admin/trust-managers"
-              as={`/trust-admin/trust-managers`}
+              href="/trust-admin/managers"
+              as={`/trust-admin/managers`}
             >
-              Return to Trust Managers
+              Return to Managers
             </AnchorLink>
           </p>
         </GridColumn>
@@ -55,4 +55,4 @@ export const getServerSideProps = propsWithContainer(
   })
 );
 
-export default archiveATrustManagerSuccess;
+export default archiveAManagerSuccess;

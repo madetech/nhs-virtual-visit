@@ -14,14 +14,14 @@ import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import Form from "../../../../src/components/Form";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
-const ArchiveATrustManagerConfirmation = ({ trust, trustManager, error }) => {
+const ArchiveAManagerConfirmation = ({ trust, manager, error }) => {
   if (error) {
     return <Error err={error} />;
   }
   const [errors, setErrors] = useState([]);
-  const trustManagerSummaryList = [
-    { key: "Email", value: trustManager.email },
-    { key: "Status", value: trustManager.status },
+  const managerSummaryList = [
+    { key: "Email", value: manager.email },
+    { key: "Status", value: manager.status },
   ];
 
   const onSubmit = async () => {
@@ -32,14 +32,14 @@ const ArchiveATrustManagerConfirmation = ({ trust, trustManager, error }) => {
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          uuid: trustManager.uuid,
+          uuid: manager.uuid,
         }),
       });
 
       if (response.status === 200) {
         Router.push({
-          pathname: `/trust-admin/trust-managers/${trustManager.uuid}/archive-success`,
-          query: { email: trustManager.email },
+          pathname: `/trust-admin/managers/${manager.uuid}/archive-success`,
+          query: { email: manager.email },
         });
       } else {
         const { error } = await response.json();
@@ -58,16 +58,16 @@ const ArchiveATrustManagerConfirmation = ({ trust, trustManager, error }) => {
 
   return (
     <Layout
-      title="Are you sure you want to delete this ward?"
+      title="Are you sure you want to delete this manager?"
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading="Trust Managers" />
+      <TrustAdminHeading trustName={trust.name} subHeading="Managers" />
       <GridRow>
         <GridColumn width="full">
           <ErrorSummary errors={errors} />
           <FormHeading>
-            Are you sure you want to delete this trust manager?
+            Are you sure you want to delete this manager?
           </FormHeading>
         </GridColumn>
       </GridRow>
@@ -75,13 +75,13 @@ const ArchiveATrustManagerConfirmation = ({ trust, trustManager, error }) => {
         <GridColumn width="two-thirds">
           <Form onSubmit={onSubmit}>
             <SummaryList
-              list={trustManagerSummaryList}
+              list={managerSummaryList}
               withActions={false}
             ></SummaryList>
 
-            <Button>Yes, delete this trust manager</Button>
+            <Button>Yes, delete this manager</Button>
             <BackLink
-              href={`/trust-admin/trust-managers/`}
+              href={`/trust-admin/managers/`}
             >{`Back to Trust Managers`}</BackLink>
           </Form>
         </GridColumn>
@@ -95,21 +95,20 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-    const orgManagerUuid = query.uuid;
+    const managerUuid = query.uuid;
 
-    const {
-      trustManager,
-      error,
-    } = await container.getRetrieveOrgManagerByUuid()(orgManagerUuid);
+    const { manager, error } = await container.getRetrieveManagerByUuid()(
+      managerUuid
+    );
 
     return {
       props: {
         trust: { name: trustResponse.trust?.name },
-        trustManager,
+        manager,
         error,
       },
     };
   })
 );
 
-export default ArchiveATrustManagerConfirmation;
+export default ArchiveAManagerConfirmation;

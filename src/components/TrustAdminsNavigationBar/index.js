@@ -8,8 +8,8 @@ const TrustAdminsNavigationBar = () => {
       href: "/trust-admin/",
     },
     {
-      text: "Trust Managers",
-      href: "/trust-admin/trust-managers",
+      text: "Managers",
+      href: "/trust-admin/managers",
     },
     {
       text: "Hospitals",
