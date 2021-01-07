@@ -1,7 +1,7 @@
 import logger from "../../../logger";
 import MsSQL from ".";
 
-const updateOrgManagerByUuid = async ({ uuid, status }) => {
+const updateManagerByUuid = async ({ uuid, status }) => {
   const db = await MsSQL.getConnectionPool();
 
   logger.info(`Updating organisation manager for ${uuid}`);
@@ -9,7 +9,7 @@ const updateOrgManagerByUuid = async ({ uuid, status }) => {
     if (!uuid)
       throw "Attempting to retrieve organisation manager with no uuid set";
     const updatedStatus = status === "active" ? 1 : 0;
-    const orgManager = await db
+    const manager = await db
       .request()
       .input("uuid", uuid)
       .input("status", updatedStatus)
@@ -18,7 +18,7 @@ const updateOrgManagerByUuid = async ({ uuid, status }) => {
       );
 
     return {
-      uuid: orgManager.recordset[0].uuid,
+      uuid: manager.recordset[0].uuid,
       error: null,
     };
   } catch (error) {
@@ -30,4 +30,4 @@ const updateOrgManagerByUuid = async ({ uuid, status }) => {
   }
 };
 
-export default updateOrgManagerByUuid;
+export default updateManagerByUuid;

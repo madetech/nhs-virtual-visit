@@ -62,9 +62,9 @@ import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
 import MsSQL from "../gateways/MsSQL";
 import insertHospital from "../gateways/PostgreSQL/insertHospital";
-import retrieveOrgManagersByOrgId from "../gateways/MsSQL/retrieveOrgManagersByOrgId";
-import retrieveOrgManagerByUuid from "../gateways/MsSQL/retrieveOrgManagerByUuid";
-import updateOrgManagerByUuid from "../gateways/MsSQL/updateOrgManagerByUuid";
+import retrieveManagersByOrgId from "../gateways/MsSQL/retrieveManagersByOrgId";
+import retrieveManagerByUuid from "../gateways/MsSQL/retrieveManagerByUuid";
+import updateManagerByUuid from "../gateways/MsSQL/updateManagerByUuid";
 import archiveManagerByUuid from "../gateways/MsSQL/archiveManagerByUuid";
 
 class AppContainer {
@@ -323,16 +323,16 @@ class AppContainer {
   };
 
   /* These uses the MsSQL DB */
-  getRetrieveOrgManagerByOrgId = () => {
-    return retrieveOrgManagersByOrgId;
+  getRetrieveManagerByOrgId = () => {
+    return retrieveManagersByOrgId;
   };
 
-  getRetrieveOrgManagerByUuid = () => {
-    return retrieveOrgManagerByUuid;
+  getRetrieveManagerByUuid = () => {
+    return retrieveManagerByUuid;
   };
 
-  getUpdateOrgManagerByUuid = () => {
-    return updateOrgManagerByUuid;
+  getUpdateManagerByUuid = () => {
+    return updateManagerByUuid;
   };
 
   getArchiveManagerByUuid = () => {
