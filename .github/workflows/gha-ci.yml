@@ -265,18 +265,32 @@ jobs:
     # needs: [contract-tests, build-and-unit-tests, migration-tests, e2e-tests]
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set up Node 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      - name: npm install and build
+        run: |
+          npm install
+          npm run build --if-present
+
       - name: Create Release Folder
         run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress' --exclude='contractTest/' --exclude='bin/' . ./release
+
       - name: Switch to Release Folder
         run: |
           cd release
           ls -la
+
       - name: Conventional Changelog Action
         uses: TriPSs/conventional-changelog-action@v3
         id: changelog
         with:
           github-token: ${{ secrets.github_token }}
           output-file: "CHANGELOG.md"
+
       - name: Create Release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
@@ -288,7 +302,7 @@ jobs:
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
   azure-build-and-deploy:
-    # needs: tag-and-release
+    needs: tag-and-release
     if: github.repository_owner == 'madetech'
     runs-on: ubuntu-latest
 
@@ -296,16 +310,6 @@ jobs:
       # checkout the repo
       - name: "Checkout Github Action"
         uses: actions/checkout@master
-
-      # - name: Set up Node 12
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: "12.x"
-
-      # - name: npm install and build
-      #   run: |
-      #     npm install
-      #     npm run build --if-present
 
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: azure/webapps-deploy@v2
