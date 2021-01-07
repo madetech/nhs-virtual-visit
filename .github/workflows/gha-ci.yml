@@ -322,6 +322,11 @@ jobs:
         with:
           node-version: "12.x"
 
+      - name: npm install and build
+        run: |
+          npm install
+          npm run build --if-present
+
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: azure/webapps-deploy@v2
         with:
