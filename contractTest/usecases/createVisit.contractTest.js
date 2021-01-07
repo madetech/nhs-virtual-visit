@@ -3,7 +3,7 @@ import createVisit from "../../src/usecases/createVisit";
 import sendBookingNotification from "../../src/usecases/sendBookingNotification";
 import sendEmail from "../../src/usecases/sendEmail";
 import sendTextMessage from "../../src/usecases/sendTextMessage";
-import Notify from "../../src/gateways/Notify";
+import Notify from "../../src/gateways/GovNotify";
 
 import { setupWardWithinHospitalAndTrust } from "../../test/testUtils/factories";
 
