@@ -266,24 +266,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Node 12
-        uses: actions/setup-node@v1
-        with:
-          node-version: "12.x"
-
-      - name: npm install and build
-        run: |
-          npm install
-          npm run build --if-present
-
-      - name: Create Release Folder
-        run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress' --exclude='contractTest/' --exclude='bin/' --exclude='db/' . ./release
-
-      - name: Switch to Release Folder
-        run: |
-          cd release
-          ls -la
-
       - name: Conventional Changelog Action
         uses: TriPSs/conventional-changelog-action@v3
         id: changelog
@@ -311,8 +293,23 @@ jobs:
       - name: "Checkout Github Action"
         uses: actions/checkout@master
 
+      - name: Set up Node 12
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      - name: npm install and build
+        run: |
+          npm install
+          npm run build --if-present
+
+      - name: Create Release Folder
+        run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress' --exclude='contractTest/' --exclude='bin/' --exclude='db/' . ./release
+
       - name: Switch to Release Folder
-        run: cd release
+        run: |
+          cd release
+          ls -la
 
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: azure/webapps-deploy@v2
