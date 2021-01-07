@@ -318,4 +318,4 @@ jobs:
           app-name: ${{ secrets.AZUREAPPSERVICE_APP_NAME }}
           slot-name: ${{ secrets.AZUREAPPSERVICE_SLOT_NAME }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
-          package: .
+          package: ./release
