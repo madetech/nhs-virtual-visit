@@ -9,28 +9,25 @@ import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToke
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 
-const EditATrustManagerSuccess = ({ error, trustManager, trust }) => {
+const EditAManagerSuccess = ({ error, manager, trust }) => {
   if (error) {
     return <Error />;
   }
 
   return (
     <Layout
-      title={`${trustManager.email} has been updated`}
+      title={`${manager.email} has been updated`}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading
-        trustName={`${trust.name}`}
-        subHeading="Trust Managers"
-      />
+      <TrustAdminHeading trustName={`${trust.name}`} subHeading="Managers" />
       <GridRow>
         <GridColumn width="two-thirds">
-          <PanelSuccess name={`${trustManager.email}`} action={`updated`} />
+          <PanelSuccess name={`${manager.email}`} action={`updated`} />
           <h2>What happens next</h2>
 
-          <ActionLink href="/trust-admin/trust-managers">
-            Return to Trust Managers
+          <ActionLink href="/trust-admin/managers">
+            Return to Managers
           </ActionLink>
         </GridColumn>
       </GridRow>
@@ -43,20 +40,19 @@ export const getServerSideProps = propsWithContainer(
     const trustResponse = await container.getRetrieveTrustById()(
       authenticationToken.trustId
     );
-    const orgManagerUuid = query.uuid;
-    const {
-      trustManager,
-      error,
-    } = await container.getRetrieveOrgManagerByUuid()(orgManagerUuid);
+    const managerUuid = query.uuid;
+    const { manager, error } = await container.getRetrieveManagerByUuid()(
+      managerUuid
+    );
 
     return {
       props: {
         trust: { name: trustResponse.trust?.name },
-        trustManager,
+        manager,
         error,
       },
     };
   })
 );
 
-export default EditATrustManagerSuccess;
+export default EditAManagerSuccess;

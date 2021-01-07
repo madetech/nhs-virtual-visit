@@ -1,9 +1,9 @@
 import React from "react";
-import AnchorLink from "../../../src/components/AnchorLink";
+import AnchorLink from "../AnchorLink";
 
-const TrustManagersTable = ({ trustManagers }) => (
+const ManagersTable = ({ managers }) => (
   <div className="nhsuk-table-responsive">
-    <table className="nhsuk-table" id="trust-manager-table">
+    <table className="nhsuk-table" id="manager-table">
       <caption className="nhsuk-table__caption">List of Trust Managers</caption>
       <thead className="nhsuk-table__head">
         <tr className="nhsuk-table__row">
@@ -19,7 +19,7 @@ const TrustManagersTable = ({ trustManagers }) => (
         </tr>
       </thead>
       <tbody className="nhsuk-table__body">
-        {trustManagers?.map((info) => (
+        {managers?.map((info) => (
           <tr key={info.uuid} className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{info.email}</td>
             <td className="nhsuk-table__cell">{info.status}</td>
@@ -28,10 +28,10 @@ const TrustManagersTable = ({ trustManagers }) => (
               <AnchorLink
                 className="nhsuk-link"
                 href={{
-                  pathname: `/trust-admin/trust-managers/[id]/edit`,
+                  pathname: `/trust-admin/managers/[uuid]/edit`,
                   query: { uuid: info.uuid },
                 }}
-                as={`/trust-admin/trust-managers/${info.uuid}/edit`}
+                as={`/trust-admin/managers/${info.uuid}/edit`}
                 data-cy="edit-tm-link"
               >
                 Edit
@@ -41,10 +41,10 @@ const TrustManagersTable = ({ trustManagers }) => (
               <AnchorLink
                 className="nhsuk-link"
                 href={{
-                  pathname: `/trust-admin/trust-managers/[id]/archive-confirmation`,
+                  pathname: `/trust-admin/managers/[uuid]/archive-confirmation`,
                   query: { uuid: info.uuid },
                 }}
-                as={`/trust-admin/trust-managers/${info.uuid}/archive-confirmation`}
+                as={`/trust-admin/managers/${info.uuid}/archive-confirmation`}
                 data-cy="delete-tm-link"
               >
                 Delete
@@ -57,4 +57,4 @@ const TrustManagersTable = ({ trustManagers }) => (
   </div>
 );
 
-export default TrustManagersTable;
+export default ManagersTable;

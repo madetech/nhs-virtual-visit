@@ -22,29 +22,29 @@ export default withContainer(
       res.status(400);
       res.end(
         JSON.stringify({
-          error: "Trust manager uuid and status must be present",
+          error: "Manager uuid and status must be present",
         })
       );
       return;
     }
 
-    const retrieveOrgManagerByUuid = container.getRetrieveOrgManagerByUuid();
+    const retrieveManagerByUuid = container.getRetrieveManagerByUuid();
 
-    const existingOrgManager = await retrieveOrgManagerByUuid(body.uuid);
+    const existingManager = await retrieveManagerByUuid(body.uuid);
 
-    if (existingOrgManager.error) {
+    if (existingManager.error) {
       res.status(404);
       res.end(
         JSON.stringify({
-          error: "Organisation Manager does not exist in current trust",
+          error: "Manager does not exist in current organisation",
         })
       );
       return;
     }
 
-    const updateOrgManager = container.getUpdateOrgManagerByUuid();
+    const updateManager = container.getUpdateManagerByUuid();
 
-    const { uuid, error } = await updateOrgManager({
+    const { uuid, error } = await updateManager({
       uuid: body.uuid,
       status: body.status,
     });
