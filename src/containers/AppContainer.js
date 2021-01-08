@@ -69,6 +69,7 @@ import archiveManagerByUuid from "../gateways/MsSQL/archiveManagerByUuid";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
 import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
 import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
+import resetPassword from "../gateways/MsSQL/resetPassword";
 
 class AppContainer {
   getDb = () => {
@@ -354,6 +355,10 @@ class AppContainer {
 
   getRetrieveEmail = () => {
     return retrieveEmail;
+  };
+
+  getResetPassword = () => {
+    return resetPassword;
   };
 }
 
