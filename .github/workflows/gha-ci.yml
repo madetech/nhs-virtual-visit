@@ -302,20 +302,19 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-        working-directory: nhs-virtual-visit
 
-      # - name: Create Release Folder
-      #   run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress' --exclude='contractTest/' --exclude='bin/' --exclude='db/' . ./release
+      - name: Create Release Folder
+        run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress' --exclude='contractTest/' --exclude='bin/' --exclude='db/' . ./release
 
-      # - name: Switch to Release Folder
-      #   run: |
-      #     cd release
-      #     ls -la
+      - name: Switch to Release Folder
+        run: |
+          cd release
+          ls -la
 
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.AZUREAPPSERVICE_APP_NAME }}
           slot-name: ${{ secrets.AZUREAPPSERVICE_SLOT_NAME }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
-          package: nhs-virtual-visit
+          # publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
+          # package: .
