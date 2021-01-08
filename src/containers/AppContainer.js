@@ -111,7 +111,6 @@ import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
 import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
 
-
 class AppContainer {
   getDb = () => {
     return Database.getInstance();
@@ -544,6 +543,10 @@ class AppContainer {
   
   getRetrieveEmail = () => {
     return retrieveEmail;
+  };
+
+  getResetPassword = () => {
+    return resetPassword;
   };
 }
 
