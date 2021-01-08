@@ -2,6 +2,8 @@ name: Virtual Visits CI
 
 on:
   push:
+    branches:
+      - master
     paths-ignore:
       - "README.md"
       - "docs/**"
@@ -297,6 +299,7 @@ jobs:
       #   uses: actions/setup-node@v1
       #   with:
       #     node-version: "12.x"
+
       # - name: npm install and build
       #   run: |
       #     npm install
