@@ -303,13 +303,13 @@ jobs:
           npm install
           npm run build --if-present
 
-      - name: Create Release Folder
-        run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress' --exclude='contractTest/' --exclude='bin/' --exclude='db/' . ./release
+      # - name: Create Release Folder
+      #   run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress' --exclude='contractTest/' --exclude='bin/' --exclude='db/' . ./release
 
-      - name: Switch to Release Folder
-        run: |
-          cd release
-          ls -la
+      # - name: Switch to Release Folder
+      #   run: |
+      #     cd release
+      #     ls -la
 
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: azure/webapps-deploy@v2
