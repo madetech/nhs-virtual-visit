@@ -1,4 +1,4 @@
-import withContainer from "../../src/middleware/withContainer";
+/*import withContainer from "../../src/middleware/withContainer";
 import jwt from "jsonwebtoken";
 
 export default withContainer(async ({ body, method }, res) => {
@@ -18,13 +18,14 @@ export default withContainer(async ({ body, method }, res) => {
 
   const token = body.token;
   const { emailAddress } = jwt.decode(token);
-  const decryptedToken = jwt.verify(token, process.env.JWT_SIGNING_KEY);
 
-  if (!decryptedToken) {
+  try {
+    jwt.verify(token, process.env.JWT_SIGNING_KEY);
+  } catch (error) {
     res.status(400);
-    res.end(JSON.stringify({ err: "error verifying token" }));
-  } else {
-    res.status(201);
-    res.end(JSON.stringify({ emailAddress }));
+    res.end(JSON.stringify({ err: "Token does not exist or has expired." }));
   }
+  res.status(201);
+  res.end(JSON.stringify({ emailAddress }))
 });
+  */

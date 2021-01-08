@@ -36,6 +36,20 @@ class TokenProvider {
 
     return decryptedToken;
   }
+
+  verifyTokenAndRetrieveEmail(token) {
+    try {
+      jwt.verify(token, this.signingKey);
+      const { emailAddress } = jwt.decode(token);
+      return {
+        emailAddress,
+      };
+    } catch (error) {
+      return {
+        emailAddress: "",
+      };
+    }
+  }
 }
 
 export default TokenProvider;

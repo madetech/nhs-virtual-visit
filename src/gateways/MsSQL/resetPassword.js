@@ -30,16 +30,13 @@ const resetPassword = async ({ password, email }) => {
       .query(
         `UPDATE dbo.[user] SET password = @password OUTPUT inserted.email WHERE email = @email`
       );
-    console.log("*****dbResponse*****");
-    console.log(dbResponse);
+
     if (dbResponse.recordset.length > 0) {
-      console.log("in if block");
       return {
         resetSuccess: true,
         error: null,
       };
     } else {
-      console.log("in else block");
       return {
         resetSuccess: false,
         error: "User email doesn't exist",
