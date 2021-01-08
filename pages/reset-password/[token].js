@@ -9,7 +9,6 @@ import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import Form from "../../src/components/Form";
 import { withRouter } from "next/router";
-import jwt from "jsonwebtoken";
 
 const ResetPassword = ({ router }) => {
   const [errors, setErrors] = useState([]);
@@ -28,14 +27,26 @@ const ResetPassword = ({ router }) => {
 
   useEffect(() => {
     const token = router.query.token;
+    const verifyToken = async () => {
+      const body = JSON.stringify({ token });
+      const response = await fetch("/api/verify-token", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body,
+      });
+
+      if (response.status === 201) {
+        const { emailAddress } = await response.json();
+        setEmail(emailAddress);
+        return true;
+      } else {
+        setExpirationError(true);
+      }
+    };
     if (token) {
-      const { emailAddress } = jwt.decode(token);
-      setEmail(emailAddress);
-    }
-    const decryptedToken = jwt.verify(token, process.env.JWT_SIGNING_KEY);
-    console.log(decryptedToken);
-    if (!decryptedToken) {
-      setExpirationError(true);
+      verifyToken();
     }
   }, [router]);
 
