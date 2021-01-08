@@ -38,7 +38,7 @@ const ResetPassword = () => {
 
     if (onSubmitErrors.length === 0) {
       const body = JSON.stringify({ email });
-      const response = await fetch("/api/verify-email", {
+      const response = await fetch("/api/send-reset-password-email", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -48,7 +48,8 @@ const ResetPassword = () => {
 
       if (response.status === 201) {
         // Send email
-        console.log("An email has been sent to reset your password");
+        // console.log("An email has been sent to reset your password")
+        // ...
       } else {
         onSubmitErrors.push({
           id: "email-invalid-error",

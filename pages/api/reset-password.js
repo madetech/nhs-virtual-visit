@@ -7,6 +7,12 @@ export default withContainer(async ({ body, method }, res, { container }) => {
     return;
   }
 
+  if (!body.password) {
+    res.status(400);
+    res.end(JSON.stringify({ err: "password must be present" }));
+    return;
+  }
+
   if (!body.email) {
     res.status(400);
     res.end(JSON.stringify({ err: "email must be present" }));
@@ -15,14 +21,14 @@ export default withContainer(async ({ body, method }, res, { container }) => {
 
   res.setHeader("Content-Type", "application/json");
 
-  const retrieveEmail = container.getRetrieveEmail();
-  const { validEmail, error } = await retrieveEmail(body.email);
+  const resetPassword = container.getResetPassword();
+  const { resetSuccess, error } = await resetPassword(body);
 
-  if (error || !validEmail) {
+  if (error) {
     res.status(400);
-    res.end(JSON.stringify({ err: "Email does not exist" }));
+    res.end(JSON.stringify({ err: "error resetting password" }));
   } else {
     res.status(201);
-    res.end(JSON.stringify({ validEmail }));
+    res.end(JSON.stringify({ resetSuccess }));
   }
 });
