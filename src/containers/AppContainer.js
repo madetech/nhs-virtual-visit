@@ -112,6 +112,7 @@ import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/Postgr
 import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
 import verifyTrustAdminCodeGateway from "../gateways/PostgreSQL/verifyTrustAdminCode";
+import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
 
 class AppContainer {
   getDb = () => {
@@ -549,6 +550,14 @@ class AppContainer {
 
   getArchiveManagerByUuidGateway = () => {
     return archiveManagerByUuidGateway(this);
+  };
+  
+  getRetrieveEmail = () => {
+    return retrieveEmail;
+  };
+
+  getResetPassword = () => {
+    return resetPassword;
   };
 }
 
