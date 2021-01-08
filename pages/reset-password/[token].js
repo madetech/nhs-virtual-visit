@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Button from "../../src/components/Button";
 import ErrorSummary from "../../src/components/ErrorSummary";
 import FormGroup from "../../src/components/FormGroup";
@@ -8,12 +9,16 @@ import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import Form from "../../src/components/Form";
-import { withRouter } from "next/router";
 
-const ResetPassword = ({ router }) => {
+const ResetPassword = ({ email, error }) => {
   const [errors, setErrors] = useState([]);
-  const [expirationError, setExpirationError] = useState(false);
-  const [email, setEmail] = useState("");
+  if (error) {
+    errors.push({
+      id: "token-error",
+      message: error,
+    });
+  }
+
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
@@ -24,31 +29,6 @@ const ResetPassword = ({ router }) => {
     const error = errors.filter((err) => err.id === `${field}-error`);
     return error.length === 1 ? error[0].message : "";
   };
-
-  useEffect(() => {
-    const token = router.query.token;
-    const verifyToken = async () => {
-      const body = JSON.stringify({ token });
-      const response = await fetch("/api/verify-token", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body,
-      });
-
-      if (response.status === 201) {
-        const { emailAddress } = await response.json();
-        setEmail(emailAddress);
-        return true;
-      } else {
-        setExpirationError(true);
-      }
-    };
-    if (token) {
-      verifyToken();
-    }
-  }, [router]);
 
   const onSubmit = async () => {
     const onSubmitErrors = [];
@@ -97,57 +77,50 @@ const ResetPassword = ({ router }) => {
         });
       }
     }
-
     setErrors(onSubmitErrors);
     return false;
   };
 
-  const expirationErrorMessage = (
-    <div>
-      Your link has expired. Please go back to reset password page and request
-      another link
-    </div>
-  );
   return (
     <Layout title="Log in to manage your trust" hasErrors={errors.length > 0}>
       <GridRow>
-        <GridColumn width="two-thirds">
+        <GridColumn>
           <ErrorSummary errors={errors} />
-          <Heading>Reset Password for {email}</Heading>
-          {expirationError ? (
-            expirationErrorMessage
-          ) : (
-            <Form onSubmit={onSubmit}>
-              <FormGroup>
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  ref={passwordRef}
-                  hasError={hasError("password")}
-                  errorMessage={errorMessage("password")}
-                  className="nhsuk-input--width-20"
-                  name="password"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input
-                  id="confirmPassword"
-                  type="password"
-                  ref={confirmPasswordRef}
-                  hasError={hasError("confirmPassword")}
-                  errorMessage={errorMessage("confirmPassword")}
-                  className="nhsuk-input--width-20"
-                  name="confirmPassword"
-                  autoComplete="off"
-                />
-                <br />
-              </FormGroup>
-              <Button className="nhsuk-u-margin-top-5" type="submit">
-                Reset Password
-              </Button>
-            </Form>
+          {!error && (
+            <>
+              <Heading>Reset Password for {email}</Heading>
+              <Form onSubmit={onSubmit}>
+                <FormGroup>
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    ref={passwordRef}
+                    hasError={hasError("password")}
+                    errorMessage={errorMessage("password")}
+                    className="nhsuk-input--width-20"
+                    name="password"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="confirmPassword">Confirm Password</Label>
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    ref={confirmPasswordRef}
+                    hasError={hasError("confirmPassword")}
+                    errorMessage={errorMessage("confirmPassword")}
+                    className="nhsuk-input--width-20"
+                    name="confirmPassword"
+                    autoComplete="off"
+                  />
+                  <br />
+                </FormGroup>
+                <Button className="nhsuk-u-margin-top-5" type="submit">
+                  Reset Password
+                </Button>
+              </Form>
+            </>
           )}
         </GridColumn>
         <span style={{ clear: "both", display: "block" }}></span>
@@ -155,4 +128,20 @@ const ResetPassword = ({ router }) => {
     </Layout>
   );
 };
-export default withRouter(ResetPassword);
+export default ResetPassword;
+
+export const getServerSideProps = propsWithContainer(
+  async ({ query, container }) => {
+    const token = query.token;
+
+    const verifyResetPasswordLink = container.getVerifyResetPasswordLink();
+    const { email, error } = verifyResetPasswordLink(token);
+
+    return {
+      props: {
+        email,
+        error,
+      },
+    };
+  }
+);

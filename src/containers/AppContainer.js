@@ -70,6 +70,7 @@ import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
 import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
 import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
 import resetPassword from "../gateways/MsSQL/resetPassword";
+import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
 
 class AppContainer {
   getDb = () => {
@@ -359,6 +360,10 @@ class AppContainer {
 
   getResetPassword = () => {
     return resetPassword;
+  };
+
+  getVerifyResetPasswordLink = () => {
+    return verifyResetPasswordLink(this);
   };
 }
 
