@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - master
-    # paths-ignore:
-    #   - "README.md"
-    #   - "docs/**"
+    paths-ignore:
+      - "README.md"
+      - "docs/**"
 
 jobs:
   tag-and-release:
@@ -31,18 +31,8 @@ jobs:
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
-  azure-build-and-deploy:
-    needs: tag-and-release
-    if: github.repository_owner == 'madetech'
-    runs-on: ubuntu-latest
-
-    steps:
-      # checkout the repo
-      - name: "Checkout Github Action"
-        uses: actions/checkout@master
-
       - name: Create Release Folder
-        run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress' --exclude='contractTest/' --exclude='bin/' --exclude='db/' --exclude='node_modules/' . ./release
+        run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__' --exclude='test/' --exclude='docs/' --exclude='jest.*' --exclude='docker/' --exclude='cypress*' --exclude='contractTest*' --exclude='bin/' --exclude='db/' --exclude='node_modules/' . ./release
 
       - name: Switch to Release Folder
         run: |
@@ -56,3 +46,29 @@ jobs:
           slot-name: ${{ secrets.AZUREAPPSERVICE_SLOT_NAME }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
           package: .
+
+  # azure-build-and-deploy:
+  #   needs: tag-and-release
+  #   if: github.repository_owner == 'madetech'
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     # checkout the repo
+  #     - name: "Checkout Github Action"
+  #       uses: actions/checkout@master
+
+  #     - name: Create Release Folder
+  #       run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__' --exclude='test/' --exclude='docs/' --exclude='jest.*' --exclude='docker/' --exclude='cypress*' --exclude='contractTest*' --exclude='bin/' --exclude='db/' --exclude='node_modules/' . ./release
+
+  #     - name: Switch to Release Folder
+  #       run: |
+  #         cd release
+  #         ls -la
+
+  #     - name: "Run Azure webapp deploy action using publish profile credentials"
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: ${{ secrets.AZUREAPPSERVICE_APP_NAME }}
+  #         slot-name: ${{ secrets.AZUREAPPSERVICE_SLOT_NAME }}
+  #         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
+  #         package: .
