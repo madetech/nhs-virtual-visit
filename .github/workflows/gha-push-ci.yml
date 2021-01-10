@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - master
-    paths-ignore:
-      - "README.md"
-      - "docs/**"
+    # paths-ignore:
+    #   - "README.md"
+    #   - "docs/**"
 
 jobs:
   tag-and-release:
