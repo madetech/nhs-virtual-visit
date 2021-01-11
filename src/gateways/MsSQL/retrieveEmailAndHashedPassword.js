@@ -6,7 +6,8 @@ const retrieveEmail = async (email) => {
 
   if (!email) {
     return {
-      validEmail: false,
+      emailAddress: "",
+      hashedPassword: "",
       error: "email is not defined",
     };
   }
@@ -15,24 +16,31 @@ const retrieveEmail = async (email) => {
     const dbResponse = await db
       .request()
       .input("email", email)
-      .query(`SELECT type FROM dbo.[user] WHERE email = @email`);
+      .query(
+        `SELECT password AS hashedPassword, email AS emailAddress FROM dbo.[user] WHERE email = @email`
+      );
 
     if (dbResponse.recordset.length > 0) {
+      const { emailAddress, hashedPassword } = dbResponse.recordset[0];
+
       return {
-        validEmail: true,
+        emailAddress,
+        hashedPassword,
         error: null,
       };
     } else {
       return {
-        validEmail: false,
-        error: null,
+        emailAddress: "",
+        hashedPassword: "",
+        error: "Email could not be found in database",
       };
     }
   } catch (error) {
     logger.error(error);
 
     return {
-      validEmail: null,
+      emailAddress: "",
+      hashedPassword: "",
       error: error.toString(),
     };
   }

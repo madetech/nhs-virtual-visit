@@ -68,7 +68,7 @@ import updateManagerByUuid from "../gateways/MsSQL/updateManagerByUuid";
 import archiveManagerByUuid from "../gateways/MsSQL/archiveManagerByUuid";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
 import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
-import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
+import retrieveEmailAndHashedPassword from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
 import resetPassword from "../gateways/MsSQL/resetPassword";
 import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
 
@@ -354,8 +354,8 @@ class AppContainer {
     return verifyUserLogin;
   };
 
-  getRetrieveEmail = () => {
-    return retrieveEmail;
+  getRetrieveEmailAndHashedPassword = () => {
+    return retrieveEmailAndHashedPassword;
   };
 
   getResetPassword = () => {
