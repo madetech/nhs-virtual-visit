@@ -25,7 +25,7 @@ describe("trust-admin/managers", () => {
     });
   });
 
-  it("retrieves trust name and managers", async () => {
+  it("retrieves trust name and managers if authenticated", async () => {
     // Arrange
     const trustId = 1;
     const expectedTrustName = "Doggo Trust";

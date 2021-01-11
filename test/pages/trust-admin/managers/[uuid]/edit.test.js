@@ -22,7 +22,7 @@ describe("trust-admin/managers/[uuid]/edit", () => {
       Location: "/trust-admin/login",
     });
   });
-  it("retrieves trust name and manager by uuid", async () => {
+  it("retrieves trust name and manager by uuid if authenticated", async () => {
     // Arrange
     const trustId = 1;
     const uuid = "1BBE43B3-4B2E-443E-8399-8299F22AB139";
