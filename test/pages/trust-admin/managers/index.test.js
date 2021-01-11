@@ -25,9 +25,10 @@ describe("trust-admin/managers", () => {
     });
   });
 
-  it("retrieves managers", async () => {
+  it("retrieves trust name and managers", async () => {
     // Arrange
     const trustId = 1;
+    const expectedTrustName = "Doggo Trust";
     const expectedManagersArray = [
       {
         uuid: "1BBE43B3-4B2E-443E-8399-8299F22AB139",
@@ -49,7 +50,7 @@ describe("trust-admin/managers", () => {
       validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId: trustId })),
     };
     const retrieveTrustByIdSuccessStub = jest.fn(async () => ({
-      trust: { name: "Doggo Trust" },
+      trust: { name: expectedTrustName },
       error: null,
     }));
     const retrieveManagersByOrgIdSuccessSpy = jest.fn(async () => ({
@@ -69,7 +70,10 @@ describe("trust-admin/managers", () => {
       container,
     });
     const actualManagerArray = props.managers;
+    const actualTrust = props.trust;
     // Assert
+    expect(retrieveTrustByIdSuccessStub).toHaveBeenCalledWith(trustId);
+    expect(actualTrust.name).toEqual(expectedTrustName);
     expect(retrieveManagersByOrgIdSuccessSpy).toHaveBeenCalledWith(trustId);
     expect(actualManagerArray.length).toEqual(2);
     actualManagerArray.forEach((manager, idx) => {
