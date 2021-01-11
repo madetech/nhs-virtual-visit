@@ -1,28 +1,24 @@
 import retrieveEmailAndHashedPassword from "./retrieveEmailAndHashedPassword";
 
 export default ({ getTokenProvider }) => async (token) => {
-  if (token) {
-    const tokenProvider = getTokenProvider();
-    const { emailAddress } = tokenProvider.retrieveEmailFromToken(token);
+  const tokenProvider = getTokenProvider();
+  const { emailAddress } = tokenProvider.retrieveEmailFromToken(token);
 
-    if (!emailAddress) {
-      return {
-        email: "",
-        error: "Email address does not exist",
-      };
-    }
-
-    const { hashedPassword } = await retrieveEmailAndHashedPassword(
-      emailAddress
-    );
-    const { errorToken } = tokenProvider.verifyTokenNotUsed(
-      token,
-      hashedPassword
-    );
-
+  if (!emailAddress) {
     return {
-      email: errorToken ? "" : emailAddress,
-      error: errorToken,
+      email: "",
+      error: "Email address does not exist",
     };
   }
+
+  const { hashedPassword } = await retrieveEmailAndHashedPassword(emailAddress);
+  const { errorToken } = tokenProvider.verifyTokenNotUsed(
+    token,
+    hashedPassword
+  );
+
+  return {
+    email: errorToken ? "" : emailAddress,
+    error: errorToken,
+  };
 };
