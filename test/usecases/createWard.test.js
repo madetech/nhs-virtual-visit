@@ -29,8 +29,7 @@ describe("createWard", () => {
       request.code,
       request.trustId,
       request.hospitalId,
-      request.pin,
-      null,
+      request.pin
     ]);
   });
 });
