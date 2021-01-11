@@ -34,8 +34,8 @@ jobs:
 
     steps:
       - name: "Run Azure webapp deploy action using publish profile credentials"
-        uses: azure/webapps-deploy@v2
-        # uses: actions/checkout@master
+        # uses: azure/webapps-deploy@v2
+        uses: actions/checkout@master
         with:
           app-name: ${{ secrets.AZUREAPPSERVICE_APP_NAME }}
           slot-name: ${{ secrets.AZUREAPPSERVICE_SLOT_NAME }}
