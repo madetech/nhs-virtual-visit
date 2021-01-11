@@ -27,7 +27,7 @@ const retrieveManagersByOrgId = async (orgId) => {
   } catch (error) {
     logger.error(error);
     return {
-      manager: [],
+      managers: [],
       error: error.toString(),
     };
   }
