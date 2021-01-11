@@ -40,7 +40,7 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId
     );
 
-    const { managers, error } = await container.getRetrieveManagerByOrgId()(
+    const { managers, error } = await container.getRetrieveManagersByOrgId()(
       authenticationToken.trustId
     );
 

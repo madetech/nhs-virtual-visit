@@ -323,7 +323,8 @@ class AppContainer {
   };
 
   /* These uses the MsSQL DB */
-  getRetrieveManagerByOrgId = () => {
+
+  getRetrieveManagersByOrgId = () => {
     return retrieveManagersByOrgId;
   };
 
