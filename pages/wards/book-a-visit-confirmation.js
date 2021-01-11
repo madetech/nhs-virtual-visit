@@ -35,7 +35,6 @@ const ScheduleConfirmation = ({
     });
   };
   const onSubmit = async () => {
-    console.log("here");
     const submitAnswers = async () => {
       let body = {
         patientName,
@@ -58,7 +57,6 @@ const ScheduleConfirmation = ({
         body,
         correlationId
       );
-      console.log(response);
       const { success, err } = await response.json();
 
       if (success) {
