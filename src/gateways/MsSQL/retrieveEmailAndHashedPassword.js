@@ -1,8 +1,14 @@
 import logger from "../../../logger";
 import MsSQL from "./";
 
+<<<<<<< HEAD
 const retrieveEmailAndHashedPassword = async (email) => {
   const db = await MsSQL.getConnectionPool();
+=======
+const retrieveEmail = async (email) => {
+  const db = await MsSQL.getConnectionPool();
+
+>>>>>>> chore: refactor token provider for reset password
   if (!email) {
     return {
       emailAddress: "",
@@ -45,4 +51,8 @@ const retrieveEmailAndHashedPassword = async (email) => {
   }
 };
 
+<<<<<<< HEAD
 export default retrieveEmailAndHashedPassword;
+=======
+export default retrieveEmail;
+>>>>>>> chore: refactor token provider for reset password
