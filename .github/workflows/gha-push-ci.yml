@@ -12,9 +12,6 @@ jobs:
   tag-and-release:
     runs-on: ubuntu-latest
     steps:
-      # - uses: actions/checkout@v2
-      # - uses: actions/checkout@master
-
       - name: Conventional Changelog Action
         uses: TriPSs/conventional-changelog-action@v3
         id: changelog
@@ -30,6 +27,12 @@ jobs:
           cd release
           ls -la
 
+  azure-deploy:
+    needs: tag-and-release
+    if: github.repository_owner == 'madetech'
+    runs-on: ubuntu-latest
+
+    steps:
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: azure/webapps-deploy@v2
         # uses: actions/checkout@master
