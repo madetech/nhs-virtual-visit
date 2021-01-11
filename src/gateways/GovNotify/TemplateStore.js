@@ -44,5 +44,9 @@ export default () => {
       templateId: process.env.EMAIL_JOIN_TEMPLATE_ID,
       personalisationKeys: ["call_url", "ward_name", "hospital_name"],
     },
+    resetPasswordEmail: {
+      templateId: process.env.EMAIL_RESET_PASSWORD_TEMPLATE_ID,
+      personalisationKeys: ["link"],
+    },
   };
 };
