@@ -8,8 +8,8 @@ import Label from "../../src/components/Label";
 import Input from "../../src/components/Input";
 import Button from "../../src/components/Button";
 import Text from "../../src/components/Text";
+import Router from "next/router";
 import { GridRow, GridColumn } from "../../src/components/Grid";
-// import fetchEndpointWithCorrelationId from '../../src/helpers/fetchEndpointWithCorrelationId';
 
 const ResetPassword = () => {
   const [errors, setErrors] = useState([]);
@@ -47,9 +47,8 @@ const ResetPassword = () => {
       });
 
       if (response.status === 201) {
-        // Send email
-        // console.log("An email has been sent to reset your password")
-        // ...
+        Router.push("reset-password/send-email-success");
+        return true;
       } else {
         onSubmitErrors.push({
           id: "email-invalid-error",

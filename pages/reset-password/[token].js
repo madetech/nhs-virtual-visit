@@ -10,12 +10,12 @@ import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import Form from "../../src/components/Form";
 
-const ResetPassword = ({ email, error }) => {
+const ResetPassword = ({ email, tokenError }) => {
   const [errors, setErrors] = useState([]);
-  if (error) {
+  if (tokenError) {
     errors.push({
       id: "token-error",
-      message: error,
+      message: tokenError,
     });
   }
 
@@ -86,7 +86,7 @@ const ResetPassword = ({ email, error }) => {
       <GridRow>
         <GridColumn>
           <ErrorSummary errors={errors} />
-          {!error && (
+          {!tokenError && (
             <>
               <Heading>Reset Password for {email}</Heading>
               <Form onSubmit={onSubmit}>
@@ -135,12 +135,12 @@ export const getServerSideProps = propsWithContainer(
     const token = query.token;
 
     const verifyResetPasswordLink = container.getVerifyResetPasswordLink();
-    const { email, error } = verifyResetPasswordLink(token);
+    const { email, error } = await verifyResetPasswordLink(token);
 
     return {
       props: {
         email,
-        error,
+        tokenError: error,
       },
     };
   }

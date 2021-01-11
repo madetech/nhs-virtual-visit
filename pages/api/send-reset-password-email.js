@@ -17,10 +17,14 @@ export default withContainer(async ({ body, method }, res, { container }) => {
 
   res.setHeader("Content-Type", "application/json");
 
-  const retrieveEmail = container.getRetrieveEmail();
-  const { validEmail, error } = await retrieveEmail(body.email);
+  const retrieveEmailAndHashedPassword = container.getRetrieveEmailAndHashedPassword();
+  const {
+    emailAddress,
+    hashedPassword,
+    error,
+  } = await retrieveEmailAndHashedPassword(body.email);
 
-  if (error || !validEmail) {
+  if (error || !emailAddress) {
     res.status(400);
     res.end(JSON.stringify({ err: "Email does not exist" }));
     return;
@@ -28,8 +32,7 @@ export default withContainer(async ({ body, method }, res, { container }) => {
 
   const notifyClient = await GovNotify.getInstance();
   const templateId = "a750f140-ff1a-47e2-b60b-0419c8454c23";
-  const emailAddress = body.email;
-  const link = createLink(emailAddress);
+  const link = createLink(emailAddress, hashedPassword);
   const personalisation = { link: link };
   const reference = null;
 
@@ -50,8 +53,8 @@ export default withContainer(async ({ body, method }, res, { container }) => {
   }
 });
 
-const createLink = (emailAddress) => {
-  const token = jwt.sign({ emailAddress }, process.env.JWT_SIGNING_KEY, {
+const createLink = (emailAddress, hashedPassword) => {
+  const token = jwt.sign({ emailAddress, hashedPassword }, hashedPassword, {
     expiresIn: "2h",
   });
   const url = `http://localhost:3000/reset-password/${token}`;
