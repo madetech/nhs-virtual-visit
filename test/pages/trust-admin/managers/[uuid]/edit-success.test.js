@@ -22,7 +22,7 @@ describe("/trust-admin/managers/[uuid]/edit-success", () => {
       Location: "/trust-admin/login",
     });
   });
-  it("retrieves trust name and manager by uuid if authenticated", async () => {
+  it("retrieves trust, manager and error (from props) if authenticated", async () => {
     // Arrange
     const trustId = 1;
     const uuid = "1BBE43B3-4B2E-443E-8399-8299F22AB139";
@@ -64,6 +64,7 @@ describe("/trust-admin/managers/[uuid]/edit-success", () => {
     });
     const actualManager = props.manager;
     const actualTrust = props.trust;
+    const error = props.error;
     // Assert
     expect(retrieveTrustByIdSuccessStub).toHaveBeenCalledWith(trustId);
     expect(actualTrust.name).toEqual(expectedTrustName);
@@ -71,5 +72,6 @@ describe("/trust-admin/managers/[uuid]/edit-success", () => {
     expect(actualManager.uuid).toEqual(expectedManager.uuid);
     expect(actualManager.email).toEqual(expectedManager.email);
     expect(actualManager.status).toEqual(expectedManager.status);
+    expect(error).toBeNull();
   });
 });
