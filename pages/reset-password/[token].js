@@ -136,8 +136,7 @@ export const getServerSideProps = propsWithContainer(
 
     const verifyResetPasswordLink = container.getVerifyResetPasswordLink();
     const { email, error } = await verifyResetPasswordLink(token);
-    console.log(email);
-    console.log(error);
+
     return {
       props: {
         email,
