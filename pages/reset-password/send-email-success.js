@@ -1,4 +1,5 @@
 import React from "react";
+<<<<<<< HEAD
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import PanelSuccess from "../../src/components/PanelSuccess";
 import Layout from "../../src/components/Layout";
@@ -27,3 +28,11 @@ export const getServerSideProps = ({ query }) => {
     },
   };
 };
+=======
+
+const SendEmailSuccess = () => {
+  return <div>Email has been sent for reset password</div>;
+};
+
+export default SendEmailSuccess;
+>>>>>>> chore: refactor token provider for reset password
