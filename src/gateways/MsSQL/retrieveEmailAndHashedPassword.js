@@ -1,7 +1,7 @@
 import logger from "../../../logger";
 import MsSQL from "./";
 
-const retrieveEmail = async (email) => {
+const retrieveEmailAndHashedPassword = async (email) => {
   const db = await MsSQL.getConnectionPool();
 
   if (!email) {
@@ -46,4 +46,4 @@ const retrieveEmail = async (email) => {
   }
 };
 
-export default retrieveEmail;
+export default retrieveEmailAndHashedPassword;
