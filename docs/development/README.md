@@ -94,6 +94,7 @@ Run `./bin/setup_local_mssql_docker.sh`
 
 Notes:
 The script will create the database and populate with an admin user and organisation data.
+Check docker memory allocation, port 1433 isn't used, wait time can be increased to check if the problem is mssql having no time to startup.
 
 ### PostgreSQL 12
 
