@@ -36,7 +36,7 @@ export default withContainer(
       .templateId;
     const expirationTime = "2h";
     const urlPath = "reset-password";
-    const link = createTimeSensitiveLink(
+    const { link, linkError } = createTimeSensitiveLink(
       headers,
       emailAddress,
       hashedPassword,
@@ -44,6 +44,12 @@ export default withContainer(
       urlPath
     );
 
+    if (linkError) {
+      res.status(401);
+      JSON.stringify({
+        error: "There was an error creating link to reset password",
+      });
+    }
     try {
       await sendEmail(
         resetPasswordEmailTemplateId,
