@@ -1,7 +1,7 @@
-import { getServerSideProps } from "pages/trust-admin/managers/[uuid]/edit";
+import { getServerSideProps } from "pages/trust-admin/managers/[uuid]/edit-success";
 import { TRUST_ADMIN } from "src/helpers/userTypes";
 
-describe("trust-admin/managers/[uuid]/edit", () => {
+describe("/trust-admin/managers/[uuid]/edit-success", () => {
   let res;
   beforeEach(() => {
     res = {
