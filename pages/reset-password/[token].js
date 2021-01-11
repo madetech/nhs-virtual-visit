@@ -9,6 +9,7 @@ import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import Form from "../../src/components/Form";
+import Router from "next/router";
 
 const ResetPassword = ({ email, tokenError }) => {
   const [errors, setErrors] = useState([]);
@@ -68,7 +69,7 @@ const ResetPassword = ({ email, tokenError }) => {
       });
 
       if (response.status === 201) {
-        window.location.href = `/reset-password/reset-success`;
+        Router.push(`/reset-password/reset-success`);
         return true;
       } else {
         onSubmitErrors.push({

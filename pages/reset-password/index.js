@@ -8,8 +8,8 @@ import Label from "../../src/components/Label";
 import Input from "../../src/components/Input";
 import Button from "../../src/components/Button";
 import Text from "../../src/components/Text";
-import Router from "next/router";
 import { GridRow, GridColumn } from "../../src/components/Grid";
+import Router from "next/router";
 
 const ResetPassword = () => {
   const [errors, setErrors] = useState([]);
@@ -47,7 +47,10 @@ const ResetPassword = () => {
       });
 
       if (response.status === 201) {
-        Router.push("reset-password/send-email-success");
+        Router.push({
+          pathname: "reset-password/send-email-success",
+          query: { email },
+        });
         return true;
       } else {
         onSubmitErrors.push({
