@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import MsSQL from "../gateways/MsSQL";
 
 const version = "3";
 
@@ -38,39 +37,25 @@ class TokenProvider {
     return decryptedToken;
   }
 
-  // retrieveEmailFromToken(token) {
-  //   try {
-  //     const { emailAddress} = jwt.decode(token);
-  //     return emailAddress;
-  //   } catch (error) {
-  //     return {emailAddress:""};
-  //   }
-
-  // }
-  async verifyTokenAndRetrieveEmail(token) {
-    const db = await MsSQL.getConnectionPool();
-
+  retrieveEmailFromToken(token) {
     try {
       const { emailAddress } = jwt.decode(token);
+      return { emailAddress };
+    } catch (error) {
+      return { emailAddress: "" };
+    }
+  }
 
-      try {
-        const dbResponse = await db
-          .request()
-          .input("emailAddress", emailAddress)
-          .query(`SELECT password from dbo.[user] WHERE email = @emailAddress`);
-
-        const secret = dbResponse.recordset[0].password;
-        jwt.verify(token, secret);
-
-        return {
-          emailAddress,
-        };
-      } catch (err) {
-        return { emailAddress: "" };
-      }
+  verifyTokenNotUsed(token, secret) {
+    try {
+      jwt.verify(token, secret);
+      return {
+        errorToken: "",
+      };
     } catch (error) {
       return {
-        emailAddress: "",
+        errorToken:
+          "Link is incorrect or has expired. Please reset your password again to get a new link.",
       };
     }
   }
