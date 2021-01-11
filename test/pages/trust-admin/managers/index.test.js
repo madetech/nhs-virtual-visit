@@ -25,7 +25,7 @@ describe("trust-admin/managers", () => {
     });
   });
 
-  it("retrieves trust name and managers if authenticated", async () => {
+  it("retrieves trust, managers list and error (from props) if authenticated", async () => {
     // Arrange
     const trustId = 1;
     const expectedTrustName = "Doggo Trust";
@@ -71,6 +71,7 @@ describe("trust-admin/managers", () => {
     });
     const actualManagerArray = props.managers;
     const actualTrust = props.trust;
+    const error = props.error;
     // Assert
     expect(retrieveTrustByIdSuccessStub).toHaveBeenCalledWith(trustId);
     expect(actualTrust.name).toEqual(expectedTrustName);
@@ -81,5 +82,6 @@ describe("trust-admin/managers", () => {
       expect(manager.email).toEqual(expectedManagersArray[idx].email);
       expect(manager.status).toEqual(expectedManagersArray[idx].status);
     });
+    expect(error).toBeNull();
   });
 });
