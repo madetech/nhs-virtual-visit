@@ -1,16 +1,16 @@
-import AppContainer from "../../src/containers/AppContainer";
-import Database from "../../src/gateways/Database";
+import AppContainer from "../../../src/containers/AppContainer";
+import Database from "../../../src/gateways/Database";
 
-import findCallsByWardId from "../../src/gateways/findCallsByWardId";
-import updateCallStatusesByWardId from "../../src/gateways/updateCallStatusesByWardId";
-import { ARCHIVED } from "../../src/helpers/visitStatus";
+import findCallsByWardId from "../../../src/gateways/PostGreSQL/findCallsByWardId";
+import updateCallStatusesByWardId from "../../../src/gateways/PostGreSQL/updateCallStatusesByWardId";
+import { ARCHIVED } from "../../../src/helpers/visitStatus";
 
 import {
   setupTrust,
   setupWard,
   setupHospital,
   setupVisit,
-} from "../../test/testUtils/factories";
+} from "../../../test/testUtils/factories";
 
 describe("updateCallStatusesByWardId() contract", () => {
   const container = AppContainer.getInstance();

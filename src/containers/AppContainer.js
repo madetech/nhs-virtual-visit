@@ -1,6 +1,6 @@
 import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
-import insertVisit from "../gateways/insertVisit";
+import insertVisit from "../gateways/PostgreSQL/insertVisit";
 import deleteVisitByCallId from "../usecases/deleteVisitByCallId";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
@@ -45,21 +45,21 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
-import findWardByCode from "../gateways/findWardByCode";
+import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
 import createOrganization from "../usecases/createOrganization";
 import retrieveOrganizations from "../usecases/retrieveOrganizations";
-import updateCallStatusesByWardId from "../gateways/updateCallStatusesByWardId";
-import updateWardArchiveTimeById from "../gateways/updateWardArchiveTimeById";
-import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
-import retrieveWardById from "../gateways/retrieveWardById";
-import retrieveTrustById from "../gateways/retrieveTrustById";
-import retrieveOrganizationById from "../gateways/retrieveOrganizationById";
+import updateCallStatusesByWardId from "../gateways/PostgreSQL/updateCallStatusesByWardId";
+import updateWardArchiveTimeById from "../gateways/PostgreSQL/updateWardArchiveTimeById";
+import updateWardVisitTotals from "../gateways/PostgreSQL/updateWardVisitTotals";
+import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
+import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
+import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
 import logEvent from "../gateways/logEvent";
 
 import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
 import MsSQL from "../gateways/MsSQL";
-import insertHospital from "../gateways/insertHospital";
+import insertHospital from "../gateways/PostgreSQL/insertHospital";
 
 class AppContainer {
   getDb = () => {

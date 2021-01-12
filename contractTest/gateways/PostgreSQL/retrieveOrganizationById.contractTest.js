@@ -1,5 +1,5 @@
-import retrieveOrganizationById from "../../src/gateways/retrieveOrganizationById";
-import { setupOrganization } from "../../test/testUtils/factories";
+import retrieveOrganizationById from "../../../src/gateways/PostGreSQL/retrieveOrganizationById";
+import { setupOrganization } from "../../../test/testUtils/factories";
 
 describe("retrieveOrganizationById", () => {
   it("returns an object containing the organization", async () => {

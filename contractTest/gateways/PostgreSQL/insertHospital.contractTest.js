@@ -1,6 +1,6 @@
-import AppContainer from "../../src/containers/AppContainer";
-import insertHospital from "../../src/gateways/insertHospital";
-import { setupTrust } from "../../test/testUtils/factories";
+import AppContainer from "../../../src/containers/AppContainer";
+import insertHospital from "../../../src/gateways/PostGreSQL/insertHospital";
+import { setupTrust } from "../../../test/testUtils/factories";
 
 describe("insertHospital contract", () => {
   const container = AppContainer.getInstance();

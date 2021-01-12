@@ -1,5 +1,5 @@
-import retrieveWardById from "../../src/gateways/retrieveWardById";
-import { setupWardWithinHospitalAndTrust } from "../../test/testUtils/factories";
+import retrieveWardById from "../../../src/gateways/PostGreSQL/retrieveWardById";
+import { setupWardWithinHospitalAndTrust } from "../../../test/testUtils/factories";
 
 describe("retrieveWardById", () => {
   it("returns the ward", async () => {

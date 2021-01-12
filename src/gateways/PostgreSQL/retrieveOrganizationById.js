@@ -1,5 +1,5 @@
-import logger from "../../logger";
-import Database from "./Database";
+import logger from "../../../logger";
+import Database from "../Database";
 
 const retrieveOrganizationById = async (organizationId) => {
   const db = await Database.getInstance();

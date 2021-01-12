@@ -1,5 +1,5 @@
-import insertVisit from "../../src/gateways/insertVisit";
-import { SCHEDULED } from "../../src/helpers/visitStatus";
+import insertVisit from "../../../src/gateways/PostgreSQL/insertVisit";
+import { SCHEDULED } from "../../../src/helpers/visitStatus";
 
 describe("insertVisit tests", () => {
   it("creates a visit in the db when valid", async () => {

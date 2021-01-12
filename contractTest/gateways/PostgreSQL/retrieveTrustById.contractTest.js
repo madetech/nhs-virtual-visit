@@ -1,5 +1,5 @@
-import retrieveTrustById from "../../src/gateways/retrieveTrustById";
-import { setupTrust } from "../../test/testUtils/factories";
+import retrieveTrustById from "../../../src/gateways/PostGreSQL/retrieveTrustById";
+import { setupTrust } from "../../../test/testUtils/factories";
 
 describe("retrieveTrustById", () => {
   it("returns an object containing the trust", async () => {
