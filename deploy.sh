@@ -9,6 +9,7 @@ fi
 
 # Check if command runs.
 ls -la
+ll
 
 # Run create tables scripts.
 npm run dbmigrate-prod-mssql up:mssql
