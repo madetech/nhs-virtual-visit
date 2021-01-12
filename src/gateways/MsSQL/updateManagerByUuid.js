@@ -23,7 +23,6 @@ const updateManagerByUuid = async ({ uuid, status }) => {
     };
   } catch (error) {
     logger.error(error);
-    console.log(error);
     return {
       error: error.toString(),
     };
