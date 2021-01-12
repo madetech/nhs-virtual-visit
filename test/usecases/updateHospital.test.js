@@ -1,72 +1,67 @@
 import updateHospital from "../../src/usecases/updateHospital";
 
 describe("updateHospital", () => {
-  it("updates a hospital in the db when valid", async () => {
-    const oneSpy = jest.fn().mockReturnValue({ id: 10 });
-    const container = {
-      async getDb() {
-        return {
-          one: oneSpy,
-        };
-      },
+  let updateHospitalSpy = jest
+    .fn()
+    .mockReturnValue({ hospitalId: 10, error: null });
+  let container;
+
+  beforeEach(() => {
+    container = {
+      getUpdateHospitalGateway: () => updateHospitalSpy,
     };
+  });
+
+  it("calls updateHospital when valid", async () => {
     const request = {
       id: 10,
       name: "Hospital",
       status: "active",
     };
+
     const { id, error } = await updateHospital(container)(request);
+
     expect(id).toEqual(10);
     expect(error).toBeNull();
-    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
-      request.name,
-      request.id,
-      null,
-      null,
-      "active",
-    ]);
+    expect(updateHospitalSpy).toHaveBeenCalledWith({
+      name: request.name,
+      id: request.id,
+      supportUrl: null,
+      surveyUrl: null,
+      status: "active",
+    });
   });
 
   it("updates a hospital with an optional support url", async () => {
-    const oneSpy = jest.fn().mockReturnValue({ id: 10 });
-    const container = {
-      async getDb() {
-        return {
-          one: oneSpy,
-        };
-      },
-    };
     const request = {
       id: 10,
       name: "Hospital",
-      code: "HHH",
       status: "active",
       supportUrl: "https://www.support.example.com",
       surveyUrl: "https://www.survey.example.com",
     };
+
     const { id, error } = await updateHospital(container)(request);
+
     expect(id).toEqual(10);
     expect(error).toBeNull();
-    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
-      request.name,
-      request.id,
-      "https://www.support.example.com",
-      "https://www.survey.example.com",
-      "active",
-    ]);
+    expect(updateHospitalSpy).toHaveBeenCalledWith({
+      name: request.name,
+      id: request.id,
+      supportUrl: "https://www.support.example.com",
+      surveyUrl: "https://www.survey.example.com",
+      status: "active",
+    });
   });
 
-  it("returns an error object on db exception", async () => {
-    const container = {
-      async getDb() {
-        return {
-          one: jest.fn(() => {
-            throw new Error("DB Error!");
-          }),
-        };
-      },
-    };
+  it("returns error response when updateHospital returns error", async () => {
+    container.getUpdateHospitalGateway = () =>
+      jest
+        .fn()
+        .mockReturnValue({ hospitalId: null, error: "Error: DB Error!" });
+
     const { id, error } = await updateHospital(container)("rubbishRequest");
+
     expect(error).toEqual("Error: DB Error!");
     expect(id).toEqual(null);
   });
