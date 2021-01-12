@@ -48,6 +48,8 @@ import updateTrust from "../usecases/updateTrust";
 import findWardByCode from "../gateways/findWardByCode";
 import createOrganization from "../usecases/createOrganization";
 import retrieveOrganizations from "../usecases/retrieveOrganizations";
+import updateCallStatusesByWardId from "../gateways/updateCallStatusesByWardId";
+import updateWardArchiveTimeById from "../gateways/updateWardArchiveTimeById";
 import updateWardVisitTotals from "../gateways/updateWardVisitTotals";
 import retrieveWardById from "../gateways/retrieveWardById";
 import retrieveTrustById from "../gateways/retrieveTrustById";
@@ -145,6 +147,10 @@ class AppContainer {
   getFindWardByCodeGateway = () => {
     return findWardByCode(this);
   };
+
+  getUpdateCallStatusesByWardIdGateway = () => updateCallStatusesByWardId(this);
+
+  getUpdateWardArchiveTimeByIdGateway = () => updateWardArchiveTimeById(this);
 
   getUpdateWardVisitTotals = () => {
     return updateWardVisitTotalsDb(this);

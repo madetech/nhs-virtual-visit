@@ -8,13 +8,13 @@ const retrieveOrganizationById = async (organizationId) => {
 
   try {
     if (!organizationId)
-      throw "Attempting to retrieve trust with no trust Id set";
+      throw "Attempting to retrieve organization with no organization ID set";
     const organization = await db.oneOrNone(
       "SELECT * FROM organization WHERE id = $1 LIMIT 1",
       organizationId
     );
 
-    if (!organization) throw "Trust not found for id";
+    if (!organization) throw "Organization not found for id";
 
     return {
       organization: {

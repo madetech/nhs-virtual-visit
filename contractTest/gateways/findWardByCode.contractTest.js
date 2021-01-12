@@ -26,6 +26,7 @@ describe("findWardByCode() contract", () => {
       wardCode,
       wardId,
       trustId,
+      archivedAt: null,
     });
   });
 

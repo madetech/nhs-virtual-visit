@@ -17,15 +17,17 @@ describe("retrieveOrganizationById", () => {
     });
   });
 
-  it("returns an error when trust not found for id", async () => {
+  it("returns an error when organization not found for id", async () => {
     const { error } = await retrieveOrganizationById(12);
     expect(error).toBeDefined();
-    expect(error).toEqual("Trust not found for id");
+    expect(error).toEqual("Organization not found for id");
   });
 
-  it("returns an error when trust id not set", async () => {
+  it("returns an error when organization id not set", async () => {
     const { error } = await retrieveOrganizationById();
     expect(error).toBeDefined();
-    expect(error).toEqual("Attempting to retrieve trust with no trust Id set");
+    expect(error).toEqual(
+      "Attempting to retrieve organization with no organization ID set"
+    );
   });
 });
