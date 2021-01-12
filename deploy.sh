@@ -7,9 +7,7 @@ else
 	commandPrefix=
 fi
 
-# Check if command runs.
-ls -la
-ll
+echo "Running Deploy.SH DBMIGRATE project script"
 
 # Run create tables scripts.
 npm run dbmigrate-prod-mssql up:mssql
