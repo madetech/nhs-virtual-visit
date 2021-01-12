@@ -20,12 +20,7 @@ jobs:
           output-file: "CHANGELOG.md"
 
       - name: Create Release Folder
-        run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress*' --exclude='jest.*' --exclude='contractTest/' --exclude='bin/' --exclude='db/' --exclude='node_modules/' . ./release
-
-      - name: Switch to Release Folder
-        run: |
-          cd release
-          ls -la
+        run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress*' --exclude='jest.*' --exclude='contractTest/' --exclude='node_modules/' . ./release
 
   azure-deploy:
     needs: tag-and-release
@@ -33,6 +28,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Switch to Release Folder
+        run: |
+          cd release
+          ls -la
+
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: actions/checkout@master
         with:
