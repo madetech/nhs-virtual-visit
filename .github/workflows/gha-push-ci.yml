@@ -25,11 +25,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Create Release Folder
-        run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress*' --exclude='jest.*' --exclude='contractTest/' --exclude='terraform/' --exclude='node_modules/' . ./release
+      # - name: Create Release Folder
+      #   run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress*' --exclude='jest.*' --exclude='contractTest/' --exclude='terraform/' --exclude='node_modules/' . ./release
 
-      - name: Switch to Release Folder
+      - name: Create and Switch to Release Folder
         run: |
+          rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress*' --exclude='jest.*' --exclude='contractTest/' --exclude='terraform/' --exclude='node_modules/' . ./release
           cd release
           ls -la
 
