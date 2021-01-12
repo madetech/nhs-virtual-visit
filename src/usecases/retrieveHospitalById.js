@@ -1,32 +1,16 @@
-import logger from "../../logger";
+const retrieveHospitalById = ({ getRetrieveHospitalByIdGateway }) => async (
+  hospitalId,
+  trustId
+) => {
+  const { hospital, error } = await getRetrieveHospitalByIdGateway()({
+    hospitalId,
+    trustId,
+  });
 
-const retrieveHospitalById = ({ getDb }) => async (hospitalId, trustId) => {
-  const db = await getDb();
-  logger.info(`Retrieving hospital for ${hospitalId}`);
-  try {
-    const hospital = await db.oneOrNone(
-      "SELECT * FROM hospitals WHERE id = $1 AND trust_id = $2 LIMIT 1",
-      [hospitalId, trustId]
-    );
-
-    return {
-      hospital: {
-        id: hospital.id,
-        name: hospital.name,
-        code: hospital.code,
-        status: hospital.status,
-        supportUrl: hospital.support_url,
-        surveyUrl: hospital.survey_url,
-      },
-      error: null,
-    };
-  } catch (error) {
-    logger.error(error);
-    return {
-      hospital: null,
-      error: error.toString(),
-    };
-  }
+  return {
+    hospital: hospital,
+    error: error,
+  };
 };
 
 export default retrieveHospitalById;

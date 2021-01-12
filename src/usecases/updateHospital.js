@@ -1,33 +1,31 @@
 import logger from "../../logger";
 
-export default ({ getDb }) => async ({
+export default ({ getUpdateHospitalGateway }) => async ({
   name,
   id,
   status,
   supportUrl = null,
   surveyUrl = null,
 }) => {
-  const db = await getDb();
+  logger.info({
+    message: `Updating hospital for ${name}`,
+    meta: {
+      name: name,
+      id: id,
+      status: status,
+    },
+  });
 
-  try {
-    const updatedHospital = await db.one(
-      `UPDATE hospitals
-      SET name = $1, support_url = $3, survey_url = $4, status = $5
-      WHERE
-        id = $2
-      RETURNING id
-			`,
-      [name, id, supportUrl, surveyUrl, status]
-    );
-    return {
-      id: updatedHospital.id,
-      error: null,
-    };
-  } catch (error) {
-    logger.error(error);
-    return {
-      id: null,
-      error: error.toString(),
-    };
-  }
+  const { hospitalId, error } = await getUpdateHospitalGateway()({
+    name,
+    id,
+    supportUrl,
+    surveyUrl,
+    status,
+  });
+
+  return {
+    id: hospitalId,
+    error: error,
+  };
 };

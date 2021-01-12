@@ -55,7 +55,9 @@ import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
 import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
 import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
 import logEvent from "../gateways/logEvent";
-
+import updateHospitalGW from "../gateways/PostgreSQL/updateHospital";
+import retrieveHospitalByIdGW from "../gateways/PostgreSQL/retrieveHospitalById";
+import retrieveHospitalsByTrustIdGW from "../gateways/PostgreSQL/retrieveHospitalsByTrustId";
 import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
 import MsSQL from "../gateways/MsSQL";
@@ -287,6 +289,18 @@ class AppContainer {
 
   getInsertVisitGateway = () => {
     return insertVisit;
+  };
+
+  getUpdateHospitalGateway = () => {
+    return updateHospitalGW(this);
+  };
+
+  getRetrieveHospitalByIdGateway = () => {
+    return retrieveHospitalByIdGW(this);
+  };
+
+  getRetrieveHospitalsByTrustIdGateway = () => {
+    return retrieveHospitalsByTrustIdGW(this);
   };
 
   getInsertHospitalGateway = () => {
