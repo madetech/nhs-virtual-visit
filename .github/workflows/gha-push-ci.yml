@@ -25,18 +25,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Create and Switch to Release Folder
-      #   run: |
-      #     rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress*' --exclude='jest.*' --exclude='contractTest/' --exclude='terraform/' --exclude='node_modules/' . ./release
-      #     cd release
-      #     ls -la
-
-      - name: "Run Azure webapp deploy action using publish profile credentials"
-        uses: actions/checkout@master
+      - name: Create and Switch to Release Folder
         run: |
           rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress*' --exclude='jest.*' --exclude='contractTest/' --exclude='terraform/' --exclude='node_modules/' . ./release
           cd release
           ls -la
+
+      - name: "Run Azure webapp deploy action using publish profile credentials"
+        uses: actions/checkout@master
         with:
           app-name: ${{ secrets.AZUREAPPSERVICE_APP_NAME }}
           slot-name: ${{ secrets.AZUREAPPSERVICE_SLOT_NAME }}
