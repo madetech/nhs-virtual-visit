@@ -26,7 +26,6 @@ const archiveManagerByUuid = async (uuid) => {
     }
   } catch (error) {
     logger.error(error);
-    console.log(error);
     return {
       success: false,
       error: "There was a problem deleting a manager",
