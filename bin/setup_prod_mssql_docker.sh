@@ -8,4 +8,4 @@ else
 fi
 
 # Run create tables scripts.
-npm run dbmigrate-dev-mssql up:mssql
+npm run dbmigrate-prod-mssql up:mssql
