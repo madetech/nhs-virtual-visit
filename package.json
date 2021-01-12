@@ -31,6 +31,7 @@
     "dbmigrate": "db-migrate --migrations-dir 'db/migrations/'",
     "dbmigrate-dev-mssql": "db-migrate --migrations-dir 'db/migrations/' -e development-mssql",
     "dbmigrate-test-mssql": "db-migrate --migrations-dir 'db/migrations/' -e test-mssql",
+    "dbmigrate-prod-mssql": "db-migrate --migrations-dir 'db/migrations/' -e production-mssql",
     "dbmigratetest": "db-migrate --migrations-dir 'db/migrations/' -e test",
     "dbmigratedry": "db-migrate --dry-run --migrations-dir 'db/migrations/'",
     "postinstall": "test -n \"$NONPMPOSTINSTALL\" || npm run build"
