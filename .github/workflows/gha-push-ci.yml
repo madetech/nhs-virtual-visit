@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Create and Switch to Release Folder
         run: |
-          rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress*' --exclude='jest.*' --exclude='contractTest/' --exclude='terraform/' --exclude='node_modules/' . ./release
+          rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress*' --exclude='jest.*' --exclude='contractTest/' --exclude='terraform/' --exclude='bin/' --exclude='node_modules/' . ./release
           cd release
           ls -la
 
