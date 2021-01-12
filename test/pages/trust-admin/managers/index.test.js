@@ -1,5 +1,5 @@
-import { getServerSideProps } from "pages/trust-admin/managers/index";
-import { TRUST_ADMIN } from "src/helpers/userTypes";
+import { getServerSideProps } from "../../../../pages/trust-admin/managers/index";
+import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 
 describe("trust-admin/managers", () => {
   let res;
