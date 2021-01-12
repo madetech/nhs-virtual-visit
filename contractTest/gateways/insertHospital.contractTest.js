@@ -1,14 +1,15 @@
 import AppContainer from "../../src/containers/AppContainer";
+import insertHospital from "../../src/gateways/insertHospital";
 import { setupTrust } from "../../test/testUtils/factories";
 
-describe("createHospital contract tests", () => {
+describe("insertHospital contract", () => {
   const container = AppContainer.getInstance();
 
-  it("creates a valid hospital", async () => {
+  it("inserts hospital into the db", async () => {
     const { trustId } = await setupTrust();
-    const { hospitalId } = await container.getCreateHospital()({
+    const { hospitalId } = await insertHospital(container)({
       name: "Test Hospital",
-      trustId: trustId,
+      trustId,
       code: "TH1",
       supportUrl: "https://www.support.example.com",
       surveyUrl: "https://www.survey.example.com",

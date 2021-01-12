@@ -59,6 +59,7 @@ import logEvent from "../gateways/logEvent";
 import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
 import MsSQL from "../gateways/MsSQL";
+import insertHospital from "../gateways/insertHospital";
 
 class AppContainer {
   getDb = () => {
@@ -286,6 +287,10 @@ class AppContainer {
 
   getInsertVisitGateway = () => {
     return insertVisit;
+  };
+
+  getInsertHospitalGateway = () => {
+    return insertHospital(this);
   };
 
   getUpdateWardVisitTotalsGateway = () => {

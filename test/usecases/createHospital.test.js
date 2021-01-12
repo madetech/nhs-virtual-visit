@@ -1,16 +1,18 @@
 import createHospital from "../../src/usecases/createHospital";
 
 describe("createHospital", () => {
-  it("creates a hospital in the db when valid", async () => {
-    const oneSpy = jest.fn().mockReturnValue({ id: 1 });
-    const container = {
-      async getDb() {
-        return {
-          one: oneSpy,
-        };
-      },
-    };
+  let insertHospitalSpy = jest
+    .fn()
+    .mockReturnValue({ hospitalId: 1, error: null });
+  let container;
 
+  beforeEach(() => {
+    container = {
+      getInsertHospitalGateway: () => insertHospitalSpy,
+    };
+  });
+
+  it("calls insert hospital when valid", async () => {
     const request = {
       name: "Defoe Hospital",
       trustId: 2,
@@ -18,27 +20,19 @@ describe("createHospital", () => {
     };
 
     const { hospitalId, error } = await createHospital(container)(request);
+
     expect(hospitalId).toEqual(1);
     expect(error).toBeNull();
-    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
-      "Defoe Hospital",
-      2,
-      null,
-      null,
-      "DFH",
-    ]);
+    expect(insertHospitalSpy).toHaveBeenCalledWith({
+      name: "Defoe Hospital",
+      trustId: 2,
+      code: "DFH",
+      supportUrl: null,
+      surveyUrl: null,
+    });
   });
 
-  it("creates a hospital with optional support url", async () => {
-    const oneSpy = jest.fn().mockReturnValue({ id: 1 });
-    const container = {
-      async getDb() {
-        return {
-          one: oneSpy,
-        };
-      },
-    };
-
+  it("calls insert hospital with optional arguments", async () => {
     const request = {
       name: "Defoe Hospital",
       trustId: 2,
@@ -48,30 +42,25 @@ describe("createHospital", () => {
     };
 
     const { hospitalId, error } = await createHospital(container)(request);
+
     expect(hospitalId).toEqual(1);
     expect(error).toBeNull();
-    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
-      "Defoe Hospital",
-      2,
-      "https://www.support.example.com",
-      "https://www.survey.example.com",
-      "DFH",
-    ]);
+    expect(insertHospitalSpy).toHaveBeenCalledWith({
+      name: "Defoe Hospital",
+      trustId: 2,
+      code: "DFH",
+      supportUrl: "https://www.support.example.com",
+      surveyUrl: "https://www.survey.example.com",
+    });
   });
 
-  it("returns an error object on db exception", async () => {
-    const container = {
-      async getDb() {
-        return {
-          one: jest.fn(() => {
-            throw new Error("DB Error!");
-          }),
-        };
-      },
-    };
+  it("returns error response when insertHospital returns error", async () => {
+    container.getInsertHospitalGateway = () =>
+      jest.fn().mockReturnValue({ hospitalId: null, error: "Oh no" });
 
     const { hospitalId, error } = await createHospital(container)("");
-    expect(error).toEqual("Error: DB Error!");
+
+    expect(error).toEqual("Oh no");
     expect(hospitalId).toBeNull();
   });
 });
