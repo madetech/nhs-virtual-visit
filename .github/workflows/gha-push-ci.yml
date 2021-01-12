@@ -9,7 +9,7 @@ on:
       - "docs/**"
 
 jobs:
-  tag-and-release:
+  tag:
     runs-on: ubuntu-latest
     steps:
       - name: Conventional Changelog Action
@@ -19,11 +19,8 @@ jobs:
           github-token: ${{ secrets.github_token }}
           output-file: "CHANGELOG.md"
 
-  azure-deploy:
-    needs: tag-and-release
-    if: github.repository_owner == 'madetech'
+  release:
     runs-on: ubuntu-latest
-
     steps:
       - name: Create and Switch to Release Folder
         run: |
@@ -31,10 +28,16 @@ jobs:
           cd release
           ls -la
 
+  azure-deploy:
+    needs: [tag, release]
+    if: github.repository_owner == 'madetech'
+    runs-on: ubuntu-latest
+
+    steps:
       - name: "Run Azure webapp deploy action using publish profile credentials"
         uses: actions/checkout@master
         with:
           app-name: ${{ secrets.AZUREAPPSERVICE_APP_NAME }}
           slot-name: ${{ secrets.AZUREAPPSERVICE_SLOT_NAME }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1354ACBB1422489280969781D23BDAC6 }}
-          package: .
+          package: release
