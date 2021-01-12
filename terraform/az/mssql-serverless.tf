@@ -27,10 +27,6 @@ resource "azurerm_mssql_server" "mssql_server" {
 }
 
 resource "azurerm_mssql_database" "mssql_db" {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> test: subject: Create terraform scripts
     name                            = "nhs-virtual-visit"
     server_id                       = azurerm_mssql_server.mssql_server.id
     collation                       = "SQL_Latin1_General_CP1_CI_AS"
@@ -40,19 +36,6 @@ resource "azurerm_mssql_database" "mssql_db" {
     auto_pause_delay_in_minutes     = 60
     sku_name                        = "GP_S_Gen5_1"
     zone_redundant                  = false
-<<<<<<< HEAD
-=======
-    name           = "nhs-virtual-visit"
-    server_id      = azurerm_mssql_server.mssql_server.id
-    collation      = "SQL_Latin1_General_CP1_CI_AS"
-    license_type   = "LicenseIncluded"
-    max_size_gb    = 20
-    read_scale     = true
-    sku_name       = "GP_S_Gen5_1"
-    zone_redundant = false
->>>>>>> test: subject: Create terraform scripts
-=======
->>>>>>> test: subject: Create terraform scripts
 
     tags = {
         environment = "Production"
