@@ -1,5 +1,5 @@
-import { getServerSideProps } from "pages/trust-admin/managers/[uuid]/archive-confirmation";
-import { TRUST_ADMIN } from "src/helpers/userTypes";
+import { getServerSideProps } from "../../../../../pages/trust-admin/managers/[uuid]/archive-confirmation";
+import { TRUST_ADMIN } from "../../../../../src/helpers/userTypes";
 
 describe("trust-admin/managers/[uuid]/archive-confirmation", () => {
   let res;
