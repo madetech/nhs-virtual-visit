@@ -1,4 +1,4 @@
-import { SCHEDULED } from "../../src/helpers/visitStatus";
+import { SCHEDULED } from "../../helpers/visitStatus";
 
 const insertVisit = async (db, visit, wardId) => {
   const { id: patientDetailsId } = await db.one(

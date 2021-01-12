@@ -1,4 +1,4 @@
-import insertHospital from "../../src/gateways/insertHospital";
+import insertHospital from "../../../src/gateways/PostgreSQL/insertHospital";
 
 describe("insertHospital", () => {
   let oneSpy = jest.fn().mockReturnValue({ id: 1 });

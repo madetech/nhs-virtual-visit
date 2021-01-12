@@ -1,11 +1,11 @@
-import AppContainer from "../../src/containers/AppContainer";
-import findWardByCode from "../../src/gateways/findWardByCode";
+import AppContainer from "../../../src/containers/AppContainer";
+import findWardByCode from "../../../src/gateways/PostGreSQL/findWardByCode";
 
 import {
   setupTrust,
   setupWard,
   setupHospital,
-} from "../../test/testUtils/factories";
+} from "../../../test/testUtils/factories";
 
 describe("findWardByCode() contract", () => {
   const container = AppContainer.getInstance();

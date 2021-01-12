@@ -1,7 +1,7 @@
-import AppContainer from "../../src/containers/AppContainer";
-import insertVisit from "../../src/gateways/insertVisit";
-import Database from "../../src/gateways/Database";
-import { setupTrust, setupWard } from "../../test/testUtils/factories";
+import AppContainer from "../../../src/containers/AppContainer";
+import insertVisit from "../../../src/gateways/PostGreSQL/insertVisit";
+import Database from "../../../src/gateways/Database";
+import { setupTrust, setupWard } from "../../../test/testUtils/factories";
 
 describe("insertVisit contract tests", () => {
   const container = AppContainer.getInstance();

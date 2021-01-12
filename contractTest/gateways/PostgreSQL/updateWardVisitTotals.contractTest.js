@@ -1,5 +1,5 @@
-import AppContainer from "../../src/containers/AppContainer";
-import { setupTrust, setupWard } from "../../test/testUtils/factories";
+import AppContainer from "../../../src/containers/AppContainer";
+import { setupTrust, setupWard } from "../../../test/testUtils/factories";
 
 describe("updateWardVisitTotals contract tests", () => {
   const container = AppContainer.getInstance();

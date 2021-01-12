@@ -1,16 +1,16 @@
 import moment from "moment";
 
-import AppContainer from "../../src/containers/AppContainer";
-import Database from "../../src/gateways/Database";
+import AppContainer from "../../../src/containers/AppContainer";
+import Database from "../../../src/gateways/Database";
 
-import findWardByCode from "../../src/gateways/findWardByCode";
-import updateWardArchiveTimeById from "../../src/gateways/updateWardArchiveTimeById";
+import findWardByCode from "../../../src/gateways/PostGreSQL/findWardByCode";
+import updateWardArchiveTimeById from "../../../src/gateways/PostGreSQL/updateWardArchiveTimeById";
 
 import {
   setupTrust,
   setupWard,
   setupHospital,
-} from "../../test/testUtils/factories";
+} from "../../../test/testUtils/factories";
 
 describe("updateWardArchiveTimeById() contract", () => {
   const container = AppContainer.getInstance();

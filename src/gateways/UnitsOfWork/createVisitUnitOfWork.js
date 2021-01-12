@@ -1,7 +1,7 @@
 import logger from "../../../logger";
 import Database from "../Database";
-import insertVisit from "../insertVisit";
-import updateWardVisitTotals from "../updateWardVisitTotals";
+import insertVisit from "../PostGreSQL/insertVisit";
+import updateWardVisitTotals from "../PostGreSQL/updateWardVisitTotals";
 
 const createVisitUnitOfWork = (sendBookingNotification) => async (
   visit,
