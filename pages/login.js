@@ -11,7 +11,7 @@ import propsWithContainer from "../src/middleware/propsWithContainer";
 import Form from "../src/components/Form";
 import fetchEndpointWithCorrelationId from "../src/helpers/fetchEndpointWithCorrelationId";
 import { v4 as uuidv4 } from "uuid";
-import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
+import { hasError, errorMessage } from "../src/helpers/pageErrorHandler";
 import AnchorLink from "../src/components/AnchorLink";
 
 const Login = ({ correlationId }) => {
