@@ -1,9 +1,14 @@
-import logger from "../../logger";
 import { VIDEO_PROVIDERS } from "../providers/CallIdProvider";
 
-const updateTrust = ({ getDb }) => async ({ id, videoProvider }) => {
-  if (!id) {
-    return { id: null, error: "An id must be provided." };
+const updateTrust = ({ getUpdateTrustGateway }) => async ({
+  trustId,
+  videoProvider,
+}) => {
+  if (!trustId) {
+    return {
+      id: null,
+      error: "An id must be provided.",
+    };
   }
   if (!VIDEO_PROVIDERS.includes(videoProvider)) {
     return {
@@ -12,38 +17,15 @@ const updateTrust = ({ getDb }) => async ({ id, videoProvider }) => {
     };
   }
 
-  const db = await getDb();
+  const { id, error } = await getUpdateTrustGateway()({
+    id: trustId,
+    videoProvider,
+  });
 
-  try {
-    const updatedTrust = await db.oneOrNone(
-      `UPDATE trusts
-      SET video_provider = $1
-      WHERE
-        id = $2
-      RETURNING id
-      `,
-      [videoProvider, id]
-    );
-
-    if (updatedTrust) {
-      return {
-        id: updatedTrust.id,
-        error: null,
-      };
-    } else {
-      return {
-        id: null,
-        error: null,
-      };
-    }
-  } catch (error) {
-    logger.error(error);
-
-    return {
-      id: null,
-      error: error.toString(),
-    };
-  }
+  return {
+    id: id,
+    error: error,
+  };
 };
 
 export default updateTrust;

@@ -56,6 +56,9 @@ import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
 import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
 import createTrustGW from "../gateways/PostgreSQL/createTrust";
 import createWardGW from "../gateways/PostgreSQL/createWard";
+import updateTrustGW from "../gateways/PostgreSQL/updateTrust";
+import updateWardGW from "../gateways/PostgreSQL/updateWard";
+import retrieveOrganizationById from "../gateways/retrieveOrganizationById";
 import logEvent from "../gateways/logEvent";
 import updateHospitalGW from "../gateways/PostgreSQL/updateHospital";
 import retrieveHospitalByIdGW from "../gateways/PostgreSQL/retrieveHospitalById";
@@ -333,6 +336,14 @@ class AppContainer {
 
   getCreateWardGateway = () => {
     return createWardGW(this);
+  };
+
+  getUpdateTrustGateway = () => {
+    return updateTrustGW(this);
+  };
+
+  getUpdateWardGateway = () => {
+    return updateWardGW(this);
   };
 
   getUpdateWardVisitTotalsGateway = () => {
