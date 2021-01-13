@@ -1,5 +1,5 @@
 import AppContainer from "../../../src/containers/AppContainer";
-import insertVisit from "../../../src/gateways/PostGreSQL/insertVisit";
+import insertVisit from "../../../src/gateways/PostgreSQL/insertVisit";
 import Database from "../../../src/gateways/Database";
 import { setupTrust, setupWard } from "../../../test/testUtils/factories";
 

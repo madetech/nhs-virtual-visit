@@ -1,8 +1,8 @@
 import AppContainer from "../../../src/containers/AppContainer";
 import Database from "../../../src/gateways/Database";
 
-import findCallsByWardId from "../../../src/gateways/PostGreSQL/findCallsByWardId";
-import updateCallStatusesByWardId from "../../../src/gateways/PostGreSQL/updateCallStatusesByWardId";
+import findCallsByWardId from "../../../src/gateways/PostgreSQL/findCallsByWardId";
+import updateCallStatusesByWardId from "../../../src/gateways/PostgreSQL/updateCallStatusesByWardId";
 import { ARCHIVED } from "../../../src/helpers/visitStatus";
 
 import {

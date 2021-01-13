@@ -1,5 +1,5 @@
 import archiveWard from "../../src/usecases/archiveWard";
-import retrieveWardById from "../../src/gateways/PostGreSQL/retrieveWardById";
+import retrieveWardById from "../../src/gateways/PostgreSQL/retrieveWardById";
 import AppContainer from "../../src/containers/AppContainer";
 import retrieveVisits from "../../src/usecases/retrieveVisits";
 import {
