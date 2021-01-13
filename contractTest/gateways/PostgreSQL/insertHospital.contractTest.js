@@ -1,5 +1,5 @@
 import AppContainer from "../../../src/containers/AppContainer";
-import insertHospital from "../../../src/gateways/PostGreSQL/insertHospital";
+import insertHospital from "../../../src/gateways/PostgreSQL/insertHospital";
 import { setupTrust } from "../../../test/testUtils/factories";
 
 describe("insertHospital contract", () => {

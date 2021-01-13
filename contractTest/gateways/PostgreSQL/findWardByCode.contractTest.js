@@ -1,5 +1,5 @@
 import AppContainer from "../../../src/containers/AppContainer";
-import findWardByCode from "../../../src/gateways/PostGreSQL/findWardByCode";
+import findWardByCode from "../../../src/gateways/PostgreSQL/findWardByCode";
 
 import {
   setupTrust,

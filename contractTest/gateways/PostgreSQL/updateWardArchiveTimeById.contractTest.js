@@ -3,8 +3,8 @@ import moment from "moment";
 import AppContainer from "../../../src/containers/AppContainer";
 import Database from "../../../src/gateways/Database";
 
-import findWardByCode from "../../../src/gateways/PostGreSQL/findWardByCode";
-import updateWardArchiveTimeById from "../../../src/gateways/PostGreSQL/updateWardArchiveTimeById";
+import findWardByCode from "../../../src/gateways/PostgreSQL/findWardByCode";
+import updateWardArchiveTimeById from "../../../src/gateways/PostgreSQL/updateWardArchiveTimeById";
 
 import {
   setupTrust,

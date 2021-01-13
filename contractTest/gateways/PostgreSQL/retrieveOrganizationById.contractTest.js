@@ -1,4 +1,4 @@
-import retrieveOrganizationById from "../../../src/gateways/PostGreSQL/retrieveOrganizationById";
+import retrieveOrganizationById from "../../../src/gateways/PostgreSQL/retrieveOrganizationById";
 import { setupOrganization } from "../../../test/testUtils/factories";
 
 describe("retrieveOrganizationById", () => {

@@ -1,4 +1,4 @@
-import retrieveWardById from "../../../src/gateways/PostGreSQL/retrieveWardById";
+import retrieveWardById from "../../../src/gateways/PostgreSQL/retrieveWardById";
 import { setupWardWithinHospitalAndTrust } from "../../../test/testUtils/factories";
 
 describe("retrieveWardById", () => {
