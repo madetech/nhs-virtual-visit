@@ -2,7 +2,6 @@ import createWard from "../../src/usecases/createWard";
 
 describe("createWard", () => {
   let createWardSpy = jest.fn().mockReturnValue({ wardId: 10, error: null });
-
   let container;
 
   beforeEach(() => {

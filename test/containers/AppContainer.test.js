@@ -120,6 +120,22 @@ describe("AppContainer", () => {
     expect(container.getSendBookingNotification()).toBeDefined();
   });
 
+  it("returns getCreateTrustGateway", () => {
+    expect(container.getCreateTrustGateway()).toBeDefined();
+  });
+
+  it("returns getCreateWardGateway", () => {
+    expect(container.getCreateWardGateway()).toBeDefined();
+  });
+
+  it("returns getUpdateTrustGateway", () => {
+    expect(container.getUpdateTrustGateway()).toBeDefined();
+  });
+
+  it("returns getUpdateWardGateway", () => {
+    expect(container.getUpdateWardGateway()).toBeDefined();
+  });
+
   it("returns getRetrieveVisitById", () => {
     expect(container.getRetrieveVisitById()).toBeDefined();
   });

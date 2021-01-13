@@ -1,9 +1,19 @@
 import updateTrust from "../../src/usecases/updateTrust";
 
 describe("updateTrust", () => {
+  let updateTrustSpy = jest.fn().mockReturnValue({ id: 10, error: null });
+
+  let container;
+
+  beforeEach(() => {
+    container = {
+      getUpdateTrustGateway: () => updateTrustSpy,
+    };
+  });
+
   it("only allows supported video providers", async () => {
-    const { error } = await updateTrust({ getDb: jest.fn() })({
-      id: 1,
+    const { error } = await updateTrust(container)({
+      trustId: 1,
       videoProvider: "unsupportedProvider",
     });
 
@@ -13,28 +23,32 @@ describe("updateTrust", () => {
   });
 
   it("returns an error if an id isn't present", async () => {
-    const { error } = await updateTrust({ getDb: jest.fn() })({
+    const { error } = await updateTrust(container)({
       videoProvider: "whereby",
     });
 
     expect(error).toEqual("An id must be provided.");
   });
 
+  it("updates a trust in the db when valid", async () => {
+    const { id, error } = await updateTrust(container)({
+      videoProvider: "whereby",
+      trustId: 10,
+    });
+
+    expect(id).toEqual(10);
+    expect(error).toBeNull();
+  });
+
   it("returns an error if the database query errors", async () => {
-    const container = {
-      async getDb() {
-        return {
-          oneOrNone: jest.fn(() => {
-            throw new Error("fail");
-          }),
-        };
-      },
-    };
+    container.getUpdateTrustGateway = () =>
+      jest.fn().mockReturnValue({ id: null, error: "Error: fail" });
 
     const { error, id } = await updateTrust(container)({
-      id: 123,
+      trustId: 123,
       videoProvider: "whereby",
     });
+
     expect(error).toEqual("Error: fail");
     expect(id).toBeNull();
   });
