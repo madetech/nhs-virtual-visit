@@ -1,16 +1,17 @@
 import createTrust from "../../src/usecases/createTrust";
 
 describe("createTrust", () => {
-  it("creates a Trust in the db when valid", async () => {
-    const oneSpy = jest.fn().mockReturnValue({ id: 1 });
-    const container = {
-      async getDb() {
-        return {
-          one: oneSpy,
-        };
-      },
-    };
+  let createTrustSpy = jest.fn().mockReturnValue({ trustId: 1, error: null });
 
+  let container;
+
+  beforeEach(() => {
+    container = {
+      getCreateTrustGateway: () => createTrustSpy,
+    };
+  });
+
+  it("calls createTrust when valid", async () => {
     const request = {
       name: "Defoe Trust",
       adminCode: "adminCode",
@@ -21,24 +22,11 @@ describe("createTrust", () => {
     const { trustId, error } = await createTrust(container)(request);
     expect(trustId).toEqual(1);
     expect(error).toBeNull();
-    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
-      "Defoe Trust",
-      "adminCode",
-      expect.anything(),
-      "whereby",
-    ]);
   });
 
   it("returns an error object on db exception", async () => {
-    const container = {
-      async getDb() {
-        return {
-          one: jest.fn(() => {
-            throw new Error("DB Error!");
-          }),
-        };
-      },
-    };
+    container.getCreateTrustGateway = () =>
+      jest.fn().mockReturnValue({ trustId: null, error: "Error: DB Error!" });
 
     const { trustId, error } = await createTrust(container)({
       name: "Test Trust",
@@ -50,9 +38,7 @@ describe("createTrust", () => {
   });
 
   it("returns an error if the password is undefined", async () => {
-    const container = {
-      async getDb() {},
-    };
+    container.getCreateTrustGateway = () => jest.fn();
 
     const request = {
       name: "Test Trust",
@@ -66,9 +52,7 @@ describe("createTrust", () => {
   });
 
   it("returns an error if the password is empty", async () => {
-    const container = {
-      async getDb() {},
-    };
+    container.getCreateTrustGateway = () => jest.fn();
 
     const request = {
       name: "Test Trust",
