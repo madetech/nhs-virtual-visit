@@ -31,11 +31,13 @@ const Select = ({
         )}
         {...props}
       >
-        <option value="DEFAULT" disabled>
-          {prompt}
-        </option>
+        <option value="DEFAULT">{prompt}</option>
         {options.map((option) => (
-          <option key={option.id} value={option.id}>
+          <option
+            key={option.id}
+            value={option.id}
+            disabled={option.status === "disabled" ? false : true}
+          >
             {option.name}
           </option>
         ))}
