@@ -5,6 +5,14 @@ import MsSQL from "./";
 const verifyUserLogin = async (email, password) => {
   const db = await MsSQL.getConnectionPool();
 
+  if (!email) {
+    return {
+      validUser: false,
+      trust_id: null,
+      type: null,
+      error: "email is not defined",
+    };
+  }
   if (!password) {
     return {
       validUser: false,
@@ -47,6 +55,7 @@ const verifyUserLogin = async (email, password) => {
       };
     }
   } catch (error) {
+    console.log("catch block");
     logger.error(error);
 
     return {

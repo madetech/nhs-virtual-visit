@@ -12,6 +12,7 @@ export default ({ getTokenProvider }) => async (token) => {
   }
 
   const { hashedPassword } = await retrieveEmailAndHashedPassword(emailAddress);
+
   const { errorToken } = tokenProvider.verifyTokenNotUsed(
     token,
     hashedPassword
