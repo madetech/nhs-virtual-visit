@@ -25,6 +25,15 @@ export default ({ getDb }) => async ({
   supportUrl = null,
   surveyUrl = null,
 }) => {
+  logger.info({
+    message: `Updating hospital for ${name}`,
+    meta: {
+      name: name,
+      id: id,
+      status: status,
+    },
+  });
+
   try {
     const updatedHospital = await updateHospitalQuery(
       getDb(),
