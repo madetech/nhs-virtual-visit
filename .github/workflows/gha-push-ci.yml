@@ -19,17 +19,7 @@ jobs:
           github-token: ${{ secrets.github_token }}
           output-file: "CHANGELOG.md"
 
-  # release:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Create and Switch to Release Folder
-  #       run: |
-  #         rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' --exclude='__mocks__/' --exclude='test/' --exclude='docs/' --exclude='docker/' --exclude='cypress*' --exclude='jest.*' --exclude='contractTest/' --exclude='terraform/' --exclude='bin/' --exclude='node_modules/' . ./release
-  #         cd release
-  #         ls -la
-
   azure-deploy:
-    # needs: [tag, release]
     needs: tag
     if: github.repository_owner == 'madetech'
     runs-on: ubuntu-latest
