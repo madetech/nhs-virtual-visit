@@ -15,4 +15,4 @@ npm run dbmigrate-prod-mssql up:mssql
 echo "Running Remove Deploy.sh script from wwwroot"
 
 # Remove deploy.sh file from home/site/wwwroot
-rm -rf jest.* docs docker cypress* contractTest terraform __mocks__ 
+rm -rf jest.* docs docker cypress* contractTest terraform
