@@ -71,7 +71,12 @@ import retrieveOrganisationByIdGateway from "../gateways/MsSQL/retrieveOrganisat
 import createOrganisationGateway from "../gateways/MsSQL/createOrganisation";
 import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActiveOrganisations";
 import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
+<<<<<<< HEAD
 import deleteOrganisationGateway from "../gateways/MsSQL/deleteOrganisation";
+=======
+import createManager from "../usecases/createManager";
+import insertManager from "../gateways/MsSQL/insertManager";
+>>>>>>> chore: created send-sign-up-email api and sent activation link via email
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -484,6 +489,14 @@ class AppContainer {
 
   getRetrieveOrganisationByIdGateway = () => {
     return retrieveOrganisationByIdGateway(this);
+  };
+  
+  getCreateManager = () => {
+    return createManager(this);
+  };
+
+  getInsertManagerGateway = () => {
+    return insertManager;
   };
 
   getLogEventGateway = () => {
