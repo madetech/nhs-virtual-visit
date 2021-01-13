@@ -34,7 +34,7 @@
     "dbmigrate-prod-mssql": "db-migrate --migrations-dir 'db/migrations/' -e production-mssql",
     "dbmigratetest": "db-migrate --migrations-dir 'db/migrations/' -e test",
     "dbmigratedry": "db-migrate --dry-run --migrations-dir 'db/migrations/'",
-    "postinstall": "test -n \"$NONPMPOSTINSTALL\" || npm run dbmigrate-prod-mssql up:mssql || npm run build"
+    "postinstall": "test -n \"$NONPMPOSTINSTALL\" || npm run build"
   },
   "dependencies": {
     "@sentry/browser": "^5.15.5",
