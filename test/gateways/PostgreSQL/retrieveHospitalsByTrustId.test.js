@@ -31,7 +31,6 @@ describe("retreiveHospitalsByTrustId", () => {
         name: "hospitalNameTwo",
       },
     ]);
-    expect(anySpy).toHaveBeenCalledWith(expect.anything(), 1);
   });
 
   it("returns an error object on db exception", async () => {

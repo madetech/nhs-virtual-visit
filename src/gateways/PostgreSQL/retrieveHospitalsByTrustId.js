@@ -1,9 +1,11 @@
 import logger from "../../../logger";
 
-const retrieveHospitalsByTrustId = ({ getDb }) => async (
+const retrieveHospitalsByTrustId = ({ getDb }) => async ({
   trustId,
-  options = { withWards: false }
-) => {
+  options = { withWards: false },
+}) => {
+  logger.info(`Retrieving hospitals by trust ID for ${trustId}`);
+
   let hospitals = [];
   try {
     hospitals = await getDb().any(
