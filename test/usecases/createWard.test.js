@@ -1,16 +1,17 @@
 import createWard from "../../src/usecases/createWard";
 
 describe("createWard", () => {
-  it("creates a ward in the db when valid", async () => {
-    const oneSpy = jest.fn().mockReturnValue({ id: 10 });
-    const container = {
-      async getDb() {
-        return {
-          one: oneSpy,
-        };
-      },
-    };
+  let createWardSpy = jest.fn().mockReturnValue({ wardId: 10, error: null });
 
+  let container;
+
+  beforeEach(() => {
+    container = {
+      getCreateWardGateway: () => createWardSpy,
+    };
+  });
+
+  it("creates a ward in the db when valid", async () => {
     const request = {
       name: "Defoe Ward",
       code: "WardCode",
@@ -23,13 +24,5 @@ describe("createWard", () => {
 
     expect(wardId).toEqual(10);
     expect(error).toBeNull();
-
-    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
-      request.name,
-      request.code,
-      request.trustId,
-      request.hospitalId,
-      request.pin
-    ]);
   });
 });

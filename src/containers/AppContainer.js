@@ -54,6 +54,8 @@ import updateWardVisitTotals from "../gateways/PostgreSQL/updateWardVisitTotals"
 import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
 import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
 import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
+import createTrustGW from "../gateways/PostgreSQL/createTrust";
+import createWardGW from "../gateways/PostgreSQL/createWard";
 import logEvent from "../gateways/logEvent";
 import updateHospitalGW from "../gateways/PostgreSQL/updateHospital";
 import retrieveHospitalByIdGW from "../gateways/PostgreSQL/retrieveHospitalById";
@@ -305,6 +307,14 @@ class AppContainer {
 
   getInsertHospitalGateway = () => {
     return insertHospital(this);
+  };
+
+  getCreateTrustGateway = () => {
+    return createTrustGW(this);
+  };
+
+  getCreateWardGateway = () => {
+    return createWardGW(this);
   };
 
   getUpdateWardVisitTotalsGateway = () => {

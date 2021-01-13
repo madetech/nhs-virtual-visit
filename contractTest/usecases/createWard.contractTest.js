@@ -1,4 +1,3 @@
-import createWard from "../../src/usecases/createWard";
 import AppContainer from "../../src/containers/AppContainer";
 import { setupTrust, setupHospital } from "../../test/testUtils/factories";
 
@@ -12,14 +11,13 @@ describe("createWard contract tests", () => {
 
     const request = {
       name: "Defoe Ward",
-      hospitalName: "Test Hospital",
       code: "WardCode",
       pin: "1234",
-      trustId,
-      hospitalId,
+      trustId: trustId,
+      hospitalId: hospitalId,
     };
 
-    const { wardId, error } = await createWard(container)(request);
+    const { wardId, error } = await container.getCreateWard()(request);
 
     const { ward } = await container.getRetrieveWardById()(wardId, trustId);
 

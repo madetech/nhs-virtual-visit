@@ -1,14 +1,11 @@
-import logger from "../../logger";
 import bcrypt from "bcryptjs";
 
-const createTrust = ({ getDb }) => async ({
+const createTrust = ({ getCreateTrustGateway }) => async ({
   name,
   adminCode,
   password,
   videoProvider,
 }) => {
-  const db = await getDb();
-
   if (!password) {
     return {
       trustId: null,
@@ -16,33 +13,20 @@ const createTrust = ({ getDb }) => async ({
     };
   }
 
-  try {
-    logger.info(`Creating trust ${name}`, name);
+  var salt = bcrypt.genSaltSync(10);
+  var hashedPassword = bcrypt.hashSync(password, salt);
 
-    var salt = bcrypt.genSaltSync(10);
-    var hashedPassword = bcrypt.hashSync(password, salt);
+  const { trustId, error } = await getCreateTrustGateway()({
+    name,
+    adminCode,
+    hashedPassword,
+    videoProvider,
+  });
 
-    const createdTrust = await db.one(
-      `INSERT INTO trusts
-            (id, name, admin_code, password, video_provider)
-            VALUES (default, $1, $2, $3, $4)
-            RETURNING id
-          `,
-      [name, adminCode, hashedPassword, videoProvider]
-    );
-
-    return {
-      trustId: createdTrust.id,
-      error: null,
-    };
-  } catch (error) {
-    logger.error(error);
-
-    return {
-      trustId: null,
-      error: error.toString(),
-    };
-  }
+  return {
+    trustId: trustId,
+    error: error,
+  };
 };
 
 export default createTrust;

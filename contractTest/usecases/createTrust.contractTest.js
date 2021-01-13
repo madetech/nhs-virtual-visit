@@ -1,10 +1,7 @@
-import createTrust from "../../src/usecases/createTrust";
 import AppContainer from "../../src/containers/AppContainer";
-import { setupTrust } from "../../test/testUtils/factories";
 
 describe("createTrust contract tests", () => {
   const container = AppContainer.getInstance();
-  const retrieveTrustById = container.getRetrieveTrustById();
 
   it("creates a trust in the db when valid", async () => {
     const request = {
@@ -14,9 +11,9 @@ describe("createTrust contract tests", () => {
       videoProvider: "provider",
     };
 
-    const { trustId, error } = await setupTrust(request);
+    const { trustId, error } = await container.getCreateTrust()(request);
 
-    const { trust } = await retrieveTrustById(trustId);
+    const { trust } = await container.getRetrieveTrustById()(trustId);
 
     expect(trust).toEqual({
       id: trustId,
@@ -28,16 +25,16 @@ describe("createTrust contract tests", () => {
   });
 
   it("returns an error if the admin_code is not unique", async () => {
-    await createTrust(container)({
-      name: "Test Trust",
+    const request = {
+      name: "Defoe Trust",
       adminCode: "adminCode",
       password: "trustpassword",
       videoProvider: "provider",
-    });
+    };
 
-    await setupTrust({ adminCode: "adminCode" });
+    await container.getCreateTrust()(request);
 
-    const { trustId, error } = await setupTrust({ adminCode: "adminCode" });
+    const { trustId, error } = await container.getCreateTrust()(request);
 
     expect(trustId).toBeNull();
     expect(error.toString()).toEqual(
@@ -46,7 +43,12 @@ describe("createTrust contract tests", () => {
   });
 
   it("returns an error if the video provider is not present", async () => {
-    const { trustId, error } = await setupTrust({ videoProvider: null });
+    const { trustId, error } = await container.getCreateTrust()({
+      videoProvider: null,
+      password: "trustpassword",
+      name: "Defoe Trust",
+      adminCode: "adminCode",
+    });
 
     expect(trustId).toBeNull();
     expect(error.toString()).toEqual(
