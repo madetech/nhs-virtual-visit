@@ -36,7 +36,7 @@ const Select = ({
           <option
             key={option.id}
             value={option.id}
-            disabled={option.status === "disabled" ? false : true}
+            disabled={option.status === 0 ? false : true}
           >
             {option.name}
           </option>

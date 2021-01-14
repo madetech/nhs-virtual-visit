@@ -572,6 +572,21 @@ class AppContainer {
   getResetPassword = () => {
     return resetPassword;
   };
+  
+  getInsertManagerGateway = () => {
+    return insertManager;
+  };
+  getCreateManager = () => {
+    return createManager(this);
+  };
+
+  getRetrieveOrganisationsGateway = () => {
+    return retrieveOrganisationsGateway;
+  };
+
+  getRetrieveOrganisations = () => {
+    return retrieveOrganisations(this);
+  };
 }
 
 export default (() => {
