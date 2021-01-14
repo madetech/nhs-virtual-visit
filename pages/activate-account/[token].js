@@ -1,17 +1,24 @@
 import React from "react";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
-//import ErrorSummary from "../../src/components/ErrorSummary";
+import ErrorSummary from "../../src/components/ErrorSummary";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
 import ActionLink from "../../src/components/ActionLink";
 
 const ActivateAccount = ({ email, activationError }) => {
+  const errors = [];
+  if (activationError) {
+    errors.push({
+      id: "activation-error",
+      message: activationError,
+    });
+  }
   return (
     <Layout title="Your account has been activated">
       <GridRow>
         <GridColumn>
-          {/* <ErrorSummary errors={[activationError]} /> */}
+          <ErrorSummary errors={errors} />
           {!activationError && (
             <>
               <Heading>{`Account has been activated for email address ${email}`}</Heading>
@@ -28,33 +35,33 @@ export default ActivateAccount;
 
 export const getServerSideProps = propsWithContainer(
   async ({ query, container }) => {
-    // const activationError = null;
-    const error = null;
+    let activationError = null;
     const token = query.token;
     const verifySignUpLink = container.getVerifySignUpLink();
     const { email, error: linkError } = await verifySignUpLink(token);
-    // activationError = activationError || linkError;
-    console.log("Get Server Side Props ***********");
-    console.log(email);
-    console.log(linkError);
+
     if (!linkError) {
-      // go to user database and make status active
       const updateManagerStatus = container.getUpdateManagerStatus();
-      const { error: managerError } = await updateManagerStatus({
+      const { user, error: managerError } = await updateManagerStatus({
         email,
         status: 1,
       });
-      console.log(managerError);
-      // activationError = activationError || managerError;
-      // go to organisation database and make status active
-      // const updateOrganisation = container.getUpdateOrganisationStatus();
-      // const { error: organisationError } = await updateOrganisationStatus({ organisationName, status: 1 });
+
+      const organisationId = user.organisation_id;
+      console.log(organisationId);
+      const updateOrganisationStatus = container.getUpdateOrganisationStatus();
+      const { error: organisationError } = await updateOrganisationStatus({
+        organisationId,
+        status: 1,
+      });
+
+      activationError = managerError || organisationError;
     }
 
     return {
       props: {
         email,
-        activationError: error,
+        activationError: activationError || linkError,
       },
     };
   }
