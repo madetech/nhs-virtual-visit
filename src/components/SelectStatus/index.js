@@ -1,6 +1,5 @@
 import React from "react";
 import classnames from "classnames";
-import ErrorMessage from "../ErrorMessage";
 
 const DEFAULT_VALUE = "DEFAULT";
 
@@ -9,28 +8,16 @@ const SelectStatus = ({
   className,
   prompt,
   options,
-  hasError,
-  errorMessage,
   defaultValue,
   ...props
 }) => {
   return (
     <>
-      {hasError && errorMessage ? (
-        <ErrorMessage id={`${id}-error`}>{errorMessage}</ErrorMessage>
-      ) : null}
       <select
         id={id}
         defaultValue={defaultValue || DEFAULT_VALUE}
-        id="nhs-dropdown-menu"
         data-cy="select-status"
-        className={classnames(
-          {
-            "nhsuk-select--error": hasError,
-          },
-          "nhsuk-select",
-          className
-        )}
+        className={classnames("nhsuk-select", className)}
         {...props}
       >
         <option value="DEFAULT" disabled>
@@ -38,7 +25,6 @@ const SelectStatus = ({
         </option>
         {options.map((option) => (
           <option key={option.name} value={option.name}>
-
             {option.name}
           </option>
         ))}
