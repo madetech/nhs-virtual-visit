@@ -115,6 +115,8 @@ import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
 import verifySignUpLink from "../usecases/verifySignUpLink";
 import updateManagerStatus from "../usecases/updateManagerStatus";
 import updateManagerStatusGateway from "../gateways/MsSQL/updateManagerStatus";
+import updateOrganisationStatus from "../usecases/updateOrganisationStatus";
+import updateOrganisationStatusGateway from "../gateways/MsSQL/updateOrganisationStatus";
 
 class AppContainer {
   getDb = () => {
@@ -586,6 +588,13 @@ class AppContainer {
   };
   getUpdateManagerStatus = () => {
     return updateManagerStatus(this);
+  };
+
+  getUpdateOrganisationStatusGateway = () => {
+    return updateOrganisationStatusGateway;
+  };
+  getUpdateOrganisationStatus = () => {
+    return updateOrganisationStatus(this);
   };
 }
 
