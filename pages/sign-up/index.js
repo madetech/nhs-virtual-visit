@@ -12,9 +12,16 @@ import Form from "../../src/components/Form";
 import Select from "../../src/components/Select";
 import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
 
-const SignUp = ({ organisations }) => {
+const SignUp = ({ organisations, error }) => {
   const [errors, setErrors] = useState([]);
   const [organisationId, setOrganisationId] = useState("");
+
+  if (error) {
+    errors.push({
+      id: "database error",
+      message: error,
+    });
+  }
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -101,64 +108,68 @@ const SignUp = ({ organisations }) => {
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <Heading>Sign up to access your site</Heading>
-          <FormGroup>
-            <Label htmlFor="organisation-id">Organisations</Label>
-            <Select
-              id="organisation-id"
-              className="nhsuk-input--width-10 nhsuk-u-width-one-half"
-              prompt="Choose an organisation"
-              options={organisations}
-              onChange={(event) => {
-                setOrganisationId(event.target.value);
-              }}
-              hasError={hasError(errors, "organisation-id")}
-              errorMessage={errorMessage(errors, "organisation-id")}
-            />
-          </FormGroup>
-          <Form onSubmit={onSubmit}>
-            <FormGroup>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                ref={emailRef}
-                hasError={hasError(errors, "email")}
-                errorMessage={errorMessage(errors, "email")}
-                className="nhsuk-input--width-20"
-                name="email"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                ref={passwordRef}
-                hasError={hasError(errors, "password")}
-                errorMessage={errorMessage(errors, "password")}
-                className="nhsuk-input--width-20"
-                name="password"
-                autoComplete="off"
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label htmlFor="confirm-password">Confirm Password</Label>
-              <Input
-                id="confirm-password"
-                type="password"
-                ref={confirmPasswordRef}
-                hasError={hasError(errors, "confirm-password")}
-                errorMessage={errorMessage(errors, "confirm-password")}
-                className="nhsuk-input--width-20"
-                name="confirm-password"
-                autoComplete="off"
-              />
-            </FormGroup>
-            <Button className="nhsuk-u-margin-top-5" type="submit">
-              Sign Up
-            </Button>
-          </Form>
+          {!error && (
+            <>
+              <Heading>Sign up to access your site</Heading>
+              <FormGroup>
+                <Label htmlFor="organisation-id">Organisations</Label>
+                <Select
+                  id="organisation-id"
+                  className="nhsuk-input--width-10 nhsuk-u-width-one-half"
+                  prompt="Choose an organisation"
+                  options={organisations}
+                  onChange={(event) => {
+                    setOrganisationId(event.target.value);
+                  }}
+                  hasError={hasError(errors, "organisation-id")}
+                  errorMessage={errorMessage(errors, "organisation-id")}
+                />
+              </FormGroup>
+              <Form onSubmit={onSubmit}>
+                <FormGroup>
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    ref={emailRef}
+                    hasError={hasError(errors, "email")}
+                    errorMessage={errorMessage(errors, "email")}
+                    className="nhsuk-input--width-20"
+                    name="email"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    ref={passwordRef}
+                    hasError={hasError(errors, "password")}
+                    errorMessage={errorMessage(errors, "password")}
+                    className="nhsuk-input--width-20"
+                    name="password"
+                    autoComplete="off"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label htmlFor="confirm-password">Confirm Password</Label>
+                  <Input
+                    id="confirm-password"
+                    type="password"
+                    ref={confirmPasswordRef}
+                    hasError={hasError(errors, "confirm-password")}
+                    errorMessage={errorMessage(errors, "confirm-password")}
+                    className="nhsuk-input--width-20"
+                    name="confirm-password"
+                    autoComplete="off"
+                  />
+                </FormGroup>
+                <Button className="nhsuk-u-margin-top-5" type="submit">
+                  Sign Up
+                </Button>
+              </Form>
+            </>
+          )}
         </GridColumn>
         <span style={{ clear: "both", display: "block" }}></span>
       </GridRow>
@@ -168,12 +179,11 @@ const SignUp = ({ organisations }) => {
 
 export default SignUp;
 
-export const getServerSideProps = propsWithContainer(async () => {
-  const organisations = [
-    { name: "Test Trust 1", id: "1", status: "active" },
-    { name: "Test Trust 2", id: "2", status: "disabled" },
-  ];
+export const getServerSideProps = propsWithContainer(async ({ container }) => {
+  const retrieveOrganisations = container.getRetrieveOrganisations();
+  const { organisations, error } = await retrieveOrganisations();
+
   return {
-    props: { organisations },
+    props: { organisations, error },
   };
 });
