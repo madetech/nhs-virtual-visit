@@ -37,9 +37,9 @@ export default withContainer(
       return;
     }
 
-    const updateManager = container.getUpdateManagerByUuid();
+    const updateManagerByUuid = container.getUpdateManagerByUuid();
 
-    const { uuid, error } = await updateManager({
+    const { uuid, error } = await updateManagerByUuid({
       uuid: body.uuid,
       status: body.status,
     });
