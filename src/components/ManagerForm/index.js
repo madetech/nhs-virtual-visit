@@ -6,18 +6,10 @@ import Label from "../Label";
 import Form from "../Form";
 import SelectStatus from "../SelectStatus";
 
-const ManagerForm = ({ errors, manager = {}, submit }) => {
+const ManagerForm = ({ manager = {}, submit }) => {
   const [status, setStatus] = useState(manager?.status);
 
   const action = manager.uuid ? "Edit" : "Add";
-
-  const hasError = (field) =>
-    errors.find((error) => error.id === `${field}-error`);
-
-  const errorMessage = (field) => {
-    const error = errors.filter((err) => err.id === `${field}-error`);
-    return error.length === 1 ? error[0].message : "";
-  };
 
   const onSubmit = async () => {
     return await submit({
@@ -42,8 +34,6 @@ const ManagerForm = ({ errors, manager = {}, submit }) => {
             onChange={(event) => {
               setStatus(event.target.value);
             }}
-            hasError={hasError("tm-select-status")}
-            errorMessage={errorMessage("tm-select-status")}
             defaultValue={status}
           />
         </FormGroup>
