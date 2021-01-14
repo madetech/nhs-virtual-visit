@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import MsSQL from "../gateways/MsSQL";
 
 const version = "3";
 
@@ -38,7 +37,19 @@ class TokenProvider {
     return decryptedToken;
   }
 
-<<<<<<< HEAD
+  generateTokenForLink(emailAddress, expirationTime, secret) {
+    let tokenObj = { emailAddress, version };
+
+    if (secret !== this.signingKey) {
+      tokenObj = { ...tokenObj, hashedPassword: secret };
+    }
+
+    return jwt.sign(tokenObj, secret, {
+      algorithm: "HS256",
+      expiresIn: expirationTime,
+    });
+  }
+
   retrieveEmailFromToken(token) {
     try {
       const { emailAddress } = jwt.decode(token);
@@ -48,48 +59,23 @@ class TokenProvider {
     }
   }
 
-  verifyTokenNotUsed(token, secret) {
+  verifyTokenFromLink(token, secret = this.signingKey) {
     try {
-      jwt.verify(token, secret);
+      const decryptedToken = jwt.verify(token, secret, {
+        algorithms: ["HS256"],
+      });
+
+      if (decryptedToken.version !== version) {
+        throw new Error("Invalid token version");
+      }
       return {
+        decryptedToken,
         errorToken: "",
       };
-=======
-  // retrieveEmailFromToken(token) {
-  //   try {
-  //     const { emailAddress} = jwt.decode(token);
-  //     return emailAddress;
-  //   } catch (error) {
-  //     return {emailAddress:""};
-  //   }
-
-  // }
-  async verifyTokenAndRetrieveEmail(token) {
-    const db = await MsSQL.getConnectionPool();
-
-    try {
-      const { emailAddress } = jwt.decode(token);
-
-      try {
-        const dbResponse = await db
-          .request()
-          .input("emailAddress", emailAddress)
-          .query(`SELECT password from dbo.[user] WHERE email = @emailAddress`);
-
-        const secret = dbResponse.recordset[0].password;
-        jwt.verify(token, secret);
-
-        return {
-          emailAddress,
-        };
-      } catch (err) {
-        return { emailAddress: "" };
-      }
->>>>>>> chore: refactor token provider for reset password
     } catch (error) {
       return {
-        errorToken:
-          "Link is incorrect or has expired. Please reset your password again to get a new link.",
+        decryptedToken: null,
+        errorToken: "Error verifying token.",
       };
     }
   }
