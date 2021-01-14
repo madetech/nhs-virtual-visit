@@ -11,6 +11,7 @@ import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Form from "../../src/components/Form";
 import Select from "../../src/components/Select";
 import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
+import Router from "next/router";
 
 const SignUp = ({ organisations, error }) => {
   const [errors, setErrors] = useState([]);
@@ -89,6 +90,10 @@ const SignUp = ({ organisations, error }) => {
       });
 
       if (response.status === 201) {
+        Router.push({
+          pathname: "sign-up/send-sign-up-email-success",
+          query: { email },
+        });
         return true;
       } else {
         onSubmitErrors.push({
