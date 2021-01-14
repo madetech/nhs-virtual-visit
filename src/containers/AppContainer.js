@@ -118,6 +118,9 @@ import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
 import verifyTrustAdminCodeGateway from "../gateways/PostgreSQL/verifyTrustAdminCode";
 import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
+import verifySignUpLink from "../usecases/verifySignUpLink";
+import updateManagerStatus from "../usecases/updateManagerStatus";
+import updateManagerStatusGateway from "../gateways/MsSQL/updateManagerStatus";
 
 class AppContainer {
   getDb = () => {
@@ -586,6 +589,17 @@ class AppContainer {
 
   getRetrieveOrganisations = () => {
     return retrieveOrganisations(this);
+  };
+
+  getVerifySignUpLink = () => {
+    return verifySignUpLink(this);
+  };
+
+  getUpdateManagerStatusGateway = () => {
+    return updateManagerStatusGateway;
+  };
+  getUpdateManagerStatus = () => {
+    return updateManagerStatus(this);
   };
 }
 

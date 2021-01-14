@@ -51,13 +51,12 @@ export default withContainer(
     const emailAddress = body.email;
     const sendEmail = container.getSendEmail();
     const signUpEmailTemplateId = TemplateStore().signUpEmail.templateId;
-    // const signUpEmailTemplateId = "0bee5277-977d-4770-beaf-a53bf3739bf8";
     const expirationTime = "48h";
     const urlPath = "activate-account";
+
     const { link, linkError } = createTimeSensitiveLink(
       headers,
       emailAddress,
-      hashedPassword,
       expirationTime,
       urlPath
     );
