@@ -1,22 +1,17 @@
 import withContainer from "../../src/middleware/withContainer";
+import {
+  validateHttpMethod,
+  checkIfAuthorised,
+} from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
-    if (method !== "PATCH") {
-      res.status(405);
-      res.end();
-      return;
-    }
+    validateHttpMethod("PATCH", method, res);
 
     const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
 
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
-
-    if (!trustAdminToken) {
-      res.status(401);
-      res.end();
-      return;
-    }
+    checkIfAuthorised(trustAdminToken, res);
 
     if (!body || !body.uuid || !body.status) {
       res.status(400);

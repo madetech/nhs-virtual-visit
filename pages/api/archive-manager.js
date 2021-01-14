@@ -1,23 +1,20 @@
 import withContainer from "../../src/middleware/withContainer";
+import {
+  validateHttpMethod,
+  checkIfAuthorised,
+} from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
-    if (method !== "DELETE") {
-      res.status(405);
-      res.end();
-      return;
-    }
+    validateHttpMethod("DELETE", method, res);
 
     const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
 
     const trustAdminAuthenticatedToken = trustAdminIsAuthenticated(
       headers.cookie
     );
-    if (!trustAdminAuthenticatedToken) {
-      res.status(401);
-      res.end();
-      return;
-    }
+
+    checkIfAuthorised(trustAdminAuthenticatedToken, res);
 
     if (!body.uuid) {
       res.status(400);
