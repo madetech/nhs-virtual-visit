@@ -4,10 +4,10 @@ const updateManager = ({
 }) => async ({ email, status }) => {
   try {
     const db = await getMsSqlConnPool();
-    await getUpdateManagerStatusGateway()(db, email, status);
-    return { error: null };
+    const user = await getUpdateManagerStatusGateway()(db, email, status);
+    return { user, error: null };
   } catch (error) {
-    return { error: "There was an error update a manager." };
+    return { user: null, error: "There was an error updating an manager." };
   }
 };
 
