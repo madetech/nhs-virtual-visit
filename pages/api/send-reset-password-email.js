@@ -33,12 +33,13 @@ export default withContainer(
       .templateId;
     const expirationTime = "2h";
     const urlPath = "reset-password";
+
     const { link, linkError } = createTimeSensitiveLink(
       headers,
       emailAddress,
-      hashedPassword,
       expirationTime,
-      urlPath
+      urlPath,
+      hashedPassword
     );
 
     if (linkError) {
