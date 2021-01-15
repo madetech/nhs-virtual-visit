@@ -10,7 +10,7 @@ fi
 # Start docker yml from path and detached.
 docker-compose -f docker/mssql/local/docker-compose.yml up -d
 
-wait_time=15s
+wait_time=45s
 
 # Wait for PostgreSQL Server to come up.
 echo waiting database to start in $wait_time...
