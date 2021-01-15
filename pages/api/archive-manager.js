@@ -26,14 +26,13 @@ export default withContainer(
 
     const archiveManagerByUuid = container.getArchiveManagerByUuid();
 
-    const { success, error } = await archiveManagerByUuid(body.uuid);
+    const { error } = await archiveManagerByUuid(body.uuid);
 
     if (error) {
       res.status(400);
-      res.end(JSON.stringify({ error }));
     } else {
       res.status(200);
-      res.end(JSON.stringify(success));
     }
+    res.end(JSON.stringify({ error }));
   }
 );
