@@ -55,7 +55,6 @@ const verifyUserLogin = async (email, password) => {
       };
     }
   } catch (error) {
-    console.log("catch block");
     logger.error(error);
 
     return {
