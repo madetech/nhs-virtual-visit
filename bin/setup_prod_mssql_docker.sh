@@ -18,5 +18,8 @@ fi
 
 echo "Running Deploy.SH DBMIGRATE project script"
 
+# Before running the script check if server is paused
+# TODO: write script and test on azure deployment center.
+
 # Run create tables scripts.
 npm run dbmigrate-prod-mssql up:mssql
