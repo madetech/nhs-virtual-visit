@@ -1,4 +1,4 @@
-const updateManagerByUuidGateway = async (db, uuid, status) => {
+const updateManagerStatusByUuidGateway = async (db, uuid, status) => {
   await db
     .request()
     .input("uuid", uuid)
@@ -6,4 +6,4 @@ const updateManagerByUuidGateway = async (db, uuid, status) => {
     .query("UPDATE dbo.[user] SET status = @status WHERE uuid = @uuid");
 };
 
-export default updateManagerByUuidGateway;
+export default updateManagerStatusByUuidGateway;

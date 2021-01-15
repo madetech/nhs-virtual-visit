@@ -93,8 +93,8 @@ import retrieveManagersByOrgId from "../usecases/retrieveManagersByOrgId";
 import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
 import retrieveManagerByUuid from "../usecases/retrieveManagerByUuid";
 import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
-import updateManagerByUuid from "../usecases/updateManagerByUuid";
-import updateManagerByUuidGateway from "../gateways/MsSQL/updateManagerByUuid";
+import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
+import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
 import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
 import archiveManagerByUuidGateway from "../gateways/MsSQL/archiveManagerByUuid";
 
@@ -404,12 +404,12 @@ class AppContainer {
     return retrieveManagerByUuidGateway;
   };
 
-  getUpdateManagerByUuid = () => {
-    return updateManagerByUuid(this);
+  getUpdateManagerStatusByUuid = () => {
+    return updateManagerStatusByUuid(this);
   };
 
-  getUpdateManagerByUuidGateway = () => {
-    return updateManagerByUuidGateway;
+  getUpdateManagerStatusByUuidGateway = () => {
+    return updateManagerStatusByUuidGateway;
   };
   å;
   getArchiveManagerByUuid = () => {
