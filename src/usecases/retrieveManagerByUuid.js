@@ -4,6 +4,9 @@ const retrieveManagerByUuid = ({
   getMsSqlConnPool,
   getRetrieveManagerByUuidGateway,
 }) => async (uuid) => {
+  if (uuid === undefined) {
+    return { manager: null, error: "uuid must be provided." };
+  }
   try {
     logger.info(`Retrieving manager for ${uuid}`);
     const db = await getMsSqlConnPool();
