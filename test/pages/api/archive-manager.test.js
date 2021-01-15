@@ -2,12 +2,13 @@ import archiveManager from "../../../pages/api/archive-manager";
 
 describe("archive-manager", () => {
   let validRequest, response, container;
+  const expectedUuid = "b6a255bf-ec49-484c-8504-02bdd1ac7dca";
 
   beforeEach(() => {
     validRequest = {
       method: "DELETE",
       body: {
-        uuid: "b6a255bf-ec49-484c-8504-02bdd1ac7dca",
+        uuid: expectedUuid,
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -76,9 +77,7 @@ describe("archive-manager", () => {
 
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.end).toHaveBeenCalledWith(JSON.stringify({ error: null }));
-    expect(archiveManagerByUuidSpy).toHaveBeenCalledWith(
-      "b6a255bf-ec49-484c-8504-02bdd1ac7dca"
-    );
+    expect(archiveManagerByUuidSpy).toHaveBeenCalledWith(expectedUuid);
   });
 
   it("returns a 400 status if errors", async () => {
