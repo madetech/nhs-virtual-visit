@@ -41,7 +41,7 @@ export default withContainer(
 
     const { uuid, error } = await updateManager({
       uuid: body.uuid,
-      status: body.status,
+      status: body.status === "active" ? 1 : 0,
     });
 
     if (error) {

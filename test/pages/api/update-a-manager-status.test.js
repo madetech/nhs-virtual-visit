@@ -201,7 +201,6 @@ describe("update-a-manager-status", () => {
     });
 
     expect(retrieveManagerByUuidSpy).toHaveBeenCalledWith(expectedUuid);
-
     expect(response.status).toHaveBeenCalledWith(404);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
@@ -218,7 +217,6 @@ describe("update-a-manager-status", () => {
     container.getUpdateManagerByUuid = updateManagerSpy;
 
     await updateAManagerStatus(validRequest, response, { container });
-
     expect(response.status).toHaveBeenCalledWith(500);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ error: "Error!" })
