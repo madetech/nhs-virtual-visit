@@ -24,8 +24,6 @@ export default withContainer(
 
     res.setHeader("Content-Type", "application/json");
 
-    console.log("*********BODY.UUID********");
-    console.log(body.uuid);
     const archiveManagerByUuid = container.getArchiveManagerByUuid();
 
     const { error } = await archiveManagerByUuid(body.uuid);
