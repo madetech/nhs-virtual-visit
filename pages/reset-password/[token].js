@@ -10,6 +10,7 @@ import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import Form from "../../src/components/Form";
 import Router from "next/router";
+import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
 
 const ResetPassword = ({ email, tokenError }) => {
   const [errors, setErrors] = useState([]);
@@ -22,14 +23,6 @@ const ResetPassword = ({ email, tokenError }) => {
 
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
-
-  const hasError = (field) =>
-    errors.find((error) => error.id === `${field}-error`);
-
-  const errorMessage = (field) => {
-    const error = errors.filter((err) => err.id === `${field}-error`);
-    return error.length === 1 ? error[0].message : "";
-  };
 
   const onSubmit = async () => {
     const onSubmitErrors = [];
@@ -97,8 +90,8 @@ const ResetPassword = ({ email, tokenError }) => {
                     id="password"
                     type="password"
                     ref={passwordRef}
-                    hasError={hasError("password")}
-                    errorMessage={errorMessage("password")}
+                    hasError={hasError(errors, "password")} //{hasError("password")}
+                    errorMessage={errorMessage(errors, "password")}
                     className="nhsuk-input--width-20"
                     name="password"
                   />
@@ -109,8 +102,8 @@ const ResetPassword = ({ email, tokenError }) => {
                     id="confirmPassword"
                     type="password"
                     ref={confirmPasswordRef}
-                    hasError={hasError("confirmPassword")}
-                    errorMessage={errorMessage("confirmPassword")}
+                    hasError={hasError(errors, "confirmPassword")}
+                    errorMessage={errorMessage(errors, "confirmPassword")}
                     className="nhsuk-input--width-20"
                     name="confirmPassword"
                     autoComplete="off"

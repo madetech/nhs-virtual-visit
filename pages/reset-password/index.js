@@ -10,19 +10,12 @@ import Button from "../../src/components/Button";
 import Text from "../../src/components/Text";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Router from "next/router";
+import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
 
 const ResetPassword = () => {
   const [errors, setErrors] = useState([]);
 
   const emailRef = useRef();
-
-  const hasError = (field) =>
-    errors.find((error) => error.id === `${field}-error`);
-
-  const errorMessage = (field) => {
-    const error = errors.filter((err) => err.id === `${field}-error`);
-    return error.length === 1 ? error[0].message : "";
-  };
 
   const onSubmit = async () => {
     const onSubmitErrors = [];
@@ -81,8 +74,8 @@ const ResetPassword = () => {
                 id="email"
                 type="email"
                 ref={emailRef}
-                hasError={hasError("email")}
-                errorMessage={errorMessage("email")}
+                hasError={hasError(errors, "email")}
+                errorMessage={errorMessage(errors, "email")}
                 className="nhsuk-input--width-20"
                 name="email"
               />
