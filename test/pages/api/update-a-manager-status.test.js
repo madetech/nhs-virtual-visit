@@ -23,7 +23,7 @@ describe("update-a-manager-status", () => {
       body: jest.fn(),
     };
     container = {
-      getUpdateManagerByUuid: jest.fn().mockReturnValue(() => {
+      getUpdateManagerStatusByUuid: jest.fn().mockReturnValue(() => {
         return { uuid: expectedUuid, error: null };
       }),
       getTrustAdminIsAuthenticated: jest
@@ -214,7 +214,7 @@ describe("update-a-manager-status", () => {
       return { error: "Error!" };
     });
 
-    container.getUpdateManagerByUuid = updateManagerSpy;
+    container.getUpdateManagerStatusByUuid = updateManagerSpy;
 
     await updateAManagerStatus(validRequest, response, { container });
     expect(response.status).toHaveBeenCalledWith(500);
