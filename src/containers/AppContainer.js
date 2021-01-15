@@ -84,6 +84,16 @@ import retrieveHospitalsByTrustIdGW from "../gateways/PostgreSQL/retrieveHospita
 import insertHospitalGW from "../gateways/PostgreSQL/insertHospital";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
 import createOrganisationGW from "../gateways/PostgreSQL/createOrganization";
+import CallIdProvider from "../providers/CallIdProvider";
+import RandomIdProvider from "../providers/RandomIdProvider";
+import MsSQL from "../gateways/MsSQL";
+import insertHospital from "../gateways/PostgreSQL/insertHospital";
+import retrieveManagersByOrgId from "../gateways/MsSQL/retrieveManagersByOrgId";
+import retrieveManagerByUuid from "../gateways/MsSQL/retrieveManagerByUuid";
+import updateManagerByUuid from "../gateways/MsSQL/updateManagerByUuid";
+import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
+import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
+import archiveManagerGatewayByUuid from "../gateways/MsSQL/archiveManagerByUuid";
 
 class AppContainer {
   getDb = () => {
@@ -406,6 +416,9 @@ class AppContainer {
 
   getVerifyResetPasswordLink = () => {
     return verifyResetPasswordLink(this);
+  }
+  getArchiveManagerByUuidGateway = () => {
+    return archiveManagerGatewayByUuid;
   };
 }
 
