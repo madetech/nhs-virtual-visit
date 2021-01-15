@@ -3,7 +3,6 @@ import MsSQL from "./";
 
 const retrieveEmailAndHashedPassword = async (email) => {
   const db = await MsSQL.getConnectionPool();
-
   if (!email) {
     return {
       emailAddress: "",
