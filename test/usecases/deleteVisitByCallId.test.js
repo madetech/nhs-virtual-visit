@@ -3,6 +3,11 @@ import deleteVisitByCallId from "../../src/usecases/deleteVisitByCallId";
 describe("deleteVisitByCallId", () => {
   it("returns a json object containing the result", async () => {
     const container = {
+      getDeleteVisitByCallIdGateway: () =>
+        jest.fn().mockReturnValue({
+          success: true,
+          error: null,
+        }),
       async getDb() {
         return {
           any: jest.fn().mockReturnValue([
@@ -24,6 +29,11 @@ describe("deleteVisitByCallId", () => {
 
   it("returns an error object on db exception", async () => {
     const container = {
+      getDeleteVisitByCallIdGateway: () =>
+        jest.fn().mockReturnValue({
+          success: false,
+          error: "Error: DB Error!",
+        }),
       async getDb() {
         return {
           any: jest.fn(() => {

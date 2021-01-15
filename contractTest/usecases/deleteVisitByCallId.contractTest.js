@@ -26,7 +26,8 @@ describe("deleteVisitByCallId contract tests", () => {
       expect.objectContaining({ patientName: "Test patient" }),
     ]);
 
-    await container.getDeleteVisitByCallId()("CALLID");
+    // await container.getDeleteVisitByCallId()("CALLID");
+    await container.getDeleteVisitByCallIdGateway()("CALLID");
 
     const {
       scheduledCalls: scheduledCallsAfterDelete,
