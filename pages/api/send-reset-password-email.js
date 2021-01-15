@@ -43,27 +43,27 @@ export default withContainer(
 
     if (linkError) {
       res.status(401);
-      JSON.stringify({
-        error: "There was an error creating link to reset password",
-      });
-    }
-    try {
-      await sendEmail(
-        resetPasswordEmailTemplateId,
-        emailAddress,
-        { link: link },
-        null
-      );
-
-      res.status(201);
-      res.end(JSON.stringify({ success: true }));
-    } catch (err) {
-      res.status(401);
       res.end(
         JSON.stringify({
-          err: `GovNotify error occurred: ${err?.error?.errors[0]?.message}`,
+          error: "There was an error creating link to reset password",
         })
       );
+      return;
+    }
+
+    const { success, error: emailError } = await sendEmail(
+      resetPasswordEmailTemplateId,
+      emailAddress,
+      { link: link },
+      null
+    );
+
+    if (emailError) {
+      res.status(401);
+      res.end(JSON.stringify({ err: "GovNotify error occured" }));
+    } else {
+      res.status(201);
+      res.end(JSON.stringify({ success }));
     }
   }
 );
