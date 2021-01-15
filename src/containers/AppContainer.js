@@ -58,7 +58,6 @@ import createTrustGW from "../gateways/PostgreSQL/createTrust";
 import createWardGW from "../gateways/PostgreSQL/createWard";
 import updateTrustGW from "../gateways/PostgreSQL/updateTrust";
 import updateWardGW from "../gateways/PostgreSQL/updateWard";
-import retrieveOrganizationById from "../gateways/retrieveOrganizationById";
 import logEvent from "../gateways/logEvent";
 import updateHospitalGW from "../gateways/PostgreSQL/updateHospital";
 import retrieveHospitalByIdGW from "../gateways/PostgreSQL/retrieveHospitalById";
