@@ -38,6 +38,7 @@ const EditManager = ({ error, manager, trust }) => {
         throw new Error(response.status);
       }
     } catch (e) {
+      console.log(e);
       const onSubmitErrors = [
         {
           id: "manager-update-error",
