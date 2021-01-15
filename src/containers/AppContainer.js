@@ -66,6 +66,7 @@ import retrieveManagersByOrgId from "../gateways/MsSQL/retrieveManagersByOrgId";
 import retrieveManagerByUuid from "../gateways/MsSQL/retrieveManagerByUuid";
 import updateManagerByUuid from "../gateways/MsSQL/updateManagerByUuid";
 import archiveManagerByUuid from "../gateways/MsSQL/archiveManagerByUuid";
+import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
 
 class AppContainer {
   getDb = () => {
@@ -89,6 +90,10 @@ class AppContainer {
 
   getDeleteVisitByCallId = () => {
     return deleteVisitByCallId(this);
+  };
+
+  getDeleteVisitByCallIdGateway = () => {
+    return deleteVisitByCallIdGW(this);
   };
 
   getCreateWard = () => {

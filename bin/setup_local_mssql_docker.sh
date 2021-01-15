@@ -19,3 +19,4 @@ echo database started...
 
 # Run create tables scripts.
 npm run dbmigrate-dev-mssql up:mssql
+npm run dbmigrate-test-mssql up:mssql

@@ -72,7 +72,8 @@ export const getServerSideProps = propsWithContainer(
       };
     }
 
-    let { error: deleteError } = await deleteVisitByCallId(container)(callId);
+    const getDeleteVisitByCallId = deleteVisitByCallId(container);
+    let { error: deleteError } = await getDeleteVisitByCallId(callId);
 
     return {
       props: {
