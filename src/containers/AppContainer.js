@@ -89,11 +89,13 @@ import RandomIdProvider from "../providers/RandomIdProvider";
 import MsSQL from "../gateways/MsSQL";
 import insertHospital from "../gateways/PostgreSQL/insertHospital";
 import retrieveManagersByOrgId from "../gateways/MsSQL/retrieveManagersByOrgId";
-import retrieveManagerByUuid from "../gateways/MsSQL/retrieveManagerByUuid";
-import updateManagerByUuid from "../gateways/MsSQL/updateManagerByUuid";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
+import retrieveManagerByUuid from "../usecases/retrieveManagerByUuid";
+import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
+import updateManagerByUuid from "../usecases/updateManagerByUuid";
+import updateManagerByUuidGateway from "../gateways/MsSQL/updateManagerByUuid";
 import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
-import archiveManagerGatewayByUuid from "../gateways/MsSQL/archiveManagerByUuid";
+import archiveManagerByUuidGateway from "../gateways/MsSQL/archiveManagerByUuid";
 
 class AppContainer {
   getDb = () => {
@@ -391,13 +393,20 @@ class AppContainer {
   };
 
   getRetrieveManagerByUuid = () => {
-    return retrieveManagerByUuid;
+    return retrieveManagerByUuid(this);
+  };
+  getRetrieveManagerByUuidGateway = () => {
+    return retrieveManagerByUuidGateway;
   };
 
   getUpdateManagerByUuid = () => {
-    return updateManagerByUuid;
+    return updateManagerByUuid(this);
   };
 
+  getUpdateManagerByUuidGateway = () => {
+    return updateManagerByUuidGateway;
+  };
+  å;
   getArchiveManagerByUuid = () => {
     return archiveManagerByUuid(this);
   };
@@ -418,7 +427,7 @@ class AppContainer {
     return verifyResetPasswordLink(this);
   }
   getArchiveManagerByUuidGateway = () => {
-    return archiveManagerGatewayByUuid;
+    return archiveManagerByUuidGateway;
   };
 }
 

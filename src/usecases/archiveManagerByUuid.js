@@ -10,7 +10,7 @@ const archiveManagerByUuid = ({
     await getArchiveManagerByUuidGateway()(db, uuid);
     return { error: null };
   } catch (error) {
-    return { error: "There was an error creating a manager." };
+    return { error: "There was an error deleting a manager." };
   }
 };
 
