@@ -4,6 +4,9 @@ const retrieveManagersByOrgId = ({
   getMsSqlConnPool,
   getRetrieveManagersByOrgIdGateway,
 }) => async (orgId) => {
+  if (orgId === undefined) {
+    return { managers: null, error: "orgId is must be provided." };
+  }
   try {
     logger.info(`Retrieving managers for ${orgId}`);
     const db = await getMsSqlConnPool();
