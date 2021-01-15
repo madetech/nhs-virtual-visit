@@ -46,7 +46,6 @@ describe("test cleanup script", () => {
       wardId: wardId,
     });
 
-    // await container.getDeleteVisitByCallId()("3");
     await container.getDeleteVisitByCallIdGateway()("3");
     //
 
