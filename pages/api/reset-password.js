@@ -1,11 +1,8 @@
 import withContainer from "../../src/middleware/withContainer";
+import { validateHttpMethod } from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(async ({ body, method }, res, { container }) => {
-  if (method !== "POST") {
-    res.status(405);
-    res.end(JSON.stringify({ err: "method not allowed" }));
-    return;
-  }
+  validateHttpMethod("POST", method, res);
 
   if (!body.password) {
     res.status(400);

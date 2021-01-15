@@ -6,11 +6,11 @@ describe("verifyUserLogin contract tests", () => {
   const container = AppContainer.getInstance();
 
   xit("verifies if a admin code and password match an existing trust", async () => {
-    // await setupUser(container)({
-    //   email: "test@email.com",
-    //   password: "TESTPASSWORD",
-    //   type: "admin",
-    // });
+    await setupUser(container)({
+      email: "test@email.com",
+      password: "TESTPASSWORD",
+      type: "admin",
+    });
 
     const { validUser, type, error } = await verifyUserLogin(
       "test@email.com",

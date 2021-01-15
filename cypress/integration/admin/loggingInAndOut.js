@@ -24,29 +24,11 @@ xdescribe("As an admin, I want to log in so that I can access the service.", () 
     ThenISeeTheAdminLogInPage();
   });
 
-  it("displays an error for an invalid code", () => {
+  it("displays an error for an invalid email", () => {
     WhenIVisitTheAdminLogInPage();
-    AndIEnterAnInvalidCode();
+    AndIEnterAnInvalidEmail();
     AndISubmitTheForm();
     ThenISeeAnError();
-  });
-
-  // Is this test still relevant?
-  it("allows an admin to log in and out when a ward code and admin code are the same", () => {
-    GivenTheSameWardCodeAsAdminCode();
-    GivenIAmAnAdmin();
-    WhenIVisitTheAdminLogInPage();
-
-    cy.audit();
-
-    AndIEnterAValidAdminEmailAndPassword();
-    AndISubmitTheForm();
-    ThenISeeTheAdminHomePage();
-
-    cy.audit();
-
-    thenIClickLogOut();
-    ThenISeeTheAdminLogInPage();
   });
 
   it("displays an error for an invalid password", () => {
@@ -55,8 +37,6 @@ xdescribe("As an admin, I want to log in so that I can access the service.", () 
     AndISubmitTheForm();
     ThenISeeAnError();
   });
-
-  function GivenTheSameWardCodeAsAdminCode() {}
 
   function WhenIVisitTheAdminLogInPage() {
     cy.visit(Cypress.env("baseUrl") + "/login");
@@ -83,13 +63,13 @@ xdescribe("As an admin, I want to log in so that I can access the service.", () 
     cy.get("h1").should("contain", "Log in to manage your site");
   }
 
-  // Displays an error for an invalid code
-  function AndIEnterAnInvalidCode() {
+  // Displays an error for an invalid email
+  function AndIEnterAnInvalidEmail() {
     cy.get("input[name=email]").type("wrong@email.com");
     cy.get("input[name=password]").type(Cypress.env("validAdminPassword"));
   }
 
-  // Displays an error for an invalid code
+  // Displays an error for an invalid password
   function AndIEnterAnInvalidPassword() {
     cy.get("input[name=email]").type(Cypress.env("validAdminEmail"));
     cy.get("input[name=password]").type("wrong");
