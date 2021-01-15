@@ -3,7 +3,7 @@ const retrieveManagerByUuidGateway = async (db, uuid) => {
     .request()
     .input("uuid", uuid)
     .query(
-      "SELECT email, password, organisation_id, uuid, status FROM dbo.[user] WHERE uuid = @uuid"
+      "SELECT email, organisation_id, uuid, status FROM dbo.[user] WHERE uuid = @uuid"
     );
   return res.recordset[0];
 };

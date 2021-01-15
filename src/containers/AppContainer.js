@@ -88,8 +88,9 @@ import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
 import MsSQL from "../gateways/MsSQL";
 import insertHospital from "../gateways/PostgreSQL/insertHospital";
-import retrieveManagersByOrgId from "../gateways/MsSQL/retrieveManagersByOrgId";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
+import retrieveManagersByOrgId from "../usecases/retrieveManagersByOrgId";
+import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
 import retrieveManagerByUuid from "../usecases/retrieveManagerByUuid";
 import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
 import updateManagerByUuid from "../usecases/updateManagerByUuid";
@@ -389,7 +390,11 @@ class AppContainer {
   /* These uses the MsSQL DB */
 
   getRetrieveManagersByOrgId = () => {
-    return retrieveManagersByOrgId;
+    return retrieveManagersByOrgId(this);
+  };
+
+  getRetrieveManagersByOrgIdGateway = () => {
+    return retrieveManagersByOrgIdGateway;
   };
 
   getRetrieveManagerByUuid = () => {
