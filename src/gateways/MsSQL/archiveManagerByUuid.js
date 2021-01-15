@@ -15,19 +15,16 @@ const archiveManagerByUuid = async (uuid) => {
 
     if (manager.rowsAffected[0] === 1) {
       return {
-        success: true,
         error: null,
       };
     } else {
       return {
-        success: false,
         error: "Manager does not exist in database.",
       };
     }
   } catch (error) {
     logger.error(error);
     return {
-      success: false,
       error: "There was a problem deleting a manager",
     };
   }
