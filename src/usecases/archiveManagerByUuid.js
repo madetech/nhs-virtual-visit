@@ -4,8 +4,11 @@ const archiveManagerByUuid = ({
   getMsSqlConnPool,
   getArchiveManagerByUuidGateway,
 }) => async (uuid) => {
+  if (!uuid) {
+    return { error: "uuid is must be provided." };
+  }
   try {
-    logger.info(`Archiving manager for ${uuid}`);
+    logger.info(`Deleting manager for ${uuid}`);
     const db = await getMsSqlConnPool();
     await getArchiveManagerByUuidGateway()(db, uuid);
     return { error: null };
