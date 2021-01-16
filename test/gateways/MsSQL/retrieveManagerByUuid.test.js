@@ -1,6 +1,5 @@
 import retrieveManagerByUuidGateway from "../../../src/gateways/MsSQL/retrieveManagerByUuid";
 
-// !!!!!! this is a mocked database !!!!!
 describe("retrieveManagerByUuidGateway", () => {
   const expectedUuid = "12SD";
   const expectedManager = {
