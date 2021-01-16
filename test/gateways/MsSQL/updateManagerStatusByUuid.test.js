@@ -34,7 +34,7 @@ describe("updateManagerStatusByUuidGateway", () => {
   });
   it("throws an error if db is undefined", async () => {
     // Arrange
-    dbSpy = {};
+    dbSpy = undefined;
 
     // Act && Assert
     expect(
