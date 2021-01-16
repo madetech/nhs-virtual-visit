@@ -21,7 +21,6 @@ const updateManagerStatusByUuid = ({
     );
     return { uuid: returnedUuid, error: null };
   } catch (error) {
-    console.log(error);
     return { uuid: null, error: "There was an error updating a manager." };
   }
 };

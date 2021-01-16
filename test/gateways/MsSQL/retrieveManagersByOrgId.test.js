@@ -1,4 +1,5 @@
 import retrieveManagersByOrgIdGateway from "../../../src/gateways/MsSQL/retrieveManagersByOrgId";
+import mockMssql from "mssql";
 
 describe("retrieveManagersByOrgIdGateway", () => {
   const expectedOrgId = 1;
@@ -12,18 +13,14 @@ describe("retrieveManagersByOrgIdGateway", () => {
       status: 1,
     },
   ];
-  const inputSpy = jest.fn().mockReturnThis();
-  const request = jest.fn().mockReturnThis();
-  const querySpy = jest.fn().mockReturnValue({
-    recordset: expectedManagers,
-  });
   let dbSpy;
   beforeEach(() => {
-    dbSpy = {
-      request,
-      input: inputSpy,
-      query: querySpy,
-    };
+    dbSpy = mockMssql.getConnectionPool();
+    dbSpy.query.mockImplementation(() =>
+      Promise.resolve({
+        recordset: expectedManagers,
+      })
+    );
   });
   it("retrieve managers recordset in the db when valid", async () => {
     // Act
@@ -33,31 +30,29 @@ describe("retrieveManagersByOrgIdGateway", () => {
     );
     // Assert
     expect(actualManagers).toEqual(expectedManagers);
-    expect(inputSpy).toHaveBeenCalledWith("orgId", expectedOrgId);
-    expect(querySpy).toHaveBeenCalledWith(
+    expect(dbSpy.input).toHaveBeenCalledTimes(1);
+    expect(dbSpy.input).toHaveBeenCalledWith("orgId", expectedOrgId);
+    expect(dbSpy.query).toHaveBeenCalledWith(
       "SELECT email, uuid, status FROM dbo.[user] WHERE organisation_id = @orgId"
     );
   });
   it("throws an error if db is undefined", async () => {
     // Arrange
-    dbSpy = undefined;
-
+    const dbStub = undefined;
     // Act && Assert
     expect(
-      async () => await retrieveManagersByOrgIdGateway(dbSpy, expectedOrgId)
+      async () => await retrieveManagersByOrgIdGateway(dbStub, expectedOrgId)
     ).rejects.toThrow();
   });
 
   it("returns undefined if orgId is undefined", async () => {
     // Arrange
-    const queryUndefinedStub = jest
-      .fn()
-      .mockReturnValue({ recordset: undefined });
-    dbSpy = {
-      ...dbSpy,
-      query: queryUndefinedStub,
-    };
     const undefinedOrgId = undefined;
+    dbSpy.query.mockImplementationOnce(() =>
+      Promise.resolve({
+        recordset: undefined,
+      })
+    );
     // Act
     const actualManagers = await retrieveManagersByOrgIdGateway(
       dbSpy,
