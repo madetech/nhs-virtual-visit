@@ -38,12 +38,12 @@ describe("archiveManagerByUuidGateway", () => {
   it("throws an error if uuid is undefined", async () => {
     // Arrange
     const undefinedUuid = undefined;
-    const queryUndefinedSpy = jest
+    const queryUndefinedStub = jest
       .fn()
       .mockReturnValue({ recordset: undefined });
     dbSpy = {
       ...dbSpy,
-      query: queryUndefinedSpy,
+      query: queryUndefinedStub,
     };
 
     // Act && Assert

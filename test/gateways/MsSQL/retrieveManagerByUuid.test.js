@@ -44,12 +44,12 @@ describe("retrieveManagerByUuidGateway", () => {
 
   it("throws an error if uuid is undefined", async () => {
     // Arrange
-    const queryUndefinedSpy = jest
+    const queryUndefinedStub = jest
       .fn()
       .mockReturnValue({ recordset: undefined });
     dbSpy = {
       ...dbSpy,
-      query: queryUndefinedSpy,
+      query: queryUndefinedStub,
     };
     const undefinedUuid = undefined;
     // Act && Assert

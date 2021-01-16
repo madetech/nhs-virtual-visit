@@ -50,12 +50,12 @@ describe("retrieveManagersByOrgIdGateway", () => {
 
   it("returns undefined if orgId is undefined", async () => {
     // Arrange
-    const queryUndefinedSpy = jest
+    const queryUndefinedStub = jest
       .fn()
       .mockReturnValue({ recordset: undefined });
     dbSpy = {
       ...dbSpy,
-      query: queryUndefinedSpy,
+      query: queryUndefinedStub,
     };
     const undefinedOrgId = undefined;
     // Act
