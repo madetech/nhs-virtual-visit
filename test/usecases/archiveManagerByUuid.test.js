@@ -4,7 +4,7 @@ describe("archiveManagerByUuid", () => {
   let container;
   const expectedUuid = "abc";
   const dbStub = jest.fn();
-  const archiveManagerByUuidSpy = jest.fn(async () => null);
+  const archiveManagerByUuidSpy = jest.fn(async () => expectedUuid);
   beforeEach(() => {
     container = {
       getMsSqlConnPool: () => dbStub,
@@ -12,8 +12,9 @@ describe("archiveManagerByUuid", () => {
     };
   });
   it("returns no error if manager can be deleted", async () => {
-    const { error } = await archiveManagerByUuid(container)(expectedUuid);
+    const { uuid, error } = await archiveManagerByUuid(container)(expectedUuid);
     expect(error).toBeNull();
+    expect(uuid).toEqual(expectedUuid);
     expect(archiveManagerByUuidSpy).toBeCalledWith(dbStub, expectedUuid);
   });
   it("returns an error if manager cannot be deleted", async () => {
@@ -25,8 +26,9 @@ describe("archiveManagerByUuid", () => {
       ...container,
       getArchiveManagerByUuidGateway: () => archiveManagerByUuidErrorSpy,
     };
-    const { error } = await archiveManagerByUuid(container)(expectedUuid);
+    const { uuid, error } = await archiveManagerByUuid(container)(expectedUuid);
     expect(error).toEqual("There was an error deleting a manager.");
+    expect(uuid).toEqual(null);
     expect(archiveManagerByUuidErrorSpy).toBeCalledWith(dbStub, expectedUuid);
   });
   it("returns an error if uuid does not exist", async () => {

@@ -5,15 +5,15 @@ const archiveManagerByUuid = ({
   getArchiveManagerByUuidGateway,
 }) => async (uuid) => {
   if (uuid === undefined) {
-    return { error: "uuid is must be provided." };
+    return { uuid, error: "uuid is must be provided." };
   }
   try {
     logger.info(`Deleting manager for ${uuid}`);
     const db = await getMsSqlConnPool();
-    await getArchiveManagerByUuidGateway()(db, uuid);
-    return { error: null };
+    const returnedUuid = await getArchiveManagerByUuidGateway()(db, uuid);
+    return { uuid: returnedUuid, error: null };
   } catch (error) {
-    return { error: "There was an error deleting a manager." };
+    return { uuid: null, error: "There was an error deleting a manager." };
   }
 };
 
