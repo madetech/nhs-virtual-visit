@@ -1,6 +1,5 @@
 import archiveManagerByUuidGateway from "../../../src/gateways/MsSQL/archiveManagerByUuid";
 
-// !!!!!! this is a mocked database !!!!!
 describe("archiveManagerByUuidGateway", () => {
   const expectedUuid = "abc";
   const inputSpy = jest.fn().mockReturnThis();

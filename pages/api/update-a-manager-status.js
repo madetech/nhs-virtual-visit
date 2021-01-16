@@ -38,14 +38,11 @@ export default withContainer(
     }
 
     const updateManager = container.getUpdateManagerStatusByUuid();
-    console.log("********body.status**********");
-    console.log(body.status === "active" ? 1 : 0);
     const { uuid, error } = await updateManager({
       uuid: body.uuid,
       status: body.status === "active" ? 1 : 0,
     });
-    console.log("********error**********");
-    console.log(error);
+
     if (error) {
       res.status(500);
       res.end(JSON.stringify({ error }));

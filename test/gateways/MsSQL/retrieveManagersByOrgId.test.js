@@ -1,6 +1,5 @@
 import retrieveManagersByOrgIdGateway from "../../../src/gateways/MsSQL/retrieveManagersByOrgId";
 
-// !!!!!! this is a mocked database !!!!!
 describe("retrieveManagersByOrgIdGateway", () => {
   const expectedOrgId = 1;
   const expectedManagers = [
