@@ -14,8 +14,12 @@ const updateManagerStatusByUuid = ({
   try {
     logger.info(`Updating manager for ${uuid}`);
     const db = await getMsSqlConnPool();
-    await getUpdateManagerStatusByUuidGateway()(db, uuid, status);
-    return { uuid, error: null };
+    const returnedUuid = await getUpdateManagerStatusByUuidGateway()(
+      db,
+      uuid,
+      status
+    );
+    return { uuid: returnedUuid, error: null };
   } catch (error) {
     console.log(error);
     return { uuid: null, error: "There was an error updating a manager." };
