@@ -42,8 +42,7 @@ export default withContainer(
       uuid: body.uuid,
       status: body.status === "active" ? 1 : 0,
     });
-    console.log("********error**********");
-    console.log(error);
+
     if (error) {
       res.status(500);
       res.end(JSON.stringify({ error }));
