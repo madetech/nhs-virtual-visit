@@ -1,20 +1,17 @@
 import updateManagerStatusByUuidGateway from "../../../src/gateways/MsSQL/updateManagerStatusByUuid";
+import mockMssql from "mssql";
 
 describe("updateManagerStatusByUuidGateway", () => {
   const expectedUuid = "abc";
   const expectedStatus = 1;
-  const inputSpy = jest.fn().mockReturnThis();
-  const request = jest.fn().mockReturnThis();
-  const querySpy = jest.fn().mockReturnValue({
-    recordset: [{ uuid: expectedUuid }],
-  });
   let dbSpy;
   beforeEach(() => {
-    dbSpy = {
-      request,
-      input: inputSpy,
-      query: querySpy,
-    };
+    dbSpy = mockMssql.getConnectionPool();
+    dbSpy.query.mockImplementation(() =>
+      Promise.resolve({
+        recordset: [{ uuid: expectedUuid }],
+      })
+    );
   });
   it("updates a managers status in the db when valid", async () => {
     // Act
@@ -25,21 +22,21 @@ describe("updateManagerStatusByUuidGateway", () => {
     );
     // Assert
     expect(actualUuid).toEqual(expectedUuid);
-    expect(inputSpy).toHaveBeenNthCalledWith(1, "uuid", expectedUuid);
-    expect(inputSpy).toHaveBeenNthCalledWith(2, "status", expectedStatus);
-    expect(querySpy).toHaveBeenCalledWith(
+    expect(dbSpy.input).toHaveBeenCalledTimes(2);
+    expect(dbSpy.input).toHaveBeenNthCalledWith(1, "uuid", expectedUuid);
+    expect(dbSpy.input).toHaveBeenNthCalledWith(2, "status", expectedStatus);
+    expect(dbSpy.query).toHaveBeenCalledWith(
       "UPDATE dbo.[user] SET status = @status OUTPUT inserted.uuid WHERE uuid = @uuid"
     );
   });
   it("throws an error if db is undefined", async () => {
     // Arrange
-    dbSpy = undefined;
-
+    const dbStub = undefined;
     // Act && Assert
     expect(
       async () =>
         await updateManagerStatusByUuidGateway(
-          dbSpy,
+          dbStub,
           expectedUuid,
           expectedStatus
         )
@@ -48,14 +45,12 @@ describe("updateManagerStatusByUuidGateway", () => {
 
   it("throws an error if uuid is undefined", async () => {
     // Arrange
-    const queryUndefinedSpy = jest
-      .fn()
-      .mockReturnValue({ recordset: undefined });
-    dbSpy = {
-      ...dbSpy,
-      query: queryUndefinedSpy,
-    };
     const undefinedUuid = undefined;
+    dbSpy.query.mockImplementationOnce(() =>
+      Promise.resolve({
+        recordset: undefined,
+      })
+    );
     // Act && Assert
     expect(
       async () =>
@@ -69,14 +64,12 @@ describe("updateManagerStatusByUuidGateway", () => {
 
   it("throws an error if status is undefined", async () => {
     // Arrange
-    const queryUndefinedSpy = jest
-      .fn()
-      .mockReturnValue({ recordset: undefined });
-    dbSpy = {
-      ...dbSpy,
-      query: queryUndefinedSpy,
-    };
     const undefinedStatus = undefined;
+    dbSpy.query.mockImplementationOnce(() =>
+      Promise.resolve({
+        recordset: undefined,
+      })
+    );
     // Act && Assert
     expect(
       async () =>
