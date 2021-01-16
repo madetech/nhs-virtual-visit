@@ -5,7 +5,7 @@ describe("updateManagerStatusByUuid", () => {
   const expectedUuid = "abc";
   const expectedStatus = "status";
   const dbStub = jest.fn();
-  const updateManagerStatusByUuidSpy = jest.fn(async () => null);
+  const updateManagerStatusByUuidSpy = jest.fn(async () => expectedUuid);
 
   beforeEach(() => {
     container = {
