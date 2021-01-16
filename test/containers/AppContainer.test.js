@@ -139,4 +139,36 @@ describe("AppContainer", () => {
   it("returns getRetrieveVisitById", () => {
     expect(container.getRetrieveVisitById()).toBeDefined();
   });
+
+  it("returns getRetrieveManagersByOrgId", () => {
+    expect(container.getRetrieveManagersByOrgId()).toBeDefined();
+  });
+
+  it("returns getRetrieveManagersByOrgIdGateway", () => {
+    expect(container.getRetrieveManagersByOrgIdGateway()).toBeDefined();
+  });
+
+  it("returns getRetrieveManagerByUuid", () => {
+    expect(container.getRetrieveManagerByUuid()).toBeDefined();
+  });
+
+  it("returns getRetrieveManagerByUuidGateway", () => {
+    expect(container.getRetrieveManagerByUuidGateway()).toBeDefined();
+  });
+
+  it("returns getUpdateManagerStatusByUuid", () => {
+    expect(container.getUpdateManagerStatusByUuid()).toBeDefined();
+  });
+
+  it("returns getUpdateManagerStatusByUuidGateway", () => {
+    expect(container.getUpdateManagerStatusByUuidGateway()).toBeDefined();
+  });
+
+  it("returns getArchiveManagerByUuid", () => {
+    expect(container.getArchiveManagerByUuid()).toBeDefined();
+  });
+
+  it("returns getArchiveManagerByUuidGateway", () => {
+    expect(container.getArchiveManagerByUuidGateway()).toBeDefined();
+  });
 });
