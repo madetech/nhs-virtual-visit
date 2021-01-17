@@ -1,5 +1,5 @@
 import retrieveManagerByUuidGateway from "../../../src/gateways/MsSQL/retrieveManagerByUuid";
-import mockMssql from "mssql";
+import mockMssql from "src/gateways/MsSQL";
 
 describe("retrieveManagerByUuidGateway", () => {
   const expectedUuid = "12SD";
