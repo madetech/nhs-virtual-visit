@@ -1,5 +1,5 @@
 import archiveManagerByUuidGateway from "../../../src/gateways/MsSQL/archiveManagerByUuid";
-import mockMssql from "mssql";
+import mockMssql from "src/gateways/MsSQL";
 
 describe("archiveManagerByUuidGateway", () => {
   const expectedUuid = "abc";

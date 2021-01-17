@@ -1,5 +1,5 @@
 import retrieveManagersByOrgIdGateway from "../../../src/gateways/MsSQL/retrieveManagersByOrgId";
-import mockMssql from "mssql";
+import mockMssql from "src/gateways/MsSQL";
 
 describe("retrieveManagersByOrgIdGateway", () => {
   const expectedOrgId = 1;

@@ -1,5 +1,5 @@
 import updateManagerStatusByUuidGateway from "../../../src/gateways/MsSQL/updateManagerStatusByUuid";
-import mockMssql from "mssql";
+import mockMssql from "src/gateways/MsSQL";
 
 describe("updateManagerStatusByUuidGateway", () => {
   const expectedUuid = "abc";
