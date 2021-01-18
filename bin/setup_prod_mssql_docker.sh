@@ -21,5 +21,5 @@ echo "Running dbmigrate-prod-mssql.sh project script"
 # Before running the script check if server is paused
 # TODO: write script and test on azure deployment center.
 
-# Run create tables scripts.
-npm run dbmigrate-prod-mssql up:mssql
+# Run create / update tables scripts.
+for i in $(seq 1 5); do [ $i -gt 1 ] && sleep 15; npm run dbmigrate-prod-mssql up:mssql && s=0 && break || s=$?; done; (exit $s)

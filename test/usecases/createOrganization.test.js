@@ -3,12 +3,18 @@ import createOrganization from "../../src/usecases/createOrganization";
 describe("createOrganizationList", () => {
   it("create an Organization", async () => {
     const oneSpy = jest.fn().mockReturnValue({ id: 1 });
+    const inputSpy = jest.fn().mockReturnValue({
+      organizationId: 1,
+      error: null,
+    });
+
     const container = {
       async getDb() {
         return {
           one: oneSpy,
         };
       },
+      getCreateOrganizationGateway: () => inputSpy,
     };
 
     const request = { name: "Test Trust", status: 0 };
@@ -18,7 +24,7 @@ describe("createOrganizationList", () => {
     );
     expect(organizationId).toEqual(1);
     expect(error).toBeNull();
-    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), ["Test Trust", 0]);
+    expect(inputSpy).toHaveBeenCalledWith("Test Trust", 0);
   });
 
   it("returns an error object on db exception", async () => {
@@ -30,6 +36,11 @@ describe("createOrganizationList", () => {
           }),
         };
       },
+      getCreateOrganizationGateway: () =>
+        jest.fn().mockReturnValue({
+          organizationId: null,
+          error: "Error: DB Error!",
+        }),
     };
 
     const { organizationId, error } = await createOrganization(container)({
