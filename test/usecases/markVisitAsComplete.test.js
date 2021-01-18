@@ -28,6 +28,11 @@ describe("markVisitAsComplete", () => {
           }),
         };
       },
+      getMarkVisitAsCompleteGateway: () =>
+        jest.fn().mockResolvedValue({
+          id: null,
+          error: "failure",
+        }),
     };
 
     const { id, error } = await markVisitAsComplete(container)({

@@ -15,7 +15,7 @@ describe("markVisitAsComplete contract tests", () => {
     const {
       id: scheduledCallId,
       error,
-    } = await container.getMarkVisitAsComplete()({
+    } = await container.getMarkVisitAsCompleteGateway()({
       id,
       wardId,
     });
