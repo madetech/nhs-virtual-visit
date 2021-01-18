@@ -1,10 +1,14 @@
-const updateOrganisationStatusGateway = async (db, organisationId, status) => {
+const updateOrganisationStatusGateway = ({ getMsSqlConnPool }) => async (
+  organisationId,
+  status
+) => {
+  const db = await getMsSqlConnPool();
   await db
     .request()
     .input("organisationId", organisationId)
     .input("status", status)
     .query(
-      `UPDATE dbo.[organisation] SET status = @statu WHERE id = @organisationId`
+      `UPDATE dbo.[organisation] SET status = @status WHERE id = @organisationId`
     );
 };
 
