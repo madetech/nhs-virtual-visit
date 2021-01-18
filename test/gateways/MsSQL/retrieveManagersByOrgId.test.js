@@ -13,49 +13,57 @@ describe("retrieveManagersByOrgIdGateway", () => {
       status: 1,
     },
   ];
-  let dbSpy;
-  beforeEach(() => {
-    dbSpy = mockMssql.getConnectionPool();
-    dbSpy.query.mockImplementation(() =>
+  const getConnectionPoolMock = mockMssql.getConnectionPool;
+
+  it("retrieve managers recordset in the db when valid", async () => {
+    // Arrange
+    getConnectionPoolMock().query.mockImplementationOnce(() =>
       Promise.resolve({
         recordset: expectedManagers,
       })
     );
-  });
-  it("retrieve managers recordset in the db when valid", async () => {
+    const container = {
+      getMsSqlConnPool: getConnectionPoolMock,
+    };
     // Act
-    const actualManagers = await retrieveManagersByOrgIdGateway(
-      dbSpy,
+    const actualManagers = await retrieveManagersByOrgIdGateway(container)(
       expectedOrgId
     );
     // Assert
     expect(actualManagers).toEqual(expectedManagers);
-    expect(dbSpy.input).toHaveBeenCalledTimes(1);
-    expect(dbSpy.input).toHaveBeenCalledWith("orgId", expectedOrgId);
-    expect(dbSpy.query).toHaveBeenCalledWith(
+    expect(container.getMsSqlConnPool().input).toHaveBeenCalledTimes(1);
+    expect(container.getMsSqlConnPool().input).toHaveBeenCalledWith(
+      "orgId",
+      expectedOrgId
+    );
+    expect(container.getMsSqlConnPool().query).toHaveBeenCalledWith(
       "SELECT email, uuid, status FROM dbo.[user] WHERE organisation_id = @orgId"
     );
   });
   it("throws an error if db is undefined", async () => {
     // Arrange
-    const dbStub = undefined;
+    const container = {
+      getMsSqlConnPool: undefined,
+    };
     // Act && Assert
     expect(
-      async () => await retrieveManagersByOrgIdGateway(dbStub, expectedOrgId)
+      async () => await retrieveManagersByOrgIdGateway(container)(expectedOrgId)
     ).rejects.toThrow();
   });
 
   it("returns undefined if orgId is undefined", async () => {
     // Arrange
     const undefinedOrgId = undefined;
-    dbSpy.query.mockImplementationOnce(() =>
+    getConnectionPoolMock().query.mockImplementationOnce(() =>
       Promise.resolve({
         recordset: undefined,
       })
     );
+    const container = {
+      getMsSqlConnPool: getConnectionPoolMock,
+    };
     // Act
-    const actualManagers = await retrieveManagersByOrgIdGateway(
-      dbSpy,
+    const actualManagers = await retrieveManagersByOrgIdGateway(container)(
       undefinedOrgId
     );
     // Assert

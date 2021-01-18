@@ -4,12 +4,10 @@ describe("updateManagerStatusByUuid", () => {
   let container;
   const expectedUuid = "abc";
   const expectedStatus = "status";
-  const dbStub = jest.fn();
   const updateManagerStatusByUuidSpy = jest.fn(async () => expectedUuid);
 
   beforeEach(() => {
     container = {
-      getMsSqlConnPool: () => dbStub,
       getUpdateManagerStatusByUuidGateway: () => updateManagerStatusByUuidSpy,
     };
   });
@@ -22,7 +20,6 @@ describe("updateManagerStatusByUuid", () => {
     expect(error).toBeNull();
     expect(uuid).toEqual(expectedUuid);
     expect(updateManagerStatusByUuidSpy).toBeCalledWith(
-      dbStub,
       expectedUuid,
       expectedStatus
     );
@@ -45,7 +42,6 @@ describe("updateManagerStatusByUuid", () => {
     expect(error).toEqual("There was an error updating a manager.");
     expect(uuid).toBeNull();
     expect(updateManagerStatusByUuidErrorSpy).toBeCalledWith(
-      dbStub,
       expectedUuid,
       expectedStatus
     );
