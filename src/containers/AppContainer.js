@@ -71,6 +71,7 @@ import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
 import retrieveEmailAndHashedPassword from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
 import resetPassword from "../gateways/MsSQL/resetPassword";
 import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
+import createOrganisationGW from "../gateways/PostgreSQL/createOrganization";
 
 class AppContainer {
   getDb = () => {
@@ -292,6 +293,10 @@ class AppContainer {
     return createOrganization(this);
   };
 
+  getCreateOrganizationGateway = () => {
+    return createOrganisationGW(this);
+  };
+
   getRetrieveOrganizations = () => {
     return retrieveOrganizations(this);
   };
@@ -346,7 +351,7 @@ class AppContainer {
   };
 
   getArchiveManagerByUuid = () => {
-    return archiveManagerByUuid;
+    return archiveManagerByUuid(this);
   };
   
   // MsSQL database gateways

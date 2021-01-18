@@ -16,7 +16,7 @@ fi
 ## See section Customize build automation 										##
 ##################################################################################
 
-echo "Running Deploy.SH DBMIGRATE project script"
+echo "Running dbmigrate-prod-mssql.sh project script"
 
 # Before running the script check if server is paused
 # TODO: write script and test on azure deployment center.
