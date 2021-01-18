@@ -15,11 +15,9 @@ describe("retrieveManagersByOrgId", () => {
       status: 1,
     },
   ];
-  const dbStub = jest.fn();
   const retrieveManagersByOrgIdSpy = jest.fn(async () => expectedManagers);
   beforeEach(() => {
     container = {
-      getMsSqlConnPool: () => dbStub,
       getRetrieveManagersByOrgIdGateway: () => retrieveManagersByOrgIdSpy,
     };
   });
@@ -34,7 +32,7 @@ describe("retrieveManagersByOrgId", () => {
         status: expectedManagers[idx].status === 0 ? "disabled" : "active",
       })
     );
-    expect(retrieveManagersByOrgIdSpy).toBeCalledWith(dbStub, expectedOrgId);
+    expect(retrieveManagersByOrgIdSpy).toBeCalledWith(expectedOrgId);
   });
   it("returns an error if manager cannot be deleted", async () => {
     const retrieveManagersByOrgIdErrorSpy = jest.fn(async () => {
@@ -49,10 +47,7 @@ describe("retrieveManagersByOrgId", () => {
     );
     expect(error).toEqual("There was an error retrieving managers.");
     expect(managers).toBeNull();
-    expect(retrieveManagersByOrgIdErrorSpy).toBeCalledWith(
-      dbStub,
-      expectedOrgId
-    );
+    expect(retrieveManagersByOrgIdErrorSpy).toBeCalledWith(expectedOrgId);
   });
   it("returns an error if orgId does not exist", async () => {
     const { managers, error } = await retrieveManagersByOrgId(container)();

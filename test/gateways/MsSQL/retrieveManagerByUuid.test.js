@@ -7,50 +7,58 @@ describe("retrieveManagerByUuidGateway", () => {
     uuid: expectedUuid,
     status: 1,
   };
-  let dbSpy;
-  beforeEach(() => {
-    dbSpy = mockMssql.getConnectionPool();
-    dbSpy.query.mockImplementation(() =>
+  const getConnectionPoolMock = mockMssql.getConnectionPool;
+
+  it("retrieve manager in the db when valid", async () => {
+    // Arrange
+    getConnectionPoolMock().query.mockImplementationOnce(() =>
       Promise.resolve({
         recordset: [expectedManager],
       })
     );
-  });
-  it("retrieve manager in the db when valid", async () => {
+    const container = {
+      getMsSqlConnPool: getConnectionPoolMock,
+    };
     // Act
-    const actualManager = await retrieveManagerByUuidGateway(
-      dbSpy,
+    const actualManager = await retrieveManagerByUuidGateway(container)(
       expectedUuid
     );
     // Assert
     expect(actualManager).toEqual(expectedManager);
-    expect(dbSpy.input).toHaveBeenCalledTimes(1);
-    expect(dbSpy.input).toHaveBeenCalledWith("uuid", expectedUuid);
-    expect(dbSpy.query).toHaveBeenCalledWith(
+    expect(container.getMsSqlConnPool().input).toHaveBeenCalledTimes(1);
+    expect(container.getMsSqlConnPool().input).toHaveBeenCalledWith(
+      "uuid",
+      expectedUuid
+    );
+    expect(container.getMsSqlConnPool().query).toHaveBeenCalledWith(
       "SELECT email, organisation_id, uuid, status FROM dbo.[user] WHERE uuid = @uuid"
     );
   });
   it("throws an error if db is undefined", async () => {
     // Arrange
-    const dbStub = undefined;
-
+    const container = {
+      getMsSqlConnPool: undefined,
+    };
     // Act && Assert
     expect(
-      async () => await retrieveManagerByUuidGateway(dbStub, expectedUuid)
+      async () => await retrieveManagerByUuidGateway(container)(expectedUuid)
     ).rejects.toThrow();
   });
 
   it("throws an error if uuid is undefined", async () => {
     // Arrange
-    dbSpy.query.mockImplementationOnce(() =>
+    getConnectionPoolMock().query.mockImplementationOnce(() =>
       Promise.resolve({
         recordset: undefined,
       })
     );
+    const container = {
+      getMsSqlConnPool: getConnectionPoolMock,
+    };
     const undefinedUuid = undefined;
     // Act && Assert
     expect(
-      async () => await retrieveManagerByUuidGateway(dbSpy, undefinedUuid)
+      async () => await retrieveManagerByUuidGateway(container)(undefinedUuid)
     ).rejects.toThrowError(TypeError);
   });
 });

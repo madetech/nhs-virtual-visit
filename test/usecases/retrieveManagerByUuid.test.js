@@ -9,11 +9,9 @@ describe("retrieveManagerByUuid", () => {
     organisation_id: 1,
     status: 1,
   };
-  const dbStub = jest.fn();
   const retrieveManagerByUuidSpy = jest.fn(async () => expectedManager);
   beforeEach(() => {
     container = {
-      getMsSqlConnPool: () => dbStub,
       getRetrieveManagerByUuidGateway: () => retrieveManagerByUuidSpy,
     };
   });
@@ -23,7 +21,7 @@ describe("retrieveManagerByUuid", () => {
     );
     expect(error).toBeNull();
     expect(manager).toEqual({ ...expectedManager, status: "active" });
-    expect(retrieveManagerByUuidSpy).toBeCalledWith(dbStub, expectedUuid);
+    expect(retrieveManagerByUuidSpy).toBeCalledWith(expectedUuid);
   });
   it("returns status of active if manager status retrieved is 1", async () => {
     const { manager, error } = await retrieveManagerByUuid(container)(
@@ -31,7 +29,7 @@ describe("retrieveManagerByUuid", () => {
     );
     expect(error).toBeNull();
     expect(manager).toEqual({ ...expectedManager, status: "active" });
-    expect(retrieveManagerByUuidSpy).toBeCalledWith(dbStub, expectedUuid);
+    expect(retrieveManagerByUuidSpy).toBeCalledWith(expectedUuid);
   });
   it("returns status of disabled if manager status retrieved is 0", async () => {
     const retrieveManagerStatusCheckByUuidSpy = jest.fn(async () => ({
@@ -48,10 +46,7 @@ describe("retrieveManagerByUuid", () => {
     );
     expect(error).toBeNull();
     expect(manager).toEqual({ ...expectedManager, status: "disabled" });
-    expect(retrieveManagerStatusCheckByUuidSpy).toBeCalledWith(
-      dbStub,
-      expectedUuid
-    );
+    expect(retrieveManagerStatusCheckByUuidSpy).toBeCalledWith(expectedUuid);
   });
   it("returns an error if manager cannot be deleted", async () => {
     const retrieveManagerByUuidErrorSpy = jest.fn(async () => {
@@ -67,7 +62,7 @@ describe("retrieveManagerByUuid", () => {
     );
     expect(error).toEqual("There was an error retrieving a manager.");
     expect(manager).toBeNull();
-    expect(retrieveManagerByUuidErrorSpy).toBeCalledWith(dbStub, expectedUuid);
+    expect(retrieveManagerByUuidErrorSpy).toBeCalledWith(expectedUuid);
   });
   it("returns an error if uuid does not exist", async () => {
     const { manager, error } = await retrieveManagerByUuid(container)();

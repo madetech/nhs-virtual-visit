@@ -3,47 +3,58 @@ import mockMssql from "src/gateways/MsSQL";
 
 describe("archiveManagerByUuidGateway", () => {
   const expectedUuid = "abc";
-  let dbSpy;
-  beforeEach(() => {
-    dbSpy = mockMssql.getConnectionPool();
-    dbSpy.query.mockImplementation(() =>
+  const getConnectionPoolMock = mockMssql.getConnectionPool;
+
+  it("deletes a managers status in the db when valid", async () => {
+    // Arrange
+    getConnectionPoolMock().query.mockImplementationOnce(() =>
       Promise.resolve({
         recordset: [{ uuid: expectedUuid }],
       })
     );
-  });
-  it("deletes a managers status in the db when valid", async () => {
+    const container = {
+      getMsSqlConnPool: getConnectionPoolMock,
+    };
     // Act
-    const actualUuid = await archiveManagerByUuidGateway(dbSpy, expectedUuid);
+    const actualUuid = await archiveManagerByUuidGateway(container)(
+      expectedUuid
+    );
     // Assert
     expect(actualUuid).toEqual(expectedUuid);
-    expect(dbSpy.input).toHaveBeenCalledTimes(1);
-    expect(dbSpy.input).toHaveBeenCalledWith("uuid", expectedUuid);
-    expect(dbSpy.query).toHaveBeenCalledWith(
+    expect(container.getMsSqlConnPool().input).toHaveBeenCalledTimes(1);
+    expect(container.getMsSqlConnPool().input).toHaveBeenCalledWith(
+      "uuid",
+      expectedUuid
+    );
+    expect(container.getMsSqlConnPool().query).toHaveBeenCalledWith(
       "DELETE FROM dbo.[user] OUTPUT deleted.uuid WHERE uuid = @uuid"
     );
   });
   it("throws an error if database is undefined", async () => {
     // Arrange
-    const dbStub = undefined;
-
+    const container = {
+      getMsSqlConnPool: undefined,
+    };
     // Act && Assert
     expect(
-      async () => await archiveManagerByUuidGateway(dbStub, expectedUuid)
+      async () => await archiveManagerByUuidGateway(container)(expectedUuid)
     ).rejects.toThrow();
   });
 
   it("throws an error if uuid is undefined", async () => {
     // Arrange
     const undefinedUuid = undefined;
-    dbSpy.query.mockImplementationOnce(() =>
+    getConnectionPoolMock().query.mockImplementationOnce(() =>
       Promise.resolve({
         recordset: undefined,
       })
     );
+    const container = {
+      getMsSqlConnPool: getConnectionPoolMock,
+    };
     // Act && Assert
     expect(
-      async () => await archiveManagerByUuidGateway(dbSpy, undefinedUuid)
+      async () => await archiveManagerByUuidGateway(container)(undefinedUuid)
     ).rejects.toThrowError(TypeError);
   });
 });
