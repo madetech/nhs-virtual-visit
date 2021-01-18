@@ -24,6 +24,7 @@ describe("archiveManagerByUuidGateway", () => {
     expect(container.getMsSqlConnPool().input).toHaveBeenCalledTimes(1);
     expect(container.getMsSqlConnPool().input).toHaveBeenCalledWith(
       "uuid",
+      expect.anything(),
       expectedUuid
     );
     expect(container.getMsSqlConnPool().query).toHaveBeenCalledWith(

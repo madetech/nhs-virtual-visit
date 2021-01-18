@@ -34,6 +34,7 @@ describe("retrieveManagersByOrgIdGateway", () => {
     expect(container.getMsSqlConnPool().input).toHaveBeenCalledTimes(1);
     expect(container.getMsSqlConnPool().input).toHaveBeenCalledWith(
       "orgId",
+      expect.anything(),
       expectedOrgId
     );
     expect(container.getMsSqlConnPool().query).toHaveBeenCalledWith(

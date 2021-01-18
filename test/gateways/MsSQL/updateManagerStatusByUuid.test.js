@@ -27,11 +27,13 @@ describe("updateManagerStatusByUuidGateway", () => {
     expect(container.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
       1,
       "uuid",
+      expect.anything(),
       expectedUuid
     );
     expect(container.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
       2,
       "status",
+      expect.anything(),
       expectedStatus
     );
     expect(container.getMsSqlConnPool().query).toHaveBeenCalledWith(
