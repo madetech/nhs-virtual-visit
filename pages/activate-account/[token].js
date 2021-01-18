@@ -35,26 +35,33 @@ export default ActivateAccount;
 
 export const getServerSideProps = propsWithContainer(
   async ({ query, container }) => {
+    let email;
     let activationError = null;
     const token = query.token;
     const verifySignUpLink = container.getVerifySignUpLink();
-    const { email, error: linkError } = await verifySignUpLink(token);
-
+    const { id, error: linkError } = await verifySignUpLink(token);
+    console.log("*****Verify sign up link iid");
+    console.log(id);
     if (!linkError) {
       const updateManagerStatus = container.getUpdateManagerStatus();
       const { user, error: managerError } = await updateManagerStatus({
-        email,
+        id,
         status: 1,
       });
 
+      email = user.email;
       const organisationId = user.organisation_id;
-      console.log(organisationId);
+
       const updateOrganisationStatus = container.getUpdateOrganisationStatus();
       const { error: organisationError } = await updateOrganisationStatus({
         organisationId,
         status: 1,
       });
 
+      // if (!organisationError) {
+      //   const updateVerifiedInUserVerificationTable = container.getUpdateVerifiedInUserVerificationTable();
+      //   const { error: userVerificationTableError } = await updateVerifiedInUserVerificationTable({ verified: 1 });
+      // }
       activationError = managerError || organisationError;
     }
 

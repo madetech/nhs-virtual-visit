@@ -2,7 +2,7 @@ import TokenProvider from "../providers/TokenProvider";
 
 const createTimeSensitiveLink = (
   headers,
-  emailAddress,
+  id,
   expirationTime,
   urlPath,
   hashedPassword = process.env.JWT_SIGNING_KEY
@@ -10,7 +10,7 @@ const createTimeSensitiveLink = (
   const tokenProvider = new TokenProvider(process.env.JWT_SIGNING_KEY);
   try {
     const token = tokenProvider.generateTokenForLink(
-      emailAddress,
+      id,
       expirationTime,
       hashedPassword
     );

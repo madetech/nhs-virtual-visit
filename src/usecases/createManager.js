@@ -1,13 +1,19 @@
-const createManager = ({
-  getMsSqlConnPool,
-  getInsertManagerGateway,
-}) => async ({ email, password, organisationId, type }) => {
+const createManager = ({ getInsertManagerGateway }) => async ({
+  email,
+  password,
+  organisationId,
+  type,
+}) => {
   try {
-    const db = await getMsSqlConnPool();
-    await getInsertManagerGateway()(db, email, password, organisationId, type);
-    return { error: null };
+    const user = await getInsertManagerGateway()(
+      email,
+      password,
+      organisationId,
+      type
+    );
+    return { user, error: null };
   } catch (error) {
-    return { error: "There was an error creating a manager." };
+    return { user: null, error: "There was an error creating a manager." };
   }
 };
 
