@@ -2,12 +2,11 @@ import logger from "../../../logger";
 import { COMPLETE } from "../../helpers/visitStatus";
 
 export default ({ getDb }) => async ({ id, wardId }) => {
-  if (!id) {
-    return { id: null, error: "An id must be provided." };
-  }
-  if (!wardId) {
-    return { id: null, error: "A wardId must be provided." };
-  }
+  logger.info(
+    `mark visit as complete id: ${id}, wardId: ${wardId}`,
+    id,
+    wardId
+  );
 
   const db = await getDb();
 
@@ -26,6 +25,8 @@ export default ({ getDb }) => async ({ id, wardId }) => {
       error: null,
     };
   } catch (error) {
+    console.log(error);
+
     logger.error(error);
     return {
       id: null,
