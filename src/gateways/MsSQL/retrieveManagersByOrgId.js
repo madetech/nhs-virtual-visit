@@ -1,4 +1,7 @@
-const retrieveManagersByOrgIdGateway = async (db, orgId) => {
+const retrieveManagersByOrgIdGateway = ({ getMsSqlConnPool }) => async (
+  orgId
+) => {
+  const db = await getMsSqlConnPool();
   const res = await db
     .request()
     .input("orgId", orgId)
