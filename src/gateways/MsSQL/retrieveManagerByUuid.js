@@ -1,4 +1,5 @@
-const retrieveManagerByUuidGateway = async (db, uuid) => {
+const retrieveManagerByUuidGateway = ({ getMsSqlConnPool }) => async (uuid) => {
+  const db = await getMsSqlConnPool();
   const res = await db
     .request()
     .input("uuid", uuid)

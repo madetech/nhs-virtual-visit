@@ -394,14 +394,14 @@ class AppContainer {
   };
 
   getRetrieveManagersByOrgIdGateway = () => {
-    return retrieveManagersByOrgIdGateway;
+    return retrieveManagersByOrgIdGateway(this);
   };
 
   getRetrieveManagerByUuid = () => {
     return retrieveManagerByUuid(this);
   };
   getRetrieveManagerByUuidGateway = () => {
-    return retrieveManagerByUuidGateway;
+    return retrieveManagerByUuidGateway(this);
   };
 
   getUpdateManagerStatusByUuid = () => {
@@ -409,7 +409,7 @@ class AppContainer {
   };
 
   getUpdateManagerStatusByUuidGateway = () => {
-    return updateManagerStatusByUuidGateway;
+    return updateManagerStatusByUuidGateway(this);
   };
   å;
   getArchiveManagerByUuid = () => {
@@ -432,7 +432,7 @@ class AppContainer {
     return verifyResetPasswordLink(this);
   }
   getArchiveManagerByUuidGateway = () => {
-    return archiveManagerByUuidGateway;
+    return archiveManagerByUuidGateway(this);
   };
 }
 

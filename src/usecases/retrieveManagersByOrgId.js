@@ -1,7 +1,6 @@
 import logger from "../../logger";
 
 const retrieveManagersByOrgId = ({
-  getMsSqlConnPool,
   getRetrieveManagersByOrgIdGateway,
 }) => async (orgId) => {
   if (orgId === undefined) {
@@ -9,8 +8,8 @@ const retrieveManagersByOrgId = ({
   }
   try {
     logger.info(`Retrieving managers for ${orgId}`);
-    const db = await getMsSqlConnPool();
-    let managers = await getRetrieveManagersByOrgIdGateway()(db, orgId);
+
+    let managers = await getRetrieveManagersByOrgIdGateway()(orgId);
     managers = managers.map((row) => ({
       uuid: row.uuid,
       email: row.email,

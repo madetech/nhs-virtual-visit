@@ -1,4 +1,5 @@
-const archiveManagerByUuidGateway = async (db, uuid) => {
+const archiveManagerByUuidGateway = ({ getMsSqlConnPool }) => async (uuid) => {
+  const db = await getMsSqlConnPool();
   const res = await db
     .request()
     .input("uuid", uuid)

@@ -1,7 +1,6 @@
 import logger from "../../logger";
 
 const updateManagerStatusByUuid = ({
-  getMsSqlConnPool,
   getUpdateManagerStatusByUuidGateway,
 }) => async ({ uuid, status }) => {
   if (uuid === undefined) {
@@ -13,9 +12,7 @@ const updateManagerStatusByUuid = ({
 
   try {
     logger.info(`Updating manager for ${uuid}`);
-    const db = await getMsSqlConnPool();
     const returnedUuid = await getUpdateManagerStatusByUuidGateway()(
-      db,
       uuid,
       status
     );

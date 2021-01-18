@@ -1,4 +1,8 @@
-const updateManagerStatusByUuidGateway = async (db, uuid, status) => {
+const updateManagerStatusByUuidGateway = ({ getMsSqlConnPool }) => async (
+  uuid,
+  status
+) => {
+  const db = await getMsSqlConnPool();
   const res = await db
     .request()
     .input("uuid", uuid)
