@@ -1,6 +1,10 @@
 import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
-import insertVisit from "../gateways/PostgreSQL/insertVisit";
+import logEvent from "../gateways/logEvent";
+import CallIdProvider from "../providers/CallIdProvider";
+import RandomIdProvider from "../providers/RandomIdProvider";
+
+/* Usecases  */
 import deleteVisitByCallId from "../usecases/deleteVisitByCallId";
 import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
@@ -45,36 +49,39 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
-import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
 import createOrganization from "../usecases/createOrganization";
 import retrieveOrganizations from "../usecases/retrieveOrganizations";
+
+/* GW MSSQL*/
+import MsSQL from "../gateways/MsSQL";
+import retrieveManagersByOrgId from "../gateways/MsSQL/retrieveManagersByOrgId";
+import retrieveManagerByUuid from "../gateways/MsSQL/retrieveManagerByUuid";
+import updateManagerByUuid from "../gateways/MsSQL/updateManagerByUuid";
+import archiveManagerByUuid from "../gateways/MsSQL/archiveManagerByUuid";
+import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
+import retrieveEmailAndHashedPassword from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
+import resetPassword from "../gateways/MsSQL/resetPassword";
+import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
+
+/* GW Imports */
+import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
+import insertVisit from "../gateways/PostgreSQL/insertVisit";
 import updateCallStatusesByWardId from "../gateways/PostgreSQL/updateCallStatusesByWardId";
 import updateWardArchiveTimeById from "../gateways/PostgreSQL/updateWardArchiveTimeById";
 import updateWardVisitTotals from "../gateways/PostgreSQL/updateWardVisitTotals";
 import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
 import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
 import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
+
 import createTrustGW from "../gateways/PostgreSQL/createTrust";
 import createWardGW from "../gateways/PostgreSQL/createWard";
 import updateTrustGW from "../gateways/PostgreSQL/updateTrust";
 import updateWardGW from "../gateways/PostgreSQL/updateWard";
-import logEvent from "../gateways/logEvent";
 import updateHospitalGW from "../gateways/PostgreSQL/updateHospital";
 import retrieveHospitalByIdGW from "../gateways/PostgreSQL/retrieveHospitalById";
 import retrieveHospitalsByTrustIdGW from "../gateways/PostgreSQL/retrieveHospitalsByTrustId";
-import CallIdProvider from "../providers/CallIdProvider";
-import RandomIdProvider from "../providers/RandomIdProvider";
-import MsSQL from "../gateways/MsSQL";
-import insertHospital from "../gateways/PostgreSQL/insertHospital";
-import retrieveManagersByOrgId from "../gateways/MsSQL/retrieveManagersByOrgId";
-import retrieveManagerByUuid from "../gateways/MsSQL/retrieveManagerByUuid";
-import updateManagerByUuid from "../gateways/MsSQL/updateManagerByUuid";
-import archiveManagerByUuid from "../gateways/MsSQL/archiveManagerByUuid";
+import insertHospitalGW from "../gateways/PostgreSQL/insertHospital";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
-import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
-import retrieveEmailAndHashedPassword from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
-import resetPassword from "../gateways/MsSQL/resetPassword";
-import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
 import createOrganisationGW from "../gateways/PostgreSQL/createOrganization";
 
 class AppContainer {
@@ -99,10 +106,6 @@ class AppContainer {
 
   getDeleteVisitByCallId = () => {
     return deleteVisitByCallId(this);
-  };
-
-  getDeleteVisitByCallIdGateway = () => {
-    return deleteVisitByCallIdGW(this);
   };
 
   getCreateWard = () => {
@@ -164,14 +167,6 @@ class AppContainer {
   getRetrieveWards = () => {
     return retrieveWards(this);
   };
-
-  getFindWardByCodeGateway = () => {
-    return findWardByCode(this);
-  };
-
-  getUpdateCallStatusesByWardIdGateway = () => updateCallStatusesByWardId(this);
-
-  getUpdateWardArchiveTimeByIdGateway = () => updateWardArchiveTimeById(this);
 
   getUpdateWardVisitTotals = () => {
     return updateWardVisitTotalsDb(this);
@@ -297,16 +292,34 @@ class AppContainer {
     return createOrganization(this);
   };
 
-  getCreateOrganizationGateway = () => {
-    return createOrganisationGW(this);
-  };
-
   getRetrieveOrganizations = () => {
     return retrieveOrganizations(this);
   };
 
   getRetrieveOrganizationById = () => {
     return retrieveOrganizationById;
+  };
+
+  /* These are the Gateway */
+
+  getFindWardByCodeGateway = () => {
+    return findWardByCode(this);
+  };
+
+  getUpdateCallStatusesByWardIdGateway = () => {
+    return updateCallStatusesByWardId(this);
+  };
+
+  getUpdateWardArchiveTimeByIdGateway = () => {
+    return updateWardArchiveTimeById(this);
+  };
+
+  getDeleteVisitByCallIdGateway = () => {
+    return deleteVisitByCallIdGW(this);
+  };
+
+  getCreateOrganizationGateway = () => {
+    return createOrganisationGW(this);
   };
 
   getInsertVisitGateway = () => {
@@ -326,7 +339,7 @@ class AppContainer {
   };
 
   getInsertHospitalGateway = () => {
-    return insertHospital(this);
+    return insertHospitalGW(this);
   };
 
   getCreateTrustGateway = () => {
@@ -373,8 +386,7 @@ class AppContainer {
   getArchiveManagerByUuid = () => {
     return archiveManagerByUuid(this);
   };
-  
-  // MsSQL database gateways
+
   getVerifyUserLogin = () => {
     return verifyUserLogin;
   };
