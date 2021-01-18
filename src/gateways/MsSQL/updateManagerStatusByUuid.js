@@ -1,3 +1,4 @@
+import mssql from "mssql";
 const updateManagerStatusByUuidGateway = ({ getMsSqlConnPool }) => async (
   uuid,
   status
@@ -5,8 +6,8 @@ const updateManagerStatusByUuidGateway = ({ getMsSqlConnPool }) => async (
   const db = await getMsSqlConnPool();
   const res = await db
     .request()
-    .input("uuid", uuid)
-    .input("status", status)
+    .input("uuid", mssql.UniqueIdentifier, uuid)
+    .input("status", mssql.TinyInt, status)
     .query(
       "UPDATE dbo.[user] SET status = @status OUTPUT inserted.uuid WHERE uuid = @uuid"
     );
