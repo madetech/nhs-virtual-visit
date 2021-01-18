@@ -5,12 +5,13 @@ export default ({ getTokenProvider }) => async (token) => {
     token
   );
 
+  console.log(decryptedToken);
   let error = null;
   if (errorToken) {
     error = "Link is incorrect or expired. Please sign up again";
   }
   return {
-    email: decryptedToken ? decryptedToken.emailAddress : "",
+    id: decryptedToken ? decryptedToken.id : "",
     error,
   };
 };

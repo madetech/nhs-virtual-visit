@@ -37,8 +37,8 @@ class TokenProvider {
     return decryptedToken;
   }
 
-  generateTokenForLink(emailAddress, expirationTime, secret) {
-    let tokenObj = { emailAddress, version };
+  generateTokenForLink(id, expirationTime, secret) {
+    let tokenObj = { id, version };
 
     if (secret !== this.signingKey) {
       tokenObj = { ...tokenObj, hashedPassword: secret };
@@ -56,6 +56,15 @@ class TokenProvider {
       return { emailAddress };
     } catch (error) {
       return { emailAddress: "" };
+    }
+  }
+
+  retrieveIdFromToken(token) {
+    try {
+      const { id } = jwt.decode(token);
+      return { id };
+    } catch (error) {
+      return { id: "" };
     }
   }
 

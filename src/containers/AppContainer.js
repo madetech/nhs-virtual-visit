@@ -123,6 +123,8 @@ import updateManagerStatus from "../usecases/updateManagerStatus";
 import updateManagerStatusGateway from "../gateways/MsSQL/updateManagerStatus";
 import updateOrganisationStatus from "../usecases/updateOrganisationStatus";
 import updateOrganisationStatusGateway from "../gateways/MsSQL/updateOrganisationStatus";
+import addToUserVerificationTable from "../usecases/addToUserVerificationTable";
+import addToUserVerificationTableGateway from "../gateways/MsSQL/addToUserVerificationTable";
 
 class AppContainer {
   getDb = () => {
@@ -579,7 +581,7 @@ class AppContainer {
   };
   
   getInsertManagerGateway = () => {
-    return insertManager;
+    return insertManager(this);
   };
   getCreateManager = () => {
     return createManager(this);
@@ -598,17 +600,25 @@ class AppContainer {
   };
 
   getUpdateManagerStatusGateway = () => {
-    return updateManagerStatusGateway;
+    return updateManagerStatusGateway(this);
   };
   getUpdateManagerStatus = () => {
     return updateManagerStatus(this);
   };
 
   getUpdateOrganisationStatusGateway = () => {
-    return updateOrganisationStatusGateway;
+    return updateOrganisationStatusGateway(this);
   };
   getUpdateOrganisationStatus = () => {
     return updateOrganisationStatus(this);
+  };
+
+  getAddToUserVerificationTable = () => {
+    return addToUserVerificationTable(this);
+  };
+
+  getAddToUserVerificationTableGateway = () => {
+    return addToUserVerificationTableGateway(this);
   };
 }
 

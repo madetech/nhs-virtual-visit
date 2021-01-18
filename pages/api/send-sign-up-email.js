@@ -40,15 +40,37 @@ export default withContainer(
       type: "manager",
     };
     const createManager = container.getCreateManager();
-    const { error } = await createManager(managerObj);
-
+    const { user, error } = await createManager(managerObj);
+    console.log("*******USER********");
+    console.log(user);
+    console.log(user.id);
     if (error) {
       res.status(400);
       res.end(JSON.stringify({ err: error }));
       return;
     }
 
+    const verificationObj = {
+      user_id: user.id,
+      code: body.email,
+      hash: hashedPassword,
+      type: "manager",
+    };
+
+    console.log(verificationObj);
+    const addToUserVerificationTable = container.getAddToUserVerificationTable();
+    const { error: verificationError } = await addToUserVerificationTable(
+      verificationObj
+    );
+
+    if (verificationError) {
+      res.status(400);
+      res.end(JSON.stringify({ err: verificationError }));
+      return;
+    }
+
     const emailAddress = body.email;
+    const id = user.id;
     const sendEmail = container.getSendEmail();
     const signUpEmailTemplateId = TemplateStore().signUpEmail.templateId;
     const expirationTime = "48h";
@@ -56,7 +78,7 @@ export default withContainer(
 
     const { link, linkError } = createTimeSensitiveLink(
       headers,
-      emailAddress,
+      id,
       expirationTime,
       urlPath
     );

@@ -1,10 +1,14 @@
-const updateManagerStatusGateway = async (db, email, status) => {
+const updateManagerStatusGateway = ({ getMsSqlConnPool }) => async (
+  id,
+  status
+) => {
+  const db = await getMsSqlConnPool();
   const res = await db
     .request()
-    .input("email", email)
+    .input("id", id)
     .input("status", status)
     .query(
-      `UPDATE dbo.[user] SET status = @status OUTPUT inserted.* WHERE email = @email`
+      `UPDATE dbo.[user] SET status = @status OUTPUT inserted.* WHERE id = @id`
     );
   return res.recordset[0];
 };
