@@ -48,10 +48,11 @@ const retrieveHospitalsByTrustId = ({ getDb }) => async ({
       error: null,
     };
   } catch (error) {
+    console.log(error);
     logger.error(error);
     return {
       hospitals: [],
-      error: error.toString(),
+      error: error.message.toString(),
     };
   }
 };

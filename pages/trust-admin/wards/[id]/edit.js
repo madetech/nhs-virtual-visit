@@ -8,7 +8,7 @@ import EditWardForm from "../../../../src/components/EditWardForm";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
-const EditAWard = ({ trust, error, ward, hospitals }) => {
+const EditAWard = ({ organisation, error, ward, hospitals }) => {
   if (error) {
     return <Error />;
   }
@@ -23,7 +23,10 @@ const EditAWard = ({ trust, error, ward, hospitals }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading={hospital.name} />
+      <TrustAdminHeading
+        trustName={organisation.name}
+        subHeading={hospital.name}
+      />
       <GridRow>
         <GridColumn width="two-thirds">
           <EditWardForm
@@ -42,31 +45,30 @@ const EditAWard = ({ trust, error, ward, hospitals }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
+    const orgId = authenticationToken.trustId;
     const getRetrieveWardById = container.getRetrieveWardById();
-    const trustResponse = await container.getRetrieveTrustById()(
-      authenticationToken.trustId
-    );
-    const { ward, error } = await getRetrieveWardById(
+    const {
+      organisation,
+      error: organisationError,
+    } = await container.getRetrieveOrganisationById()(orgId);
+    const { ward, error: wardError } = await getRetrieveWardById(
       query.id,
-      authenticationToken.trustId
+      orgId
     );
 
-    const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
-    const retrieveHospitalsResponse = await retrieveHospitalsByTrustId(
-      authenticationToken.trustId
-    );
-    if (error) {
-      return { props: { error: error } };
-    } else {
-      return {
-        props: {
-          error: error,
-          ward: ward,
-          hospitals: retrieveHospitalsResponse.hospitals,
-          trust: { name: trustResponse.trust?.name },
-        },
-      };
-    }
+    const {
+      hospitals,
+      error: hospitalsError,
+    } = await container.getRetrieveHospitalsByTrustId()(orgId);
+
+    return {
+      props: {
+        error: organisationError || wardError || hospitalsError,
+        ward,
+        hospitals,
+        organisation,
+      },
+    };
   })
 );
 
