@@ -396,6 +396,7 @@ class AppContainer {
   getRetrieveManagerByUuid = () => {
     return retrieveManagerByUuid(this);
   };
+
   getRetrieveManagerByUuidGateway = () => {
     return retrieveManagerByUuidGateway(this);
   };
@@ -407,7 +408,7 @@ class AppContainer {
   getUpdateManagerStatusByUuidGateway = () => {
     return updateManagerStatusByUuidGateway(this);
   };
-  å;
+
   getArchiveManagerByUuid = () => {
     return archiveManagerByUuid(this);
   };
