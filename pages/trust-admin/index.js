@@ -17,7 +17,7 @@ const TrustAdmin = ({
   hospitals,
   leastVisited,
   mostVisited,
-  trust,
+  organisation,
   averageParticipantsInVisit,
   wardVisitTotalsStartDate,
   reportingStartDate,
@@ -31,11 +31,11 @@ const TrustAdmin = ({
 
   return (
     <Layout
-      title={`Dashboard for ${trust.name}`}
+      title={`Dashboard for ${organisation.name}`}
       showNavigationBarForType={TRUST_ADMIN}
       showNavigationBar={true}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading="Dashboard" />
+      <TrustAdminHeading trustName={organisation.name} subHeading="Dashboard" />
       <GridRow>
         <GridColumn width="full">
           <GridRow className="nhsuk-u-padding-bottom-3">
@@ -174,9 +174,14 @@ export const getServerSideProps = propsWithContainer(
     const hospitalsResponse = await container.getRetrieveHospitalsByTrustId()(
       authenticationToken.trustId
     );
-    const { trust, error: trustError } = await container.getRetrieveTrustById()(
+
+    const {
+      organisation,
+      error: organisationError,
+    } = await container.getRetrieveOrganisationById()(
       authenticationToken.trustId
     );
+
     const retrieveHospitalVisitTotals = await container.getRetrieveHospitalVisitTotals()(
       authenticationToken.trustId
     );
@@ -218,12 +223,12 @@ export const getServerSideProps = propsWithContainer(
 
     const error =
       wardError ||
-      trustError ||
       averageParticipantsInVisitError ||
       wardVisitTotalsStartDateError ||
       reportingStartDateError ||
       averageVisitTimeSecondsError ||
-      averageVisitsPerDayError;
+      averageVisitsPerDayError ||
+      organisationError;
 
     return {
       props: {
@@ -231,7 +236,7 @@ export const getServerSideProps = propsWithContainer(
         hospitals: hospitalsResponse.hospitals,
         leastVisited: retrieveHospitalVisitTotals.leastVisited,
         mostVisited: retrieveHospitalVisitTotals.mostVisited,
-        trust: { name: trust?.name },
+        organisation,
         wardVisitTotalsStartDate,
         reportingStartDate,
         averageParticipantsInVisit,

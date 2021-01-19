@@ -9,7 +9,7 @@ import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import PanelSuccess from "../../../../src/components/PanelSuccess";
 
-const archiveAManagerSuccess = ({ trust, managerEmail, error }) => {
+const archiveAManagerSuccess = ({ organisation, managerEmail, error }) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -20,7 +20,7 @@ const archiveAManagerSuccess = ({ trust, managerEmail, error }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading="Managers" />
+      <TrustAdminHeading trustName={organisation.name} subHeading="Managers" />
       <GridRow>
         <GridColumn width="two-thirds">
           <PanelSuccess name={`${managerEmail}`} action="deleted" />
@@ -40,14 +40,17 @@ const archiveAManagerSuccess = ({ trust, managerEmail, error }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ query, container, authenticationToken }) => {
-    const { trust, error } = await container.getRetrieveTrustById()(
+    const {
+      organisation,
+      error,
+    } = await container.getRetrieveOrganisationById()(
       authenticationToken.trustId
     );
     const managerEmail = query.email;
 
     return {
       props: {
-        trust: { name: trust?.name },
+        organisation,
         managerEmail,
         error,
       },

@@ -9,7 +9,7 @@ import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToke
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 
-const EditAManagerSuccess = ({ error, manager, trust }) => {
+const EditAManagerSuccess = ({ error, organisation, manager }) => {
   if (error) {
     return <Error />;
   }
@@ -20,7 +20,10 @@ const EditAManagerSuccess = ({ error, manager, trust }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={`${trust.name}`} subHeading="Managers" />
+      <TrustAdminHeading
+        trustName={`${organisation.name}`}
+        subHeading="Managers"
+      />
       <GridRow>
         <GridColumn width="two-thirds">
           <PanelSuccess name={`${manager.email}`} action={`updated`} />
@@ -37,19 +40,23 @@ const EditAManagerSuccess = ({ error, manager, trust }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
-    const trustResponse = await container.getRetrieveTrustById()(
+    const {
+      organisation,
+      error: organisationError,
+    } = await container.getRetrieveOrganisationById()(
       authenticationToken.trustId
     );
     const managerUuid = query.uuid;
-    const { manager, error } = await container.getRetrieveManagerByUuid()(
-      managerUuid
-    );
+    const {
+      manager,
+      error: managerError,
+    } = await container.getRetrieveManagerByUuid()(managerUuid);
 
     return {
       props: {
-        trust: { name: trustResponse.trust?.name },
+        organisation,
         manager,
-        error,
+        error: managerError || organisationError,
       },
     };
   })

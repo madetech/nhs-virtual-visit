@@ -52,6 +52,8 @@ import retrieveOrganisations from "../usecases/retrieveOrganisations";
 import retrieveManagersByOrgId from "../usecases/retrieveManagersByOrgId";
 import retrieveManagerByUuid from "../usecases/retrieveManagerByUuid";
 import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
+import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
+import retrieveOrganisationById from "../usecases/retrieveOrganisationById";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -59,6 +61,11 @@ import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
 import retrieveEmailAndHashedPassword from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
 import resetPassword from "../gateways/MsSQL/resetPassword";
 import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
+import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
+import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
+import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
+import archiveManagerByUuidGateway from "../gateways/MsSQL/archiveManagerByUuid";
+import retrieveOrganisationByIdGateway from "../gateways/MsSQL/retrieveOrganisationById";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -320,10 +327,15 @@ class AppContainer {
   getRetrieveOrganisationsGateway = () => {
     return retrieveOrganisationsGateway(this);
   };
+  getRetrieveOrganisationById = () => {
+    return retrieveOrganisationById(this);
+  };
 
+  /**** TOCHECK: this is linked to a file in the gateway folder!! It is not a usecase! ****/
   getRetrieveOrganizationById = () => {
     return retrieveOrganizationById;
   };
+  /**** TOCHECK: this is linked to a file in the gateway folder!! ****/
 
   /* These are the Gateway */
 

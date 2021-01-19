@@ -10,18 +10,18 @@ import ActionLink from "../../../src/components/ActionLink";
 import Text from "../../../src/components/Text";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
-const TrustAdmin = ({ hospitals, hospitalError, trust, trustError }) => {
-  if (hospitalError || trustError) {
-    return <Error err={hospitalError || trustError} />;
+const TrustAdmin = ({ hospitals, error, organisation }) => {
+  if (error) {
+    return <Error err={error} />;
   }
 
   return (
     <Layout
-      title={`Hospitals for ${trust.name}`}
+      title={`Hospitals for ${organisation.name}`}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading="Hospitals" />
+      <TrustAdminHeading trustName={organisation.name} subHeading="Hospitals" />
       <GridRow>
         <GridColumn width="full">
           <ActionLink href={`/trust-admin/hospitals/add`}>
@@ -40,33 +40,33 @@ const TrustAdmin = ({ hospitals, hospitalError, trust, trustError }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, authenticationToken }) => {
-    const hospitalsResponse = await container.getRetrieveHospitalsByTrustId()(
-      authenticationToken.trustId,
-      { withWards: true }
-    );
-    const trustResponse = await container.getRetrieveTrustById()(
-      authenticationToken.trustId
-    );
-    const hospitalVisitTotalsResponse = await container.getRetrieveHospitalVisitTotals()(
-      authenticationToken.trustId
-    );
+    const orgId = authenticationToken.trustId;
+    const {
+      hospitals,
+      error: hospitalsError,
+    } = await container.getRetrieveHospitalsByTrustId()(orgId, {
+      withWards: true,
+    });
+    const {
+      organisation,
+      error: organisationError,
+    } = await container.getRetrieveOrganisationById()(orgId);
+    const {
+      hospitals: hospitalVisitTotals,
+      error: hospitalsVisitTotalError,
+    } = await container.getRetrieveHospitalVisitTotals()(orgId);
 
-    const hospitalsWithVisitTotals = hospitalsResponse.hospitals?.map(
-      (hospital) => {
-        hospital.bookedVisits =
-          hospitalVisitTotalsResponse.hospitals.find(
-            ({ id }) => id === hospital.id
-          )?.totalVisits || 0;
-        return hospital;
-      }
-    );
-
+    const hospitalsWithVisitTotals = hospitals?.map((hospital) => {
+      hospital.bookedVisits =
+        hospitalVisitTotals.find(({ id }) => id === hospital.id)?.totalVisits ||
+        0;
+      return hospital;
+    });
     return {
       props: {
         hospitals: hospitalsWithVisitTotals,
-        hospitalError: hospitalsResponse.error,
-        trust: { name: trustResponse.trust?.name },
-        trustError: trustResponse.error,
+        organisation,
+        error: organisationError || hospitalsError || hospitalsVisitTotalError,
       },
     };
   })

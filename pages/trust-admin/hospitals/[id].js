@@ -13,7 +13,7 @@ import Panel from "../../../src/components/Panel";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
 const ShowHospital = ({
-  trust,
+  organisation,
   hospital,
   wards,
   error,
@@ -32,7 +32,10 @@ const ShowHospital = ({
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading={hospital.name} />
+      <TrustAdminHeading
+        trustName={organisation.name}
+        subHeading={hospital.name}
+      />
 
       <GridRow>
         <GridColumn width="full">
@@ -97,25 +100,24 @@ const ShowHospital = ({
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ authenticationToken, container, query }) => {
     const { id: hospitalId } = query;
-    const trustId = authenticationToken.trustId;
+    const orgId = authenticationToken.trustId;
 
-    const trustResponse = await container.getRetrieveTrustById()(
-      authenticationToken.trustId
-    );
+    const {
+      organisation,
+      error: organisationError,
+    } = await container.getRetrieveOrganisationById()(orgId);
 
     const {
       hospital,
       error: hospitalError,
-    } = await container.getRetrieveHospitalById()(hospitalId, trustId);
+    } = await container.getRetrieveHospitalById()(hospitalId, orgId);
 
     const {
       wards,
       error: wardsError,
     } = await container.getRetrieveWardsByHospitalId()(hospital.id);
 
-    const visitTotals = await container.getRetrieveHospitalVisitTotals()(
-      trustId
-    );
+    const visitTotals = await container.getRetrieveHospitalVisitTotals()(orgId);
 
     const totalBookedVisits =
       visitTotals.hospitals.find(({ id }) => id === hospitalId)?.totalVisits ||
@@ -129,10 +131,10 @@ export const getServerSideProps = propsWithContainer(
 
     return {
       props: {
-        trust: { name: trustResponse.trust?.name },
+        organisation,
         hospital,
         wards,
-        error: hospitalError || wardsError,
+        error: hospitalError || wardsError || organisationError,
         totalBookedVisits,
         mostVisitedWard,
         leastVisitedWard,
