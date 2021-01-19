@@ -72,6 +72,7 @@ import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
 import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
 import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
 
+import retrieveHospitalVisitTotalsGW from "../gateways/PostgreSQL/retrieveHospitalVisitTotals";
 import retrieveWardsByHospitalIdGW from "../gateways/PostgreSQL/retrieveWardsByHospitalId";
 import markVisitAsCompleteGW from "../gateways/PostgreSQL/markVisitAsComplete";
 import createTrustGW from "../gateways/PostgreSQL/createTrust";
@@ -318,6 +319,10 @@ class AppContainer {
 
   getUpdateWardArchiveTimeByIdGateway = () => {
     return updateWardArchiveTimeById(this);
+  };
+
+  getRetrieveHospitalVisitTotalsGateway = () => {
+    return retrieveHospitalVisitTotalsGW(this);
   };
 
   getRetrieveWardsByHospitalIdGateway = () => {
