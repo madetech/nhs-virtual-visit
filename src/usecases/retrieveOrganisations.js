@@ -1,12 +1,10 @@
 import logger from "../../logger";
 
 const retrieveOrganisations = ({
-  getMsSqlConnPool,
   getRetrieveOrganisationsGateway,
 }) => async () => {
   try {
-    const db = await getMsSqlConnPool();
-    const organisations = await getRetrieveOrganisationsGateway()(db);
+    const organisations = await getRetrieveOrganisationsGateway()();
 
     return {
       organisations: organisations.map((organisation) => ({

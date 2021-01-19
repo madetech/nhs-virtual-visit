@@ -325,7 +325,7 @@ class AppContainer {
   };
 
   getRetrieveOrganisationsGateway = () => {
-    return retrieveOrganisationsGateway;
+    return retrieveOrganisationsGateway(this);
   };
 
   getRetrieveOrganizationById = () => {
@@ -471,7 +471,7 @@ class AppContainer {
   };
 
   getRetrieveActiveOrganisationsGateway = () => {
-    return retrieveActiveOrganisationsGateway;
+    return retrieveActiveOrganisationsGateway(this);
   };
 
   getRetrieveOrganisationById = () => {

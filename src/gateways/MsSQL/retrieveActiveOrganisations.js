@@ -1,4 +1,7 @@
-const retrieveOrganisationsGateway = async (db) => {
+const retrieveActiveOrganisationsGateway = ({
+  getMsSqlConnPool,
+}) => async () => {
+  const db = await getMsSqlConnPool();
   const res = await db
     .request()
     .input("status", 1)
@@ -7,4 +10,4 @@ const retrieveOrganisationsGateway = async (db) => {
   return organisations;
 };
 
-export default retrieveOrganisationsGateway;
+export default retrieveActiveOrganisationsGateway;
