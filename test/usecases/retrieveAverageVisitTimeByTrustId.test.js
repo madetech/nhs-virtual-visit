@@ -5,11 +5,11 @@ describe("retrieveAverageVisitTimeByTrustId", () => {
   it("formats the average visit time", async () => {
     const anySpy = jest
       .fn()
-      .mockResolvedValue(12300);
+      .mockReturnValue(12300);
 
     const container = {
-      async getRetrieveAverageVisitTimeByTrustIdGateway() {
-        return { any: anySpy };
+      getRetrieveAverageVisitTimeByTrustIdGateway() {
+        return anySpy;
       },
     };
 
@@ -23,11 +23,11 @@ describe("retrieveAverageVisitTimeByTrustId", () => {
   it("formats the average visit time when the average visit time is NULL", async () => {
     const anySpy = jest
       .fn()
-      .mockResolvedValue( null);
+      .mockReturnValue( null);
 
     const container = {
-      async getRetrieveAverageVisitTimeByTrustIdGateway() {
-        return { any: anySpy };
+      getRetrieveAverageVisitTimeByTrustIdGateway() {
+        return anySpy;
       },
     };
 
