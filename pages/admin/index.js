@@ -10,7 +10,7 @@ import Text from "../../src/components/Text";
 import Error from "next/error";
 import { ADMIN } from "../../src/helpers/userTypes";
 
-const Admin = ({ trusts, error }) => {
+const Admin = ({ organisations, error }) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -26,8 +26,8 @@ const Admin = ({ trusts, error }) => {
           <Heading>Site administration</Heading>
           <ActionLink href={`/admin/trusts`}>View all trusts</ActionLink>
 
-          {trusts.length > 0 ? (
-            <TrustsTable trusts={trusts} />
+          {organisations.length > 0 ? (
+            <TrustsTable trusts={organisations} />
           ) : (
             <Text>There are no trusts.</Text>
           )}
@@ -39,10 +39,13 @@ const Admin = ({ trusts, error }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyAdminToken(async ({ container }) => {
-    const { trusts, error } = await container.getRetrieveTrusts()();
+    const {
+      organisations,
+      error,
+    } = await container.getRetrieveActiveOrganisations()();
 
     return {
-      props: { trusts: trusts, error: error },
+      props: { organisations, error },
     };
   })
 );
