@@ -428,6 +428,7 @@ class AppContainer {
   getVerifyResetPasswordLink = () => {
     return verifyResetPasswordLink(this);
   };
+
   getArchiveManagerByUuidGateway = () => {
     return archiveManagerByUuidGateway(this);
   };
