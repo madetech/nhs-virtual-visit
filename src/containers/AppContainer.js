@@ -572,7 +572,7 @@ class AppContainer {
   };
 
   getRetrieveOrganisationsGateway = () => {
-    return retrieveOrganisationsGateway;
+    return retrieveOrganisationsGateway(this);
   };
 
   getRetrieveOrganisations = () => {
