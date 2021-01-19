@@ -54,6 +54,7 @@ import retrieveOrganizations from "../usecases/retrieveOrganizations";
 import retrieveManagersByOrgId from "../usecases/retrieveManagersByOrgId";
 import retrieveManagerByUuid from "../usecases/retrieveManagerByUuid";
 import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
+import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -61,6 +62,10 @@ import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
 import retrieveEmailAndHashedPassword from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
 import resetPassword from "../gateways/MsSQL/resetPassword";
 import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
+import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
+import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
+import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
+import archiveManagerByUuidGateway from "../gateways/MsSQL/archiveManagerByUuid";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -85,11 +90,6 @@ import retrieveHospitalsByTrustIdGW from "../gateways/PostgreSQL/retrieveHospita
 import insertHospitalGW from "../gateways/PostgreSQL/insertHospital";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
 import createOrganisationGW from "../gateways/PostgreSQL/createOrganization";
-import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
-import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
-import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
-import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
-import archiveManagerByUuidGateway from "../gateways/MsSQL/archiveManagerByUuid";
 
 class AppContainer {
   getDb = () => {
