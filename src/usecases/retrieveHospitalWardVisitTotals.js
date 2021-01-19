@@ -1,5 +1,5 @@
 export default ({ getRetrieveHospitalWardVisitTotalsGateway }) => async (hospitalId) => {
-  const { wards, sortedByTotalVisitsDescending } = getRetrieveHospitalWardVisitTotalsGateway()(hospitalId);
+  const { wards, sortedByTotalVisitsDescending } = await getRetrieveHospitalWardVisitTotalsGateway()(hospitalId);
 
   const mostVisitedWard = sortedByTotalVisitsDescending[0];
   const leastVisitedWard =
