@@ -43,7 +43,6 @@ import retrieveWardVisitTotalsStartDateByTrustId from "../usecases/retrieveWardV
 import retrieveAverageVisitsPerDayByTrustId from "../usecases/retrieveAverageVisitsPerDayByTrustId";
 import retrieveReportingStartDateByTrustId from "../usecases/retrieveReportingStartDateByTrustId";
 import retrieveSurveyUrlByCallId from "../usecases/retrieveSurveyUrlByCallId";
-import retrieveSupportUrlByCallId from "../usecases/retrieveSupportUrlByCallId";
 import updateVisitById from "../usecases/updateVisitById";
 import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
@@ -277,10 +276,6 @@ class AppContainer {
     return retrieveSurveyUrlByCallId(this);
   };
 
-  getRetrieveSupportUrlByCallId = () => {
-    return retrieveSupportUrlByCallId(this);
-  };
-
   getUpdateVisitById = () => {
     return updateVisitById(this);
   };
@@ -373,7 +368,7 @@ class AppContainer {
 
   getRetrieveAverageVisitTimeByTrustIdGateway = () => {
     return retrieveAverageVisitTimeByTrustIdGateway(this);
-  }
+  };
 
   getInsertHospitalGateway = () => {
     return insertHospitalGW(this);
@@ -401,11 +396,11 @@ class AppContainer {
 
   getRetrieveHospitalWardVisitTotalsGateway = () => {
     return retrieveHospitalWardVisitTotalsGateway(this);
-  }
+  };
 
   getRetrieveAverageVisitsPerDayGateway = () => {
     return retrieveAverageVisitsPerDayGateway(this);
-  }
+  };
 
   getLogEventGateway = () => {
     return logEvent(

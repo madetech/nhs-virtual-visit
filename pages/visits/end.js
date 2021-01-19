@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import Layout from "../../src/components/Layout";
-import ActionLinkSection from "../../src/components/ActionLinkSection";
 import ActionLink from "../../src/components/ActionLink";
 import AnchorLink from "../../src/components/AnchorLink";
 import InsetText from "../../src/components/InsetText";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import { v4 as uuidv4 } from "uuid";
 
-const EndOfVisit = ({ wardId, callId, supportUrl, correlationId }) => {
+const EndOfVisit = ({ wardId, callId, correlationId }) => {
   useEffect(() => {
     console.log(correlationId);
   }, []);
@@ -62,12 +61,6 @@ const EndOfVisit = ({ wardId, callId, supportUrl, correlationId }) => {
             <InsetText>
               Your personal data will be removed within 24 hours.
             </InsetText>
-
-            <ActionLinkSection
-              heading="What happens next"
-              link={supportUrl}
-              linkText="Get support from this hospital"
-            />
           </div>
         )}
       </div>
@@ -85,20 +78,10 @@ export const getServerSideProps = propsWithContainer(
     const token = await userIsAuthenticated(headers.cookie);
     const correlationId = `${uuidv4()}-visit-ended`;
 
-    const {
-      supportUrl,
-      error: supportUrlError,
-    } = await container.getRetrieveSupportUrlByCallId()(query.callId);
-
-    const error = supportUrlError;
-
-    if (error) console.error(error);
-
     return {
       props: {
         wardId: token?.ward || null,
         callId: query.callId,
-        supportUrl,
         correlationId,
       },
     };
