@@ -1,6 +1,7 @@
+
 import logger from "../../../logger";
 
-const retrieveOrganisationByIdGateway = ({ getMsSqlConnPool }) => async (
+export default ({ getMsSqlConnPool }) => async (
   organisationId
 ) => {
   logger.info(`Retrieving organisation with id: ${organisationId}`);
@@ -26,5 +27,3 @@ const retrieveOrganisationByIdGateway = ({ getMsSqlConnPool }) => async (
     };
   }
 };
-
-export default retrieveOrganisationByIdGateway;
