@@ -108,10 +108,6 @@ describe("AppContainer", () => {
     expect(container.getRetrieveSurveyUrlByCallId()).toBeDefined();
   });
 
-  it("returns getRetrieveSupportUrlByCallId", () => {
-    expect(container.getRetrieveSupportUrlByCallId()).toBeDefined();
-  });
-
   it("returns getUpdateVisitById", () => {
     expect(container.getUpdateVisitById()).toBeDefined();
   });
