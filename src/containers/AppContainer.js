@@ -72,6 +72,7 @@ import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
 import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
 import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
 
+import retrieveAverageParticipantsInVisitGW from "../gateways/PostgreSQL/retrieveAverageParticipantsInVisit";
 import retrieveHospitalVisitTotalsGW from "../gateways/PostgreSQL/retrieveHospitalVisitTotals";
 import retrieveWardsByHospitalIdGW from "../gateways/PostgreSQL/retrieveWardsByHospitalId";
 import markVisitAsCompleteGW from "../gateways/PostgreSQL/markVisitAsComplete";
@@ -324,6 +325,10 @@ class AppContainer {
 
   getRetrieveHospitalVisitTotalsGateway = () => {
     return retrieveHospitalVisitTotalsGW(this);
+  };
+
+  getRetrieveAverageParticipantsInVisitGateway = () => {
+    return retrieveAverageParticipantsInVisitGW(this);
   };
 
   getRetrieveWardsByHospitalIdGateway = () => {
