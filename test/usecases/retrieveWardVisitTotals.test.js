@@ -6,9 +6,7 @@ describe("retrieveWardVisitTotals", () => {
       const anySpy = jest.fn(async () => []);
 
       const container = {
-        getDb: async () => ({
-          any: anySpy,
-        }),
+        getRetrieveWardVisitTotalsGateway: () => anySpy,
       };
 
       const response = await retrieveWardVisitTotals(container)();
@@ -23,10 +21,7 @@ describe("retrieveWardVisitTotals", () => {
       const anySpy = jest.fn(async () => []);
 
       const container = {
-        getDb: async () => ({
-          any: anySpy,
-          trustId: 0,
-        }),
+        getRetrieveWardVisitTotalsGateway: () => anySpy,
       };
 
       const response = await retrieveWardVisitTotals(container)();
@@ -40,23 +35,21 @@ describe("retrieveWardVisitTotals", () => {
     it("Returns the totals per ward and the overall total for all trusts", async () => {
       const anySpy = jest.fn(async () => [
         {
-          hospital_name: "Hospital One",
+          hospitalName: "Hospital One",
           name: "Ward One",
-          total_visits: "10",
-          trust_id: 0,
+          visits: 10,
+          trustId: 0,
         },
         {
-          hospital_name: "Hospital One",
+          hospitalName: "Hospital One",
           name: "Ward Two",
-          total_visits: "20",
-          trust_id: 1,
+          visits: 20,
+          trustId: 1,
         },
       ]);
 
       const container = {
-        getDb: async () => ({
-          any: anySpy,
-        }),
+        getRetrieveWardVisitTotalsGateway: () => anySpy,
       };
 
       let res = await retrieveWardVisitTotals(container)();
@@ -85,18 +78,15 @@ describe("retrieveWardVisitTotals", () => {
       const trustId = 1;
       const anySpy = jest.fn(async () => [
         {
-          hospital_name: "Hospital One",
+          hospitalName: "Hospital One",
           name: "Ward Two",
-          total_visits: "20",
-          trust_id: trustId,
+          visits: 20,
+          trustId: trustId,
         },
       ]);
 
       const container = {
-        getDb: async () => ({
-          any: anySpy,
-          trustId: trustId,
-        }),
+        getRetrieveWardVisitTotalsGateway: () => anySpy,
       };
 
       let res = await retrieveWardVisitTotals(container)(trustId);

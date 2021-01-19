@@ -1,27 +1,30 @@
-export default ({ getDb }) => async (hospitalId) => {
+export default ({ getDb }) => async (trustId) => {
   const db = await getDb();
 
   const queryResult = await db.any(
     `SELECT
-      wards.id as ward_id,
-      wards.name as ward_name,
-      COALESCE(SUM(totals.total),0) AS total_visits
-    FROM wards
-    LEFT JOIN ward_visit_totals AS totals ON wards.id = totals.ward_id
-    WHERE wards.hospital_id = $1 AND wards.archived_at IS NULL
-    GROUP BY wards.id`,
-    [hospitalId]
+    wards.name,
+    SUM(totals.total) AS total_visits,
+    (
+      SELECT
+        name
+      FROM
+        hospitals
+      WHERE
+        id = wards.hospital_id
+    ) as hospital_name,
+    wards.hospital_id as hospital_id,
+    wards.trust_id as trust_id
+    FROM ward_visit_totals AS totals JOIN wards ON wards.id = totals.ward_id AND ($1 IS NULL OR wards.trust_id = $1)
+    GROUP BY wards.trust_id, wards.hospital_id, wards.id
+    ORDER BY wards.name`,
+    [trustId]
   );
 
-  let wards = {};
-
-  queryResult.forEach(({ ward_id, total_visits }) => {
-    wards[ward_id] = parseInt(total_visits);
-  });
-
-  const sortedByTotalVisitsDescending = queryResult.sort(
-    (a, b) => b.total_visits - a.total_visits
-  );
-
-  return { wards, sortedByTotalVisitsDescending };
-}
+  return queryResult.map(({ hospital_name, total_visits, name, trust_id }) => ({
+    hospitalName: hospital_name,
+    name,
+    visits: parseInt(total_visits),
+    trustId: trust_id,
+  }));
+};
