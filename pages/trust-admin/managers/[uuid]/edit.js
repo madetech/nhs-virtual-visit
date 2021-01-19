@@ -10,7 +10,7 @@ import ManagerForm from "../../../../src/components/ManagerForm";
 import ErrorSummary from "../../../../src/components/ErrorSummary";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
-const EditManager = ({ error, manager, trust }) => {
+const EditManager = ({ error, manager, organisation }) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -55,7 +55,7 @@ const EditManager = ({ error, manager, trust }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading="Managers" />
+      <TrustAdminHeading trustName={organisation.name} subHeading="Managers" />
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
@@ -73,19 +73,23 @@ const EditManager = ({ error, manager, trust }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ authenticationToken, container, query }) => {
-    const trustResponse = await container.getRetrieveTrustById()(
+    const {
+      organisation,
+      error: organisationError,
+    } = await container.getRetrieveOrganisationById()(
       authenticationToken.trustId
     );
     const managerUuid = query.uuid;
-    const { manager, error } = await container.getRetrieveManagerByUuid()(
-      managerUuid
-    );
+    const {
+      manager,
+      error: managerError,
+    } = await container.getRetrieveManagerByUuid()(managerUuid);
 
     return {
       props: {
         manager,
-        trust: { name: trustResponse.trust?.name },
-        error,
+        organisation,
+        error: managerError || organisationError,
       },
     };
   })

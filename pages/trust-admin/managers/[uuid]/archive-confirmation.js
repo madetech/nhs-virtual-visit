@@ -14,7 +14,7 @@ import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import Form from "../../../../src/components/Form";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
-const ArchiveAManagerConfirmation = ({ trust, manager, error }) => {
+const ArchiveAManagerConfirmation = ({ organisation, manager, error }) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -62,7 +62,7 @@ const ArchiveAManagerConfirmation = ({ trust, manager, error }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading="Managers" />
+      <TrustAdminHeading trustName={organisation.name} subHeading="Managers" />
       <GridRow>
         <GridColumn width="full">
           <ErrorSummary errors={errors} />
@@ -92,20 +92,24 @@ const ArchiveAManagerConfirmation = ({ trust, manager, error }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
-    const trustResponse = await container.getRetrieveTrustById()(
+    const {
+      organisation,
+      error: organisationError,
+    } = await container.getRetrieveOrganisationById()(
       authenticationToken.trustId
     );
     const managerUuid = query.uuid;
 
-    const { manager, error } = await container.getRetrieveManagerByUuid()(
-      managerUuid
-    );
+    const {
+      manager,
+      error: managerError,
+    } = await container.getRetrieveManagerByUuid()(managerUuid);
 
     return {
       props: {
-        trust: { name: trustResponse.trust?.name },
+        organisation,
         manager,
-        error,
+        error: organisationError || managerError,
       },
     };
   })

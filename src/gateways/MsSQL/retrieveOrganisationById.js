@@ -1,5 +1,5 @@
-
 import logger from "../../../logger";
+import mssql from "mssql";
 
 export default ({ getMsSqlConnPool }) => async (
   organisationId
@@ -10,7 +10,7 @@ export default ({ getMsSqlConnPool }) => async (
     const db = await getMsSqlConnPool();
     const response = await db
       .request()
-      .input("organisationId", organisationId)
+      .input("organisationId", mssql.Int, organisationId)
       .query("SELECT * FROM dbo.[organisation] WHERE id = @organisationId");
 
     return {

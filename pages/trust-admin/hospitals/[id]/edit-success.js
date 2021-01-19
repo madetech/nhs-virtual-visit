@@ -10,7 +10,12 @@ import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 import PanelSuccess from "../../../../src/components/PanelSuccess";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 
-const EditAHospitalSuccess = ({ trust, error, hospitalName, hospitalId }) => {
+const EditAHospitalSuccess = ({
+  organisation,
+  error,
+  hospitalName,
+  hospitalId,
+}) => {
   if (error) {
     return <Error />;
   }
@@ -21,7 +26,7 @@ const EditAHospitalSuccess = ({ trust, error, hospitalName, hospitalId }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading="Hospitals" />
+      <TrustAdminHeading trustName={organisation.name} subHeading="Hospitals" />
       <GridRow>
         <GridColumn width="two-thirds">
           <PanelSuccess name={`${hospitalName}`} action={`updated`} />
@@ -42,22 +47,25 @@ const EditAHospitalSuccess = ({ trust, error, hospitalName, hospitalId }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
-    const trustResponse = await container.getRetrieveTrustById()(
+    const {
+      organisation,
+      error: organisationError,
+    } = await container.getRetrieveOrganisationById()(
       authenticationToken.trustId
     );
 
     const getRetrieveHospitalById = container.getRetrieveHospitalById();
-    const { hospital, error } = await getRetrieveHospitalById(
+    const { hospital, error: hospitalError } = await getRetrieveHospitalById(
       query.id,
       authenticationToken.trustId
     );
 
     return {
       props: {
-        error: error,
+        error: organisationError || hospitalError,
         hospitalName: hospital.name,
         hospitalId: hospital.id,
-        trust: { name: trustResponse.trust?.name },
+        organisation,
       },
     };
   })

@@ -10,7 +10,7 @@ import EditHospitalForm from "../../../src/components/EditHospitalForm";
 import ErrorSummary from "../../../src/components/ErrorSummary";
 import TrustAdminHeading from "../../../src/components/TrustAdminHeading";
 
-const AddAHospital = ({ trust, error, trustId }) => {
+const AddAHospital = ({ organisation, error }) => {
   if (error) {
     return <Error />;
   }
@@ -31,7 +31,7 @@ const AddAHospital = ({ trust, error, trustId }) => {
   };
 
   const submit = async (payload) => {
-    payload.trustId = trustId;
+    payload.trustId = organisation.id;
     try {
       const response = await fetch("/api/create-hospital", {
         method: "POST",
@@ -56,7 +56,7 @@ const AddAHospital = ({ trust, error, trustId }) => {
     } catch (e) {
       const submitErrors = [
         e.props.status === 400
-          ? getHospitalUniqueError(error.props.err)
+          ? getHospitalUniqueError(e.props.err)
           : getGenericError(),
       ];
       setErrors(submitErrors);
@@ -72,7 +72,7 @@ const AddAHospital = ({ trust, error, trustId }) => {
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading trustName={trust.name} subHeading="Hospitals" />
+      <TrustAdminHeading trustName={organisation.name} subHeading="Hospitals" />
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
@@ -89,14 +89,18 @@ const AddAHospital = ({ trust, error, trustId }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ authenticationToken, container }) => {
-    const trustId = authenticationToken.trustId;
-    const trustResponse = await container.getRetrieveTrustById()(
+    // const trustId = authenticationToken.trustId;
+    const {
+      organisation,
+      error: organisationError,
+    } = await container.getRetrieveOrganisationById()(
       authenticationToken.trustId
     );
     return {
       props: {
-        trustId,
-        trust: { name: trustResponse.trust?.name },
+        error: organisationError,
+        // trustId,
+        organisation,
       },
     };
   })
