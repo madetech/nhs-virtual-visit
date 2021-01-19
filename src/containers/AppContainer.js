@@ -51,13 +51,12 @@ import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
 import createOrganization from "../usecases/createOrganization";
 import retrieveOrganizations from "../usecases/retrieveOrganizations";
+import retrieveManagersByOrgId from "../usecases/retrieveManagersByOrgId";
+import retrieveManagerByUuid from "../usecases/retrieveManagerByUuid";
+import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
-import retrieveManagersByOrgId from "../gateways/MsSQL/retrieveManagersByOrgId";
-import retrieveManagerByUuid from "../gateways/MsSQL/retrieveManagerByUuid";
-import updateManagerByUuid from "../gateways/MsSQL/updateManagerByUuid";
-import archiveManagerByUuid from "../gateways/MsSQL/archiveManagerByUuid";
 import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
 import retrieveEmailAndHashedPassword from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
 import resetPassword from "../gateways/MsSQL/resetPassword";
@@ -84,18 +83,10 @@ import retrieveHospitalsByTrustIdGW from "../gateways/PostgreSQL/retrieveHospita
 import insertHospitalGW from "../gateways/PostgreSQL/insertHospital";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
 import createOrganisationGW from "../gateways/PostgreSQL/createOrganization";
-import CallIdProvider from "../providers/CallIdProvider";
-import RandomIdProvider from "../providers/RandomIdProvider";
-import MsSQL from "../gateways/MsSQL";
-import insertHospital from "../gateways/PostgreSQL/insertHospital";
-import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
-import retrieveManagersByOrgId from "../usecases/retrieveManagersByOrgId";
 import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
-import retrieveManagerByUuid from "../usecases/retrieveManagerByUuid";
 import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
 import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
 import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
-import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
 import archiveManagerByUuidGateway from "../gateways/MsSQL/archiveManagerByUuid";
 
 class AppContainer {
@@ -430,7 +421,7 @@ class AppContainer {
 
   getVerifyResetPasswordLink = () => {
     return verifyResetPasswordLink(this);
-  }
+  };
   getArchiveManagerByUuidGateway = () => {
     return archiveManagerByUuidGateway(this);
   };
