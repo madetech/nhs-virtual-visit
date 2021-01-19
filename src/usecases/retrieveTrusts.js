@@ -1,25 +1,11 @@
 import logger from "../../logger";
 
-const retrieveTrusts = ({ getDb }) => async () => {
-  const db = await getDb();
+const retrieveTrusts = ({ getRetrieveTrustsGateway }) => async () => {
   try {
-    const trusts = await db.any(
-      `SELECT
-        id as id,
-        name as name,
-        admin_code as admin_code,
-        video_provider
-      FROM
-        trusts`
-    );
+    const trusts = await getRetrieveTrustsGateway()();
 
     return {
-      trusts: trusts.map((trust) => ({
-        id: trust.id,
-        name: trust.name,
-        adminCode: trust.admin_code,
-        videoProvider: trust.video_provider,
-      })),
+      trusts,
       error: null,
     };
   } catch (error) {
