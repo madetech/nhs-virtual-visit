@@ -10,8 +10,10 @@ export function checkIfAuthorised(token, res) {
   if (!token) {
     res.status(401);
     res.end(JSON.stringify({ err: "Unauthorized" }));
-    return;
+    return false;
   }
+
+  return true;
 }
 
 export default validateHttpMethod;

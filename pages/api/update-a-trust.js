@@ -12,7 +12,7 @@ export default withContainer(async (req, res, { container }) => {
 
   const token = adminIsAuthenticated(req.headers.cookie);
 
-  checkIfAuthorised(token, res);
+  if(!checkIfAuthorised(token, res)) { return; }
 
   const { id, videoProvider } = req.body;
 
