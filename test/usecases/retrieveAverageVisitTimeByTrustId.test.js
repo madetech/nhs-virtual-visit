@@ -3,13 +3,13 @@ import retrieveAverageVisitTimeByTrustId from "../../src/usecases/retrieveAverag
 describe("retrieveAverageVisitTimeByTrustId", () => {
   const trustId = 1;
   it("formats the average visit time", async () => {
-    const dbSpy = jest
+    const anySpy = jest
       .fn()
-      .mockResolvedValue([{ average_visit_duration_seconds: 12300 }]);
+      .mockResolvedValue(12300);
 
     const container = {
-      async getDb() {
-        return { any: dbSpy };
+      async getRetrieveAverageVisitTimeByTrustIdGateway() {
+        return { any: anySpy };
       },
     };
 
@@ -21,13 +21,13 @@ describe("retrieveAverageVisitTimeByTrustId", () => {
   });
 
   it("formats the average visit time when the average visit time is NULL", async () => {
-    const dbSpy = jest
+    const anySpy = jest
       .fn()
-      .mockResolvedValue([{ average_visit_duration_seconds: null }]);
+      .mockResolvedValue( null);
 
     const container = {
-      async getDb() {
-        return { any: dbSpy };
+      async getRetrieveAverageVisitTimeByTrustIdGateway() {
+        return { any: anySpy };
       },
     };
 
