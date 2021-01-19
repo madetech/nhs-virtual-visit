@@ -14,7 +14,7 @@ const archiveAWardSuccess = ({
   hospitalName,
   hospitalId,
   error,
-  trust,
+  organisation,
 }) => {
   if (error) {
     return <Error err={error} />;
@@ -27,7 +27,7 @@ const archiveAWardSuccess = ({
       showNavigationBarForType={TRUST_ADMIN}
     >
       <TrustAdminHeading
-        trustName={`${trust.name}`}
+        trustName={`${organisation.name}`}
         subHeading="Trust Managers"
       />
       <GridRow>
@@ -53,7 +53,10 @@ const archiveAWardSuccess = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
-    const trustResponse = await container.getRetrieveTrustById()(
+    const {
+      organisation,
+      error,
+    } = await container.getRetrieveOrganisationById()(
       authenticationToken.trustId
     );
     return {
@@ -61,7 +64,8 @@ export const getServerSideProps = propsWithContainer(
         name: query.name,
         hospitalName: query.hospitalName,
         hospitalId: query.hospitalId,
-        trust: { name: trustResponse.trust?.name },
+        organisation,
+        error,
       },
     };
   })

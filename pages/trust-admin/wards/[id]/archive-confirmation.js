@@ -18,7 +18,7 @@ const ArchiveAWardConfirmation = ({
   id,
   name,
   hospitalName,
-  trust,
+  organisation,
   hospitalId,
 }) => {
   const [hasError, setHasError] = useState(error);
@@ -41,7 +41,7 @@ const ArchiveAWardConfirmation = ({
       body: JSON.stringify({
         name,
         hospitalName,
-        trustId: trust.id,
+        trustId: organisation.id,
         wardId: id,
       }),
     });
@@ -63,7 +63,7 @@ const ArchiveAWardConfirmation = ({
       showNavigationBarForType={TRUST_ADMIN}
     >
       <TrustAdminHeading
-        trustName={`${trust.name}`}
+        trustName={`${organisation.name}`}
         subHeading="Trust Managers"
       />
       <GridRow>
@@ -90,33 +90,26 @@ const ArchiveAWardConfirmation = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
-    const trustResponse = await container.getRetrieveTrustById()(
-      authenticationToken.trustId
-    );
-    const getRetrieveWardById = container.getRetrieveWardById();
-
-    const { ward, error } = await getRetrieveWardById(
+    const orgId = authenticationToken.trustId;
+    const {
+      organisation,
+      error: organisationError,
+    } = await container.getRetrieveOrganisationById()(orgId);
+    const { ward, error: wardError } = await container.getRetrieveWardById()(
       query.id,
-      authenticationToken.trustId
+      orgId
     );
 
-    if (error) {
-      return { props: { error: error } };
-    } else {
-      return {
-        props: {
-          error: error,
-          id: ward.id,
-          name: ward.name,
-          hospitalName: ward.hospitalName,
-          trust: {
-            name: trustResponse.trust?.name,
-            id: authenticationToken.trustId,
-          },
-          hospitalId: ward.hospitalId,
-        },
-      };
-    }
+    return {
+      props: {
+        error: organisationError || wardError,
+        id: ward.id,
+        name: ward.name,
+        hospitalName: ward.hospitalName,
+        organisation,
+        hospitalId: ward.hospitalId,
+      },
+    };
   })
 );
 
