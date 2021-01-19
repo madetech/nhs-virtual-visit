@@ -90,6 +90,7 @@ import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUui
 import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
 import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
 import archiveManagerByUuidGateway from "../gateways/MsSQL/archiveManagerByUuid";
+import retrieveWardVisitTotalsGateway from "../gateways/PostgreSQL/retrieveWardVisitTotals";
 
 class AppContainer {
   getDb = () => {
@@ -355,6 +356,10 @@ class AppContainer {
 
   getRetrieveHospitalsByTrustIdGateway = () => {
     return retrieveHospitalsByTrustIdGW(this);
+  };
+
+  getRetrieveWardVisitTotalsGateway = () => {
+    return retrieveWardVisitTotalsGateway(this);
   };
 
   getInsertHospitalGateway = () => {
