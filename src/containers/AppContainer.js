@@ -95,6 +95,7 @@ import archiveManagerByUuidGateway from "../gateways/MsSQL/archiveManagerByUuid"
 import retrieveWardVisitTotalsGateway from "../gateways/PostgreSQL/retrieveWardVisitTotals";
 import retrieveHospitalWardVisitTotalsGateway from "../gateways/PostgreSQL/retrieveHospitalWardVisitTotals";
 import retrieveAverageVisitTimeByTrustIdGateway from "../gateways/PostgreSQL/retrieveAverageVisitTimeByTrustId";
+import retrieveAverageVisitsPerDayGateway from "../gateways/PostgreSQL/retrieveAverageVisitsPerDayByTrustId";
 
 class AppContainer {
   getDb = () => {
@@ -400,6 +401,10 @@ class AppContainer {
 
   getRetrieveHospitalWardVisitTotalsGateway = () => {
     return retrieveHospitalWardVisitTotalsGateway(this);
+  }
+
+  getRetrieveAverageVisitsPerDayGateway = () => {
+    return retrieveAverageVisitsPerDayGateway(this);
   }
 
   getLogEventGateway = () => {
