@@ -39,4 +39,5 @@ const archiveWard = ({
 
   return { success: true, error: null };
 };
+
 export default archiveWard;

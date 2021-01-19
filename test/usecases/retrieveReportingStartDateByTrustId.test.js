@@ -4,13 +4,11 @@ describe("retrieveReportingStartDateByTrustId", () => {
   it("returns the error if database throws an error", async () => {
     const trustId = 1;
     const container = {
-      async getDb() {
-        return {
-          one: jest.fn().mockImplementation(() => {
-            throw new Error("Error!");
-          }),
-        };
-      },
+      getRetrieveReportingStartDateByTrustIdGateway: () =>
+        jest.fn().mockResolvedValue({
+          startDate: null,
+          error: "Error!",
+        }),
     };
 
     const { error } = await retrieveReportingStartDateByTrustId(container)(

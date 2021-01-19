@@ -72,6 +72,7 @@ import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
 import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
 import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
 
+import retrieveReportingStartDateByTrustIdGW from "../gateways/PostgreSQL/retrieveReportingStartDateByTrustId";
 import retrieveAverageParticipantsInVisitGW from "../gateways/PostgreSQL/retrieveAverageParticipantsInVisit";
 import retrieveHospitalVisitTotalsGW from "../gateways/PostgreSQL/retrieveHospitalVisitTotals";
 import retrieveWardsByHospitalIdGW from "../gateways/PostgreSQL/retrieveWardsByHospitalId";
@@ -424,6 +425,10 @@ class AppContainer {
 
   getRetrieveManagerByUuidGateway = () => {
     return retrieveManagerByUuidGateway(this);
+  };
+
+  getRetrieveReportingStartDateByTrustIdGateway = () => {
+    return retrieveReportingStartDateByTrustIdGW(this);
   };
 
   getUpdateManagerStatusByUuid = () => {
