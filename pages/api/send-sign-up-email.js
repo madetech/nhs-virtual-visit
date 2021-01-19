@@ -1,15 +1,12 @@
 import withContainer from "../../src/middleware/withContainer";
 import createTimeSensitiveLink from "../../src/helpers/createTimeSensitiveLink";
 import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
+import { validateHttpMethod } from "../../src/helpers/apiErrorHandler";
 import bcrypt from "bcryptjs";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
-    if (method !== "POST") {
-      res.status(405);
-      res.end(JSON.stringify({ err: "method not allowed" }));
-      return;
-    }
+    validateHttpMethod("POST", method, res);
 
     if (!body.email) {
       res.status(400);
@@ -41,9 +38,7 @@ export default withContainer(
     };
     const createManager = container.getCreateManager();
     const { user, error } = await createManager(managerObj);
-    console.log("*******USER********");
-    console.log(user);
-    console.log(user.id);
+
     if (error) {
       res.status(400);
       res.end(JSON.stringify({ err: error }));
@@ -57,7 +52,6 @@ export default withContainer(
       type: "manager",
     };
 
-    console.log(verificationObj);
     const addToUserVerificationTable = container.getAddToUserVerificationTable();
     const { error: verificationError } = await addToUserVerificationTable(
       verificationObj
@@ -85,27 +79,25 @@ export default withContainer(
 
     if (linkError) {
       res.status(401);
-      JSON.stringify({
-        error: "There was an error creating link to reset password",
-      });
-    }
-    try {
-      await sendEmail(
-        signUpEmailTemplateId,
-        emailAddress,
-        { link: link },
-        null
+      res.end(
+        JSON.stringify({ error: "There was an error creating link to sign up" })
       );
+      return;
+    }
 
+    const { error: emailError } = await sendEmail(
+      signUpEmailTemplateId,
+      emailAddress,
+      { link: link },
+      null
+    );
+
+    if (emailError) {
+      res.status(401);
+      res.end(JSON.stringify({ err: "GovNotify error occurred" }));
+    } else {
       res.status(201);
       res.end(JSON.stringify({ email: emailAddress }));
-    } catch (err) {
-      res.status(401);
-      res.end(
-        JSON.stringify({
-          err: `GovNotify error occurred: ${err?.error?.errors[0]?.message}`,
-        })
-      );
     }
   }
 );
