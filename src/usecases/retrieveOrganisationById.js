@@ -15,7 +15,7 @@ const retrieveOrganisationById = ({
   } catch (error) {
     logger.error(error);
     return {
-      organisations: null,
+      organisation: null,
       error: "There is an error with the database",
     };
   }
