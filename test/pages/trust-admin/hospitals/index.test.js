@@ -10,18 +10,11 @@ describe("trust-admin/hospitals", () => {
   const tokenProvider = {
     validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId: orgId })),
   };
-  const retrieveOrganisationByIdSpy = jest.fn(async () => ({
-    organisation: { name: "Doggo Trust" },
-    error: null,
-  }));
-  const retrieveHospitalsByTrustIdSuccessSpy = jest.fn(async () => ({
-    hospitals: [
-      { id: 1, name: "1", wards: [{ id: 1, name: "Ward 1" }] },
-      { id: 2, name: "2", wards: [{ id: 2, name: "Ward 2" }] },
-    ],
-    error: null,
-  }));
-  const retrieveHospitalVisitTotalsStub = jest.fn(async () => ({
+  const expectedHospitals = [
+    { id: 1, name: "1", wards: [{ id: 1, name: "Ward 1" }] },
+    { id: 2, name: "2", wards: [{ id: 2, name: "Ward 2" }] },
+  ];
+  const expectedHospitalVisitObj = {
     hospitals: [
       { id: 1, name: "Test Hospital", totalVisits: 5 },
       { id: 2, name: "Test Hospital", totalVisits: 10 },
@@ -29,7 +22,18 @@ describe("trust-admin/hospitals", () => {
     leastVisited: [{ id: 1, name: "Test Hospital", totalVisits: 5 }],
     mostVisited: [{ id: 2, name: "Test Hospital", totalVisits: 10 }],
     error: null,
+  };
+  const retrieveOrganisationByIdSpy = jest.fn(async () => ({
+    organisation: { name: "Doggo Trust" },
+    error: null,
   }));
+  const retrieveHospitalsByTrustIdSuccessSpy = jest.fn(async () => ({
+    hospitals: expectedHospitals,
+    error: null,
+  }));
+  const retrieveHospitalVisitTotalsStub = jest.fn(
+    async () => expectedHospitalVisitObj
+  );
   let res, container;
   beforeEach(() => {
     res = {
@@ -62,7 +66,9 @@ describe("trust-admin/hospitals", () => {
 
     it("retrieves hospitals", async () => {
       // Act
-      const { props } = await getServerSideProps({
+      const {
+        props: { hospitals },
+      } = await getServerSideProps({
         req: authenticatedReq,
         res,
         container,
@@ -71,9 +77,8 @@ describe("trust-admin/hospitals", () => {
       expect(retrieveHospitalsByTrustIdSuccessSpy).toHaveBeenCalledWith(orgId, {
         withWards: true,
       });
-      expect(props.hospitals.length).toEqual(2);
-      expect(props.hospitals[0].id).toEqual(1);
-      expect(props.hospitals[1].name).toEqual("2");
+      expect(hospitals.length).toEqual(2);
+      expect(hospitals).toEqual(expectedHospitals);
     });
 
     it("sets an error in props if hospital error", async () => {
@@ -138,6 +143,7 @@ describe("trust-admin/hospitals", () => {
     });
 
     it("retrieves the number of booked visits for the trust's hospitals", async () => {
+      // Arrange
       // Act
       const {
         props: { hospitals },
