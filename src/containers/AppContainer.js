@@ -70,6 +70,7 @@ import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
 import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
 import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
 
+import captureEventGW from "../gateways/PostgreSQL/captureEvent";
 import retrieveReportingStartDateByTrustIdGW from "../gateways/PostgreSQL/retrieveReportingStartDateByTrustId";
 import retrieveAverageParticipantsInVisitGW from "../gateways/PostgreSQL/retrieveAverageParticipantsInVisit";
 import retrieveHospitalVisitTotalsGW from "../gateways/PostgreSQL/retrieveHospitalVisitTotals";
@@ -308,6 +309,10 @@ class AppContainer {
 
   getFindWardByCodeGateway = () => {
     return findWardByCode(this);
+  };
+
+  getCaptureEventGateway = () => {
+    return captureEventGW(this);
   };
 
   getUpdateCallStatusesByWardIdGateway = () => {
