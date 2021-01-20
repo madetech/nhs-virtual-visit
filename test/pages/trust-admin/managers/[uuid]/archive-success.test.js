@@ -24,7 +24,7 @@ describe("trust-admin/managers/[uuid]/archive-success", () => {
   });
   it("retrieves trust, manager email and error (from props) if authenticated", async () => {
     // Arrange
-    const trustId = 1;
+    const orgId = 1;
     const expectedManagerEmail = "nhs-manager1@nhs.co.uk";
     const expectedTrustName = "Doggo Trust";
     const authenticatedReq = {
@@ -33,32 +33,31 @@ describe("trust-admin/managers/[uuid]/archive-success", () => {
       },
     };
     const tokenProvider = {
-      validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId })),
+      validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId: orgId })),
     };
-    const retrieveTrustByIdSuccessStub = jest.fn(async () => ({
-      trust: { name: expectedTrustName },
+    const retrieveOrganisationByIdSpy = jest.fn(async () => ({
+      organisation: { name: "Doggo Trust" },
       error: null,
     }));
 
     const container = {
-      getRetrieveTrustById: () => retrieveTrustByIdSuccessStub,
+      getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
     // Act
-    const { props } = await getServerSideProps({
+    const {
+      props: { managerEmail, organisation, error },
+    } = await getServerSideProps({
       req: authenticatedReq,
       res,
       query: { email: expectedManagerEmail },
       container,
     });
-    const actualManagerEmail = props.managerEmail;
-    const actualTrust = props.trust;
-    const error = props.error;
     // Assert
-    expect(retrieveTrustByIdSuccessStub).toHaveBeenCalledWith(trustId);
-    expect(actualTrust.name).toEqual(expectedTrustName);
-    expect(actualManagerEmail).toEqual(expectedManagerEmail);
+    expect(retrieveOrganisationByIdSpy).toHaveBeenCalledWith(orgId);
+    expect(organisation.name).toEqual(expectedTrustName);
+    expect(managerEmail).toEqual(expectedManagerEmail);
     expect(error).toBeNull();
   });
 });
