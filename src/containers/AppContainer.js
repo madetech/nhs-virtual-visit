@@ -42,7 +42,6 @@ import retrieveAverageVisitTimeByTrustId from "../usecases/retrieveAverageVisitT
 import retrieveWardVisitTotalsStartDateByTrustId from "../usecases/retrieveWardVisitTotalsStartDateByTrustId";
 import retrieveAverageVisitsPerDayByTrustId from "../usecases/retrieveAverageVisitsPerDayByTrustId";
 import retrieveReportingStartDateByTrustId from "../usecases/retrieveReportingStartDateByTrustId";
-import retrieveSurveyUrlByCallId from "../usecases/retrieveSurveyUrlByCallId";
 import updateVisitById from "../usecases/updateVisitById";
 import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
@@ -271,10 +270,6 @@ class AppContainer {
 
   getRetrieveReportingStartDateByTrustId = () => {
     return retrieveReportingStartDateByTrustId(this);
-  };
-
-  getRetrieveSurveyUrlByCallId = () => {
-    return retrieveSurveyUrlByCallId(this);
   };
 
   getUpdateVisitById = () => {
