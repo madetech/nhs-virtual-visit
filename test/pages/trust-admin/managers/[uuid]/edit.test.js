@@ -24,14 +24,14 @@ describe("trust-admin/managers/[uuid]/edit", () => {
   });
   it("retrieves trust, manager and error (from props) if authenticated", async () => {
     // Arrange
-    const trustId = 1;
+    const orgId = 1;
     const uuid = "1BBE43B3-4B2E-443E-8399-8299F22AB139";
     const expectedManager = {
       uuid: "1BBE43B3-4B2E-443E-8399-8299F22AB139",
       email: "nhs-manager1@nhs.co.uk",
       status: "active",
     };
-    const expectedTrustName = "Doggo Trust";
+    const expectedOrganisationName = "Doggo Trust";
 
     const authenticatedReq = {
       headers: {
@@ -39,10 +39,10 @@ describe("trust-admin/managers/[uuid]/edit", () => {
       },
     };
     const tokenProvider = {
-      validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId })),
+      validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId: orgId })),
     };
-    const retrieveTrustByIdSuccessStub = jest.fn(async () => ({
-      trust: { name: expectedTrustName },
+    const retrieveOrganisationByIdSpy = jest.fn(async () => ({
+      organisation: { name: "Doggo Trust" },
       error: null,
     }));
     const retrieveManagerByUuidSuccessSpy = jest.fn(async () => ({
@@ -50,28 +50,25 @@ describe("trust-admin/managers/[uuid]/edit", () => {
       error: null,
     }));
     const container = {
-      getRetrieveTrustById: () => retrieveTrustByIdSuccessStub,
+      getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
       getRetrieveManagerByUuid: () => retrieveManagerByUuidSuccessSpy,
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
     // Act
-    const { props } = await getServerSideProps({
+    const {
+      props: { manager, error, organisation },
+    } = await getServerSideProps({
       req: authenticatedReq,
       res,
       query: { uuid },
       container,
     });
-    const actualManager = props.manager;
-    const actualTrust = props.trust;
-    const error = props.error;
     // Assert
-    expect(retrieveTrustByIdSuccessStub).toHaveBeenCalledWith(trustId);
-    expect(actualTrust.name).toEqual(expectedTrustName);
+    expect(retrieveOrganisationByIdSpy).toHaveBeenCalledWith(orgId);
+    expect(organisation.name).toEqual(expectedOrganisationName);
     expect(retrieveManagerByUuidSuccessSpy).toHaveBeenCalledWith(uuid);
-    expect(actualManager.uuid).toEqual(expectedManager.uuid);
-    expect(actualManager.email).toEqual(expectedManager.email);
-    expect(actualManager.status).toEqual(expectedManager.status);
+    expect(manager.uuid).toEqual(expectedManager.uuid);
     expect(error).toBeNull();
   });
 });
