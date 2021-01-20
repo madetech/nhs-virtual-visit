@@ -34,11 +34,9 @@ describe("ward/cancel-visit-confirmation", () => {
     });
     it("provides an error if a db error occurs", async () => {
       const container = {
-        getDb: () =>
-          Promise.resolve({
-            any: () => {
-              throw new Error("Some DB Error");
-            },
+        getRetrieveVisitByCallIdGateway: () =>
+          async () => ({
+            error: "Foo"
           }),
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
@@ -58,21 +56,20 @@ describe("ward/cancel-visit-confirmation", () => {
     describe("with callId parameter", () => {
       it("provides the visit record from the database", async () => {
         const container = {
-          getDb: () =>
-            Promise.resolve({
-              any: () => [
-                {
-                  id: 1,
-                  patient_name: "Fred Bloggs",
-                  recipient_name: "John Doe",
-                  recipient_number: "07700900900",
-                  recipient_email: "john@example.com",
-                  call_time: new Date("2020-04-15T23:00:00.000Z"),
-                  call_id: "Test-Call-Id",
-                  provider: "Test",
-                },
-              ],
-            }),
+        getRetrieveVisitByCallIdGateway: () =>
+          async () => ({
+            scheduledCall: {
+              id: 1,
+              patientName: "Fred Bloggs",
+              recipientName: "John Doe",
+              recipientNumber: "07700900900",
+              recipientEmail: "john@example.com",
+              callTime: "2020-04-15T23:00:00.000Z",
+              callId: "Test-Call-Id",
+              provider: "Test"
+            },
+            error: null
+          }),
           getTokenProvider: () => tokenProvider,
           getRegenerateToken: () => jest.fn().mockReturnValue({}),
           getRetrieveWardById: () => jest.fn().mockReturnValue({}),
