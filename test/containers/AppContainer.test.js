@@ -277,4 +277,8 @@ describe("AppContainer", () => {
   it("returns getCaptureEventGateway", () => {
     expect(container.getCaptureEventGateway()).toBeDefined();
   });
+
+  it("returns getRetrieveVisitByIdGateway", () => {
+    expect(container.getRetrieveVisitByIdGateway()).toBeDefined();
+  });
 });
