@@ -1,67 +1,62 @@
 import { getServerSideProps } from "../../../../../pages/trust-admin/wards/[id]/edit";
 
-const authenticatedReq = {
-  headers: {
-    cookie: "token=123",
-  },
-};
-
 describe("/trust-admin/wards/[id]/edit", () => {
-  const anonymousReq = {
+  const authenticatedReq = {
     headers: {
-      cookie: "",
+      cookie: "token=123",
     },
   };
-
-  let res;
-
+  const expectedWard = {
+    id: 1,
+    name: "Defoe Ward",
+    hospitalName: "Northwick Park Hospital",
+  };
   const tokenProvider = {
     validate: jest.fn(() => ({ type: "trustAdmin", trustId: 10 })),
   };
-
+  const retrieveOrganisationByIdSpy = jest.fn(async () => ({
+    organisation: { name: "Doggo Trust" },
+    error: null,
+  }));
+  const retrieveWardByIdSpy = jest.fn().mockReturnValue({
+    ward: expectedWard,
+    error: null,
+  });
+  let res, container;
   beforeEach(() => {
     res = {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
     };
+    container = {
+      getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
+      getRetrieveWardById: () => retrieveWardByIdSpy,
+      getRetrieveHospitalsByTrustId: () =>
+        jest.fn().mockReturnValue({
+          hospitals: [],
+          error: null,
+        }),
+      getTokenProvider: () => tokenProvider,
+      getRegenerateToken: () => jest.fn().mockReturnValue({}),
+    };
   });
-
   describe("getServerSideProps", () => {
     it("redirects to login page if not authenticated", async () => {
+      // Arrange
+      const anonymousReq = {
+        headers: {
+          cookie: "",
+        },
+      };
+      // Act
       await getServerSideProps({ req: anonymousReq, res });
-
+      // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
         Location: "/trust-admin/login",
       });
     });
-
     describe("with wardId parameter", () => {
       it("retrieves a ward by the wardId parameter", async () => {
-        const retrieveTrustByIdSpy = jest.fn(async () => ({
-          trust: { name: "Doggo Trust" },
-          error: null,
-        }));
-
-        const retrieveWardByIdSpy = jest.fn().mockReturnValue({
-          ward: {
-            id: 1,
-            name: "Defoe Ward",
-            hospitalName: "Northwick Park Hospital",
-          },
-          error: null,
-        });
-
-        const container = {
-          getRetrieveTrustById: () => retrieveTrustByIdSpy,
-          getRetrieveWardById: () => retrieveWardByIdSpy,
-          getRetrieveHospitalsByTrustId: () =>
-            jest.fn().mockReturnValue({
-              hospitals: [],
-              error: null,
-            }),
-          getTokenProvider: () => tokenProvider,
-          getRegenerateToken: () => jest.fn().mockReturnValue({}),
-        };
-
+        // Act
         await getServerSideProps({
           req: authenticatedReq,
           res,
@@ -70,38 +65,14 @@ describe("/trust-admin/wards/[id]/edit", () => {
           },
           container,
         });
-
+        // Assert
         expect(retrieveWardByIdSpy).toHaveBeenCalledWith("ward ID", 10);
       });
-
       it("set a ward prop based on the retrieved ward", async () => {
-        const retrieveTrustByIdSpy = jest.fn(async () => ({
-          trust: { name: "Doggo Trust" },
-          error: null,
-        }));
-
-        const retrieveWardByIdSpy = jest.fn().mockReturnValue({
-          ward: {
-            id: 1,
-            name: "Defoe Ward",
-            hospitalId: "1",
-          },
-          error: null,
-        });
-
-        const container = {
-          getRetrieveTrustById: () => retrieveTrustByIdSpy,
-          getRetrieveWardById: () => retrieveWardByIdSpy,
-          getRetrieveHospitalsByTrustId: () =>
-            jest.fn().mockReturnValue({
-              hospitals: [],
-              error: null,
-            }),
-          getTokenProvider: () => tokenProvider,
-          getRegenerateToken: () => jest.fn().mockReturnValue({}),
-        };
-
-        const { props } = await getServerSideProps({
+        // Act
+        const {
+          props: { ward, error },
+        } = await getServerSideProps({
           req: authenticatedReq,
           res,
           query: {
@@ -109,10 +80,9 @@ describe("/trust-admin/wards/[id]/edit", () => {
           },
           container,
         });
-
-        expect(props.ward.id).toEqual(1);
-        expect(props.ward.name).toEqual("Defoe Ward");
-        expect(props.ward.hospitalId).toEqual("1");
+        // Assert
+        expect(ward).toEqual(expectedWard);
+        expect(error).toBeNull();
       });
     });
   });
