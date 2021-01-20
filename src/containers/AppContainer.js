@@ -48,7 +48,7 @@ import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
 import createOrganization from "../usecases/createOrganization";
-import retrieveOrganizations from "../usecases/retrieveOrganizations";
+import retrieveOrganisations from "../usecases/retrieveOrganisations";
 import retrieveManagersByOrgId from "../usecases/retrieveManagersByOrgId";
 import retrieveManagerByUuid from "../usecases/retrieveManagerByUuid";
 import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
@@ -63,14 +63,12 @@ import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
 import insertVisit from "../gateways/PostgreSQL/insertVisit";
-import retrieveOrganisations from "../usecases/retrieveOrganisations";
 import updateCallStatusesByWardId from "../gateways/PostgreSQL/updateCallStatusesByWardId";
 import updateWardArchiveTimeById from "../gateways/PostgreSQL/updateWardArchiveTimeById";
 import updateWardVisitTotals from "../gateways/PostgreSQL/updateWardVisitTotals";
 import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
 import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
 import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
-
 import retrieveOrganizationsGW from "../gateways/PostgreSQL/retrieveOrganizations";
 import retrieveVisitByIdGW from "../gateways/PostgreSQL/retrieveVisitById";
 import captureEventGW from "../gateways/PostgreSQL/captureEvent";
@@ -88,7 +86,6 @@ import retrieveHospitalByIdGW from "../gateways/PostgreSQL/retrieveHospitalById"
 import retrieveHospitalsByTrustIdGW from "../gateways/PostgreSQL/retrieveHospitalsByTrustId";
 import insertHospitalGW from "../gateways/PostgreSQL/insertHospital";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
-<<<<<<< HEAD
 import createOrganisationGW from "../gateways/PostgreSQL/createOrganization";
 import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
 import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
@@ -103,22 +100,13 @@ import retrieveTrustsGateway from "../gateways/PostgreSQL/retrieveTrusts";
 import retrieveVisitByCallIdGateway from "../gateways/PostgreSQL/retrieveVisitByCallId";
 import retrieveVisitsGateway from "../gateways/PostgreSQL/retrieveVisits";
 import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/PostgreSQL/retrieveWardVisitTotalsStartDateByTrustId";
-<<<<<<< HEAD
 import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
-=======
-=======
-import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
-import retrieveEmailAndHashedPassword from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
-import resetPassword from "../gateways/MsSQL/resetPassword";
-import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
 import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
 import retrieveActiveOrganisations from "../usecases/retrieveActiveOrganisations";
 import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActiveOrganisations";
 import retrieveOrganisationById from "../usecases/retrieveOrganisationById";
 import retrieveOrganisationByIdGateway from "../gateways/MsSQL/retrieveOrganisationById";
->>>>>>> change existing admin functionality to use mssql and add view trust
->>>>>>> change existing admin functionality to use mssql and add view trust
 
 class AppContainer {
   getDb = () => {
@@ -325,7 +313,7 @@ class AppContainer {
   };
 
   getRetrieveOrganisationsGateway = () => {
-    return retrieveOrganisationsGateway(this);
+    return retrieveOrganisationsGateway;
   };
 
   getRetrieveOrganizationById = () => {
@@ -430,7 +418,6 @@ class AppContainer {
     return updateWardVisitTotals;
   };
 
-<<<<<<< HEAD
   getRetrieveHospitalWardVisitTotalsGateway = () => {
     return retrieveHospitalWardVisitTotalsGateway(this);
   };
@@ -455,7 +442,6 @@ class AppContainer {
     return retrieveWardVisitTotalsStartDateByTrustIdGateway(this);
   };
 
-<<<<<<< HEAD
   getUpdateVisitByIdGateway = () => {
     return updateVisitByIdGateway(this);
   };
@@ -464,14 +450,12 @@ class AppContainer {
     return verifyAdminCodeGateway(this);
   };
 
-=======
-=======
   getRetrieveActiveOrganisations = () => {
     return retrieveActiveOrganisations(this);
   };
 
   getRetrieveActiveOrganisationsGateway = () => {
-    return retrieveActiveOrganisationsGateway(this);
+    return retrieveActiveOrganisationsGateway;
   };
 
   getRetrieveOrganisationById = () => {
@@ -482,8 +466,6 @@ class AppContainer {
     return retrieveOrganisationByIdGateway(this);
   };
 
->>>>>>> change existing admin functionality to use mssql and add view trust
->>>>>>> change existing admin functionality to use mssql and add view trust
   getLogEventGateway = () => {
     return logEvent(
       process.env.AZURE_FUNCTION_KEY,
@@ -525,10 +507,7 @@ class AppContainer {
     return archiveManagerByUuid(this);
   };
 
-<<<<<<< HEAD
-=======
   // MsSQL database gateways
->>>>>>> change existing admin functionality to use mssql and add view trust
   getVerifyUserLogin = () => {
     return verifyUserLogin;
   };

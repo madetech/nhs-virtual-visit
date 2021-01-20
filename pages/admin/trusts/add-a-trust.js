@@ -41,25 +41,23 @@ const AddATrust = () => {
 
     if (onSubmitErrors.length === 0) {
       const submitTrust = async (name) => {
-
-        const response = await fetch("/api/create-organization", {
+        const response = await fetch("/api/create-organisation", {
           method: "POST",
           headers: {
             "content-type": "application/json",
           },
           body: JSON.stringify({
             name,
-            status: 0,
           }),
         });
 
         const status = response.status;
 
         if (status == 201) {
-          const { organizationId } = await response.json();
+          const { organisationId } = await response.json();
           Router.push(
             "/admin/trusts/[id]/add-success",
-            `/admin/trusts/${organizationId}/add-success`
+            `/admin/trusts/${organisationId}/add-success`
           );
           return true;
         } else if (status === 409) {

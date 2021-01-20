@@ -1,24 +1,20 @@
-import logger from "../../logger";
-
 const retrieveOrganisationById = ({
   getRetrieveOrganisationByIdGateway,
 }) => async (organisationId) => {
-  try {
-    const organisation = await getRetrieveOrganisationByIdGateway()(
-      organisationId
-    );
-    const organisationObj = { name: organisation.name };
-    return {
-      organisation: organisationObj,
-      error: null,
-    };
-  } catch (error) {
-    logger.error(error);
-    return {
-      organisation: null,
-      error: "There is an error with the database",
-    };
+  const { organisation, error } = await getRetrieveOrganisationByIdGateway()(
+    organisationId
+  );
+
+  let organisationObj;
+
+  if (organisation) {
+    organisationObj = { name: organisation.name };
   }
+
+  return {
+    organisation: organisationObj,
+    error: error,
+  };
 };
 
 export default retrieveOrganisationById;

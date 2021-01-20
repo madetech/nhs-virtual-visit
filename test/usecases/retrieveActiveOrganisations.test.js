@@ -3,10 +3,13 @@ import retrieveActiveOrganisations from "../../src/usecases/retrieveActiveOrgani
 describe("retrieveActiveOrganisations", () => {
   it("returns a list of organsiations that have and active status", async () => {
     const getRetrieveActiveOrganisationsGateway = jest.fn(() => {
-      return jest.fn().mockReturnValue([
-        { id: 1, name: "Test Trust1", status: 1 },
-        { id: 2, name: "Test Trust2", status: 1 },
-      ]);
+      return jest.fn().mockReturnValue({
+        organisations: [
+          { id: 1, name: "Test Trust1", status: 1 },
+          { id: 2, name: "Test Trust2", status: 1 },
+        ],
+        error: null,
+      });
     });
 
     const expectedResponse = [
@@ -16,6 +19,7 @@ describe("retrieveActiveOrganisations", () => {
     const { organisations, error } = await retrieveActiveOrganisations({
       getRetrieveActiveOrganisationsGateway,
     })();
+
     expect(organisations).toHaveLength(2);
     expect(organisations).toEqual(expectedResponse);
     expect(error).toBeNull();
@@ -23,8 +27,9 @@ describe("retrieveActiveOrganisations", () => {
 
   it("errors if there is a problem with the database call", async () => {
     const getRetrieveActiveOrganisationsGateway = jest.fn(() => {
-      return jest.fn(() => {
-        throw new Error();
+      return jest.fn().mockReturnValue({
+        organisations: null,
+        error: "There is an error with the database",
       });
     });
 
@@ -32,7 +37,7 @@ describe("retrieveActiveOrganisations", () => {
       getRetrieveActiveOrganisationsGateway,
     })();
 
-    expect(organisations).toBeNull();
+    expect(organisations).toEqual([]);
     expect(error).toEqual("There is an error with the database");
   });
 });

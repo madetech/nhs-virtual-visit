@@ -1,13 +1,30 @@
+import logger from "../../../logger";
+
 const retrieveOrganisationByIdGateway = ({ getMsSqlConnPool }) => async (
   organisationId
 ) => {
-  const db = await getMsSqlConnPool();
-  const res = await db
-    .request()
-    .input("organisationId", organisationId)
-    .query("SELECT * FROM dbo.[organisation] WHERE id = @organisationId");
-  const organisation = res.recordset[0];
-  return organisation;
+  logger.info(`Retrieving organisation with id: ${organisationId}`);
+
+  try {
+    const db = await getMsSqlConnPool();
+    const response = await db
+      .request()
+      .input("organisationId", organisationId)
+      .query("SELECT * FROM dbo.[organisation] WHERE id = @organisationId");
+
+    return {
+      organisation: response.recordset[0],
+      error: null,
+    };
+  } catch (error) {
+    logger.error(
+      `Error retrieving organisation with id: ${organisationId}, ${error}`
+    );
+    return {
+      organisation: null,
+      error: error.toString(),
+    };
+  }
 };
 
 export default retrieveOrganisationByIdGateway;

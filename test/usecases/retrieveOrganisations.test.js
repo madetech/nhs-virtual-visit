@@ -3,15 +3,18 @@ import retrieveOrganisations from "../../src/usecases/retrieveOrganisations";
 describe("retrieveOrganisations", () => {
   it("returns a list of organsiations", async () => {
     const getRetrieveOrganisationsGateway = jest.fn(() => {
-      return jest.fn().mockReturnValue([
-        { id: 1, name: "Test Trust1", status: 1 },
-        { id: 2, name: "Test Trust2", status: 1 },
-      ]);
+      return jest.fn().mockReturnValue({
+        organisations: [
+          { id: 1, name: "Test Trust1", status: 1 },
+          { id: 2, name: "Test Trust2", status: 0 },
+        ],
+        error: null,
+      });
     });
 
     const expectedResponse = [
       { id: 1, name: "Test Trust1", status: 1 },
-      { id: 2, name: "Test Trust2", status: 1 },
+      { id: 2, name: "Test Trust2", status: 0 },
     ];
     const { organisations, error } = await retrieveOrganisations({
       getRetrieveOrganisationsGateway,
@@ -23,8 +26,9 @@ describe("retrieveOrganisations", () => {
 
   it("errors if there is a problem with the database call", async () => {
     const getRetrieveOrganisationsGateway = jest.fn(() => {
-      return jest.fn(() => {
-        throw new Error();
+      return jest.fn().mockReturnValue({
+        organisations: null,
+        error: "There is an error with the database",
       });
     });
 
@@ -32,7 +36,7 @@ describe("retrieveOrganisations", () => {
       getRetrieveOrganisationsGateway,
     })();
 
-    expect(organisations).toBeNull();
+    expect(organisations).toEqual([]);
     expect(error).toEqual("There is an error with the database");
   });
 });
