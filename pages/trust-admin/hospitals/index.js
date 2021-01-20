@@ -64,7 +64,7 @@ export const getServerSideProps = propsWithContainer(
     });
     return {
       props: {
-        hospitals: hospitalsWithVisitTotals,
+        hospitals: hospitalsWithVisitTotals || null,
         organisation,
         error: organisationError || hospitalsError || hospitalsVisitTotalError,
       },

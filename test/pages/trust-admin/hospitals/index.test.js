@@ -67,7 +67,7 @@ describe("trust-admin/hospitals", () => {
     it("retrieves hospitals", async () => {
       // Act
       const {
-        props: { hospitals },
+        props: { hospitals, error },
       } = await getServerSideProps({
         req: authenticatedReq,
         res,
@@ -79,6 +79,7 @@ describe("trust-admin/hospitals", () => {
       });
       expect(hospitals.length).toEqual(2);
       expect(hospitals).toEqual(expectedHospitals);
+      expect(error).toBeNull();
     });
 
     it("sets an error in props if hospital error", async () => {
@@ -94,7 +95,7 @@ describe("trust-admin/hospitals", () => {
       };
       // Act
       const {
-        props: { error },
+        props: { error, hospitals },
       } = await getServerSideProps({
         req: authenticatedReq,
         res,
@@ -102,6 +103,7 @@ describe("trust-admin/hospitals", () => {
       });
       // Assert
       expect(error).toEqual("Error!");
+      expect(hospitals).toBeNull();
     });
 
     it("retrieves the trust of the trustAdmin", async () => {
