@@ -1,22 +1,26 @@
 import createTimeSensitiveLink from "../../src/helpers/createTimeSensitiveLink";
-import jwt from "jsonwebtoken";
+import TokenProvider from "../../src/providers/TokenProvider";
+
+jest.mock("../../src/providers/TokenProvider");
 
 describe("createTimeSensitiveLink", () => {
   it("returns a link with a time sensitive token", () => {
     const headers = { host: "rootUrl" };
-    const emailAddress = "test@email.com";
-    const hashedPassword = "hashedPassword";
+    const id = "UUID";
     const expirationTime = "2h";
     const urlPath = "urlPath";
+    const hashedPassword = "hashedPassword";
 
-    jwt.sign = jest.fn().mockReturnValue("token");
+    TokenProvider.mockImplementation(() => {
+      return { generateTokenForLink: jest.fn().mockReturnValue("token") };
+    });
 
     const { link, linkError } = createTimeSensitiveLink(
       headers,
-      emailAddress,
-      hashedPassword,
+      id,
       expirationTime,
-      urlPath
+      urlPath,
+      hashedPassword
     );
 
     expect(linkError).toBe(null);
@@ -30,8 +34,11 @@ describe("createTimeSensitiveLink", () => {
     const expirationTime = "2h";
     const urlPath = "urlPath";
 
-    jwt.sign = jest.fn().mockImplementation(() => {
+    const generateTokenForLinkStub = jest.fn().mockImplementation(() => {
       throw new Error("Error");
+    });
+    TokenProvider.mockImplementation(() => {
+      return { generateTokenForLink: generateTokenForLinkStub };
     });
 
     const { link, linkError } = createTimeSensitiveLink(
