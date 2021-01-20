@@ -25,10 +25,10 @@ describe("trust-admin/managers", () => {
     });
   });
 
-  it("retrieves trust, managers list and error (from props) if authenticated", async () => {
+  it("retrieves organisation, managers list and error (from props) if authenticated", async () => {
     // Arrange
-    const trustId = 1;
-    const expectedTrustName = "Doggo Trust";
+    const orgId = 1;
+    const expectedOrganisationName = "Doggo Trust";
     const expectedManagersArray = [
       {
         uuid: "1BBE43B3-4B2E-443E-8399-8299F22AB139",
@@ -47,10 +47,10 @@ describe("trust-admin/managers", () => {
       },
     };
     const tokenProvider = {
-      validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId: trustId })),
+      validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId: orgId })),
     };
-    const retrieveTrustByIdSuccessStub = jest.fn(async () => ({
-      trust: { name: expectedTrustName },
+    const retrieveOrganisationByIdSuccessStub = jest.fn(async () => ({
+      organisation: { name: expectedOrganisationName },
       error: null,
     }));
     const retrieveManagersByOrgIdSuccessSpy = jest.fn(async () => ({
@@ -58,7 +58,7 @@ describe("trust-admin/managers", () => {
       error: null,
     }));
     const container = {
-      getRetrieveTrustById: () => retrieveTrustByIdSuccessStub,
+      getRetrieveOrganisationById: () => retrieveOrganisationByIdSuccessStub,
       getRetrieveManagersByOrgId: () => retrieveManagersByOrgIdSuccessSpy,
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
@@ -70,12 +70,12 @@ describe("trust-admin/managers", () => {
       container,
     });
     const actualManagerArray = props.managers;
-    const actualTrust = props.trust;
+    const actualOrganisation = props.organisation;
     const error = props.error;
     // Assert
-    expect(retrieveTrustByIdSuccessStub).toHaveBeenCalledWith(trustId);
-    expect(actualTrust.name).toEqual(expectedTrustName);
-    expect(retrieveManagersByOrgIdSuccessSpy).toHaveBeenCalledWith(trustId);
+    expect(retrieveOrganisationByIdSuccessStub).toHaveBeenCalledWith(orgId);
+    expect(actualOrganisation.name).toEqual(expectedOrganisationName);
+    expect(retrieveManagersByOrgIdSuccessSpy).toHaveBeenCalledWith(orgId);
     expect(actualManagerArray.length).toEqual(2);
     actualManagerArray.forEach((manager, idx) => {
       expect(manager.uuid).toEqual(expectedManagersArray[idx].uuid);
