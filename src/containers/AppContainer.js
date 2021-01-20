@@ -97,6 +97,7 @@ import retrieveAverageVisitTimeByTrustIdGateway from "../gateways/PostgreSQL/ret
 import retrieveAverageVisitsPerDayGateway from "../gateways/PostgreSQL/retrieveAverageVisitsPerDayByTrustId";
 import retrieveTrustsGateway from "../gateways/PostgreSQL/retrieveTrusts";
 import retrieveVisitByCallIdGateway from "../gateways/PostgreSQL/retrieveVisitByCallId";
+import retrieveVisitsGateway from "../gateways/PostgreSQL/retrieveVisits";
 
 class AppContainer {
   getDb = () => {
@@ -410,6 +411,10 @@ class AppContainer {
 
   getRetrieveVisitByCallIdGateway = () => {
     return retrieveVisitByCallIdGateway(this);
+  }
+
+  getRetrieveVisitsGateway = () => {
+    return retrieveVisitsGateway(this);
   }
 
   getLogEventGateway = () => {
