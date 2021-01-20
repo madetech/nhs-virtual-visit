@@ -13,16 +13,9 @@ import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 import Form from "../../../../src/components/Form";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
-const ArchiveAWardConfirmation = ({
-  error,
-  id,
-  name,
-  hospitalName,
-  organisation,
-  hospitalId,
-}) => {
+const ArchiveAWardConfirmation = ({ error, ward, organisation }) => {
   const [hasError, setHasError] = useState(error);
-
+  const { id, hospitalName, name, hospitalId } = ward;
   if (hasError) {
     return <Error />;
   }
@@ -103,11 +96,8 @@ export const getServerSideProps = propsWithContainer(
     return {
       props: {
         error: organisationError || wardError,
-        id: ward.id,
-        name: ward.name,
-        hospitalName: ward.hospitalName,
+        ward,
         organisation,
-        hospitalId: ward.hospitalId,
       },
     };
   })
