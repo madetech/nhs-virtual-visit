@@ -1,12 +1,9 @@
 import withContainer from "../../src/middleware/withContainer";
+import { validateHttpMethod } from "../../src/helpers/apiErrorHandler";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
-    if (method !== "POST") {
-      res.status(405);
-      res.end(JSON.stringfify({ err: "method not allowed" }));
-      return;
-    }
+    validateHttpMethod("POST", method, res);
 
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
 
@@ -17,26 +14,29 @@ export default withContainer(
     }
 
     if (!body.name) {
-      res.status(409);
+      res.status(400);
       res.end(JSON.stringify({ err: "trust name must be present" }));
       return;
     }
 
     res.setHeader("Content-Type", "application/json");
 
-    const createOrganization = container.getCreateOrganization();
+    const createOrganisation = container.getCreateOrganisation();
 
-    const { organizationId, error } = await createOrganization({
+    const { organisationId, error } = await createOrganisation({
       name: body.name,
-      status: body.status,
+      type: "trust",
+      createdBy: body.userId,
     });
 
     if (error) {
       res.status(409);
-      res.end(JSON.stringify({ err: "Trust name already exists" }));
+      res.end(
+        JSON.stringify({ err: "There was an error creating a new trust" })
+      );
     } else {
       res.status(201);
-      res.end(JSON.stringify({ organizationId }));
+      res.end(JSON.stringify({ organisationId }));
     }
   }
 );

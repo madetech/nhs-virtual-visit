@@ -21,10 +21,11 @@ describe("retrieveOrganisationsGateway", () => {
       };
     });
 
-    const organisations = await retrieveOrganisationsGateway({
+    const { organisations, error } = await retrieveOrganisationsGateway({
       getMsSqlConnPool,
     })();
 
+    expect(error).toBeNull();
     expect(organisations[0].id).toEqual(1);
     expect(organisations[0].name).toEqual("Test Organisation");
     expect(organisations[0].created_at).toEqual("01/01/2001");
@@ -32,5 +33,24 @@ describe("retrieveOrganisationsGateway", () => {
     expect(organisations[0].type).toEqual("type");
     expect(organisations[0].uuid).toEqual("uuid");
     expect(organisations[0].status).toEqual(1);
+  });
+
+  it("returns an error if there is a problem with the database call", async () => {
+    const getMsSqlConnPool = jest.fn(() => {
+      return {
+        request: jest.fn().mockReturnThis(),
+        input: jest.fn().mockReturnThis(),
+        query: jest.fn(() => {
+          throw new Error("DB Error!");
+        }),
+      };
+    });
+
+    const { organisations, error } = await retrieveOrganisationsGateway({
+      getMsSqlConnPool,
+    })();
+
+    expect(organisations).toBeNull();
+    expect(error).toEqual("Error: DB Error!");
   });
 });
