@@ -44,12 +44,12 @@ describe("/trust-admin/hospitals/[id]/add-success", () => {
       };
       // Act
       await getServerSideProps({ req: anonymousReq, res });
-
+      // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
         Location: "/trust-admin/login",
       });
     });
-    // Assert
+
     describe("with hospitalId parameter", () => {
       it("retrieves a hospital by the hospitalId parameter", async () => {
         // Act
@@ -77,6 +77,7 @@ describe("/trust-admin/hospitals/[id]/add-success", () => {
         });
         // Assert
         expect(props.name).toEqual("Northwick Park Hospital");
+        expect(props.error).toBeNull();
       });
     });
   });
