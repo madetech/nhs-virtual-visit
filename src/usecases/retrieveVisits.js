@@ -1,3 +1,3 @@
 export default ({ getRetrieveVisitsGateway }) => async ({ wardId }) => {
-  return getRetrieveVisitsGateway()(wardId);
+  return await getRetrieveVisitsGateway()(wardId);
 };
