@@ -77,11 +77,9 @@ describe("trust-admin/managers", () => {
     expect(actualOrganisation.name).toEqual(expectedOrganisationName);
     expect(retrieveManagersByOrgIdSuccessSpy).toHaveBeenCalledWith(orgId);
     expect(actualManagerArray.length).toEqual(2);
-    actualManagerArray.forEach((manager, idx) => {
-      expect(manager.uuid).toEqual(expectedManagersArray[idx].uuid);
-      expect(manager.email).toEqual(expectedManagersArray[idx].email);
-      expect(manager.status).toEqual(expectedManagersArray[idx].status);
-    });
+    actualManagerArray.forEach((manager, idx) =>
+      expect(manager).toEqual(expectedManagersArray[idx])
+    );
     expect(error).toBeNull();
   });
 });
