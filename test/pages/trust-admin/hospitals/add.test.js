@@ -23,5 +23,36 @@ describe("/trust-admin/hospitals/add", () => {
         Location: "/trust-admin/login",
       });
     });
+    it("returns an organisation and error prop", async () => {
+      // Arrange
+      const authenticatedReq = {
+        headers: {
+          cookie: "token=123",
+        },
+      };
+      const tokenProvider = {
+        validate: jest.fn(() => ({ type: "trustAdmin", trustId: 1 })),
+      };
+      const retrieveOrganisationByIdSpy = jest.fn(async () => ({
+        organisation: { name: "Doggo Trust" },
+        error: null,
+      }));
+      const container = {
+        getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
+        getTokenProvider: () => tokenProvider,
+        getRegenerateToken: () => jest.fn().mockReturnValue({}),
+      };
+      // Act
+      const {
+        props: { organisation, error },
+      } = await getServerSideProps({
+        req: authenticatedReq,
+        res,
+        container,
+      });
+      // Assert
+      expect(organisation.name).toEqual("Doggo Trust");
+      expect(error).toBeNull();
+    });
   });
 });
