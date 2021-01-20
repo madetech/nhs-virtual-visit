@@ -13,7 +13,7 @@ describe("admin", () => {
     },
   };
 
-  const trusts = [
+  const organisations = [
     {
       id: 1,
       name: "Test Trust 1",
@@ -47,13 +47,13 @@ describe("admin", () => {
       });
     });
 
-    it("retrieves trusts", async () => {
-      const getRetrieveTrustsSpy = jest.fn(async () => ({
-        trusts: trusts,
+    it("retrieves organisations", async () => {
+      const getRetrieveActiveOrganisationsSpy = jest.fn(async () => ({
+        organisations: organisations,
         error: null,
       }));
       const container = {
-        getRetrieveTrusts: () => getRetrieveTrustsSpy,
+        getRetrieveActiveOrganisations: () => getRetrieveActiveOrganisationsSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
@@ -64,18 +64,18 @@ describe("admin", () => {
         container,
       });
 
-      expect(getRetrieveTrustsSpy).toHaveBeenCalled();
-      expect(props.trusts).toEqual(trusts);
+      expect(getRetrieveActiveOrganisationsSpy).toHaveBeenCalled();
+      expect(props.organisations).toEqual(organisations);
       expect(props.error).toBeNull();
     });
 
-    it("sets an error in props if trusts error", async () => {
-      const getRetrieveTrustsSpy = jest.fn(async () => ({
-        trusts: null,
+    it("sets an error in props if organisations error", async () => {
+      const getRetrieveActiveOrganisationsSpy = jest.fn(async () => ({
+        organisations: null,
         error: "Error!",
       }));
       const container = {
-        getRetrieveTrusts: () => getRetrieveTrustsSpy,
+        getRetrieveActiveOrganisations: () => getRetrieveActiveOrganisationsSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
