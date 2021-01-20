@@ -1,7 +1,7 @@
 import logger from "../../../logger";
 import { SCHEDULED, COMPLETE } from "../../helpers/visitStatus";
 
-export default ({ getDb }) => async ({ wardId }) => {
+export default ({ getDb }) => async (wardId) => {
   const db = await getDb();
   try {
     let query = `SELECT *,
