@@ -79,13 +79,19 @@ describe("TokenProvider", () => {
     expect(token.emailAddress).toEqual("");
   });
 
-  it("should not return an error when token is verified", () => {
-    jwt.verify = jest.fn().mockReturnValue();
+  it("should return the decryptedToken when token is verified", () => {
+    jwt.verify = jest.fn().mockReturnValue({
+      version: "3",
+    });
 
     const tokenProvider = new TokenProvider();
 
-    const { errorToken } = tokenProvider.verifyTokenNotUsed("token", "secret");
+    const { decryptedToken, errorToken } = tokenProvider.verifyTokenFromLink(
+      "token",
+      "secret"
+    );
 
+    expect(decryptedToken.version).toEqual("3");
     expect(errorToken).toEqual("");
   });
 
@@ -96,13 +102,12 @@ describe("TokenProvider", () => {
 
     const tokenProvider = new TokenProvider();
 
-    const { errorToken } = tokenProvider.verifyTokenNotUsed(
+    const { decryptedToken, errorToken } = tokenProvider.verifyTokenFromLink(
       "invalidToken",
       "invalidSecret"
     );
 
-    expect(errorToken).toEqual(
-      "Link is incorrect or has expired. Please reset your password again to get a new link."
-    );
+    expect(decryptedToken).toBeNull();
+    expect(errorToken).toEqual("Error verifying token");
   });
 });

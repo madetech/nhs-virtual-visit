@@ -14,8 +14,8 @@ describe("verifyResetPasswordLink", () => {
       retrieveEmailFromToken: jest.fn(() => {
         return { emailAddress: token.emailAddress };
       }),
-      verifyTokenNotUsed: jest.fn(() => {
-        return { errorToken: "" };
+      verifyTokenFromLink: jest.fn(() => {
+        return { decryptedToken: token, errorToken: "" };
       }),
     };
 
@@ -26,7 +26,7 @@ describe("verifyResetPasswordLink", () => {
     const { email, error } = await verifyResetPasswordLink(container)(token);
 
     expect(email).toEqual("test@email.com");
-    expect(error).toEqual("");
+    expect(error).toBeNull();
   });
 
   it("returns an error it there is no email in the token", async () => {
@@ -39,7 +39,7 @@ describe("verifyResetPasswordLink", () => {
         return { emailAddress: token.emailAddress };
       }),
       verifyTokenNotUsed: jest.fn(() => {
-        return { errorToken: "" };
+        return { decryptedToken: token, errorToken: "" };
       }),
     };
 
@@ -62,8 +62,8 @@ describe("verifyResetPasswordLink", () => {
       retrieveEmailFromToken: jest.fn(() => {
         return { emailAddress: token.emailAddress };
       }),
-      verifyTokenNotUsed: jest.fn(() => {
-        return { errorToken: "error" };
+      verifyTokenFromLink: jest.fn(() => {
+        return { decryptedToken: "", errorToken: "error" };
       }),
     };
 
@@ -73,7 +73,9 @@ describe("verifyResetPasswordLink", () => {
     const container = { getTokenProvider: () => tokenProvider };
     const { email, error } = await verifyResetPasswordLink(container)(token);
 
-    expect(email).toEqual("");
-    expect(error).toEqual("error");
+    expect(email).toBeFalsy();
+    expect(error).toEqual(
+      "Link is incorrect or expired. Please reset password again"
+    );
   });
 });

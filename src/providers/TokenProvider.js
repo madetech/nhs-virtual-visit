@@ -84,7 +84,7 @@ class TokenProvider {
     } catch (error) {
       return {
         decryptedToken: null,
-        errorToken: "Error verifying token.",
+        errorToken: "Error verifying token",
       };
     }
   }
