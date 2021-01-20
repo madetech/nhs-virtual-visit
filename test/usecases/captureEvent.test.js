@@ -2,16 +2,13 @@ import captureEvent from "../../src/usecases/captureEvent";
 
 describe("captureEvent", () => {
   it("rejects a bad event", async () => {
-    const oneSpy = jest.fn().mockImplementation(() => {
-      throw new Error();
+    const gwSpy = jest.fn().mockResolvedValue({
+      event: null,
+      error: null,
     });
 
     const container = {
-      async getDb() {
-        return {
-          one: oneSpy,
-        };
-      },
+      getCaptureEventGateway: () => gwSpy,
     };
 
     const joinRequest = {
@@ -24,23 +21,19 @@ describe("captureEvent", () => {
 
     expect(event).toBeNull();
     expect(error).toBeDefined();
-    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
-      expect.anything(),
-      null,
-      null,
-      null,
-    ]);
+    expect(gwSpy).toHaveBeenCalledWith(joinRequest);
   });
 
   it("accepts a valid join-visit event", async () => {
-    const oneSpy = jest.fn().mockReturnValue({ id: 1 });
+    const gwSpy = jest.fn().mockResolvedValue({
+      event: {
+        id: 1,
+      },
+      error: null,
+    });
 
     const container = {
-      async getDb() {
-        return {
-          one: oneSpy,
-        };
-      },
+      getCaptureEventGateway: () => gwSpy,
     };
 
     const joinRequest = {
@@ -53,11 +46,6 @@ describe("captureEvent", () => {
 
     expect(error).toBeNull();
     expect(event.id).toEqual(1);
-    expect(oneSpy).toHaveBeenCalledWith(expect.anything(), [
-      expect.anything(),
-      "join-visit",
-      1,
-      "c30c27f0-abb1-432e-8b87-44c41af1d76c",
-    ]);
+    expect(gwSpy).toHaveBeenCalledWith(joinRequest);
   });
 });

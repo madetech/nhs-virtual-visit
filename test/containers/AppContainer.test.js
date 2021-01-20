@@ -273,4 +273,8 @@ describe("AppContainer", () => {
       container.getRetrieveReportingStartDateByTrustIdGateway()
     ).toBeDefined();
   });
+
+  it("returns getCaptureEventGateway", () => {
+    expect(container.getCaptureEventGateway()).toBeDefined();
+  });
 });
