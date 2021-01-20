@@ -4,13 +4,9 @@ describe("retrieveWardVisitTotalsStartDateByTrustId", () => {
   it("returns the error if database throws an error", async () => {
     const trustId = 1;
     const container = {
-      async getDb() {
-        return {
-          one: jest.fn().mockImplementation(() => {
-            throw new Error("Error!");
-          }),
-        };
-      },
+      getRetrieveWardVisitTotalsStartDateByTrustIdGateway: () => async () => ({
+        error: "Error!"
+      }),
     };
 
     const { error } = await retrieveWardVisitTotalsStartDateByTrustId(
