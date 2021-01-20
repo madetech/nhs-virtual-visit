@@ -47,7 +47,7 @@ import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
 import updateTrust from "../usecases/updateTrust";
-import createOrganization from "../usecases/createOrganization";
+import createOrganisation from "../usecases/createOrganisation";
 import retrieveOrganisations from "../usecases/retrieveOrganisations";
 import retrieveManagersByOrgId from "../usecases/retrieveManagersByOrgId";
 import retrieveManagerByUuid from "../usecases/retrieveManagerByUuid";
@@ -107,6 +107,7 @@ import retrieveActiveOrganisations from "../usecases/retrieveActiveOrganisations
 import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActiveOrganisations";
 import retrieveOrganisationById from "../usecases/retrieveOrganisationById";
 import retrieveOrganisationByIdGateway from "../gateways/MsSQL/retrieveOrganisationById";
+import createOrganisationGateway from "../gateways/MsSQL/createOrganisation";
 
 class AppContainer {
   getDb = () => {
@@ -304,8 +305,12 @@ class AppContainer {
     return updateTrust(this);
   };
 
-  getCreateOrganization = () => {
-    return createOrganization(this);
+  getCreateOrganisation = () => {
+    return createOrganisation(this);
+  };
+
+  getCreateOrganisationGateway = () => {
+    return createOrganisationGateway(this);
   };
 
   getRetrieveOrganisations = () => {
@@ -313,7 +318,7 @@ class AppContainer {
   };
 
   getRetrieveOrganisationsGateway = () => {
-    return retrieveOrganisationsGateway;
+    return retrieveOrganisationsGateway(this);
   };
 
   getRetrieveOrganizationById = () => {
@@ -455,7 +460,7 @@ class AppContainer {
   };
 
   getRetrieveActiveOrganisationsGateway = () => {
-    return retrieveActiveOrganisationsGateway;
+    return retrieveActiveOrganisationsGateway(this);
   };
 
   getRetrieveOrganisationById = () => {

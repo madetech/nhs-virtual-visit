@@ -34,6 +34,13 @@ describe("retrieveOrganizations", () => {
     const container = {
       getRetrieveOrganizations: () =>
         jest.fn().mockReturnValue({ error: "Error: DB Error!" }),
+      async getDb() {
+        return {
+          any: jest.fn(() => {
+            throw new Error("DB Error!");
+          }),
+        };
+      },
     };
 
     const { error } = await retrieveOrganizations(container)();
