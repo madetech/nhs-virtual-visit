@@ -3,6 +3,7 @@ import createTimeSensitiveLink from "../../src/helpers/createTimeSensitiveLink";
 import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
 import { validateHttpMethod } from "../../src/helpers/apiErrorHandler";
 import bcrypt from "bcryptjs";
+// import { v4 as uuidv4 } from "uuid";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -45,23 +46,34 @@ export default withContainer(
       return;
     }
 
-    const verificationObj = {
-      user_id: user.id,
-      code: body.email,
-      hash: hashedPassword,
-      type: "manager",
-    };
+    // const userVerificationCode = uuidv4();
+    // const hashSalt = bcrypt.genSaltSync(10);
+    // const userVerificationHash = bcrypt.hashSync(userVerificationCode, hashSalt);
+
+    // const verificationObj = {
+    //   user_id: user.id,
+    //   code: userVerificationCode,
+    //   hash: userVerificationHash,
+    //   type: "confirmRegistration",
+    // };
 
     const addToUserVerificationTable = container.getAddToUserVerificationTable();
-    const { error: verificationError } = await addToUserVerificationTable(
-      verificationObj
-    );
+    const {
+      verifyUser,
+      error: verificationError,
+    } = await addToUserVerificationTable({
+      user_id: user.id,
+      type: "confirmRegistration",
+    });
 
+    console.log(verifyUser);
     if (verificationError) {
       res.status(400);
       res.end(JSON.stringify({ err: verificationError }));
       return;
     }
+
+    // AT THIS POINT
 
     const emailAddress = body.email;
     const id = user.id;
