@@ -26,10 +26,6 @@ describe("AppContainer", () => {
     expect(await container.getDb()).toBeDefined();
   });
 
-  it("returns getMsSqlConnPool", async () => {
-    expect(await container.getMsSqlConnPool()).toBeDefined();
-  });
-
   it("returns getTokenProvider", () => {
     expect(container.getTokenProvider()).toBeDefined();
   });
@@ -99,7 +95,9 @@ describe("AppContainer", () => {
   });
 
   it("returns getRetrieveWardVisitTotalsStartDateByTrustId", () => {
-    expect(container.getRetrieveWardVisitTotalsStartDateByTrustId()).toBeDefined();
+    expect(
+      container.getRetrieveWardVisitTotalsStartDateByTrustId()
+    ).toBeDefined();
   });
 
   it("returns getRetrieveReportingStartDateByTrustId", () => {
@@ -199,7 +197,9 @@ describe("AppContainer", () => {
   });
 
   it("returns getRetrieveAverageParticipantsInVisitGateway", () => {
-    expect(container.getRetrieveAverageParticipantsInVisitGateway()).toBeDefined();
+    expect(
+      container.getRetrieveAverageParticipantsInVisitGateway()
+    ).toBeDefined();
   });
 
   it("returns getRetrieveWardsByHospitalIdGateway", () => {
@@ -239,7 +239,9 @@ describe("AppContainer", () => {
   });
 
   it("returns getRetrieveAverageVisitTimeByTrustIdGateway", () => {
-    expect(container.getRetrieveAverageVisitTimeByTrustIdGateway()).toBeDefined();
+    expect(
+      container.getRetrieveAverageVisitTimeByTrustIdGateway()
+    ).toBeDefined();
   });
 
   it("returns getInsertHospitalGateway", () => {
@@ -267,6 +269,8 @@ describe("AppContainer", () => {
   });
 
   it("returns getRetrieveReportingStartDateByTrustIdGateway", () => {
-    expect(container.getRetrieveReportingStartDateByTrustIdGateway()).toBeDefined();
+    expect(
+      container.getRetrieveReportingStartDateByTrustIdGateway()
+    ).toBeDefined();
   });
 });
