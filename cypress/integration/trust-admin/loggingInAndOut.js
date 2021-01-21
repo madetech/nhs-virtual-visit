@@ -1,9 +1,10 @@
-xdescribe("As a trust admin, I want to log in so that I can access the service.", () => {
+describe("As a trust admin, I want to log in so that I can access the service.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(
       "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
     );
+    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   it("allows a trust admin to log in and out", () => {
@@ -69,7 +70,7 @@ xdescribe("As a trust admin, I want to log in so that I can access the service."
 
   function ThenISeeTheTrustAdminHomePage() {
     cy.contains("There is a problem").should("not.exist");
-    cy.contains("Test Trust").should("be.visible");
+    cy.contains("Airedale NHS Foundation Trust").should("be.visible");
     cy.contains("Dashboard").should("be.visible");
   }
 

@@ -69,11 +69,11 @@ function ThenISeeTheWardIsDeleted(name) {
 }
 
 function WhenIClickOnTrustManagersOnTheNavigationBar() {
-  cy.get("a.nhsuk-header__navigation-link").contains("Trust Managers").click();
+  cy.get("a.nhsuk-header__navigation-link").contains("Managers").click();
 }
 
 function ThenISeeTheTrustManagersList() {
-  cy.get("caption").should("contain", "List of Trust Managers");
+  cy.get("caption").should("contain", "List of Managers");
 }
 
 module.exports = {

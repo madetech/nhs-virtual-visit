@@ -5,12 +5,13 @@ import {
   ThenISeeTheTrustManagersList,
 } from "./trustAdminCommonSteps";
 
-describe.skip("As an admin, I want to delete a trust manager so that I can remove a trust manager from the system.", () => {
+describe("As an admin, I want to delete a trust manager so that I can remove a trust manager from the system.", () => {
   before(() => {
     // reset and seed the database: need to edit this to run MSSQL test DB and reseed
     cy.exec(
       "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
     );
+    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   it("allows admin to delete a trust manager", () => {
@@ -32,14 +33,12 @@ describe.skip("As an admin, I want to delete a trust manager so that I can remov
 
   function ThenISeeADeleteTrustManagerPage() {
     cy.get("[data-cy=form-heading]").contains(
-      "Are you sure you want to delete this trust manager?"
+      "Are you sure you want to delete this manager?"
     );
   }
 
   function WhenIClickTheDeleteTrustManagerButton() {
-    cy.get("[data-cy=button]")
-      .contains("Yes, delete this trust manager")
-      .click();
+    cy.get("[data-cy=button]").contains("Yes, delete this manager").click();
   }
 
   function ThenISeeTheTrustManagerIsDeletedPage() {
