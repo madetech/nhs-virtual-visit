@@ -4,7 +4,7 @@ export default ({ getCreateFacilityGateway }) => async ({
   name,
   orgId,
   code,
-  userId,
+  createdBy,
 }) => {
   if (orgId == undefined) {
     return {
@@ -27,7 +27,7 @@ export default ({ getCreateFacilityGateway }) => async ({
       name,
       orgId,
       code,
-      userId,
+      createdBy,
     });
     return { facilityId, error: null };
   } catch (error) {

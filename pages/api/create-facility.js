@@ -30,7 +30,7 @@ export default withContainer(
       name: body.name,
       orgId: body.orgId,
       code: body.code,
-      userId: body.userId,
+      createdBy: body.userId,
     });
 
     if (error) {
