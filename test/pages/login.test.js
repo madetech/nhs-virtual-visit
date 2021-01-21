@@ -10,7 +10,7 @@ describe("login", () => {
   let res;
   beforeEach(() => {
     res = {
-      writeHead: jest.fn().mockReturnValue({ end: () => { } }),
+      writeHead: jest.fn().mockReturnValue({ end: () => {} }),
     };
   });
 
