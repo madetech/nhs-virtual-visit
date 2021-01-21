@@ -1,12 +1,9 @@
 import retrieveOrganizationById from "../../../src/gateways/PostgreSQL/retrieveOrganizationById";
 import { setupOrganization } from "../../../test/testUtils/factories";
 
-describe("retrieveOrganizationById", () => {
+describe.skip("retrieveOrganizationById", () => {
   it("returns an object containing the organization", async () => {
     const { organizationId } = await setupOrganization();
-    console.log("*******OrganizationID*");
-    console.log(organizationId);
-
     const { organization, error } = await retrieveOrganizationById(
       organizationId
     );
