@@ -5,7 +5,7 @@ import {
   WhenIClickHospitalsOnTheNavigationBar,
 } from "./trustAdminCommonSteps";
 
-xdescribe("As a trust admin, I want to add a hospital so that I can manage virtual visits per hospital.", () => {
+describe("As a trust admin, I want to add a hospital so that I can manage virtual visits per hospital.", () => {
   const hospitalName = "Scorpia Hospital";
   const hospitalCode = "SCH";
 
@@ -14,6 +14,7 @@ xdescribe("As a trust admin, I want to add a hospital so that I can manage virtu
     cy.exec(
       "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
     );
+    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   it("allows a trust admin to add and edit a hospital", () => {

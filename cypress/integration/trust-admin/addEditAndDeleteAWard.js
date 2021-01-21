@@ -17,12 +17,13 @@ import {
   WhenIFillOutTheAddWardForm,
 } from "./trustAdminCommonSteps";
 
-xdescribe("As a trust admin, I want to add, edit and delete  a ward so that ward staff can book virtual visits.", () => {
+describe("As a trust admin, I want to add, edit and delete  a ward so that ward staff can book virtual visits.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(
       "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
     );
+    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   it("allows a trust admin to add, edit and delete a ward", () => {

@@ -4,7 +4,7 @@ import AnchorLink from "../AnchorLink";
 const ManagersTable = ({ managers }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table" id="manager-table">
-      <caption className="nhsuk-table__caption">List of Trust Managers</caption>
+      <caption className="nhsuk-table__caption">List of Managers</caption>
       <thead className="nhsuk-table__head">
         <tr className="nhsuk-table__row">
           <th className="nhsuk-table__header" scope="col">

@@ -7,12 +7,13 @@ import {
 } from "./trustAdminCommonSteps";
 import { thenIClickLogOut } from "../commonSteps";
 
-xdescribe("As a trust admin, I want to edit a ward so that I can modify the details of a ward.", () => {
+describe("As a trust admin, I want to edit a ward so that I can modify the details of a ward.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(
       "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
     );
+    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   it("displays errors when fields have been left blank", () => {
