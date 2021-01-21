@@ -10,7 +10,7 @@ describe("trust-admin/hospitals", () => {
   const tokenProvider = {
     validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId: orgId })),
   };
-  const expectedHospitals = [
+  const expectedFacilities = [
     { id: 1, name: "1", wards: [{ id: 1, name: "Ward 1" }] },
     { id: 2, name: "2", wards: [{ id: 2, name: "Ward 2" }] },
   ];
@@ -27,10 +27,9 @@ describe("trust-admin/hospitals", () => {
     organisation: { name: "Doggo Trust" },
     error: null,
   }));
-  const retrieveHospitalsByTrustIdSuccessSpy = jest.fn(async () => ({
-    hospitals: expectedHospitals,
-    error: null,
-  }));
+  const retrieveFacilitiesByOrgIdSpy = jest.fn().mockReturnValue({
+    facilities: expectedFacilities,
+  });
   const retrieveHospitalVisitTotalsStub = jest.fn(
     async () => expectedHospitalVisitObj
   );
@@ -41,7 +40,7 @@ describe("trust-admin/hospitals", () => {
     };
     container = {
       getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
-      getRetrieveHospitalsByTrustId: () => retrieveHospitalsByTrustIdSuccessSpy,
+      getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgIdSpy,
       getRetrieveHospitalVisitTotals: () => retrieveHospitalVisitTotalsStub,
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
@@ -74,24 +73,23 @@ describe("trust-admin/hospitals", () => {
         container,
       });
       // Assert
-      expect(retrieveHospitalsByTrustIdSuccessSpy).toHaveBeenCalledWith(orgId, {
+      expect(retrieveFacilitiesByOrgIdSpy).toHaveBeenCalledWith(orgId, {
         withWards: true,
       });
       expect(hospitals.length).toEqual(2);
-      expect(hospitals).toEqual(expectedHospitals);
+      expect(hospitals).toEqual(expectedFacilities);
       expect(error).toBeNull();
     });
 
     it("sets an error in props if hospital error", async () => {
       // Arrange
-      const retrieveHospitalsByTrustIdErrorStub = jest.fn(async () => ({
+      const retrieveFacilitiesByOrgIdErrorStub = jest.fn(async () => ({
         hospitals: null,
         error: "Error!",
       }));
       container = {
         ...container,
-        getRetrieveHospitalsByTrustId: () =>
-          retrieveHospitalsByTrustIdErrorStub,
+        getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgIdErrorStub,
       };
       // Act
       const {

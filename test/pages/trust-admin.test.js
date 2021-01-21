@@ -3,13 +3,6 @@ import { getServerSideProps } from "../../pages/trust-admin";
 describe("trust-admin", () => {
   let res;
   let trustId = 1;
-
-  const anonymousReq = {
-    headers: {
-      cookie: "",
-    },
-  };
-
   const authenticatedReq = {
     headers: {
       cookie: "token=123",
@@ -39,6 +32,10 @@ describe("trust-admin", () => {
     { id: 1, name: "Defoe Ward", hospital_id: 1, code: "test_code" },
     { id: 2, name: "Willem Ward", hospital_id: 1, code: "test_code_2" },
   ];
+  const expectedFacilities = [
+    { id: 1, name: "1" },
+    { id: 2, name: "2" },
+  ];
 
   const tokenProvider = {
     validate: jest.fn(() => ({ type: "trustAdmin", trustId: trustId })),
@@ -54,11 +51,9 @@ describe("trust-admin", () => {
     error: null,
   }));
 
-  const retrieveHospitalsByTrustId = jest.fn().mockReturnValue({
-    hospitals: [
-      { id: 1, name: "1" },
-      { id: 2, name: "2" },
-    ],
+  const retrieveFacilitiesByOrgId = jest.fn().mockReturnValue({
+    facilities: expectedFacilities,
+    error: null,
   });
 
   const retrieveWardVisitTotalsSpy = jest.fn().mockReturnValue({ total: 1234 });
@@ -89,7 +84,7 @@ describe("trust-admin", () => {
   const container = {
     getRetrieveWards: () => getRetrieveWardsSpy,
     getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
-    getRetrieveHospitalsByTrustId: () => retrieveHospitalsByTrustId,
+    getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgId,
     getRetrieveWardVisitTotals: () => retrieveWardVisitTotalsSpy,
     getRetrieveHospitalVisitTotals: () => retrieveHospitalVisitTotals,
     getRetrieveAverageParticipantsInVisit: () =>
@@ -114,8 +109,15 @@ describe("trust-admin", () => {
 
   describe("getServerSideProps", () => {
     it("redirects to login page if not authenticated", async () => {
+      // Arrange
+      const anonymousReq = {
+        headers: {
+          cookie: "",
+        },
+      };
+      // Act
       await getServerSideProps({ req: anonymousReq, res });
-
+      // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
         Location: "/trust-admin/login",
       });
@@ -134,15 +136,17 @@ describe("trust-admin", () => {
     });
 
     it("retrieves hospitals", async () => {
-      const { props } = await getServerSideProps({
+      const {
+        props: { hospitals, error },
+      } = await getServerSideProps({
         req: authenticatedReq,
         res,
         container,
       });
 
-      expect(props.hospitals.length).toEqual(2);
-      expect(props.hospitals[0].id).toEqual(1);
-      expect(props.hospitals[1].name).toEqual("2");
+      expect(hospitals.length).toEqual(2);
+      expect(hospitals).toEqual(expectedFacilities);
+      expect(error).toBeNull();
     });
 
     it("retrieves ward visit totals", async () => {

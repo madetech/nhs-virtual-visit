@@ -30,9 +30,9 @@ describe("/trust-admin/wards/[id]/edit", () => {
     container = {
       getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
       getRetrieveWardById: () => retrieveWardByIdSpy,
-      getRetrieveHospitalsByTrustId: () =>
+      getRetrieveFacilitiesByOrgId: () =>
         jest.fn().mockReturnValue({
-          hospitals: [],
+          facilities: [],
           error: null,
         }),
       getTokenProvider: () => tokenProvider,

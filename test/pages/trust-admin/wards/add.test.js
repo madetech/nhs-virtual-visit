@@ -25,14 +25,14 @@ describe("/trust-admin/wards/add", () => {
     it("returns hospitals, hospitalId, organisation and error through props", async () => {
       // Arrange
       const orgId = 10;
-      const expectedHospitalId = 1;
+      const expectedFacilityId = 1;
       const authenticatedReq = {
         headers: {
           cookie: "token=123",
         },
       };
       const expectedOrganisationName = "Doggo Trust";
-      const expectedHospitals = [
+      const expectedFacilities = [
         { id: 1, name: "Hospital1", wards: [{ id: 1, name: "Ward 1" }] },
         { id: 2, name: "Hospital2", wards: [{ id: 2, name: "Ward 2" }] },
       ];
@@ -43,13 +43,13 @@ describe("/trust-admin/wards/add", () => {
         organisation: { name: expectedOrganisationName },
         error: null,
       }));
-      const retrieveHospitalsByTrustIdSpy = jest.fn().mockReturnValue({
-        hospitals: expectedHospitals,
+      const retrieveFacilitiesByOrgIdSpy = jest.fn().mockReturnValue({
+        facilities: expectedFacilities,
         error: null,
       });
       const container = {
         getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
-        getRetrieveHospitalsByTrustId: () => retrieveHospitalsByTrustIdSpy,
+        getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgIdSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
@@ -60,16 +60,16 @@ describe("/trust-admin/wards/add", () => {
         req: authenticatedReq,
         res,
         query: {
-          hospitalId: expectedHospitalId,
+          hospitalId: expectedFacilityId,
         },
         container,
       });
       // Assert
       expect(retrieveOrganisationByIdSpy).toBeCalledWith(orgId);
-      expect(retrieveHospitalsByTrustIdSpy).toBeCalledWith(orgId);
-      expect(hospitals).toEqual(expectedHospitals);
+      expect(retrieveFacilitiesByOrgIdSpy).toBeCalledWith(orgId);
+      expect(hospitals).toEqual(expectedFacilities);
       expect(organisation.name).toEqual(expectedOrganisationName);
-      expect(hospitalId).toEqual(expectedHospitalId);
+      expect(hospitalId).toEqual(expectedFacilityId);
       expect(error).toBeNull();
     });
   });
