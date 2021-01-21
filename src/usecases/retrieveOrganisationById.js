@@ -11,7 +11,11 @@ export default ({ getRetrieveOrganisationByIdGateway }) => async (
   let organisationObj;
 
   if (organisation) {
-    organisationObj = { name: organisation.name, uuid: organisation.uuid };
+    organisationObj = {
+      id: organisation.id,
+      name: organisation.name,
+      uuid: organisation.uuid,
+    };
   }
 
   return {
