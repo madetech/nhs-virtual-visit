@@ -43,8 +43,8 @@ const AddATrustSuccess = ({ error, name }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyAdminToken(async ({ container, query }) => {
-    const getRetrieveOrganizationById = container.getRetrieveOrganizationById();
-    const { organization, error } = await getRetrieveOrganizationById(query.id);
+    const getRetrieveOrganisationById = container.getRetrieveOrganisationById();
+    const { organisation, error } = await getRetrieveOrganisationById(query.id);
 
     if (error) {
       return { props: { error: error } };
@@ -52,7 +52,7 @@ export const getServerSideProps = propsWithContainer(
       return {
         props: {
           error: error,
-          name: organization.name,
+          name: organisation.name,
         },
       };
     }

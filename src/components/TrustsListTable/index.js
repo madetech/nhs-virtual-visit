@@ -10,8 +10,8 @@ const TrustsTable = ({ trusts }) => (
           <th className="nhsuk-table__header" scope="col">
             Trust name
           </th>
-          <th className="nhsuk-table__header" scope="col" colSpan="2">
-            <span className="nhsuk-u-visually-hidden">Actions</span>
+          <th className="nhsuk-table__header" scope="col">
+            Status
           </th>
           <th className="nhsuk-table__header" scope="col" colSpan="2">
             <span className="nhsuk-u-visually-hidden">Actions</span>
@@ -30,14 +30,8 @@ const TrustsTable = ({ trusts }) => (
             >
               <td className="nhsuk-table__cell">{trust.name}</td>
 
-              <td className="nhsuk-table__cell" style={{ textAlign: "right" }}>
-                <AnchorLink
-                  href="/admin/trusts/[id]"
-                  as={`/admin/trusts/${trust.id}`}
-                >
-                  View
-                  <span className="nhsuk-u-visually-hidden"> {trust.name}</span>
-                </AnchorLink>
+              <td className="nhsuk-table__cell">
+                {trust.status == 0 ? "Disabled" : "Enabled"}
               </td>
               <td className="nhsuk-table__cell" style={{ textAlign: "center" }}>
                 <AnchorLink

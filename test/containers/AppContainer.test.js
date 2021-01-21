@@ -281,4 +281,8 @@ describe("AppContainer", () => {
   it("returns getRetrieveVisitByIdGateway", () => {
     expect(container.getRetrieveVisitByIdGateway()).toBeDefined();
   });
+
+  it("returns getRetrieveOrganizations", () => {
+    expect(container.getRetrieveOrganizations()).toBeDefined();
+  });
 });

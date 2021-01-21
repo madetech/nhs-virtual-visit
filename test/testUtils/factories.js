@@ -11,8 +11,8 @@ export const setupTrust = async (args = {}) => {
   });
 };
 
-export const setupOrganization = async (args = {}) => {
-  return await container.getCreateOrganizationGateway()({
+export const setupOrganisation = async (args = {}) => {
+  return await container.getCreateOrganisationGateway()({
     name: "Test Trust",
     status: 0,
     ...args,
