@@ -19,7 +19,7 @@ describe("trust-admin/managers/[uuid]/edit", () => {
     await getServerSideProps({ req: anonymousReq, res });
     // Assert
     expect(res.writeHead).toHaveBeenCalledWith(302, {
-      Location: "/trust-admin/login",
+      Location: "/login",
     });
   });
   it("retrieves trust, manager and error (from props) if authenticated", async () => {

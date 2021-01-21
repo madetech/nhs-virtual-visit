@@ -51,7 +51,7 @@ describe("/trust-admin/wards/[id]/edit", () => {
       await getServerSideProps({ req: anonymousReq, res });
       // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/trust-admin/login",
+        Location: "/login",
       });
     });
     describe("with wardId parameter", () => {

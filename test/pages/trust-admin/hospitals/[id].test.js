@@ -27,7 +27,7 @@ describe("trust-admin/hospitals/[id]", () => {
       await getServerSideProps({ req: anonymousReq, res });
       // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/trust-admin/login",
+        Location: "/login",
       });
     });
 

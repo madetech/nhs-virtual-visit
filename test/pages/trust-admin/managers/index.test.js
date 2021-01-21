@@ -21,7 +21,7 @@ describe("trust-admin/managers", () => {
 
     // Assert
     expect(res.writeHead).toHaveBeenCalledWith(302, {
-      Location: "/trust-admin/login",
+      Location: "/login",
     });
   });
 

@@ -19,7 +19,7 @@ describe("/trust-admin/wards/archive-success", () => {
       await getServerSideProps({ req: anonymousReq, res });
       // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/trust-admin/login",
+        Location: "/login",
       });
     });
     it("returns hospitals, hospitalId, organisation and error through props", async () => {

@@ -20,7 +20,7 @@ describe("/trust-admin/wards/[id]/archive-confirmation", () => {
       await getServerSideProps({ req: anonymousReq, res });
       // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/trust-admin/login",
+        Location: "/login",
       });
     });
     it("returns error, id, name hospitalName organisation and hospitalId as props", async () => {

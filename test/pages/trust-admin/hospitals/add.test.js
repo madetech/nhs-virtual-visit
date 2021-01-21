@@ -20,7 +20,7 @@ describe("/trust-admin/hospitals/add", () => {
       await getServerSideProps({ req: anonymousReq, res });
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/trust-admin/login",
+        Location: "/login",
       });
     });
     it("returns an organisation and error prop", async () => {
