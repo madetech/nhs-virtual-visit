@@ -15,8 +15,8 @@ describe("retrieveAverageVisitsPerDay", () => {
 
   it("returns an error if a trustId is not provided", async () => {
     const container = {
-      async getDb() {
-        return { any: dbAnySpy };
+      getRetrieveAverageVisitsPerDayGateway() {
+        return dbAnySpy;
       },
     };
 
@@ -27,20 +27,24 @@ describe("retrieveAverageVisitsPerDay", () => {
 
   it("retrieves events from the database with the trustId", async () => {
     const container = {
-      async getDb() {
-        return { any: dbAnySpy };
+      getRetrieveAverageVisitsPerDayGateway() {
+        return dbAnySpy;
       },
     };
 
-    await retrieveAverageVisitsPerDayByTrustId(container)(trustId);
+    const date = new Date();
 
-    expect(dbAnySpy).toHaveBeenCalledWith(expect.anything(), trustId);
+    await retrieveAverageVisitsPerDayByTrustId(container)(trustId, date);
+
+    expect(dbAnySpy).toHaveBeenCalledWith(trustId, date);
   });
 
   it("returns the average number of participants in a visit", async () => {
     const container = {
-      async getDb() {
-        return { any: dbAnySpy };
+      getRetrieveAverageVisitsPerDayGateway() {
+        return async () => {
+          return 2;
+        };
       },
     };
 

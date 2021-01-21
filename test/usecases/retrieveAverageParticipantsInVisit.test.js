@@ -3,18 +3,17 @@ import retrieveAverageParticipantsInVisit from "../../src/usecases/retrieveAvera
 describe("retrieveAverageParticipantsInVisit", () => {
   const trustId = 1;
 
-  let dbAnySpy;
+  let gwAnySpy;
 
   beforeEach(() => {
-    dbAnySpy = jest.fn().mockResolvedValue([{ average_participants: "3.5" }]);
+    gwAnySpy = jest.fn().mockResolvedValue({
+      averageParticipantsInVisit: 3.5,
+      error: null,
+    });
   });
 
   it("returns an error if a trustId is not provided", async () => {
-    const container = {
-      async getDb() {
-        return { any: dbAnySpy };
-      },
-    };
+    const container = {};
 
     const { error } = await retrieveAverageParticipantsInVisit(container)();
 
@@ -23,21 +22,17 @@ describe("retrieveAverageParticipantsInVisit", () => {
 
   it("retrieves events from the database with the trustId", async () => {
     const container = {
-      async getDb() {
-        return { any: dbAnySpy };
-      },
+      getRetrieveAverageParticipantsInVisitGateway: () => gwAnySpy,
     };
 
     await retrieveAverageParticipantsInVisit(container)(trustId);
 
-    expect(dbAnySpy).toHaveBeenCalledWith(expect.anything(), trustId);
+    expect(gwAnySpy).toHaveBeenCalledWith(trustId);
   });
 
   it("returns the average number of participants in a visit", async () => {
     const container = {
-      async getDb() {
-        return { any: dbAnySpy };
-      },
+      getRetrieveAverageParticipantsInVisitGateway: () => gwAnySpy,
     };
 
     const {

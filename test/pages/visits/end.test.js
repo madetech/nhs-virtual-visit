@@ -10,22 +10,6 @@ describe("end", () => {
 
       expect(text).toBeInTheDocument();
     });
-
-    it("renders the support section if there is a support link", () => {
-      const { getByText } = render(
-        <EndOfVisit supportUrl="https://www.support.example.com" />
-      );
-      const text = getByText(/Get support from this hospital/i);
-
-      expect(text).toBeInTheDocument();
-    });
-
-    it("does not render the support section if there is no support link", () => {
-      const { queryByText } = render(<EndOfVisit supportUrl={null} />);
-      const text = queryByText(/Get support from this hospital/i);
-
-      expect(text).toBeNull();
-    });
   });
 
   describe("for a staff member", () => {
@@ -75,13 +59,7 @@ describe("end", () => {
 
     const callId = "TEST123";
     const query = { callId };
-    const supportUrl = "https://www.support.example.com";
     const urQuestionUrl = "https://www.support.example.com";
-
-    const retrieveSupportUrlByCallId = jest.fn().mockResolvedValue({
-      supportUrl,
-      error: null,
-    });
 
     const retrieveUrQuestionUrl = jest.fn().mockResolvedValue({
       urQuestionUrl,
@@ -91,7 +69,6 @@ describe("end", () => {
     const container = {
       getUserIsAuthenticated: () =>
         jest.fn().mockResolvedValue({ ward: "test-ward-id" }),
-      getRetrieveSupportUrlByCallId: () => retrieveSupportUrlByCallId,
       getRetrieveUrQuestionUrl: () => retrieveUrQuestionUrl,
     };
 
@@ -118,12 +95,6 @@ describe("end", () => {
       });
 
       expect(props.wardId).toBeNull();
-    });
-
-    it("retrieves the support link of the hospital", async () => {
-      const { props } = await getServerSideProps({ req, container, query });
-
-      expect(props.supportUrl).toEqual(supportUrl);
     });
   });
 });
