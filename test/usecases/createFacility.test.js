@@ -26,13 +26,14 @@ describe("createFacility", () => {
   });
 
   it("returns error response when createFacilityGateway throws an error.", async () => {
+    // Arrange
     container.getCreateFacilityGateway = () =>
       jest.fn(async () => {
         throw new Error("error");
       });
-
+    // Act
     const { facilityId, error } = await createFacility(container)(requestObj);
-
+    // Assert
     expect(error).toEqual("There was an error creating a facility.");
     expect(facilityId).toBeNull();
   });
@@ -42,7 +43,7 @@ describe("createFacility", () => {
       ...requestObj,
       name: undefined,
     });
-
+    // Assert
     expect(error).toEqual("name must be provided.");
     expect(facilityId).toBeUndefined();
   });
@@ -53,7 +54,7 @@ describe("createFacility", () => {
       ...requestObj,
       code: undefined,
     });
-
+    // Assert
     expect(error).toEqual("facility code must be provided.");
     expect(facilityId).toBeUndefined();
   });
@@ -64,7 +65,7 @@ describe("createFacility", () => {
       ...requestObj,
       orgId: undefined,
     });
-
+    // Assert
     expect(error).toEqual("organisation id must be provided.");
     expect(facilityId).toBeUndefined();
   });
