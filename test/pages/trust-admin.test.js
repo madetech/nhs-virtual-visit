@@ -49,8 +49,8 @@ describe("trust-admin", () => {
     error: null,
   }));
 
-  const retrieveTrustByIdSpy = jest.fn(async () => ({
-    trust: { name: "Doggo Trust" },
+  const retrieveOrganisationByIdSpy = jest.fn(async () => ({
+    organisation: { name: "Doggo Trust" },
     error: null,
   }));
 
@@ -88,7 +88,7 @@ describe("trust-admin", () => {
 
   const container = {
     getRetrieveWards: () => getRetrieveWardsSpy,
-    getRetrieveTrustById: () => retrieveTrustByIdSpy,
+    getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
     getRetrieveHospitalsByTrustId: () => retrieveHospitalsByTrustId,
     getRetrieveWardVisitTotals: () => retrieveWardVisitTotalsSpy,
     getRetrieveHospitalVisitTotals: () => retrieveHospitalVisitTotals,
@@ -224,13 +224,13 @@ describe("trust-admin", () => {
         container,
       });
 
-      expect(retrieveTrustByIdSpy).toHaveBeenCalledWith(trustId);
-      expect(props.trust).toEqual({ name: "Doggo Trust" });
+      expect(retrieveOrganisationByIdSpy).toHaveBeenCalledWith(trustId);
+      expect(props.organisation).toEqual({ name: "Doggo Trust" });
       expect(props.error).toBeNull();
     });
 
     it("sets an error in props if trust error", async () => {
-      const retrieveTrustByIdSpyError = jest.fn(async () => ({
+      const retrieveOrgByIdSpyError = jest.fn(async () => ({
         trust: null,
         error: "Error!",
       }));
@@ -239,7 +239,7 @@ describe("trust-admin", () => {
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveTrustById: () => retrieveTrustByIdSpyError,
+          getRetrieveOrganisationById: () => retrieveOrgByIdSpyError,
         }),
       });
 
