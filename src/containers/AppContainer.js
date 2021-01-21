@@ -59,6 +59,7 @@ import deleteOrganisation from "../usecases/deleteOrganisation";
 import updateLinkStatusByHash from "../usecases/updateLinkStatusByHash";
 import retrieveManagerByEmail from "../usecases/retrieveManagerByEmail";
 import retrieveFacilitiesByOrgId from "../usecases/retrieveFacilitiesByOrgId";
+import createFacility from "../usecases/createFacility";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -82,6 +83,8 @@ import updateLinkStatusByHashGateway from "../gateways/MsSQL/updateLinkStatusByH
 import retrieveManagerByEmailGateway from "../gateways/MsSQL/retrieveManagerByEmail";
 
 import retrieveFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveFacilitiesByOrgId";
+import createFacilityGateway from "../gateways/MsSQL/createFacility";
+
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
 import insertVisit from "../gateways/PostgreSQL/insertVisit";
@@ -227,6 +230,10 @@ class AppContainer {
 
   getCreateHospital = () => {
     return createHospital(this);
+  };
+
+  getCreateFacility = () => {
+    return createFacility(this);
   };
 
   getUpdateHospital = () => {
@@ -646,6 +653,9 @@ class AppContainer {
   
   getRetrieveFacilitiesByOrgIdGW = () => {
     return retrieveFacilitiesByOrgIdGW(this);
+  };
+  getCreateFacilityGateway = () => {
+    return createFacilityGateway(this);
   };
 }
 
