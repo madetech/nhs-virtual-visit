@@ -10,7 +10,7 @@ import EditHospitalForm from "../../../src/components/EditHospitalForm";
 import ErrorSummary from "../../../src/components/ErrorSummary";
 import TrustAdminHeading from "../../../src/components/TrustAdminHeading";
 
-const AddAHospital = ({ organisation, error }) => {
+const AddAHospital = ({ organisation, error, userId }) => {
   if (error) {
     return <Error />;
   }
@@ -31,9 +31,10 @@ const AddAHospital = ({ organisation, error }) => {
   };
 
   const submit = async (payload) => {
-    payload.trustId = organisation.id;
+    payload.orgId = organisation.id;
+    payload.userId = userId;
     try {
-      const response = await fetch("/api/create-hospital", {
+      const response = await fetch("/api/create-facility", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -49,7 +50,7 @@ const AddAHospital = ({ organisation, error }) => {
 
       Router.push(
         "/trust-admin/hospitals/[id]/add-success",
-        `/trust-admin/hospitals/${json.hospitalId}/add-success`
+        `/trust-admin/hospitals/${json.facilityId}/add-success`
       );
 
       return true;
@@ -96,11 +97,12 @@ export const getServerSideProps = propsWithContainer(
     } = await container.getRetrieveOrganisationById()(
       authenticationToken.trustId
     );
+    console.log(`user_id is ${authenticationToken.userId}`);
     return {
       props: {
         error: organisationError,
-        // trustId,
         organisation,
+        userId: authenticationToken.userId,
       },
     };
   })
