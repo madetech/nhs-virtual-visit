@@ -7,7 +7,7 @@ describe("createFacility", () => {
     name: "Test 1 Hospital",
     orgId: 10,
     code: "TH1",
-    userId: 5,
+    createdBy: 5,
   };
   const getConnectionPoolMock = mockMssql.getConnectionPool;
 
@@ -46,12 +46,12 @@ describe("createFacility", () => {
     );
     expect(container.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
       4,
-      "userId",
+      "createdBy",
       expect.anything(),
-      expectedArgs.userId
+      expectedArgs.createdBy
     );
     expect(container.getMsSqlConnPool().query).toHaveBeenCalledWith(
-      "INSERT INTO dbo.[facility] ([name], [organisation_id], [code], [created_by]) OUTPUT inserted.id VALUES (@name, @orgId, @code, @userId)"
+      "INSERT INTO dbo.[facility] ([name], [organisation_id], [code], [created_by]) OUTPUT inserted.id VALUES (@name, @orgId, @code, @createdBy)"
     );
   });
   it("throws an error if db is undefined", async () => {
@@ -65,7 +65,7 @@ describe("createFacility", () => {
     ).rejects.toThrow();
   });
 
-  it("throws an error if user id is undefined", async () => {
+  it("throws an error if createdBy is undefined", async () => {
     // Arrange
     getConnectionPoolMock().query.mockImplementationOnce(() =>
       Promise.resolve({
@@ -78,7 +78,10 @@ describe("createFacility", () => {
     // Act && Assert
     expect(
       async () =>
-        await createFacility(container)({ ...expectedArgs, userId: undefined })
+        await createFacility(container)({
+          ...expectedArgs,
+          createdBy: undefined,
+        })
     ).rejects.toThrow();
   });
   it("throws an error if name is undefined", async () => {
