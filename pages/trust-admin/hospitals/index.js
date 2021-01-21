@@ -42,31 +42,32 @@ export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, authenticationToken }) => {
     const orgId = authenticationToken.trustId;
     const {
-      hospitals,
-      error: hospitalsError,
-    } = await container.getRetrieveHospitalsByTrustId()(orgId, {
-      withWards: true,
-    });
-    const {
       organisation,
       error: organisationError,
     } = await container.getRetrieveOrganisationById()(orgId);
+    const {
+      facilities,
+      error: facilitiesError,
+    } = await container.getRetrieveFacilitiesByOrgId()(orgId, {
+      withWards: true,
+    });
+
     const {
       hospitals: hospitalVisitTotals,
       error: hospitalsVisitTotalError,
     } = await container.getRetrieveHospitalVisitTotals()(orgId);
 
-    const hospitalsWithVisitTotals = hospitals?.map((hospital) => {
-      hospital.bookedVisits =
-        hospitalVisitTotals.find(({ id }) => id === hospital.id)?.totalVisits ||
+    const facilitiesWithVisitTotals = facilities?.map((facility) => {
+      facility.bookedVisits =
+        hospitalVisitTotals.find(({ id }) => id === facility.id)?.totalVisits ||
         0;
-      return hospital;
+      return facility;
     });
     return {
       props: {
-        hospitals: hospitalsWithVisitTotals || null,
+        hospitals: facilitiesWithVisitTotals || null,
         organisation,
-        error: organisationError || hospitalsError || hospitalsVisitTotalError,
+        error: organisationError || facilitiesError || hospitalsVisitTotalError,
       },
     };
   })

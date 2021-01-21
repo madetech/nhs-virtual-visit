@@ -58,6 +58,7 @@ import retrieveActiveOrganisations from "../usecases/retrieveActiveOrganisations
 import deleteOrganisation from "../usecases/deleteOrganisation";
 import updateLinkStatusByHash from "../usecases/updateLinkStatusByHash";
 import retrieveManagerByEmail from "../usecases/retrieveManagerByEmail";
+import retrieveFacilitiesByOrgId from "../usecases/retrieveFacilitiesByOrgId";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -80,6 +81,7 @@ import verifySignUpLinkGateway from "../gateways/MsSQL/verifySignUpLink";
 import updateLinkStatusByHashGateway from "../gateways/MsSQL/updateLinkStatusByHash";
 import retrieveManagerByEmailGateway from "../gateways/MsSQL/retrieveManagerByEmail";
 
+import retrieveFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveFacilitiesByOrgId";
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
 import insertVisit from "../gateways/PostgreSQL/insertVisit";
@@ -233,6 +235,10 @@ class AppContainer {
 
   getRetrieveHospitalsByTrustId = () => {
     return retrieveHospitalsByTrustId(this);
+  };
+
+  getRetrieveFacilitiesByOrgId = () => {
+    return retrieveFacilitiesByOrgId(this);
   };
 
   getRetrieveTrustById = () => {
@@ -636,6 +642,10 @@ class AppContainer {
 
   getRetrieveManagerByEmailGateway = () => {
     return retrieveManagerByEmailGateway(this);
+  };
+  
+  getRetrieveFacilitiesByOrgIdGW = () => {
+    return retrieveFacilitiesByOrgIdGW(this);
   };
 }
 
