@@ -1,5 +1,10 @@
 import mssql from "mssql";
-export default ({ getMsSqlConnPool }) => async (name, orgId, code, userId) => {
+export default ({ getMsSqlConnPool }) => async ({
+  name,
+  orgId,
+  code,
+  userId,
+}) => {
   const db = await getMsSqlConnPool();
   const res = await db
     .request()
