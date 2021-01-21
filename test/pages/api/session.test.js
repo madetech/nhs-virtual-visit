@@ -249,7 +249,7 @@ describe("api/session", () => {
           wardId: undefined,
           wardCode: undefined,
           trustId: 1,
-          type: "trustAdmin",
+          type: "trustManager",
         });
         expect(response.writeHead).toHaveBeenCalledWith(
           201,

@@ -111,7 +111,6 @@ import retrieveVisitsGateway from "../gateways/PostgreSQL/retrieveVisits";
 import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/PostgreSQL/retrieveWardVisitTotalsStartDateByTrustId";
 import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
-import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
 import verifySignUpLink from "../usecases/verifySignUpLink";
 import updateManagerStatus from "../usecases/updateManagerStatus";
 import updateManagerStatusGateway from "../gateways/MsSQL/updateManagerStatus";
@@ -483,7 +482,7 @@ class AppContainer {
   getRetrieveOrganisationByIdGateway = () => {
     return retrieveOrganisationByIdGateway(this);
   };
-  
+
   getCreateManager = () => {
     return createManager(this);
   };
@@ -557,15 +556,11 @@ class AppContainer {
   getArchiveManagerByUuidGateway = () => {
     return archiveManagerByUuidGateway(this);
   };
-  
-  getRetrieveEmail = () => {
-    return retrieveEmail;
-  };
 
   getResetPassword = () => {
     return resetPassword;
   };
-  
+
   getInsertManagerGateway = () => {
     return insertManager(this);
   };
