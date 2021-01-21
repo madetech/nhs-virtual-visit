@@ -4,6 +4,8 @@ import { setupOrganization } from "../../../test/testUtils/factories";
 describe("retrieveOrganizationById", () => {
   it("returns an object containing the organization", async () => {
     const { organizationId } = await setupOrganization();
+    console.log("*******OrganizationID*");
+    console.log(organizationId);
 
     const { organization, error } = await retrieveOrganizationById(
       organizationId

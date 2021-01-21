@@ -19,6 +19,7 @@ describe("retrieveOrganisationsGateway", () => {
               status: 1,
             },
           ],
+          rowsAffected: [1],
         }),
       };
     });
