@@ -54,6 +54,7 @@ import retrieveManagerByUuid from "../usecases/retrieveManagerByUuid";
 import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
 import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
 import retrieveOrganisationById from "../usecases/retrieveOrganisationById";
+import retrieveActiveOrganisations from "../usecases/retrieveActiveOrganisations";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -66,6 +67,9 @@ import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersBy
 import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
 import archiveManagerByUuidGateway from "../gateways/MsSQL/archiveManagerByUuid";
 import retrieveOrganisationByIdGateway from "../gateways/MsSQL/retrieveOrganisationById";
+import createOrganisationGateway from "../gateways/MsSQL/createOrganisation";
+import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActiveOrganisations";
+import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -94,11 +98,6 @@ import retrieveHospitalsByTrustIdGW from "../gateways/PostgreSQL/retrieveHospita
 import insertHospitalGW from "../gateways/PostgreSQL/insertHospital";
 import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
 import createOrganisationGW from "../gateways/PostgreSQL/createOrganization";
-import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
-import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
-import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
-import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
-import archiveManagerByUuidGateway from "../gateways/MsSQL/archiveManagerByUuid";
 import retrieveWardVisitTotalsGateway from "../gateways/PostgreSQL/retrieveWardVisitTotals";
 import retrieveHospitalWardVisitTotalsGateway from "../gateways/PostgreSQL/retrieveHospitalWardVisitTotals";
 import retrieveAverageVisitTimeByTrustIdGateway from "../gateways/PostgreSQL/retrieveAverageVisitTimeByTrustId";
@@ -109,12 +108,6 @@ import retrieveVisitsGateway from "../gateways/PostgreSQL/retrieveVisits";
 import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/PostgreSQL/retrieveWardVisitTotalsStartDateByTrustId";
 import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
-import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
-import retrieveActiveOrganisations from "../usecases/retrieveActiveOrganisations";
-import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActiveOrganisations";
-import retrieveOrganisationById from "../usecases/retrieveOrganisationById";
-import retrieveOrganisationByIdGateway from "../gateways/MsSQL/retrieveOrganisationById";
-import createOrganisationGateway from "../gateways/MsSQL/createOrganisation";
 
 class AppContainer {
   getDb = () => {
