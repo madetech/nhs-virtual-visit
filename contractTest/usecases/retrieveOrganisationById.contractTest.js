@@ -16,6 +16,7 @@ describe("retrieveOrganisation usecase contract tests", () => {
     } = await container.getRetrieveOrganisationById()(id);
     // Assert
     expect(organisation).toEqual({
+      id: id,
       name: "Test Trust",
       uuid: organisation.uuid,
     });
