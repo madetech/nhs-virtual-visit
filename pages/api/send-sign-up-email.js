@@ -57,6 +57,7 @@ export default withContainer(
     }
 
     const id = user.id;
+    const hash = verifyUser.hash;
     const sendEmail = container.getSendEmail();
     const signUpEmailTemplateId = TemplateStore().signUpEmail.templateId;
     const expirationTime = "48h";
@@ -65,6 +66,7 @@ export default withContainer(
     const { link, linkError } = createTimeSensitiveLink(
       headers,
       id,
+      hash,
       expirationTime,
       urlPath
     );
