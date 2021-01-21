@@ -64,20 +64,19 @@ describe("trust-admin/managers", () => {
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
     // Act
-    const { props } = await getServerSideProps({
+    const {
+      props: { managers, organisation, error },
+    } = await getServerSideProps({
       req: authenticatedReq,
       res,
       container,
     });
-    const actualManagerArray = props.managers;
-    const actualOrganisation = props.organisation;
-    const error = props.error;
     // Assert
     expect(retrieveOrganisationByIdSuccessStub).toHaveBeenCalledWith(orgId);
-    expect(actualOrganisation.name).toEqual(expectedOrganisationName);
+    expect(organisation.name).toEqual(expectedOrganisationName);
     expect(retrieveManagersByOrgIdSuccessSpy).toHaveBeenCalledWith(orgId);
-    expect(actualManagerArray.length).toEqual(2);
-    actualManagerArray.forEach((manager, idx) =>
+    expect(managers.length).toEqual(2);
+    managers.forEach((manager, idx) =>
       expect(manager).toEqual(expectedManagersArray[idx])
     );
     expect(error).toBeNull();
