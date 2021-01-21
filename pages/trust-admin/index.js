@@ -177,8 +177,7 @@ export const getServerSideProps = propsWithContainer(
     } = await container.getRetrieveFacilitiesByOrgId()(
       authenticationToken.trustId
     );
-    console.log("****facilities****");
-    console.log(facilities);
+
     const {
       organisation,
       error: organisationError,
