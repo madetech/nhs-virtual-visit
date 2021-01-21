@@ -3,6 +3,20 @@ const createOrganisation = ({ getCreateOrganisationGateway }) => async ({
   type,
   createdBy,
 }) => {
+  if (!name) {
+    return {
+      organisationId: null,
+      error: "name is not defined",
+    };
+  }
+
+  if (!type) {
+    return {
+      organisationId: null,
+      error: "type is not defined",
+    };
+  }
+
   const { organisation, error } = await getCreateOrganisationGateway()({
     name,
     type,
