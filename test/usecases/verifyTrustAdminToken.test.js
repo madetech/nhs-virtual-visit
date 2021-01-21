@@ -48,7 +48,7 @@ describe("verifyTrustAdminToken", () => {
 
     verifyTrustAdminToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
-      Location: "/trust-admin/login",
+      Location: "/login",
     });
   });
 
@@ -64,7 +64,7 @@ describe("verifyTrustAdminToken", () => {
 
     verifyTrustAdminToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
-      Location: "/trust-admin/login",
+      Location: "/login",
     });
   });
 
