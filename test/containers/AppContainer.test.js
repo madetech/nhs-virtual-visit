@@ -284,6 +284,8 @@ describe("AppContainer", () => {
 
   it("returns getRetrieveOrganizations", () => {
     expect(container.getRetrieveOrganizations()).toBeDefined();
+  });
+
   it("returns getRetrieveOrganisationById", () => {
     expect(container.getRetrieveOrganisationById()).toBeDefined();
   });

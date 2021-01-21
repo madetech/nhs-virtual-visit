@@ -36,7 +36,11 @@ describe("retrieveOrganisationsGateway", () => {
     expect(organisation.type).toEqual("type");
     expect(organisation.uuid).toEqual("uuid");
     expect(organisation.status).toEqual(1);
-    expect(inputSpy).toHaveBeenCalledWith("organisationId", 3);
+    expect(inputSpy).toHaveBeenCalledWith(
+      "organisationId",
+      expect.anything(),
+      3
+    );
   });
 
   it("returns an error if there is a problem with the database call", async () => {
