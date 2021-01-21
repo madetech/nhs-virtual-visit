@@ -171,10 +171,14 @@ export const getServerSideProps = propsWithContainer(
     const { wards, error: wardError } = await container.getRetrieveWards()(
       authenticationToken.trustId
     );
-    const hospitalsResponse = await container.getRetrieveHospitalsByTrustId()(
+    const {
+      facilities,
+      error: facilitiesError,
+    } = await container.getRetrieveFacilitiesByOrgId()(
       authenticationToken.trustId
     );
-
+    console.log("****facilities****");
+    console.log(facilities);
     const {
       organisation,
       error: organisationError,
@@ -223,6 +227,7 @@ export const getServerSideProps = propsWithContainer(
 
     const error =
       wardError ||
+      facilitiesError ||
       averageParticipantsInVisitError ||
       wardVisitTotalsStartDateError ||
       reportingStartDateError ||
@@ -233,7 +238,7 @@ export const getServerSideProps = propsWithContainer(
     return {
       props: {
         wards: wards,
-        hospitals: hospitalsResponse.hospitals,
+        hospitals: facilities,
         leastVisited: retrieveHospitalVisitTotals.leastVisited,
         mostVisited: retrieveHospitalVisitTotals.mostVisited,
         organisation,

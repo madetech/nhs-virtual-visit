@@ -55,6 +55,7 @@ import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
 import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
 import retrieveOrganisationById from "../usecases/retrieveOrganisationById";
 import retrieveActiveOrganisations from "../usecases/retrieveActiveOrganisations";
+import retrieveFacilitiesByOrgId from "../usecases/retrieveFacilitiesByOrgId";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -70,7 +71,7 @@ import retrieveOrganisationByIdGateway from "../gateways/MsSQL/retrieveOrganisat
 import createOrganisationGateway from "../gateways/MsSQL/createOrganisation";
 import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActiveOrganisations";
 import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
-
+import retrieveFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveFacilitiesByOrgId";
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
 import insertVisit from "../gateways/PostgreSQL/insertVisit";
@@ -215,6 +216,10 @@ class AppContainer {
 
   getRetrieveHospitalsByTrustId = () => {
     return retrieveHospitalsByTrustId(this);
+  };
+
+  getRetrieveFacilitiesByOrgId = () => {
+    return retrieveFacilitiesByOrgId(this);
   };
 
   getRetrieveTrustById = () => {
@@ -534,6 +539,10 @@ class AppContainer {
 
   getArchiveManagerByUuidGateway = () => {
     return archiveManagerByUuidGateway(this);
+  };
+
+  getRetrieveFacilitiesByOrgIdGW = () => {
+    return retrieveFacilitiesByOrgIdGW(this);
   };
 }
 
