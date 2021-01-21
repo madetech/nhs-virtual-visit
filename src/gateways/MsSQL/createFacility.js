@@ -15,7 +15,5 @@ export default ({ getMsSqlConnPool }) => async ({
     .query(
       "INSERT INTO dbo.[facility] ([name], [organisation_id], [code], [created_by]) OUTPUT inserted.id VALUES (@name, @orgId, @code, @userId)"
     );
-  console.log("***CREATEFacility");
-  console.log(res.recordset);
   return res.recordset[0].id;
 };
