@@ -6,7 +6,8 @@ jest.mock("../../src/providers/TokenProvider");
 describe("createTimeSensitiveLink", () => {
   it("returns a link with a time sensitive token", () => {
     const headers = { host: "rootUrl" };
-    const id = "UUID";
+    const id = 1;
+    const hash = "hashedUuid";
     const expirationTime = "2h";
     const urlPath = "urlPath";
     const hashedPassword = "hashedPassword";
@@ -18,6 +19,7 @@ describe("createTimeSensitiveLink", () => {
     const { link, linkError } = createTimeSensitiveLink(
       headers,
       id,
+      hash,
       expirationTime,
       urlPath,
       hashedPassword
@@ -50,6 +52,6 @@ describe("createTimeSensitiveLink", () => {
     );
 
     expect(linkError.message).toBe("Error");
-    expect(link).toEqual("");
+    expect(link).toBeNull();
   });
 });

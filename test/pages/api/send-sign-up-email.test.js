@@ -47,7 +47,12 @@ describe("send-reset-password-email", () => {
         return { success: true, error: null };
       }),
       getAddToUserVerificationTable: jest.fn().mockReturnValue(() => {
-        return { error: null };
+        return {
+          verifyUser: {
+            hash: "hashedUuid",
+          },
+          error: null,
+        };
       }),
     };
     createTimeSensitiveLink.mockReturnValue({
