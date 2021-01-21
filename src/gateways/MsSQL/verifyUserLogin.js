@@ -34,7 +34,6 @@ const verifyUserLogin = async (email, password) => {
 
     if (dbResponse.recordset.length > 0) {
       const user = dbResponse.recordset[0];
-      console.log(user);
       if (!bcrypt.compareSync(password, user.password))
         return {
           validUser: false,
