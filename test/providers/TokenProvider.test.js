@@ -9,6 +9,7 @@ describe("TokenProvider", () => {
       ward: "123",
       trustId: 2,
       type: "wardStaff",
+      userId: undefined,
     });
 
     const tokenProvider = new TokenProvider();
@@ -25,6 +26,7 @@ describe("TokenProvider", () => {
       ward: "123",
       trustId: 2,
       type: "wardStaff",
+      userId: undefined,
     });
 
     const tokenProvider = new TokenProvider();
