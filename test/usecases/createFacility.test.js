@@ -8,7 +8,7 @@ describe("createFacility", () => {
     name: "Defoe Hospital",
     orgId: 2,
     code: "DFH",
-    userId: 10,
+    createdBy: 10,
   };
   beforeEach(() => {
     container = {
