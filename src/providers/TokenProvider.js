@@ -37,8 +37,8 @@ class TokenProvider {
     return decryptedToken;
   }
 
-  generateTokenForLink(id, expirationTime, secret) {
-    let tokenObj = { id, version };
+  generateTokenForLink(id, hash, expirationTime, secret) {
+    let tokenObj = { id, hash, version };
 
     if (secret !== this.signingKey) {
       tokenObj = { ...tokenObj, hashedPassword: secret };
