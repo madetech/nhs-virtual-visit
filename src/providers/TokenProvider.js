@@ -7,7 +7,8 @@ class TokenProvider {
     this.signingKey = signingKey;
   }
 
-  generate({ wardId, wardCode, trustId, type }) {
+  generate({ wardId, wardCode, trustId, type, userId }) {
+    console.log(userId);
     return jwt.sign(
       // If updating the token structure, update the version
       {
@@ -16,6 +17,7 @@ class TokenProvider {
         trustId,
         version,
         type,
+        userId,
       },
       this.signingKey,
       {

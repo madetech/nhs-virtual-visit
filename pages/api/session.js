@@ -19,7 +19,7 @@ export default withContainer(async (req, res, { container }) => {
 
     const verifyUserLogin = container.getVerifyUserLogin();
     const verifyUserLoginResponse = await verifyUserLogin(code, password);
-
+    console.log(verifyUserLoginResponse);
     if (
       !verifyUserLoginResponse.validUser &&
       !verifyWardCodeResponse.validWardCode
@@ -40,6 +40,7 @@ export default withContainer(async (req, res, { container }) => {
 
     if (trustManager) {
       token = tokens.generate({
+        userId: verifyUserLoginResponse.user_id,
         wardId: undefined,
         wardCode: undefined,
         trustId: verifyUserLoginResponse.trust_id,
@@ -47,6 +48,7 @@ export default withContainer(async (req, res, { container }) => {
       });
     } else if (admin) {
       token = tokens.generate({
+        userId: verifyUserLoginResponse.user_id,
         wardId: undefined,
         wardCode: undefined,
         trustId: undefined,
@@ -55,6 +57,7 @@ export default withContainer(async (req, res, { container }) => {
     } else {
       const { ward } = verifyWardCodeResponse;
       token = tokens.generate({
+        userId: undefined,
         wardId: ward.id,
         wardCode: ward.code,
         trustId: ward.trustId,
