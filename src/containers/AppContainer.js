@@ -331,12 +331,6 @@ class AppContainer {
     return retrieveOrganisationById(this);
   };
 
-  /**** TOCHECK: this is linked to a file in the gateway folder!! It is not a usecase! ****/
-  getRetrieveOrganizationById = () => {
-    return retrieveOrganizationById;
-  };
-  /**** TOCHECK: this is linked to a file in the gateway folder!! ****/
-
   /* These are the Gateway */
 
   getFindWardByCodeGateway = () => {
@@ -488,6 +482,10 @@ class AppContainer {
       process.env.AZURE_FUNCTION_KEY,
       process.env.AZURE_FUNCTION_URL
     );
+  };
+
+  getRetrieveOrganizationById = () => {
+    return retrieveOrganizationById;
   };
 
   /* These uses the MsSQL DB */
