@@ -2,8 +2,6 @@ import withContainer from "../../src/middleware/withContainer";
 import createTimeSensitiveLink from "../../src/helpers/createTimeSensitiveLink";
 import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
 import { validateHttpMethod } from "../../src/helpers/apiErrorHandler";
-import bcrypt from "bcryptjs";
-// import { v4 as uuidv4 } from "uuid";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -28,14 +26,10 @@ export default withContainer(
     }
     res.setHeader("Content-Type", "application/json");
 
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(body.password, salt);
-
     const managerObj = {
       email: body.email,
-      password: hashedPassword,
+      password: body.password,
       organisationId: body.organisationId,
-      type: "manager",
     };
     const createManager = container.getCreateManager();
     const { user, error } = await createManager(managerObj);
@@ -45,17 +39,6 @@ export default withContainer(
       res.end(JSON.stringify({ err: error }));
       return;
     }
-
-    // const userVerificationCode = uuidv4();
-    // const hashSalt = bcrypt.genSaltSync(10);
-    // const userVerificationHash = bcrypt.hashSync(userVerificationCode, hashSalt);
-
-    // const verificationObj = {
-    //   user_id: user.id,
-    //   code: userVerificationCode,
-    //   hash: userVerificationHash,
-    //   type: "confirmRegistration",
-    // };
 
     const addToUserVerificationTable = container.getAddToUserVerificationTable();
     const {
@@ -73,9 +56,6 @@ export default withContainer(
       return;
     }
 
-    // AT THIS POINT
-
-    const emailAddress = body.email;
     const id = user.id;
     const sendEmail = container.getSendEmail();
     const signUpEmailTemplateId = TemplateStore().signUpEmail.templateId;
@@ -97,6 +77,7 @@ export default withContainer(
       return;
     }
 
+    const emailAddress = body.email;
     const { error: emailError } = await sendEmail(
       signUpEmailTemplateId,
       emailAddress,
