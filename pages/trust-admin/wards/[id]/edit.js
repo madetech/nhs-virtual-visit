@@ -57,15 +57,15 @@ export const getServerSideProps = propsWithContainer(
     );
 
     const {
-      hospitals,
-      error: hospitalsError,
-    } = await container.getRetrieveHospitalsByTrustId()(orgId);
+      facilities,
+      error: facilitiesError,
+    } = await container.getRetrieveFacilitiesByOrgId()(orgId);
 
     return {
       props: {
-        error: organisationError || wardError || hospitalsError,
+        error: organisationError || wardError || facilitiesError,
         ward,
-        hospitals,
+        hospitals: facilities,
         organisation,
       },
     };

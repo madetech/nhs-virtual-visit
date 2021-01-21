@@ -46,17 +46,16 @@ export const getServerSideProps = propsWithContainer(
       organisation,
       error: organisationError,
     } = await container.getRetrieveOrganisationById()(orgId);
-    const retrieveHospitalsByTrustId = container.getRetrieveHospitalsByTrustId();
     const {
-      hospitals,
-      error: hospitalsError,
-    } = await retrieveHospitalsByTrustId(orgId);
+      facilities,
+      error: facilitiesError,
+    } = await container.getRetrieveFacilitiesByOrgId()(orgId);
     const hospitalId = query.hospitalId || null;
 
     return {
       props: {
-        error: organisationError || hospitalsError,
-        hospitals,
+        error: organisationError || facilitiesError,
+        hospitals: facilities,
         hospitalId,
         organisation,
       },
