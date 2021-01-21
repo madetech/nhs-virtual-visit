@@ -284,5 +284,11 @@ describe("AppContainer", () => {
 
   it("returns getRetrieveOrganizations", () => {
     expect(container.getRetrieveOrganizations()).toBeDefined();
+  it("returns getRetrieveOrganisationById", () => {
+    expect(container.getRetrieveOrganisationById()).toBeDefined();
+  });
+
+  it("returns getRetrieveOrganisationByIdGateway", () => {
+    expect(container.getRetrieveOrganisationByIdGateway()).toBeDefined();
   });
 });
