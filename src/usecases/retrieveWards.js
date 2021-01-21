@@ -1,41 +1,18 @@
 import logger from "../../logger";
 
-const retrieveWards = ({ getDb }) => async (trustId) => {
-  const db = await getDb();
+const retrieveWards = ({ getRetrieveActiveWardsByTrustIdGW }) => async (
+  trustId
+) => {
+  const retrieveActiveWardsByTrustIdGW = getRetrieveActiveWardsByTrustIdGW();
   try {
-    const wards = await db.any(
-      `SELECT
-        id as ward_id,
-        name as ward_name,
-        (
-          SELECT
-            name
-          FROM
-            hospitals
-          WHERE
-            wards.hospital_id = id
-            AND trust_id = $1
-        ) as hospital_name,
-        wards.code as ward_code
-      FROM
-        wards
-      WHERE
-        wards.trust_id = $1
-      AND
-        wards.archived_at IS NULL
-      ORDER BY
-        name ASC,
-        name ASC
-    `,
-      [trustId]
-    );
+    const wards = await retrieveActiveWardsByTrustIdGW(trustId);
 
     return {
-      wards: wards.map((ward) => ({
-        id: ward.ward_id,
-        name: ward.ward_name,
-        hospitalName: ward.hospital_name,
-        code: ward.ward_code,
+      wards: wards.map(({ wardId, wardName, hospitalName, wardCode }) => ({
+        id: wardId,
+        name: wardName,
+        hospitalName: hospitalName,
+        code: wardCode,
       })),
       error: null,
     };
