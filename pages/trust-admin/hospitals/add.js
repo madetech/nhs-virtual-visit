@@ -6,7 +6,7 @@ import Layout from "../../../src/components/Layout";
 import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
-import EditHospitalForm from "../../../src/components/EditHospitalForm";
+import HospitalForm from "../../../src/components/HospitalForm";
 import ErrorSummary from "../../../src/components/ErrorSummary";
 import TrustAdminHeading from "../../../src/components/TrustAdminHeading";
 
@@ -49,8 +49,8 @@ const AddAHospital = ({ organisation, error, userId }) => {
       }
 
       Router.push(
-        "/trust-admin/hospitals/[id]/add-success",
-        `/trust-admin/hospitals/${json.facilityId}/add-success`
+        "/trust-admin/hospitals/[uuid]/add-success",
+        `/trust-admin/hospitals/${json.uuid}/add-success`
       );
 
       return true;
@@ -77,11 +77,7 @@ const AddAHospital = ({ organisation, error, userId }) => {
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <EditHospitalForm
-            errors={errors}
-            setErrors={setErrors}
-            submit={submit}
-          />
+          <HospitalForm errors={errors} setErrors={setErrors} submit={submit} />
         </GridColumn>
       </GridRow>
     </Layout>
@@ -90,14 +86,13 @@ const AddAHospital = ({ organisation, error, userId }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ authenticationToken, container }) => {
-    // const trustId = authenticationToken.trustId;
     const {
       organisation,
       error: organisationError,
     } = await container.getRetrieveOrganisationById()(
       authenticationToken.trustId
     );
-    console.log(`user_id is ${authenticationToken.userId}`);
+
     return {
       props: {
         error: organisationError,
