@@ -300,5 +300,11 @@ describe("AppContainer", () => {
 
   it("returns getCreateFacility", () => {
     expect(container.getCreateFacility()).toBeDefined();
+  it("returns getRetrieveFacilitiesByOrgIdGateway", () => {
+    expect(container.getRetrieveFacilitiesByOrgIdGateway()).toBeDefined();
+  });
+
+  it("returns getRetrieveFacilitiesByOrgId", () => {
+    expect(container.getRetrieveFacilitiesByOrgId()).toBeDefined();
   });
 });
