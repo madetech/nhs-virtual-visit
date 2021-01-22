@@ -17,7 +17,7 @@ export default ({ getMsSqlConnPool }) => async ({
       facilities.map(async (facility) => {
         const departments = await db
           .request()
-          .input("facility_id", facility.id)
+          .input("facility_id", mssql.Int, facility.id)
           .query(
             "SELECT * FROM dbo.[department] WHERE facility_id = @facility_id"
           );
@@ -34,5 +34,5 @@ export default ({ getMsSqlConnPool }) => async ({
       })
     );
   }
-  return { facilities, error: null };
+  return facilities;
 };
