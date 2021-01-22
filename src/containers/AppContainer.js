@@ -62,6 +62,7 @@ import retrieveFacilitiesByOrgId from "../usecases/retrieveFacilitiesByOrgId";
 import createFacility from "../usecases/createFacility";
 import retrieveFacilityById from "../usecases/retrieveFacilityById";
 import retrieveFacilityByUuid from "../usecases/retrieveFacilityByUuid";
+import updateFacilityByUuid from "../usecases/updateFacilityByUuid";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -87,6 +88,7 @@ import retrieveFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveFacilitiesByO
 import createFacilityGateway from "../gateways/MsSQL/createFacility";
 import retrieveFacilityByIdGateway from "../gateways/MsSQL/retrieveFacilityById";
 import retrieveFacilityByUuidGateway from "../gateways/MsSQL/retrieveFacilityByUuid";
+import updateFacilityByUuidGateway from "../gateways/MsSQL/updateFacilityByUuid";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -350,6 +352,9 @@ class AppContainer {
   getRetrieveFacilityByUuid = () => {
     return retrieveFacilityByUuid(this);
   };
+  getUpdateFacilityByUuid = () => {
+    return updateFacilityByUuid(this);
+  };
 
   getCreateOrganisationGateway = () => {
     return createOrganisationGateway(this);
@@ -578,6 +583,10 @@ class AppContainer {
 
   getArchiveManagerByUuid = () => {
     return archiveManagerByUuid(this);
+  };
+
+  getUpdateFacilityByUuidGateway = () => {
+    return updateFacilityByUuidGateway(this);
   };
 
   // MsSQL database gateways

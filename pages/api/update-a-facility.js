@@ -40,7 +40,7 @@ export default withContainer(
     const {
       uuid: facilityUuid,
       error: updateError,
-    } = await container.getUpdateFacility()({
+    } = await container.getUpdateFacilityByUuid()({
       uuid,
       name,
       status,
