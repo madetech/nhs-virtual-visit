@@ -60,6 +60,7 @@ import createFacility from "../usecases/createFacility";
 import retrieveFacilityById from "../usecases/retrieveFacilityById";
 import retrieveFacilityByUuid from "../usecases/retrieveFacilityByUuid";
 import updateFacilityByUuid from "../usecases/updateFacilityByUuid";
+import retrieveDepartmentsByFacilityId from "../usecases/retrieveDepartmentsByFacilityId";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -80,6 +81,7 @@ import createFacilityGateway from "../gateways/MsSQL/createFacility";
 import retrieveFacilityByIdGateway from "../gateways/MsSQL/retrieveFacilityById";
 import retrieveFacilityByUuidGateway from "../gateways/MsSQL/retrieveFacilityByUuid";
 import updateFacilityByUuidGateway from "../gateways/MsSQL/updateFacilityByUuid";
+import retrieveDepartmentsByFacilityIdGateway from "../gateways/MsSQL/retrieveDepartmentsByFacilityId";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -354,6 +356,10 @@ class AppContainer {
     return retrieveOrganisationById(this);
   };
 
+  getRetrieveDepartmentsByFacilityId = () => {
+    return retrieveDepartmentsByFacilityId(this);
+  };
+
   /* These are the Gateway */
 
   getFindWardByCodeGateway = () => {
@@ -501,6 +507,10 @@ class AppContainer {
 
   getRetrieveOrganisationByIdGateway = () => {
     return retrieveOrganisationByIdGateway(this);
+  };
+
+  getRetrieveDepartmentsByFacilityIdGateway = () => {
+    return retrieveDepartmentsByFacilityIdGateway(this);
   };
 
   getLogEventGateway = () => {

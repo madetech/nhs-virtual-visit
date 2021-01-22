@@ -14,7 +14,7 @@ const EditAHospitalSuccess = ({
   organisation,
   error,
   hospitalName,
-  hospitalId,
+  hospitalUuid,
 }) => {
   if (error) {
     return <Error />;
@@ -31,7 +31,7 @@ const EditAHospitalSuccess = ({
         <GridColumn width="two-thirds">
           <PanelSuccess name={`${hospitalName}`} action={`updated`} />
           <h2>What happens next</h2>
-          <ActionLink href={`/trust-admin/hospitals/${hospitalId}`}>
+          <ActionLink href={`/trust-admin/hospitals/${hospitalUuid}`}>
             {`View ${hospitalName}`}
           </ActionLink>
           <p>
@@ -47,6 +47,7 @@ const EditAHospitalSuccess = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
+    const { uuid } = query;
     const {
       organisation,
       error: organisationError,
@@ -54,17 +55,16 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId
     );
 
-    const getRetrieveHospitalById = container.getRetrieveHospitalById();
-    const { hospital, error: hospitalError } = await getRetrieveHospitalById(
-      query.id,
-      authenticationToken.trustId
-    );
+    const {
+      facility: { name: hospitalName, uuid: hospitalUuid },
+      error: facilityError,
+    } = await container.getRetrieveFacilityByUuid()(uuid);
 
     return {
       props: {
-        error: organisationError || hospitalError,
-        hospitalName: hospital.name,
-        hospitalId: hospital.id,
+        error: organisationError || facilityError,
+        hospitalName,
+        hospitalUuid,
         organisation,
       },
     };

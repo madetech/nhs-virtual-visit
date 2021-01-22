@@ -325,4 +325,12 @@ describe("AppContainer", () => {
   it("returns getUpdateFacilityByUuidGateway", () => {
     expect(container.getUpdateFacilityByUuidGateway()).toBeDefined();
   });
+
+  it("returns getRetrieveDepartmentsByFacilityId", () => {
+    expect(container.getRetrieveDepartmentsByFacilityId()).toBeDefined();
+  });
+
+  it("returns getRetrieveDepartmentsByFacilityIdGateway", () => {
+    expect(container.getRetrieveDepartmentsByFacilityIdGateway()).toBeDefined();
+  });
 });
