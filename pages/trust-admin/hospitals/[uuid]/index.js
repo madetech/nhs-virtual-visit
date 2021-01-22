@@ -101,7 +101,6 @@ export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ authenticationToken, container, query }) => {
     const { uuid: facilityUuid } = query;
     const orgId = authenticationToken.trustId;
-    console.log(facilityUuid);
     const {
       organisation,
       error: organisationError,
@@ -113,10 +112,9 @@ export const getServerSideProps = propsWithContainer(
     } = await container.getRetrieveFacilityByUuid()(facilityUuid);
 
     const {
-      wards,
-      error: wardsError,
-    } = await container.getRetrieveWardsByHospitalId()(facility.id);
-
+      departments,
+      error: departmentsError,
+    } = await container.getRetrieveDepartmentsByFacilityId()(facility.id);
     const visitTotals = await container.getRetrieveHospitalVisitTotals()(orgId);
 
     const totalBookedVisits =
@@ -133,8 +131,8 @@ export const getServerSideProps = propsWithContainer(
       props: {
         organisation,
         hospital: facility,
-        wards,
-        error: facilityError || wardsError || organisationError,
+        wards: departments,
+        error: facilityError || departmentsError || organisationError,
         totalBookedVisits,
         mostVisitedWard,
         leastVisitedWard,

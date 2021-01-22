@@ -20,7 +20,7 @@ const EditHospital = ({ organisation, hospital, error }) => {
   const submit = async (payload) => {
     payload.uuid = hospital.uuid;
     try {
-      const response = await fetch("/api/update-a-hospital", {
+      const response = await fetch("/api/update-a-facility", {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
@@ -36,7 +36,7 @@ const EditHospital = ({ organisation, hospital, error }) => {
 
       Router.push(
         "/trust-admin/hospitals/[uuid]/edit-success",
-        `/trust-admin/hospitals/${json.facilityUuid}/edit-success`
+        `/trust-admin/hospitals/${json.uuid}/edit-success`
       );
 
       return true;
