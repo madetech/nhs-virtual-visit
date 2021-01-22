@@ -9,7 +9,7 @@ export default withContainer(
     validateHttpMethod("POST", method, res);
 
     const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
-
+    const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
     checkIfAuthorised(trustAdminIsAuthenticated(headers.cookie), res);
 
     if (!body.name) {
@@ -26,11 +26,11 @@ export default withContainer(
 
     res.setHeader("Content-Type", "application/json");
 
-    const { facilityId, error } = await container.getCreateFacility()({
+    const { uuid, error } = await container.getCreateFacility()({
       name: body.name,
       orgId: body.orgId,
       code: body.code,
-      createdBy: body.userId,
+      createdBy: trustAdminToken.userId,
     });
 
     if (error) {
@@ -38,7 +38,7 @@ export default withContainer(
       res.end(JSON.stringify({ err: "Facility name already exists" }));
     } else {
       res.status(201);
-      res.end(JSON.stringify({ facilityId }));
+      res.end(JSON.stringify({ uuid }));
     }
   }
 );

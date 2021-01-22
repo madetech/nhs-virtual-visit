@@ -6,7 +6,7 @@ import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToke
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import Layout from "../../../../src/components/Layout";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
-import EditHospitalForm from "../../../../src/components/EditHospitalForm";
+import EditHospitalForm from "../../../../src/components/HospitalForm";
 import ErrorSummary from "../../../../src/components/ErrorSummary";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
@@ -18,7 +18,7 @@ const EditHospital = ({ organisation, hospital, error }) => {
   const [errors, setErrors] = useState([]);
 
   const submit = async (payload) => {
-    payload.id = hospital.id;
+    payload.uuid = hospital.uuid;
     try {
       const response = await fetch("/api/update-a-hospital", {
         method: "PATCH",
@@ -35,8 +35,8 @@ const EditHospital = ({ organisation, hospital, error }) => {
       const json = await response.json();
 
       Router.push(
-        "/trust-admin/hospitals/[id]/edit-success",
-        `/trust-admin/hospitals/${json.hospitalId}/edit-success`
+        "/trust-admin/hospitals/[uuid]/edit-success",
+        `/trust-admin/hospitals/${json.facilityUuid}/edit-success`
       );
 
       return true;
@@ -79,21 +79,21 @@ const EditHospital = ({ organisation, hospital, error }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ authenticationToken, container, query }) => {
-    const { id: hospitalId } = query;
+    const { uuid: facilityUuid } = query;
     const orgId = authenticationToken.trustId;
     const {
       organisation,
       error: organisationError,
     } = await container.getRetrieveOrganisationById()(orgId);
     const {
-      hospital,
-      error: hospitalError,
-    } = await container.getRetrieveHospitalById()(hospitalId, orgId);
-
+      facility,
+      error: facilityError,
+    } = await container.getRetrieveFacilityByUuid()(facilityUuid);
+    console.log(facility);
     return {
       props: {
-        hospital,
-        error: hospitalError || organisationError,
+        hospital: facility,
+        error: facilityError || organisationError,
         organisation,
       },
     };
