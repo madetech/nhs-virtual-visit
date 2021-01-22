@@ -1,11 +1,13 @@
 import React from "react";
 import { waitFor, screen, render, fireEvent } from "@testing-library/react";
 import Login, { getServerSideProps } from "../../pages/login";
-import fetchMock from "jest-fetch-mock";
+import fetchEndpointWithCorrelationId from "../../src/helpers/fetchEndpointWithCorrelationId";
 
 jest.mock("uuid", () => ({
   v4: () => "uuidv4",
 }));
+
+jest.mock("../../src/helpers/fetchEndpointWithCorrelationId");
 
 describe("login", () => {
   let res;
@@ -13,22 +15,16 @@ describe("login", () => {
     res = {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
     };
+  });
 
-    // Enable mock on fetch module. Bypass fetch external call
-    fetchMock.doMock();
-
-    // Reset fetch mocks
-    fetchMock.resetMocks();
-
-    // Login redirect window.location.href
-    global.window = Object.create(window);
-    const url = "http://dummy.com";
-    Object.defineProperty(window, "location", {
-      value: {
-        href: url,
-      },
-      writable: true,
-    });
+  // Login redirect window.location.href
+  global.window = Object.create(window);
+  const url = "http://dummy.com";
+  Object.defineProperty(window, "location", {
+    value: {
+      href: url,
+    },
+    writable: true,
   });
 
   const authenticatedReq = {
@@ -54,13 +50,9 @@ describe("login", () => {
       expect(inputPwd.value).toEqual("23");
     });
 
-    fetchMock.mockResolvedValue({
+    fetchEndpointWithCorrelationId.mockReturnValue({
       status: 201,
-      json: jest.fn(() => {
-        return {
-          userType: "admin",
-        };
-      }),
+      json: jest.fn().mockReturnValue({ userType: "admin" }),
     });
 
     await waitFor(() => {
@@ -96,13 +88,9 @@ describe("login", () => {
       expect(inputPwd.value).toEqual("23");
     });
 
-    fetchMock.mockResolvedValue({
+    fetchEndpointWithCorrelationId.mockReturnValue({
       status: 201,
-      json: jest.fn(() => {
-        return {
-          userType: "manager",
-        };
-      }),
+      json: jest.fn().mockReturnValue({ userType: "manager" }),
     });
 
     await waitFor(() => {
@@ -136,6 +124,10 @@ describe("login", () => {
       fireEvent.change(inputPwd, { target: { value: "23" } });
 
       expect(inputPwd.value).toEqual("23");
+    });
+
+    fetchEndpointWithCorrelationId.mockReturnValue({
+      status: 200,
     });
 
     await waitFor(() => {
