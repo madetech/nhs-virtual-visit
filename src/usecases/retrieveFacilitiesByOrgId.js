@@ -1,4 +1,4 @@
-export default ({ getRetrieveFacilitiesByOrgIdGW }) => async (
+export default ({ getRetrieveFacilitiesByOrgIdGateway }) => async (
   orgId,
   options = { withWards: false }
 ) => {
@@ -6,13 +6,12 @@ export default ({ getRetrieveFacilitiesByOrgIdGW }) => async (
     return { facility: undefined, error: "organisation id must be provided" };
   }
   try {
-    const { facilities, error } = await getRetrieveFacilitiesByOrgIdGW()({
+    const facilities = await getRetrieveFacilitiesByOrgIdGateway()({
       orgId,
       options,
     });
-    return { facilities, error };
+    return { facilities, error: null };
   } catch (error) {
-    console.log(error);
     return {
       facilities: null,
       error: "There was an error retrieving facilities.",
