@@ -10,7 +10,7 @@ import HospitalForm from "../../../src/components/HospitalForm";
 import ErrorSummary from "../../../src/components/ErrorSummary";
 import TrustAdminHeading from "../../../src/components/TrustAdminHeading";
 
-const AddAHospital = ({ organisation, error, userId }) => {
+const AddAHospital = ({ organisation, error }) => {
   if (error) {
     return <Error />;
   }
@@ -32,7 +32,6 @@ const AddAHospital = ({ organisation, error, userId }) => {
 
   const submit = async (payload) => {
     payload.orgId = organisation.id;
-    payload.userId = userId;
     try {
       const response = await fetch("/api/create-facility", {
         method: "POST",
@@ -97,7 +96,6 @@ export const getServerSideProps = propsWithContainer(
       props: {
         error: organisationError,
         organisation,
-        userId: authenticationToken.userId,
       },
     };
   })
