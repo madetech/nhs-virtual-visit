@@ -19,6 +19,9 @@ describe("login", () => {
     // Enable mock on fetch module. Bypass fetch external call
     fetchMock.doMock();
 
+    // Reset fetch mocks
+    fetchMock.resetMocks();
+
     // Login redirect window.location.href
     global.window = Object.create(window);
     const url = "http://dummy.com";
