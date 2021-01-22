@@ -8,32 +8,32 @@ export default ({ getCreateFacilityGateway }) => async ({
 }) => {
   if (orgId == undefined) {
     return {
-      facilityId: undefined,
+      uuid: undefined,
       error: "organisation id must be provided.",
     };
   }
   if (name == undefined) {
-    return { facilityId: undefined, error: "name must be provided." };
+    return { uuid: undefined, error: "name must be provided." };
   }
   if (code == undefined) {
-    return { facilityId: undefined, error: "facility code must be provided." };
+    return { uuid: undefined, error: "facility code must be provided." };
   }
   try {
     logger.info({
       message: `Creating facility for ${name}, trust: ${orgId}`,
       meta: { name, code, orgId },
     });
-    const facilityId = await getCreateFacilityGateway()({
+    const uuid = await getCreateFacilityGateway()({
       name,
       orgId,
       code,
       createdBy,
     });
-    return { facilityId, error: null };
+    return { uuid, error: null };
   } catch (error) {
     logger.error(`Error creating facility ${name}, ${error}`);
     return {
-      facilityId: null,
+      uuid: null,
       error: "There was an error creating a facility.",
     };
   }

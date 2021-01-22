@@ -13,7 +13,7 @@ export default ({ getMsSqlConnPool }) => async ({
     .input("code", mssql.NVarChar(255), code)
     .input("createdBy", mssql.Int, createdBy)
     .query(
-      "INSERT INTO dbo.[facility] ([name], [organisation_id], [code], [created_by]) OUTPUT inserted.id VALUES (@name, @orgId, @code, @createdBy)"
+      "INSERT INTO dbo.[facility] ([name], [organisation_id], [code], [created_by]) OUTPUT inserted.uuid VALUES (@name, @orgId, @code, @createdBy)"
     );
-  return res.recordset[0].id;
+  return res.recordset[0].uuid;
 };

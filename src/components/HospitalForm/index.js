@@ -6,10 +6,10 @@ import Input from "../Input";
 import Label from "../Label";
 import Form from "../Form";
 import isPresent from "../../helpers/isPresent";
-import SelectStatus from "../../components/SelectStatus";
+import SelectStatus from "../SelectStatus";
 import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 
-const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
+const HospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
   const [hospitalStatus, setHospitalStatus] = useState(hospital.status);
   const [hospitalCode, setHospitalCode] = useState(hospital.code);
@@ -101,7 +101,7 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
           />
         </FormGroup>
       )}
-     
+
       {action === "Edit" && (
         <FormGroup>
           <Label htmlFor="hospital-status" className="nhsuk-label--m">
@@ -111,15 +111,9 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
             id="hospital-status"
             className="nhsuk-input--width-10 nhsuk-u-width-one-half"
             prompt="Choose a hospital status"
-            options={[
-              { name: "active" },
-              { name: "disabled" },
-            ]}
+            options={[{ name: "active" }, { name: "disabled" }]}
             onChange={(event) => {
-              setHospitalStatus(
-                event.target.value
-              );
-
+              setHospitalStatus(event.target.value);
             }}
             hasError={hasError(errors, "hospital-status")}
             errorMessage={errorMessage(errors, "hospital-status")}
@@ -134,4 +128,4 @@ const EditHospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   );
 };
 
-export default EditHospitalForm;
+export default HospitalForm;
