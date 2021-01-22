@@ -15,22 +15,16 @@ describe("login", () => {
     res = {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
     };
+  });
 
-    // Enable mock on fetch module. Bypass fetch external call
-    fetchMock.doMock();
-
-    // Reset fetch mocks
-    fetchMock.resetMocks();
-
-    // Login redirect window.location.href
-    global.window = Object.create(window);
-    const url = "http://dummy.com";
-    Object.defineProperty(window, "location", {
-      value: {
-        href: url,
-      },
-      writable: true,
-    });
+  // Login redirect window.location.href
+  global.window = Object.create(window);
+  const url = "http://dummy.com";
+  Object.defineProperty(window, "location", {
+    value: {
+      href: url,
+    },
+    writable: true,
   });
 
   // Login redirect window.location.href
