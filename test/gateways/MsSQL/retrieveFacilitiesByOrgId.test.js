@@ -122,7 +122,7 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
     ).rejects.toThrow();
   });
 
-  xit("throws an error if orgId is undefined", async () => {
+  it("throws an error if orgId is undefined", async () => {
     // Arrange
     getConnectionPoolMock().query.mockImplementationOnce(() =>
       Promise.resolve({
