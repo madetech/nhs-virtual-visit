@@ -7,6 +7,7 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
   const expectedFacilitiesWithWards = [
     {
       id: 1,
+      uuid: "uuid1",
       name: "hospitalNameOne",
       code: "HN1",
       status: 0,
@@ -14,6 +15,7 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
     },
     {
       id: 2,
+      uuid: "uuid2",
       name: "hospitalNameTwo",
       code: "HN2",
       status: 1,
@@ -23,6 +25,7 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
   const expectedFacilitiesWithoutWards = expectedFacilitiesWithWards.map(
     (facility) => ({
       id: facility.id,
+      uuid: facility.uuid,
       name: facility.name,
       code: facility.code,
       status: facility.status,

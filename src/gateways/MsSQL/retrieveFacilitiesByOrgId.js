@@ -23,6 +23,7 @@ export default ({ getMsSqlConnPool }) => async ({
           );
         return {
           id: facility.id,
+          uuid: facility.uuid,
           name: facility.name,
           code: facility.code,
           status: facility.status,
