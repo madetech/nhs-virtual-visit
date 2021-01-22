@@ -30,7 +30,7 @@ const HospitalsTable = ({ hospitals }) => (
       </thead>
       <tbody className="nhsuk-table__body">
         {hospitals.map((hospital) => (
-          <tr key={hospital.name} className="nhsuk-table__row">
+          <tr key={hospital.uuid} className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{hospital.name}</td>
             <td className="nhsuk-table__cell">{hospital.code}</td>
             <td className="nhsuk-table__cell">{hospital.status}</td>
@@ -38,8 +38,8 @@ const HospitalsTable = ({ hospitals }) => (
             <td className="nhsuk-table__cell">{hospital.bookedVisits}</td>
             <td className="nhsuk-table__cell">
               <AnchorLink
-                href="/trust-admin/hospitals/[id]"
-                as={`/trust-admin/hospitals/${hospital.id}`}
+                href="/trust-admin/hospitals/[uuid]"
+                as={`/trust-admin/hospitals/${hospital.uuid}`}
               >
                 View
                 <span className="nhsuk-u-visually-hidden">
@@ -50,8 +50,8 @@ const HospitalsTable = ({ hospitals }) => (
             </td>
             <td className="nhsuk-table__cell">
               <AnchorLink
-                href="/trust-admin/hospitals/[id]/edit"
-                as={`/trust-admin/hospitals/${hospital.id}/edit`}
+                href="/trust-admin/hospitals/[uuid]/edit"
+                as={`/trust-admin/hospitals/${hospital.uuid}/edit`}
                 data-testid={`edit-${toLowerSnake(hospital.name)}`}
               >
                 Edit
