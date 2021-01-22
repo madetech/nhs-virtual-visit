@@ -27,16 +27,6 @@ describe("login", () => {
     writable: true,
   });
 
-  // Login redirect window.location.href
-  global.window = Object.create(window);
-  const url = "http://dummy.com";
-  Object.defineProperty(window, "location", {
-    value: {
-      href: url,
-    },
-    writable: true,
-  });
-
   const authenticatedReq = {
     headers: {
       cookie: "token=123",
@@ -49,9 +39,9 @@ describe("login", () => {
     await waitFor(() => {
       var inputEmail = screen.getByLabelText("Email");
 
-      fireEvent.change(inputEmail, { target: { value: "emai@mail.com" } });
+      fireEvent.change(inputEmail, { target: { value: "email@mail.com" } });
 
-      expect(inputEmail.value).toEqual("emai@mail.com");
+      expect(inputEmail.value).toEqual("email@mail.com");
 
       var inputPwd = screen.getByLabelText("Password");
 
@@ -87,9 +77,9 @@ describe("login", () => {
     await waitFor(() => {
       var inputEmail = screen.getByLabelText("Email");
 
-      fireEvent.change(inputEmail, { target: { value: "emai@mail.com" } });
+      fireEvent.change(inputEmail, { target: { value: "email@mail.com" } });
 
-      expect(inputEmail.value).toEqual("emai@mail.com");
+      expect(inputEmail.value).toEqual("email@mail.com");
 
       var inputPwd = screen.getByLabelText("Password");
 
@@ -125,9 +115,9 @@ describe("login", () => {
     await waitFor(() => {
       var inputEmail = screen.getByLabelText("Email");
 
-      fireEvent.change(inputEmail, { target: { value: "emai@mail.com" } });
+      fireEvent.change(inputEmail, { target: { value: "email@mail.com" } });
 
-      expect(inputEmail.value).toEqual("emai@mail.com");
+      expect(inputEmail.value).toEqual("email@mail.com");
 
       var inputPwd = screen.getByLabelText("Password");
 
