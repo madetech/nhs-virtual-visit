@@ -74,6 +74,7 @@ import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisation
 import deleteOrganisationGateway from "../gateways/MsSQL/deleteOrganisation";
 import createManager from "../usecases/createManager";
 import insertManager from "../gateways/MsSQL/insertManager";
+import verifySignUpLinkGateway from "../gateways/MsSQL/verifySignUpLink";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -115,6 +116,13 @@ import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
 import verifyTrustAdminCodeGateway from "../gateways/PostgreSQL/verifyTrustAdminCode";
 import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
+import verifySignUpLink from "../usecases/verifySignUpLink";
+import activateManagerAndOrganisation from "../usecases/activateManagerAndOrganisation";
+import activateManagerAndOrganisationGateway from "../gateways/MsSQL/activateManagerAndOrganisation";
+import activateOrganisation from "../usecases/activateOrganisation";
+import activateOrganisationGateway from "../gateways/MsSQL/activateOrganisation";
+import addToUserVerificationTable from "../usecases/addToUserVerificationTable";
+import addToUserVerificationTableGateway from "../gateways/MsSQL/addToUserVerificationTable";
 
 class AppContainer {
   getDb = () => {
@@ -568,6 +576,51 @@ class AppContainer {
 
   getResetPassword = () => {
     return resetPassword;
+  };
+
+  getInsertManagerGateway = () => {
+    return insertManager(this);
+  };
+  getCreateManager = () => {
+    return createManager(this);
+  };
+
+  getRetrieveOrganisationsGateway = () => {
+    return retrieveOrganisationsGateway(this);
+  };
+
+  getRetrieveOrganisations = () => {
+    return retrieveOrganisations(this);
+  };
+
+  getVerifySignUpLinkGateway = () => {
+    return verifySignUpLinkGateway(this);
+  };
+
+  getVerifySignUpLink = () => {
+    return verifySignUpLink(this);
+  };
+
+  getActivateManagerAndOrganisationGateway = () => {
+    return activateManagerAndOrganisationGateway(this);
+  };
+  getActivateManagerAndOrganisation = () => {
+    return activateManagerAndOrganisation(this);
+  };
+
+  getActivateOrganisationGateway = () => {
+    return activateOrganisationGateway(this);
+  };
+  getActivateOrganisation = () => {
+    return activateOrganisation(this);
+  };
+
+  getAddToUserVerificationTable = () => {
+    return addToUserVerificationTable(this);
+  };
+
+  getAddToUserVerificationTableGateway = () => {
+    return addToUserVerificationTableGateway(this);
   };
 }
 
