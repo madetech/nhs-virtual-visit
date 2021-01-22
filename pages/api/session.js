@@ -19,7 +19,6 @@ export default withContainer(async (req, res, { container }) => {
 
     const verifyUserLogin = container.getVerifyUserLogin();
     const verifyUserLoginResponse = await verifyUserLogin(code, password);
-    console.log(verifyUserLoginResponse);
     if (
       !verifyUserLoginResponse.validUser &&
       !verifyWardCodeResponse.validWardCode
