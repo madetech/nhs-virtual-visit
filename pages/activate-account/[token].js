@@ -6,12 +6,12 @@ import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
 import ActionLink from "../../src/components/ActionLink";
 
-const ActivateAccount = ({ email, organisationName, activationError }) => {
+const ActivateAccount = ({ email, organisationName, error }) => {
   const errors = [];
-  if (activationError) {
+  if (error) {
     errors.push({
       id: "activation-error",
-      message: activationError,
+      message: error,
     });
   }
   return (
@@ -19,7 +19,7 @@ const ActivateAccount = ({ email, organisationName, activationError }) => {
       <GridRow>
         <GridColumn>
           <ErrorSummary errors={errors} />
-          {!activationError && (
+          {!error && (
             <>
               <Heading>Account Activation Success</Heading>
               <p>{`${organisationName} is now active`}</p>
@@ -46,39 +46,25 @@ export const getServerSideProps = propsWithContainer(
         props: {
           email: null,
           organisationName: null,
-          activationError: linkError,
+          error: linkError,
         },
       };
     }
 
-    const activateManager = container.getActivateManager();
-    const {
-      user: activatedUser,
-      error: activateManagerError,
-    } = await activateManager({ userId: user.user_id });
-
-    if (activateManagerError) {
-      return {
-        props: {
-          email: null,
-          organisationName: null,
-          activationError: "There was an error",
-        },
-      };
-    }
-
-    const organisationId = activatedUser.organisation_id;
-    const activateOrganisation = container.getActivateOrganisation();
+    const activateManagerAndOrganisation = container.getActivateManagerAndOrganisation();
     const {
       organisation,
-      error: organisationError,
-    } = await activateOrganisation({ organisationId });
+      error: activationError,
+    } = await activateManagerAndOrganisation({
+      userId: user.user_id,
+      organisationId: user.organisation_id,
+    });
 
     return {
       props: {
-        email: organisationError ? null : activatedUser.email,
-        organisationName: organisationError ? null : organisation.name,
-        activationError: organisationError ? "There was an error" : null,
+        email: !activationError && user.email,
+        organisationName: !activationError && organisation.name,
+        error: activationError && "There was an error",
       },
     };
   }
