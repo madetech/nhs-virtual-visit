@@ -10,6 +10,7 @@ import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Form from "../../src/components/Form";
 import Select from "../../src/components/Select";
+import AnchorLink from "../../src/components/AnchorLink";
 import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
 import Router from "next/router";
 
@@ -169,10 +170,13 @@ const SignUp = ({ organisations, error }) => {
                     autoComplete="off"
                   />
                 </FormGroup>
-                <Button className="nhsuk-u-margin-top-5" type="submit">
+                <Button className="nhsuk-u-margin-top-2" type="submit">
                   Sign Up
                 </Button>
               </Form>
+              <p>
+                <AnchorLink href="/login">Back to Login Page</AnchorLink>
+              </p>
             </>
           )}
         </GridColumn>

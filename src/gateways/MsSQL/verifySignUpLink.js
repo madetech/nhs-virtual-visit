@@ -13,7 +13,8 @@ const verifySignUpLinkGateway = ({ getMsSqlConnPool }) => async ({
       .input("hash", hash)
       .input("uuid", uuid)
       .query(
-        `SELECT user_id, verified, status FROM dbo.[user_verification], dbo.[user] 
+        `SELECT user_id, organisation_id, verified, status, email 
+          FROM dbo.[user_verification], dbo.[user] 
           WHERE hash = @hash AND uuid = @uuid`
       );
 

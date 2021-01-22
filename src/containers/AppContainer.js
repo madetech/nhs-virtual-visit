@@ -113,8 +113,8 @@ import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/Postgr
 import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
 import verifySignUpLink from "../usecases/verifySignUpLink";
-import activateManager from "../usecases/activateManager";
-import activateManagerGateway from "../gateways/MsSQL/activateManager";
+import activateManagerAndOrganisation from "../usecases/activateManagerAndOrganisation";
+import activateManagerAndOrganisationGateway from "../gateways/MsSQL/activateManagerAndOrganisation";
 import activateOrganisation from "../usecases/activateOrganisation";
 import activateOrganisationGateway from "../gateways/MsSQL/activateOrganisation";
 import addToUserVerificationTable from "../usecases/addToUserVerificationTable";
@@ -585,11 +585,11 @@ class AppContainer {
     return verifySignUpLink(this);
   };
 
-  getActivateManagerGateway = () => {
-    return activateManagerGateway(this);
+  getActivateManagerAndOrganisationGateway = () => {
+    return activateManagerAndOrganisationGateway(this);
   };
-  getActivateManager = () => {
-    return activateManager(this);
+  getActivateManagerAndOrganisation = () => {
+    return activateManagerAndOrganisation(this);
   };
 
   getActivateOrganisationGateway = () => {
