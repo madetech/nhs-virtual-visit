@@ -60,6 +60,8 @@ import updateLinkStatusByHash from "../usecases/updateLinkStatusByHash";
 import retrieveManagerByEmail from "../usecases/retrieveManagerByEmail";
 import retrieveFacilitiesByOrgId from "../usecases/retrieveFacilitiesByOrgId";
 import createFacility from "../usecases/createFacility";
+import retrieveFacilityById from "../usecases/retrieveFacilityById";
+import retrieveFacilityByUuid from "../usecases/retrieveFacilityByUuid";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -83,6 +85,8 @@ import updateLinkStatusByHashGateway from "../gateways/MsSQL/updateLinkStatusByH
 import retrieveManagerByEmailGateway from "../gateways/MsSQL/retrieveManagerByEmail";
 import retrieveFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveFacilitiesByOrgId";
 import createFacilityGateway from "../gateways/MsSQL/createFacility";
+import retrieveFacilityByIdGateway from "../gateways/MsSQL/retrieveFacilityById";
+import retrieveFacilityByUuidGateway from "../gateways/MsSQL/retrieveFacilityByUuid";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -339,6 +343,14 @@ class AppContainer {
     return createOrganisation(this);
   };
 
+  getRetrieveFacilityById = () => {
+    return retrieveFacilityById(this);
+  };
+
+  getRetrieveFacilityByUuid = () => {
+    return retrieveFacilityByUuid(this);
+  };
+
   getCreateOrganisationGateway = () => {
     return createOrganisationGateway(this);
   };
@@ -548,6 +560,10 @@ class AppContainer {
     return retrieveManagerByUuidGateway(this);
   };
 
+  getRetrieveFacilityByIdGateway = () => {
+    return retrieveFacilityByIdGateway(this);
+  };
+
   getRetrieveReportingStartDateByTrustIdGateway = () => {
     return retrieveReportingStartDateByTrustIdGW(this);
   };
@@ -655,6 +671,9 @@ class AppContainer {
   };
   getCreateFacilityGateway = () => {
     return createFacilityGateway(this);
+  };
+  getRetrieveFacilityByUuidGateway = () => {
+    return retrieveFacilityByUuidGateway(this);
   };
 }
 
