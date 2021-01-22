@@ -81,7 +81,6 @@ import insertManager from "../gateways/MsSQL/insertManager";
 import verifySignUpLinkGateway from "../gateways/MsSQL/verifySignUpLink";
 import updateLinkStatusByHashGateway from "../gateways/MsSQL/updateLinkStatusByHash";
 import retrieveManagerByEmailGateway from "../gateways/MsSQL/retrieveManagerByEmail";
-
 import retrieveFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveFacilitiesByOrgId";
 import createFacilityGateway from "../gateways/MsSQL/createFacility";
 
@@ -651,7 +650,7 @@ class AppContainer {
     return retrieveManagerByEmailGateway(this);
   };
   
-  getRetrieveFacilitiesByOrgIdGW = () => {
+  getRetrieveFacilitiesByOrgIdGateway = () => {
     return retrieveFacilitiesByOrgIdGW(this);
   };
   getCreateFacilityGateway = () => {
