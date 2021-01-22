@@ -548,7 +548,7 @@ class AppContainer {
     return archiveManagerByUuidGateway(this);
   };
 
-  getRetrieveFacilitiesByOrgIdGW = () => {
+  getRetrieveFacilitiesByOrgIdGateway = () => {
     return retrieveFacilitiesByOrgIdGW(this);
   };
   getCreateFacilityGateway = () => {
