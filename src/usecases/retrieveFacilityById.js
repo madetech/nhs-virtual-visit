@@ -11,7 +11,11 @@ export default ({ getRetrieveFacilityByIdGateway }) => async (
   }
   try {
     logger.info(`Retrieving hospital for ${facilityId}`);
-    const facility = await getRetrieveFacilityByIdGateway()(facilityId, orgId);
+    let facility = await getRetrieveFacilityByIdGateway()(facilityId, orgId);
+    facility = {
+      ...facility,
+      status: facility.status === 1 ? "active" : "disabled",
+    };
     return { facility, error: null };
   } catch (error) {
     logger.error(`Error retrieving hospital: ${error}`);

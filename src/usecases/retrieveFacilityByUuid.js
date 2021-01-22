@@ -5,7 +5,11 @@ export default ({ getRetrieveFacilityByUuidGateway }) => async (uuid) => {
   }
   try {
     logger.info(`Retrieving hospital for ${uuid}`);
-    const facility = await getRetrieveFacilityByUuidGateway()(uuid);
+    let facility = await getRetrieveFacilityByUuidGateway()(uuid);
+    facility = {
+      ...facility,
+      status: facility.status === 1 ? "active" : "disabled",
+    };
     return { facility, error: null };
   } catch (error) {
     console.log(error);
