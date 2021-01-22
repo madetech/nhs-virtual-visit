@@ -6,10 +6,14 @@ export default ({ getRetrieveFacilitiesByOrgIdGateway }) => async (
     return { facility: undefined, error: "organisation id must be provided" };
   }
   try {
-    const facilities = await getRetrieveFacilitiesByOrgIdGateway()({
+    let facilities = await getRetrieveFacilitiesByOrgIdGateway()({
       orgId,
       options,
     });
+    facilities = facilities.map((facility) => ({
+      ...facility,
+      status: facility.status === 1 ? "active" : "disabled",
+    }));
     return { facilities, error: null };
   } catch (error) {
     return {

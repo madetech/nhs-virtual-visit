@@ -8,14 +8,14 @@ describe("retrieveFacilitiesByOrgId", () => {
       id: 1,
       name: "hospitalNameOne",
       code: "HN1",
-      status: 0,
+      status: "disabled",
       wards: [{ id: 1, name: "Ward 1 for hospitalNameOne" }],
     },
     {
       id: 2,
       name: "hospitalNameTwo",
       code: "HN2",
-      status: 1,
+      status: "active",
       wards: [{ id: 2, name: "Ward 1 for hospitalNameTwo" }],
     },
   ];
@@ -27,9 +27,13 @@ describe("retrieveFacilitiesByOrgId", () => {
       status: facility.status,
     })
   );
+
+  const dbMockFacilitiesWithoutWards = expectedFacilitiesWithoutWards.map(
+    (facility) => ({ ...facility, status: facility.status == "active" ? 1 : 0 })
+  );
   let retrieveFacilitiesByOrgIdSpy = jest
     .fn()
-    .mockReturnValue(expectedFacilitiesWithoutWards);
+    .mockReturnValue(dbMockFacilitiesWithoutWards);
   let container;
 
   beforeEach(() => {
@@ -64,9 +68,15 @@ describe("retrieveFacilitiesByOrgId", () => {
   describe("withWards option is true", () => {
     it("returns a facilities array containing an array of wards", async () => {
       // Arrange
+      const dbMockFacilitiesWithWards = expectedFacilitiesWithWards.map(
+        (facility) => ({
+          ...facility,
+          status: facility.status == "active" ? 1 : 0,
+        })
+      );
       const retrieveFacilitiesByOrgIdWithWardsSpy = jest
         .fn()
-        .mockReturnValue(expectedFacilitiesWithWards);
+        .mockReturnValue(dbMockFacilitiesWithWards);
       container = {
         ...container,
         getRetrieveFacilitiesByOrgIdGateway: () =>
