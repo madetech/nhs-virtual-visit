@@ -97,7 +97,6 @@ const Login = ({ correlationId }) => {
               <Input
                 id="password"
                 type="password"
-                data-testid="input-password"
                 ref={passwordRef}
                 hasError={hasError(errors, "password")}
                 errorMessage={errorMessage(errors, "password")}
@@ -109,16 +108,12 @@ const Login = ({ correlationId }) => {
             <p>
               <AnchorLink href="/reset-password">Reset password</AnchorLink>
             </p>
-            <Button
-              data-testid="button-submit"
-              className="nhsuk-u-margin-top-5"
-              type="submit"
-            >
+            <Button className="nhsuk-u-margin-top-5" type="submit">
               Log in
             </Button>
           </Form>
         </GridColumn>
-        <span style={{ clear: "both", display: "block" }}></span>
+        {/* <span style={{ clear: "both", display: "block" }}></span> */}
       </GridRow>
     </Layout>
   );
