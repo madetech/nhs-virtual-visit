@@ -72,6 +72,7 @@ import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActive
 import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
 import createManager from "../usecases/createManager";
 import insertManager from "../gateways/MsSQL/insertManager";
+import verifySignUpLinkGateway from "../gateways/MsSQL/verifySignUpLink";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -112,10 +113,10 @@ import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/Postgr
 import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
 import verifySignUpLink from "../usecases/verifySignUpLink";
-import updateManagerStatus from "../usecases/updateManagerStatus";
-import updateManagerStatusGateway from "../gateways/MsSQL/updateManagerStatus";
-import updateOrganisationStatus from "../usecases/updateOrganisationStatus";
-import updateOrganisationStatusGateway from "../gateways/MsSQL/updateOrganisationStatus";
+import activateManager from "../usecases/activateManager";
+import activateManagerGateway from "../gateways/MsSQL/activateManager";
+import activateOrganisation from "../usecases/activateOrganisation";
+import activateOrganisationGateway from "../gateways/MsSQL/activateOrganisation";
 import addToUserVerificationTable from "../usecases/addToUserVerificationTable";
 import addToUserVerificationTableGateway from "../gateways/MsSQL/addToUserVerificationTable";
 
@@ -576,22 +577,26 @@ class AppContainer {
     return retrieveOrganisations(this);
   };
 
+  getVerifySignUpLinkGateway = () => {
+    return verifySignUpLinkGateway(this);
+  };
+
   getVerifySignUpLink = () => {
     return verifySignUpLink(this);
   };
 
-  getUpdateManagerStatusGateway = () => {
-    return updateManagerStatusGateway(this);
+  getActivateManagerGateway = () => {
+    return activateManagerGateway(this);
   };
-  getUpdateManagerStatus = () => {
-    return updateManagerStatus(this);
+  getActivateManager = () => {
+    return activateManager(this);
   };
 
-  getUpdateOrganisationStatusGateway = () => {
-    return updateOrganisationStatusGateway(this);
+  getActivateOrganisationGateway = () => {
+    return activateOrganisationGateway(this);
   };
-  getUpdateOrganisationStatus = () => {
-    return updateOrganisationStatus(this);
+  getActivateOrganisation = () => {
+    return activateOrganisation(this);
   };
 
   getAddToUserVerificationTable = () => {
