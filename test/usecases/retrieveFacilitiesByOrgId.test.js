@@ -9,6 +9,7 @@ describe("retrieveFacilitiesByOrgId", () => {
       name: "hospitalNameOne",
       code: "HN1",
       status: "disabled",
+      uuid: "421bc539-f800-4677-8e5f-be0998d214e8",
       wards: [{ id: 1, name: "Ward 1 for hospitalNameOne" }],
     },
     {
@@ -16,6 +17,7 @@ describe("retrieveFacilitiesByOrgId", () => {
       name: "hospitalNameTwo",
       code: "HN2",
       status: "active",
+      uuid: "bf800c31-bcfa-4cd7-a34c-3a332db3430c",
       wards: [{ id: 2, name: "Ward 1 for hospitalNameTwo" }],
     },
   ];
