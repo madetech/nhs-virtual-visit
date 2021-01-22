@@ -71,12 +71,9 @@ import retrieveOrganisationByIdGateway from "../gateways/MsSQL/retrieveOrganisat
 import createOrganisationGateway from "../gateways/MsSQL/createOrganisation";
 import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActiveOrganisations";
 import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
-<<<<<<< HEAD
 import deleteOrganisationGateway from "../gateways/MsSQL/deleteOrganisation";
-=======
 import createManager from "../usecases/createManager";
 import insertManager from "../gateways/MsSQL/insertManager";
->>>>>>> chore: created send-sign-up-email api and sent activation link via email
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -117,13 +114,7 @@ import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/Postgr
 import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
 import verifyTrustAdminCodeGateway from "../gateways/PostgreSQL/verifyTrustAdminCode";
-import verifySignUpLink from "../usecases/verifySignUpLink";
-import updateManagerStatus from "../usecases/updateManagerStatus";
-import updateManagerStatusGateway from "../gateways/MsSQL/updateManagerStatus";
-import updateOrganisationStatus from "../usecases/updateOrganisationStatus";
-import updateOrganisationStatusGateway from "../gateways/MsSQL/updateOrganisationStatus";
-import addToUserVerificationTable from "../usecases/addToUserVerificationTable";
-import addToUserVerificationTableGateway from "../gateways/MsSQL/addToUserVerificationTable";
+import retrieveEmail from "../gateways/MsSQL/retrieveEmail";
 
 class AppContainer {
   getDb = () => {
@@ -496,7 +487,7 @@ class AppContainer {
   getRetrieveOrganisationByIdGateway = () => {
     return retrieveOrganisationByIdGateway(this);
   };
-
+  
   getCreateManager = () => {
     return createManager(this);
   };
@@ -570,50 +561,13 @@ class AppContainer {
   getArchiveManagerByUuidGateway = () => {
     return archiveManagerByUuidGateway(this);
   };
+  
+  getRetrieveEmail = () => {
+    return retrieveEmail;
+  };
 
   getResetPassword = () => {
     return resetPassword;
-  };
-
-  getInsertManagerGateway = () => {
-    return insertManager(this);
-  };
-  getCreateManager = () => {
-    return createManager(this);
-  };
-
-  getRetrieveOrganisationsGateway = () => {
-    return retrieveOrganisationsGateway(this);
-  };
-
-  getRetrieveOrganisations = () => {
-    return retrieveOrganisations(this);
-  };
-
-  getVerifySignUpLink = () => {
-    return verifySignUpLink(this);
-  };
-
-  getUpdateManagerStatusGateway = () => {
-    return updateManagerStatusGateway(this);
-  };
-  getUpdateManagerStatus = () => {
-    return updateManagerStatus(this);
-  };
-
-  getUpdateOrganisationStatusGateway = () => {
-    return updateOrganisationStatusGateway(this);
-  };
-  getUpdateOrganisationStatus = () => {
-    return updateOrganisationStatus(this);
-  };
-
-  getAddToUserVerificationTable = () => {
-    return addToUserVerificationTable(this);
-  };
-
-  getAddToUserVerificationTableGateway = () => {
-    return addToUserVerificationTableGateway(this);
   };
 }
 

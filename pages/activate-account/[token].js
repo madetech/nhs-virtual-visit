@@ -6,7 +6,7 @@ import Heading from "../../src/components/Heading";
 import Layout from "../../src/components/Layout";
 import ActionLink from "../../src/components/ActionLink";
 
-const ActivateAccount = ({ email, activationError }) => {
+const ActivateAccount = ({ email, organisationName, activationError }) => {
   const errors = [];
   if (activationError) {
     errors.push({
@@ -21,7 +21,9 @@ const ActivateAccount = ({ email, activationError }) => {
           <ErrorSummary errors={errors} />
           {!activationError && (
             <>
-              <Heading>{`Account has been activated for email address ${email}`}</Heading>
+              <Heading>Account Activation Success</Heading>
+              <p>{`${organisationName} is now active`}</p>
+              <p>{`Account has been activated for email address ${email}`}</p>
               <ActionLink href={`/login`}>Go to Login page</ActionLink>
             </>
           )}
@@ -35,40 +37,48 @@ export default ActivateAccount;
 
 export const getServerSideProps = propsWithContainer(
   async ({ query, container }) => {
-    let email;
-    let activationError = null;
     const token = query.token;
     const verifySignUpLink = container.getVerifySignUpLink();
-    const { id, error: linkError } = await verifySignUpLink(token);
-    console.log("*****Verify sign up link iid");
-    console.log(id);
-    if (!linkError) {
-      const updateManagerStatus = container.getUpdateManagerStatus();
-      const { user, error: managerError } = await updateManagerStatus({
-        id,
-        status: 1,
-      });
+    const { user, error: linkError } = await verifySignUpLink(token);
 
-      email = user.email;
-      const organisationId = user.organisation_id;
-
-      const updateOrganisationStatus = container.getUpdateOrganisationStatus();
-      const { error: organisationError } = await updateOrganisationStatus({
-        organisationId,
-        status: 1,
-      });
-
-      // if (!organisationError) {
-      //   const updateVerifiedInUserVerificationTable = container.getUpdateVerifiedInUserVerificationTable();
-      //   const { error: userVerificationTableError } = await updateVerifiedInUserVerificationTable({ verified: 1 });
-      // }
-      activationError = managerError || organisationError;
+    if (linkError) {
+      return {
+        props: {
+          email: null,
+          organisationName: null,
+          activationError: linkError,
+        },
+      };
     }
+
+    const activateManager = container.getActivateManager();
+    const {
+      user: activatedUser,
+      error: activateManagerError,
+    } = await activateManager({ userId: user.user_id });
+
+    if (activateManagerError) {
+      return {
+        props: {
+          email: null,
+          organisationName: null,
+          activationError: "There was an error",
+        },
+      };
+    }
+
+    const organisationId = activatedUser.organisation_id;
+    const activateOrganisation = container.getActivateOrganisation();
+    const {
+      organisation,
+      error: organisationError,
+    } = await activateOrganisation({ organisationId });
 
     return {
       props: {
-        email,
-        activationError: activationError || linkError,
+        email: organisationError ? null : activatedUser.email,
+        organisationName: organisationError ? null : organisation.name,
+        activationError: organisationError ? "There was an error" : null,
       },
     };
   }

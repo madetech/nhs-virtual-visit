@@ -49,14 +49,13 @@ export default withContainer(
       type: "confirmRegistration",
     });
 
-    console.log(verifyUser);
     if (verificationError) {
       res.status(400);
       res.end(JSON.stringify({ err: verificationError }));
       return;
     }
 
-    const id = user.id;
+    const uuid = user.uuid;
     const hash = verifyUser.hash;
     const sendEmail = container.getSendEmail();
     const signUpEmailTemplateId = TemplateStore().signUpEmail.templateId;
@@ -65,7 +64,7 @@ export default withContainer(
 
     const { link, linkError } = createTimeSensitiveLink(
       headers,
-      id,
+      uuid,
       hash,
       expirationTime,
       urlPath
