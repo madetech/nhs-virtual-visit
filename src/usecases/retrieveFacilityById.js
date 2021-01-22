@@ -14,7 +14,7 @@ export default ({ getRetrieveFacilityByIdGateway }) => async (
     let facility = await getRetrieveFacilityByIdGateway()(facilityId, orgId);
     facility = {
       ...facility,
-      status: facility.status === 1 ? "active" : "disabled",
+      status: facility.status === 0 ? "active" : "disabled",
     };
     return { facility, error: null };
   } catch (error) {
