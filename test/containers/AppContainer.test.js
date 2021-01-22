@@ -309,4 +309,20 @@ describe("AppContainer", () => {
   it("returns getRetrieveFacilitiesByOrgId", () => {
     expect(container.getRetrieveFacilitiesByOrgId()).toBeDefined();
   });
+
+  it("returns getRetrieveFacilityByUuid", () => {
+    expect(container.getRetrieveFacilityByUuid()).toBeDefined();
+  });
+
+  it("returns getRetrieveFacilityByUuidGateway", () => {
+    expect(container.getRetrieveFacilityByUuidGateway()).toBeDefined();
+  });
+
+  it("returns getUpdateFacilityByUuid", () => {
+    expect(container.getUpdateFacilityByUuid()).toBeDefined();
+  });
+
+  it("returns getUpdateFacilityByUuidGateway", () => {
+    expect(container.getUpdateFacilityByUuidGateway()).toBeDefined();
+  });
 });
