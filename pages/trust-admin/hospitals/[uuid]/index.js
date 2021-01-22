@@ -1,16 +1,16 @@
 import React from "react";
 import Error from "next/error";
 import Router from "next/router";
-import propsWithContainer from "../../../src/middleware/propsWithContainer";
-import verifyTrustAdminToken from "../../../src/usecases/verifyTrustAdminToken";
-import Button from "../../../src/components/Button";
-import TrustAdminHeading from "../../../src/components/TrustAdminHeading";
-import { GridRow, GridColumn } from "../../../src/components/Grid";
-import Layout from "../../../src/components/Layout";
-import WardsTable from "../../../src/components/WardsTable";
-import NumberTile from "../../../src/components/NumberTile";
-import Panel from "../../../src/components/Panel";
-import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
+import propsWithContainer from "../../../../src/middleware/propsWithContainer";
+import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
+import Button from "../../../../src/components/Button";
+import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
+import { GridRow, GridColumn } from "../../../../src/components/Grid";
+import Layout from "../../../../src/components/Layout";
+import WardsTable from "../../../../src/components/WardsTable";
+import NumberTile from "../../../../src/components/NumberTile";
+import Panel from "../../../../src/components/Panel";
+import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
 
 const ShowHospital = ({
   organisation,
@@ -99,42 +99,42 @@ const ShowHospital = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ authenticationToken, container, query }) => {
-    const { id: hospitalId } = query;
+    const { uuid: facilityUuid } = query;
     const orgId = authenticationToken.trustId;
-
+    console.log(facilityUuid);
     const {
       organisation,
       error: organisationError,
     } = await container.getRetrieveOrganisationById()(orgId);
 
     const {
-      hospital,
-      error: hospitalError,
-    } = await container.getRetrieveHospitalById()(hospitalId, orgId);
+      facility,
+      error: facilityError,
+    } = await container.getRetrieveFacilityByUuid()(facilityUuid);
 
     const {
       wards,
       error: wardsError,
-    } = await container.getRetrieveWardsByHospitalId()(hospital.id);
+    } = await container.getRetrieveWardsByHospitalId()(facility.id);
 
     const visitTotals = await container.getRetrieveHospitalVisitTotals()(orgId);
 
     const totalBookedVisits =
-      visitTotals.hospitals.find(({ id }) => id === hospitalId)?.totalVisits ||
+      visitTotals.hospitals.find(({ id }) => id === facility.id)?.totalVisits ||
       0;
 
     const {
       wards: wardVisitTotals,
       mostVisited: mostVisitedWard,
       leastVisited: leastVisitedWard,
-    } = await container.getRetrieveHospitalWardVisitTotals()(hospital.id);
+    } = await container.getRetrieveHospitalWardVisitTotals()(facility.id);
 
     return {
       props: {
         organisation,
-        hospital,
+        hospital: facility,
         wards,
-        error: hospitalError || wardsError || organisationError,
+        error: facilityError || wardsError || organisationError,
         totalBookedVisits,
         mostVisitedWard,
         leastVisitedWard,

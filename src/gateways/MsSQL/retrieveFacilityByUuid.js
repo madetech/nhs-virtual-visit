@@ -2,8 +2,6 @@ import mssql from "mssql";
 
 export default ({ getMsSqlConnPool }) => async (uuid) => {
   const db = await getMsSqlConnPool();
-  console.log("****ingateway***");
-  console.log(uuid);
   const res = await db
     .request()
     .input("uuid", mssql.UniqueIdentifier, uuid)
