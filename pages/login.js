@@ -113,7 +113,6 @@ const Login = ({ correlationId }) => {
             </Button>
           </Form>
         </GridColumn>
-        {/* <span style={{ clear: "both", display: "block" }}></span> */}
       </GridRow>
     </Layout>
   );
