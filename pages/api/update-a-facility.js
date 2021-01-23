@@ -12,20 +12,21 @@ export default withContainer(
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
 
     checkIfAuthorised(trustAdminToken, res);
-    const { id, name, status } = body;
-    if (!body || !id || !name || status == undefined) {
+    const { uuid, name, status } = body;
+    if (!body || !uuid || !name || status == undefined) {
       res.status(400);
       res.end(
-        JSON.stringify({ err: "facility id, name and status must be present" })
+        JSON.stringify({
+          err: "facility uuid, name and status must be present",
+        })
       );
       return;
     }
 
-    const { error } = await container.getRetrieveFacilityById()(
-      id,
-      name,
-      status
-    );
+    const {
+      facility: { id },
+      error,
+    } = await container.getRetrieveFacilityByUuid()(uuid, name, status);
 
     if (error) {
       res.status(404);
@@ -38,7 +39,7 @@ export default withContainer(
     }
 
     const {
-      uuid,
+      uuid: facilityUuid,
       error: updateError,
     } = await container.getUpdateFacilityById()({
       id,
@@ -51,7 +52,7 @@ export default withContainer(
       res.end(JSON.stringify({ error: "failed to update hospital" }));
     } else {
       res.status(200);
-      res.end(JSON.stringify({ uuid }));
+      res.end(JSON.stringify({ uuid: facilityUuid }));
     }
   }
 );

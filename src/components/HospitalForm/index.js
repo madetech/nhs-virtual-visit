@@ -15,7 +15,7 @@ const HospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalCode, setHospitalCode] = useState(hospital.code);
 
   let action = "Add";
-  if (hospital.id) {
+  if (hospital.uuid) {
     action = "Edit";
   }
 
