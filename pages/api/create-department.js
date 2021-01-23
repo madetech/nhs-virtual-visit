@@ -10,38 +10,48 @@ export default withContainer(
 
     const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
-    checkIfAuthorised(trustAdminIsAuthenticated(headers.cookie), res);
-    const { name, orgId, code } = body;
-    if (!name) {
+    const trustAdminAuthenticatedToken = trustAdminIsAuthenticated(
+      headers.cookie
+    );
+    checkIfAuthorised(trustAdminAuthenticatedToken, res);
+
+    const { name, facilityId, pin, code } = body;
+    if (!name || name.length === 0) {
       res.status(400);
       res.end(JSON.stringify({ err: "name must be present" }));
       return;
     }
 
-    if (!orgId) {
+    if (!facilityId) {
       res.status(400);
-      res.end(JSON.stringify({ err: "organisation ID must be present" }));
+      res.end(JSON.stringify({ err: "facility id must be present" }));
+      return;
+    }
+
+    if (!pin) {
+      res.status(400);
+      res.end(JSON.stringify({ err: "ward pin must be present" }));
       return;
     }
 
     if (!code) {
       res.status(400);
-      res.end(JSON.stringify({ err: "organisation code must be present" }));
+      res.end(JSON.stringify({ err: "ward code must be present" }));
       return;
     }
-
     res.setHeader("Content-Type", "application/json");
 
-    const { uuid, error } = await container.getCreateFacility()({
+    const { uuid, error } = await container.getCreateWard()({
       name,
-      orgId,
       code,
+      pin,
+      facilityId,
       createdBy: trustAdminToken.userId,
     });
 
     if (error) {
       res.status(400);
-      res.end(JSON.stringify({ err: "Facility name already exists" }));
+      res.end();
     } else {
       res.status(201);
       res.end(JSON.stringify({ uuid }));
