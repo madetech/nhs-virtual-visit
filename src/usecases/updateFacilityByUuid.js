@@ -20,7 +20,7 @@ export default ({ getUpdateFacilityByUuidGateway }) => async ({
     logger.info(`Updating facility ${name} with ${uuid}`);
     const returnedUuid = await getUpdateFacilityByUuidGateway()({
       uuid,
-      status: status == "active" ? 0 : 1,
+      status: status == "active" ? 1 : 0,
       name,
     });
     return { uuid: returnedUuid, error: null };

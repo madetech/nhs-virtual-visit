@@ -8,7 +8,7 @@ export default ({ getRetrieveFacilityByUuidGateway }) => async (uuid) => {
     let facility = await getRetrieveFacilityByUuidGateway()(uuid);
     facility = {
       ...facility,
-      status: facility.status === 0 ? "active" : "disabled",
+      status: facility.status === 1 ? "active" : "disabled",
     };
     return { facility, error: null };
   } catch (error) {
