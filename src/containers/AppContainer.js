@@ -62,7 +62,7 @@ import retrieveFacilitiesByOrgId from "../usecases/retrieveFacilitiesByOrgId";
 import createFacility from "../usecases/createFacility";
 import retrieveFacilityById from "../usecases/retrieveFacilityById";
 import retrieveFacilityByUuid from "../usecases/retrieveFacilityByUuid";
-import updateFacilityByUuid from "../usecases/updateFacilityByUuid";
+import updateFacilityById from "../usecases/updateFacilityById";
 import retrieveDepartmentsByFacilityId from "../usecases/retrieveDepartmentsByFacilityId";
 import createDepartment from "../usecases/createDepartment";
 
@@ -90,7 +90,7 @@ import retrieveFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveFacilitiesByO
 import createFacilityGateway from "../gateways/MsSQL/createFacility";
 import retrieveFacilityByIdGateway from "../gateways/MsSQL/retrieveFacilityById";
 import retrieveFacilityByUuidGateway from "../gateways/MsSQL/retrieveFacilityByUuid";
-import updateFacilityByUuidGateway from "../gateways/MsSQL/updateFacilityByUuid";
+import updateFacilityByIdGateway from "../gateways/MsSQL/updateFacilityById";
 import retrieveDepartmentsByFacilityIdGateway from "../gateways/MsSQL/retrieveDepartmentsByFacilityId";
 import createDepartmentGateway from "../gateways/MsSQL/createDepartment";
 
@@ -356,8 +356,8 @@ class AppContainer {
   getRetrieveFacilityByUuid = () => {
     return retrieveFacilityByUuid(this);
   };
-  getUpdateFacilityByUuid = () => {
-    return updateFacilityByUuid(this);
+  getUpdateFacilityById = () => {
+    return updateFacilityById(this);
   };
 
   getCreateOrganisationGateway = () => {
@@ -605,8 +605,8 @@ class AppContainer {
     return archiveManagerByUuid(this);
   };
 
-  getUpdateFacilityByUuidGateway = () => {
-    return updateFacilityByUuidGateway(this);
+  getUpdateFacilityByIdGateway = () => {
+    return updateFacilityByIdGateway(this);
   };
 
   // MsSQL database gateways
