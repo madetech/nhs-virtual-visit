@@ -41,7 +41,7 @@ const AddAWard = ({ organisation, error, hospital }) => {
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, authenticationToken, params }) => {
     const orgId = authenticationToken.trustId;
-    const facilityUuid = params.uuid || null;
+    const facilityUuid = params.hospitalUuid;
     const {
       organisation,
       error: organisationError,

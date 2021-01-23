@@ -38,7 +38,7 @@ const HospitalsTable = ({ hospitals }) => (
             <td className="nhsuk-table__cell">{hospital.bookedVisits}</td>
             <td className="nhsuk-table__cell">
               <AnchorLink
-                href="/trust-admin/hospitals/[uuid]"
+                href="/trust-admin/hospitals/[hospitalUuid]"
                 as={`/trust-admin/hospitals/${hospital.uuid}`}
               >
                 View
@@ -50,7 +50,7 @@ const HospitalsTable = ({ hospitals }) => (
             </td>
             <td className="nhsuk-table__cell">
               <AnchorLink
-                href="/trust-admin/hospitals/[uuid]/edit-hospital"
+                href="/trust-admin/hospitals/[hospitalUuid]/edit-hospital"
                 as={`/trust-admin/hospitals/${hospital.uuid}/edit-hospital`}
                 data-testid={`edit-${toLowerSnake(hospital.name)}`}
               >
