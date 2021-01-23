@@ -48,10 +48,10 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
       });
     };
 
-    const setUniqueWardCodeError = (errors) => {
+    const setCreateWardApiError = (errors, message) => {
       errors.push({
-        id: "ward-code-error",
-        message: "This ward code already exists. Enter a unique ward code",
+        id: "create-department-api-error",
+        message,
       });
     };
     const setWardPinError = (errors) => {
@@ -118,7 +118,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
         let code = wardCode;
         let pin = wardPin;
 
-        const response = await fetch("/api/create-ward", {
+        const response = await fetch("/api/create-department", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -127,22 +127,23 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
             name,
             code,
             pin,
-            hospitalId: hospital.id,
+            facilityId: hospital.id,
           }),
         });
 
         const status = response.status;
 
         if (status == 201) {
-          const { wardId } = await response.json();
+          const { uuid } = await response.json();
           Router.push(
-            "/trust-admin/wards/[id]/add-success",
-            `/trust-admin/wards/${wardId}/add-success`
+            "/trust-admin/hospitals/[uuid]/wards/[id]/add-ward-success",
+            `/trust-admin/hospitals/${hospital.uuid}/wards/${uuid}/add-ward-success`
           );
 
           return true;
         } else {
-          setUniqueWardCodeError(onSubmitErrors);
+          const { error: errorMessage } = await response.json();
+          setCreateWardApiError(onSubmitErrors, errorMessage);
           setErrors(onSubmitErrors);
         }
 

@@ -1,6 +1,6 @@
 import logger from "../../logger";
 
-export default ({ getCreateDepartment }) => async (department) => {
+export default ({ getCreateDepartmentGateway }) => async (department) => {
   const { name, code, facilityId, pin, createdBy } = department;
   if (name === undefined) {
     return { uuid: null, error: "name must be provided." };
@@ -20,9 +20,10 @@ export default ({ getCreateDepartment }) => async (department) => {
   try {
     logger.info(`Creating department for facility ${facilityId}`);
 
-    const uuid = await getCreateDepartment()(department);
+    const uuid = await getCreateDepartmentGateway()(department);
     return { uuid, error: null };
   } catch (error) {
+    logger.error(`Error creating department ${error}`);
     return { uuid: null, error: "There was an error creating a department." };
   }
 };

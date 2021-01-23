@@ -50,8 +50,8 @@ const HospitalsTable = ({ hospitals }) => (
             </td>
             <td className="nhsuk-table__cell">
               <AnchorLink
-                href="/trust-admin/hospitals/[uuid]/edit"
-                as={`/trust-admin/hospitals/${hospital.uuid}/edit`}
+                href="/trust-admin/hospitals/[uuid]/edit-hospital"
+                as={`/trust-admin/hospitals/${hospital.uuid}/edit-hospital`}
                 data-testid={`edit-${toLowerSnake(hospital.name)}`}
               >
                 Edit

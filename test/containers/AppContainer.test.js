@@ -333,4 +333,12 @@ describe("AppContainer", () => {
   it("returns getRetrieveDepartmentsByFacilityIdGateway", () => {
     expect(container.getRetrieveDepartmentsByFacilityIdGateway()).toBeDefined();
   });
+
+  it("returns getCreateDepartment", () => {
+    expect(container.getCreateDepartment()).toBeDefined();
+  });
+
+  it("returns getCreateDepartmentGateway", () => {
+    expect(container.getCreateDepartmentGateway()).toBeDefined();
+  });
 });
