@@ -115,8 +115,6 @@ const HospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
             onChange={(event) => {
               setHospitalStatus(event.target.value);
             }}
-            hasError={hasError(errors, "hospital-status")}
-            errorMessage={errorMessage(errors, "hospital-status")}
             defaultValue={hospitalStatus}
           />
         </FormGroup>
