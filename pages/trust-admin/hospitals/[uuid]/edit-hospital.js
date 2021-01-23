@@ -18,7 +18,7 @@ const EditHospital = ({ organisation, hospital, error }) => {
   const [errors, setErrors] = useState([]);
 
   const submit = async (payload) => {
-    payload.uuid = hospital.uuid;
+    payload.id = hospital.id;
     try {
       const response = await fetch("/api/update-a-facility", {
         method: "PATCH",
