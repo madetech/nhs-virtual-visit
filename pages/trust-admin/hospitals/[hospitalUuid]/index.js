@@ -98,8 +98,8 @@ const ShowHospital = ({
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyTrustAdminToken(async ({ authenticationToken, container, query }) => {
-    const { uuid: facilityUuid } = query;
+  verifyTrustAdminToken(async ({ authenticationToken, container, params }) => {
+    const { hospitalUuid: facilityUuid } = params;
     const orgId = authenticationToken.trustId;
     const {
       organisation,

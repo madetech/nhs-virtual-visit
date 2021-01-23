@@ -35,7 +35,7 @@ const EditHospital = ({ organisation, hospital, error }) => {
       const json = await response.json();
 
       Router.push(
-        "/trust-admin/hospitals/[uuid]/edit-hospital-success",
+        "/trust-admin/hospitals/[hospitalUuid]/edit-hospital-success",
         `/trust-admin/hospitals/${json.uuid}/edit-hospital-success`
       );
 
@@ -78,8 +78,8 @@ const EditHospital = ({ organisation, hospital, error }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyTrustAdminToken(async ({ authenticationToken, container, query }) => {
-    const { uuid: facilityUuid } = query;
+  verifyTrustAdminToken(async ({ authenticationToken, container, params }) => {
+    const { hospitalUuid: facilityUuid } = params;
     const orgId = authenticationToken.trustId;
     const {
       organisation,
