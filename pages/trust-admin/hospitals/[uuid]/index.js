@@ -83,10 +83,10 @@ const ShowHospital = ({
           <Button
             className="nhsuk-button"
             onClick={() => {
-              Router.push({
-                pathname: `/trust-admin/wards/add`,
-                query: { hospitalId: hospital.id },
-              });
+              Router.push(
+                `/trust-admin/hospitals/[uuid]/wards/add-ward`,
+                `/trust-admin/hospitals/${hospital.uuid}/wards/add-ward`
+              );
             }}
           >
             Add a ward

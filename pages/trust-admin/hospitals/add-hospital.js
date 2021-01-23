@@ -48,8 +48,8 @@ const AddAHospital = ({ organisation, error }) => {
       }
 
       Router.push(
-        "/trust-admin/hospitals/[uuid]/add-success",
-        `/trust-admin/hospitals/${json.uuid}/add-success`
+        "/trust-admin/hospitals/[uuid]/add-hospital-success",
+        `/trust-admin/hospitals/${json.uuid}/add-hospital-success`
       );
 
       return true;

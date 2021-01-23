@@ -11,7 +11,7 @@ export default ({ getRetrieveDepartmentsByFacilityIdGateway }) => async (
     let departments = await getRetrieveDepartmentsByFacilityIdGateway()(id);
     departments = departments.map((department) => ({
       ...department,
-      status: department.status === 0 ? "active" : "disabled",
+      status: department.status === 1 ? "active" : "disabled",
     }));
     return { departments, error: null };
   } catch (error) {

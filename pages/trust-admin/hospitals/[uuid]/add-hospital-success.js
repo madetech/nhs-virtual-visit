@@ -10,44 +10,30 @@ import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import PanelSuccess from "../../../../src/components/PanelSuccess";
 
-const EditAWardSuccess = ({
-  error,
-  name,
-  hospitalName,
-  hospitalId,
-  organisation,
-}) => {
+const AddAHospitalSuccess = ({ organisation, error, hospital }) => {
   if (error) {
     return <Error />;
   }
 
   return (
     <Layout
-      title={`${name} has been updated`}
+      title={`${hospital.name} has been added`}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
-      <TrustAdminHeading
-        trustName={organisation.name}
-        subHeading={hospitalName}
-      />
+      <TrustAdminHeading trustName={organisation.name} subHeading="Hospitals" />
+
       <GridRow>
         <GridColumn width="two-thirds">
-          <PanelSuccess
-            name={`${name}`}
-            action={`updated`}
-            subAction={`for ${hospitalName}`}
-          />
+          <PanelSuccess name={`${hospital.name}`} action={`added`} />
           <h2>What happens next</h2>
-          <ActionLink href={`/trust-admin/wards/add?hospitalId=${hospitalId}`}>
-            Add a ward for {hospitalName}
+
+          <ActionLink href={`/trust-admin/hospitals/add-hospital`}>
+            Add another hospital
           </ActionLink>
           <p>
-            <AnchorLink
-              href="/trust-admin/hospitals/[id]"
-              as={`/trust-admin/hospitals/${hospitalId}`}
-            >
-              {`Return to ${hospitalName}`}
+            <AnchorLink href={`/trust-admin/hospitals/${hospital.uuid}`}>
+              {`Go to ${hospital.name}`}
             </AnchorLink>
           </p>
         </GridColumn>
@@ -58,27 +44,27 @@ const EditAWardSuccess = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
-    const orgId = authenticationToken.trustId;
+    const { uuid } = query;
     const {
       organisation,
       error: organisationError,
-    } = await container.getRetrieveOrganisationById()(orgId);
-    const getRetrieveWardById = container.getRetrieveWardById();
-    const { ward, error: wardError } = await getRetrieveWardById(
-      query.id,
-      orgId
+    } = await container.getRetrieveOrganisationById()(
+      authenticationToken.trustId
     );
+
+    const {
+      facility: { name },
+      error: facilityError,
+    } = await container.getRetrieveFacilityByUuid()(uuid);
 
     return {
       props: {
-        error: organisationError || wardError,
-        name: ward.name,
-        hospitalName: ward.hospitalName,
-        hospitalId: ward.hospitalId,
+        error: organisationError || facilityError,
+        hospital: { name, uuid },
         organisation,
       },
     };
   })
 );
 
-export default EditAWardSuccess;
+export default AddAHospitalSuccess;
