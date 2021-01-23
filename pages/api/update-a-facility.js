@@ -17,7 +17,7 @@ export default withContainer(
       res.status(400);
       res.end(
         JSON.stringify({
-          err: "facility uuid, name and status must be present",
+          error: "facility uuid, name and status must be present",
         })
       );
       return;
@@ -32,7 +32,7 @@ export default withContainer(
       res.status(404);
       res.end(
         JSON.stringify({
-          err: "facility does not exist in current organisation",
+          error: "facility does not exist in current organisation",
         })
       );
       return;
@@ -49,7 +49,7 @@ export default withContainer(
 
     if (updateError) {
       res.status(500);
-      res.end(JSON.stringify({ error: "failed to update hospital" }));
+      res.end(JSON.stringify({ error: updateError }));
     } else {
       res.status(200);
       res.end(JSON.stringify({ uuid: facilityUuid }));
