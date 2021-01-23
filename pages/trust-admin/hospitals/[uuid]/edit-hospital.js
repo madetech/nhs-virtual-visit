@@ -18,7 +18,7 @@ const EditHospital = ({ organisation, hospital, error }) => {
   const [errors, setErrors] = useState([]);
 
   const submit = async (payload) => {
-    payload.id = hospital.id;
+    payload.uuid = hospital.uuid;
     try {
       const response = await fetch("/api/update-a-facility", {
         method: "PATCH",
@@ -86,13 +86,13 @@ export const getServerSideProps = propsWithContainer(
       error: organisationError,
     } = await container.getRetrieveOrganisationById()(orgId);
     const {
-      facility,
+      facility: { uuid, name, code, status },
       error: facilityError,
     } = await container.getRetrieveFacilityByUuid()(facilityUuid);
-    console.log(facility);
+
     return {
       props: {
-        hospital: facility,
+        hospital: { uuid, name, code, status },
         error: facilityError || organisationError,
         organisation,
       },
