@@ -7,7 +7,7 @@ import {
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     validateHttpMethod("POST", method, res);
-
+    console.log("****in api***");
     const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
     const trustAdminAuthenticatedToken = trustAdminIsAuthenticated(
@@ -40,21 +40,29 @@ export default withContainer(
       return;
     }
     res.setHeader("Content-Type", "application/json");
+    try {
+      const { uuid, error } = await container.getCreateDepartment()({
+        name,
+        code,
+        pin,
+        facilityId,
+        createdBy: trustAdminToken.userId,
+      });
 
-    const { uuid, error } = await container.getCreateWard()({
-      name,
-      code,
-      pin,
-      facilityId,
-      createdBy: trustAdminToken.userId,
-    });
-
-    if (error) {
-      res.status(400);
-      res.end();
-    } else {
-      res.status(201);
-      res.end(JSON.stringify({ uuid }));
+      if (error) {
+        res.status(400);
+        res.end(JSON.stringify({ error }));
+      } else {
+        res.status(201);
+        res.end(JSON.stringify({ uuid }));
+      }
+    } catch (error) {
+      res.status(500);
+      res.end(
+        JSON.stringify({
+          error: "500 (Internal Server Error). Please try again later.",
+        })
+      );
     }
   }
 );

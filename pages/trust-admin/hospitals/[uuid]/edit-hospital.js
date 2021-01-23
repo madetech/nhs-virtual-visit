@@ -6,7 +6,7 @@ import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToke
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import Layout from "../../../../src/components/Layout";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
-import EditHospitalForm from "../../../../src/components/HospitalForm";
+import HospitalForm from "../../../../src/components/HospitalForm";
 import ErrorSummary from "../../../../src/components/ErrorSummary";
 import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
 
@@ -35,8 +35,8 @@ const EditHospital = ({ organisation, hospital, error }) => {
       const json = await response.json();
 
       Router.push(
-        "/trust-admin/hospitals/[uuid]/edit-success",
-        `/trust-admin/hospitals/${json.uuid}/edit-success`
+        "/trust-admin/hospitals/[uuid]/edit-hospital-success",
+        `/trust-admin/hospitals/${json.uuid}/edit-hospital-success`
       );
 
       return true;
@@ -65,7 +65,7 @@ const EditHospital = ({ organisation, hospital, error }) => {
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <EditHospitalForm
+          <HospitalForm
             errors={errors}
             setErrors={setErrors}
             hospital={hospital}

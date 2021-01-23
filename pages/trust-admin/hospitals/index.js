@@ -24,7 +24,7 @@ const TrustAdmin = ({ hospitals, error, organisation }) => {
       <TrustAdminHeading trustName={organisation.name} subHeading="Hospitals" />
       <GridRow>
         <GridColumn width="full">
-          <ActionLink href={`/trust-admin/hospitals/add`}>
+          <ActionLink href={`/trust-admin/hospitals/add-hospital`}>
             Add a hospital
           </ActionLink>
           {hospitals.length > 0 ? (
