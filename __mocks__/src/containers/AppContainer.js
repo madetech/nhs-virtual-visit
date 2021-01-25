@@ -8,5 +8,6 @@ export default {
   getRetrieveDepartmentByUuid: jest.fn(() => () => Promise.resolve({})),
   getUpdateDepartmentById: jest.fn(() => () => Promise.resolve({})),
   getUpdateDepartmentByIdGateway: jest.fn(() => () => Promise.resolve({})),
+  getUpdateFacilityByIdGateway: jest.fn(() => () => Promise.resolve({})),
   getTrustAdminIsAuthenticated: jest.fn(() => () => true),
 };
