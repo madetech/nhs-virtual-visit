@@ -7,6 +7,7 @@ const activateManagerAndOrganisationGateway = ({ getMsSqlConnPool }) => async ({
   status,
 }) => {
   logger.info("Activating manager");
+
   try {
     const db = await getMsSqlConnPool();
     const response = await db
@@ -41,7 +42,7 @@ const activateManagerAndOrganisationGateway = ({ getMsSqlConnPool }) => async ({
   } catch (error) {
     logger.error(`Error activating manager ${error}`);
     return {
-      user: null,
+      organisation: null,
       error: error.toString(),
     };
   }

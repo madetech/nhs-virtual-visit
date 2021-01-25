@@ -3,14 +3,14 @@ const activateManagerAndOrganisation = ({
 }) => async ({ userId, organisationId }) => {
   if (!userId) {
     return {
-      user: null,
+      organisation: null,
       error: "userId is not defined",
     };
   }
 
   if (!organisationId) {
     return {
-      user: null,
+      organisation: null,
       error: "organisationId is not defined",
     };
   }
