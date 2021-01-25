@@ -1,7 +1,8 @@
 import { getServerSideProps } from "../../../../../pages/trust-admin/hospitals/[hospitalUuid]/edit-hospital";
 import mockAppContainer from "src/containers/AppContainer";
+import { TRUST_ADMIN } from "../../../../../src/helpers/userTypes";
 
-describe("/trust-admin/hospitals/[id]/edit", () => {
+describe("/trust-admin/hospitals/[hospitalUuid]/edit-hospital", () => {
   // Arrange
   let res;
   beforeEach(() => {
@@ -50,7 +51,7 @@ describe("/trust-admin/hospitals/[id]/edit", () => {
       mockAppContainer
         .getTokenProvider()
         .validate.mockImplementationOnce(() => ({
-          type: "trustAdmin",
+          type: TRUST_ADMIN,
           trustId: orgId,
         }));
       mockAppContainer.getRetrieveOrganisationById.mockImplementationOnce(

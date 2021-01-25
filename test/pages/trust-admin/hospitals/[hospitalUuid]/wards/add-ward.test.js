@@ -1,6 +1,8 @@
-import { getServerSideProps } from "../../../../pages/trust-admin/wards/add";
-import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
-describe("/trust-admin/wards/add", () => {
+import { getServerSideProps } from "../../../../../../pages/trust-admin/hospitals/[hospitalUuid]/wards/add-ward";
+import { TRUST_ADMIN } from "../../../../../../src/helpers/userTypes";
+import mockAppContainer from "src/containers/AppContainer";
+
+describe("/trust-admin/hospitals/[hospitalUuid]/wards/add-ward", () => {
   let res;
   beforeEach(() => {
     res = {
@@ -22,54 +24,66 @@ describe("/trust-admin/wards/add", () => {
         Location: "/login",
       });
     });
-    it("returns hospitals, hospitalId, organisation and error through props", async () => {
+    it("returns hospital, organisation and error through props", async () => {
       // Arrange
       const orgId = 10;
       const expectedFacilityId = 1;
+      const expectedFacilityUuid = "uuid";
       const authenticatedReq = {
         headers: {
           cookie: "token=123",
         },
       };
       const expectedOrganisationName = "Doggo Trust";
-      const expectedFacilities = [
-        { id: 1, name: "Hospital1", wards: [{ id: 1, name: "Ward 1" }] },
-        { id: 2, name: "Hospital2", wards: [{ id: 2, name: "Ward 2" }] },
-      ];
-      const tokenProvider = {
-        validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId: orgId })),
+      const expectedFacility = {
+        id: expectedFacilityId,
+        uuid: expectedFacilityUuid,
+        name: "Hospital1",
       };
+
       const retrieveOrganisationByIdSpy = jest.fn(async () => ({
         organisation: { name: expectedOrganisationName },
         error: null,
       }));
-      const retrieveFacilitiesByOrgIdSpy = jest.fn().mockReturnValue({
-        facilities: expectedFacilities,
+      const retrieveFacilityByUuidSpy = jest.fn().mockReturnValue({
+        facility: expectedFacility,
         error: null,
       });
-      const container = {
-        getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
-        getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgIdSpy,
-        getTokenProvider: () => tokenProvider,
-        getRegenerateToken: () => jest.fn().mockReturnValue({}),
-      };
+      mockAppContainer
+        .getTokenProvider()
+        .validate.mockImplementationOnce(() => ({
+          type: TRUST_ADMIN,
+          trustId: orgId,
+        }));
+      mockAppContainer.getRetrieveOrganisationById.mockImplementationOnce(
+        () => retrieveOrganisationByIdSpy
+      );
+      mockAppContainer.getRetrieveFacilityByUuid.mockImplementationOnce(
+        () => retrieveFacilityByUuidSpy
+      );
+
+      // const container = {
+      //   getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
+      //   getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgIdSpy,
+      //   getTokenProvider: () => tokenProvider,
+      //   getRegenerateToken: () => jest.fn().mockReturnValue({}),
+      // };
       // Act
       const {
-        props: { hospitals, hospitalId, organisation, error },
+        props: { hospital, organisation, error },
       } = await getServerSideProps({
         req: authenticatedReq,
         res,
-        query: {
-          hospitalId: expectedFacilityId,
+        params: {
+          hospitalUuid: expectedFacilityUuid,
         },
-        container,
+        container: { ...mockAppContainer },
       });
       // Assert
       expect(retrieveOrganisationByIdSpy).toBeCalledWith(orgId);
-      expect(retrieveFacilitiesByOrgIdSpy).toBeCalledWith(orgId);
-      expect(hospitals).toEqual(expectedFacilities);
+      expect(retrieveFacilityByUuidSpy).toBeCalledWith(expectedFacilityUuid);
+      expect(hospital).toEqual(expectedFacility);
       expect(organisation.name).toEqual(expectedOrganisationName);
-      expect(hospitalId).toEqual(expectedFacilityId);
       expect(error).toBeNull();
     });
   });
