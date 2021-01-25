@@ -11,16 +11,9 @@ import isPresent from "../../helpers/isPresent";
 import Form from "../Form";
 import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 
-const EditWardForm = ({
-  errors,
-  setErrors,
-  id,
-  initialName,
-  hospitalId,
-  status,
-}) => {
-  const [wardName, setWardName] = useState(initialName);
-  const [wardStatus, setWardStatus] = useState(status);
+const EditWardForm = ({ errors, setErrors, hospitalUuid, ward }) => {
+  const [wardName, setWardName] = useState(ward.name);
+  const [wardStatus, setWardStatus] = useState(ward.status);
   let onSubmitErrors = [];
 
   const submitAnswers = async () => {
@@ -31,23 +24,27 @@ const EditWardForm = ({
           "content-type": "application/json",
         },
         body: JSON.stringify({
-          id,
+          uuid: ward.uuid,
           name: wardName,
           status: wardStatus,
-          hospitalId,
         }),
       });
 
-      if (!response.ok) {
-        throw Error(response.status);
+      if (response.status == 201) {
+        const { uuid: wardUuid } = await response.json();
+        await Router.push(
+          "/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/edit-success",
+          `/trust-admin/hospitals/${hospitalUuid}/wards/${wardUuid}/edit-success`
+        );
+        return true;
+      } else {
+        const { error } = await response.json();
+        onSubmitErrors.push({
+          id: "ward-update-error",
+          message: error,
+        });
+        setErrors(onSubmitErrors);
       }
-
-      const json = await response.json();
-      await Router.push(
-        "/trust-admin/wards/[id]/edit-success",
-        `/trust-admin/wards/${json.wardId}/edit-success`
-      );
-      return true;
     } catch (e) {
       onSubmitErrors.push({
         id: "ward-update-error",

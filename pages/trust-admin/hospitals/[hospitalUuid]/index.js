@@ -78,7 +78,7 @@ const ShowHospital = ({
           <WardsTable
             wards={wards}
             wardVisitTotals={wardVisitTotals}
-            hospitalId={hospital.id}
+            hospitalUuid={hospital.uuid}
           />
           <Button
             className="nhsuk-button"
