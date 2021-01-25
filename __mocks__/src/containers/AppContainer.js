@@ -1,7 +1,12 @@
 import mockMssql from "src/gateways/MsSQL";
+import mockTokenProvider from "src/providers/TokenProvider";
+
 export default {
   getMsSqlConnPool: jest.fn(() => mockMssql.getConnectionPool()),
-  getTokenProvider: jest.fn({ type: null, trustId: null }),
+  getTokenProvider: jest.fn(() => ({ ...mockTokenProvider })),
+  getRegenerateToken: jest.fn(() => () => ({})),
+  getRetrieveOrganisationById: jest.fn(() => () => Promise.resolve({})),
+  getRetrieveFacilityByUuid: jest.fn(() => () => Promise.resolve({})),
   getCreateFacilityGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveFacilityByIdGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveFacilityByUuidGateway: jest.fn(() => () => Promise.resolve({})),

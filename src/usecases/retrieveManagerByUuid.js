@@ -11,7 +11,7 @@ const retrieveManagerByUuid = ({ getRetrieveManagerByUuidGateway }) => async (
 
     let manager = await getRetrieveManagerByUuidGateway()(uuid);
 
-    const status = manager.status === 0 ? "active" : "disabled";
+    const status = manager.status === 1 ? "active" : "disabled";
     manager = { ...manager, status };
     return { manager, error: null };
   } catch (error) {

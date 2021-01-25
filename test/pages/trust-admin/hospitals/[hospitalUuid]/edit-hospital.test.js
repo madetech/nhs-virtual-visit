@@ -1,4 +1,5 @@
-import { getServerSideProps } from "../../../../../pages/trust-admin/hospitals/[id]/edit";
+import { getServerSideProps } from "../../../../../pages/trust-admin/hospitals/[hospitalUuid]/edit-hospital";
+import mockAppContainer from "src/containers/AppContainer";
 
 describe("/trust-admin/hospitals/[id]/edit", () => {
   // Arrange
@@ -23,15 +24,11 @@ describe("/trust-admin/hospitals/[id]/edit", () => {
         Location: "/login",
       });
     });
-
-    it("retrieves the hospital by ID", async () => {
+    it("retrieves the facility by id", async () => {
       // Arrange
       const orgId = 1;
-      const tokenProvider = {
-        validate: jest.fn(() => ({ type: "trustAdmin", trustId: orgId })),
-      };
-
-      const hospitalId = 2;
+      const facilityId = 2;
+      const facilityUuid = "uuid";
       const authenticatedReq = {
         headers: {
           cookie: "token=123",
@@ -41,30 +38,36 @@ describe("/trust-admin/hospitals/[id]/edit", () => {
         organisation: { name: "Doggo Trust" },
         error: null,
       }));
-      const retrieveHospitalByIdSpy = jest.fn().mockResolvedValue({
-        hospital: {
-          id: hospitalId,
+      const retrieveFacilityByUuidSpy = jest.fn().mockResolvedValue({
+        facility: {
+          id: facilityId,
+          uuid: facilityUuid,
           name: "Northwick Park Hospital",
-          surveyUrl: "https://www.survey.example.com",
-          supportUrl: "https://www.support.example.com",
+          status: "active",
         },
         error: null,
       });
-      const container = {
-        getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
-        getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
-        getTokenProvider: () => tokenProvider,
-        getRegenerateToken: () => jest.fn().mockReturnValue({}),
-      };
+      mockAppContainer
+        .getTokenProvider()
+        .validate.mockImplementationOnce(() => ({
+          type: "trustAdmin",
+          trustId: orgId,
+        }));
+      mockAppContainer.getRetrieveOrganisationById.mockImplementationOnce(
+        () => retrieveOrganisationByIdSpy
+      );
+      mockAppContainer.getRetrieveFacilityByUuid.mockImplementationOnce(
+        () => retrieveFacilityByUuidSpy
+      );
       // Act
       await getServerSideProps({
         req: authenticatedReq,
         res,
-        query: { id: hospitalId },
-        container,
+        params: { hospitalUuid: facilityUuid },
+        container: { ...mockAppContainer },
       });
       // Assert
-      expect(retrieveHospitalByIdSpy).toHaveBeenCalledWith(hospitalId, orgId);
+      expect(retrieveFacilityByUuidSpy).toHaveBeenCalledWith(facilityUuid);
     });
   });
 });
