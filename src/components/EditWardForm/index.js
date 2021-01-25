@@ -33,7 +33,7 @@ const EditWardForm = ({ errors, setErrors, hospitalUuid, ward }) => {
       if (response.status == 201) {
         const { uuid: wardUuid } = await response.json();
         await Router.push(
-          "/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/edit-ward-success",
+          // "/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/edit-ward-success",
           `/trust-admin/hospitals/${hospitalUuid}/wards/${wardUuid}/edit-ward-success`
         );
         return true;
