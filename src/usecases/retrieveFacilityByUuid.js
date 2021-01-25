@@ -4,7 +4,7 @@ export default ({ getRetrieveFacilityByUuidGateway }) => async (uuid) => {
     return { facility: null, error: "uuid must be present." };
   }
   try {
-    logger.info(`Retrieving hospital for ${uuid}`);
+    logger.info(`Retrieving facility for ${uuid}`);
     let facility = await getRetrieveFacilityByUuidGateway()(uuid);
     facility = {
       ...facility,
@@ -13,10 +13,10 @@ export default ({ getRetrieveFacilityByUuidGateway }) => async (uuid) => {
     return { facility, error: null };
   } catch (error) {
     console.log(error);
-    logger.error(`Error retrieving hospital: ${error}`);
+    logger.error(`Error retrieving facility: ${error}`);
     return {
       facility: null,
-      error: "There has been an error retrieving hospital.",
+      error: "There has been an error retrieving facility.",
     };
   }
 };
