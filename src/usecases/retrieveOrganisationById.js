@@ -3,7 +3,7 @@ const retrieveOrganisationById = ({
 }) => async (organisationId) => {
   if (!organisationId) {
     return {
-      user: null,
+      organisation: null,
       error: "organisationId is not defined",
     };
   }
