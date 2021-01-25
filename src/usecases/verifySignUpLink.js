@@ -2,6 +2,13 @@ const verifySignUpLink = ({
   getTokenProvider,
   getVerifySignUpLinkGateway,
 }) => async (token) => {
+  if (!token) {
+    return {
+      user: null,
+      error: "token is not defined",
+    };
+  }
+
   const tokenProvider = getTokenProvider();
   const { decryptedToken, errorToken } = tokenProvider.verifyTokenFromLink(
     token
@@ -19,7 +26,7 @@ const verifySignUpLink = ({
 
   const { user, error } = await getVerifySignUpLinkGateway()({ hash, uuid });
 
-  if (user.verified || user.status !== 0) {
+  if (user && (user.verified || user.status !== 0)) {
     let errorMessage;
     user.verified
       ? (errorMessage = "Link is invalid. Please sign up again")
