@@ -12,8 +12,7 @@ export default withContainer(
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
     checkIfAuthorised(trustAdminToken, res);
 
-    const { uuid, name, status } = body;
-    if (!body || !uuid || !name || !status) {
+    if (!body || !body.uuid || !body.name || !body.status) {
       res.status(400);
       res.end(
         JSON.stringify({
@@ -23,6 +22,7 @@ export default withContainer(
       return;
     }
     try {
+      const { uuid, name, status } = body;
       const {
         department,
         error: departmentError,
@@ -37,7 +37,6 @@ export default withContainer(
         );
         return;
       }
-
       const {
         uuid: departmentUuid,
         error,
@@ -49,6 +48,7 @@ export default withContainer(
 
       if (error) {
         res.status(400);
+        res.end(JSON.stringify({ error }));
         res.end();
       } else {
         res.status(201);
