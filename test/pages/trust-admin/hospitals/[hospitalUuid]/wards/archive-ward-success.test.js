@@ -1,5 +1,5 @@
-import { getServerSideProps } from "../../../../pages/trust-admin/wards/archive-success";
-import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
+import { getServerSideProps } from "../../../../../../pages/trust-admin/hospitals/[hospitalUuid]/wards/archive-ward-success";
+import { TRUST_ADMIN } from "../../../../../../src/helpers/userTypes";
 describe("/trust-admin/wards/archive-success", () => {
   let res;
   beforeEach(() => {
