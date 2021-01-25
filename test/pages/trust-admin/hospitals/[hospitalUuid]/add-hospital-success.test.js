@@ -1,37 +1,46 @@
-import { getServerSideProps } from "../../../../../pages/trust-admin/hospitals/[id]/add-success";
+import { getServerSideProps } from "../../../../../pages/trust-admin/hospitals/[hospitalUuid]/add-hospital-success";
+import mockAppContainer from "src/containers/AppContainer";
+import { TRUST_ADMIN } from "../../../../../src/helpers/userTypes";
 
-describe("/trust-admin/hospitals/[id]/add-success", () => {
+describe("/hospitals/[hospitalUuid]/add-hospital-success", () => {
   // Arrange
+  const orgId = 1;
+  const expectedFacilityUuid = "uuid";
+  const expectedFacility = {
+    uuid: expectedFacilityUuid,
+    name: "Hospital1",
+  };
   const authenticatedReq = {
     headers: {
       cookie: "token=123",
     },
   };
-  const tokenProvider = {
-    validate: jest.fn(() => ({ type: "trustAdmin", trustId: 1 })),
-  };
   const retrieveOrganisationByIdSpy = jest.fn(async () => ({
     organisation: { name: "Doggo Trust" },
     error: null,
   }));
-  const retrieveHospitalByIdSpy = jest.fn().mockReturnValue({
-    hospital: {
-      id: 1,
-      name: "Northwick Park Hospital",
-    },
+  const retrieveFacilityByUuidSpy = jest.fn().mockResolvedValue({
+    facility: expectedFacility,
     error: null,
   });
-  let res, container;
+
+  let res;
   beforeEach(() => {
     res = {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
     };
-    container = {
-      getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
-      getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
-      getTokenProvider: () => tokenProvider,
-      getRegenerateToken: () => jest.fn().mockReturnValue({}),
-    };
+    mockAppContainer
+      .getTokenProvider()
+      .validate.mockImplementationOnce(() => ({
+        type: TRUST_ADMIN,
+        trustId: orgId,
+      }));
+    mockAppContainer.getRetrieveOrganisationById.mockImplementationOnce(
+      () => retrieveOrganisationByIdSpy
+    );
+    mockAppContainer.getRetrieveFacilityByUuid.mockImplementation(
+      () => retrieveFacilityByUuidSpy
+    );
   });
 
   describe("getServerSideProps", () => {
@@ -50,34 +59,38 @@ describe("/trust-admin/hospitals/[id]/add-success", () => {
       });
     });
 
-    describe("with hospitalId parameter", () => {
-      it("retrieves a hospital by the hospitalId parameter", async () => {
+    describe("with hospitalUuid parameter", () => {
+      it("retrieves a hospital by the hospitalUuid parameter", async () => {
         // Act
         await getServerSideProps({
           req: authenticatedReq,
           res,
-          query: {
-            id: "hospital ID",
+          params: {
+            hospitalUuid: expectedFacilityUuid,
           },
-          container,
+          container: { ...mockAppContainer },
         });
         // Assert
-        expect(retrieveHospitalByIdSpy).toHaveBeenCalledWith("hospital ID", 1);
+        expect(retrieveFacilityByUuidSpy).toHaveBeenCalledWith(
+          expectedFacilityUuid
+        );
       });
 
       it("set a hospital prop based on the retrieved hospital", async () => {
         // Act
-        const { props } = await getServerSideProps({
+        const {
+          props: { hospital, error },
+        } = await getServerSideProps({
           req: authenticatedReq,
           res,
-          query: {
-            hospitalId: "hospital ID",
+          params: {
+            hospitalUuid: expectedFacilityUuid,
           },
-          container,
+          container: { ...mockAppContainer },
         });
         // Assert
-        expect(props.name).toEqual("Northwick Park Hospital");
-        expect(props.error).toBeNull();
+        expect(hospital).toEqual(expectedFacility);
+        expect(error).toBeNull();
       });
     });
   });
