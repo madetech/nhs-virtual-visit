@@ -9,6 +9,9 @@ export default ({ getRetrieveDepartmentsByFacilityIdGateway }) => async (
   try {
     logger.info(`Retrieving deparments for facility id: ${id}`);
     let departments = await getRetrieveDepartmentsByFacilityIdGateway()(id);
+    if (departments == undefined) {
+      throw Error();
+    }
     departments = departments.map((department) => ({
       ...department,
       status: department.status === 1 ? "active" : "disabled",
@@ -17,7 +20,7 @@ export default ({ getRetrieveDepartmentsByFacilityIdGateway }) => async (
   } catch (error) {
     return {
       departments: null,
-      error: "There was an error retrieving a department.",
+      error: "There was an error retrieving departments.",
     };
   }
 };

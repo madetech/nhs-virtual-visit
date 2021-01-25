@@ -34,7 +34,7 @@ describe("retrieveManagersByOrgId", () => {
     );
     expect(retrieveManagersByOrgIdSpy).toBeCalledWith(expectedOrgId);
   });
-  it("returns an error if manager cannot be deleted", async () => {
+  it("returns an error if db exception", async () => {
     const retrieveManagersByOrgIdErrorSpy = jest.fn(async () => {
       throw new Error("error");
     });
