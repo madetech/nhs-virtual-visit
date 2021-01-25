@@ -349,4 +349,12 @@ describe("AppContainer", () => {
   it("returns getRetrieveDepartmentByUuidGateway", () => {
     expect(container.getRetrieveDepartmentByUuidGateway()).toBeDefined();
   });
+
+  it("returns getUpdateDepartmentByIdGateway", () => {
+    expect(container.getUpdateDepartmentByIdGateway()).toBeDefined();
+  });
+
+  it("returns getUpdateDepartmentById", () => {
+    expect(container.getUpdateDepartmentById()).toBeDefined();
+  });
 });
