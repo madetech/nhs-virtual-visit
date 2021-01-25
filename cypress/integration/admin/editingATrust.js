@@ -34,7 +34,7 @@ xdescribe("As an admin, I want to edit a trust so that I can update the details 
   });
 
   function WhenIClickToEditATrust() {
-    cy.get("a.nhsuk-link").contains("Edit Test Trust").click();
+    cy.get("a.nhsuk-link").contains("Edit").click();
   }
 
   function ThenISeeTheEditATrustForm() {
