@@ -6,6 +6,7 @@ export default {
   getTokenProvider: jest.fn(() => ({ ...mockTokenProvider })),
   getRegenerateToken: jest.fn(() => () => ({})),
   getRetrieveOrganisationById: jest.fn(() => () => Promise.resolve({})),
+  getRetrieveFacilitiesByOrgId: jest.fn(() => () => Promise.resolve({})),
   getRetrieveFacilityByUuid: jest.fn(() => () => Promise.resolve({})),
   getCreateFacilityGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveFacilityByIdGateway: jest.fn(() => () => Promise.resolve({})),
