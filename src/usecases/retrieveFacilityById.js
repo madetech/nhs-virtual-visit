@@ -15,7 +15,7 @@ export default ({ getRetrieveFacilityByIdGateway }) => async (facilityId) => {
     logger.error(`Error retrieving hospital: ${error}`);
     return {
       facility: null,
-      error: "There has been an error retrieving hospital.",
+      error: "There has been an error retrieving the facility.",
     };
   }
 };
