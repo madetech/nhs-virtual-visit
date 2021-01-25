@@ -2,7 +2,7 @@ import React from "react";
 import AnchorLink from "../AnchorLink";
 import toLowerSnake from "../../helpers/toLowerSnake";
 
-const WardsTable = ({ wards, wardVisitTotals }) => (
+const WardsTable = ({ wards, wardVisitTotals, hospitalUuid }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
       <caption className="nhsuk-table__caption">List of wards</caption>
@@ -34,7 +34,7 @@ const WardsTable = ({ wards, wardVisitTotals }) => (
       </thead>
       <tbody className="nhsuk-table__body">
         {wards.map((ward) => (
-          <tr key={ward.id} className="nhsuk-table__row">
+          <tr key={ward.uuid} className="nhsuk-table__row">
             {!wardVisitTotals && (
               <td className="nhsuk-table__cell">{ward.hospitalName}</td>
             )}
@@ -42,15 +42,13 @@ const WardsTable = ({ wards, wardVisitTotals }) => (
             <td className="nhsuk-table__cell">{ward.code}</td>
             <td className="nhsuk-table__cell">{ward.status}</td>
             {wardVisitTotals && (
-              <td className="nhsuk-table__cell">{wardVisitTotals[ward.id]}</td>
+              <td className="nhsuk-table__cell">
+                {wardVisitTotals[ward.uuid]}
+              </td>
             )}
             <td className="nhsuk-table__cell">
               <AnchorLink
-                href={{
-                  pathname: `/trust-admin/wards/[id]/edit`,
-                  query: { id: ward.id },
-                }}
-                as={`/trust-admin/wards/${ward.id}/edit`}
+                href={`/trust-admin/hospitals/${hospitalUuid}/wards/${ward.uuid}/edit-ward`}
               >
                 Edit
                 <span className="nhsuk-u-visually-hidden"> {ward.name}</span>
