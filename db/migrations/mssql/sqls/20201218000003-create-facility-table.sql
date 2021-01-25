@@ -6,6 +6,6 @@ CREATE TABLE dbo.[facility] (
   [created_by] int NOT NULL,
   [code] nvarchar(255) NOT NULL,
   [uuid] uniqueidentifier NOT NULL DEFAULT newid(),
-  [status] tinyint DEFAULT 0,
+  [status] tinyint DEFAULT 1,
   CONSTRAINT PK_facility PRIMARY KEY (id)
 )
