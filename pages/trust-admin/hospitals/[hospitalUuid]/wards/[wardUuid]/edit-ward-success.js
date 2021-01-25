@@ -14,7 +14,7 @@ const EditAWardSuccess = ({
   error,
   name,
   hospitalName,
-  hospitalId,
+  hospitalUuid,
   organisation,
 }) => {
   if (error) {
@@ -39,14 +39,13 @@ const EditAWardSuccess = ({
             subAction={`for ${hospitalName}`}
           />
           <h2>What happens next</h2>
-          <ActionLink href={`/trust-admin/wards/add?hospitalId=${hospitalId}`}>
+          <ActionLink
+            href={`/trust-admin/hospitals/${hospitalUuid}/wards/add-ward`}
+          >
             Add a ward for {hospitalName}
           </ActionLink>
           <p>
-            <AnchorLink
-              href="/trust-admin/hospitals/[id]"
-              as={`/trust-admin/hospitals/${hospitalId}`}
-            >
+            <AnchorLink href={`/trust-admin/hospitals/${hospitalUuid}`}>
               {`Return to ${hospitalName}`}
             </AnchorLink>
           </p>
@@ -57,24 +56,30 @@ const EditAWardSuccess = ({
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
+  verifyTrustAdminToken(async ({ container, params, authenticationToken }) => {
     const orgId = authenticationToken.trustId;
+    const { wardUuid, hospitalUuid } = params;
     const {
       organisation,
       error: organisationError,
     } = await container.getRetrieveOrganisationById()(orgId);
-    const getRetrieveWardById = container.getRetrieveWardById();
-    const { ward, error: wardError } = await getRetrieveWardById(
-      query.id,
-      orgId
-    );
+
+    const {
+      department,
+      error: departmentError,
+    } = await container.getRetrieveDepartmentByUuid()(wardUuid);
+
+    const {
+      facility,
+      error: facilityError,
+    } = await container.getRetrieveFacilityByUuid()(hospitalUuid);
 
     return {
       props: {
-        error: organisationError || wardError,
-        name: ward.name,
-        hospitalName: ward.hospitalName,
-        hospitalId: ward.hospitalId,
+        error: organisationError || departmentError || facilityError,
+        name: department.name,
+        hospitalName: facility.name,
+        hospitalUuid,
         organisation,
       },
     };
