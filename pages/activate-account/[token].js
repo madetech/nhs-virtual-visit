@@ -62,8 +62,8 @@ export const getServerSideProps = propsWithContainer(
 
     return {
       props: {
-        email: !activationError && user.email,
-        organisationName: !activationError && organisation.name,
+        email: !activationError ? user.email : null,
+        organisationName: !activationError ? organisation.name : null,
         error: activationError && "There was an error",
       },
     };
