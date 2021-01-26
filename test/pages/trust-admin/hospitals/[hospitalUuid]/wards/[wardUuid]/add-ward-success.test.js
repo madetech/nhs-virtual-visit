@@ -150,7 +150,7 @@ describe("/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/add-ward-succes
         });
         // Assert
         expect(hospitalName).toBeUndefined();
-        expect(error).toBeDefined();
+        expect(error).toEqual(true);
       });
       it("returns an error if hospitalUuid is undefined", async () => {
         // Act
@@ -167,7 +167,7 @@ describe("/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/add-ward-succes
         });
         // Assert
         expect(hospitalUuid).toBeUndefined();
-        expect(error).toBeDefined();
+        expect(error).toEqual(true);
       });
       it("returns an error if wardUuid is undefined", async () => {
         // Act
@@ -184,7 +184,7 @@ describe("/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/add-ward-succes
         });
         // Assert
         expect(wardUuid).toBeUndefined();
-        expect(error).toBeDefined();
+        expect(error).toEqual(true);
       });
     });
   });

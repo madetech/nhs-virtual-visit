@@ -70,11 +70,12 @@ export const getServerSideProps = propsWithContainer(
         department,
         error: departmentError,
       } = await container.getRetrieveDepartmentByUuid()(wardUuid);
-
+      const queryOrParamsError =
+        !hospitalName || !hospitalUuid || !wardUuid ? true : null;
       return {
         props: {
-          error: organisationError || departmentError,
-          name: department.name,
+          error: organisationError || departmentError || queryOrParamsError,
+          name: department?.name,
           hospitalName,
           hospitalUuid,
           organisation,
