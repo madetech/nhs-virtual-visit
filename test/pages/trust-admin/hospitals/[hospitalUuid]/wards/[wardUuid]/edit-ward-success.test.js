@@ -3,48 +3,11 @@ import mockAppContainer from "src/containers/AppContainer";
 import { TRUST_ADMIN } from "../../../../../../../src/helpers/userTypes";
 
 describe("/trust-admin/hospitals/[hospitalUuid]/wards/[warduuid]/edit-ward-success", () => {
-  // Arrange
-  const orgId = 1;
-  const authenticatedReq = {
-    headers: {
-      cookie: "token=123",
-    },
-  };
-  const expectedHospitalUuid = "hospitalUuid";
-  const expectedWardUuid = "wardUuid";
-  const expectedDepartment = { name: "Department One" };
-  const expectedFacility = { name: "Facility One" };
-  const expectedOrganisation = { name: "Doggo Trust" };
-  const retrieveOrganisationByIdSpy = jest.fn(async () => ({
-    organisation: expectedOrganisation,
-    error: null,
-  }));
-  const retrieveDepartmentByUuidSpy = jest.fn().mockReturnValue({
-    department: expectedDepartment,
-    error: null,
-  });
-  const retrieveFacilityByUuidSpy = jest.fn().mockReturnValue({
-    facility: expectedFacility,
-    error: null,
-  });
   let res;
   beforeEach(() => {
     res = {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
     };
-    mockAppContainer.getTokenProvider().validate.mockImplementationOnce(() => ({
-      type: TRUST_ADMIN,
-      trustId: orgId,
-    }));
-    mockAppContainer.getRetrieveOrganisationById.mockImplementation(
-      () => retrieveOrganisationByIdSpy
-    );
-    mockAppContainer.getRetrieveDepartmentByUuid.mockImplementation(
-      () => retrieveDepartmentByUuidSpy
-    );
-    mockAppContainer.getRetrieveFacilityByUuid.mockImplementation(
-      () => retrieveFacilityByUuidSpy
-    );
   });
   describe("getServerSideProps", () => {
     it("redirects to login page if not authenticated", async () => {
@@ -61,42 +24,163 @@ describe("/trust-admin/hospitals/[hospitalUuid]/wards/[warduuid]/edit-ward-succe
         Location: "/login",
       });
     });
-    describe("with wardUuid parameter", () => {
-      it("retrieves a ward by the wardUuid parameter", async () => {
-        // Act
-        await getServerSideProps({
-          req: authenticatedReq,
-          res,
-          params: {
-            hospitalUuid: expectedHospitalUuid,
-            wardUuid: expectedWardUuid,
-          },
-          container: { ...mockAppContainer },
-        });
-        // Assert
-        expect(retrieveDepartmentByUuidSpy).toHaveBeenCalledWith(
-          expectedWardUuid
-        );
+    describe("if authenticated", () => {
+      // Arrange
+      const orgId = 1;
+      const authenticatedReq = {
+        headers: {
+          cookie: "token=123",
+        },
+      };
+      const expectedFacilityUuid = "hospitalUuid";
+      const expectedDepartmentUuid = "wardUuid";
+      const expectedFacilityName = "facility name";
+      const expectedDepartment = { name: "Department One" };
+      const expectedOrganisation = { name: "Doggo Trust" };
+      const retrieveOrganisationByIdSpy = jest.fn(async () => ({
+        organisation: expectedOrganisation,
+        error: null,
+      }));
+      const retrieveDepartmentByUuidSpy = jest.fn().mockReturnValue({
+        department: expectedDepartment,
+        error: null,
       });
-      it("set a ward prop based on the retrieved ward", async () => {
+      mockAppContainer.getTokenProvider().validate.mockImplementation(() => ({
+        type: TRUST_ADMIN,
+        trustId: orgId,
+      }));
+      mockAppContainer.getRetrieveOrganisationById.mockImplementation(
+        () => retrieveOrganisationByIdSpy
+      );
+      mockAppContainer.getRetrieveDepartmentByUuid.mockImplementation(
+        () => retrieveDepartmentByUuidSpy
+      );
+      it("returns error is null, name, hospitalName, hospitalUuid, organisation in props", async () => {
         // Act
         const {
           props: { name, hospitalName, hospitalUuid, organisation, error },
         } = await getServerSideProps({
           req: authenticatedReq,
           res,
+          query: { hospitalName: expectedFacilityName },
           params: {
-            hospitalUuid: expectedHospitalUuid,
-            wardUuid: expectedWardUuid,
+            hospitalUuid: expectedFacilityUuid,
+            wardUuid: expectedDepartmentUuid,
           },
           container: { ...mockAppContainer },
         });
         // Assert
+        expect(retrieveOrganisationByIdSpy).toHaveBeenCalledWith(orgId);
+        expect(retrieveDepartmentByUuidSpy).toHaveBeenCalledWith(
+          expectedDepartmentUuid
+        );
         expect(name).toEqual(expectedDepartment.name);
         expect(organisation).toEqual(expectedOrganisation);
-        expect(hospitalName).toEqual(expectedFacility.name);
-        expect(hospitalUuid).toEqual(expectedHospitalUuid);
+        expect(hospitalName).toEqual(expectedFacilityName);
+        expect(hospitalUuid).toEqual(expectedFacilityUuid);
         expect(error).toBeNull();
+      });
+      it("returns an error if ward name cannot be retrieved", async () => {
+        // Arrange
+        const retrieveDepartmentByUuidSpy = jest.fn().mockResolvedValue({
+          department: null,
+          error: "ward name Error!",
+        });
+        mockAppContainer.getRetrieveDepartmentByUuid.mockImplementationOnce(
+          () => retrieveDepartmentByUuidSpy
+        );
+        const {
+          props: { name, error },
+        } = await getServerSideProps({
+          req: authenticatedReq,
+          res,
+          query: { hospitalName: expectedFacilityName },
+          params: {
+            wardUuid: expectedDepartmentUuid,
+            hospitalUuid: expectedFacilityUuid,
+          },
+          container: { ...mockAppContainer },
+        });
+        // Assert
+        expect(name).toBeUndefined();
+        expect(error).toEqual("ward name Error!");
+      });
+      it("returns an error if organisation cannot be retrieved", async () => {
+        // Arrange
+        const retrieveOrganisationByIdSpy = jest.fn().mockResolvedValue({
+          organisation: null,
+          error: "organisation name Error!",
+        });
+        mockAppContainer.getRetrieveOrganisationById.mockImplementationOnce(
+          () => retrieveOrganisationByIdSpy
+        );
+        const {
+          props: { organisation, error },
+        } = await getServerSideProps({
+          req: authenticatedReq,
+          res,
+          query: { hospitalName: expectedFacilityName },
+          params: {
+            wardUuid: expectedDepartmentUuid,
+            hospitalUuid: expectedFacilityUuid,
+          },
+          container: { ...mockAppContainer },
+        });
+        // Assert
+        expect(organisation).toBeNull();
+        expect(error).toEqual("organisation name Error!");
+      });
+      it("returns an error if hospitalName is undefined", async () => {
+        // Act
+        const {
+          props: { hospitalName, error },
+        } = await getServerSideProps({
+          req: authenticatedReq,
+          res,
+          query: {},
+          params: {
+            wardUuid: expectedDepartmentUuid,
+            hospitalUuid: expectedFacilityUuid,
+          },
+          container: { ...mockAppContainer },
+        });
+        // Assert
+        expect(hospitalName).toBeUndefined();
+        expect(error).toEqual(true);
+      });
+      it("returns an error if hospitalUuid is undefined", async () => {
+        // Act
+        const {
+          props: { hospitalUuid, error },
+        } = await getServerSideProps({
+          req: authenticatedReq,
+          res,
+          query: { hospitalName: expectedFacilityName },
+          params: {
+            wardUuid: expectedDepartmentUuid,
+          },
+          container: { ...mockAppContainer },
+        });
+        // Assert
+        expect(hospitalUuid).toBeUndefined();
+        expect(error).toEqual(true);
+      });
+      it("returns an error if wardUuid is undefined", async () => {
+        // Act
+        const {
+          props: { wardUuid, error },
+        } = await getServerSideProps({
+          req: authenticatedReq,
+          res,
+          query: { hospitalName: expectedFacilityName },
+          params: {
+            hospitalUuid: expectedFacilityUuid,
+          },
+          container: { ...mockAppContainer },
+        });
+        // Assert
+        expect(wardUuid).toBeUndefined();
+        expect(error).toEqual(true);
       });
     });
   });
