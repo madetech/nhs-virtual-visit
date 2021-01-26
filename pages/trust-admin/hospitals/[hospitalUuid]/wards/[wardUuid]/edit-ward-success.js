@@ -56,34 +56,32 @@ const EditAWardSuccess = ({
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyTrustAdminToken(async ({ container, params, authenticationToken }) => {
-    const orgId = authenticationToken.trustId;
-    const { wardUuid, hospitalUuid } = params;
-    const {
-      organisation,
-      error: organisationError,
-    } = await container.getRetrieveOrganisationById()(orgId);
-
-    const {
-      department,
-      error: departmentError,
-    } = await container.getRetrieveDepartmentByUuid()(wardUuid);
-
-    const {
-      facility,
-      error: facilityError,
-    } = await container.getRetrieveFacilityByUuid()(hospitalUuid);
-
-    return {
-      props: {
-        error: organisationError || departmentError || facilityError,
-        name: department.name,
-        hospitalName: facility.name,
-        hospitalUuid,
+  verifyTrustAdminToken(
+    async ({ container, params, query, authenticationToken }) => {
+      const orgId = authenticationToken.trustId;
+      const { hospitalName } = query;
+      const { wardUuid, hospitalUuid } = params;
+      const {
         organisation,
-      },
-    };
-  })
+        error: organisationError,
+      } = await container.getRetrieveOrganisationById()(orgId);
+
+      const {
+        department,
+        error: departmentError,
+      } = await container.getRetrieveDepartmentByUuid()(wardUuid);
+
+      return {
+        props: {
+          error: organisationError || departmentError,
+          name: department.name,
+          hospitalName,
+          hospitalUuid,
+          organisation,
+        },
+      };
+    }
+  )
 );
 
 export default EditAWardSuccess;
