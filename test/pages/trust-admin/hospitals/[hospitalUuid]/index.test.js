@@ -1,12 +1,11 @@
-import { getServerSideProps } from "../../../../pages/trust-admin/hospitals/[id]";
-
-describe("trust-admin/hospitals/[id]", () => {
+import { getServerSideProps } from "../../../../../pages/trust-admin/hospitals/[hospitalUuid]";
+import { TRUST_ADMIN } from "../../../../../src/helpers/userTypes";
+describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () => {
   let res;
-
-  const trustId = 1;
+  const orgId = 1;
 
   const tokenProvider = {
-    validate: jest.fn(() => ({ type: "trustAdmin", trustId: trustId })),
+    validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId: orgId })),
   };
 
   beforeEach(() => {
@@ -31,24 +30,25 @@ describe("trust-admin/hospitals/[id]", () => {
       });
     });
 
-    it("provides the trust, hospital and wards as props", async () => {
+    it("provides the organisation, facility and departments as props", async () => {
       // Arrange
       const authenticatedReq = {
         headers: {
           cookie: "token=123",
         },
       };
-      const hospitalId = 1;
+      const expectedFacilityUuid = "facility-uuid";
+      const expectedFacilityId = 1;
       const retrieveOrganisationByIdSpy = jest.fn(async () => ({
         organisation: { name: "Doggo Trust" },
         error: null,
       }));
-      const wardsSpy = jest.fn(async () => ({
-        wards: [{ id: 1 }, { id: 2 }],
+      const departmentsSpy = jest.fn(async () => ({
+        departments: [{ id: 1 }, { id: 2 }],
         error: null,
       }));
-      const hospitalSpy = jest.fn(async () => ({
-        hospital: { id: hospitalId, name: "Test Hospital" },
+      const facilitySpy = jest.fn(async () => ({
+        facility: { id: expectedFacilityId, name: "Test Hospital" },
         error: null,
       }));
       const visitTotalsSpy = jest.fn().mockReturnValue({
@@ -66,8 +66,8 @@ describe("trust-admin/hospitals/[id]", () => {
       });
       const container = {
         getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
-        getRetrieveWardsByHospitalId: () => wardsSpy,
-        getRetrieveHospitalById: () => hospitalSpy,
+        getRetrieveDepartmentsByFacilityId: () => departmentsSpy,
+        getRetrieveFacilityByUuid: () => facilitySpy,
         getRetrieveHospitalVisitTotals: () => visitTotalsSpy,
         getRetrieveHospitalWardVisitTotals: () => hospitalWardTotalsSpy,
         getTokenProvider: () => tokenProvider,
@@ -77,15 +77,20 @@ describe("trust-admin/hospitals/[id]", () => {
       const { props } = await getServerSideProps({
         req: authenticatedReq,
         res,
-        query: { id: hospitalId },
+        params: { hospitalUuid: expectedFacilityUuid },
         container,
       });
       // Assert
-      expect(hospitalSpy).toHaveBeenCalledWith(hospitalId, trustId);
-      expect(visitTotalsSpy).toHaveBeenCalledWith(trustId);
-      expect(hospitalWardTotalsSpy).toHaveBeenCalledWith(hospitalId);
+      expect(retrieveOrganisationByIdSpy).toHaveBeenCalledWith(orgId);
+      expect(facilitySpy).toHaveBeenCalledWith(expectedFacilityUuid);
+      expect(departmentsSpy).toHaveBeenCalledWith(expectedFacilityId);
+      expect(visitTotalsSpy).toHaveBeenCalledWith(orgId);
+      expect(hospitalWardTotalsSpy).toHaveBeenCalledWith(expectedFacilityId);
       expect(props.wards).toEqual([{ id: 1 }, { id: 2 }]);
-      expect(props.hospital).toEqual({ id: hospitalId, name: "Test Hospital" });
+      expect(props.hospital).toEqual({
+        id: expectedFacilityId,
+        name: "Test Hospital",
+      });
       expect(props.totalBookedVisits).toEqual(10);
       expect(props.mostVisitedWard).toEqual({
         wardName: "Most Visited",
