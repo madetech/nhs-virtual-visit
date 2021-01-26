@@ -7,7 +7,6 @@ import {
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     validateHttpMethod("POST", method, res);
-    console.log("****in api***");
     const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
     const trustAdminAuthenticatedToken = trustAdminIsAuthenticated(
@@ -15,32 +14,32 @@ export default withContainer(
     );
     checkIfAuthorised(trustAdminAuthenticatedToken, res);
 
-    const { name, facilityId, pin, code } = body;
-    if (!name || name.length === 0) {
+    if (!body.name || body.name.length === 0) {
       res.status(400);
-      res.end(JSON.stringify({ err: "name must be present" }));
+      res.end(JSON.stringify({ error: "name must be present" }));
       return;
     }
 
-    if (!facilityId) {
+    if (!body.facilityId) {
       res.status(400);
-      res.end(JSON.stringify({ err: "facility id must be present" }));
+      res.end(JSON.stringify({ error: "facility id must be present" }));
       return;
     }
 
-    if (!pin) {
+    if (!body.pin) {
       res.status(400);
-      res.end(JSON.stringify({ err: "ward pin must be present" }));
+      res.end(JSON.stringify({ error: "department pin must be present" }));
       return;
     }
 
-    if (!code) {
+    if (!body.code) {
       res.status(400);
-      res.end(JSON.stringify({ err: "ward code must be present" }));
+      res.end(JSON.stringify({ error: "department code must be present" }));
       return;
     }
     res.setHeader("Content-Type", "application/json");
     try {
+      const { name, facilityId, pin, code } = body;
       const { uuid, error } = await container.getCreateDepartment()({
         name,
         code,
