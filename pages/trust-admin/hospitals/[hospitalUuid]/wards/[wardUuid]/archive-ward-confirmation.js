@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import Error from "next/error";
-import { GridRow, GridColumn } from "../../../../src/components/Grid";
-import Layout from "../../../../src/components/Layout";
-import verifyTrustAdminToken from "../../../../src/usecases/verifyTrustAdminToken";
-import propsWithContainer from "../../../../src/middleware/propsWithContainer";
-import SummaryList from "../../../../src/components/SummaryList";
-import Heading from "../../../../src/components/Heading";
-import Button from "../../../../src/components/Button";
-import BackLink from "../../../../src/components/BackLink";
+import { GridRow, GridColumn } from "../../../../../../src/components/Grid";
+import Layout from "../../../../../../src/components/Layout";
+import verifyTrustAdminToken from "../../../../../../src/usecases/verifyTrustAdminToken";
+import propsWithContainer from "../../../../../../src/middleware/propsWithContainer";
+import SummaryList from "../../../../../../src/components/SummaryList";
+import Heading from "../../../../../../src/components/Heading";
+import Button from "../../../../../../src/components/Button";
+import BackLink from "../../../../../../src/components/BackLink";
 import Router from "next/router";
-import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
-import Form from "../../../../src/components/Form";
-import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
+import { TRUST_ADMIN } from "../../../../../../src/helpers/userTypes";
+import Form from "../../../../../../src/components/Form";
+import TrustAdminHeading from "../../../../../../src/components/TrustAdminHeading";
 
 const ArchiveAWardConfirmation = ({ error, ward, organisation }) => {
   const [hasError, setHasError] = useState(error);
