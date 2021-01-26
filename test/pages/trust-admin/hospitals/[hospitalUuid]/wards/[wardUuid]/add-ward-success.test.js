@@ -1,6 +1,6 @@
-import { getServerSideProps } from "../../../../../pages/trust-admin/wards/[id]/add-success";
+import { getServerSideProps } from "../../../../../../../pages/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/add-ward-success";
 
-describe("/trust-admin/wards/[id]/add-success", () => {
+describe("/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/add-ward-success", () => {
   // Arrange
   const authenticatedReq = {
     headers: {
