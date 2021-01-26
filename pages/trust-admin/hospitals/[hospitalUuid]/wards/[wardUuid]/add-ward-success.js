@@ -1,14 +1,14 @@
 import React from "react";
 import Error from "next/error";
-import Layout from "src/components/Layout";
-import AnchorLink from "src/components/AnchorLink";
-import propsWithContainer from "src/middleware/propsWithContainer";
-import verifyTrustAdminToken from "src/usecases/verifyTrustAdminToken";
-import ActionLink from "src/components/ActionLink";
-import TrustAdminHeading from "src/components/TrustAdminHeading";
-import { TRUST_ADMIN } from "src/helpers/userTypes";
-import { GridRow, GridColumn } from "src/components/Grid";
-import PanelSuccess from "src/components/PanelSuccess";
+import Layout from "../../../../../../src/components/Layout";
+import AnchorLink from "../../../../../../src/components/AnchorLink";
+import propsWithContainer from "../../../../../../src/middleware/propsWithContainer";
+import verifyTrustAdminToken from "../../../../../../src/usecases/verifyTrustAdminToken";
+import ActionLink from "../../../../../../src/components/ActionLink";
+import TrustAdminHeading from "../../../../../../src/components/TrustAdminHeading";
+import { TRUST_ADMIN } from "../../../../../../src/helpers/userTypes";
+import { GridRow, GridColumn } from "../../../../../../src/components/Grid";
+import PanelSuccess from "../../../../../../src/components/PanelSuccess";
 
 const AddAWardSuccess = ({
   organisation,
