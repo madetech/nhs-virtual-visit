@@ -109,6 +109,7 @@ import retrieveVisitsGateway from "../gateways/PostgreSQL/retrieveVisits";
 import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/PostgreSQL/retrieveWardVisitTotalsStartDateByTrustId";
 import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
+import verifyTrustAdminCodeGateway from "../gateways/PostgreSQL/verifyTrustAdminCode";
 
 class AppContainer {
   getDb = () => {
@@ -458,16 +459,16 @@ class AppContainer {
     return verifyAdminCodeGateway(this);
   };
 
+  getVerifyTrustAdminCodeGateway = () => {
+    return verifyTrustAdminCodeGateway(this);
+  };
+
   getRetrieveActiveOrganisations = () => {
     return retrieveActiveOrganisations(this);
   };
 
   getRetrieveActiveOrganisationsGateway = () => {
     return retrieveActiveOrganisationsGateway(this);
-  };
-
-  getRetrieveOrganisationById = () => {
-    return retrieveOrganisationById(this);
   };
 
   getRetrieveOrganisationByIdGateway = () => {

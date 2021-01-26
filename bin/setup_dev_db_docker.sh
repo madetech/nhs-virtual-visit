@@ -1,12 +1,5 @@
 #!/bin/bash
 
-if [[ "$OSTYPE" == "linux-gnu"* && $EUID != 0 ]]
-then
-	commandPrefix="sudo"
-else
-	commandPrefix=
-fi
-
 # Start docker yml from path and detached.
 docker-compose -f docker/pg/docker-compose.yml up -d postgres
 
@@ -18,8 +11,8 @@ sleep $wait_time
 echo database started...
 
 # Drop if exists and re-create database.
-$commandPrefix docker exec postgres dropdb nhs-virtual-visit-dev -U postgres --if-exists
-$commandPrefix docker exec postgres createdb nhs-virtual-visit-dev -U postgres
+docker exec postgres dropdb nhs-virtual-visit-dev -U postgres --if-exists
+docker exec postgres createdb nhs-virtual-visit-dev -U postgres
 
 # Run create tables and seed scripts.
 npm run dbmigrate up
