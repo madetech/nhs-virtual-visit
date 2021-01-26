@@ -15,7 +15,7 @@ const AddAWardSuccess = ({
   error,
   name,
   hospitalName,
-  hospitalId,
+  hospitalUuid,
 }) => {
   if (error) {
     return <Error />;
@@ -39,14 +39,13 @@ const AddAWardSuccess = ({
             subAction={`for ${hospitalName}`}
           />
           <h2>What happens next</h2>
-          <ActionLink href={`/trust-admin/wards/add?hospitalId=${hospitalId}`}>
+          <ActionLink
+            href={`/trust-admin/hospitals/${hospitalUuid}/wards/add-ward`}
+          >
             Add another ward for {hospitalName}
           </ActionLink>
           <p>
-            <AnchorLink
-              href="/trust-admin/hospitals/[id]"
-              as={`/trust-admin/hospitals/${hospitalId}`}
-            >
+            <AnchorLink href={`/trust-admin/hospitals/${hospitalUuid}/`}>
               {`Return to ${hospitalName}`}
             </AnchorLink>
           </p>
@@ -57,28 +56,31 @@ const AddAWardSuccess = ({
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
-    const orgId = authenticationToken.trustId;
-    const {
-      organisation,
-      error: organisationError,
-    } = await container.getRetrieveOrganisationById()(orgId);
-
-    const getRetrieveWardById = container.getRetrieveWardById();
-    const { ward, error: wardError } = await getRetrieveWardById(
-      query.id,
-      orgId
-    );
-    return {
-      props: {
-        error: organisationError || wardError,
-        name: ward.name,
-        hospitalName: ward.hospitalName,
-        hospitalId: ward.hospitalId,
+  verifyTrustAdminToken(
+    async ({ container, params, query, authenticationToken }) => {
+      const orgId = authenticationToken.trustId;
+      const { hospitalName } = query;
+      const { hospitalUuid, wardUuid } = params;
+      const {
         organisation,
-      },
-    };
-  })
+        error: organisationError,
+      } = await container.getRetrieveOrganisationById()(orgId);
+
+      const {
+        department,
+        error: departmentError,
+      } = await container.getRetrieveDepartmentByUuid()(wardUuid);
+      return {
+        props: {
+          error: organisationError || departmentError,
+          name: department.name,
+          hospitalName,
+          hospitalUuid,
+          organisation,
+        },
+      };
+    }
+  )
 );
 
 export default AddAWardSuccess;

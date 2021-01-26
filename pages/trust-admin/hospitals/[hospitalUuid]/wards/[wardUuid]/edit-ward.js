@@ -31,7 +31,7 @@ const EditAWard = ({ organisation, error, ward, hospital }) => {
             errors={errors}
             setErrors={setErrors}
             ward={ward}
-            hospitalUuid={hospital.uuid}
+            hospital={hospital}
           />
         </GridColumn>
       </GridRow>

@@ -11,7 +11,7 @@ import isPresent from "../../helpers/isPresent";
 import Form from "../Form";
 import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 
-const EditWardForm = ({ errors, setErrors, hospitalUuid, ward }) => {
+const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
   const [wardName, setWardName] = useState(ward.name);
   const [wardStatus, setWardStatus] = useState(ward.status);
   let onSubmitErrors = [];
@@ -32,10 +32,10 @@ const EditWardForm = ({ errors, setErrors, hospitalUuid, ward }) => {
 
       if (response.status == 201) {
         const { uuid: wardUuid } = await response.json();
-        await Router.push(
-          // "/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/edit-ward-success",
-          `/trust-admin/hospitals/${hospitalUuid}/wards/${wardUuid}/edit-ward-success`
-        );
+        await Router.push({
+          pathname: `/trust-admin/hospitals/${hospital.uuid}/wards/${wardUuid}/edit-ward-success`,
+          query: { hospitalName: hospital.name },
+        });
         return true;
       } else {
         const { error } = await response.json();
