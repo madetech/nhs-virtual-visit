@@ -1,17 +1,20 @@
 import createFacility from "../../../pages/api/create-facility";
-
+import mockAppContainer from "src/containers/AppContainer";
+import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 describe("create-facility", () => {
   // Arrange
-  let validRequest, response, container;
-  const createFacilitySpy = jest
-    .fn()
-    .mockReturnValue({ facilityId: 1, error: null });
+  let validRequest, response;
+  const expectedUuid = "uuid";
+  const createFacilitySpy = jest.fn(() =>
+    Promise.resolve({ uuid: expectedUuid, error: null })
+  );
   beforeEach(() => {
     validRequest = {
       method: "POST",
       body: {
         name: "Yugi Muto Hospital",
         orgId: "1",
+        code: "YMH",
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -24,12 +27,12 @@ describe("create-facility", () => {
       end: jest.fn(),
       body: jest.fn(),
     };
-    container = {
-      getCreateFacility: () => createFacilitySpy,
-      getTrustAdminIsAuthenticated: jest
-        .fn()
-        .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
-    };
+    mockAppContainer.getTrustAdminIsAuthenticated.mockImplementation(() =>
+      jest.fn(() => ({ type: TRUST_ADMIN, trustId: 1, userId: 10 }))
+    );
+    mockAppContainer.getCreateFacility.mockImplementation(
+      () => createFacilitySpy
+    );
   });
 
   it("returns 405 if not POST method", async () => {
@@ -37,7 +40,7 @@ describe("create-facility", () => {
     validRequest.method = "GET";
     // Act
     await createFacility(validRequest, response, {
-      container,
+      container: mockAppContainer,
     });
     // Assert
     expect(response.status).toHaveBeenCalledWith(405);
@@ -46,6 +49,9 @@ describe("create-facility", () => {
   it("returns a 401 if no token provided", async () => {
     // Arrange
     const trustAdminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
+    mockAppContainer.getTrustAdminIsAuthenticated.mockImplementationOnce(
+      () => trustAdminIsAuthenticatedSpy
+    );
     // Act
     await createFacility(
       {
@@ -55,10 +61,7 @@ describe("create-facility", () => {
       },
       response,
       {
-        container: {
-          ...container,
-          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
-        },
+        container: mockAppContainer,
       }
     );
     // Assert
@@ -68,15 +71,19 @@ describe("create-facility", () => {
 
   it("creates a new facility if valid", async () => {
     // Act
-    await createFacility(validRequest, response, { container });
+    await createFacility(validRequest, response, {
+      container: mockAppContainer,
+    });
     // Assert
     expect(response.status).toHaveBeenCalledWith(201);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ facilityId: 1 })
+      JSON.stringify({ uuid: expectedUuid })
     );
     expect(createFacilitySpy).toHaveBeenCalledWith({
+      code: "YMH",
       name: "Yugi Muto Hospital",
       orgId: "1",
+      createdBy: 10,
     });
   });
 
@@ -84,16 +91,17 @@ describe("create-facility", () => {
     // Arrange
     const createFacilityStub = jest
       .fn()
-      .mockReturnValue({ facilityId: 123, error: "Error message" });
+      .mockReturnValue({ uuid: null, error: "Error message" });
+    mockAppContainer.getCreateFacility.mockImplementation(
+      () => createFacilityStub
+    );
     // Act
     await createFacility(validRequest, response, {
       container: {
-        ...container,
-        getCreateFacility: () => createFacilityStub,
+        ...mockAppContainer,
       },
     });
     // Assert
-    expect(response.status).toHaveBeenCalledWith(400);
   });
 
   it("returns a 400 if the name is an empty string", async () => {
@@ -109,11 +117,13 @@ describe("create-facility", () => {
       },
     };
     // Act
-    await createFacility(invalidRequest, response, { container });
+    await createFacility(invalidRequest, response, {
+      container: { ...mockAppContainer },
+    });
     // Assert
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "name must be present" })
+      JSON.stringify({ error: "name must be present" })
     );
   });
 
@@ -129,11 +139,13 @@ describe("create-facility", () => {
       },
     };
     // Act
-    await createFacility(invalidRequest, response, { container });
+    await createFacility(invalidRequest, response, {
+      container: { ...mockAppContainer },
+    });
     // Assert
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "name must be present" })
+      JSON.stringify({ error: "name must be present" })
     );
   });
 
@@ -149,11 +161,13 @@ describe("create-facility", () => {
       },
     };
     // Act
-    await createFacility(invalidRequest, response, { container });
+    await createFacility(invalidRequest, response, {
+      container: { ...mockAppContainer },
+    });
     // Assert
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "name must be present" })
+      JSON.stringify({ error: "name must be present" })
     );
   });
 
@@ -169,11 +183,13 @@ describe("create-facility", () => {
       },
     };
     // Act
-    await createFacility(invalidRequest, response, { container });
+    await createFacility(invalidRequest, response, {
+      container: { ...mockAppContainer },
+    });
     // Assert
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "organisation ID must be present" })
+      JSON.stringify({ error: "facility id must be present" })
     );
   });
 });
