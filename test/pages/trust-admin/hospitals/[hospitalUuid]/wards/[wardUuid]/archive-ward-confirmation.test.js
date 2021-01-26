@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../../../../pages/trust-admin/wards/[id]/archive-confirmation";
+import { getServerSideProps } from "../../../../../../../pages/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/archive-ward-confirmation";
 
 describe("/trust-admin/wards/[id]/archive-confirmation", () => {
   let res;
