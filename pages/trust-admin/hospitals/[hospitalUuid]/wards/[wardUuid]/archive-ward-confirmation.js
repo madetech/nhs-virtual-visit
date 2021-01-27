@@ -35,12 +35,15 @@ const ArchiveAWardConfirmation = ({ error, ward, organisation, hospital }) => {
         uuid: ward.uuid,
       }),
     });
+    console.log(response.status);
     if (response.status === 200) {
+      console.log("response is a success");
       Router.push(
         `/trust-admin/hospitals/${hospital.uuid}/wards/${ward.uuid}/archive-ward-success?hospitalName=${hospital.name}`
       );
       return true;
     } else {
+      console.log("response failed");
       setHasError(true);
     }
     return false;
