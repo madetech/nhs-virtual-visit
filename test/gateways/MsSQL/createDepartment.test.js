@@ -24,7 +24,7 @@ describe("createDepartment", () => {
     );
     // Assert
     expect(actualDepartmentUuid).toEqual(expectedDepartmentUuid);
-    expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenCalledTimes(6);
+    expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenCalledTimes(5);
     expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
       1,
       "name",
@@ -55,14 +55,8 @@ describe("createDepartment", () => {
       expect.anything(),
       expectedArgs.createdBy
     );
-    expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
-      6,
-      "status",
-      expect.anything(),
-      1
-    );
     expect(mockAppContainer.getMsSqlConnPool().query).toHaveBeenCalledWith(
-      "INSERT INTO dbo.[department] ([name], [facility_id], [code], [pin], [created_by], [status]) OUTPUT inserted.uuid VALUES (@name, @facilityId, @code, @pin, @createdBy, @status)"
+      "INSERT INTO dbo.[department] ([name], [facility_id], [code], [pin], [created_by]) OUTPUT inserted.uuid VALUES (@name, @facilityId, @code, @pin, @createdBy)"
     );
   });
   it("throws an error if db is undefined", async () => {

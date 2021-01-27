@@ -14,9 +14,8 @@ export default ({ getMsSqlConnPool }) => async ({
     .input("code", mssql.NVarChar(255), code)
     .input("pin", mssql.NVarChar(255), pin)
     .input("createdBy", mssql.Int, createdBy)
-    .input("status", mssql.TinyInt, 1)
     .query(
-      "INSERT INTO dbo.[department] ([name], [facility_id], [code], [pin], [created_by], [status]) OUTPUT inserted.uuid VALUES (@name, @facilityId, @code, @pin, @createdBy, @status)"
+      "INSERT INTO dbo.[department] ([name], [facility_id], [code], [pin], [created_by]) OUTPUT inserted.uuid VALUES (@name, @facilityId, @code, @pin, @createdBy)"
     );
   return res.recordset[0].uuid;
 };
