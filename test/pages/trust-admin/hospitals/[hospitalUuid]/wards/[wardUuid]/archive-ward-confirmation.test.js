@@ -1,5 +1,5 @@
 import { getServerSideProps } from "../../../../../../../pages/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/archive-ward-confirmation";
-
+import { TRUST_ADMIN } from "../../../../../../../src/helpers/userTypes";
 describe("/trust-admin/wards/[id]/archive-confirmation", () => {
   let res;
   beforeEach(() => {
@@ -32,15 +32,17 @@ describe("/trust-admin/wards/[id]/archive-confirmation", () => {
       };
       const expectedOrgId = 1;
       const expectedOrganisationName = "Doggo Trust";
-      const expectedWard = {
+      const expectedFacilityName = "Hospital One";
+      const expectedFacilityUuid = "hospital-uuid";
+      const expectedDepartment = {
         id: 1,
+        uuid: "deparment-uuid",
         name: "Defoe Ward",
-        hospitalId: 2,
-        hospitalName: "Northwick Park Hospital",
+        facilityId: 2,
       };
       const tokenProvider = {
         validate: jest.fn(() => ({
-          type: "trustAdmin",
+          type: TRUST_ADMIN,
           trustId: expectedOrgId,
         })),
       };
@@ -49,13 +51,13 @@ describe("/trust-admin/wards/[id]/archive-confirmation", () => {
         error: null,
       }));
 
-      const retrieveWardByIdSpy = jest.fn().mockReturnValue({
-        ward: expectedWard,
+      const retrieveDepartmentByUuidSpy = jest.fn().mockReturnValue({
+        department: expectedDepartment,
         error: null,
       });
       const container = {
         getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
-        getRetrieveWardById: () => retrieveWardByIdSpy,
+        getRetrieveDepartmentByUuid: () => retrieveDepartmentByUuidSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
@@ -65,18 +67,21 @@ describe("/trust-admin/wards/[id]/archive-confirmation", () => {
       } = await getServerSideProps({
         req: authenticatedReq,
         res,
+        params: {
+          wardUuid: expectedDepartment.uuid,
+          hospitalUuid: expectedFacilityUuid,
+        },
         query: {
-          id: expectedWard.id,
+          hospitalName: expectedFacilityName,
         },
         container,
       });
       // Assert
-      expect(retrieveWardByIdSpy).toHaveBeenCalledWith(
-        expectedOrgId,
-        expectedWard.id
+      expect(retrieveDepartmentByUuidSpy).toHaveBeenCalledWith(
+        expectedDepartment.uuid
       );
       expect(organisation.name).toEqual(expectedOrganisationName);
-      expect(ward).toEqual(expectedWard);
+      expect(ward).toEqual(expectedDepartment);
       expect(error).toBeNull();
     });
   });
