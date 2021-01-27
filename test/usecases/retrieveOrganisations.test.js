@@ -18,7 +18,7 @@ describe("retrieveOrganisations", () => {
     ];
     const { organisations, error } = await retrieveOrganisations({
       getRetrieveOrganisationsGateway,
-    })();
+    })({});
     expect(organisations).toHaveLength(2);
     expect(organisations).toEqual(expectedResponse);
     expect(error).toBeNull();
@@ -34,7 +34,7 @@ describe("retrieveOrganisations", () => {
 
     const { organisations, error } = await retrieveOrganisations({
       getRetrieveOrganisationsGateway,
-    })();
+    })({});
 
     expect(organisations).toEqual([]);
     expect(error).toEqual("There is an error with the database");

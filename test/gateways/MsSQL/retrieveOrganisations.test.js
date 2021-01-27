@@ -5,6 +5,7 @@ describe("retrieveOrganisationsGateway", () => {
     const getMsSqlConnPool = jest.fn(() => {
       return {
         request: jest.fn().mockReturnThis(),
+        input: jest.fn().mockReturnThis(),
         query: jest.fn().mockReturnValue({
           recordset: [
             {
@@ -23,7 +24,7 @@ describe("retrieveOrganisationsGateway", () => {
 
     const { organisations, error } = await retrieveOrganisationsGateway({
       getMsSqlConnPool,
-    })();
+    })({});
 
     expect(error).toBeNull();
     expect(organisations[0].id).toEqual(1);
@@ -48,7 +49,7 @@ describe("retrieveOrganisationsGateway", () => {
 
     const { organisations, error } = await retrieveOrganisationsGateway({
       getMsSqlConnPool,
-    })();
+    })({});
 
     expect(organisations).toBeNull();
     expect(error).toEqual("Error: DB Error!");

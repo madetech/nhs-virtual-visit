@@ -1,7 +1,12 @@
-const retrieveOrganisations = ({
-  getRetrieveOrganisationsGateway,
-}) => async () => {
-  const { organisations, error } = await getRetrieveOrganisationsGateway()();
+const retrieveOrganisations = ({ getRetrieveOrganisationsGateway }) => async ({
+  page,
+  limit,
+}) => {
+  const {
+    organisations,
+    total,
+    error,
+  } = await getRetrieveOrganisationsGateway()({ page, limit });
 
   let organisationsObj = [];
 
@@ -15,6 +20,7 @@ const retrieveOrganisations = ({
 
   return {
     organisations: organisationsObj,
+    total,
     error: error,
   };
 };
