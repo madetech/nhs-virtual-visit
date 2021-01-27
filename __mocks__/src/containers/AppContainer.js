@@ -14,6 +14,7 @@ export default {
   getRetrieveFacilityByUuidGateway: jest.fn(() => () => Promise.resolve({})),
   getUpdateFacilityById: jest.fn(() => () => Promise.resolve({})),
   getCreateDepartment: jest.fn(() => () => Promise.resolve({})),
+  getCreateDepartmentGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveDepartmentByUuidGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveDepartmentByUuid: jest.fn(() => () => Promise.resolve({})),
   getRetrieveDepartmentsByFacilityId: jest.fn(() => () => Promise.resolve({})),

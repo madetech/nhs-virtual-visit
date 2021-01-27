@@ -6,7 +6,7 @@ export default ({ getCreateDepartmentGateway }) => async (department) => {
     return { uuid: null, error: "name must be provided." };
   }
   if (code === undefined) {
-    return { code: null, error: "code must be provided." };
+    return { uuid: null, error: "code must be provided." };
   }
   if (facilityId === undefined) {
     return { uuid: null, error: "facility id must be provided." };
