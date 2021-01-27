@@ -26,11 +26,12 @@ describe("retrieveManagersByOrgIdGateway", () => {
       getMsSqlConnPool: getConnectionPoolMock,
     };
     // Act
-    const actualManagers = await retrieveManagersByOrgIdGateway(container)(
+    const { managers, error } = await retrieveManagersByOrgIdGateway(container)(
       expectedOrgId
     );
     // Assert
-    expect(actualManagers).toEqual(expectedManagers);
+    expect(error).toBeNull();
+    expect(managers).toEqual(expectedManagers);
     expect(container.getMsSqlConnPool().input).toHaveBeenCalledTimes(1);
     expect(container.getMsSqlConnPool().input).toHaveBeenCalledWith(
       "orgId",
@@ -38,9 +39,10 @@ describe("retrieveManagersByOrgIdGateway", () => {
       expectedOrgId
     );
     expect(container.getMsSqlConnPool().query).toHaveBeenCalledWith(
-      "SELECT email, uuid, status FROM dbo.[user] WHERE organisation_id = @orgId"
+      "SELECT email, uuid, status, id FROM dbo.[user] WHERE organisation_id = @orgId"
     );
   });
+
   it("throws an error if db is undefined", async () => {
     // Arrange
     const container = {
@@ -64,10 +66,11 @@ describe("retrieveManagersByOrgIdGateway", () => {
       getMsSqlConnPool: getConnectionPoolMock,
     };
     // Act
-    const actualManagers = await retrieveManagersByOrgIdGateway(container)(
+    const { managers, error } = await retrieveManagersByOrgIdGateway(container)(
       undefinedOrgId
     );
     // Assert
-    expect(actualManagers).toBeUndefined();
+    expect(managers).toBeUndefined();
+    expect(error).toBeNull();
   });
 });
