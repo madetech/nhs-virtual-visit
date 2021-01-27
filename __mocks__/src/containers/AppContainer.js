@@ -13,6 +13,7 @@ export default {
   getRetrieveFacilityByIdGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveFacilityByUuidGateway: jest.fn(() => () => Promise.resolve({})),
   getUpdateFacilityById: jest.fn(() => () => Promise.resolve({})),
+  getUpdateFacilityByIdGateway: jest.fn(() => () => Promise.resolve({})),
   getCreateDepartment: jest.fn(() => () => Promise.resolve({})),
   getCreateDepartmentGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveDepartmentByUuidGateway: jest.fn(() => () => Promise.resolve({})),
@@ -23,6 +24,6 @@ export default {
   ),
   getUpdateDepartmentById: jest.fn(() => () => Promise.resolve({})),
   getUpdateDepartmentByIdGateway: jest.fn(() => () => Promise.resolve({})),
-  getUpdateFacilityByIdGateway: jest.fn(() => () => Promise.resolve({})),
+  getArchiveDepartmentByIdGateway: jest.fn(() => () => Promise.resolve({})),
   getTrustAdminIsAuthenticated: jest.fn(() => () => true),
 };
