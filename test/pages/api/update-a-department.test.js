@@ -1,6 +1,6 @@
 import updateADepartment from "../../../pages/api/update-a-department";
 import mockAppContainer from "src/containers/AppContainer";
-
+import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 describe("update-a-ward", () => {
   let validRequest, response;
   beforeEach(() => {
@@ -25,7 +25,7 @@ describe("update-a-ward", () => {
       jest.fn(() => true)
     );
     mockAppContainer.getTokenProvider.mockImplementation(
-      jest.fn({ type: "trustAdmin", trustId: 1 })
+      jest.fn({ type: TRUST_ADMIN, trustId: 1 })
     );
     mockAppContainer.getRetrieveDepartmentByUuid.mockImplementation(() =>
       jest.fn(() =>
