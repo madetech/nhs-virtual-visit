@@ -114,7 +114,7 @@ export const getServerSideProps = propsWithContainer(
     const {
       departments,
       error: departmentsError,
-    } = await container.getRetrieveDepartmentsByFacilityId()(facility.id);
+    } = await container.getRetrieveActiveDepartmentsByFacilityId()(facility.id);
     const visitTotals = await container.getRetrieveHospitalVisitTotals()(orgId);
 
     const totalBookedVisits =
