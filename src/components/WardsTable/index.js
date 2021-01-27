@@ -2,7 +2,7 @@ import React from "react";
 import AnchorLink from "../AnchorLink";
 import toLowerSnake from "../../helpers/toLowerSnake";
 
-const WardsTable = ({ wards, wardVisitTotals, hospitalUuid }) => (
+const WardsTable = ({ wards, wardVisitTotals, hospital }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table">
       <caption className="nhsuk-table__caption">List of wards</caption>
@@ -48,7 +48,7 @@ const WardsTable = ({ wards, wardVisitTotals, hospitalUuid }) => (
             )}
             <td className="nhsuk-table__cell">
               <AnchorLink
-                href={`/trust-admin/hospitals/${hospitalUuid}/wards/${ward.uuid}/edit-ward`}
+                href={`/trust-admin/hospitals/${hospital.uuid}/wards/${ward.uuid}/edit-ward`}
               >
                 Edit
                 <span className="nhsuk-u-visually-hidden"> {ward.name}</span>
@@ -57,8 +57,7 @@ const WardsTable = ({ wards, wardVisitTotals, hospitalUuid }) => (
             <td className="nhsuk-table__cell">
               <AnchorLink
                 data-testid={`delete-${toLowerSnake(ward.name)}`}
-                href={"/trust-admin/wards/[id]/archive-confirmation"}
-                as={`/trust-admin/wards/${ward.id}/archive-confirmation`}
+                href={`/trust-admin/hospitals/${hospital.uuid}/wards/${ward.uuid}/archive-ward-confirmation?hospitalName=${hospital.name}`}
               >
                 Delete
                 <span className="nhsuk-u-visually-hidden"> {ward.name}</span>
