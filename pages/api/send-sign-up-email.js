@@ -52,7 +52,7 @@ export default withContainer(
 
       if (retrieveManagerError) {
         res.status(400);
-        res.end(JSON.stringify({ err: error }));
+        res.end(JSON.stringify({ err: retrieveManagerError }));
         return;
       }
       manager = managers[0];
@@ -108,7 +108,7 @@ export default withContainer(
       };
     }
 
-    const emailAddress = manager.email;
+    const emailAddress = manager ? manager.email : body.email;
 
     const { error: emailError } = await sendEmail(
       emailTemplateId,

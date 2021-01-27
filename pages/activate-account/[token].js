@@ -37,10 +37,13 @@ export default ActivateAccount;
 
 export const getServerSideProps = propsWithContainer(
   async ({ query, container }) => {
+    console.log("***********************");
+    console.log("query", query);
     const token = query.token;
     const verifySignUpLink = container.getVerifySignUpLink();
     const { user, error: linkError } = await verifySignUpLink(token);
-
+    console.log("user", user);
+    console.log("linkError", linkError);
     if (linkError) {
       return {
         props: {
