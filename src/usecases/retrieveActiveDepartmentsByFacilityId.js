@@ -1,6 +1,6 @@
 import logger from "../../logger";
 
-export default ({ getRetrieveDepartmentsByFacilityIdGateway }) => async (
+export default ({ getRetrieveActiveDepartmentsByFacilityIdGateway }) => async (
   id
 ) => {
   if (id === undefined) {
@@ -8,7 +8,9 @@ export default ({ getRetrieveDepartmentsByFacilityIdGateway }) => async (
   }
   try {
     logger.info(`Retrieving deparments for facility id: ${id}`);
-    let departments = await getRetrieveDepartmentsByFacilityIdGateway()(id);
+    let departments = await getRetrieveActiveDepartmentsByFacilityIdGateway()(
+      id
+    );
     if (departments == undefined) {
       throw Error();
     }

@@ -1,7 +1,7 @@
-import retrieveDepartmentsByFacilityIdGateway from "../../../src/gateways/MsSQL/retrieveDepartmentsByFacilityId";
+import retrieveActiveDepartmentsByFacilityIdGateway from "../../../src/gateways/MsSQL/retrieveActiveDepartmentsByFacilityId";
 import mockAppContainer from "src/containers/AppContainer";
 
-describe("retrieveDepartmentsByFacilityIdGateway", () => {
+describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
   const expectedFacilityId = 2;
   const expectedDepartments = [
     {
@@ -17,7 +17,7 @@ describe("retrieveDepartmentsByFacilityIdGateway", () => {
       uuid: "uuid 5",
       name: "Ward Five",
       code: "WD5",
-      status: 0,
+      status: 1,
       facilityId: expectedFacilityId,
     },
   ];
@@ -29,7 +29,7 @@ describe("retrieveDepartmentsByFacilityIdGateway", () => {
       })
     );
     // Act
-    const actualDepartments = await retrieveDepartmentsByFacilityIdGateway(
+    const actualDepartments = await retrieveActiveDepartmentsByFacilityIdGateway(
       mockAppContainer
     )(expectedFacilityId);
     // Assert
@@ -41,7 +41,7 @@ describe("retrieveDepartmentsByFacilityIdGateway", () => {
       expectedFacilityId
     );
     expect(mockAppContainer.getMsSqlConnPool().query).toHaveBeenCalledWith(
-      "SELECT id, facility_id AS facilityId, uuid, name, code, status FROM dbo.[department] WHERE facility_id = @id"
+      "SELECT id, facility_id AS facilityId, uuid, name, code, status FROM dbo.[department] WHERE facility_id = @id AND status = 1"
     );
   });
   it("throws an error if msSQL is undefined", async () => {
@@ -50,7 +50,7 @@ describe("retrieveDepartmentsByFacilityIdGateway", () => {
     // Act && Assert
     expect(
       async () =>
-        await retrieveDepartmentsByFacilityIdGateway(mockAppContainer)(
+        await retrieveActiveDepartmentsByFacilityIdGateway(mockAppContainer)(
           expectedFacilityId
         )
     ).rejects.toThrow();
@@ -63,7 +63,7 @@ describe("retrieveDepartmentsByFacilityIdGateway", () => {
       })
     );
     // Act
-    const actualDepartments = await retrieveDepartmentsByFacilityIdGateway(
+    const actualDepartments = await retrieveActiveDepartmentsByFacilityIdGateway(
       mockAppContainer
     )();
     // Assert
@@ -78,7 +78,7 @@ describe("retrieveDepartmentsByFacilityIdGateway", () => {
     );
     const idDoesNotExist = 99;
     // Act
-    const actualDepartments = await retrieveDepartmentsByFacilityIdGateway(
+    const actualDepartments = await retrieveActiveDepartmentsByFacilityIdGateway(
       mockAppContainer
     )(idDoesNotExist);
     // Assert

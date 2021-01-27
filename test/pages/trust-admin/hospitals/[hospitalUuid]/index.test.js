@@ -66,7 +66,7 @@ describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () =>
       });
       const container = {
         getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
-        getRetrieveDepartmentsByFacilityId: () => departmentsSpy,
+        getRetrieveActiveDepartmentsByFacilityId: () => departmentsSpy,
         getRetrieveFacilityByUuid: () => facilitySpy,
         getRetrieveHospitalVisitTotals: () => visitTotalsSpy,
         getRetrieveHospitalWardVisitTotals: () => hospitalWardTotalsSpy,

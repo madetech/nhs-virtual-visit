@@ -63,7 +63,7 @@ import createFacility from "../usecases/createFacility";
 import retrieveFacilityById from "../usecases/retrieveFacilityById";
 import retrieveFacilityByUuid from "../usecases/retrieveFacilityByUuid";
 import updateFacilityById from "../usecases/updateFacilityById";
-import retrieveDepartmentsByFacilityId from "../usecases/retrieveDepartmentsByFacilityId";
+import retrieveActiveDepartmentsByFacilityId from "../usecases/retrieveActiveDepartmentsByFacilityId";
 import createDepartment from "../usecases/createDepartment";
 import retrieveDepartmentByUuid from "../usecases/retrieveDepartmentByUuid";
 import updateDepartmentById from "../usecases/updateDepartmentById";
@@ -94,7 +94,7 @@ import createFacilityGateway from "../gateways/MsSQL/createFacility";
 import retrieveFacilityByIdGateway from "../gateways/MsSQL/retrieveFacilityById";
 import retrieveFacilityByUuidGateway from "../gateways/MsSQL/retrieveFacilityByUuid";
 import updateFacilityByIdGateway from "../gateways/MsSQL/updateFacilityById";
-import retrieveDepartmentsByFacilityIdGateway from "../gateways/MsSQL/retrieveDepartmentsByFacilityId";
+import retrieveActiveDepartmentsByFacilityIdGateway from "../gateways/MsSQL/retrieveActiveDepartmentsByFacilityId";
 import createDepartmentGateway from "../gateways/MsSQL/createDepartment";
 import retrieveDepartmentByUuidGateway from "../gateways/MsSQL/retrieveDepartmentByUuid";
 import updateDepartmentByIdGateway from "../gateways/MsSQL/updateDepartmentById";
@@ -389,8 +389,8 @@ class AppContainer {
     return retrieveOrganisationById(this);
   };
 
-  getRetrieveDepartmentsByFacilityId = () => {
-    return retrieveDepartmentsByFacilityId(this);
+  getRetrieveActiveDepartmentsByFacilityId = () => {
+    return retrieveActiveDepartmentsByFacilityId(this);
   };
 
   getCreateDepartment = () => {
@@ -566,8 +566,8 @@ class AppContainer {
     return insertManager;
   };
 
-  getRetrieveDepartmentsByFacilityIdGateway = () => {
-    return retrieveDepartmentsByFacilityIdGateway(this);
+  getRetrieveActiveDepartmentsByFacilityIdGateway = () => {
+    return retrieveActiveDepartmentsByFacilityIdGateway(this);
   };
 
   getCreateDepartmentGateway = () => {

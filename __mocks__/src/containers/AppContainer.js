@@ -18,8 +18,10 @@ export default {
   getCreateDepartmentGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveDepartmentByUuidGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveDepartmentByUuid: jest.fn(() => () => Promise.resolve({})),
-  getRetrieveDepartmentsByFacilityId: jest.fn(() => () => Promise.resolve({})),
-  getRetrieveDepartmentsByFacilityIdGateway: jest.fn(() => () =>
+  getRetrieveActiveDepartmentsByFacilityId: jest.fn(() => () =>
+    Promise.resolve({})
+  ),
+  getRetrieveActiveDepartmentsByFacilityIdGateway: jest.fn(() => () =>
     Promise.resolve({})
   ),
   getUpdateDepartmentById: jest.fn(() => () => Promise.resolve({})),

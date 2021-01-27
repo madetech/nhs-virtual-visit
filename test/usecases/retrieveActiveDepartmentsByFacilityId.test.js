@@ -1,4 +1,4 @@
-import retrieveDepartmentsByFacilityId from "../../src/usecases/retrieveDepartmentsByFacilityId";
+import retrieveDepartmentsByFacilityId from "../../src/usecases/retrieveActiveDepartmentsByFacilityId";
 import mockAppContainer from "src/containers/AppContainer";
 describe("retrieveDepartmentsByFacilityId", () => {
   // Arrange
@@ -25,7 +25,7 @@ describe("retrieveDepartmentsByFacilityId", () => {
     async () => expectedDepartments
   );
   beforeEach(() => {
-    mockAppContainer.getRetrieveDepartmentsByFacilityIdGateway.mockImplementation(
+    mockAppContainer.getRetrieveActiveDepartmentsByFacilityIdGateway.mockImplementation(
       () => retrieveDepartmentsByFacilityIdSpy
     );
   });
@@ -50,7 +50,7 @@ describe("retrieveDepartmentsByFacilityId", () => {
     const retrieveDepartmentsByFacilityIdErrorSpy = jest.fn(async () => {
       throw new Error("error");
     });
-    mockAppContainer.getRetrieveDepartmentsByFacilityIdGateway.mockImplementationOnce(
+    mockAppContainer.getRetrieveActiveDepartmentsByFacilityIdGateway.mockImplementationOnce(
       () => retrieveDepartmentsByFacilityIdErrorSpy
     );
     const { departments, error } = await retrieveDepartmentsByFacilityId(
@@ -66,7 +66,7 @@ describe("retrieveDepartmentsByFacilityId", () => {
     const retrieveDepartmentsByFacilityIdUndefinedSpy = jest.fn(async () =>
       Promise.resolved({ recordset: undefined })
     );
-    mockAppContainer.getRetrieveDepartmentsByFacilityIdGateway.mockImplementationOnce(
+    mockAppContainer.getRetrieveActiveDepartmentsByFacilityIdGateway.mockImplementationOnce(
       () => retrieveDepartmentsByFacilityIdUndefinedSpy
     );
     const { departments, error } = await retrieveDepartmentsByFacilityId(
