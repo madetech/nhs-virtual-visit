@@ -25,5 +25,6 @@ export default {
   getUpdateDepartmentById: jest.fn(() => () => Promise.resolve({})),
   getUpdateDepartmentByIdGateway: jest.fn(() => () => Promise.resolve({})),
   getArchiveDepartmentByIdGateway: jest.fn(() => () => Promise.resolve({})),
+  getArchiveDepartmentById: jest.fn(() => () => Promise.resolve({})),
   getTrustAdminIsAuthenticated: jest.fn(() => () => true),
 };

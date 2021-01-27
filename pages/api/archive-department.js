@@ -15,7 +15,7 @@ export default withContainer(
 
     if (!body?.uuid) {
       res.status(400);
-      res.end(JSON.stringify({ err: "ward uuid must be present" }));
+      res.end(JSON.stringify({ error: "department uuid must be present" }));
       return;
     }
     res.setHeader("Content-Type", "application/json");
@@ -35,12 +35,10 @@ export default withContainer(
         );
         return;
       }
-
       const {
         uuid: archivedUuid,
         error: archiveError,
-      } = container.getArchiveDepartmentById()(department.id);
-
+      } = await container.getArchiveDepartmentById()(department.id);
       if (archiveError) {
         res.status(400);
         res.end(JSON.stringify("Error on deleting department"));
