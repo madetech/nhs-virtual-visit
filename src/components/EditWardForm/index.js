@@ -4,7 +4,6 @@ import FormGroup from "../FormGroup";
 import FormHeading from "../FormHeading";
 import Input from "../Input";
 import ErrorSummary from "../ErrorSummary";
-import SelectStatus from "../SelectStatus";
 import Label from "../Label";
 import Router from "next/router";
 import isPresent from "../../helpers/isPresent";
@@ -13,7 +12,6 @@ import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 
 const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
   const [wardName, setWardName] = useState(ward.name);
-  const [wardStatus, setWardStatus] = useState(ward.status);
   let onSubmitErrors = [];
 
   const submitAnswers = async () => {
@@ -26,7 +24,6 @@ const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
         body: JSON.stringify({
           uuid: ward.uuid,
           name: wardName,
-          status: wardStatus,
         }),
       });
 
@@ -93,21 +90,6 @@ const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
             name="ward-name"
             autoComplete="off"
             value={wardName || ""}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label htmlFor="ward-status" className="nhsuk-label--m">
-            Ward Status
-          </Label>
-          <SelectStatus
-            id="ward-status"
-            className="nhsuk-input--width-10 nhsuk-u-width-one-half"
-            prompt="Choose a ward status"
-            options={[{ name: "active" }, { name: "disabled" }]}
-            onChange={(event) => {
-              setWardStatus(event.target.value);
-            }}
-            defaultValue={wardStatus}
           />
         </FormGroup>
         <Button data-testid="edit-ward-button" className="nhsuk-u-margin-top-5">
