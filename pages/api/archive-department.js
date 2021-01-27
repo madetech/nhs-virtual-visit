@@ -21,11 +21,14 @@ export default withContainer(
     res.setHeader("Content-Type", "application/json");
 
     try {
-      const { uuid } = body.uuid;
+      const { uuid } = body;
+      console.log(uuid);
       const {
         department,
         error,
       } = await container.getRetrieveDepartmentByUuid()(uuid);
+      console.log("ERROR RETRIEVING");
+      console.log(error);
       if (error) {
         res.status(404);
         res.end(

@@ -1,5 +1,5 @@
-import { getServerSideProps } from "../../../../../../pages/trust-admin/hospitals/[hospitalUuid]/wards/archive-ward-success";
-import { TRUST_ADMIN } from "../../../../../../src/helpers/userTypes";
+import { getServerSideProps } from "../../../../../../../pages/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/archive-ward-success";
+import { TRUST_ADMIN } from "../../../../../../../src/helpers/userTypes";
 describe("/trust-admin/wards/archive-success", () => {
   let res;
   beforeEach(() => {
@@ -25,9 +25,14 @@ describe("/trust-admin/wards/archive-success", () => {
     it("returns hospitals, hospitalId, organisation and error through props", async () => {
       // Arrange
       const orgId = 10;
-      const expectedHospitalId = 1;
-      const expectedHospitalName = "Hospital1";
-      const expectedWardName = "Ward1";
+      const expectedDepartment = {
+        name: "Ward1",
+        uuid: "department-uuid",
+      };
+      const expectedFacility = {
+        name: "Hospital1",
+        uuid: "hospitalUuid",
+      };
       const authenticatedReq = {
         headers: {
           cookie: "token=123",
@@ -41,30 +46,39 @@ describe("/trust-admin/wards/archive-success", () => {
         organisation: { name: expectedOrganisationName },
         error: null,
       }));
+      const retrieveDepartmentByUuidSpy = jest.fn(async () => ({
+        department: {
+          name: expectedDepartment.name,
+          uuid: expectedDepartment.uuid,
+        },
+        error: null,
+      }));
       const container = {
         getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
+        getRetrieveDepartmentByUuid: () => retrieveDepartmentByUuidSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
       // Act
       const {
-        props: { name, hospitalName, hospitalId, organisation, error },
+        props: { ward, hospital, organisation, error },
       } = await getServerSideProps({
         req: authenticatedReq,
         res,
         query: {
-          hospitalId: expectedHospitalId,
-          hospitalName: expectedHospitalName,
-          name: expectedWardName,
+          hospitalName: expectedFacility.name,
+        },
+        params: {
+          hospitalUuid: expectedFacility.uuid,
+          wardUuid: expectedDepartment.uuid,
         },
         container,
       });
       // Assert
       expect(retrieveOrganisationByIdSpy).toBeCalledWith(orgId);
       expect(organisation.name).toEqual(expectedOrganisationName);
-      expect(hospitalId).toEqual(expectedHospitalId);
-      expect(hospitalName).toEqual(expectedHospitalName);
-      expect(name).toEqual(expectedWardName);
+      expect(hospital).toEqual(expectedFacility);
+      expect(ward).toEqual(expectedDepartment);
       expect(error).toBeNull();
     });
   });
