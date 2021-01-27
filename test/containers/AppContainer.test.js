@@ -357,4 +357,12 @@ describe("AppContainer", () => {
   it("returns getUpdateDepartmentById", () => {
     expect(container.getUpdateDepartmentById()).toBeDefined();
   });
+
+  it("returns getArchiveDepartmentByIdGateway", () => {
+    expect(container.getArchiveDepartmentByIdGateway()).toBeDefined();
+  });
+
+  it("returns getArchiveDepartmentById", () => {
+    expect(container.getArchiveDepartmentById()).toBeDefined();
+  });
 });

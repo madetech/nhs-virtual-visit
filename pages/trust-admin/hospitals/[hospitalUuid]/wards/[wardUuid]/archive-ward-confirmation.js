@@ -13,34 +13,31 @@ import { TRUST_ADMIN } from "../../../../../../src/helpers/userTypes";
 import Form from "../../../../../../src/components/Form";
 import TrustAdminHeading from "../../../../../../src/components/TrustAdminHeading";
 
-const ArchiveAWardConfirmation = ({ error, ward, organisation }) => {
+const ArchiveAWardConfirmation = ({ error, ward, organisation, hospital }) => {
   const [hasError, setHasError] = useState(error);
-  const { id, hospitalName, name, hospitalId } = ward;
+  const { name, hospitalId } = ward;
   if (hasError) {
     return <Error />;
   }
 
   const wardSummaryList = [
     { key: "Name", value: name },
-    { key: "Hospital", value: hospitalName },
+    { key: "Hospital", value: hospital.name },
   ];
 
   const onSubmit = async () => {
-    const response = await fetch("/api/archive-ward", {
+    const response = await fetch("/api/archive-department", {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        name,
-        hospitalName,
-        trustId: organisation.id,
-        wardId: id,
+        uuid: ward.uuid,
       }),
     });
     if (response.status === 200) {
       Router.push(
-        `/trust-admin/wards/archive-success?name=${name}&hospitalName=${hospitalName}&hospitalId=${hospitalId}`
+        `/trust-admin/hospitals/${hospital.uuid}/wards/${ward.uuid}/archive-ward-success?hospitalName=${hospital.name}`
       );
       return true;
     } else {
@@ -73,7 +70,7 @@ const ArchiveAWardConfirmation = ({ error, ward, organisation }) => {
             <Button>Yes, delete this ward</Button>
             <BackLink
               href={`/trust-admin/hospitals/${hospitalId}`}
-            >{`Back to ${hospitalName}`}</BackLink>
+            >{`Back to ${hospital.name}`}</BackLink>
           </Form>
         </GridColumn>
       </GridRow>
@@ -82,25 +79,33 @@ const ArchiveAWardConfirmation = ({ error, ward, organisation }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyTrustAdminToken(async ({ container, query, authenticationToken }) => {
-    const orgId = authenticationToken.trustId;
-    const {
-      organisation,
-      error: organisationError,
-    } = await container.getRetrieveOrganisationById()(orgId);
-    const { ward, error: wardError } = await container.getRetrieveWardById()(
-      query.id,
-      orgId
-    );
-
-    return {
-      props: {
-        error: organisationError || wardError,
-        ward,
+  verifyTrustAdminToken(
+    async ({ container, params, query, authenticationToken }) => {
+      const wardUuid = params?.wardUuid;
+      const hospitalUuid = params?.hospitalUuid;
+      const hospitalName = query?.hospitalName;
+      const orgId = authenticationToken.trustId;
+      const {
         organisation,
-      },
-    };
-  })
+        error: organisationError,
+      } = await container.getRetrieveOrganisationById()(orgId);
+      const {
+        department,
+        error: departmentError,
+      } = await container.getRetrieveDepartmentByUuid()(wardUuid);
+      const queryOrParamsError =
+        !hospitalName || !hospitalUuid || !wardUuid ? true : null;
+
+      return {
+        props: {
+          error: organisationError || departmentError || queryOrParamsError,
+          ward: department,
+          hospital: { name: hospitalName, uuid: hospitalUuid },
+          organisation,
+        },
+      };
+    }
+  )
 );
 
 export default ArchiveAWardConfirmation;
