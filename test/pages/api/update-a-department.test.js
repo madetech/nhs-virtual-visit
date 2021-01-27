@@ -9,7 +9,6 @@ describe("update-a-ward", () => {
       body: {
         uuid: "uuid",
         name: "Joey Wheeler Ward",
-        status: "active",
       },
       headers: {
         cookie: "token=valid.token.value",
@@ -89,7 +88,6 @@ describe("update-a-ward", () => {
       expect.objectContaining({
         id: 1,
         name: "Joey Wheeler Ward",
-        status: "active",
       })
     );
   });
@@ -157,7 +155,7 @@ describe("update-a-ward", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
-        error: "uuid, name and department status must be present",
+        error: "uuid and name must be present",
       })
     );
   });
@@ -185,7 +183,7 @@ describe("update-a-ward", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
-        error: "uuid, name and department status must be present",
+        error: "uuid and name must be present",
       })
     );
   });
@@ -212,7 +210,7 @@ describe("update-a-ward", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
-        error: "uuid, name and department status must be present",
+        error: "uuid and name must be present",
       })
     );
   });
@@ -240,7 +238,7 @@ describe("update-a-ward", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
-        error: "uuid, name and department status must be present",
+        error: "uuid and name must be present",
       })
     );
   });

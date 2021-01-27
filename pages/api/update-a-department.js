@@ -12,17 +12,17 @@ export default withContainer(
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
     checkIfAuthorised(trustAdminToken, res);
 
-    if (!body || !body.uuid || !body.name || !body.status) {
+    if (!body || !body.uuid || !body.name) {
       res.status(400);
       res.end(
         JSON.stringify({
-          error: "uuid, name and department status must be present",
+          error: "uuid and name must be present",
         })
       );
       return;
     }
     try {
-      const { uuid, name, status } = body;
+      const { uuid, name } = body;
       const {
         department,
         error: departmentError,
@@ -43,7 +43,6 @@ export default withContainer(
       } = await container.getUpdateDepartmentById()({
         id: department.id,
         name,
-        status,
       });
 
       if (error) {
