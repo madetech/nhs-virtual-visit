@@ -9,8 +9,9 @@ import TrustsListTable from "../../../src/components/TrustsListTable";
 import Text from "../../../src/components/Text";
 import Error from "next/error";
 import { ADMIN } from "../../../src/helpers/userTypes";
+import { Pagination } from "../../../src/components/Pagination";
 
-const Admin = ({ organisations, error }) => {
+const Admin = ({ organisations, page, totalPages, error }) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -26,7 +27,15 @@ const Admin = ({ organisations, error }) => {
           <Heading>List of all trusts</Heading>
           <ActionLink href="trusts/add-a-trust">Add a trust</ActionLink>
           {organisations.length > 0 ? (
-            <TrustsListTable trusts={organisations} />
+            <div>
+              <TrustsListTable trusts={organisations} />
+              <Pagination
+                previousHref={`/admin/trusts?page=${page - 1}`}
+                previousName={page === 0 ? null : `Page ${page}`}
+                nextHref={`/admin/trusts?page=${page + 1}`}
+                nextName={page > totalPages - 1 ? null : `Page ${page + 2}`}
+              />
+            </div>
           ) : (
             <Text>There are no trusts</Text>
           )}
@@ -37,14 +46,23 @@ const Admin = ({ organisations, error }) => {
 };
 
 export const getServerSideProps = propsWithContainer(
-  verifyAdminToken(async ({ container }) => {
+  verifyAdminToken(async ({ container, query }) => {
+    const page = query.page ? parseInt(query.page) : 0;
+    const limit = query.limit ? parseInt(query.limit) : 10;
+
     const {
       organisations,
+      total,
       error,
-    } = await container.getRetrieveOrganisations()();
+    } = await container.getRetrieveOrganisations()({
+      page,
+      limit,
+    });
+
+    const totalPages = total / limit;
 
     return {
-      props: { organisations, error },
+      props: { organisations, page, totalPages, error },
     };
   })
 );
