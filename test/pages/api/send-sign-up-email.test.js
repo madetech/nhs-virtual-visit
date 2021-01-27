@@ -16,7 +16,11 @@ describe("send-reset-password-email", () => {
       body: {
         email: "nhs-manager@nhs.co.uk",
         password: "password",
-        organisationId: 1,
+        organisation: {
+          id: 1,
+          name: "Test trust",
+          status: 0,
+        },
       },
       headers: {
         cookie: "",
@@ -54,6 +58,7 @@ describe("send-reset-password-email", () => {
           error: null,
         };
       }),
+      getRetrieveManagersByOrgId: jest.fn(),
     };
     createTimeSensitiveLink.mockReturnValue({
       link: "validLink",
@@ -64,6 +69,9 @@ describe("send-reset-password-email", () => {
         templateId: "templateId",
         personalisationKeys: "validLink",
       },
+      signUpRequestEmail: {
+        templateId: "requestTemplateId",
+      },
     });
     bcrypt.hashSync.mockReturnValue("hashedPassword");
   });
@@ -71,9 +79,7 @@ describe("send-reset-password-email", () => {
   it("returns 405 if not POST method", async () => {
     validRequest.method = "GET";
 
-    await sendSignUpEmail(validRequest, response, {
-      container: container,
-    });
+    await sendSignUpEmail(validRequest, response, { container: container });
 
     expect(response.status).toHaveBeenCalledWith(405);
   });
@@ -91,11 +97,7 @@ describe("send-reset-password-email", () => {
       },
     };
 
-    await sendSignUpEmail(invalidRequest, response, {
-      container: {
-        ...container,
-      },
-    });
+    await sendSignUpEmail(invalidRequest, response, { container });
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
@@ -116,11 +118,7 @@ describe("send-reset-password-email", () => {
       },
     };
 
-    await sendSignUpEmail(invalidRequest, response, {
-      container: {
-        ...container,
-      },
-    });
+    await sendSignUpEmail(invalidRequest, response, { container });
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
@@ -128,7 +126,7 @@ describe("send-reset-password-email", () => {
     );
   });
 
-  it("returns a 400 if the organisationId is not present", async () => {
+  it("returns a 400 if the organisation is not present", async () => {
     const invalidRequest = {
       method: "POST",
       body: {
@@ -141,11 +139,7 @@ describe("send-reset-password-email", () => {
       },
     };
 
-    await sendSignUpEmail(invalidRequest, response, {
-      container: {
-        ...container,
-      },
-    });
+    await sendSignUpEmail(invalidRequest, response, { container });
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
@@ -172,79 +166,187 @@ describe("send-reset-password-email", () => {
     );
   });
 
-  it("returns a 400 if there is an error returned from addToUserVerificationTable database call", async () => {
-    const addToUserVerificationTableSpy = jest.fn().mockReturnValue({
-      error: "There was a verificationError",
+  describe("when organisation status is 0", () => {
+    it("returns a 400 if there is an error returned from addToUserVerificationTable database call", async () => {
+      const addToUserVerificationTableSpy = jest.fn().mockReturnValue({
+        error: "There was a verificationError",
+      });
+
+      await sendSignUpEmail(validRequest, response, {
+        container: {
+          ...container,
+          getAddToUserVerificationTable: () => addToUserVerificationTableSpy,
+        },
+      });
+
+      expect(response.status).toHaveBeenCalledWith(400);
+      expect(response.end).toHaveBeenCalledWith(
+        JSON.stringify({ err: "There was a verificationError" })
+      );
     });
 
-    await sendSignUpEmail(validRequest, response, {
-      container: {
-        ...container,
-        getAddToUserVerificationTable: () => addToUserVerificationTableSpy,
-      },
+    it("returns a 401 if there is a linkError", async () => {
+      createTimeSensitiveLink.mockReturnValue({
+        link: "",
+        linkError: "link error!",
+      });
+
+      await sendSignUpEmail(validRequest, response, {
+        container: {
+          ...container,
+        },
+      });
+
+      expect(response.status).toHaveBeenCalledWith(401);
+      expect(response.end).toHaveBeenCalledWith(
+        JSON.stringify({
+          error: "There was an error creating link to sign up",
+        })
+      );
     });
 
-    expect(response.status).toHaveBeenCalledWith(400);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "There was a verificationError" })
-    );
+    it("returns a 201 if the sendEmail is successful", async () => {
+      const sendEmailSpy = jest.fn().mockReturnValue({ error: null });
+
+      await sendSignUpEmail(validRequest, response, {
+        container: {
+          ...container,
+          getSendEmail: () => sendEmailSpy,
+        },
+      });
+
+      expect(response.status).toHaveBeenCalledWith(201);
+      expect(response.end).toHaveBeenCalledWith(
+        JSON.stringify({ email: "nhs-manager@nhs.co.uk" })
+      );
+      expect(sendEmailSpy).toHaveBeenCalledWith(
+        "templateId",
+        "nhs-manager@nhs.co.uk",
+        { link: "validLink" },
+        null
+      );
+    });
+
+    it("returns a 401 if the sendEmail is unsuccessful", async () => {
+      const sendEmailStub = jest
+        .fn()
+        .mockReturnValue({ error: "Error message" });
+
+      await sendSignUpEmail(validRequest, response, {
+        container: {
+          ...container,
+          getSendEmail: () => sendEmailStub,
+        },
+      });
+
+      expect(response.status).toHaveBeenCalledWith(401);
+      expect(response.end).toHaveBeenCalledWith(
+        JSON.stringify({ err: "GovNotify error occurred" })
+      );
+    });
   });
 
-  it("returns a 401 if there is a linkError", async () => {
-    createTimeSensitiveLink.mockReturnValue({
-      link: "",
-      linkError: "link error!",
-    });
-
-    await sendSignUpEmail(validRequest, response, {
-      container: {
+  describe("when organisation status is 1", () => {
+    beforeEach(() => {
+      validRequest = {
+        ...validRequest,
+        body: {
+          email: "nhs-manager@nhs.co.uk",
+          password: "password",
+          organisation: {
+            id: 1,
+            name: "Test trust",
+            status: 1,
+          },
+        },
+      };
+      container = {
         ...container,
-      },
+        getRetrieveManagersByOrgId: jest.fn().mockReturnValue(() => {
+          return {
+            managers: [
+              {
+                id: 1,
+                uuid: "manager1Uuid",
+                email: "nhs-manager1@nhs.co.uk",
+              },
+              {
+                id: 2,
+                uuid: "manager2Uuid",
+                email: "nhs-manager2@nhs.co.uk",
+              },
+            ],
+            error: null,
+          };
+        }),
+      };
+    });
+    it("returns a 400 if there is an error returned from retrieveManagerByOrgId database call", async () => {
+      const retrieveManagersByOrgIdSpy = jest.fn().mockReturnValue({
+        managers: null,
+        error: "There was an error",
+      });
+
+      await sendSignUpEmail(validRequest, response, {
+        container: {
+          ...container,
+          getRetrieveManagersByOrgId: () => retrieveManagersByOrgIdSpy,
+        },
+      });
+
+      expect(response.status).toHaveBeenCalledWith(400);
+      expect(response.end).toHaveBeenCalledWith(
+        JSON.stringify({ err: "There was an error" })
+      );
     });
 
-    expect(response.status).toHaveBeenCalledWith(401);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({
-        error: "There was an error creating link to sign up",
-      })
-    );
-  });
+    it("returns a 201 if the sendEmail is successful", async () => {
+      const sendEmailSpy = jest.fn().mockReturnValue({ error: null });
+      const addToUserVerificationTableSpy = jest.fn().mockReturnValue({
+        verifyUser: { hash: "hashedUuid" },
+        error: null,
+      });
+      await sendSignUpEmail(validRequest, response, {
+        container: {
+          ...container,
+          getSendEmail: () => sendEmailSpy,
+          getAddToUserVerificationTable: () => addToUserVerificationTableSpy,
+        },
+      });
 
-  it("returns a 201 if the sendEmail is successful", async () => {
-    const sendEmailSpy = jest.fn().mockReturnValue({ error: null });
+      const personalisationKeys = {
+        link: "validLink",
+        email: "nhs-manager@nhs.co.uk",
+        organisation_name: "Test trust",
+      };
+      const managerEmail = "nhs-manager1@nhs.co.uk";
+      const requestTemplateId = "requestTemplateId";
+      const managerUuid = "manager1Uuid";
+      const managerId = 1;
 
-    await sendSignUpEmail(validRequest, response, {
-      container: {
-        ...container,
-        getSendEmail: () => sendEmailSpy,
-      },
+      expect(response.status).toHaveBeenCalledWith(201);
+      expect(response.end).toHaveBeenCalledWith(
+        JSON.stringify({ email: managerEmail })
+      );
+
+      expect(addToUserVerificationTableSpy).toHaveBeenCalledWith({
+        user_id: managerId,
+        type: "confirmRegistration",
+      });
+
+      expect(createTimeSensitiveLink).toHaveBeenCalledWith(
+        { cookie: "" },
+        managerUuid,
+        "hashedUuid",
+        "48h",
+        "activate-account"
+      );
+      expect(sendEmailSpy).toHaveBeenCalledWith(
+        requestTemplateId,
+        managerEmail,
+        personalisationKeys,
+        null
+      );
     });
-
-    expect(response.status).toHaveBeenCalledWith(201);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ email: "nhs-manager@nhs.co.uk" })
-    );
-    expect(sendEmailSpy).toHaveBeenCalledWith(
-      "templateId",
-      "nhs-manager@nhs.co.uk",
-      { link: "validLink" },
-      null
-    );
-  });
-
-  it("returns a 401 if the sendEmail is unsuccessful", async () => {
-    const sendEmailStub = jest.fn().mockReturnValue({ error: "Error message" });
-
-    await sendSignUpEmail(validRequest, response, {
-      container: {
-        ...container,
-        getSendEmail: () => sendEmailStub,
-      },
-    });
-
-    expect(response.status).toHaveBeenCalledWith(401);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "GovNotify error occurred" })
-    );
   });
 });
