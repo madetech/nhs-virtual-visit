@@ -16,7 +16,7 @@ import Router from "next/router";
 
 const SignUp = ({ organisations, error }) => {
   const [errors, setErrors] = useState([]);
-  const [organisationId, setOrganisationId] = useState("");
+  const [organisation, setOrganisation] = useState({});
 
   if (error) {
     errors.push({
@@ -29,6 +29,14 @@ const SignUp = ({ organisations, error }) => {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
+  const organisationChangeHandler = async (event) => {
+    const organisationId = event.target.value;
+    const selectedOrganisation = organisations.find(
+      (org) => org.id.toString() === organisationId
+    );
+    setOrganisation(selectedOrganisation);
+  };
+
   const verifyEmail = (email) => email.match(/@nhs\.co\.uk/);
 
   const onSubmit = async () => {
@@ -38,9 +46,9 @@ const SignUp = ({ organisations, error }) => {
     const password = passwordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
 
-    if (!organisationId) {
+    if (!organisation.id) {
       onSubmitErrors.push({
-        id: "organisation-id-error",
+        id: "organisation-error",
         message: "Pick an organisation from the dropdown",
       });
     }
@@ -54,7 +62,7 @@ const SignUp = ({ organisations, error }) => {
 
     if (!verifyEmail(email)) {
       onSubmitErrors.push({
-        id: "email-error",
+        id: "verify-email-error",
         message: "You must have an NHS email to be able to sign up",
       });
     }
@@ -81,7 +89,11 @@ const SignUp = ({ organisations, error }) => {
     }
 
     if (onSubmitErrors.length === 0) {
-      const body = JSON.stringify({ email, password, organisationId });
+      const body = JSON.stringify({
+        email,
+        password,
+        organisation,
+      });
       const response = await fetch("/api/send-sign-up-email", {
         method: "POST",
         headers: {
@@ -93,7 +105,7 @@ const SignUp = ({ organisations, error }) => {
       if (response.status === 201) {
         Router.push({
           pathname: "sign-up/send-sign-up-email-success",
-          query: { email },
+          query: { email, status: organisation.status },
         });
         return true;
       } else {
@@ -124,12 +136,17 @@ const SignUp = ({ organisations, error }) => {
                   className="nhsuk-input--width-10 nhsuk-u-width-one-half"
                   prompt="Choose an organisation"
                   options={organisations}
-                  onChange={(event) => {
-                    setOrganisationId(event.target.value);
-                  }}
-                  hasError={hasError(errors, "organisation-id")}
-                  errorMessage={errorMessage(errors, "organisation-id")}
+                  onChange={organisationChangeHandler}
+                  hasError={hasError(errors, "organisation")}
+                  errorMessage={errorMessage(errors, "organisation")}
                 />
+                {organisation && organisation.status === 1 && (
+                  <p style={{ paddingTop: "10px" }}>
+                    This organisation has already been activated. An email will
+                    be sent to a current manager to allow you access on form
+                    completion.
+                  </p>
+                )}
               </FormGroup>
               <Form onSubmit={onSubmit}>
                 <FormGroup>
@@ -171,7 +188,9 @@ const SignUp = ({ organisations, error }) => {
                   />
                 </FormGroup>
                 <Button className="nhsuk-u-margin-top-2" type="submit">
-                  Sign Up
+                  {organisation && organisation.status === 1
+                    ? "Send Request"
+                    : "Sign Up"}
                 </Button>
               </Form>
               <p>
