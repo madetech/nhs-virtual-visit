@@ -52,5 +52,9 @@ export default () => {
       templateId: process.env.EMAIL_SIGN_UP_TEMPLATE_ID,
       personalisationKeys: ["link"],
     },
+    signUpRequestEmail: {
+      templateId: process.env.EMAIL_SIGN_UP_REQUEST_TEMPLATE_ID,
+      personalisationKeys: ["link", "email", "organisation_name"],
+    },
   };
 };

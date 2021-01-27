@@ -8,10 +8,10 @@ const retrieveOrganisations = ({ getRetrieveOrganisationsGateway }) => async ({
     error,
   } = await getRetrieveOrganisationsGateway()({ page, limit });
 
-  let organisationsObj = [];
+  let organisationsArr = [];
 
   if (organisations) {
-    organisationsObj = organisations.map((organisation) => ({
+    organisationsArr = organisations.map((organisation) => ({
       id: organisation.id,
       name: organisation.name,
       status: organisation.status,
@@ -19,7 +19,7 @@ const retrieveOrganisations = ({ getRetrieveOrganisationsGateway }) => async ({
   }
 
   return {
-    organisations: organisationsObj,
+    organisations: organisationsArr,
     total,
     error: error,
   };
