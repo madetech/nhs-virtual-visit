@@ -43,6 +43,7 @@ describe("send-reset-password-email", () => {
             type: "manager",
             organisationId: 1,
             status: 0,
+            uuid: "uuid",
           },
           error: null,
         };
@@ -300,7 +301,7 @@ describe("send-reset-password-email", () => {
       );
     });
 
-    it("returns a 201 if the sendEmail is successful", async () => {
+    it("returns a 201 if the sendEmail is successful for manager authorisation", async () => {
       const sendEmailSpy = jest.fn().mockReturnValue({ error: null });
       const addToUserVerificationTableSpy = jest.fn().mockReturnValue({
         verifyUser: { hash: "hashedUuid" },
@@ -321,7 +322,6 @@ describe("send-reset-password-email", () => {
       };
       const managerEmail = "nhs-manager1@nhs.co.uk";
       const requestTemplateId = "requestTemplateId";
-      const managerUuid = "manager1Uuid";
       const managerId = 1;
 
       expect(response.status).toHaveBeenCalledWith(201);
@@ -331,15 +331,15 @@ describe("send-reset-password-email", () => {
 
       expect(addToUserVerificationTableSpy).toHaveBeenCalledWith({
         user_id: managerId,
-        type: "confirmRegistration",
+        type: "authoriseUser",
       });
 
       expect(createTimeSensitiveLink).toHaveBeenCalledWith(
         { cookie: "" },
-        managerUuid,
+        "uuid",
         "hashedUuid",
         "48h",
-        "activate-account"
+        "authorise-user"
       );
       expect(sendEmailSpy).toHaveBeenCalledWith(
         requestTemplateId,
