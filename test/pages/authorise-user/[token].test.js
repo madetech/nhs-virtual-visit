@@ -113,7 +113,7 @@ describe("/authorise-user/[token]", () => {
       const updateLinkStatusByHash = jest.fn();
 
       const retrieveOrganisationById = jest.fn(async () => {
-        return { organisation, error: "There is an error" };
+        return { organisation: undefined, error: "There is an error" };
       });
 
       const container = {
@@ -128,7 +128,7 @@ describe("/authorise-user/[token]", () => {
         },
         container,
       });
-      console.log(props.organisationName);
+
       expect(props.organisationName).toBeUndefined();
       expect(props.error).toBeNull();
     });
