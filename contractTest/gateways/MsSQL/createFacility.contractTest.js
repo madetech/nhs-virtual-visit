@@ -1,8 +1,5 @@
 import createFacility from "../../../src/gateways/MsSQL/createFacility";
-import {
-  setupOrganization,
-  setUpManager,
-} from "../../../test/testUtils/factories";
+import { setupManagerAndOrganisation } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
 
 describe("createFacility", () => {
@@ -13,13 +10,11 @@ describe("createFacility", () => {
   };
   it("returns an object containing the facility", async () => {
     // Arrange
-    const {
-      organisation: { id: orgId },
-    } = await setupOrganization();
     const email = `${Math.random()}@nhs.co.uk`;
-    const {
-      user: { id: userId },
-    } = await setUpManager({ organisationId: orgId, email });
+    const { orgId, userId } = await setupManagerAndOrganisation({
+      userArgs: { email },
+    });
+
     const uuid = await createFacility(container)({
       ...facilityArgs,
       orgId,
@@ -40,13 +35,10 @@ describe("createFacility", () => {
   describe("throws an error", () => {
     it("name is undefined", async () => {
       // Arrange
-      const {
-        organisation: { id: orgId },
-      } = await setupOrganization();
       const email = `${Math.random()}@nhs.co.uk`;
-      const {
-        user: { id: userId },
-      } = await setUpManager({ organisationId: orgId, email });
+      const { orgId, userId } = await setupManagerAndOrganisation({
+        userArgs: { email },
+      });
       // Act && Assert
       expect(
         async () =>
@@ -60,13 +52,10 @@ describe("createFacility", () => {
     });
     it("orgId is undefined", async () => {
       // Arrange
-      const {
-        organisation: { id: orgId },
-      } = await setupOrganization();
       const email = `${Math.random()}@nhs.co.uk`;
-      const {
-        user: { id: userId },
-      } = await setUpManager({ organisationId: orgId, email });
+      const { userId } = await setupManagerAndOrganisation({
+        userArgs: { email },
+      });
       // Act && Assert
       expect(
         async () =>
@@ -79,13 +68,10 @@ describe("createFacility", () => {
     });
     it("code is undefined", async () => {
       // Arrange
-      const {
-        organisation: { id: orgId },
-      } = await setupOrganization();
       const email = `${Math.random()}@nhs.co.uk`;
-      const {
-        user: { id: userId },
-      } = await setUpManager({ organisationId: orgId, email });
+      const { orgId, userId } = await setupManagerAndOrganisation({
+        userArgs: { email },
+      });
       // Act && Assert
       expect(
         async () =>
@@ -99,9 +85,10 @@ describe("createFacility", () => {
     });
     it("createdBy is undefined", async () => {
       // Arrange
-      const {
-        organisation: { id: orgId },
-      } = await setupOrganization();
+      const email = `${Math.random()}@nhs.co.uk`;
+      const { orgId } = await setupManagerAndOrganisation({
+        userArgs: { email },
+      });
       // Act && Assert
       expect(
         async () =>
