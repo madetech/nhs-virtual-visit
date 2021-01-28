@@ -63,7 +63,6 @@ export const getServerSideProps = propsWithContainer(
         0;
       return facility;
     });
-    console.log(facilitiesWithVisitTotals);
     return {
       props: {
         hospitals: facilitiesWithVisitTotals || null,
