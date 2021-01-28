@@ -4,7 +4,7 @@ const verifySignUpLinkGateway = ({ getMsSqlConnPool }) => async ({
   hash,
   uuid,
 }) => {
-  logger.info("Adding signing up user to user verification table");
+  logger.info("Verifying sign up link");
 
   try {
     const db = await getMsSqlConnPool();
@@ -13,7 +13,7 @@ const verifySignUpLinkGateway = ({ getMsSqlConnPool }) => async ({
       .input("hash", hash)
       .input("uuid", uuid)
       .query(
-        `SELECT user_id, organisation_id, verified, status, email 
+        `SELECT user_id, organisation_id, verified, status, email, hash, dbo.[user_verification].type 
           FROM dbo.[user_verification], dbo.[user] 
           WHERE hash = @hash AND uuid = @uuid`
       );
@@ -23,9 +23,7 @@ const verifySignUpLinkGateway = ({ getMsSqlConnPool }) => async ({
       error: null,
     };
   } catch (error) {
-    logger.error(
-      `Error adding signing up user to user verification table ${error}`
-    );
+    logger.error(`Error verifying sign up link ${error}`);
     return {
       user: null,
       error: error.toString(),

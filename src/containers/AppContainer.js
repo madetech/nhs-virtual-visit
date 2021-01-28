@@ -56,6 +56,8 @@ import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
 import retrieveOrganisationById from "../usecases/retrieveOrganisationById";
 import retrieveActiveOrganisations from "../usecases/retrieveActiveOrganisations";
 import deleteOrganisation from "../usecases/deleteOrganisation";
+import updateLinkStatusByHash from "../usecases/updateLinkStatusByHash";
+import retrieveManagerByEmail from "../usecases/retrieveManagerByEmail";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -75,6 +77,8 @@ import deleteOrganisationGateway from "../gateways/MsSQL/deleteOrganisation";
 import createManager from "../usecases/createManager";
 import insertManager from "../gateways/MsSQL/insertManager";
 import verifySignUpLinkGateway from "../gateways/MsSQL/verifySignUpLink";
+import updateLinkStatusByHashGateway from "../gateways/MsSQL/updateLinkStatusByHash";
+import retrieveManagerByEmailGateway from "../gateways/MsSQL/retrieveManagerByEmail";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -621,6 +625,22 @@ class AppContainer {
 
   getAddToUserVerificationTableGateway = () => {
     return addToUserVerificationTableGateway(this);
+  };
+
+  getUpdateLinkStatusByHash = () => {
+    return updateLinkStatusByHash(this);
+  };
+
+  getUpdateLinkStatusByHashGateway = () => {
+    return updateLinkStatusByHashGateway(this);
+  };
+
+  getRetrieveManagerByEmail = () => {
+    return retrieveManagerByEmail(this);
+  };
+
+  getRetrieveManagerByEmailGateway = () => {
+    return retrieveManagerByEmailGateway(this);
   };
 }
 

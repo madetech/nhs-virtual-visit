@@ -13,27 +13,10 @@ export default withContainer(
       return;
     }
 
-    if (!body.password) {
-      res.status(400);
-      res.end(JSON.stringify({ err: "password must be present" }));
-      return;
-    }
-
-    if (!body.organisation) {
-      res.status(400);
-      res.end(JSON.stringify({ err: "organisation must be present" }));
-      return;
-    }
-
     res.setHeader("Content-Type", "application/json");
 
-    const managerObj = {
-      email: body.email,
-      password: body.password,
-      organisationId: body.organisation.id,
-    };
-    const createManager = container.getCreateManager();
-    const { user, error } = await createManager(managerObj);
+    const retrieveManagerByEmail = container.getRetrieveManagerByEmail();
+    const { manager: user, error } = await retrieveManagerByEmail(body.email);
 
     if (error) {
       res.status(400);
@@ -41,30 +24,13 @@ export default withContainer(
       return;
     }
 
-    let manager;
-
-    if (body.organisation.status === 1) {
-      const retrieveManagersByOrgId = container.getRetrieveManagersByOrgId();
-      const {
-        managers,
-        error: retrieveManagerError,
-      } = await retrieveManagersByOrgId(body.organisation.id);
-
-      if (retrieveManagerError) {
-        res.status(400);
-        res.end(JSON.stringify({ err: retrieveManagerError }));
-        return;
-      }
-      manager = managers[0];
-    }
-
     const addToUserVerificationTable = container.getAddToUserVerificationTable();
     const {
       verifyUser,
       error: verificationError,
     } = await addToUserVerificationTable({
-      user_id: manager ? manager.id : user.id,
-      type: manager ? "authoriseUser" : "confirmRegistration",
+      user_id: user.id,
+      type: "confirmRegistration",
     });
 
     if (verificationError) {
@@ -76,11 +42,9 @@ export default withContainer(
     const uuid = user.uuid;
     const hash = verifyUser.hash;
     const sendEmail = container.getSendEmail();
-    const emailTemplateId = manager
-      ? TemplateStore().signUpRequestEmail.templateId
-      : TemplateStore().signUpEmail.templateId;
+    const emailTemplateId = TemplateStore().signUpEmail.templateId;
     const expirationTime = "48h";
-    const urlPath = manager ? "authorise-user" : "activate-account";
+    const urlPath = "activate-account";
 
     const { link, linkError } = createTimeSensitiveLink(
       headers,
@@ -98,17 +62,9 @@ export default withContainer(
       return;
     }
 
-    let personalisationKeys = { link };
+    const personalisationKeys = { link };
 
-    if (manager) {
-      personalisationKeys = {
-        ...personalisationKeys,
-        email: body.email,
-        organisation_name: body.organisation.name,
-      };
-    }
-
-    const emailAddress = manager ? manager.email : body.email;
+    const emailAddress = body.email;
 
     const { error: emailError } = await sendEmail(
       emailTemplateId,
