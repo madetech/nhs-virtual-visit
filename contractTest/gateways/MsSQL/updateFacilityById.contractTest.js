@@ -1,9 +1,5 @@
 import updateFacilityByIdGateway from "../../../src/gateways/MsSQL/updateFacilityById";
-import {
-  setupOrganization,
-  setUpManager,
-  setUpFacility,
-} from "../../../test/testUtils/factories";
+import { setupOrganisationFacilityAndManager } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
 
 describe("updateFacilityByIdGateway", () => {
@@ -12,75 +8,49 @@ describe("updateFacilityByIdGateway", () => {
     name: "Test Facility One Updated",
     status: 0,
   };
+  let ids;
+  beforeEach(async () => {
+    const email = `${Math.random()}@nhs.co.uk`;
+    ids = await setupOrganisationFacilityAndManager({
+      userArgs: { email },
+    });
+  });
   it("updates a facility", async () => {
     // Arrange
-    const {
-      organisation: { id: orgId },
-    } = await setupOrganization();
-    const email = `${Math.random()}@nhs.co.uk`;
-    const {
-      user: { id: userId },
-    } = await setUpManager({ organisationId: orgId, email });
-    const uuid = await setUpFacility({
-      orgId,
-      createdBy: userId,
-    });
+    const { facilityId, facilityUuid } = ids;
     const currentFacility = await container.getRetrieveFacilityByUuidGateway()(
-      uuid
+      facilityUuid
     );
     // Act
     await updateFacilityByIdGateway(container)({
-      id: currentFacility.id,
+      id: facilityId,
       ...facilityToBeUpdated,
     });
     const updatedFacility = await container.getRetrieveFacilityByUuidGateway()(
-      uuid
+      facilityUuid
     );
     // Assert
     expect(updatedFacility).toEqual({
       ...currentFacility,
-      status: facilityToBeUpdated.status,
-      name: facilityToBeUpdated.name,
+      ...facilityToBeUpdated,
     });
   });
   describe("throws an error", () => {
     it("name is undefined", async () => {
       // Arrange
-      const {
-        organisation: { id: orgId },
-      } = await setupOrganization();
-      const email = `${Math.random()}@nhs.co.uk`;
-      const {
-        user: { id: userId },
-      } = await setUpManager({ organisationId: orgId, email });
-      const uuid = await setUpFacility({
-        orgId,
-        createdBy: userId,
-      });
-      const currentFacility = await container.getRetrieveFacilityByUuidGateway()(
-        uuid
-      );
-      // Act
+      const { facilityId } = ids;
+      // Act && Assert
       expect(
         async () =>
           await updateFacilityByIdGateway(container)({
-            id: currentFacility.id,
+            id: facilityId,
             ...facilityToBeUpdated,
             name: undefined,
           })
       ).rejects.toThrow();
     });
     it("id is undefined", async () => {
-      // Arrange
-      const {
-        organisation: { id: orgId },
-      } = await setupOrganization();
-      const email = `${Math.random()}@nhs.co.uk`;
-      const {
-        user: { id: userId },
-      } = await setUpManager({ organisationId: orgId, email });
-      await setUpFacility({ orgId, createdBy: userId });
-      // Act
+      // Act && Assert
       expect(
         async () =>
           await updateFacilityByIdGateway(container)({
