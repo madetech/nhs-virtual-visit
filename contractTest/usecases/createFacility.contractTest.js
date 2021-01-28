@@ -1,13 +1,12 @@
-import createFacility from "../../../src/gateways/MsSQL/createFacility";
 import {
   setupOrganization,
   setUpManager,
-} from "../../../test/testUtils/factories";
-import AppContainer from "../../../src/containers/AppContainer";
+} from "../../test/testUtils/factories";
+import AppContainer from "../../src/containers/AppContainer";
 
 describe("createFacility", () => {
   const container = AppContainer.getInstance();
-  it("returns an object containing the facility", async () => {
+  it("creates a valid facility", async () => {
     // Arrange
     const {
       organisation: { id: orgId },
@@ -16,28 +15,24 @@ describe("createFacility", () => {
     const {
       user: { id: userId },
     } = await setUpManager({ organisationId: orgId, email });
-
     const facilityArgs = {
       name: "Test Facility One",
       code: "TF1",
     };
-    const uuid = await createFacility(container)({
+    const { uuid: facilityUuid, error } = await container.getCreateFacility()({
       ...facilityArgs,
-      orgId,
+      orgId: orgId,
       createdBy: userId,
     });
-    // Act
-    const { facility, error } = await container.getRetrieveFacilityByUuid(
-      container
-    )(uuid);
-    console.log(facility);
-    // Assert
-    expect(error).toBeNull();
+    const { facility } = await container.getRetrieveFacilityByUuid()(
+      facilityUuid
+    );
     expect(facility).toEqual({
       ...facilityArgs,
-      id: facility.id,
-      uuid,
       status: "active",
+      id: facility.id,
+      uuid: facility.uuid,
     });
+    expect(error).toBeNull();
   });
 });

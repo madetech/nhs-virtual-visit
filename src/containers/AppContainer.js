@@ -68,7 +68,7 @@ import createDepartment from "../usecases/createDepartment";
 import retrieveDepartmentByUuid from "../usecases/retrieveDepartmentByUuid";
 import updateDepartmentById from "../usecases/updateDepartmentById";
 import archiveDepartmentById from "../usecases/archiveDepartmentById";
-
+import createManager from "../usecases/createManager";
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
@@ -99,7 +99,7 @@ import createDepartmentGateway from "../gateways/MsSQL/createDepartment";
 import retrieveDepartmentByUuidGateway from "../gateways/MsSQL/retrieveDepartmentByUuid";
 import updateDepartmentByIdGateway from "../gateways/MsSQL/updateDepartmentById";
 import archiveDepartmentByIdGateway from "../gateways/MsSQL/archiveDepartmentById";
-
+import insertManager from "../gateways/MsSQL/insertManager";
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
 import insertVisit from "../gateways/PostgreSQL/insertVisit";
@@ -389,6 +389,13 @@ class AppContainer {
     return retrieveOrganisationById(this);
   };
 
+  getInsertManagerGateway = () => {
+    return insertManager(this);
+  };
+  getCreateManager = () => {
+    return createManager(this);
+  };
+
   getRetrieveActiveDepartmentsByFacilityId = () => {
     return retrieveActiveDepartmentsByFacilityId(this);
   };
@@ -638,6 +645,8 @@ class AppContainer {
   getUpdateFacilityByIdGateway = () => {
     return updateFacilityByIdGateway(this);
   };
+
+  getCreateMan;
 
   // MsSQL database gateways
   getVerifyUserLogin = () => {

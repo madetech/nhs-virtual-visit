@@ -1,6 +1,13 @@
 import AppContainer from "../../src/containers/AppContainer";
 const container = AppContainer.getInstance();
 
+export const setUpManager = async (args = {}) => {
+  return await container.getCreateManager()({
+    password: "password",
+    ...args,
+  });
+};
+
 export const setupTrust = async (args = {}) => {
   return await container.getCreateTrust()({
     name: "Test Trust",
@@ -26,6 +33,15 @@ export const setupHospital = async (args = {}) => {
     name: "Test Hospital",
     supportUrl: "https://www.support.example.com",
     surveyUrl: "https://www.survey.example.com",
+    ...args,
+  });
+};
+
+export const setUpFacility = async (args = {}) => {
+  return await container.getCreateFacility()({
+    name: "Test Facility One",
+    code: "TF1",
+    createdBy: 2,
     ...args,
   });
 };
