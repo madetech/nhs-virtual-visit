@@ -31,7 +31,7 @@ describe("retrieveDepartmentByUuidGateway", () => {
       expectedDepartmentUuid
     );
     expect(mockAppContainer.getMsSqlConnPool().query).toHaveBeenCalledWith(
-      "SELECT id, uuid, name, code, status, facility_id FROM dbo.[department] WHERE uuid = @uuid"
+      "SELECT id, uuid, name, code, status, facility_id AS facilityId FROM dbo.[department] WHERE uuid = @uuid"
     );
   });
   it("throws an error if db is undefined", async () => {
