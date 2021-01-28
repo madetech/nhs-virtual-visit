@@ -2,8 +2,9 @@ import AppContainer from "../../src/containers/AppContainer";
 const container = AppContainer.getInstance();
 
 export const setUpManager = async (args = {}) => {
-  return await container.getCreateManager()({
+  return await container.getInsertManagerGateway()({
     password: "password",
+    type: "manager",
     ...args,
   });
 };
@@ -60,6 +61,61 @@ export const setUpDepartment = async (args = {}) => {
     pin: "1234",
     ...args,
   });
+};
+export const setupManagerAndOrganisation = async (
+  args = {
+    organisationArgs: {},
+    userArgs: {},
+  }
+) => {
+  const {
+    organisation: { id: orgId },
+  } = await setupOrganization({
+    ...args.organisationArgs,
+  });
+
+  const {
+    user: { id: userId },
+  } = await setUpManager({
+    organisationId: orgId,
+    ...args.userArgs,
+  });
+
+  return { userId, orgId };
+};
+
+export const setupOrganisationFacilityAndManager = async (
+  args = {
+    organisationArgs: {},
+    facilityArgs: {},
+    userArgs: {},
+  }
+) => {
+  const {
+    organisation: { id: orgId },
+  } = await setupOrganization({
+    ...args.organisationArgs,
+  });
+
+  const {
+    user: { id: userId },
+  } = await setUpManager({
+    organisationId: orgId,
+    ...args.userArgs,
+  });
+
+  const uuid = await setUpFacility({
+    orgId,
+    createdBy: userId,
+    ...args.facilityArgs,
+  });
+  console.log(uuid);
+  const {
+    id: facilityId,
+    uuid: facilityUuid,
+  } = await container.getRetrieveFacilityByUuidGateway()(uuid);
+
+  return { userId, orgId, facilityId, facilityUuid };
 };
 
 export const setupWardWithinHospitalAndTrust = async (

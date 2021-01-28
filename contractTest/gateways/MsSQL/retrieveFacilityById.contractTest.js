@@ -1,38 +1,31 @@
 import retrieveFacilityByIdGateWay from "../../../src/gateways/MsSQL/retrieveFacilityById";
-import {
-  setupOrganization,
-  setUpManager,
-  setUpFacility,
-} from "../../../test/testUtils/factories";
+import { setupOrganisationFacilityAndManager } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
 
 describe("retrieveFacilityById", () => {
   const container = AppContainer.getInstance();
-
+  const facilityArgs = {
+    name: "Test Facility One",
+    code: "TF1",
+  };
   it("returns an object containing the facility", async () => {
     // Arrange
-    const {
-      organisation: { id: orgId },
-    } = await setupOrganization();
     const email = `${Math.random()}@nhs.co.uk`;
     const {
-      user: { id: userId },
-    } = await setUpManager({ organisationId: orgId, email });
-    const uuid = await setUpFacility({ orgId, createdBy: userId });
-    const currentFacility = await container.getRetrieveFacilityByUuidGateway()(
-      uuid
-    );
+      facilityId,
+      facilityUuid,
+    } = await setupOrganisationFacilityAndManager({
+      userArgs: { email },
+      facilityArgs,
+    });
     // Act
-    const facility = await retrieveFacilityByIdGateWay(container)(
-      currentFacility.id
-    );
+    const facility = await retrieveFacilityByIdGateWay(container)(facilityId);
     // Assert
     expect(facility).toEqual({
-      id: currentFacility.id,
-      name: "Test Facility One",
-      code: "TF1",
-      uuid,
+      id: facilityId,
+      uuid: facilityUuid,
       status: 1,
+      ...facilityArgs,
     });
   });
   it("returns undefined if uuid is undefined", async () => {
