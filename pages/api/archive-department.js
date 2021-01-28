@@ -22,13 +22,10 @@ export default withContainer(
 
     try {
       const { uuid } = body;
-      console.log(uuid);
       const {
         department,
         error,
       } = await container.getRetrieveDepartmentByUuid()(uuid);
-      console.log("ERROR RETRIEVING");
-      console.log(error);
       if (error) {
         res.status(404);
         res.end(

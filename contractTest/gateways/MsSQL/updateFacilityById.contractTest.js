@@ -6,7 +6,6 @@ describe("updateFacilityByIdGateway", () => {
   const container = AppContainer.getInstance();
   const facilityToBeUpdated = {
     name: "Test Facility One Updated",
-    status: 0,
   };
   let ids;
   beforeEach(async () => {

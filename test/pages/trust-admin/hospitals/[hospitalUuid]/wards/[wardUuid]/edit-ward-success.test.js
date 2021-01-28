@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../../../../../../../pages/trust-admin/hospitals/[hospitalUuid]/wards/[warduuid]/edit-ward-success";
+import { getServerSideProps } from "../../../../../../../pages/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/edit-ward-success";
 import mockAppContainer from "src/containers/AppContainer";
 import { TRUST_ADMIN } from "../../../../../../../src/helpers/userTypes";
 
