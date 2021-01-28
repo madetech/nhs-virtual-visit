@@ -91,25 +91,16 @@ export const setupOrganisationFacilityAndManager = async (
     userArgs: {},
   }
 ) => {
-  const {
-    organisation: { id: orgId },
-  } = await setupOrganization({
-    ...args.organisationArgs,
+  const { orgId, userId } = await setupManagerAndOrganisation({
+    userArgs: args.userArgs,
+    organisationArgs: args.organisationArgs,
   });
-
-  const {
-    user: { id: userId },
-  } = await setUpManager({
-    organisationId: orgId,
-    ...args.userArgs,
-  });
-
   const uuid = await setUpFacility({
     orgId,
     createdBy: userId,
     ...args.facilityArgs,
   });
-  console.log(uuid);
+
   const {
     id: facilityId,
     uuid: facilityUuid,
