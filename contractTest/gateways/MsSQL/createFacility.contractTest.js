@@ -8,13 +8,16 @@ describe("createFacility", () => {
     name: "Test Facility One",
     code: "TF1",
   };
-  it("returns an object containing the facility", async () => {
-    // Arrange
+  let ids;
+  beforeEach(async () => {
     const email = `${Math.random()}@nhs.co.uk`;
-    const { orgId, userId } = await setupManagerAndOrganisation({
+    ids = await setupManagerAndOrganisation({
       userArgs: { email },
     });
-
+  });
+  it("returns an object containing the facility", async () => {
+    // Arrange
+    const { orgId, userId } = ids;
     const uuid = await createFacility(container)({
       ...facilityArgs,
       orgId,
@@ -35,10 +38,7 @@ describe("createFacility", () => {
   describe("throws an error", () => {
     it("name is undefined", async () => {
       // Arrange
-      const email = `${Math.random()}@nhs.co.uk`;
-      const { orgId, userId } = await setupManagerAndOrganisation({
-        userArgs: { email },
-      });
+      const { orgId, userId } = ids;
       // Act && Assert
       expect(
         async () =>
@@ -52,10 +52,7 @@ describe("createFacility", () => {
     });
     it("orgId is undefined", async () => {
       // Arrange
-      const email = `${Math.random()}@nhs.co.uk`;
-      const { userId } = await setupManagerAndOrganisation({
-        userArgs: { email },
-      });
+      const { userId } = ids;
       // Act && Assert
       expect(
         async () =>
@@ -68,10 +65,7 @@ describe("createFacility", () => {
     });
     it("code is undefined", async () => {
       // Arrange
-      const email = `${Math.random()}@nhs.co.uk`;
-      const { orgId, userId } = await setupManagerAndOrganisation({
-        userArgs: { email },
-      });
+      const { orgId, userId } = ids;
       // Act && Assert
       expect(
         async () =>
@@ -85,10 +79,7 @@ describe("createFacility", () => {
     });
     it("createdBy is undefined", async () => {
       // Arrange
-      const email = `${Math.random()}@nhs.co.uk`;
-      const { orgId } = await setupManagerAndOrganisation({
-        userArgs: { email },
-      });
+      const { orgId } = ids;
       // Act && Assert
       expect(
         async () =>
