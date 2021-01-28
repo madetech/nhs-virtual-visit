@@ -53,6 +53,15 @@ export const setupWard = async (args = {}) => {
   });
 };
 
+export const setUpDepartment = async (args = {}) => {
+  return await container.getCreateDepartmentGateway()({
+    name: "Test Department",
+    code: "departmentCode",
+    pin: "1234",
+    ...args,
+  });
+};
+
 export const setupWardWithinHospitalAndTrust = async (
   args = {
     index: 1,
