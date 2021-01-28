@@ -3,6 +3,7 @@ import {
   setupOrganization,
   setUpManager,
   setUpFacility,
+  setUpDepartment,
 } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
 
@@ -90,12 +91,51 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
     const currentFacilityTwo = await container.getRetrieveFacilityByUuidGateway()(
       facilityTwoUuid
     );
+    const departmentOne = {
+      name: "Department One",
+      code: "DP1",
+    };
+    const departmentTwo = {
+      name: "Department Two",
+      code: "DP2",
+    };
+    const departmentOneUuid = await setUpDepartment({
+      ...departmentOne,
+      facilityId: currentFacilityOne.id,
+      createdBy: userId,
+    });
+
+    const departmentTwoUuid = await setUpDepartment({
+      ...departmentTwo,
+      facilityId: currentFacilityTwo.id,
+      createdBy: userId,
+    });
+    const currentDepartmentOne = await container.getRetrieveDepartmentByUuidGateway()(
+      departmentOneUuid
+    );
+    const currentDepartmentTwo = await container.getRetrieveDepartmentByUuidGateway()(
+      departmentTwoUuid
+    );
     // Act
     const facilities = await retrieveFacilitiesByOrgIdGateWay(container)({
       orgId,
+      options: { withWards: true },
     });
     // // Assert
-    expect(facilities).toEqual([currentFacilityOne, currentFacilityTwo]);
+    expect(facilities).toEqual([
+      {
+        ...currentFacilityOne,
+        departments: [
+          { name: currentDepartmentOne.name, id: currentDepartmentOne.id },
+        ],
+      },
+      {
+        ...currentFacilityTwo,
+        departments: [
+          { name: currentDepartmentTwo.name, id: currentDepartmentTwo.id },
+        ],
+      },
+    ]);
   });
   it("returns [] if orgId is undefined", async () => {
     // Arrange && Act && Assert
