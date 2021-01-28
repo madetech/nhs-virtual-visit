@@ -1,0 +1,1 @@
+ALTER TABLE facility ADD [updated_at] datetime NOT NULL DEFAULT GETDATE();
