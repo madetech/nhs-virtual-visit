@@ -18,7 +18,7 @@ describe("retrieveFacilityById", () => {
     const {
       user: { id: userId },
     } = await setUpManager({ organisationId: orgId, email });
-    const { uuid } = await setUpFacility({ orgId, createdBy: userId });
+    const uuid = await setUpFacility({ orgId, createdBy: userId });
     // Act
     const facility = await retrieveFacilityByUuidGateWay(container)(uuid);
     // Assert
