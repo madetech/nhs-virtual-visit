@@ -109,6 +109,24 @@ export const setupOrganisationFacilityAndManager = async (
   return { userId, orgId, facilityId, facilityUuid };
 };
 
+// export const setupOrganisationFacilityDepartmentsAndManager = async (
+//   args = {
+//     organisationArgs: {},
+//     facilityArgs: {},
+//     userArgs: {},
+//     departmentArgs: {}
+//   }
+// ) => {
+//   const { orgId, userId, facilityId, facilityUuid } = await setupOrganisationFacilityAndManager({
+//     userArgs: args.userArgs,
+//     organisationArgs: args.organisationArgs,
+//     facilityArgs: args.facilityArgs,
+//   });
+
+//   const uuid = await setupDepartment
+//   return { userId, orgId, facilityId, facilityUuid, departmentUuid, departmentId };
+// };
+
 export const setupWardWithinHospitalAndTrust = async (
   args = {
     index: 1,
