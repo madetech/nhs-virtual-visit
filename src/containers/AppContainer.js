@@ -55,6 +55,7 @@ import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
 import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
 import retrieveOrganisationById from "../usecases/retrieveOrganisationById";
 import retrieveActiveOrganisations from "../usecases/retrieveActiveOrganisations";
+import deleteOrganisation from "../usecases/deleteOrganisation";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -70,6 +71,7 @@ import retrieveOrganisationByIdGateway from "../gateways/MsSQL/retrieveOrganisat
 import createOrganisationGateway from "../gateways/MsSQL/createOrganisation";
 import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActiveOrganisations";
 import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
+import deleteOrganisationGateway from "../gateways/MsSQL/deleteOrganisation";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -313,6 +315,14 @@ class AppContainer {
 
   getCreateOrganisationGateway = () => {
     return createOrganisationGateway(this);
+  };
+
+  getDeleteOrganisation = () => {
+    return deleteOrganisation(this);
+  };
+
+  getDeleteOrganisationGateway = () => {
+    return deleteOrganisationGateway(this);
   };
 
   getRetrieveOrganisations = () => {
