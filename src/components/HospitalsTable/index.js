@@ -34,7 +34,7 @@ const HospitalsTable = ({ hospitals }) => (
             <td className="nhsuk-table__cell">{hospital.name}</td>
             <td className="nhsuk-table__cell">{hospital.code}</td>
             <td className="nhsuk-table__cell">{hospital.status}</td>
-            <td className="nhsuk-table__cell">{hospital.wards.length}</td>
+            <td className="nhsuk-table__cell">{hospital.departments.length}</td>
             <td className="nhsuk-table__cell">{hospital.bookedVisits}</td>
             <td className="nhsuk-table__cell">
               <AnchorLink
