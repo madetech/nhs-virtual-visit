@@ -91,7 +91,11 @@ describe("send-reset-password-email", () => {
       body: {
         email: "",
         password: "password",
-        organisationId: 1,
+        organisation: {
+          id: 1,
+          name: "Test trust",
+          status: 0,
+        },
       },
       headers: {
         cookie: "",
@@ -112,7 +116,11 @@ describe("send-reset-password-email", () => {
       body: {
         email: "nhs-manager@nhs.co.uk",
         password: "",
-        organisationId: 1,
+        organisation: {
+          id: 1,
+          name: "Test trust",
+          status: 0,
+        },
       },
       headers: {
         cookie: "",
@@ -133,7 +141,7 @@ describe("send-reset-password-email", () => {
       body: {
         email: "nhs-manager@nhs.co.uk",
         password: "password",
-        organisationId: null,
+        organisation: null,
       },
       headers: {
         cookie: "",
