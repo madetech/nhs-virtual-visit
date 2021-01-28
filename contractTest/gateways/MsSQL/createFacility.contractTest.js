@@ -1,5 +1,5 @@
 import createFacility from "../../../src/gateways/MsSQL/createFacility";
-import { setupManagerAndOrganisation } from "../../../test/testUtils/factories";
+import { setupOrganisationAndManager } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
 
 describe("createFacility", () => {
@@ -11,7 +11,7 @@ describe("createFacility", () => {
   let ids;
   beforeEach(async () => {
     const email = `${Math.random()}@nhs.co.uk`;
-    ids = await setupManagerAndOrganisation({
+    ids = await setupOrganisationAndManager({
       userArgs: { email },
     });
   });

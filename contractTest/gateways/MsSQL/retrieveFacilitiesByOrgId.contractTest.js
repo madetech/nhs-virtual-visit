@@ -1,9 +1,8 @@
 import retrieveFacilitiesByOrgIdGateWay from "../../../src/gateways/MsSQL/retrieveFacilitiesByOrgId";
 import {
-  setupOrganization,
-  setUpManager,
-  setUpFacility,
   setUpDepartment,
+  setUpFacility,
+  setupOrganisationAndManager,
 } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
 
@@ -12,6 +11,7 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
 
   it("returns an object containing the facilities when no options is passed", async () => {
     // Arrange
+    const email = `${Math.random()}@nhs.co.uk`;
     const facilityOne = {
       name: "Facility Test One",
       code: "FT1",
@@ -21,24 +21,19 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
       code: "FT2",
     };
 
-    const {
-      organisation: { id: orgId },
-    } = await setupOrganization();
-
-    const email = `${Math.random()}@nhs.co.uk`;
-    const {
-      user: { id: userId },
-    } = await setUpManager({ organisationId: orgId, email });
+    const { userId, orgId } = await setupOrganisationAndManager({
+      userArgs: { email },
+    });
 
     const facilityOneUuid = await setUpFacility({
       ...facilityOne,
-      orgId,
       createdBy: userId,
+      orgId,
     });
     const facilityTwoUuid = await setUpFacility({
       ...facilityTwo,
-      orgId,
       createdBy: userId,
+      orgId,
     });
 
     const currentFacilityOne = await container.getRetrieveFacilityByUuidGateway()(
@@ -56,6 +51,7 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
   });
   it("returns an object containing the facilities with wards when withWards args is true", async () => {
     // Arrange
+    const email = `${Math.random()}@nhs.co.uk`;
     const facilityOne = {
       name: "Facility Test One",
       code: "FT1",
@@ -65,24 +61,19 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
       code: "FT2",
     };
 
-    const {
-      organisation: { id: orgId },
-    } = await setupOrganization();
-
-    const email = `${Math.random()}@nhs.co.uk`;
-    const {
-      user: { id: userId },
-    } = await setUpManager({ organisationId: orgId, email });
+    const { userId, orgId } = await setupOrganisationAndManager({
+      userArgs: { email },
+    });
 
     const facilityOneUuid = await setUpFacility({
       ...facilityOne,
-      orgId,
       createdBy: userId,
+      orgId,
     });
     const facilityTwoUuid = await setUpFacility({
       ...facilityTwo,
-      orgId,
       createdBy: userId,
+      orgId,
     });
 
     const currentFacilityOne = await container.getRetrieveFacilityByUuidGateway()(

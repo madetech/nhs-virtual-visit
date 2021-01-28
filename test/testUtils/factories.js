@@ -62,7 +62,7 @@ export const setUpDepartment = async (args = {}) => {
     ...args,
   });
 };
-export const setupManagerAndOrganisation = async (
+export const setupOrganisationAndManager = async (
   args = {
     organisationArgs: {},
     userArgs: {},
@@ -91,7 +91,7 @@ export const setupOrganisationFacilityAndManager = async (
     userArgs: {},
   }
 ) => {
-  const { orgId, userId } = await setupManagerAndOrganisation({
+  const { orgId, userId } = await setupOrganisationAndManager({
     userArgs: args.userArgs,
     organisationArgs: args.organisationArgs,
   });
@@ -109,23 +109,43 @@ export const setupOrganisationFacilityAndManager = async (
   return { userId, orgId, facilityId, facilityUuid };
 };
 
-// export const setupOrganisationFacilityDepartmentsAndManager = async (
-//   args = {
-//     organisationArgs: {},
-//     facilityArgs: {},
-//     userArgs: {},
-//     departmentArgs: {}
-//   }
-// ) => {
-//   const { orgId, userId, facilityId, facilityUuid } = await setupOrganisationFacilityAndManager({
-//     userArgs: args.userArgs,
-//     organisationArgs: args.organisationArgs,
-//     facilityArgs: args.facilityArgs,
-//   });
+export const setupOrganisationFacilityDepartmentAndManager = async (
+  args = {
+    organisationArgs: {},
+    facilityArgs: {},
+    userArgs: {},
+    departmentArgs: {},
+  }
+) => {
+  const {
+    orgId,
+    userId,
+    facilityId,
+    facilityUuid,
+  } = await setupOrganisationFacilityAndManager({
+    userArgs: args.userArgs,
+    organisationArgs: args.organisationArgs,
+    facilityArgs: args.facilityArgs,
+  });
 
-//   const uuid = await setupDepartment
-//   return { userId, orgId, facilityId, facilityUuid, departmentUuid, departmentId };
-// };
+  const uuid = await setUpDepartment({
+    facilityId,
+    createdBy: userId,
+    ...args.departmentArgs,
+  });
+  const {
+    id: departmentId,
+    uuid: departmentUuid,
+  } = await container.getRetrieveDepartmentByUuidGateway()(uuid);
+  return {
+    userId,
+    orgId,
+    facilityId,
+    facilityUuid,
+    departmentUuid,
+    departmentId,
+  };
+};
 
 export const setupWardWithinHospitalAndTrust = async (
   args = {
