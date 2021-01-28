@@ -27,7 +27,7 @@ export default ({ getMsSqlConnPool }) => async ({
           name: facility.name,
           code: facility.code,
           status: facility.status,
-          wards: departments.recordset.map((department) => ({
+          departments: departments.recordset.map((department) => ({
             id: department.id,
             name: department.name,
           })),
