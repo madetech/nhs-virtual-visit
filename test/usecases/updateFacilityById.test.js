@@ -7,7 +7,6 @@ describe("updateFacilityById", () => {
   const expectedFacilityUuid = "uuid";
   const expectedFacility = {
     id: 10,
-    status: "active",
     name: "Hospital Name One",
   };
   const updateFacilityByIdSpy = jest.fn().mockReturnValue(expectedFacilityUuid);
@@ -22,10 +21,7 @@ describe("updateFacilityById", () => {
       expectedFacility
     );
     // Assert
-    expect(updateFacilityByIdSpy).toBeCalledWith({
-      ...expectedFacility,
-      status: expectedFacility.status === "active" ? 1 : 0,
-    });
+    expect(updateFacilityByIdSpy).toBeCalledWith(expectedFacility);
     expect(uuid).toEqual(expectedFacilityUuid);
     expect(error).toBeNull();
   });
@@ -37,16 +33,6 @@ describe("updateFacilityById", () => {
     });
     // Assert
     expect(error).toEqual("id must be provided.");
-    expect(uuid).toBeNull();
-  });
-  it("returns an error if status is undefined", async () => {
-    // Act
-    const { uuid, error } = await updateFacilityById(mockAppContainer)({
-      ...expectedFacility,
-      status: undefined,
-    });
-    // Assert
-    expect(error).toEqual("status must be provided.");
     expect(uuid).toBeNull();
   });
   it("returns an error if name is undefined", async () => {

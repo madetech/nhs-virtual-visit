@@ -8,7 +8,6 @@ class TokenProvider {
   }
 
   generate({ wardId, wardCode, trustId, type, userId }) {
-    console.log(userId);
     return jwt.sign(
       // If updating the token structure, update the version
       {

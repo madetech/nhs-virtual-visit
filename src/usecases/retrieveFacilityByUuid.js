@@ -12,7 +12,6 @@ export default ({ getRetrieveFacilityByUuidGateway }) => async (uuid) => {
     };
     return { facility, error: null };
   } catch (error) {
-    console.log(error);
     logger.error(`Error retrieving facility: ${error}`);
     return {
       facility: null,

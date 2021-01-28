@@ -1,15 +1,8 @@
 import logger from "../../logger";
 
-export default ({ getUpdateFacilityByIdGateway }) => async ({
-  id,
-  status,
-  name,
-}) => {
+export default ({ getUpdateFacilityByIdGateway }) => async ({ id, name }) => {
   if (id === undefined) {
     return { uuid: null, error: "id must be provided." };
-  }
-  if (status === undefined) {
-    return { uuid: null, error: "status must be provided." };
   }
 
   if (name === undefined) {
@@ -20,7 +13,6 @@ export default ({ getUpdateFacilityByIdGateway }) => async ({
     logger.info(`Updating facility ${name} with ${id}`);
     const returnedUuid = await getUpdateFacilityByIdGateway()({
       id,
-      status: status == "active" ? 1 : 0,
       name,
     });
     return { uuid: returnedUuid, error: null };

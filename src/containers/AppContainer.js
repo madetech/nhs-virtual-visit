@@ -84,8 +84,7 @@ import createOrganisationGateway from "../gateways/MsSQL/createOrganisation";
 import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActiveOrganisations";
 import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
 import deleteOrganisationGateway from "../gateways/MsSQL/deleteOrganisation";
-import createManager from "../usecases/createManager";
-import insertManager from "../gateways/MsSQL/insertManager";
+import insertManagerGateway from "../gateways/MsSQL/insertManager";
 import verifySignUpLinkGateway from "../gateways/MsSQL/verifySignUpLink";
 import updateLinkStatusByHashGateway from "../gateways/MsSQL/updateLinkStatusByHash";
 import retrieveManagerByEmailGateway from "../gateways/MsSQL/retrieveManagerByEmail";
@@ -99,7 +98,7 @@ import createDepartmentGateway from "../gateways/MsSQL/createDepartment";
 import retrieveDepartmentByUuidGateway from "../gateways/MsSQL/retrieveDepartmentByUuid";
 import updateDepartmentByIdGateway from "../gateways/MsSQL/updateDepartmentById";
 import archiveDepartmentByIdGateway from "../gateways/MsSQL/archiveDepartmentById";
-import insertManager from "../gateways/MsSQL/insertManager";
+
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
 import insertVisit from "../gateways/PostgreSQL/insertVisit";
@@ -390,7 +389,7 @@ class AppContainer {
   };
 
   getInsertManagerGateway = () => {
-    return insertManager(this);
+    return insertManagerGateway(this);
   };
   getCreateManager = () => {
     return createManager(this);
@@ -569,10 +568,6 @@ class AppContainer {
     return createManager(this);
   };
 
-  getInsertManagerGateway = () => {
-    return insertManager;
-  };
-
   getRetrieveActiveDepartmentsByFacilityIdGateway = () => {
     return retrieveActiveDepartmentsByFacilityIdGateway(this);
   };
@@ -673,9 +668,6 @@ class AppContainer {
     return resetPassword;
   };
 
-  getInsertManagerGateway = () => {
-    return insertManager(this);
-  };
   getCreateManager = () => {
     return createManager(this);
   };
@@ -733,7 +725,7 @@ class AppContainer {
   getRetrieveManagerByEmailGateway = () => {
     return retrieveManagerByEmailGateway(this);
   };
-  
+
   getRetrieveFacilitiesByOrgIdGateway = () => {
     return retrieveFacilitiesByOrgIdGW(this);
   };

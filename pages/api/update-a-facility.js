@@ -13,17 +13,17 @@ export default withContainer(
 
     checkIfAuthorised(trustAdminToken, res);
 
-    if (!body || !body.uuid || !body.name || body.status == undefined) {
+    if (!body || !body.uuid || !body.name) {
       res.status(400);
       res.end(
         JSON.stringify({
-          error: "facility uuid, name and status must be present",
+          error: "facility uuid and must be present",
         })
       );
       return;
     }
     try {
-      const { uuid, name, status } = body;
+      const { uuid, name } = body;
       const { facility, error } = await container.getRetrieveFacilityByUuid()(
         uuid
       );
@@ -44,7 +44,6 @@ export default withContainer(
       } = await container.getUpdateFacilityById()({
         id: facility?.id,
         name,
-        status,
       });
 
       if (updateError) {

@@ -16,7 +16,7 @@ const archiveAWardSuccess = ({ ward, hospital, error, organisation }) => {
 
   return (
     <Layout
-      title={`${ward.name} has been archived`}
+      title={`${ward.name} has been deleted`}
       showNavigationBar={true}
       showNavigationBarForType={TRUST_ADMIN}
     >
@@ -28,7 +28,7 @@ const archiveAWardSuccess = ({ ward, hospital, error, organisation }) => {
         <GridColumn width="two-thirds">
           <PanelSuccess
             name={`${ward.name}`}
-            action={`archived`}
+            action={`deleted`}
             subAction={`for ${hospital.name}`}
           />
           <p>
