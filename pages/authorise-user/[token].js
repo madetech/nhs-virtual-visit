@@ -95,14 +95,14 @@ export const getServerSideProps = propsWithContainer(
     await updateLinkStatusByHash({ hash: user.hash });
 
     const retrieveOrganisationById = container.getRetrieveOrganisationById();
-    const { organisation, error } = await retrieveOrganisationById(
+    const { organisation } = await retrieveOrganisationById(
       user.organisation_id
     );
 
     return {
       props: {
         email: user.email,
-        organisationName: !error ? organisation.name : undefined,
+        organisationName: organisation?.name,
         error: null,
       },
     };
