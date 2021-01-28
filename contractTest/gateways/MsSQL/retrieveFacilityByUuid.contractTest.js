@@ -1,32 +1,33 @@
 import retrieveFacilityByUuidGateWay from "../../../src/gateways/MsSQL/retrieveFacilityByUuid";
-import {
-  setupOrganization,
-  setUpManager,
-  setUpFacility,
-} from "../../../test/testUtils/factories";
+import { setupOrganisationFacilityAndManager } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
 
 describe("retrieveFacilityByUuid", () => {
   const container = AppContainer.getInstance();
-
+  const facilityArgs = {
+    name: "Test Facility One",
+    code: "TF1",
+  };
   it("returns an object containing the facility", async () => {
     // Arrange
-    const {
-      organisation: { id: orgId },
-    } = await setupOrganization();
     const email = `${Math.random()}@nhs.co.uk`;
     const {
-      user: { id: userId },
-    } = await setUpManager({ organisationId: orgId, email });
-    const uuid = await setUpFacility({ orgId, createdBy: userId });
+      facilityId,
+      facilityUuid,
+    } = await setupOrganisationFacilityAndManager({
+      userArgs: { email },
+      facilityArgs,
+    });
     // Act
-    const facility = await retrieveFacilityByUuidGateWay(container)(uuid);
+    const facility = await retrieveFacilityByUuidGateWay(container)(
+      facilityUuid
+    );
     // Assert
     expect(facility).toEqual({
-      id: facility.id,
+      id: facilityId,
       name: "Test Facility One",
       code: "TF1",
-      uuid,
+      uuid: facilityUuid,
       status: 1,
     });
   });
