@@ -41,10 +41,10 @@ const TrustsTable = ({ trusts }) => (
               </td>
               <td className="nhsuk-table__cell" style={{ textAlign: "center" }}>
                 <AnchorLink
-                  href="/admin/trusts/[id]/edit"
-                  as={`/admin/trusts/${trust.id}/edit`}
+                  href="/admin/trusts/[id]/delete"
+                  as={`/admin/trusts/${trust.id}/delete`}
                 >
-                  Edit
+                  Delete
                   <span className="nhsuk-u-visually-hidden"> {trust.name}</span>
                 </AnchorLink>
               </td>
