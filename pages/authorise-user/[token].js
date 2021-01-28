@@ -102,7 +102,7 @@ export const getServerSideProps = propsWithContainer(
     return {
       props: {
         email: user.email,
-        organisationName: !error ? organisation.name : "undefined",
+        organisationName: !error ? organisation.name : undefined,
         error: null,
       },
     };
