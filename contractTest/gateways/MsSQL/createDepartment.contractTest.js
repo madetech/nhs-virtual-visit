@@ -12,7 +12,7 @@ describe("createDepartment", () => {
     name: "Test Department",
     code: "departmentCode",
   };
-  it("returns an object containing the department", async () => {
+  it("creates a department", async () => {
     // Arrange
     const {
       organisation: { id: orgId },
