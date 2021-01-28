@@ -26,16 +26,15 @@ describe("createFacility", () => {
       createdBy: userId,
     });
     // Act
-    const { facility, error } = await container.getRetrieveFacilityByUuid(
+    const facility = await container.getRetrieveFacilityByUuidGateway(
       container
     )(uuid);
     // Assert
-    expect(error).toBeNull();
     expect(facility).toEqual({
       ...facilityArgs,
       id: facility.id,
       uuid,
-      status: "active",
+      status: 1,
     });
   });
   describe("throws an error", () => {

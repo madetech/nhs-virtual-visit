@@ -41,7 +41,6 @@ export const setUpFacility = async (args = {}) => {
   return await container.getCreateFacility()({
     name: "Test Facility One",
     code: "TF1",
-    createdBy: 2,
     ...args,
   });
 };
