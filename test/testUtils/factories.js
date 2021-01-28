@@ -38,7 +38,7 @@ export const setupHospital = async (args = {}) => {
 };
 
 export const setUpFacility = async (args = {}) => {
-  return await container.getCreateFacility()({
+  return await container.getCreateFacilityGateway()({
     name: "Test Facility One",
     code: "TF1",
     ...args,
