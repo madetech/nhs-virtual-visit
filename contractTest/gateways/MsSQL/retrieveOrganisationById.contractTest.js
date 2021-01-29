@@ -1,15 +1,22 @@
 import retrieveOrganisationById from "../../../src/gateways/MsSQL/retrieveOrganisationById";
 import { setupOrganization } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
+import setupUser from "../../../test/testUtils/setupUser";
 
 describe("retrieveOrganisationById", () => {
   // Arrange
   const container = AppContainer.getInstance();
   it("returns an object containing the trust", async () => {
     // Arrange
+    const { id: userId } = await setupUser(container)({
+      email: "default@example.com",
+      password: "testpassword",
+      type: "Default",
+    });
+
     const {
       organisation: { id },
-    } = await setupOrganization();
+    } = await setupOrganization({ createdBy: userId });
     // Act
     const { organisation, error } = await retrieveOrganisationById(container)(
       id
@@ -21,7 +28,7 @@ describe("retrieveOrganisationById", () => {
       name: "Test Trust",
       type: "trust",
       status: 0,
-      created_by: 1,
+      created_by: userId,
       created_at: organisation.created_at,
       uuid: organisation.uuid,
     });

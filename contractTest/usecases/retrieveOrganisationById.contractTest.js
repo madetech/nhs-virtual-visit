@@ -1,14 +1,21 @@
 import AppContainer from "../../src/containers/AppContainer";
 import { setupOrganization } from "../../test/testUtils/factories";
+import setupUser from "../../test/testUtils/setupUser";
 
 describe("retrieveOrganisation usecase contract tests", () => {
   // Arrange
   const container = AppContainer.getInstance();
   it("returns an organisation", async () => {
-    // Arange
+    // Arrange
+    const { id: userId } = await setupUser(container)({
+      email: "default@example.com",
+      password: "testpassword",
+      type: "Default",
+    });
+
     const {
       organisation: { id },
-    } = await setupOrganization();
+    } = await setupOrganization({ createdBy: userId });
     // Act
     const {
       organisation,

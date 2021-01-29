@@ -1,14 +1,17 @@
 import AppContainer from "./src/containers/AppContainer";
 import truncateAllTables from "./test/testUtils/truncateAllTables";
+import truncateAllMsSQLTables from "./test/testUtils/truncateAllMsSQLTables.js";
 
 const container = AppContainer.getInstance();
 
 beforeAll(async () => {
   await truncateAllTables(container);
+  await truncateAllMsSQLTables(container);
 });
 
 afterEach(async () => {
   await truncateAllTables(container);
+  await truncateAllMsSQLTables(container);
 });
 
 afterAll(async () => {
