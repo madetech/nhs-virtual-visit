@@ -24,7 +24,7 @@ const retrieveOrganisationsGateway = ({ getMsSqlConnPool }) => async ({
 
     return {
       organisations: response.recordset,
-      total: count.recordset[0].total,
+      total: total,
       error: null,
     };
   } catch (error) {
