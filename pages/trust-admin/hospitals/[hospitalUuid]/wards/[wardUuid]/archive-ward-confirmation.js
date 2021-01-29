@@ -54,7 +54,7 @@ const ArchiveAWardConfirmation = ({ error, ward, organisation, hospital }) => {
     >
       <TrustAdminHeading
         trustName={`${organisation.name}`}
-        subHeading="Trust Managers"
+        subHeading={hospital.name}
       />
       <GridRow>
         <GridColumn width="full">
