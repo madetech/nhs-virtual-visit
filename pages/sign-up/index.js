@@ -209,7 +209,7 @@ export default SignUp;
 
 export const getServerSideProps = propsWithContainer(async ({ container }) => {
   const retrieveOrganisations = container.getRetrieveOrganisations();
-  const { organisations, error } = await retrieveOrganisations();
+  const { organisations, error } = await retrieveOrganisations({});
 
   return {
     props: { organisations, error },
