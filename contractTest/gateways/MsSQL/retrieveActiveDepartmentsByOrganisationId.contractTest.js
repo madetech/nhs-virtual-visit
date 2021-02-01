@@ -40,6 +40,11 @@ describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
       code: "DE3",
       status: 0,
     };
+    const departmentThree = {
+      name: "Department Three",
+      code: "DE3",
+      status: 0,
+    };
     const departmentOneUuid = await setUpDepartment({
       ...departmentOne,
       createdBy: userId,
