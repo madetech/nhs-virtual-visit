@@ -1,6 +1,10 @@
 import bcrypt from "bcryptjs";
 
-export default ({ getMsSqlConnPool }) => async ({ email, password, type }) => {
+export default ({ getMsSqlConnPool }) => async ({
+  email,
+  password,
+  type = "admin",
+}) => {
   const salt = bcrypt.genSaltSync(10);
   const hashedPassword = bcrypt.hashSync(password, salt);
 
