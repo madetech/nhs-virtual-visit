@@ -98,15 +98,11 @@ import createDepartmentGateway from "../gateways/MsSQL/createDepartment";
 import retrieveDepartmentByUuidGateway from "../gateways/MsSQL/retrieveDepartmentByUuid";
 import updateDepartmentByIdGateway from "../gateways/MsSQL/updateDepartmentById";
 import archiveDepartmentByIdGateway from "../gateways/MsSQL/archiveDepartmentById";
-<<<<<<< HEAD
 import retrieveDepartmentByCodeGateway from "../gateways/MsSQL/retrieveDepartmentByCode";
 import verifyAdminCodeGateway from "../gateways/MsSQL/verifyAdminCode";
 import retrieveActiveDepartmentsByOrganisationIdGateway from "../gateways/MsSQL/retrieveActiveDepartmentsByOrganisationId";
 import updateDepartmentStatusByIdGateway from "../gateways/MsSQL/updateDepartmentStatusById";
-=======
-import retrieveActiveDepartmentsByOrganisationIdGateway from "../gateways/MsSQL/retrieveActiveDepartmentsByOrganisationId";
 
->>>>>>> chore: added GW, contract test, appContainer unit test
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
 import insertVisit from "../gateways/PostgreSQL/insertVisit";
@@ -612,6 +608,9 @@ class AppContainer {
     return retrieveActiveDepartmentsByOrganisationIdGateway(this);
   };
 
+  getUpdateDepartmentStatusByIdGateway = () => {
+    return updateDepartmentStatusByIdGateway(this);
+  };
   getLogEventGateway = () => {
     return logEvent(
       process.env.AZURE_FUNCTION_KEY,
