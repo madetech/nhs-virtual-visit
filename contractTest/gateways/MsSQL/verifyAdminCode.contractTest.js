@@ -7,7 +7,7 @@ describe("verifyAdminCode contract tests", () => {
   let randInt;
 
   beforeEach(async () => {
-    randInt = Math.round(Math.random() * 100);
+    randInt = Math.random();
     await setupAdmin(container)({
       email: `nhs-admin${randInt}@nhs.co.uk`,
       password: "password",
