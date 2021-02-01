@@ -9,7 +9,7 @@ import AppContainer from "../../../src/containers/AppContainer";
 describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
   const container = AppContainer.getInstance();
 
-  it("returns an object containing an array of wards", async () => {
+  it("returns an object containing an array of wards with status of 1", async () => {
     // Arrange
     const email = `${Math.random()}@nhs.co.uk`;
     const {
@@ -35,6 +35,11 @@ describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
       name: "Department Two",
       code: "DET",
     };
+    const departmentThree = {
+      name: "Department Three",
+      code: "DE3",
+      status: 0,
+    };
     const departmentOneUuid = await setUpDepartment({
       ...departmentOne,
       createdBy: userId,
@@ -45,6 +50,11 @@ describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
       createdBy: userId,
       facilityId,
     });
+    const departmentThreeUuid = await setUpDepartment({
+      ...departmentThree,
+      createdBy: userId,
+      facilityId,
+    });
 
     const currentDepartmentOne = await container.getRetrieveDepartmentByUuidGateway()(
       departmentOneUuid
@@ -52,6 +62,13 @@ describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
     const currentDepartmentTwo = await container.getRetrieveDepartmentByUuidGateway()(
       departmentTwoUuid
     );
+    const currentDepartmentThree = await container.getRetrieveDepartmentByUuidGateway()(
+      departmentThreeUuid
+    );
+    await container.getUpdateDepartmentStatusByIdGateway(container)({
+      id: currentDepartmentThree.id,
+      status: 0,
+    });
     // Act
     const departmentsInOrganisationOne = await retrieveActiveDepartmentsByOrganisationIdGateway(
       container

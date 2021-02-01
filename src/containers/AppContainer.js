@@ -101,7 +101,7 @@ import archiveDepartmentByIdGateway from "../gateways/MsSQL/archiveDepartmentByI
 import retrieveDepartmentByCodeGateway from "../gateways/MsSQL/retrieveDepartmentByCode";
 import verifyAdminCodeGateway from "../gateways/MsSQL/verifyAdminCode";
 import retrieveActiveDepartmentsByOrganisationIdGateway from "../gateways/MsSQL/retrieveActiveDepartmentsByOrganisationId";
-
+import updateDepartmentStatusByIdGateway from "../gateways/MsSQL/updateDepartmentStatusById";
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
 import insertVisit from "../gateways/PostgreSQL/insertVisit";
@@ -598,6 +598,9 @@ class AppContainer {
     return retrieveActiveDepartmentsByOrganisationIdGateway(this);
   };
 
+  getUpdateDepartmentStatusByIdGateway = () => {
+    return updateDepartmentStatusByIdGateway(this);
+  };
   getLogEventGateway = () => {
     return logEvent(
       process.env.AZURE_FUNCTION_KEY,
