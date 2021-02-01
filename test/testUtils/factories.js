@@ -25,7 +25,6 @@ export const setupOrganization = async (args = {}) => {
     name: "Test Trust",
     status: 0,
     type: "trust",
-    createdBy: 1,
     ...args,
   });
 };
@@ -82,6 +81,31 @@ export const setupOrganisationAndManager = async (
   });
 
   return { userId, orgId };
+};
+export const setupOrganisationAndFacility = async (
+  args = {
+    organisationArgs: {},
+    facilityArgs: {},
+  }
+) => {
+  const {
+    organisation: { id: orgId },
+  } = await setupOrganization({
+    ...args.organisationArgs,
+  });
+
+  const uuid = await setUpFacility({
+    orgId,
+    createdBy: args.organisationArgs.createdBy,
+    ...args.facilityArgs,
+  });
+
+  const {
+    id: facilityId,
+    uuid: facilityUuid,
+  } = await container.getRetrieveFacilityByUuidGateway()(uuid);
+
+  return { orgId, facilityId, facilityUuid };
 };
 
 export const setupOrganisationFacilityAndManager = async (

@@ -371,4 +371,10 @@ describe("AppContainer", () => {
   it(" returns getRetrieveDepartmentByCodeGateway", () => {
     expect(container.getRetrieveDepartmentByCodeGateway()).toBeDefined();
   });
+  
+  it("returns getRetrieveActiveDepartmentsByOrganisationIdGateway", () => {
+    expect(
+      container.getRetrieveActiveDepartmentsByOrganisationIdGateway()
+    ).toBeDefined();
+  });
 });

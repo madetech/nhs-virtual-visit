@@ -37,7 +37,6 @@ describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
       departmentTwoUuid
     );
     // Act
-
     const departments = await retrieveActiveDepartmentsByFacilityIdGateway(
       container
     )(facilityId);
