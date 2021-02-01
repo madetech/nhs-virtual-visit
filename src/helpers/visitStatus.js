@@ -9,7 +9,25 @@ const ARCHIVED = "archived"; // The visit's parent ward has been archived
 const CANCELLED = "cancelled"; // The visit has been explicitly cancelled
 const COMPLETE = "complete"; // The visit has occurred
 
+const statusToId = (status) =>
+  ({
+    [SCHEDULED]: 0,
+    [ARCHIVED]: 1,
+    [CANCELLED]: 2,
+    [COMPLETE]: 3,
+  }[status]);
+
+const idToStatus = (status) =>
+  ({
+    0: SCHEDULED,
+    1: ARCHIVED,
+    2: CANCELLED,
+    3: COMPLETE,
+  }[status]);
+
 module.exports = {
+  statusToId,
+  idToStatus,
   SCHEDULED,
   ARCHIVED,
   CANCELLED,

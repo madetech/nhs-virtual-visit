@@ -137,6 +137,7 @@ export const setupOrganisationFacilityDepartmentAndManager = async (
     id: departmentId,
     uuid: departmentUuid,
   } = await container.getRetrieveDepartmentByUuidGateway()(uuid);
+
   return {
     userId,
     orgId,
