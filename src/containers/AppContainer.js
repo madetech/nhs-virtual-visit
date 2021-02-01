@@ -98,6 +98,7 @@ import createDepartmentGateway from "../gateways/MsSQL/createDepartment";
 import retrieveDepartmentByUuidGateway from "../gateways/MsSQL/retrieveDepartmentByUuid";
 import updateDepartmentByIdGateway from "../gateways/MsSQL/updateDepartmentById";
 import archiveDepartmentByIdGateway from "../gateways/MsSQL/archiveDepartmentById";
+import retrieveDepartmentByCodeGateway from "../gateways/MsSQL/retrieveDepartmentByCode";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -586,6 +587,10 @@ class AppContainer {
 
   getArchiveDepartmentByIdGateway = () => {
     return archiveDepartmentByIdGateway(this);
+  };
+
+  getRetrieveDepartmentByCodeGateway = () => {
+    return retrieveDepartmentByCodeGateway(this);
   };
 
   getLogEventGateway = () => {
