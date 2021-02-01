@@ -8,7 +8,6 @@ class TokenProvider {
   }
 
   generate({ wardId, wardCode, trustId, type, userId }) {
-    console.log(userId);
     return jwt.sign(
       // If updating the token structure, update the version
       {
@@ -39,6 +38,19 @@ class TokenProvider {
     return decryptedToken;
   }
 
+  generateTokenForLink(uuid, hash, expirationTime, secret) {
+    let tokenObj = { uuid, hash, version };
+
+    if (secret !== this.signingKey) {
+      tokenObj = { ...tokenObj, hashedPassword: secret };
+    }
+
+    return jwt.sign(tokenObj, secret, {
+      algorithm: "HS256",
+      expiresIn: expirationTime,
+    });
+  }
+
   retrieveEmailFromToken(token) {
     try {
       const { emailAddress } = jwt.decode(token);
@@ -48,16 +60,32 @@ class TokenProvider {
     }
   }
 
-  verifyTokenNotUsed(token, secret) {
+  retrieveIdFromToken(token) {
     try {
-      jwt.verify(token, secret);
+      const { id } = jwt.decode(token);
+      return { id };
+    } catch (error) {
+      return { id: "" };
+    }
+  }
+
+  verifyTokenFromLink(token, secret = this.signingKey) {
+    try {
+      const decryptedToken = jwt.verify(token, secret, {
+        algorithms: ["HS256"],
+      });
+
+      if (decryptedToken.version !== version) {
+        throw new Error("Invalid token version");
+      }
       return {
+        decryptedToken,
         errorToken: "",
       };
     } catch (error) {
       return {
-        errorToken:
-          "Link is incorrect or has expired. Please reset your password again to get a new link.",
+        decryptedToken: null,
+        errorToken: "Error verifying token",
       };
     }
   }

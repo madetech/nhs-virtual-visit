@@ -4,14 +4,14 @@ import mockMssql from "src/gateways/MsSQL";
 describe("retrieveGetFacilitiesByOrgIdGateway", () => {
   const expectedOrgId = 1;
   const getConnectionPoolMock = mockMssql.getConnectionPool;
-  const expectedFacilitiesWithWards = [
+  const expectedFacilitiesWithDepartments = [
     {
       id: 1,
       uuid: "uuid1",
       name: "hospitalNameOne",
       code: "HN1",
       status: 0,
-      wards: [{ id: 1, name: "Ward 1 for hospitalNameOne" }],
+      departments: [{ id: 1, name: "Ward 1 for hospitalNameOne" }],
     },
     {
       id: 2,
@@ -19,10 +19,10 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
       name: "hospitalNameTwo",
       code: "HN2",
       status: 1,
-      wards: [{ id: 2, name: "Ward 1 for hospitalNameTwo" }],
+      departments: [{ id: 2, name: "Ward 1 for hospitalNameTwo" }],
     },
   ];
-  const expectedFacilitiesWithoutWards = expectedFacilitiesWithWards.map(
+  const expectedFacilitiesWithoutDepartments = expectedFacilitiesWithDepartments.map(
     (facility) => ({
       id: facility.id,
       uuid: facility.uuid,
@@ -36,7 +36,7 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
     // Arrange
     getConnectionPoolMock().query.mockImplementationOnce(() =>
       Promise.resolve({
-        recordset: expectedFacilitiesWithoutWards,
+        recordset: expectedFacilitiesWithoutDepartments,
       })
     );
     const container = {
@@ -47,7 +47,7 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
       orgId: expectedOrgId,
     });
     // Assert
-    expect(facilities).toEqual(expectedFacilitiesWithoutWards);
+    expect(facilities).toEqual(expectedFacilitiesWithoutDepartments);
     expect(container.getMsSqlConnPool().input).toHaveBeenCalledTimes(1);
     expect(container.getMsSqlConnPool().input).toHaveBeenCalledWith(
       "orgId",
@@ -62,7 +62,7 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
     // Arrange
     getConnectionPoolMock()
       .query.mockImplementationOnce(() =>
-        Promise.resolve({ recordset: expectedFacilitiesWithoutWards })
+        Promise.resolve({ recordset: expectedFacilitiesWithoutDepartments })
       )
       .mockImplementationOnce(() =>
         Promise.resolve({
@@ -102,14 +102,14 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
         i,
         "facility_id",
         expect.anything(),
-        expectedFacilitiesWithWards[i - 2].id
+        expectedFacilitiesWithDepartments[i - 2].id
       );
       expect(container.getMsSqlConnPool().query).toHaveBeenNthCalledWith(
         i,
         "SELECT * FROM dbo.[department] WHERE facility_id = @facility_id"
       );
     }
-    expect(facilities).toEqual(expectedFacilitiesWithWards);
+    expect(facilities).toEqual(expectedFacilitiesWithDepartments);
   });
   it("throws an error if db is undefined", async () => {
     // Arrange

@@ -1,8 +1,17 @@
 import createOrganisation from "../../src/usecases/createOrganisation";
 
-describe("retrieveOrganisationById", () => {
-  it("returns a trust with the given Id", async () => {
-    const getCreateOrganisationGateway = jest.fn(() => {
+describe("createOrganisation", () => {
+  let newOrganisation;
+  let getCreateOrganisationGateway;
+
+  beforeEach(() => {
+    newOrganisation = {
+      name: "Test Trust",
+      type: "trust",
+      createdBy: 1,
+    };
+
+    getCreateOrganisationGateway = jest.fn(() => {
       return jest.fn().mockReturnValue({
         organisation: {
           id: 1,
@@ -13,33 +22,52 @@ describe("retrieveOrganisationById", () => {
         error: null,
       });
     });
+  });
 
-    const newOrganisation = {
-      name: "Test Trust",
-      type: "trust",
-      createdBy: 1,
+  it("returns an error if no name passed in", async () => {
+    newOrganisation = {
+      ...newOrganisation,
+      name: "",
     };
 
     const { organisationId, error } = await createOrganisation({
       getCreateOrganisationGateway,
     })(newOrganisation);
+
+    expect(organisationId).toBeNull();
+    expect(error).toEqual("name is not defined");
+  });
+
+  it("returns an error if no type is passed in", async () => {
+    newOrganisation = {
+      ...newOrganisation,
+      type: "",
+    };
+
+    const { organisationId, error } = await createOrganisation({
+      getCreateOrganisationGateway,
+    })(newOrganisation);
+
+    expect(organisationId).toBeNull();
+    expect(error).toEqual("type is not defined");
+  });
+
+  it("creates an new organisation and returns it", async () => {
+    const { organisationId, error } = await createOrganisation({
+      getCreateOrganisationGateway,
+    })(newOrganisation);
+
     expect(organisationId).toEqual(1);
     expect(error).toBeNull();
   });
 
   it("errors if there is a problem with the database call", async () => {
-    const getCreateOrganisationGateway = jest.fn(() => {
+    getCreateOrganisationGateway = jest.fn(() => {
       return jest.fn().mockReturnValue({
         organisation: null,
         error: "There is an error with the database",
       });
     });
-
-    const newOrganisation = {
-      name: "Test Trust",
-      type: "trust",
-      createdBy: 1,
-    };
 
     const { organisationId, error } = await createOrganisation({
       getCreateOrganisationGateway,

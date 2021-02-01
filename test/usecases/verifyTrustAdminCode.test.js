@@ -1,9 +1,13 @@
 import verifyTrustAdminCode from "../../src/usecases/verifyTrustAdminCode";
+import getVerifyTrustAdminCodeGateway from "../../src/gateways/PostgreSQL/verifyTrustAdminCode";
 
 describe("verifyTrustAdminCode", () => {
   describe("Given a matching trust trustAdmin code", () => {
     it("Returns true with the matching trust ID", async () => {
       const container = {
+        getVerifyTrustAdminCodeGateway() {
+          return getVerifyTrustAdminCodeGateway(container);
+        },
         getDb: async () => ({
           any: jest.fn(async () => [
             {
@@ -17,6 +21,8 @@ describe("verifyTrustAdminCode", () => {
         }),
       };
 
+      console.log(container);
+
       let response = await verifyTrustAdminCode(container)("MEOW", "password");
       expect(response.validTrustAdminCode).toEqual(true);
       expect(response.trust).toEqual({
@@ -28,6 +34,9 @@ describe("verifyTrustAdminCode", () => {
   describe("Given a non matching trust trustAdmin code", () => {
     it("Returns false", async () => {
       const container = {
+        getVerifyTrustAdminCodeGateway() {
+          return getVerifyTrustAdminCodeGateway(container);
+        },
         getDb: async () => ({
           any: jest.fn(async () => []),
         }),
@@ -41,6 +50,9 @@ describe("verifyTrustAdminCode", () => {
   describe("Given a DB error", () => {
     it("Returns an error", async () => {
       const container = {
+        getVerifyTrustAdminCodeGateway() {
+          return getVerifyTrustAdminCodeGateway(container);
+        },
         async getDb() {
           return {
             any: jest.fn(() => {

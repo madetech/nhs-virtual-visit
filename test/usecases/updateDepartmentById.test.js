@@ -7,7 +7,6 @@ describe("updateDepartmentById", () => {
   const expectedDepartmentUuid = "uuid";
   const expectedDepartment = {
     id: 10,
-    status: "active",
     name: "Defoe Ward",
   };
   const updateDepartmentByIdSpy = jest
@@ -24,10 +23,7 @@ describe("updateDepartmentById", () => {
       expectedDepartment
     );
     // Assert
-    expect(updateDepartmentByIdSpy).toBeCalledWith({
-      ...expectedDepartment,
-      status: expectedDepartment.status === "active" ? 1 : 0,
-    });
+    expect(updateDepartmentByIdSpy).toBeCalledWith(expectedDepartment);
     expect(uuid).toEqual(expectedDepartmentUuid);
     expect(error).toBeNull();
   });
@@ -39,16 +35,6 @@ describe("updateDepartmentById", () => {
     });
     // Assert
     expect(error).toEqual("id must be provided.");
-    expect(uuid).toBeNull();
-  });
-  it("returns an error if status is undefined", async () => {
-    // Act
-    const { uuid, error } = await updateDepartmentById(mockAppContainer)({
-      ...expectedDepartment,
-      status: undefined,
-    });
-    // Assert
-    expect(error).toEqual("status must be provided.");
     expect(uuid).toBeNull();
   });
   it("returns an error if name is undefined", async () => {

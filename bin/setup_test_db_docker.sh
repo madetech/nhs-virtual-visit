@@ -18,8 +18,8 @@ sleep $wait_time
 echo database started...
 
 # Drop if exists and re-create database.
-$commandPrefix docker exec postgres dropdb nhs-virtual-visit-test -U postgres
-$commandPrefix docker exec postgres createdb nhs-virtual-visit-test -U postgres
+docker exec postgres dropdb nhs-virtual-visit-test -U postgres
+docker exec postgres createdb nhs-virtual-visit-test -U postgres
 
 # Run create tables scripts.
 npm run dbmigratetest up

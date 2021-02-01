@@ -6,7 +6,7 @@ import {
   WhenIClickToReturnToSiteAdministration,
 } from "./adminCommonSteps";
 
-xdescribe("As an admin, I want to add a trust so that a trust can use the virtual visits service.", () => {
+describe("As an admin, I want to add a trust so that a trust can use the virtual visits service.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(
@@ -63,7 +63,7 @@ xdescribe("As an admin, I want to add a trust so that a trust can use the virtua
   }
 
   function WhenIFillOutTheForm() {
-    cy.get("input[name=trust-name]").type("Bow Trust");
+    cy.get("input[name=trust-name]").type("AAA Trust");
   }
 
   function AndISubmitTheForm() {
@@ -71,7 +71,7 @@ xdescribe("As an admin, I want to add a trust so that a trust can use the virtua
   }
 
   function ThenISeeTheTrustIsAdded() {
-    cy.get("h1").should("contain", "Bow Trust has been added");
+    cy.get("h1").should("contain", "AAA Trust has been added");
   }
 
   function ThenISeeAListOfTrusts() {
@@ -79,7 +79,7 @@ xdescribe("As an admin, I want to add a trust so that a trust can use the virtua
   }
 
   function AndISeeTheAddedTrust() {
-    cy.get("td").should("contain", "Bow Trust");
+    cy.get("td").should("contain", "AAA Trust");
   }
 
   // Displays errors when fields have been left blank

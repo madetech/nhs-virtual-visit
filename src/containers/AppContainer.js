@@ -55,17 +55,20 @@ import archiveManagerByUuid from "../usecases/archiveManagerByUuid";
 import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
 import retrieveOrganisationById from "../usecases/retrieveOrganisationById";
 import retrieveActiveOrganisations from "../usecases/retrieveActiveOrganisations";
+import deleteOrganisation from "../usecases/deleteOrganisation";
+import updateLinkStatusByHash from "../usecases/updateLinkStatusByHash";
+import retrieveManagerByEmail from "../usecases/retrieveManagerByEmail";
 import retrieveFacilitiesByOrgId from "../usecases/retrieveFacilitiesByOrgId";
 import createFacility from "../usecases/createFacility";
 import retrieveFacilityById from "../usecases/retrieveFacilityById";
 import retrieveFacilityByUuid from "../usecases/retrieveFacilityByUuid";
 import updateFacilityById from "../usecases/updateFacilityById";
-import retrieveDepartmentsByFacilityId from "../usecases/retrieveDepartmentsByFacilityId";
+import retrieveActiveDepartmentsByFacilityId from "../usecases/retrieveActiveDepartmentsByFacilityId";
 import createDepartment from "../usecases/createDepartment";
 import retrieveDepartmentByUuid from "../usecases/retrieveDepartmentByUuid";
 import updateDepartmentById from "../usecases/updateDepartmentById";
 import archiveDepartmentById from "../usecases/archiveDepartmentById";
-
+import createManager from "../usecases/createManager";
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
@@ -80,12 +83,17 @@ import retrieveOrganisationByIdGateway from "../gateways/MsSQL/retrieveOrganisat
 import createOrganisationGateway from "../gateways/MsSQL/createOrganisation";
 import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActiveOrganisations";
 import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
+import deleteOrganisationGateway from "../gateways/MsSQL/deleteOrganisation";
+import insertManagerGateway from "../gateways/MsSQL/insertManager";
+import verifySignUpLinkGateway from "../gateways/MsSQL/verifySignUpLink";
+import updateLinkStatusByHashGateway from "../gateways/MsSQL/updateLinkStatusByHash";
+import retrieveManagerByEmailGateway from "../gateways/MsSQL/retrieveManagerByEmail";
 import retrieveFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveFacilitiesByOrgId";
 import createFacilityGateway from "../gateways/MsSQL/createFacility";
 import retrieveFacilityByIdGateway from "../gateways/MsSQL/retrieveFacilityById";
 import retrieveFacilityByUuidGateway from "../gateways/MsSQL/retrieveFacilityByUuid";
 import updateFacilityByIdGateway from "../gateways/MsSQL/updateFacilityById";
-import retrieveDepartmentsByFacilityIdGateway from "../gateways/MsSQL/retrieveDepartmentsByFacilityId";
+import retrieveActiveDepartmentsByFacilityIdGateway from "../gateways/MsSQL/retrieveActiveDepartmentsByFacilityId";
 import createDepartmentGateway from "../gateways/MsSQL/createDepartment";
 import retrieveDepartmentByUuidGateway from "../gateways/MsSQL/retrieveDepartmentByUuid";
 import updateDepartmentByIdGateway from "../gateways/MsSQL/updateDepartmentById";
@@ -129,6 +137,14 @@ import retrieveVisitsGateway from "../gateways/PostgreSQL/retrieveVisits";
 import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/PostgreSQL/retrieveWardVisitTotalsStartDateByTrustId";
 import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
 import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
+import verifyTrustAdminCodeGateway from "../gateways/PostgreSQL/verifyTrustAdminCode";
+import verifySignUpLink from "../usecases/verifySignUpLink";
+import activateManagerAndOrganisation from "../usecases/activateManagerAndOrganisation";
+import activateManagerAndOrganisationGateway from "../gateways/MsSQL/activateManagerAndOrganisation";
+import activateOrganisation from "../usecases/activateOrganisation";
+import activateOrganisationGateway from "../gateways/MsSQL/activateOrganisation";
+import addToUserVerificationTable from "../usecases/addToUserVerificationTable";
+import addToUserVerificationTableGateway from "../gateways/MsSQL/addToUserVerificationTable";
 
 class AppContainer {
   getDb = () => {
@@ -353,6 +369,14 @@ class AppContainer {
     return createOrganisationGateway(this);
   };
 
+  getDeleteOrganisation = () => {
+    return deleteOrganisation(this);
+  };
+
+  getDeleteOrganisationGateway = () => {
+    return deleteOrganisationGateway(this);
+  };
+
   getRetrieveOrganisations = () => {
     return retrieveOrganisations(this);
   };
@@ -364,8 +388,15 @@ class AppContainer {
     return retrieveOrganisationById(this);
   };
 
-  getRetrieveDepartmentsByFacilityId = () => {
-    return retrieveDepartmentsByFacilityId(this);
+  getInsertManagerGateway = () => {
+    return insertManagerGateway(this);
+  };
+  getCreateManager = () => {
+    return createManager(this);
+  };
+
+  getRetrieveActiveDepartmentsByFacilityId = () => {
+    return retrieveActiveDepartmentsByFacilityId(this);
   };
 
   getCreateDepartment = () => {
@@ -517,6 +548,10 @@ class AppContainer {
     return verifyAdminCodeGateway(this);
   };
 
+  getVerifyTrustAdminCodeGateway = () => {
+    return verifyTrustAdminCodeGateway(this);
+  };
+
   getRetrieveActiveOrganisations = () => {
     return retrieveActiveOrganisations(this);
   };
@@ -525,16 +560,16 @@ class AppContainer {
     return retrieveActiveOrganisationsGateway(this);
   };
 
-  getRetrieveOrganisationById = () => {
-    return retrieveOrganisationById(this);
-  };
-
   getRetrieveOrganisationByIdGateway = () => {
     return retrieveOrganisationByIdGateway(this);
   };
 
-  getRetrieveDepartmentsByFacilityIdGateway = () => {
-    return retrieveDepartmentsByFacilityIdGateway(this);
+  getCreateManager = () => {
+    return createManager(this);
+  };
+
+  getRetrieveActiveDepartmentsByFacilityIdGateway = () => {
+    return retrieveActiveDepartmentsByFacilityIdGateway(this);
   };
 
   getCreateDepartmentGateway = () => {
@@ -625,6 +660,68 @@ class AppContainer {
 
   getArchiveManagerByUuidGateway = () => {
     return archiveManagerByUuidGateway(this);
+  };
+
+  getResetPassword = () => {
+    return resetPassword;
+  };
+
+  getCreateManager = () => {
+    return createManager(this);
+  };
+
+  getRetrieveOrganisationsGateway = () => {
+    return retrieveOrganisationsGateway(this);
+  };
+
+  getRetrieveOrganisations = () => {
+    return retrieveOrganisations(this);
+  };
+
+  getVerifySignUpLinkGateway = () => {
+    return verifySignUpLinkGateway(this);
+  };
+
+  getVerifySignUpLink = () => {
+    return verifySignUpLink(this);
+  };
+
+  getActivateManagerAndOrganisationGateway = () => {
+    return activateManagerAndOrganisationGateway(this);
+  };
+  getActivateManagerAndOrganisation = () => {
+    return activateManagerAndOrganisation(this);
+  };
+
+  getActivateOrganisationGateway = () => {
+    return activateOrganisationGateway(this);
+  };
+  getActivateOrganisation = () => {
+    return activateOrganisation(this);
+  };
+
+  getAddToUserVerificationTable = () => {
+    return addToUserVerificationTable(this);
+  };
+
+  getAddToUserVerificationTableGateway = () => {
+    return addToUserVerificationTableGateway(this);
+  };
+
+  getUpdateLinkStatusByHash = () => {
+    return updateLinkStatusByHash(this);
+  };
+
+  getUpdateLinkStatusByHashGateway = () => {
+    return updateLinkStatusByHashGateway(this);
+  };
+
+  getRetrieveManagerByEmail = () => {
+    return retrieveManagerByEmail(this);
+  };
+
+  getRetrieveManagerByEmailGateway = () => {
+    return retrieveManagerByEmailGateway(this);
   };
 
   getRetrieveFacilitiesByOrgIdGateway = () => {

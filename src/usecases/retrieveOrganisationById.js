@@ -1,9 +1,13 @@
-export default ({ getRetrieveOrganisationByIdGateway }) => async (
-  organisationId
-) => {
-  if (organisationId === undefined) {
-    return { name: undefined, uuid: undefined, error: "id must be provided." };
+const retrieveOrganisationById = ({
+  getRetrieveOrganisationByIdGateway,
+}) => async (organisationId) => {
+  if (!organisationId) {
+    return {
+      organisation: null,
+      error: "organisationId is not defined",
+    };
   }
+
   const { organisation, error } = await getRetrieveOrganisationByIdGateway()(
     organisationId
   );
@@ -23,3 +27,5 @@ export default ({ getRetrieveOrganisationByIdGateway }) => async (
     error: error,
   };
 };
+
+export default retrieveOrganisationById;

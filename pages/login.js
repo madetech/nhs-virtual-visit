@@ -109,16 +109,14 @@ const Login = ({ correlationId }) => {
             <p>
               <AnchorLink href="/reset-password">Reset password</AnchorLink>
             </p>
-            <Button
-              data-testid="button-submit"
-              className="nhsuk-u-margin-top-5"
-              type="submit"
-            >
+            <p>
+              <AnchorLink href="/sign-up">Manager Sign Up</AnchorLink>
+            </p>
+            <Button className="nhsuk-u-margin-top-5" type="submit">
               Log in
             </Button>
           </Form>
         </GridColumn>
-        <span style={{ clear: "both", display: "block" }}></span>
       </GridRow>
     </Layout>
   );

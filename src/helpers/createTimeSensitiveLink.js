@@ -1,28 +1,33 @@
-import jwt from "jsonwebtoken";
+import TokenProvider from "../providers/TokenProvider";
 
 const createTimeSensitiveLink = (
   headers,
-  emailAddress,
-  hashedPassword,
+  id,
+  hash,
   expirationTime,
-  urlPath
+  urlPath,
+  hashedPassword = process.env.JWT_SIGNING_KEY
 ) => {
+  const tokenProvider = new TokenProvider(process.env.JWT_SIGNING_KEY);
   try {
-    const token = jwt.sign({ emailAddress, hashedPassword }, hashedPassword, {
-      expiresIn: expirationTime,
-    });
+    const token = tokenProvider.generateTokenForLink(
+      id,
+      hash,
+      expirationTime,
+      hashedPassword
+    );
     const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
     const host = headers.host;
     const origin = `${protocol}://${host}`;
-
     const link = `${origin}/${urlPath}/${token}`;
+
     return {
       link,
       linkError: null,
     };
   } catch (error) {
     return {
-      link: "",
+      link: null,
       linkError: error,
     };
   }

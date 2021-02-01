@@ -15,12 +15,23 @@ describe("retrieveManagersByOrgId", () => {
       status: 1,
     },
   ];
-  const retrieveManagersByOrgIdSpy = jest.fn(async () => expectedManagers);
+  const retrieveManagersByOrgIdSpy = jest.fn(() => {
+    return { expectedManagers, error: null };
+  });
+
   beforeEach(() => {
     container = {
       getRetrieveManagersByOrgIdGateway: () => retrieveManagersByOrgIdSpy,
     };
   });
+
+  it("returns an error if there is no orgId", async () => {
+    const { managers, error } = await retrieveManagersByOrgId(container)();
+
+    expect(managers).toBeNull();
+    expect(error).toEqual("orgId is not defined");
+  });
+
   it("returns no error if managers can be retrieved", async () => {
     const { managers, error } = await retrieveManagersByOrgId(container)(
       expectedOrgId
@@ -34,10 +45,15 @@ describe("retrieveManagersByOrgId", () => {
     );
     expect(retrieveManagersByOrgIdSpy).toBeCalledWith(expectedOrgId);
   });
-  it("returns an error if db exception", async () => {
-    const retrieveManagersByOrgIdErrorSpy = jest.fn(async () => {
-      throw new Error("error");
+
+  it("returns an error if managers cannot be retrieved", async () => {
+    const retrieveManagersByOrgIdErrorSpy = jest.fn(() => {
+      return {
+        managers: null,
+        error: "error",
+      };
     });
+
     container = {
       ...container,
       getRetrieveManagersByOrgIdGateway: () => retrieveManagersByOrgIdErrorSpy,
@@ -45,13 +61,9 @@ describe("retrieveManagersByOrgId", () => {
     const { managers, error } = await retrieveManagersByOrgId(container)(
       expectedOrgId
     );
-    expect(error).toEqual("There was an error retrieving managers.");
-    expect(managers).toBeNull();
+
+    expect(error).toEqual("error");
+    expect(managers).toEqual([]);
     expect(retrieveManagersByOrgIdErrorSpy).toBeCalledWith(expectedOrgId);
-  });
-  it("returns an error if orgId does not exist", async () => {
-    const { managers, error } = await retrieveManagersByOrgId(container)();
-    expect(error).toEqual("orgId is must be provided.");
-    expect(managers).toBeNull();
   });
 });

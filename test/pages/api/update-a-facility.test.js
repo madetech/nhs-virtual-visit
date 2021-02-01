@@ -41,22 +41,6 @@ describe("update-a-facility", () => {
     mockAppContainer.getRetrieveFacilityByUuid.mockImplementation(() =>
       jest.fn().mockResolvedValue({ facility: expectedFacility, error: null })
     );
-    // container = {
-    //   getUpdateHospital: jest.fn().mockReturnValue(() => {
-    //     return { id: 123, error: null };
-    //   }),
-    //   getTrustAdminIsAuthenticated: jest
-    //     .fn()
-    //     .mockReturnValue((cookie) =>
-    //       cookie === "token=valid.token.value" ? { trustId: 1 } : false
-    //     ),
-    //   getRetrieveHospitalById: jest.fn().mockReturnValue(() => {
-    //     return { error: null };
-    //   }),
-    //   getTokenProvider: jest
-    //     .fn()
-    //     .mockReturnValue({ type: "trustAdmin", trustId: 1 }),
-    // };
   });
 
   it("returns 405 if not PATCH method", async () => {
@@ -111,7 +95,7 @@ describe("update-a-facility", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
-        error: "facility uuid, name and status must be present",
+        error: "facility uuid and must be present",
       })
     );
   });
@@ -133,7 +117,7 @@ describe("update-a-facility", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
-        error: "facility uuid, name and status must be present",
+        error: "facility uuid and must be present",
       })
     );
   });
@@ -155,7 +139,7 @@ describe("update-a-facility", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
-        error: "facility uuid, name and status must be present",
+        error: "facility uuid and must be present",
       })
     );
   });
@@ -177,7 +161,7 @@ describe("update-a-facility", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
-        error: "facility uuid, name and status must be present",
+        error: "facility uuid and must be present",
       })
     );
   });
@@ -199,7 +183,7 @@ describe("update-a-facility", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
-        error: "facility uuid, name and status must be present",
+        error: "facility uuid and must be present",
       })
     );
   });
@@ -248,7 +232,6 @@ describe("update-a-facility", () => {
     expect(updateFacilitySpy).toHaveBeenCalledWith({
       id: expectedFacilityId,
       name: expectedFacilityObject.name,
-      status: expectedFacilityObject.status,
     });
   });
 

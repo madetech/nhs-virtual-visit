@@ -6,7 +6,6 @@ describe("updateDepartmentByIdGateway", () => {
   const departmentObj = {
     id: 1,
     name: "wardNameOne",
-    status: 0,
   };
   it("updates department in the db when valid", async () => {
     // Arrange
@@ -25,24 +24,18 @@ describe("updateDepartmentByIdGateway", () => {
       1,
       "id",
       expect.anything(),
-      1
+      departmentObj.id
     );
-    expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenCalledTimes(3);
+    expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenCalledTimes(2);
     expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
       2,
-      "status",
-      expect.anything(),
-      0
-    );
-    expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
-      3,
       "name",
       expect.anything(),
-      "wardNameOne"
+      departmentObj.name
     );
 
     expect(mockAppContainer.getMsSqlConnPool().query).toHaveBeenCalledWith(
-      "UPDATE dbo.[department] SET status = @status, name = @name OUTPUT inserted.uuid WHERE id = @id"
+      "UPDATE dbo.[department] SET name = @name OUTPUT inserted.uuid WHERE id = @id"
     );
   });
   it("throws an error if db is undefined", async () => {

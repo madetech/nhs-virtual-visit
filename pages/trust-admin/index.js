@@ -188,21 +188,25 @@ export const getServerSideProps = propsWithContainer(
     const retrieveHospitalVisitTotals = await container.getRetrieveHospitalVisitTotals()(
       authenticationToken.trustId
     );
+
     const retrieveWardVisitTotals = await container.getRetrieveWardVisitTotals()(
       authenticationToken.trustId
     );
+
     const {
       averageParticipantsInVisit,
       error: averageParticipantsInVisitError,
     } = await container.getRetrieveAverageParticipantsInVisit()(
       authenticationToken.trustId
     );
+
     const {
       startDate: wardVisitTotalsStartDate,
       error: wardVisitTotalsStartDateError,
     } = await container.getRetrieveWardVisitTotalsStartDateByTrustId()(
       authenticationToken.trustId
     );
+
     const {
       startDate: reportingStartDate,
       error: reportingStartDateError,

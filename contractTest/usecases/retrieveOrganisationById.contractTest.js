@@ -33,6 +33,6 @@ describe("retrieveOrganisation usecase contract tests", () => {
     // Act
     const { error } = await container.getRetrieveOrganisationById()();
     // Assert
-    expect(error).toEqual("id must be provided.");
+    expect(error).toEqual("organisationId is not defined");
   });
 });

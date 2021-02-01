@@ -1,6 +1,7 @@
 export default async ({ getMsSqlConnPool }) => {
   const db = await getMsSqlConnPool();
 
+  await db.request().query("DELETE from dbo.[department]");
   await db.request().query("DELETE from dbo.[facility]");
 
   //these tables are circular references so we have to remove the reference first

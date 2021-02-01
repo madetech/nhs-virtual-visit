@@ -6,12 +6,10 @@ import Input from "../Input";
 import Label from "../Label";
 import Form from "../Form";
 import isPresent from "../../helpers/isPresent";
-import SelectStatus from "../SelectStatus";
 import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 
 const HospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
   const [hospitalName, setHospitalName] = useState(hospital.name);
-  const [hospitalStatus, setHospitalStatus] = useState(hospital.status);
   const [hospitalCode, setHospitalCode] = useState(hospital.code);
 
   let action = "Add";
@@ -26,13 +24,6 @@ const HospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       e.push({
         id: "hospital-name-error",
         message: "Enter a hospital name",
-      });
-    };
-
-    const setHospitalStatusError = (e) => {
-      e.push({
-        id: "hospital-status-error",
-        message: "Enter a hospital status",
       });
     };
 
@@ -51,15 +42,10 @@ const HospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
       setHospitalCodeError(onSubmitErrors);
     }
 
-    if (!isPresent(hospitalStatus) && action == "Edit") {
-      setHospitalStatusError(onSubmitErrors);
-    }
-
     if (onSubmitErrors.length === 0) {
       return await submit({
         name: hospitalName,
         code: hospitalCode,
-        status: hospitalStatus,
       });
     } else setErrors(onSubmitErrors);
   };
@@ -98,24 +84,6 @@ const HospitalForm = ({ errors, setErrors, hospital = {}, submit }) => {
             name="hospital-code"
             autoComplete="off"
             value={hospitalCode || ""}
-          />
-        </FormGroup>
-      )}
-
-      {action === "Edit" && (
-        <FormGroup>
-          <Label htmlFor="hospital-status" className="nhsuk-label--m">
-            Hospital Status
-          </Label>
-          <SelectStatus
-            id="hospital-status"
-            className="nhsuk-input--width-10 nhsuk-u-width-one-half"
-            prompt="Choose a hospital status"
-            options={[{ name: "active" }, { name: "disabled" }]}
-            onChange={(event) => {
-              setHospitalStatus(event.target.value);
-            }}
-            defaultValue={hospitalStatus}
           />
         </FormGroup>
       )}

@@ -25,22 +25,16 @@ describe("updateFacilityByIdGateway", () => {
       expect.anything(),
       1
     );
-    expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenCalledTimes(3);
+    expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenCalledTimes(2);
     expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
       2,
-      "status",
-      expect.anything(),
-      0
-    );
-    expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
-      3,
       "name",
       expect.anything(),
       "Hospital Name One"
     );
 
     expect(mockAppContainer.getMsSqlConnPool().query).toHaveBeenCalledWith(
-      "UPDATE dbo.[facility] SET status = @status, name = @name OUTPUT inserted.uuid WHERE id = @id"
+      "UPDATE dbo.[facility] SET name = @name OUTPUT inserted.uuid WHERE id = @id"
     );
   });
   it("throws an error if db is undefined", async () => {

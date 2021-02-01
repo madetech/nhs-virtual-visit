@@ -7,7 +7,6 @@ export default ({ getArchiveDepartmentByIdGateway }) => async (id) => {
   try {
     logger.info(`Archiving deparment for ${id}`);
     const archivedUuid = await getArchiveDepartmentByIdGateway()(id);
-    console.log(archivedUuid);
     return { uuid: archivedUuid, error: null };
   } catch (error) {
     return { uuid: null, error: "There was an error archiving a department." };

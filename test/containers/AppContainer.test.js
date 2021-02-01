@@ -326,12 +326,14 @@ describe("AppContainer", () => {
     expect(container.getUpdateFacilityByIdGateway()).toBeDefined();
   });
 
-  it("returns getRetrieveDepartmentsByFacilityId", () => {
-    expect(container.getRetrieveDepartmentsByFacilityId()).toBeDefined();
+  it("returns getRetrieveActiveDepartmentsByFacilityId", () => {
+    expect(container.getRetrieveActiveDepartmentsByFacilityId()).toBeDefined();
   });
 
-  it("returns getRetrieveDepartmentsByFacilityIdGateway", () => {
-    expect(container.getRetrieveDepartmentsByFacilityIdGateway()).toBeDefined();
+  it("returns getRetrieveActiveDepartmentsByFacilityIdGateway", () => {
+    expect(
+      container.getRetrieveActiveDepartmentsByFacilityIdGateway()
+    ).toBeDefined();
   });
 
   it("returns getCreateDepartment", () => {
