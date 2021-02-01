@@ -1,30 +1,21 @@
 import retrieveOrganisationById from "../../../src/gateways/MsSQL/retrieveOrganisationById";
-import { setupOrganization } from "../../../test/testUtils/factories";
+import { setupOrganisationAndManager } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
-import setupUser from "../../../test/testUtils/setupUser";
 
 describe("retrieveOrganisationById", () => {
   // Arrange
   const container = AppContainer.getInstance();
   it("returns an object containing the trust", async () => {
     // Arrange
-    const { id: userId } = await setupUser(container)({
-      email: "default@example.com",
-      password: "testpassword",
-      type: "Default",
-    });
-
-    const {
-      organisation: { id },
-    } = await setupOrganization({ createdBy: userId });
+    const { orgId, userId } = await setupOrganisationAndManager();
     // Act
     const { organisation, error } = await retrieveOrganisationById(container)(
-      id
+      orgId
     );
     // Assert
     expect(error).toBeNull();
     expect(organisation).toEqual({
-      id: id,
+      id: orgId,
       name: "Test Trust",
       type: "trust",
       status: 0,
