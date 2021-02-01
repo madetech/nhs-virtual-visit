@@ -11,7 +11,6 @@ describe("verifyAdminCode contract tests", () => {
     await setupAdmin(container)({
       email: `nhs-admin${randInt}@nhs.co.uk`,
       password: "password",
-      type: "admin",
     });
   });
   it("verifies user if they are an admin", async () => {
