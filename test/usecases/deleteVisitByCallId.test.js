@@ -8,15 +8,6 @@ describe("deleteVisitByCallId", () => {
           success: true,
           error: null,
         }),
-      async getDb() {
-        return {
-          any: jest.fn().mockReturnValue([
-            {
-              sucess: true,
-            },
-          ]),
-        };
-      },
     };
 
     const { success, error } = await deleteVisitByCallId(container)(
@@ -34,13 +25,6 @@ describe("deleteVisitByCallId", () => {
           success: false,
           error: "Error: DB Error!",
         }),
-      async getDb() {
-        return {
-          any: jest.fn(() => {
-            throw new Error("DB Error!");
-          }),
-        };
-      },
     };
 
     const { success, error } = await deleteVisitByCallId(container)(
