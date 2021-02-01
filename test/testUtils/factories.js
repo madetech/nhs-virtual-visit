@@ -107,6 +107,31 @@ export const setupOrganisationAndFacility = async (
 
   return { orgId, facilityId, facilityUuid };
 };
+export const setupOrganisationAndFacility = async (
+  args = {
+    organisationArgs: {},
+    facilityArgs: {},
+  }
+) => {
+  const {
+    organisation: { id: orgId },
+  } = await setupOrganization({
+    ...args.organisationArgs,
+  });
+
+  const uuid = await setUpFacility({
+    orgId,
+    createdBy: args.organisationArgs.createdBy,
+    ...args.facilityArgs,
+  });
+
+  const {
+    id: facilityId,
+    uuid: facilityUuid,
+  } = await container.getRetrieveFacilityByUuidGateway()(uuid);
+
+  return { orgId, facilityId, facilityUuid };
+};
 
 export const setupOrganisationFacilityAndManager = async (
   args = {
