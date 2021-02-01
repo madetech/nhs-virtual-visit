@@ -98,7 +98,11 @@ import createDepartmentGateway from "../gateways/MsSQL/createDepartment";
 import retrieveDepartmentByUuidGateway from "../gateways/MsSQL/retrieveDepartmentByUuid";
 import updateDepartmentByIdGateway from "../gateways/MsSQL/updateDepartmentById";
 import archiveDepartmentByIdGateway from "../gateways/MsSQL/archiveDepartmentById";
+<<<<<<< HEAD
 import retrieveDepartmentByCodeGateway from "../gateways/MsSQL/retrieveDepartmentByCode";
+=======
+import verifyAdminCodeGateway from "../gateways/MsSQL/verifyAdminCode";
+>>>>>>> verifyAdminCode mssql gateway contract test created
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -137,7 +141,7 @@ import retrieveVisitByCallIdGateway from "../gateways/PostgreSQL/retrieveVisitBy
 import retrieveVisitsGateway from "../gateways/PostgreSQL/retrieveVisits";
 import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/PostgreSQL/retrieveWardVisitTotalsStartDateByTrustId";
 import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
-import verifyAdminCodeGateway from "../gateways/PostgreSQL/verifyAdminCode";
+import verifyAdminCodeGW from "../gateways/PostgreSQL/verifyAdminCode";
 import verifyTrustAdminCodeGateway from "../gateways/PostgreSQL/verifyTrustAdminCode";
 import verifySignUpLink from "../usecases/verifySignUpLink";
 import activateManagerAndOrganisation from "../usecases/activateManagerAndOrganisation";
@@ -545,8 +549,8 @@ class AppContainer {
     return updateVisitByIdGateway(this);
   };
 
-  getVerifyAdminCodeGateway = () => {
-    return verifyAdminCodeGateway(this);
+  getVerifyAdminCodeGW = () => {
+    return verifyAdminCodeGW(this);
   };
 
   getVerifyTrustAdminCodeGateway = () => {
@@ -737,6 +741,10 @@ class AppContainer {
   };
   getRetrieveFacilityByUuidGateway = () => {
     return retrieveFacilityByUuidGateway(this);
+  };
+
+  getVerifyAdminCodeGateway = () => {
+    return verifyAdminCodeGateway(this);
   };
 }
 
