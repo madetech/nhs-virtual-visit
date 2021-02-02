@@ -17,11 +17,7 @@ export default ({ getMsSqlConnPool }) => async ({
     VALUES(@email, @password, @type, @organisation_id, 1)`
     );
 
-<<<<<<< HEAD
   return {
     id: result.recordset[0].id,
   };
-=======
-  return user;
->>>>>>> verifyAdminCode mssql gateway contract test created
 };
