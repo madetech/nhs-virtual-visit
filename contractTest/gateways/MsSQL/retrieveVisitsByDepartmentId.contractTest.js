@@ -6,7 +6,7 @@ import insertVisit from "../../../src/gateways/MsSQL/insertVisit";
 describe("retrieveVisitsByDepartmentId", () => {
   const container = AppContainer.getInstance();
 
-  it("returns an object containing the facilities when no options is passed", async () => {
+  it("returns an object containing the visits when no options is passed", async () => {
     const departmentCreated = {
       code: "WardCodeOne",
     };
