@@ -73,6 +73,7 @@ export const setupOrganisationAndManager = async (
   } = await setUpManager({
     ...args.userArgs,
   });
+
   const {
     organisation: { id: orgId },
   } = await setupOrganization({

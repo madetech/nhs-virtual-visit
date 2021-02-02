@@ -1,13 +1,11 @@
 import updateOrganisationGateway from "../../../src/gateways/MsSQL/updateOrganisation";
 import AppContainer from "../../../src/containers/AppContainer";
-import { setupOrganization } from "../../../test/testUtils/factories";
+import { setupOrganisationAndManager } from "../../../test/testUtils/factories";
 
 describe("updateOrganisation contract tests", () => {
   const container = AppContainer.getInstance();
   it("updates an organisation", async () => {
-    const {
-      organisation: { id },
-    } = await setupOrganization();
+    const { orgId: id } = await setupOrganisationAndManager();
     const name = "Changed Trust Name";
 
     const { organisation, error } = await updateOrganisationGateway(container)({
@@ -21,7 +19,7 @@ describe("updateOrganisation contract tests", () => {
   });
 
   it("returns error if the id isn't found in the database", async () => {
-    await setupOrganization();
+    await setupOrganisationAndManager();
     const name = "Changed Trust Name";
     const invalidId = 1000000;
     const { organisation, error } = await updateOrganisationGateway(container)({
