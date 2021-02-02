@@ -6,13 +6,10 @@ describe("archiveDepartmentByIdGateway", () => {
   const container = AppContainer.getInstance();
   it("updates a department", async () => {
     // Arrange
-    const email = `${Math.random()}@nhs.co.uk`;
     const {
       departmentUuid,
       departmentId,
-    } = await setupOrganisationFacilityDepartmentAndManager({
-      userArgs: { email },
-    });
+    } = await setupOrganisationFacilityDepartmentAndManager();
     const currentDepartment = await container.getRetrieveDepartmentByUuidGateway()(
       departmentUuid
     );

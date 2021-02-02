@@ -10,10 +10,7 @@ describe("createFacility", () => {
   };
   let ids;
   beforeEach(async () => {
-    const email = `${Math.random()}@nhs.co.uk`;
-    ids = await setupOrganisationAndManager({
-      userArgs: { email },
-    });
+    ids = await setupOrganisationAndManager();
   });
   it("returns an object containing the facility", async () => {
     // Arrange

@@ -10,12 +10,10 @@ describe("retrieveFacilityByUuid", () => {
   };
   it("returns an object containing the facility", async () => {
     // Arrange
-    const email = `${Math.random()}@nhs.co.uk`;
     const {
       facilityId,
       facilityUuid,
     } = await setupOrganisationFacilityAndManager({
-      userArgs: { email },
       facilityArgs,
     });
     // Act
