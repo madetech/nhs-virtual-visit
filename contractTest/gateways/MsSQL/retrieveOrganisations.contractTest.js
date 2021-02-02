@@ -10,10 +10,9 @@ describe("retrieveOrganisationsGateWay", () => {
 
   it("returns an object containing all organisations in db", async () => {
     // Arrange
-    const email = `${Math.random()}@nhs.co.uk`;
     const {
       user: { id: userId },
-    } = await setUpManager({ email });
+    } = await setUpManager();
 
     const organisationOne = {
       name: "Organisation One",
@@ -28,9 +27,6 @@ describe("retrieveOrganisationsGateWay", () => {
       code: "OR3",
     };
 
-    const {
-      organisations: expectedOrganisations,
-    } = await container.getRetrieveOrganisationsGateway(container)({});
     const { organisation: currentOrganisationOne } = await setupOrganization({
       name: organisationOne.name,
       code: organisationOne.code,
@@ -46,15 +42,13 @@ describe("retrieveOrganisationsGateWay", () => {
       code: organisationThree.code,
       createdBy: userId,
     });
-
-    expectedOrganisations.push(
-      currentOrganisationOne,
-      currentOrganisationTwo,
-      currentOrganisationThree
-    );
     // Act
     const { organisations } = await retrieveOrganisationsGateWay(container)({});
     // Assert
-    expect(organisations).orderlessEqual(expectedOrganisations);
+    expect(organisations).orderlessEqual([
+      currentOrganisationOne,
+      currentOrganisationTwo,
+      currentOrganisationThree,
+    ]);
   });
 });
