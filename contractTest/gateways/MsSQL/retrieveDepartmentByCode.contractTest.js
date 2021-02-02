@@ -7,7 +7,6 @@ describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
   const container = AppContainer.getInstance();
   it("retrieves department returning object containing trustId, wardId and wardCode", async () => {
     // Arrange
-    const email = `${Math.random()}@nhs.co.uk`;
     const departmentCreated = {
       code: "WardCodeOne",
     };
@@ -16,9 +15,6 @@ describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
       departmentId,
       departmentUuid,
     } = await setupOrganisationFacilityDepartmentAndManager({
-      userArgs: { email },
-      organisationArgs: {},
-      facilityArgs: {},
       departmentArgs: { code: departmentCreated.code },
     });
     // Act
