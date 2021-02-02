@@ -1,5 +1,6 @@
 import retrieveDepartmentByCodeGateway from "../../../src/gateways/MsSQL/retrieveDepartmentByCode";
 import { setupOrganisationFacilityDepartmentAndManager } from "../../../test/testUtils/factories";
+import { statusToId, ACTIVE } from "../../../src/helpers/statusTypes";
 import AppContainer from "../../../src/containers/AppContainer";
 
 describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
@@ -30,7 +31,7 @@ describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
       uuid: departmentUuid,
       trustId: orgId,
       wardCode: departmentCreated.code,
-      wardStatus: 1,
+      wardStatus: statusToId(ACTIVE),
     });
   });
   it("returns department as undefined if wardcode doesn't exist", async () => {
