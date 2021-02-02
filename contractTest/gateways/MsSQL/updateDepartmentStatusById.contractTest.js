@@ -1,25 +1,23 @@
 import updateDepartmentStatusByIdGateway from "../../../src/gateways/MsSQL/updateDepartmentStatusById";
 import { setupOrganisationFacilityDepartmentAndManager } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
+import { statusToId, ACTIVE, DISABLED } from "../../../src/helpers/statusTypes";
 
 describe("updateDepartmentStatusByIdGateway", () => {
   const container = AppContainer.getInstance();
-  it("updates a department status to 1", async () => {
+  it("updates a department status to ACTIVE", async () => {
     // Arrange
-    const email = `${Math.random()}@nhs.co.uk`;
     const {
       departmentUuid,
       departmentId,
-    } = await setupOrganisationFacilityDepartmentAndManager({
-      userArgs: { email },
-    });
+    } = await setupOrganisationFacilityDepartmentAndManager();
     const currentDepartment = await container.getRetrieveDepartmentByUuidGateway()(
       departmentUuid
     );
     // Act
     await updateDepartmentStatusByIdGateway(container)({
       id: departmentId,
-      status: 1,
+      status: statusToId(ACTIVE),
     });
     const archivedDepartment = await container.getRetrieveDepartmentByUuidGateway()(
       departmentUuid
@@ -27,22 +25,19 @@ describe("updateDepartmentStatusByIdGateway", () => {
     // Assert
     expect(archivedDepartment).toEqual({ ...currentDepartment, status: 1 });
   });
-  it("updates a department status to 0", async () => {
+  it("updates a department status to DISABLED", async () => {
     // Arrange
-    const email = `${Math.random()}@nhs.co.uk`;
     const {
       departmentUuid,
       departmentId,
-    } = await setupOrganisationFacilityDepartmentAndManager({
-      userArgs: { email },
-    });
+    } = await setupOrganisationFacilityDepartmentAndManager();
     const currentDepartment = await container.getRetrieveDepartmentByUuidGateway()(
       departmentUuid
     );
     // Act
     await updateDepartmentStatusByIdGateway(container)({
       id: departmentId,
-      status: 0,
+      status: statusToId(DISABLED),
     });
     const archivedDepartment = await container.getRetrieveDepartmentByUuidGateway()(
       departmentUuid
