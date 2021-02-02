@@ -21,7 +21,21 @@ describe("insertVisit contract tests", () => {
       callPassword: "securePassword",
     };
 
-    let { id } = await insertVisit(db, visit, departmentId);
+    let { id, error } = await insertVisit(db, visit, departmentId);
     expect(id).toBeGreaterThan(0);
+    expect(error).toBeNull();
+  });
+
+  it("catches errors", async () => {
+    const db = await container.getMsSqlConnPool();
+    const {
+      departmentId,
+    } = await setupOrganisationFacilityDepartmentAndManager();
+    const visit = null;
+
+    let { error } = await insertVisit(db, visit, departmentId);
+    expect(error).toEqual(
+      "TypeError: Cannot read property 'patientName' of null"
+    );
   });
 });
