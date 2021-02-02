@@ -46,7 +46,7 @@ import updateVisitById from "../usecases/updateVisitById";
 import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
 import markVisitAsComplete from "../usecases/markVisitAsComplete";
-import updateTrust from "../usecases/updateTrust";
+import updateOrganisation from "../usecases/updateOrganisation";
 import createOrganisation from "../usecases/createOrganisation";
 import retrieveOrganisations from "../usecases/retrieveOrganisations";
 import retrieveManagersByOrgId from "../usecases/retrieveManagersByOrgId";
@@ -351,8 +351,8 @@ class AppContainer {
     return markVisitAsComplete(this);
   };
 
-  getUpdateTrust = () => {
-    return updateTrust(this);
+  getUpdateOrganisation = () => {
+    return updateOrganisation(this);
   };
 
   getCreateOrganisation = () => {
