@@ -5,16 +5,16 @@ import {
   setupOrganisationAndFacility,
 } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
+import { statusToId, DISABLED } from "../../../src/helpers/statusTypes";
 
 describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
   const container = AppContainer.getInstance();
 
   it("returns an object containing an array of wards with status of 1 in name ascending order", async () => {
     // Arrange
-    const email = `${Math.random()}@nhs.co.uk`;
     const {
       user: { id: userId },
-    } = await setUpManager({ email });
+    } = await setUpManager();
     const organisationOne = {
       name: "Test Trust 1",
       code: "TT1",
@@ -38,7 +38,6 @@ describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
     const departmentThree = {
       name: "Department Three",
       code: "DE3",
-      status: 0,
     };
     const departmentOneUuid = await setUpDepartment({
       ...departmentOne,
@@ -67,7 +66,7 @@ describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
     );
     await container.getUpdateDepartmentStatusByIdGateway(container)({
       id: currentDepartmentThree.id,
-      status: 0,
+      status: statusToId(DISABLED),
     });
     // Act
     const departmentsInOrganisationOne = await retrieveActiveDepartmentsByOrganisationIdGateway(
@@ -94,10 +93,9 @@ describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
   });
   it("returns an empty array if there are no departments found", async () => {
     // Arrange
-    const email = `${Math.random()}@nhs.co.uk`;
     const {
       user: { id: userId },
-    } = await setUpManager({ email });
+    } = await setUpManager();
     const organisationOne = {
       name: "Test Trust 1",
       code: "TT1",
