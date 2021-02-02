@@ -594,6 +594,7 @@ class AppContainer {
   getRetrieveDepartmentByCodeGateway = () => {
     return retrieveDepartmentByCodeGateway(this);
   };
+  
   getRetrieveActiveDepartmentsByOrganisationIdGateway = () => {
     return retrieveActiveDepartmentsByOrganisationIdGateway(this);
   };
@@ -601,6 +602,11 @@ class AppContainer {
   getUpdateDepartmentStatusByIdGateway = () => {
     return updateDepartmentStatusByIdGateway(this);
   };
+
+  getRetrieveActiveDepartmentsByOrganisationIdGateway = () => {
+    return retrieveActiveDepartmentsByOrganisationIdGateway(this);
+  };
+
   getLogEventGateway = () => {
     return logEvent(
       process.env.AZURE_FUNCTION_KEY,
