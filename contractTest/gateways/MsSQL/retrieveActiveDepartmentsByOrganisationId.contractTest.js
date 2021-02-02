@@ -9,7 +9,7 @@ import AppContainer from "../../../src/containers/AppContainer";
 describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
   const container = AppContainer.getInstance();
 
-  it("returns an object containing an array of wards with status of 1", async () => {
+  it("returns an object containing an array of wards with status of 1 in name ascending order", async () => {
     // Arrange
     const email = `${Math.random()}@nhs.co.uk`;
     const {
@@ -28,12 +28,12 @@ describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
     });
 
     const departmentOne = {
-      name: "Department One",
-      code: "DEO",
+      name: "Department B",
+      code: "DEB",
     };
     const departmentTwo = {
-      name: "Department Two",
-      code: "DET",
+      name: "Department A",
+      code: "DEA",
     };
     const departmentThree = {
       name: "Department Three",
@@ -76,15 +76,15 @@ describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
     const expectedDepartmentsInOrganisationOne = [
       {
         hospitalName: facilityOne.name,
-        wardCode: departmentOne.code,
-        wardName: departmentOne.name,
-        wardId: currentDepartmentOne.id,
-      },
-      {
-        hospitalName: facilityOne.name,
         wardCode: departmentTwo.code,
         wardName: departmentTwo.name,
         wardId: currentDepartmentTwo.id,
+      },
+      {
+        hospitalName: facilityOne.name,
+        wardCode: departmentOne.code,
+        wardName: departmentOne.name,
+        wardId: currentDepartmentOne.id,
       },
     ];
     // Assert
