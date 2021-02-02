@@ -10,10 +10,7 @@ describe("createDepartment", () => {
   };
   let ids;
   beforeEach(async () => {
-    const email = `${Math.random()}@nhs.co.uk`;
-    ids = await setupOrganisationFacilityAndManager({
-      userArgs: { email },
-    });
+    ids = await setupOrganisationFacilityAndManager();
   });
 
   it("creates a department", async () => {

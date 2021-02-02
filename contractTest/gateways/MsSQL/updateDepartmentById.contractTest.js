@@ -9,9 +9,7 @@ describe("updateDepartmentByIdGateway", () => {
   };
   let ids;
   beforeEach(async () => {
-    const email = `${Math.random()}@nhs.co.uk`;
     ids = await setupOrganisationFacilityDepartmentAndManager({
-      userArgs: { email },
       departmentArgs,
     });
   });
