@@ -98,11 +98,8 @@ import createDepartmentGateway from "../gateways/MsSQL/createDepartment";
 import retrieveDepartmentByUuidGateway from "../gateways/MsSQL/retrieveDepartmentByUuid";
 import updateDepartmentByIdGateway from "../gateways/MsSQL/updateDepartmentById";
 import archiveDepartmentByIdGateway from "../gateways/MsSQL/archiveDepartmentById";
-<<<<<<< HEAD
 import retrieveDepartmentByCodeGateway from "../gateways/MsSQL/retrieveDepartmentByCode";
-=======
 import verifyAdminCodeGateway from "../gateways/MsSQL/verifyAdminCode";
->>>>>>> verifyAdminCode mssql gateway contract test created
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
