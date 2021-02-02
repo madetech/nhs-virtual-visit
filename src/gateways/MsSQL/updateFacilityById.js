@@ -8,5 +8,6 @@ export default ({ getMsSqlConnPool }) => async ({ id, name }) => {
     .query(
       "UPDATE dbo.[facility] SET name = @name OUTPUT inserted.uuid WHERE id = @id"
     );
+
   return res.recordset[0].uuid;
 };
