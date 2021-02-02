@@ -641,8 +641,6 @@ class AppContainer {
     return updateFacilityByIdGateway(this);
   };
 
-  getCreateMan;
-
   // MsSQL database gateways
   getVerifyUserLogin = () => {
     return verifyUserLogin;

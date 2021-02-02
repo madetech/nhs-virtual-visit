@@ -1,14 +1,19 @@
 import AppContainer from "../../src/containers/AppContainer";
+import { setUpManager } from "../../test/testUtils/factories";
 
 describe("deleteOrganisation contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("deletes an organisation", async () => {
+    const {
+      user: { id: userId },
+    } = await setUpManager();
+
     const { organisationId } = await container.getCreateOrganisation()({
       name: "Test Hospital",
       status: 0,
       type: "trust",
-      createdBy: 1,
+      createdBy: userId,
     });
 
     await container.getDeleteOrganisation()(organisationId);

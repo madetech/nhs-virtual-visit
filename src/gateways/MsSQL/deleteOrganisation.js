@@ -3,8 +3,6 @@ import mssql from "mssql";
 
 export default ({ getMsSqlConnPool }) => async (organisationId) => {
   try {
-    console.log(JSON.stringify(organisationId));
-
     const db = await getMsSqlConnPool();
     await db
       .request()

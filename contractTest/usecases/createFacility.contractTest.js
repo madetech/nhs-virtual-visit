@@ -9,12 +9,13 @@ describe("createFacility", () => {
   it("creates a valid facility", async () => {
     // Arrange
     const {
-      organisation: { id: orgId },
-    } = await setupOrganization();
-    const email = `${Math.random()}@nhs.co.uk`;
-    const {
       user: { id: userId },
-    } = await setUpManager({ organisationId: orgId, email });
+    } = await setUpManager();
+
+    const {
+      organisation: { id: orgId },
+    } = await setupOrganization({ createdBy: userId });
+
     const facilityArgs = {
       name: "Test Facility One",
       code: "TF1",

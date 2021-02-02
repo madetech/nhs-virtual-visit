@@ -97,6 +97,7 @@ const Login = ({ correlationId }) => {
               <Input
                 id="password"
                 type="password"
+                data-testid="input-password"
                 ref={passwordRef}
                 hasError={hasError(errors, "password")}
                 errorMessage={errorMessage(errors, "password")}

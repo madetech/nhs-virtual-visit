@@ -3,6 +3,7 @@ const container = AppContainer.getInstance();
 
 export const setUpManager = async (args = {}) => {
   return await container.getInsertManagerGateway()({
+    email: "default@nhs.co.uk",
     password: "password",
     type: "manager",
     ...args,
@@ -69,16 +70,15 @@ export const setupOrganisationAndManager = async (
   }
 ) => {
   const {
-    organisation: { id: orgId },
-  } = await setupOrganization({
-    ...args.organisationArgs,
-  });
-
-  const {
     user: { id: userId },
   } = await setUpManager({
-    organisationId: orgId,
     ...args.userArgs,
+  });
+  const {
+    organisation: { id: orgId },
+  } = await setupOrganization({
+    createdBy: userId,
+    ...args.organisationArgs,
   });
 
   return { userId, orgId };
@@ -137,6 +137,7 @@ export const setupOrganisationFacilityDepartmentAndManager = async (
     id: departmentId,
     uuid: departmentUuid,
   } = await container.getRetrieveDepartmentByUuidGateway()(uuid);
+
   return {
     userId,
     orgId,

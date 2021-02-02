@@ -1,3 +1,4 @@
+//this should be a gateway too, but I'll leave it for now
 export default ({ getMsSqlConnPool }) => async ({
   email,
   password,
@@ -5,7 +6,7 @@ export default ({ getMsSqlConnPool }) => async ({
   organisation_id,
 }) => {
   const db = await getMsSqlConnPool();
-  const user = await db
+  const result = await db
     .request()
     .input("email", email)
     .input("password", password)
@@ -15,6 +16,8 @@ export default ({ getMsSqlConnPool }) => async ({
       `INSERT INTO dbo.[user] ([email], [password], [type], [organisation_id], [status]) OUTPUT INSERTED.[id]
     VALUES(@email, @password, @type, @organisation_id, 1)`
     );
-  console.log(user);
-  return user;
+
+  return {
+    id: result.recordset[0].id,
+  };
 };

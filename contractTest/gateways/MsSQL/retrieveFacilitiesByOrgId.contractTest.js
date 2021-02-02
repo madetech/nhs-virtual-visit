@@ -11,7 +11,6 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
 
   it("returns an object containing the facilities when no options is passed", async () => {
     // Arrange
-    const email = `${Math.random()}@nhs.co.uk`;
     const facilityOne = {
       name: "Facility Test One",
       code: "FT1",
@@ -21,9 +20,7 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
       code: "FT2",
     };
 
-    const { userId, orgId } = await setupOrganisationAndManager({
-      userArgs: { email },
-    });
+    const { userId, orgId } = await setupOrganisationAndManager();
 
     const facilityOneUuid = await setUpFacility({
       ...facilityOne,
@@ -51,7 +48,6 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
   });
   it("returns an object containing the facilities with wards when withWards args is true", async () => {
     // Arrange
-    const email = `${Math.random()}@nhs.co.uk`;
     const facilityOne = {
       name: "Facility Test One",
       code: "FT1",
@@ -61,9 +57,7 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
       code: "FT2",
     };
 
-    const { userId, orgId } = await setupOrganisationAndManager({
-      userArgs: { email },
-    });
+    const { userId, orgId } = await setupOrganisationAndManager();
 
     const facilityOneUuid = await setUpFacility({
       ...facilityOne,
