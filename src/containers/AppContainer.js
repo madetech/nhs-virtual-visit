@@ -149,6 +149,7 @@ import activateOrganisation from "../usecases/activateOrganisation";
 import activateOrganisationGateway from "../gateways/MsSQL/activateOrganisation";
 import addToUserVerificationTable from "../usecases/addToUserVerificationTable";
 import addToUserVerificationTableGateway from "../gateways/MsSQL/addToUserVerificationTable";
+import updateVisitStatusByDepartmentId from "../gateways/MsSQL/updateVisitStatusByDepartmentId";
 
 class AppContainer {
   getDb = () => {
@@ -474,6 +475,10 @@ class AppContainer {
 
   getInsertVisitGateway = () => {
     return insertVisit;
+  };
+
+  getUpdateVisitStatusByDepartmentIdGateway = () => {
+    return updateVisitStatusByDepartmentId(this);
   };
 
   getUpdateHospitalGateway = () => {
