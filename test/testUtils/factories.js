@@ -1,5 +1,6 @@
 import AppContainer from "../../src/containers/AppContainer";
 const container = AppContainer.getInstance();
+import insertVisitMsSQLGateway from "../../src/gateways/MsSQL/insertVisit"; //We can't use this for every test yet so we won't put it into the AppContainer until later
 
 export const setUpManager = async (args = {}) => {
   return await container.getInsertManagerGateway()({
@@ -158,7 +159,7 @@ export const setupOrganisationFacilityAndManager = async (
     createdBy: userId,
     ...args.facilityArgs,
   });
-
+  
   const {
     id: facilityId,
     uuid: facilityUuid,
@@ -185,7 +186,7 @@ export const setupOrganisationFacilityDepartmentAndManager = async (
     organisationArgs: args.organisationArgs,
     facilityArgs: args.facilityArgs,
   });
-
+  
   const uuid = await setUpDepartment({
     facilityId,
     createdBy: userId,
@@ -195,7 +196,7 @@ export const setupOrganisationFacilityDepartmentAndManager = async (
     id: departmentId,
     uuid: departmentUuid,
   } = await container.getRetrieveDepartmentByUuidGateway()(uuid);
-
+  
   return {
     userId,
     orgId,
@@ -242,6 +243,21 @@ export const setUpScheduledCall = async (args = {}) => {
     visit,
     args.departmentId
   );
+//Some tests still need the old setupVisit(), so let's seperate the MsSQL into a different function
+export const setupVisitMsSQL = async (args = {}) => {
+  const db = await container.getMsSqlConnPool();
+  const visit = {
+    patientName: "Patient Name",
+    contactEmail: "contact@example.com",
+    contactName: "Contact Name",
+    callTime: new Date("2020-06-01 13:00"),
+    callId: "TESTCALLID",
+    provider: "whereby",
+    callPassword: "TESTCALLPASSWORD",
+    ...args,
+  };
+  const { id: visitId, error } = await insertVisitMsSQLGateway(db, visit, args.departmentId);
+  return { visitId, error };
 };
 
 export const setupVisit = async (args = {}) => {

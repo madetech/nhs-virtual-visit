@@ -8,5 +8,6 @@ export default ({ getMsSqlConnPool }) => async (uuid) => {
     .query(
       "SELECT id, name, code, status, uuid FROM dbo.[facility] WHERE uuid=@uuid"
     );
+
   return res.recordset[0];
 };
