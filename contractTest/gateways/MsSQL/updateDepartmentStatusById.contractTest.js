@@ -23,7 +23,10 @@ describe("updateDepartmentStatusByIdGateway", () => {
       departmentUuid
     );
     // Assert
-    expect(archivedDepartment).toEqual({ ...currentDepartment, status: 1 });
+    expect(archivedDepartment).toEqual({
+      ...currentDepartment,
+      status: statusToId(ACTIVE),
+    });
   });
   it("updates a department status to DISABLED", async () => {
     // Arrange
