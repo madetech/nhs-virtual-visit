@@ -4,18 +4,16 @@ import setupAdmin from "../../../test/testUtils/setupAdmin";
 
 describe("verifyAdminCode contract tests", () => {
   const container = AppContainer.getInstance();
-  let randInt;
 
   beforeEach(async () => {
-    randInt = Math.random();
     await setupAdmin(container)({
-      email: `nhs-admin${randInt}@nhs.co.uk`,
+      email: `nhs-admin10@nhs.co.uk`,
       password: "password",
     });
   });
   it("verifies user if they are an admin", async () => {
     const { validAdminCode, error } = await verifyAdminCodeGateway(container)(
-      `nhs-admin${randInt}@nhs.co.uk`,
+      `nhs-admin10@nhs.co.uk`,
       "password"
     );
     expect(error).toBeNull();
@@ -24,7 +22,7 @@ describe("verifyAdminCode contract tests", () => {
 
   it("is not valid if the password is wrong", async () => {
     const { validAdminCode, error } = await verifyAdminCodeGateway(container)(
-      `nhs-admin${randInt}@nhs.co.uk`,
+      `nhs-admin10@nhs.co.uk`,
       "incorrect password"
     );
     expect(error).toEqual("Incorrect email or password");
@@ -33,12 +31,12 @@ describe("verifyAdminCode contract tests", () => {
 
   it("is not valid if user is not an admin", async () => {
     await setupAdmin(container)({
-      email: `nhs-manager${randInt}@nhs.co.uk`,
+      email: `nhs-manager10@nhs.co.uk`,
       password: "password",
       type: "manager",
     });
     const { validAdminCode, error } = await verifyAdminCodeGateway(container)(
-      `nhs-manager${randInt}@nhs.co.uk`,
+      `nhs-manager10@nhs.co.uk`,
       "password"
     );
     expect(error).toEqual("You are not an admin");
