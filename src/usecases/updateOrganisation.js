@@ -11,7 +11,7 @@ const updateOrganisation = ({ getUpdateOrganisationGateway }) => async ({
   if (!name) {
     return {
       organisation: null,
-      error: "A name must be provided",
+      error: "A name must be provided.",
     };
   }
 
