@@ -1,7 +1,7 @@
 import AppContainer from "../../src/containers/AppContainer";
 import {
   setupWardWithinHospitalAndTrust,
-  setupVisit,
+  setupVisitPostgres,
 } from "../../test/testUtils/factories";
 import { SCHEDULED } from "../../src/helpers/visitStatus";
 
@@ -11,7 +11,7 @@ describe("retrieveVisitById contract tests", () => {
   it("retrieves a visit by id", async () => {
     const { wardId } = await setupWardWithinHospitalAndTrust();
 
-    const { id } = await setupVisit({ wardId });
+    const { id } = await setupVisitPostgres({ wardId });
 
     const { scheduledCall, error } = await container.getRetrieveVisitById()({
       id,

@@ -1,7 +1,7 @@
 import AppContainer from "../../src/containers/AppContainer";
 import {
   setupTrust,
-  setupVisit,
+  setupVisitPostgres,
   setupWardWithinHospitalAndTrust,
 } from "../../test/testUtils/factories";
 import { v4 as uuidv4 } from "uuid";
@@ -19,7 +19,7 @@ describe("retrieveReportingStartDateByTrustId contract tests", () => {
       index: 1,
     });
 
-    const { id: visitId } = await setupVisit({
+    const { id: visitId } = await setupVisitPostgres({
       wardId: wardId1,
       callId: "callId1",
     });
@@ -34,7 +34,7 @@ describe("retrieveReportingStartDateByTrustId contract tests", () => {
       callSessionId,
     });
 
-    const { id: visitId2 } = await setupVisit({
+    const { id: visitId2 } = await setupVisitPostgres({
       wardId: wardId1,
       callId: "callId2",
     });
@@ -54,7 +54,7 @@ describe("retrieveReportingStartDateByTrustId contract tests", () => {
       index: 2,
     });
 
-    const { id: visitId3 } = await setupVisit({
+    const { id: visitId3 } = await setupVisitPostgres({
       wardId: wardId2,
       callId: "callId3",
     });
