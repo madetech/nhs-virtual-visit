@@ -104,6 +104,7 @@ import retrieveActiveDepartmentsByOrganisationIdGateway from "../gateways/MsSQL/
 import updateDepartmentStatusByIdGateway from "../gateways/MsSQL/updateDepartmentStatusById";
 import deleteVisitByCallIdGateway from "../gateways/MsSQL/deleteVisitByCallId";
 import insertVisitGateway from "../gateways/MsSQL/insertVisit";
+import retrieveAverageParticipantsInVisitGateway from "../gateways/MsSQL/retrieveAverageParticipantsInVisit";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -597,7 +598,7 @@ class AppContainer {
   getRetrieveDepartmentByCodeGateway = () => {
     return retrieveDepartmentByCodeGateway(this);
   };
-  
+
   getRetrieveActiveDepartmentsByOrganisationIdGateway = () => {
     return retrieveActiveDepartmentsByOrganisationIdGateway(this);
   };
@@ -770,6 +771,10 @@ class AppContainer {
 
   getInsertVisitGateway = () => {
     return insertVisitGateway;
+  };
+
+  getRetrieveAverageParticipantsInVisitGateway = () => {
+    return retrieveAverageParticipantsInVisitGateway(this);
   };
 }
 

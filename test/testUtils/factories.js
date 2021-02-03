@@ -205,7 +205,7 @@ export const setupVisit = async (args = {}) => {
     contactNumber: "01234578912",
     ...args,
   };
-  return await container.getInsertVisitGateway()(db, visit, args.wardId);
+  return await container.getInsertVisitGateway()(db, visit, args.departmentId);
 };
 
 export const setupVisitPostgres = async (args = {}) => {

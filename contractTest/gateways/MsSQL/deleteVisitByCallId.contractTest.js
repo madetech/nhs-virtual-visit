@@ -13,7 +13,7 @@ describe("deleteVisitByCallIdGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    const { id: callId } = await setupVisit({ wardId: departmentId });
+    const { id: callId } = await setupVisit({ departmentId });
 
     // Act
     const { success, error } = await deleteVisitByCallIdGateway(container)(
@@ -30,7 +30,7 @@ describe("deleteVisitByCallIdGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    await setupVisit({ wardId: departmentId });
+    await setupVisit({ departmentId });
     const invalidCallId = 10000000;
 
     // Act
