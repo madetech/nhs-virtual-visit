@@ -3,7 +3,7 @@ import {
   setupTrust,
   setupHospital,
   setupWard,
-  setupVisit,
+  setupVisitPostgres,
 } from "../../test/testUtils/factories";
 import { v4 as uuidv4 } from "uuid";
 import MockDate from "mockdate";
@@ -37,7 +37,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
     //how ever we're still passing strange values like TESTPROVIDER that
     //the program doesn't know how to deal with, we'll probably need to give
     //it a real value
-    const { id: visitId } = await setupVisit({
+    const { id: visitId } = await setupVisitPostgres({
       trustId: trustId,
       wardId: wardId,
     });
@@ -60,7 +60,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       callSessionId,
     });
 
-    const { id: visit2Id } = await setupVisit({
+    const { id: visit2Id } = await setupVisitPostgres({
       wardId: wardId,
       callId: "TESTCALLID2",
     });
@@ -108,7 +108,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
 
   it("returns 0 if there is only 1 event for a trust", async () => {
     // A trust with a visit with 1 participant
-    const { id: visitId } = await setupVisit({
+    const { id: visitId } = await setupVisitPostgres({
       wardId: wardId,
     });
 
@@ -133,7 +133,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
 
   it("returns 0 if there are only join events", async () => {
     // A trust with a visit with 1 participant
-    const { id: visitId } = await setupVisit({
+    const { id: visitId } = await setupVisitPostgres({
       wardId: wardId,
     });
 
@@ -164,7 +164,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
 
   it("ignores visits with 0 duration when calculating the average", async () => {
     // A trust with a visit with 1 participant
-    const { id: visitId } = await setupVisit({
+    const { id: visitId } = await setupVisitPostgres({
       wardId: wardId,
     });
 
@@ -186,7 +186,7 @@ describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
       callSessionId,
     });
 
-    const { id: visit2Id } = await setupVisit({
+    const { id: visit2Id } = await setupVisitPostgres({
       wardId: wardId,
       callId: "TESTCALLID2",
     });

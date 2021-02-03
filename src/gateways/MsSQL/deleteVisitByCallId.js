@@ -1,23 +1,34 @@
 import logger from "../../../logger";
-import { CANCELLED } from "../../../src/helpers/visitStatus";
+import { statusToId, CANCELLED } from "../../helpers/visitStatus";
 
 const deleteVisitByCallIdGateway = ({ getMsSqlConnPool }) => async (callId) => {
-  logger.info("Deleting Visit");
+  logger.info(`Cancelling Visit ${callId}`);
 
   try {
     const db = await getMsSqlConnPool();
     const results = await db
-      .input(callId, "callId")
-      .input(CANCELLED, status)
-      .query(`DELETE FROM dbo.[scheduled_call] WHERE id = @callId`);
+      .request()
+      .input("callId", callId)
+      .input("status", statusToId(CANCELLED))
+      .query(
+        `UPDATE dbo.[scheduled_call] SET status = @status WHERE id = @callId`
+      );
 
-    logger.info(`${results}, success=true`, results);
+    if (results.rowsAffected[0] !== 0) {
+      logger.info(`${results}, success=true`, results);
+      return {
+        success: true,
+        error: null,
+      };
+    }
+
+    logger.error(`Error: ${callId} could not be found in the database`);
     return {
-      success: true,
-      error: null,
+      success: false,
+      error: "Call could not be found in the database",
     };
   } catch (error) {
-    logger.error(`Error deleting visit: ${JSON.stringify(error)}`);
+    logger.error(`Error cancelling visit: ${JSON.stringify(error)}`);
     return {
       success: false,
       error: error.toString(),

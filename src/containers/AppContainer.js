@@ -105,11 +105,8 @@ import verifyAdminCodeGateway from "../gateways/MsSQL/verifyAdminCode";
 import retrieveActiveDepartmentsByOrganisationIdGateway from "../gateways/MsSQL/retrieveActiveDepartmentsByOrganisationId";
 import updateDepartmentStatusByIdGateway from "../gateways/MsSQL/updateDepartmentStatusById";
 import updateOrganisationGateway from "../gateways/MsSQL/updateOrganisation";
-<<<<<<< HEAD
 import insertScheduledCallGateway from "../gateways/MsSQL/insertVisit";
-=======
 import deleteVisitByCallIdGateway from "../gateways/MsSQL/deleteVisitByCallId";
->>>>>>> create deleteVisitByCallId  mssql gateway and update usecase unit test
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";

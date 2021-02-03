@@ -2,7 +2,7 @@ import captureEvent from "../../src/usecases/captureEvent";
 import AppContainer from "../../src/containers/AppContainer";
 import {
   setupWardWithinHospitalAndTrust,
-  setupVisit,
+  setupVisitPostgres,
 } from "../../test/testUtils/factories";
 
 describe("captureEvent contract tests", () => {
@@ -24,7 +24,7 @@ describe("captureEvent contract tests", () => {
   it("creates a join-visit event in the db when valid", async () => {
     const { wardId } = await setupWardWithinHospitalAndTrust();
 
-    const { id: visitId } = await setupVisit({ wardId });
+    const { id: visitId } = await setupVisitPostgres({ wardId });
 
     const joinRequest = {
       action: "join-visit",
