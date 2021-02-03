@@ -2,7 +2,7 @@ import AppContainer from "../../src/containers/AppContainer";
 import {
   setupWardWithinHospitalAndTrust,
   setupTrust,
-  setupVisit,
+  setupVisitPostgres,
 } from "../../test/testUtils/factories";
 import { v4 as uuidv4 } from "uuid";
 
@@ -13,7 +13,7 @@ describe("retrieveAverageParticipantsInVisit contract tests", () => {
     // A trust with a visit with 1 participant
     const { wardId } = await setupWardWithinHospitalAndTrust();
 
-    const { id: visitId } = await setupVisit({ wardId });
+    const { id: visitId } = await setupVisitPostgres({ wardId });
 
     const callSessionId = uuidv4();
 
@@ -39,7 +39,7 @@ describe("retrieveAverageParticipantsInVisit contract tests", () => {
       wardArgs: { wardCode: "wardCode2" },
     });
 
-    const { id: visitId2 } = await setupVisit({
+    const { id: visitId2 } = await setupVisitPostgres({
       wardId: wardId2,
       callId: "testCallId2",
     });
@@ -58,7 +58,7 @@ describe("retrieveAverageParticipantsInVisit contract tests", () => {
       callSessionId: callSessionId2,
     });
 
-    const { id: visitId3 } = await setupVisit({
+    const { id: visitId3 } = await setupVisitPostgres({
       wardId: wardId2,
       callId: "testCallId3",
     });
@@ -91,7 +91,7 @@ describe("retrieveAverageParticipantsInVisit contract tests", () => {
       callSessionId: callSessionId4,
     });
 
-    const { id: visitId4 } = await setupVisit({
+    const { id: visitId4 } = await setupVisitPostgres({
       wardId: wardId2,
       callId: "testCallId4",
     });

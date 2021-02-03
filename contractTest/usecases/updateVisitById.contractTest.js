@@ -1,7 +1,7 @@
 import AppContainer from "../../src/containers/AppContainer";
 import {
   setupWardWithinHospitalAndTrust,
-  setupVisit,
+  setupVisitPostgres,
 } from "../../test/testUtils/factories";
 
 describe("updateVisitById contract tests", () => {
@@ -9,7 +9,7 @@ describe("updateVisitById contract tests", () => {
 
   it("updates the details of a visit", async () => {
     const { wardId } = await setupWardWithinHospitalAndTrust();
-    const { id } = await setupVisit({ wardId });
+    const { id } = await setupVisitPostgres({ wardId });
 
     await container.getUpdateVisitById()({
       id,

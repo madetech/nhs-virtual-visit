@@ -15,9 +15,6 @@ describe("insertVisit contract tests", () => {
       contactName: "Contact Test",
       contactNumber: "07123456789",
       callTime: new Date(2021, 0, 27, 13, 37, 0, 0),
-      callId: "123",
-      provider: "whereby",
-      callPassword: "securePassword",
     };
 
     let { id, error } = await insertVisit(container)(visit, departmentId);
