@@ -199,9 +199,9 @@ export const setupWardWithinHospitalAndTrust = async (
 export const setUpScheduledCall = async (args = {}) => {
   const visit = {
     patientName: "Patient Test",
-    contactEmail: "test1@testemail.com",
-    contactName: "Contact Test",
-    contactNumber: "07123456789",
+    recipientEmail: "test1@testemail.com",
+    recipientName: "Contact Test",
+    recipientNumber: "07123456789",
     callTime: new Date(2021, 0, 27, 13, 37, 0, 0),
     callId: "123",
     ...args,

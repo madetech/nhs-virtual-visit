@@ -9,9 +9,9 @@ export default ({ getMsSqlConnPool }) => async (visit, departmentId) => {
       .request()
       .input("patient_name", visit.patientName)
       .input("call_time", visit.callTime)
-      .input("recipient_name", visit.contactName)
-      .input("recipient_number", visit.contactNumber)
-      .input("recipient_email", visit.contactEmail)
+      .input("recipient_name", visit.recipientName)
+      .input("recipient_number", visit.recipientNumber)
+      .input("recipient_email", visit.recipientEmail)
       .input("department_id", departmentId)
       .input("status", statusToId(SCHEDULED))
       .query(
