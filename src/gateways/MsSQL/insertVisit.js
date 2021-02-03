@@ -1,9 +1,10 @@
 import { statusToId, SCHEDULED } from "../../helpers/visitStatus";
 import logger from "../../../logger";
 
-const insertVisit = async (db, visit, departmentId) => {
+export default ({ getMsSqlConnPool }) => async (visit, departmentId) => {
   try {
     //patient name is now part of the same table, as is the recipient name
+    const db = await getMsSqlConnPool();
     const result = await db
       .request()
       .input("patient_name", visit.patientName)
@@ -32,5 +33,3 @@ const insertVisit = async (db, visit, departmentId) => {
     };
   }
 };
-
-export default insertVisit;
