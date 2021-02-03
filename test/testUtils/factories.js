@@ -196,6 +196,22 @@ export const setupWardWithinHospitalAndTrust = async (
   return { wardId, hospitalId, trustId };
 };
 
+export const setUpScheduledCall = async (args = {}) => {
+  const visit = {
+    patientName: "Patient Test",
+    contactEmail: "test1@testemail.com",
+    contactName: "Contact Test",
+    contactNumber: "07123456789",
+    callTime: new Date(2021, 0, 27, 13, 37, 0, 0),
+    callId: "123",
+    ...args,
+  };
+  return await container.getCreateScheduledCallGateway()(
+    visit,
+    args.departmentId
+  );
+};
+
 export const setupVisit = async (args = {}) => {
   const db = await container.getDb();
   const visit = {
