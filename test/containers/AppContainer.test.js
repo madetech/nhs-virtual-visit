@@ -371,7 +371,7 @@ describe("AppContainer", () => {
   it(" returns getRetrieveDepartmentByCodeGateway", () => {
     expect(container.getRetrieveDepartmentByCodeGateway()).toBeDefined();
   });
-  
+
   it("returns getRetrieveActiveDepartmentsByOrganisationIdGateway", () => {
     expect(
       container.getRetrieveActiveDepartmentsByOrganisationIdGateway()
@@ -380,5 +380,9 @@ describe("AppContainer", () => {
 
   it("returns getUpdateDepartmentStatusByIdGateway", () => {
     expect(container.getUpdateDepartmentStatusByIdGateway()).toBeDefined();
+  });
+
+  it("returns getCreateScheduledCallGateway", () => {
+    expect(container.getCreateScheduledCallGateway()).toBeDefined();
   });
 });

@@ -103,6 +103,7 @@ import verifyAdminCodeGateway from "../gateways/MsSQL/verifyAdminCode";
 import retrieveActiveDepartmentsByOrganisationIdGateway from "../gateways/MsSQL/retrieveActiveDepartmentsByOrganisationId";
 import updateDepartmentStatusByIdGateway from "../gateways/MsSQL/updateDepartmentStatusById";
 import updateOrganisationGateway from "../gateways/MsSQL/updateOrganisation";
+import insertScheduledCallGateway from "../gateways/MsSQL/insertVisit";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -596,14 +597,6 @@ class AppContainer {
   getRetrieveDepartmentByCodeGateway = () => {
     return retrieveDepartmentByCodeGateway(this);
   };
-  
-  getRetrieveActiveDepartmentsByOrganisationIdGateway = () => {
-    return retrieveActiveDepartmentsByOrganisationIdGateway(this);
-  };
-
-  getUpdateDepartmentStatusByIdGateway = () => {
-    return updateDepartmentStatusByIdGateway(this);
-  };
 
   getRetrieveActiveDepartmentsByOrganisationIdGateway = () => {
     return retrieveActiveDepartmentsByOrganisationIdGateway(this);
@@ -612,6 +605,19 @@ class AppContainer {
   getUpdateDepartmentStatusByIdGateway = () => {
     return updateDepartmentStatusByIdGateway(this);
   };
+
+  getRetrieveActiveDepartmentsByOrganisationIdGateway = () => {
+    return retrieveActiveDepartmentsByOrganisationIdGateway(this);
+  };
+
+  getUpdateDepartmentStatusByIdGateway = () => {
+    return updateDepartmentStatusByIdGateway(this);
+  };
+
+  getCreateScheduledCallGateway = () => {
+    return insertScheduledCallGateway(this);
+  };
+
   getLogEventGateway = () => {
     return logEvent(
       process.env.AZURE_FUNCTION_KEY,
