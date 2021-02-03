@@ -196,6 +196,19 @@ export const setupWardWithinHospitalAndTrust = async (
 };
 
 export const setupVisit = async (args = {}) => {
+  const db = await container.getMsSqlConnPool();
+  const visit = {
+    patientName: "Patient Name",
+    contactEmail: "contact@example.com",
+    contactName: "Contact Name",
+    callTime: new Date("2020-06-01 13:00"),
+    contactNumber: "01234578912",
+    ...args,
+  };
+  return await container.getInsertVisitGateway()(db, visit, args.wardId);
+};
+
+export const setupVisitPostgres = async (args = {}) => {
   const db = await container.getDb();
   const visit = {
     patientName: "Patient Name",
@@ -207,5 +220,5 @@ export const setupVisit = async (args = {}) => {
     callPassword: "TESTCALLPASSWORD",
     ...args,
   };
-  return await container.getInsertVisitGateway()(db, visit, args.wardId);
+  return await container.getInsertVisitGW()(db, visit, args.wardId);
 };

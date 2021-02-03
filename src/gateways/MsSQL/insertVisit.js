@@ -1,7 +1,7 @@
 import { statusToId, SCHEDULED } from "../../helpers/visitStatus";
 import logger from "../../../logger";
 
-const insertVisit = async (db, visit, departmentId) => {
+const insertVisitGateway = async (db, visit, departmentId) => {
   try {
     //patient name is now part of the same table, as is the recipient name
     const result = await db
@@ -33,4 +33,4 @@ const insertVisit = async (db, visit, departmentId) => {
   }
 };
 
-export default insertVisit;
+export default insertVisitGateway;

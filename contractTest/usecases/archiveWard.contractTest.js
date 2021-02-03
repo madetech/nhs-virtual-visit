@@ -4,7 +4,7 @@ import AppContainer from "../../src/containers/AppContainer";
 import retrieveVisits from "../../src/usecases/retrieveVisits";
 import {
   setupWardWithinHospitalAndTrust,
-  setupVisit,
+  setupVisitPostgres,
 } from "../../test/testUtils/factories";
 
 describe("archiveWard contract tests", () => {
@@ -49,7 +49,7 @@ describe("archiveWard contract tests", () => {
   it("archives ward visits when the ward data is valid and visits are scheduled", async () => {
     const { trustId, wardId } = await setupWardWithinHospitalAndTrust();
 
-    const { id: visitId } = await setupVisit({ wardId });
+    const { id: visitId } = await setupVisitPostgres({ wardId });
 
     expect(visitId).toBeDefined();
 

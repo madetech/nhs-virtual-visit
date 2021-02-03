@@ -9,7 +9,7 @@ import {
 } from "../../test/testUtils/factories";
 import { COMPLETE } from "../../src/helpers/visitStatus";
 
-describe("test cleanup script", () => {
+xdescribe("test cleanup script", () => {
   it("updates visit states and data correctly", async () => {
     const container = AppContainer.getInstance();
 

@@ -9,7 +9,7 @@ import {
   setupTrust,
   setupWard,
   setupHospital,
-  setupVisit,
+  setupVisitPostgres,
 } from "../../../test/testUtils/factories";
 
 describe("updateCallStatusesByWardId() contract", () => {
@@ -21,9 +21,9 @@ describe("updateCallStatusesByWardId() contract", () => {
     const { trustId } = await setupTrust();
     const { hospitalId } = await setupHospital({ trustId });
     const { wardId } = await setupWard({ trustId, hospitalId });
-    await setupVisit({ wardId, callId: "ID1" });
-    await setupVisit({ wardId, callId: "ID2" });
-    await setupVisit({ wardId, callId: "ID3" });
+    await setupVisitPostgres({ wardId, callId: "ID1" });
+    await setupVisitPostgres({ wardId, callId: "ID2" });
+    await setupVisitPostgres({ wardId, callId: "ID3" });
 
     await updateCallStatusesByWardId(container)(wardId, ARCHIVED);
     const scheduledCalls = await findCallsByWardId(container)(wardId);

@@ -103,6 +103,7 @@ import verifyAdminCodeGateway from "../gateways/MsSQL/verifyAdminCode";
 import retrieveActiveDepartmentsByOrganisationIdGateway from "../gateways/MsSQL/retrieveActiveDepartmentsByOrganisationId";
 import updateDepartmentStatusByIdGateway from "../gateways/MsSQL/updateDepartmentStatusById";
 import deleteVisitByCallIdGateway from "../gateways/MsSQL/deleteVisitByCallId";
+import insertVisitGateway from "../gateways/MsSQL/insertVisit";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -473,7 +474,7 @@ class AppContainer {
     return createOrganisationGW(this);
   };
 
-  getInsertVisitGateway = () => {
+  getInsertVisitGW = () => {
     return insertVisit;
   };
 
@@ -762,9 +763,13 @@ class AppContainer {
   getVerifyAdminCodeGateway = () => {
     return verifyAdminCodeGateway(this);
   };
-  
+
   getDeleteVisitByCallIdGateway = () => {
     return deleteVisitByCallIdGateway(this);
+  };
+
+  getInsertVisitGateway = () => {
+    return insertVisitGateway;
   };
 }
 

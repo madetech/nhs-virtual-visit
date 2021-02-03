@@ -1,5 +1,5 @@
 import AppContainer from "../../../src/containers/AppContainer";
-import insertVisit from "../../../src/gateways/MsSQL/insertVisit";
+import insertVisitGateway from "../../../src/gateways/MsSQL/insertVisit";
 import { setupOrganisationFacilityDepartmentAndManager } from "../../../test/testUtils/factories";
 
 describe("insertVisit contract tests", () => {
@@ -16,12 +16,9 @@ describe("insertVisit contract tests", () => {
       contactName: "Contact Test",
       contactNumber: "07123456789",
       callTime: new Date(2021, 0, 27, 13, 37, 0, 0),
-      callId: "123",
-      provider: "whereby",
-      callPassword: "securePassword",
     };
 
-    let { id, error } = await insertVisit(db, visit, departmentId);
+    let { id, error } = await insertVisitGateway(db, visit, departmentId);
     expect(id).toBeGreaterThan(0);
     expect(error).toBeNull();
   });
@@ -33,7 +30,7 @@ describe("insertVisit contract tests", () => {
     } = await setupOrganisationFacilityDepartmentAndManager();
     const visit = null;
 
-    let { error } = await insertVisit(db, visit, departmentId);
+    let { error } = await insertVisitGateway(db, visit, departmentId);
     expect(error).toEqual(
       "TypeError: Cannot read property 'patientName' of null"
     );
