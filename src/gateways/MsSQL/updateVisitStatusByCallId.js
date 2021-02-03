@@ -20,19 +20,24 @@ export default ({ getMsSqlConnPool }) => async ({
       .input("id", id)
       .input("status", status)
       .query(
-        `UPDATE dbo.[scheduled_call] SET status = @status OUTPUT inserted.id WHERE id = @id`
+        `UPDATE dbo.[scheduled_call] SET status = @status OUTPUT inserted.* WHERE id = @id`
       );
-
+    if (res.recordset[0]) {
+      return {
+        visit: res.recordset[0],
+        error: null,
+      };
+    }
     return {
-      id: res.recordset[0].id,
-      error: null,
+      visit: null,
+      error: "Error retrieving recordset",
     };
   } catch (error) {
     console.log(error);
 
     logger.error(error);
     return {
-      id: null,
+      visit: null,
       error: error.toString(),
     };
   }
