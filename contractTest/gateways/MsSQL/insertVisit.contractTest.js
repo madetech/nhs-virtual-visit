@@ -6,7 +6,6 @@ describe("insertVisit contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("inserts visit into the db", async () => {
-    const db = await container.getMsSqlConnPool();
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
@@ -21,19 +20,18 @@ describe("insertVisit contract tests", () => {
       callPassword: "securePassword",
     };
 
-    let { id, error } = await insertVisit(db, visit, departmentId);
+    let { id, error } = await insertVisit(container)(visit, departmentId);
     expect(id).toBeGreaterThan(0);
     expect(error).toBeNull();
   });
 
   it("catches errors", async () => {
-    const db = await container.getMsSqlConnPool();
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
     const visit = null;
 
-    let { error } = await insertVisit(db, visit, departmentId);
+    let { error } = await insertVisit(container)(visit, departmentId);
     expect(error).toEqual(
       "TypeError: Cannot read property 'patientName' of null"
     );

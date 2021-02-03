@@ -16,8 +16,7 @@ describe("retrieveVisitsByDepartmentId", () => {
       departmentArgs: { code: departmentCreated.code },
     });
 
-    const db = await container.getMsSqlConnPool();
-    await insertVisit(db, {}, departmentId);
+    await insertVisit(container)({}, departmentId);
 
     // Act
     const { error, visits } = await retrieveVisitsByDepartmentId(container)(
