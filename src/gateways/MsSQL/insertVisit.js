@@ -17,18 +17,20 @@ export default ({ getMsSqlConnPool }) => async (visit, departmentId) => {
       .query(
         `insert into dbo.[scheduled_call]
           ([patient_name], [call_time], [recipient_name], [recipient_number], [recipient_email], [department_id], [status])
-          output inserted.id
+          output inserted.*
           values (@patient_name, @call_time, @recipient_name, @recipient_number, @recipient_email, @department_id, @status)`
       );
 
     return {
       id: result.recordset[0].id,
+      uuid: result.recordset[0].uuid,
       error: null,
     };
   } catch (error) {
     logger.error(`Error creating visit ${visit}, ${error}`);
     return {
-      user: null,
+      id: null,
+      uuid: null,
       error: error.toString(),
     };
   }
