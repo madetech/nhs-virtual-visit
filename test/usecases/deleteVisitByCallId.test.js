@@ -1,9 +1,26 @@
 import deleteVisitByCallId from "../../src/usecases/deleteVisitByCallId";
 
 describe("deleteVisitByCallId", () => {
+  it("returns an error if there is no callId", async () => {
+    const callId = "";
+
+    const container = {
+      getDeleteVisitByCallIdGW: () =>
+        jest.fn().mockReturnValue({
+          success: true,
+          error: null,
+        }),
+    };
+
+    const { success, error } = await deleteVisitByCallId(container)(callId);
+
+    expect(success).toBe(false);
+    expect(error).toEqual("callId is not defined");
+  });
+
   it("returns a json object containing the result", async () => {
     const container = {
-      getDeleteVisitByCallIdGateway: () =>
+      getDeleteVisitByCallIdGW: () =>
         jest.fn().mockReturnValue({
           success: true,
           error: null,
@@ -20,7 +37,7 @@ describe("deleteVisitByCallId", () => {
 
   it("returns an error object on db exception", async () => {
     const container = {
-      getDeleteVisitByCallIdGateway: () =>
+      getDeleteVisitByCallIdGW: () =>
         jest.fn().mockReturnValue({
           success: false,
           error: "Error: DB Error!",
