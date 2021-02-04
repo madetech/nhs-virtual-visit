@@ -17,8 +17,12 @@ describe("insertVisit contract tests", () => {
       callTime: new Date(2021, 0, 27, 13, 37, 0, 0),
     };
 
-    let { id, error } = await insertVisit(container)(visit, departmentId);
+    const { id, uuid, error } = await insertVisit(container)(
+      visit,
+      departmentId
+    );
     expect(id).toBeGreaterThan(0);
+    expect(uuid).toBeTruthy();
     expect(error).toBeNull();
   });
 
