@@ -3,6 +3,7 @@ import {
   validateHttpMethod,
   checkIfAuthorised,
 } from "../../src/helpers/apiErrorHandler";
+import { statusToId, DISABLED } from "../../src/helpers/statusTypes";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
@@ -23,16 +24,27 @@ export default withContainer(
     }
 
     res.setHeader("Content-Type", "application/json");
+    try {
+      const { error } = await container.getUpdateManagerStatusByUuid()({
+        uuid: body.uuid,
+        status: statusToId(DISABLED),
+      });
 
-    const archiveManagerByUuid = container.getArchiveManagerByUuid();
-
-    const { error } = await archiveManagerByUuid(body.uuid);
-
-    if (error) {
-      res.status(400);
-    } else {
-      res.status(200);
+      if (error) {
+        console.log(error);
+        res.status(400);
+      } else {
+        res.status(200);
+      }
+      res.end(JSON.stringify({ error }));
+    } catch (error) {
+      console.log(error);
+      res.status(500);
+      res.end(
+        JSON.stringify({
+          error: "500 (Internal Server Error). Please try again later.",
+        })
+      );
     }
-    res.end(JSON.stringify({ error }));
   }
 );
