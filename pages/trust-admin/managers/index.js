@@ -52,10 +52,15 @@ export const getServerSideProps = propsWithContainer(
     } = await container.getRetrieveManagersByOrgId()(
       authenticationToken.trustId
     );
-
+    let filteredManagers = null;
+    if (!managersError) {
+      filteredManagers = managers.filter(
+        (manager) => manager.id != authenticationToken.userId
+      );
+    }
     return {
       props: {
-        managers,
+        managers: filteredManagers,
         organisation,
         error: organisationError || managersError,
       },
