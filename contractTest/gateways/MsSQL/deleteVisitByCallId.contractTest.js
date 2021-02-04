@@ -13,7 +13,7 @@ describe("deleteVisitByCallIdGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    const { id: callId } = await setupVisit({ wardId: departmentId });
+    const { uuid: callId } = await setupVisit({ wardId: departmentId });
 
     // Act
     const { success, error } = await deleteVisitByCallIdGateway(container)(
@@ -31,7 +31,7 @@ describe("deleteVisitByCallIdGateway", () => {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
     await setupVisit({ wardId: departmentId });
-    const invalidCallId = 10000000;
+    const invalidCallId = undefined;
 
     // Act
     const { success, error } = await deleteVisitByCallIdGateway(container)(
@@ -41,5 +41,25 @@ describe("deleteVisitByCallIdGateway", () => {
     // Assert
     expect(success).toBe(false);
     expect(error).toEqual("Call could not be found in the database");
+  });
+
+  it("catches errors", async () => {
+    // Arrange
+    const {
+      departmentId,
+    } = await setupOrganisationFacilityDepartmentAndManager();
+    await setupVisit({ wardId: departmentId });
+    const invalidCallId = "invalidUuid";
+
+    // Act
+    const { success, error } = await deleteVisitByCallIdGateway(container)(
+      invalidCallId
+    );
+
+    // Assert
+    expect(success).toBe(false);
+    expect(error).toEqual(
+      "RequestError: Conversion failed when converting from a character string to uniqueidentifier."
+    );
   });
 });
