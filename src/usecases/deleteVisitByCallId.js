@@ -1,7 +1,7 @@
-const deleteVisitByCallId = ({ getDeleteVisitByCallIdGateway }) => async (
+const deleteVisitByCallId = ({ getDeleteVisitByCallIdGW }) => async (
   callId
 ) => {
-  return await getDeleteVisitByCallIdGateway()(callId);
+  return await getDeleteVisitByCallIdGW()(callId);
 };
 
 export default deleteVisitByCallId;

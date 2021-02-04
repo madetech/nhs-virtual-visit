@@ -467,7 +467,7 @@ class AppContainer {
     return markVisitAsCompleteGW(this);
   };
 
-  getDeleteVisitByCallIdGateway = () => {
+  getDeleteVisitByCallIdGW = () => {
     return deleteVisitByCallIdGW(this);
   };
 
@@ -773,7 +773,7 @@ class AppContainer {
   getUpdateOrganisationGateway = () => {
     return updateOrganisationGateway(this);
   };
-  
+
   getDeleteVisitByCallIdGateway = () => {
     return deleteVisitByCallIdGateway(this);
   };

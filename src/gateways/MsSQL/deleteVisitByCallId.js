@@ -11,7 +11,7 @@ const deleteVisitByCallIdGateway = ({ getMsSqlConnPool }) => async (callId) => {
       .input("callId", callId)
       .input("status", statusToId(CANCELLED))
       .query(
-        `UPDATE dbo.[scheduled_call] SET status = @status WHERE id = @callId`
+        `UPDATE dbo.[scheduled_call] SET status = @status WHERE uuid = @callId`
       );
 
     if (results.rowsAffected[0] !== 0) {
