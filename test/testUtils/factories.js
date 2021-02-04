@@ -222,7 +222,6 @@ export const setUpScheduledCall = async (args = {}) => {
 };
 
 export const setupVisit = async (args = {}) => {
-  const db = await container.getMsSqlConnPool();
   const visit = {
     patientName: "Patient Name",
     contactEmail: "contact@example.com",
@@ -231,7 +230,10 @@ export const setupVisit = async (args = {}) => {
     contactNumber: "01234578912",
     ...args,
   };
-  return await container.getInsertVisitGateway()(db, visit, args.wardId);
+  return await container.getCreateScheduledCallGateway(container)(
+    visit,
+    args.wardId
+  );
 };
 
 export const setupVisitPostgres = async (args = {}) => {
@@ -246,5 +248,5 @@ export const setupVisitPostgres = async (args = {}) => {
     callPassword: "TESTCALLPASSWORD",
     ...args,
   };
-  return await container.getInsertVisitGW()(db, visit, args.wardId);
+  return await container.getInsertVisitGateway()(db, visit, args.wardId);
 };
