@@ -1,4 +1,9 @@
 import logger from "../../../logger";
+import {
+  statusToId,
+  SCHEDULED,
+  COMPLETE,
+} from "../../../src/helpers/visitStatus";
 
 export default ({ getMsSqlConnPool }) => async (callUuid) => {
   const db = await getMsSqlConnPool();
@@ -7,7 +12,12 @@ export default ({ getMsSqlConnPool }) => async (callUuid) => {
     const res = await db
       .request()
       .input("uuid", callUuid)
-      .query("SELECT * FROM dbo.[scheduled_call] WHERE [uuid] = @uuid");
+      .input("scheduled", statusToId(SCHEDULED))
+      .input("complete", statusToId(COMPLETE))
+      .query(
+        "SELECT * FROM dbo.[scheduled_call] WHERE [uuid] = @uuid AND pii_cleared_out IS NULL AND status = @scheduled OR status = @complete"
+      );
+
     const {
       patient_name,
       recipient_email,
