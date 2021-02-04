@@ -70,6 +70,7 @@ import updateDepartmentById from "../usecases/updateDepartmentById";
 import archiveDepartmentById from "../usecases/archiveDepartmentById";
 import createManager from "../usecases/createManager";
 import verifyUserLogin from "../usecases/verifyUserLogin";
+import retrieveActiveManagersByOrgId from "../usecases/retrieveActiveManagersByOrgId";
 
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
@@ -107,6 +108,7 @@ import updateDepartmentStatusByIdGateway from "../gateways/MsSQL/updateDepartmen
 import updateOrganisationGateway from "../gateways/MsSQL/updateOrganisation";
 import insertScheduledCallGateway from "../gateways/MsSQL/insertVisit";
 import deleteVisitByCallIdGateway from "../gateways/MsSQL/deleteVisitByCallId";
+import retrieveActiveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveActiveManagersByOrgId";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -425,6 +427,10 @@ class AppContainer {
     return archiveDepartmentById(this);
   };
 
+  getRetrieveActiveManagersByOrgId = () => {
+    return retrieveActiveManagersByOrgId(this);
+  };
+
   /* These are the Gateway */
 
   getFindWardByCodeGateway = () => {
@@ -624,6 +630,10 @@ class AppContainer {
 
   getCreateScheduledCallGateway = () => {
     return insertScheduledCallGateway(this);
+  };
+
+  getRetrieveActiveManagersByOrgIdGateway = () => {
+    return retrieveActiveManagersByOrgIdGateway(this);
   };
 
   getLogEventGateway = () => {

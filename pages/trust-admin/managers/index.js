@@ -49,7 +49,7 @@ export const getServerSideProps = propsWithContainer(
     const {
       managers,
       error: managersError,
-    } = await container.getRetrieveManagersByOrgId()(
+    } = await container.getRetrieveActiveManagersByOrgId()(
       authenticationToken.trustId
     );
     let filteredManagers = null;

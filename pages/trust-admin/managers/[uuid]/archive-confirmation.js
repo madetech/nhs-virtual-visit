@@ -19,10 +19,7 @@ const ArchiveAManagerConfirmation = ({ organisation, manager, error }) => {
     return <Error err={error} />;
   }
   const [errors, setErrors] = useState([]);
-  const managerSummaryList = [
-    { key: "Email", value: manager.email },
-    { key: "Status", value: manager.status },
-  ];
+  const managerSummaryList = [{ key: "Email", value: manager.email }];
 
   const onSubmit = async () => {
     try {
@@ -42,8 +39,8 @@ const ArchiveAManagerConfirmation = ({ organisation, manager, error }) => {
           query: { email: manager.email },
         });
       } else {
-        const { error } = await response.json();
-        throw new Error(error);
+        const { error: err } = await response.json();
+        throw new Error(err);
       }
     } catch (e) {
       const onSubmitErrors = [
