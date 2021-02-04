@@ -385,4 +385,12 @@ describe("AppContainer", () => {
   it("returns getCreateScheduledCallGateway", () => {
     expect(container.getCreateScheduledCallGateway()).toBeDefined();
   });
+
+  it("returns getRetrieveActiveManagersByOrgIdGateway", () => {
+    expect(container.getRetrieveActiveManagersByOrgIdGateway()).toBeDefined();
+  });
+
+  it("returns getRetrieveActiveManagersByOrgId", () => {
+    expect(container.getRetrieveActiveManagersByOrgId()).toBeDefined();
+  });
 });
