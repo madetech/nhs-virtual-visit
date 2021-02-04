@@ -1,5 +1,5 @@
 import archiveManager from "../../../pages/api/archive-manager";
-
+import { statusToId, DISABLED } from "../../../src/helpers/statusTypes";
 describe("archive-manager", () => {
   let validRequest, response, container;
   const expectedUuid = "b6a255bf-ec49-484c-8504-02bdd1ac7dca";
@@ -22,7 +22,7 @@ describe("archive-manager", () => {
       body: jest.fn(),
     };
     container = {
-      getArchiveManagerByUuid: jest.fn().mockReturnValue(() => {
+      getUpdateManagerStatusByUuid: jest.fn().mockReturnValue(() => {
         return { error: null };
       }),
       getTrustAdminIsAuthenticated: jest
@@ -66,29 +66,34 @@ describe("archive-manager", () => {
   });
 
   it("archives a manager if valid", async () => {
-    const archiveManagerByUuidSpy = jest.fn().mockReturnValue({ error: null });
+    const getUpdateManagerStatusByUuidSpy = jest
+      .fn()
+      .mockReturnValue({ error: null });
 
     await archiveManager(validRequest, response, {
       container: {
         ...container,
-        getArchiveManagerByUuid: () => archiveManagerByUuidSpy,
+        getUpdateManagerStatusByUuid: () => getUpdateManagerStatusByUuidSpy,
       },
     });
 
     expect(response.status).toHaveBeenCalledWith(200);
     expect(response.end).toHaveBeenCalledWith(JSON.stringify({ error: null }));
-    expect(archiveManagerByUuidSpy).toHaveBeenCalledWith(expectedUuid);
+    expect(getUpdateManagerStatusByUuidSpy).toHaveBeenCalledWith({
+      uuid: expectedUuid,
+      status: statusToId(DISABLED),
+    });
   });
 
   it("returns a 400 status if errors", async () => {
-    const archiveManagerByUuidStub = jest
+    const getUpdateManagerStatusByUuidStub = jest
       .fn()
       .mockReturnValue({ error: "Failed to remove manager" });
 
     await archiveManager(validRequest, response, {
       container: {
         ...container,
-        getArchiveManagerByUuid: () => archiveManagerByUuidStub,
+        getUpdateManagerStatusByUuid: () => getUpdateManagerStatusByUuidStub,
       },
     });
 
@@ -115,6 +120,26 @@ describe("archive-manager", () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ error: "Manager uuid must be present" })
+    );
+  });
+  it("returns a 500 if appContainer call throws an error", async () => {
+    // Arrange
+    const getUpdateManagerStatusByUuidStub = jest.fn(async () => {
+      throw new Error("ERROR!");
+    });
+    // Act
+    await archiveManager(validRequest, response, {
+      container: {
+        ...container,
+        getUpdateManagerStatusByUuid: () => getUpdateManagerStatusByUuidStub,
+      },
+    });
+    // Assert
+    expect(response.status).toHaveBeenCalledWith(500);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({
+        error: "500 (Internal Server Error). Please try again later.",
+      })
     );
   });
 });
