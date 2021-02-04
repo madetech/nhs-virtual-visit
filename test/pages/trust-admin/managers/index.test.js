@@ -1,5 +1,6 @@
 import { getServerSideProps } from "../../../../pages/trust-admin/managers/index";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
+import { ACTIVE } from "../../../../src/helpers/statusTypes";
 
 describe("trust-admin/managers", () => {
   let res;
@@ -27,18 +28,21 @@ describe("trust-admin/managers", () => {
 
   it("retrieves organisation, managers list and error (from props) if authenticated", async () => {
     // Arrange
+    const currentLoggedInManagerId = 1;
     const orgId = 1;
     const expectedOrganisationName = "Doggo Trust";
     const expectedManagersArray = [
       {
+        id: 1,
         uuid: "1BBE43B3-4B2E-443E-8399-8299F22AB139",
         email: "nhs-manager1@nhs.co.uk",
-        status: "active",
+        status: ACTIVE,
       },
       {
+        id: 2,
         uuid: "F8F800FE-7A7E-4419-BA6F-7EFDD7871331",
         email: "nhs-manager2@nhs.co.uk",
-        status: "disabled",
+        status: ACTIVE,
       },
     ];
     const authenticatedReq = {
@@ -47,7 +51,11 @@ describe("trust-admin/managers", () => {
       },
     };
     const tokenProvider = {
-      validate: jest.fn(() => ({ type: TRUST_ADMIN, trustId: orgId })),
+      validate: jest.fn(() => ({
+        type: TRUST_ADMIN,
+        trustId: orgId,
+        userId: currentLoggedInManagerId,
+      })),
     };
     const retrieveOrganisationByIdSuccessStub = jest.fn(async () => ({
       organisation: { name: expectedOrganisationName },
@@ -75,9 +83,10 @@ describe("trust-admin/managers", () => {
     expect(retrieveOrganisationByIdSuccessStub).toHaveBeenCalledWith(orgId);
     expect(organisation.name).toEqual(expectedOrganisationName);
     expect(retrieveManagersByOrgIdSuccessSpy).toHaveBeenCalledWith(orgId);
-    expect(managers.length).toEqual(2);
-    managers.forEach((manager, idx) =>
-      expect(manager).toEqual(expectedManagersArray[idx])
+    expect(managers).toEqual(
+      expectedManagersArray.filter(
+        (manager) => manager.id != currentLoggedInManagerId
+      )
     );
     expect(error).toBeNull();
   });
