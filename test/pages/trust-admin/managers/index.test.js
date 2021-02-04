@@ -61,13 +61,14 @@ describe("trust-admin/managers", () => {
       organisation: { name: expectedOrganisationName },
       error: null,
     }));
-    const retrieveManagersByOrgIdSuccessSpy = jest.fn(async () => ({
+    const retrieveActiveManagersByOrgIdSuccessSpy = jest.fn(async () => ({
       managers: expectedManagersArray,
       error: null,
     }));
     const container = {
       getRetrieveOrganisationById: () => retrieveOrganisationByIdSuccessStub,
-      getRetrieveManagersByOrgId: () => retrieveManagersByOrgIdSuccessSpy,
+      getRetrieveActiveManagersByOrgId: () =>
+        retrieveActiveManagersByOrgIdSuccessSpy,
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
@@ -82,7 +83,7 @@ describe("trust-admin/managers", () => {
     // Assert
     expect(retrieveOrganisationByIdSuccessStub).toHaveBeenCalledWith(orgId);
     expect(organisation.name).toEqual(expectedOrganisationName);
-    expect(retrieveManagersByOrgIdSuccessSpy).toHaveBeenCalledWith(orgId);
+    expect(retrieveActiveManagersByOrgIdSuccessSpy).toHaveBeenCalledWith(orgId);
     expect(managers).toEqual(
       expectedManagersArray.filter(
         (manager) => manager.id != currentLoggedInManagerId
