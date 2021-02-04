@@ -93,6 +93,29 @@ export const setupOrganisationAndManager = async (
 
   return { userId, orgId };
 };
+
+export const setupAdminAndOrganisation = async (
+  args = {
+    organisationArgs: {},
+    userArgs: {},
+  }
+) => {
+  const {
+    user: { id: adminId },
+  } = await setUpAdmin({
+    ...args.userArgs,
+  });
+
+  const {
+    organisation: { id: orgId },
+  } = await setupOrganization({
+    createdBy: adminId,
+    ...args.organisationArgs,
+  });
+
+  return { adminId, orgId };
+};
+
 export const setupOrganisationAndFacility = async (
   args = {
     organisationArgs: {},
