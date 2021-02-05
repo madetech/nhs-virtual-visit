@@ -13,6 +13,7 @@ import fetchEndpointWithCorrelationId from "../src/helpers/fetchEndpointWithCorr
 import { v4 as uuidv4 } from "uuid";
 import { hasError, errorMessage } from "../src/helpers/pageErrorHandler";
 import AnchorLink from "../src/components/AnchorLink";
+import Router from "next/router";
 
 const Login = ({ correlationId }) => {
   const [errors, setErrors] = useState([]);
@@ -54,9 +55,9 @@ const Login = ({ correlationId }) => {
         const { userType } = await response.json();
 
         if (userType === "admin") {
-          window.location.href = `/admin`;
+          Router.push("/admin");
         } else if (userType === "manager") {
-          window.location.href = `/trust-admin`;
+          Router.push("/trust-admin");
         }
         return true;
       } else {
