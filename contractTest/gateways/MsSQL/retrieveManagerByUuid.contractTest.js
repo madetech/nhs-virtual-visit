@@ -27,7 +27,11 @@ describe("retrieveManagerByUuidGateway", () => {
       expectedManager.uuid
     );
     // Assert
-    expect(manager).toEqual(expectedManager);
+    expect(manager.email).toEqual(expectedManager.email);
+    expect(manager.organisation_id).toEqual(expectedManager.organisation_id);
+    expect(manager.uuid).toEqual(expectedManager.uuid);
+    expect(manager.status).toEqual(expectedManager.status);
+    expect(manager.id).toEqual(expectedManager.id);
   });
   it("returns manager object to be undefined if uuid is undefined", async () => {
     // Act

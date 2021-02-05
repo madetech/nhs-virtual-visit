@@ -32,7 +32,7 @@ describe("retrieveManagerByUuidGateway", () => {
       expectedUuid
     );
     expect(container.getMsSqlConnPool().query).toHaveBeenCalledWith(
-      "SELECT * FROM dbo.[user] WHERE uuid = @uuid"
+      "SELECT id, email, organisation_id, uuid, status FROM dbo.[user] WHERE uuid = @uuid"
     );
   });
   it("throws an error if db is undefined", async () => {
