@@ -69,9 +69,11 @@ import retrieveDepartmentByUuid from "../usecases/retrieveDepartmentByUuid";
 import updateDepartmentById from "../usecases/updateDepartmentById";
 import archiveDepartmentById from "../usecases/archiveDepartmentById";
 import createManager from "../usecases/createManager";
+import verifyUserLogin from "../usecases/verifyUserLogin";
+
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
-import verifyUserLogin from "../gateways/MsSQL/verifyUserLogin";
+import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
 import retrieveEmailAndHashedPassword from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
 import resetPassword from "../gateways/MsSQL/resetPassword";
 import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
@@ -676,9 +678,12 @@ class AppContainer {
     return updateFacilityByIdGateway(this);
   };
 
-  // MsSQL database gateways
   getVerifyUserLogin = () => {
-    return verifyUserLogin;
+    return verifyUserLogin(this);
+  };
+  // MsSQL database gateways
+  getVerifyUserLoginGateway = () => {
+    return verifyUserLoginGateway(this);
   };
 
   getRetrieveEmailAndHashedPassword = () => {
