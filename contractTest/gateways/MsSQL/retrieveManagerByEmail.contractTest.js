@@ -33,12 +33,13 @@ describe("retrieveManagerByEmailGateway", () => {
     expect(manager.type).toEqual(expectedManager.type);
     expect(error).toBeNull();
   });
-  it("returns manager object to be undefined if email is undefined", async () => {
+  it("returns an error if email is undefined", async () => {
     // Act
-    const { manager } = await retrieveManagerByEmailGateway(container)(
+    const { manager, error } = await retrieveManagerByEmailGateway(container)(
       undefined
     );
     // Assert
-    expect(manager).toBeUndefined();
+    expect(manager).toBeNull();
+    expect(error).toEqual("Error: Manager is undefined");
   });
 });

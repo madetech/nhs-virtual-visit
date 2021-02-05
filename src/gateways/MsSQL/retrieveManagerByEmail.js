@@ -11,6 +11,9 @@ const retrieveManagerByEmailGateway = ({ getMsSqlConnPool }) => async (
       `SELECT id, email, uuid, type  
         FROM dbo.[user] WHERE email = @email`
     );
+    if (!response.recordset[0]) {
+      throw Error("Manager is undefined");
+    }
     return {
       manager: response.recordset[0],
       error: null,
