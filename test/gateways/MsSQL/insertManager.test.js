@@ -1,8 +1,10 @@
 import insertManagerGateway from "../../../src/gateways/MsSQL/insertManager";
+import bcrypt from "bcryptjs";
+
+jest.mock("bcryptjs");
 
 describe("insertManagerGateway", () => {
   let newManager;
-
   beforeEach(() => {
     newManager = {
       email: "nhs-manager@nhs.co.uk",
@@ -23,7 +25,7 @@ describe("insertManagerGateway", () => {
             {
               id: 1,
               email: "nhs-manager@nhs.co.uk",
-              password: "password",
+              password: "hashedPassword",
               created_at: "01/01/2001",
               updated_at: "01/01/2001",
               type: "manager",
@@ -36,6 +38,9 @@ describe("insertManagerGateway", () => {
       };
     });
 
+    bcrypt.genSalt = jest.fn();
+    bcrypt.hashSync.mockReturnValue("hashedPassword");
+
     const { user, error } = await insertManagerGateway({
       getMsSqlConnPool,
     })(newManager);
@@ -43,7 +48,7 @@ describe("insertManagerGateway", () => {
     const expectedResponse = {
       id: 1,
       email: "nhs-manager@nhs.co.uk",
-      password: "password",
+      password: "hashedPassword",
       created_at: "01/01/2001",
       updated_at: "01/01/2001",
       type: "manager",
@@ -55,7 +60,7 @@ describe("insertManagerGateway", () => {
     expect(error).toBeNull();
     expect(user).toEqual(expectedResponse);
     expect(inputSpy).toHaveBeenCalledWith("email", "nhs-manager@nhs.co.uk");
-    expect(inputSpy).toHaveBeenCalledWith("password", "password");
+    expect(inputSpy).toHaveBeenCalledWith("password", "hashedPassword");
     expect(inputSpy).toHaveBeenCalledWith("type", "manager");
     expect(inputSpy).toHaveBeenCalledWith("organisationId", 1);
   });
