@@ -1,5 +1,3 @@
-import bcrypt from "bcryptjs";
-
 const createManager = ({ getInsertManagerGateway }) => async ({
   email,
   password,
@@ -26,12 +24,9 @@ const createManager = ({ getInsertManagerGateway }) => async ({
     };
   }
 
-  const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync(password, salt);
-
   const { user, error } = await getInsertManagerGateway()({
     email,
-    password: hashedPassword,
+    password: password,
     organisationId,
     type: "manager",
   });

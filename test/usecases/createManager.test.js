@@ -16,7 +16,6 @@ describe("createManager", () => {
         user: {
           id: 1,
           email: "nhs-manager@nhs.co.uk",
-          password: "hashedpassword",
           created_at: "01/01/2001",
           updated_at: "01/01/2001",
           type: "manager",
@@ -79,7 +78,6 @@ describe("createManager", () => {
     const expectedResponse = {
       id: 1,
       email: "nhs-manager@nhs.co.uk",
-      password: "hashedpassword",
       created_at: "01/01/2001",
       updated_at: "01/01/2001",
       type: "manager",
