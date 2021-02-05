@@ -10,6 +10,16 @@ export const setUpManager = async (args = {}) => {
   });
 };
 
+export const setUpAdmin = async (args = {}) => {
+  return await container.getInsertManagerGateway()({
+    email: "admin@nhs.co.uk",
+    password: "password",
+    type: "admin",
+    organisationId: null,
+    ...args,
+  });
+};
+
 export const setupTrust = async (args = {}) => {
   return await container.getCreateTrust()({
     name: "Test Trust",
