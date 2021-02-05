@@ -1,68 +1,108 @@
-import verifyUserLogin from "../../../src/gateways/MsSQL/verifyUserLogin";
+import verifyUserLoginGateway from "../../../src/gateways/MsSQL/verifyUserLogin";
 import AppContainer from "../../../src/containers/AppContainer";
-import setupUser from "../../../test/testUtils/setupUser";
+import { setUpManager } from "../../../test/testUtils/factories";
 
 describe("verifyUserLogin contract tests", () => {
   const container = AppContainer.getInstance();
 
-  xit("verifies if a admin code and password match an existing trust", async () => {
-    await setupUser(container)({
-      email: "test@email.com",
+  it("verifies that an admin is in the database with a valid email and password", async () => {
+    const { user } = await setUpManager({
+      email: "test-admin@email.com",
       password: "TESTPASSWORD",
       type: "admin",
     });
 
-    const { validUser, type, error } = await verifyUserLogin(
-      "test@email.com",
+    const {
+      validUser,
+      trust_id,
+      type,
+      user_id,
+      error,
+    } = await verifyUserLoginGateway(container)(
+      "test-admin@email.com",
       "TESTPASSWORD"
     );
 
     expect(validUser).toEqual(true);
+    expect(trust_id).toBeNull();
+    expect(user_id).toEqual(user.id);
     expect(type).toEqual("admin");
     expect(error).toBeNull();
   });
 
-  xit("is not valid if the password is not provided", async () => {
-    await setupUser(container)({
-      email: "test@email.com",
+  it("verifies that a manager is in the database with a valid email and password", async () => {
+    const { user } = await setUpManager({
+      email: "test-manager@email.com",
       password: "TESTPASSWORD",
+      type: "manager",
+      organisation_id: 1,
     });
 
-    const { validAdminCode, error } = await verifyUserLogin(container)(
-      "TESTCODE"
+    const {
+      validUser,
+      trust_id,
+      type,
+      user_id,
+      error,
+    } = await verifyUserLoginGateway(container)(
+      "test-manager@email.com",
+      "TESTPASSWORD"
     );
 
-    expect(validAdminCode).toEqual(false);
-    expect(error).toBe("password is not defined");
+    expect(validUser).toEqual(true);
+    expect(trust_id).toEqual(user.organisation_id);
+    expect(user_id).toEqual(user.id);
+    expect(type).toEqual("manager");
+    expect(error).toBeNull();
   });
 
-  xit("is not valid if the email is incorrect", async () => {
-    await setupUser(container)({
-      email: "test@email.com",
+  it("errors if wrong password is passed in", async () => {
+    await setUpManager({
+      email: "test-admin@email.com",
       password: "TESTPASSWORD",
+      type: "admin",
     });
 
-    const { validAdminCode, error } = await verifyUserLogin(container)(
+    const {
+      validUser,
+      trust_id,
+      type,
+      user_id,
+      error,
+    } = await verifyUserLoginGateway(container)(
+      "test-admin@email.com",
+      "INVALIDPASSWORD"
+    );
+
+    expect(validUser).toEqual(false);
+    expect(trust_id).toBeNull();
+    expect(user_id).toBeNull();
+    expect(type).toBeNull();
+    expect(error).toEqual("Incorrect email or password");
+  });
+
+  it("errors if the email is not in the database", async () => {
+    await setUpManager({
+      email: "test-admin@email.com",
+      password: "TESTPASSWORD",
+      type: "admin",
+    });
+
+    const {
+      validUser,
+      trust_id,
+      type,
+      user_id,
+      error,
+    } = await verifyUserLoginGateway(container)(
       "wrong@email.com",
       "TESTPASSWORD"
     );
 
-    expect(validAdminCode).toEqual(false);
-    expect(error).toBeNull();
-  });
-
-  xit("is not valid if the password is incorrect", async () => {
-    await setupUser(container)({
-      email: "test@email.com",
-      password: "TESTPASSWORD",
-    });
-
-    const { validAdminCode, error } = await verifyUserLogin(container)(
-      "test@email.com",
-      "WRONGPASSWORD"
-    );
-
-    expect(validAdminCode).toEqual(false);
-    expect(error).toBe("Incorrect email or password");
+    expect(validUser).toEqual(false);
+    expect(trust_id).toBeNull();
+    expect(user_id).toBeNull();
+    expect(type).toBeNull();
+    expect(error).toEqual("Email does not exist in the database");
   });
 });

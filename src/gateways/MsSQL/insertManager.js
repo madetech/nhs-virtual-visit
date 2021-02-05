@@ -1,4 +1,5 @@
 import logger from "../../../logger";
+import bcrypt from "bcryptjs";
 
 const insertManagerGateway = ({ getMsSqlConnPool }) => async ({
   email,
@@ -10,10 +11,14 @@ const insertManagerGateway = ({ getMsSqlConnPool }) => async ({
 
   try {
     const db = await getMsSqlConnPool();
+
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
+
     const res = await db
       .request()
       .input("email", email)
-      .input("password", password)
+      .input("password", hashedPassword)
       .input("type", type)
       .input("organisationId", organisationId)
       .query(

@@ -13,11 +13,11 @@ export default ({ getMsSqlConnPool }) => async ({
     .input("type", type)
     .input("organisation_id", organisation_id)
     .query(
-      `INSERT INTO dbo.[user] ([email], [password], [type], [organisation_id], [status]) OUTPUT INSERTED.[id]
+      `INSERT INTO dbo.[user] ([email], [password], [type], [organisation_id], [status]) OUTPUT INSERTED.*
     VALUES(@email, @password, @type, @organisation_id, 1)`
     );
 
   return {
-    id: result.recordset[0].id,
+    user: result.recordset[0],
   };
 };
