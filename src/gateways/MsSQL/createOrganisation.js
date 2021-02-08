@@ -1,5 +1,5 @@
 import logger from "../../../logger";
-
+import mssql from "mssql";
 const createOrganisationGateway = ({ getMsSqlConnPool }) => async ({
   name,
   type,
@@ -11,9 +11,9 @@ const createOrganisationGateway = ({ getMsSqlConnPool }) => async ({
     const db = await getMsSqlConnPool();
     const response = await db
       .request()
-      .input("name", name)
-      .input("type", type)
-      .input("createdBy", createdBy)
+      .input("name", mssql.NVarChar(255), name)
+      .input("type", mssql.NVarChar(255), type)
+      .input("createdBy", mssql.Int, createdBy)
       .query(
         "INSERT INTO dbo.[organisation] ([name], [type], [created_by]) OUTPUT inserted.* VALUES (@name, @type, @createdBy)"
       );
