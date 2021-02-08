@@ -55,7 +55,7 @@ export const getServerSideProps = propsWithContainer(
     const {
       hospitals: hospitalVisitTotals,
       error: hospitalsVisitTotalError,
-    } = await container.getRetrieveHospitalVisitTotals()(orgId);
+    } = await container.getRetrieveFacilityVisitTotals()(orgId);
 
     const facilitiesWithVisitTotals = facilities?.map((facility) => {
       facility.bookedVisits =

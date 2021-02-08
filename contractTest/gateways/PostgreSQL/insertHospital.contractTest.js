@@ -2,7 +2,7 @@ import AppContainer from "../../../src/containers/AppContainer";
 import insertHospital from "../../../src/gateways/PostgreSQL/insertHospital";
 import { setupTrust } from "../../../test/testUtils/factories";
 
-describe("insertHospital contract", () => {
+describe.skip("insertHospital contract", () => {
   const container = AppContainer.getInstance();
 
   it("inserts hospital into the db", async () => {

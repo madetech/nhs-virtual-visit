@@ -87,7 +87,7 @@ export default withContainer(
     }
 
     try {
-      const { ward } = await container.getRetrieveWardById()(
+      const { ward } = await container.getRetrieveDepartmentById()(
         userIsAuthenticatedResponse.wardId,
         userIsAuthenticatedResponse.trustId
       );

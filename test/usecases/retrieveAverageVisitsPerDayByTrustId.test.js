@@ -1,6 +1,6 @@
 import retrieveAverageVisitsPerDayByTrustId from "../../src/usecases/retrieveAverageVisitsPerDayByTrustId";
 
-describe("retrieveAverageVisitsPerDay", () => {
+describe.skip("retrieveAverageVisitsPerDay", () => {
   const trustId = 1;
 
   let dbAnySpy;

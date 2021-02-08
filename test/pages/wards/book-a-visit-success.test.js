@@ -38,7 +38,7 @@ describe("wards/book-a-visit-success", () => {
       const getRetrieveWardByIdSpy = jest.fn().mockReturnValue({});
 
       const container = {
-        getRetrieveWardById: () => getRetrieveWardByIdSpy,
+        getRetrieveDepartmentById: () => getRetrieveWardByIdSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };

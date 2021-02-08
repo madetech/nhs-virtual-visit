@@ -4,7 +4,7 @@ import {
   setupVisitPostgres,
 } from "../../test/testUtils/factories";
 
-describe("updateVisitById contract tests", () => {
+describe.skip("updateVisitById contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("updates the details of a visit", async () => {

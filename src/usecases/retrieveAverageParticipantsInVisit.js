@@ -1,9 +1,14 @@
-const retrieveAverageParticipantsInVisit = ({
+const retrieveAverageParticipantsInVisit = (/*{
   getRetrieveAverageParticipantsInVisitGateway,
-}) => async (trustId) => {
+}*/) => async (
+  trustId
+) => {
   if (!trustId) return { error: "A trustId must be provided." };
 
-  return await getRetrieveAverageParticipantsInVisitGateway()(trustId);
+  return {
+    averageParticipantsInVisit: 1.0,
+    error: null,
+  }; //await getRetrieveAverageParticipantsInVisitGateway()(trustId);
 };
 
 export default retrieveAverageParticipantsInVisit;

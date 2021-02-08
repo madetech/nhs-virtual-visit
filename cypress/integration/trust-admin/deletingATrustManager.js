@@ -9,7 +9,7 @@ describe("As an trust admin, I want to delete a trust manager so that I can remo
   before(() => {
     // reset and seed the database: need to edit this to run MSSQL test DB and reseed
     cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
     );
     cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });

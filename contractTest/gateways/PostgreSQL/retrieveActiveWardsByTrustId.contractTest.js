@@ -7,7 +7,7 @@ import {
   setupHospital,
 } from "../../../test/testUtils/factories";
 
-describe("retrieveActiveWardsByTrustId() contract", () => {
+describe.skip("retrieveActiveWardsByTrustId() contract", () => {
   const container = AppContainer.getInstance();
 
   it("returns the appropriate ward", async () => {

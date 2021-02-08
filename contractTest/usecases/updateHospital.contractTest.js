@@ -2,7 +2,7 @@ import updateHospital from "../../src/usecases/updateHospital";
 import AppContainer from "../../src/containers/AppContainer";
 import { setupTrust } from "../../test/testUtils/factories";
 
-describe("updateHospital contract tests", () => {
+describe.skip("updateHospital contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("updates a hospital", async () => {

@@ -34,7 +34,7 @@ export default withContainer(async (req, res, { container }) => {
   const secondEmailTemplateId = TemplateStore().secondEmail.templateId;
 
   try {
-    const { ward, error } = await container.getRetrieveWardById()(
+    const { ward, error } = await container.getRetrieveDepartmentById()(
       authenticationToken.wardId,
       authenticationToken.trustId
     );

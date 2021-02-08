@@ -29,8 +29,8 @@ describe("create-department", () => {
       end: jest.fn(),
       body: jest.fn(),
     };
-    mockAppContainer.getTrustAdminIsAuthenticated.mockImplementation(() =>
-      jest.fn(() => ({ type: TRUST_ADMIN, trustId: 1, userId: 10 }))
+    mockAppContainer.getOrganisationAdminIsAuthenticated.mockImplementation(
+      () => jest.fn(() => ({ type: TRUST_ADMIN, trustId: 1, userId: 10 }))
     );
     mockAppContainer.getCreateDepartment.mockImplementation(
       () => createDepartmentSpy
@@ -50,7 +50,7 @@ describe("create-department", () => {
   it("returns a 401 if no token provided", async () => {
     // Arrange
     const trustAdminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
-    mockAppContainer.getTrustAdminIsAuthenticated.mockImplementationOnce(
+    mockAppContainer.getOrganisationAdminIsAuthenticated.mockImplementationOnce(
       () => trustAdminIsAuthenticatedSpy
     );
     // Act

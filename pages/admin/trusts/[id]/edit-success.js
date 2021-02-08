@@ -40,7 +40,7 @@ const EditATrustSuccess = ({ error, trust }) => {
 
 export const getServerSideProps = propsWithContainer(
   verifyAdminToken(async ({ container, query }) => {
-    const getRetrieveTrustById = container.getRetrieveTrustById();
+    const getRetrieveTrustById = container.getRetrieveOrganisationById();
     const { trust, error } = await getRetrieveTrustById(query.id);
 
     if (error) {

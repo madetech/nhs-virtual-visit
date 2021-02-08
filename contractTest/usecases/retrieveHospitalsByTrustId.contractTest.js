@@ -5,7 +5,7 @@ import {
   setupWard,
 } from "../../test/testUtils/factories";
 
-describe("retrieveHospitalsByTrustId contract tests", () => {
+describe.skip("retrieveHospitalsByTrustId contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns all the hospitals for a trust", async () => {

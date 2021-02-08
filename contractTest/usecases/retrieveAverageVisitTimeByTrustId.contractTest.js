@@ -8,7 +8,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import MockDate from "mockdate";
 
-describe("retrieveAverageVisitTimeByTrustId contract tests", () => {
+describe.skip("retrieveAverageVisitTimeByTrustId contract tests", () => {
   const container = AppContainer.getInstance();
 
   let trustId;

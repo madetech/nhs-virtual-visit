@@ -8,7 +8,7 @@ export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     validateHttpMethod("PATCH", method, res);
 
-    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getOrganisationAdminIsAuthenticated();
 
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
 
@@ -40,7 +40,7 @@ export default withContainer(
       return;
     }
 
-    const retrieveWardById = container.getRetrieveWardById();
+    const retrieveWardById = container.getRetrieveDepartmentById();
 
     const existingWard = await retrieveWardById(
       body.id,
@@ -53,7 +53,7 @@ export default withContainer(
       return;
     }
 
-    const updateWard = container.getUpdateWard();
+    const updateWard = container.getUpdateDepartment();
 
     const { wardId, error } = await updateWard({
       id: body.id,

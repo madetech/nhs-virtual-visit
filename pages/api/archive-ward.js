@@ -8,7 +8,7 @@ export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     validateHttpMethod("DELETE", method, res);
 
-    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getOrganisationAdminIsAuthenticated();
 
     const trustAdminAuthenticatedToken = trustAdminIsAuthenticated(
       headers.cookie
@@ -24,7 +24,7 @@ export default withContainer(
 
     res.setHeader("Content-Type", "application/json");
 
-    const archiveWard = container.getArchiveWard();
+    const archiveWard = container.getArchiveDepartment();
 
     const { success, error } = await archiveWard(
       body.wardId,

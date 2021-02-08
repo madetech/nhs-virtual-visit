@@ -26,10 +26,10 @@ describe("archive-ward", () => {
       body: jest.fn(),
     };
     container = {
-      getArchiveWard: jest.fn().mockReturnValue(() => {
+      getArchiveDepartment: jest.fn().mockReturnValue(() => {
         return { success: true, error: null };
       }),
-      getTrustAdminIsAuthenticated: jest
+      getOrganisationAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue(
           (cookie) => cookie === "token=valid.token.value" && { trustId: "1" }
@@ -60,7 +60,8 @@ describe("archive-ward", () => {
       {
         container: {
           ...container,
-          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
+          getOrganisationAdminIsAuthenticated: () =>
+            trustAdminIsAuthenticatedSpy,
         },
       }
     );
@@ -77,7 +78,7 @@ describe("archive-ward", () => {
     await archiveWard(validRequest, response, {
       container: {
         ...container,
-        getArchiveWard: () => archiveWardSpy,
+        getArchiveDepartment: () => archiveWardSpy,
       },
     });
 
@@ -94,7 +95,7 @@ describe("archive-ward", () => {
     await archiveWard(validRequest, response, {
       container: {
         ...container,
-        getArchiveWard: () => archiveWardStub,
+        getArchiveDepartment: () => archiveWardStub,
       },
     });
 

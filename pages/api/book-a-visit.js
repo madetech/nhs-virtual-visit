@@ -1,8 +1,8 @@
 import withContainer from "../../src/middleware/withContainer";
 import {
   createVisit,
-  retrieveWardById,
-  retrieveTrustById,
+  retrieveDepartmentById,
+  retrieveOrganisationById,
   CallIdProvider,
   RandomIdProvider,
 } from "../../src/containers/CreateVisitContainer";
@@ -41,7 +41,7 @@ export default withContainer(
 
     res.setHeader("Content-Type", "application/json");
 
-    const { trust, error: trustErr } = await retrieveTrustById(trustId);
+    const { trust, error: trustErr } = await retrieveOrganisationById(trustId);
 
     if (trustErr) {
       res.status(400);
@@ -49,7 +49,10 @@ export default withContainer(
       return;
     }
 
-    const { ward, error: wardErr } = await retrieveWardById(wardId, trustId);
+    const { ward, error: wardErr } = await retrieveDepartmentById(
+      wardId,
+      trustId
+    );
     if (wardErr) {
       res.status(400);
       res.end(JSON.stringify({ wardErr }));

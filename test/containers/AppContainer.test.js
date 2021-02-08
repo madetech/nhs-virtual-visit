@@ -46,36 +46,12 @@ describe("AppContainer", () => {
     expect(container.getSendEmail()).toBeDefined();
   });
 
-  it("returns createWard", () => {
-    expect(container.getCreateWard()).toBeDefined();
-  });
-
   it("returns getRetrieveVisitByCallId", () => {
     expect(container.getRetrieveVisitByCallId()).toBeDefined();
   });
 
   it("returns verifyCallPassword", () => {
     expect(container.getVerifyCallPassword()).toBeDefined();
-  });
-
-  it("returns getUpdateWard", () => {
-    expect(container.getUpdateWard()).toBeDefined();
-  });
-
-  it("returns getVerifyWardCode", () => {
-    expect(container.getVerifyWardCode()).toBeDefined();
-  });
-
-  it("returns getVerifyTrustAdminCode", () => {
-    expect(container.getVerifyTrustAdminCode()).toBeDefined();
-  });
-
-  it("returns getRetrieveHospitalsByTrustId", () => {
-    expect(container.getRetrieveHospitalsByTrustId()).toBeDefined();
-  });
-
-  it("returns getRetrieveTrustById", () => {
-    expect(container.getRetrieveTrustById()).toBeDefined();
   });
 
   it("returns getValidateEmailAddress", () => {
@@ -94,38 +70,12 @@ describe("AppContainer", () => {
     expect(container.getRetrieveAverageParticipantsInVisit()).toBeDefined();
   });
 
-  it("returns getRetrieveWardVisitTotalsStartDateByTrustId", () => {
-    expect(
-      container.getRetrieveWardVisitTotalsStartDateByTrustId()
-    ).toBeDefined();
-  });
-
-  it("returns getRetrieveReportingStartDateByTrustId", () => {
-    expect(container.getRetrieveReportingStartDateByTrustId()).toBeDefined();
-  });
-
   it("returns getUpdateVisitById", () => {
     expect(container.getUpdateVisitById()).toBeDefined();
   });
 
   it("returns getSendBookingNotification", () => {
     expect(container.getSendBookingNotification()).toBeDefined();
-  });
-
-  it("returns getCreateTrustGateway", () => {
-    expect(container.getCreateTrustGateway()).toBeDefined();
-  });
-
-  it("returns getCreateWardGateway", () => {
-    expect(container.getCreateWardGateway()).toBeDefined();
-  });
-
-  it("returns getUpdateTrustGateway", () => {
-    expect(container.getUpdateTrustGateway()).toBeDefined();
-  });
-
-  it("returns getUpdateWardGateway", () => {
-    expect(container.getUpdateWardGateway()).toBeDefined();
   });
 
   it("returns getRetrieveVisitById", () => {
@@ -180,98 +130,16 @@ describe("AppContainer", () => {
     expect(container.getArchiveManagerByUuidGateway()).toBeDefined();
   });
 
-  it("returns getFindWardByCodeGateway", () => {
-    expect(container.getFindWardByCodeGateway()).toBeDefined();
-  });
-
-  it("returns getUpdateCallStatusesByWardIdGateway", () => {
-    expect(container.getUpdateCallStatusesByWardIdGateway()).toBeDefined();
-  });
-
-  it("returns getUpdateWardArchiveTimeByIdGateway", () => {
-    expect(container.getUpdateWardArchiveTimeByIdGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveHospitalVisitTotalsGateway", () => {
-    expect(container.getRetrieveHospitalVisitTotalsGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveAverageParticipantsInVisitGateway", () => {
-    expect(
-      container.getRetrieveAverageParticipantsInVisitGateway()
-    ).toBeDefined();
-  });
-
-  it("returns getRetrieveWardsByHospitalIdGateway", () => {
-    expect(container.getRetrieveWardsByHospitalIdGateway()).toBeDefined();
-  });
-
-  it("returns getMarkVisitAsCompleteGateway", () => {
-    expect(container.getMarkVisitAsCompleteGateway()).toBeDefined();
-  });
-
   it("returns getDeleteVisitByCallIdGateway", () => {
     expect(container.getDeleteVisitByCallIdGateway()).toBeDefined();
-  });
-
-  it("returns getCreateOrganizationGateway", () => {
-    expect(container.getCreateOrganizationGateway()).toBeDefined();
   });
 
   it("returns getInsertVisitGateway", () => {
     expect(container.getInsertVisitGateway()).toBeDefined();
   });
 
-  it("returns getUpdateHospitalGateway", () => {
-    expect(container.getUpdateHospitalGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveHospitalByIdGateway", () => {
-    expect(container.getRetrieveHospitalByIdGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveHospitalsByTrustIdGateway", () => {
-    expect(container.getRetrieveHospitalsByTrustIdGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveWardVisitTotalsGateway", () => {
-    expect(container.getRetrieveWardVisitTotalsGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveAverageVisitTimeByTrustIdGateway", () => {
-    expect(
-      container.getRetrieveAverageVisitTimeByTrustIdGateway()
-    ).toBeDefined();
-  });
-
-  it("returns getInsertHospitalGateway", () => {
-    expect(container.getInsertHospitalGateway()).toBeDefined();
-  });
-
-  it("returns getUpdateWardVisitTotalsGateway", () => {
-    expect(container.getUpdateWardVisitTotalsGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveHospitalWardVisitTotalsGateway", () => {
-    expect(container.getRetrieveHospitalWardVisitTotalsGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveAverageVisitsPerDayGateway", () => {
-    expect(container.getRetrieveAverageVisitsPerDayGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveTrustsGateway", () => {
-    expect(container.getRetrieveTrustsGateway()).toBeDefined();
-  });
-
   it("returns getLogEventGateway", () => {
     expect(container.getLogEventGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveReportingStartDateByTrustIdGateway", () => {
-    expect(
-      container.getRetrieveReportingStartDateByTrustIdGateway()
-    ).toBeDefined();
   });
 
   it("returns getCaptureEventGateway", () => {
@@ -280,10 +148,6 @@ describe("AppContainer", () => {
 
   it("returns getRetrieveVisitByIdGateway", () => {
     expect(container.getRetrieveVisitByIdGateway()).toBeDefined();
-  });
-
-  it("returns getRetrieveOrganizations", () => {
-    expect(container.getRetrieveOrganizations()).toBeDefined();
   });
 
   it("returns getRetrieveOrganisationById", () => {

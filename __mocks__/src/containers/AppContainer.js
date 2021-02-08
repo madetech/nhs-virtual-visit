@@ -19,6 +19,8 @@ export default {
   ),
   getCreateDepartment: jest.fn(() => () => Promise.resolve({})),
   getCreateDepartmentGateway: jest.fn(() => () => Promise.resolve({})),
+  getRetrieveDepartmentById: jest.fn(() => () => Promise.resolve({})),
+  getRetrieveDepartmentByIdGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveDepartmentByUuidGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveDepartmentByUuid: jest.fn(() => () => Promise.resolve({})),
   getRetrieveActiveDepartmentsByFacilityId: jest.fn(() => () =>
@@ -36,7 +38,6 @@ export default {
     Promise.resolve({})
   ),
   getResetPasswordGateway: jest.fn(() => () => Promise.resolve({})),
-  getRetrieveEmailAndHashedPasswordGateway: jest.fn(() => () =>
-    Promise.resolve({})
-  ),
+  getAdminIsAuthenticated: jest.fn(() => () => true),
+  getOrganisationAdminIsAuthenticated: jest.fn(() => () => true),
 };

@@ -7,7 +7,7 @@ import {
   setupVisitPostgres,
 } from "../../test/testUtils/factories";
 
-describe("archiveWard contract tests", () => {
+describe.skip("archiveWard contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns an error when the ward data is invalid", async () => {

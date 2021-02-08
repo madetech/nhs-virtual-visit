@@ -5,7 +5,7 @@ import {
 } from "../../test/testUtils/factories";
 import { SCHEDULED } from "../../src/helpers/visitStatus";
 
-describe("retrieveVisitById contract tests", () => {
+describe.skip("retrieveVisitById contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("retrieves a visit by id", async () => {

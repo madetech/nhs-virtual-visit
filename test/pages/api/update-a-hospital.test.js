@@ -23,15 +23,15 @@ describe("update-a-hospital", () => {
       body: jest.fn(),
     };
     container = {
-      getUpdateHospital: jest.fn().mockReturnValue(() => {
+      getUpdateFacility: jest.fn().mockReturnValue(() => {
         return { id: 123, error: null };
       }),
-      getTrustAdminIsAuthenticated: jest
+      getOrganisationAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) =>
           cookie === "token=valid.token.value" ? { trustId: 1 } : false
         ),
-      getRetrieveHospitalById: jest.fn().mockReturnValue(() => {
+      getRetrieveFacilityById: jest.fn().mockReturnValue(() => {
         return { error: null };
       }),
       getTokenProvider: jest
@@ -63,7 +63,8 @@ describe("update-a-hospital", () => {
       {
         container: {
           ...container,
-          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
+          getOrganisationAdminIsAuthenticated: () =>
+            trustAdminIsAuthenticatedSpy,
         },
       }
     );
@@ -196,7 +197,7 @@ describe("update-a-hospital", () => {
     await updateAHospital(validRequest, response, {
       container: {
         ...container,
-        getRetrieveHospitalById: () => retrieveHospitalByIdSpy,
+        getRetrieveFacilityById: () => retrieveHospitalByIdSpy,
       },
     });
 
@@ -214,7 +215,7 @@ describe("update-a-hospital", () => {
       .mockReturnValue({ id: 123, error: null });
 
     await updateAHospital(validRequest, response, {
-      container: { ...container, getUpdateHospital: () => updateHospitalSpy },
+      container: { ...container, getUpdateFacility: () => updateHospitalSpy },
     });
 
     expect(response.status).toHaveBeenCalledWith(200);
@@ -232,7 +233,7 @@ describe("update-a-hospital", () => {
       return { error: "Error!" };
     });
 
-    container.getUpdateHospital = updateHospitalSpy;
+    container.getUpdateFacility = updateHospitalSpy;
 
     await updateAHospital(validRequest, response, { container });
 
@@ -250,7 +251,7 @@ describe("update-a-hospital", () => {
     validRequest.body.surveyUrl = "https://www.survey.example.com";
 
     await updateAHospital(validRequest, response, {
-      container: { ...container, getUpdateHospital: () => updateHospitalSpy },
+      container: { ...container, getUpdateFacility: () => updateHospitalSpy },
     });
 
     expect(response.status).toHaveBeenCalledWith(200);
@@ -272,7 +273,7 @@ describe("update-a-hospital", () => {
     validRequest.body.supportUrl = "https://www.support.example.com";
 
     await updateAHospital(validRequest, response, {
-      container: { ...container, getUpdateHospital: () => updateHospitalSpy },
+      container: { ...container, getUpdateFacility: () => updateHospitalSpy },
     });
 
     expect(response.status).toHaveBeenCalledWith(200);

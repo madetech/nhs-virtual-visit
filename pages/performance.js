@@ -19,7 +19,7 @@ const Performance = ({ visitsScheduled }) => (
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container }) => {
-    const retrieveWardVisitTotals = container.getRetrieveWardVisitTotals();
+    const retrieveWardVisitTotals = container.getRetrieveDepartmentVisitTotals();
     const wardVisitTotals = await retrieveWardVisitTotals();
 
     return {

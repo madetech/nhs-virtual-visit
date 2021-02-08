@@ -7,7 +7,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import MockDate from "mockdate";
 
-describe("retrieveReportingStartDateByTrustId contract tests", () => {
+describe.skip("retrieveReportingStartDateByTrustId contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns the date of when reporting started for a trust", async () => {

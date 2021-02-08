@@ -27,13 +27,13 @@ describe("update-a-ward", () => {
       body: jest.fn(),
     };
     container = {
-      getUpdateWard: jest.fn().mockReturnValue(() => {
+      getUpdateDepartment: jest.fn().mockReturnValue(() => {
         return { wardId: 123, error: null };
       }),
-      getTrustAdminIsAuthenticated: jest
+      getOrganisationAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
-      getRetrieveWardById: jest.fn().mockReturnValue(() => {
+      getRetrieveDepartmentById: jest.fn().mockReturnValue(() => {
         return { error: null };
       }),
       getTokenProvider: jest
@@ -65,7 +65,8 @@ describe("update-a-ward", () => {
       {
         container: {
           ...container,
-          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
+          getOrganisationAdminIsAuthenticated: () =>
+            trustAdminIsAuthenticatedSpy,
         },
       }
     );
@@ -82,7 +83,7 @@ describe("update-a-ward", () => {
     await updateAWard(validRequest, response, {
       container: {
         ...container,
-        getUpdateWard: () => updateWardSpy,
+        getUpdateDepartment: () => updateWardSpy,
       },
     });
 
@@ -106,7 +107,7 @@ describe("update-a-ward", () => {
     await updateAWard(validRequest, response, {
       container: {
         ...container,
-        getUpdateWard: () => updateWardStub,
+        getUpdateDepartment: () => updateWardStub,
       },
     });
 
@@ -258,7 +259,7 @@ describe("update-a-ward", () => {
     await updateAWard(validRequest, response, {
       container: {
         ...container,
-        getRetrieveWardById: jest.fn().mockReturnValue(() => {
+        getRetrieveDepartmentById: jest.fn().mockReturnValue(() => {
           return { error: "Error!" };
         }),
       },
@@ -286,7 +287,7 @@ describe("update-a-ward", () => {
     await updateAWard(invalidRequest, response, {
       container: {
         ...container,
-        getRetrieveWardById: jest.fn().mockReturnValue(() => {
+        getRetrieveDepartmentById: jest.fn().mockReturnValue(() => {
           return { error: "Error!" };
         }),
       },

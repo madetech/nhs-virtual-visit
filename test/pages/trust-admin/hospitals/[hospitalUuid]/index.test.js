@@ -68,8 +68,8 @@ describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () =>
         getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
         getRetrieveActiveDepartmentsByFacilityId: () => departmentsSpy,
         getRetrieveFacilityByUuid: () => facilitySpy,
-        getRetrieveHospitalVisitTotals: () => visitTotalsSpy,
-        getRetrieveHospitalWardVisitTotals: () => hospitalWardTotalsSpy,
+        getRetrieveFacilityVisitTotals: () => visitTotalsSpy,
+        getRetrieveFacilityDepartmentVisitTotals: () => hospitalWardTotalsSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };

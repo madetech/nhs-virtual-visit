@@ -44,7 +44,7 @@ describe("ward/visits", () => {
       }));
       const container = {
         getRetrieveVisits: () => visitsSpy,
-        getRetrieveWardById: () => wardSpy,
+        getRetrieveDepartmentById: () => wardSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
@@ -80,7 +80,7 @@ describe("ward/visits", () => {
       });
       const container = {
         getRetrieveVisits: () => retrieveVisitsStub,
-        getRetrieveWardById: () => jest.fn().mockReturnValue({}),
+        getRetrieveDepartmentById: () => jest.fn().mockReturnValue({}),
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };

@@ -8,7 +8,7 @@ export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     validateHttpMethod("PATCH", method, res);
 
-    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getOrganisationAdminIsAuthenticated();
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
     checkIfAuthorised(trustAdminToken, res);
 

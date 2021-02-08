@@ -9,7 +9,7 @@ export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     validateHttpMethod("DELETE", method, res);
 
-    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getOrganisationAdminIsAuthenticated();
 
     const trustAdminAuthenticatedToken = trustAdminIsAuthenticated(
       headers.cookie

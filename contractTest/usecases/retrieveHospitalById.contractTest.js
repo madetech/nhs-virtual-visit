@@ -1,7 +1,7 @@
 import AppContainer from "../../src/containers/AppContainer";
 import { setupTrust, setupHospital } from "../../test/testUtils/factories";
 
-describe("retrieveHospitalById contract tests", () => {
+describe.skip("retrieveHospitalById contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns a hospital", async () => {

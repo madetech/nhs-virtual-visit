@@ -4,7 +4,7 @@ import {
 } from "../../test/testUtils/factories";
 import AppContainer from "../../src/containers/AppContainer";
 
-describe("createFacility", () => {
+describe.skip("createFacility", () => {
   const container = AppContainer.getInstance();
   it("creates a valid facility", async () => {
     // Arrange

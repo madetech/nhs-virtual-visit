@@ -26,7 +26,7 @@ describe("update-a-manager-status", () => {
       getUpdateManagerStatusByUuid: jest.fn().mockReturnValue(() => {
         return { uuid: expectedUuid, error: null };
       }),
-      getTrustAdminIsAuthenticated: jest
+      getOrganisationAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) =>
           cookie === "token=valid.token.value" ? { trustId: 1 } : false
@@ -63,7 +63,8 @@ describe("update-a-manager-status", () => {
       {
         container: {
           ...container,
-          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
+          getOrganisationAdminIsAuthenticated: () =>
+            trustAdminIsAuthenticatedSpy,
         },
       }
     );

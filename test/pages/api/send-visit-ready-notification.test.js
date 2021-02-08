@@ -32,7 +32,7 @@ describe("send-visit-ready-notification", () => {
       getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
       getSendTextMessage: () => sendTextMessageSpy,
       getSendEmail: () => sendEmailSpy,
-      getRetrieveWardById: () => retrieveWardByIdSpy,
+      getRetrieveDepartmentById: () => retrieveWardByIdSpy,
     };
   });
 

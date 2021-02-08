@@ -28,7 +28,7 @@ describe("markVisitAsComplete", () => {
           }),
         };
       },
-      getMarkVisitAsCompleteGateway: () =>
+      getUpdateVisitStatusByCallIdGateway: () =>
         jest.fn().mockResolvedValue({
           id: null,
           error: "failure",

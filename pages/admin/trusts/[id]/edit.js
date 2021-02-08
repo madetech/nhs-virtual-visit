@@ -117,7 +117,9 @@ export const getServerSideProps = propsWithContainer(
   verifyAdminToken(async ({ container, query }) => {
     const { id: trustId } = query;
 
-    const { trust, error } = await container.getRetrieveTrustById()(trustId);
+    const { trust, error } = await container.getRetrieveOrganisationById()(
+      trustId
+    );
 
     return {
       props: {

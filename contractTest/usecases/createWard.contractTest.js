@@ -1,7 +1,7 @@
 import AppContainer from "../../src/containers/AppContainer";
 import { setupTrust, setupHospital } from "../../test/testUtils/factories";
 
-describe("createWard contract tests", () => {
+describe.skip("createWard contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("creates a ward in the db when valid", async () => {

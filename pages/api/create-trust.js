@@ -38,7 +38,7 @@ export default withContainer(
 
     res.setHeader("Content-Type", "application/json");
 
-    const createTrust = container.getCreateTrust();
+    const createTrust = container.getCreateOrganisation();
 
     const { trustId, error } = await createTrust({
       name: body.name,

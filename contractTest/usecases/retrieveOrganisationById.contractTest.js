@@ -2,7 +2,7 @@ import AppContainer from "../../src/containers/AppContainer";
 import { setupOrganization } from "../../test/testUtils/factories";
 import setupUser from "../../test/testUtils/setupUser";
 
-describe("retrieveOrganisation usecase contract tests", () => {
+describe.skip("retrieveOrganisation usecase contract tests", () => {
   // Arrange
   const container = AppContainer.getInstance();
   it("returns an organisation", async () => {

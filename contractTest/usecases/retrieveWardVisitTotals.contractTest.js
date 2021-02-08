@@ -1,12 +1,12 @@
 import AppContainer from "../../src/containers/AppContainer";
 import { setupTrust } from "../../test/testUtils/factories";
 
-describe("retrieveWardVisitTotals contract tests", () => {
+describe.skip("retrieveWardVisitTotals contract tests", () => {
   const container = AppContainer.getInstance();
   const date1 = new Date("2020-06-01 13:00");
   const date2 = new Date("2020-06-02 13:00");
 
-  describe("when a trustID isn't provided", () => {
+  describe.skip("when a trustID isn't provided", () => {
     it("returns the number of booked visits for the service and by all wards", async () => {
       // A trust with 1 hospital and 2 wards
       const { trustId } = await setupTrust();
@@ -90,7 +90,7 @@ describe("retrieveWardVisitTotals contract tests", () => {
     });
   });
 
-  describe("when a trustID is provided", () => {
+  describe.skip("when a trustID is provided", () => {
     it("returns the number of booked visits for the trust and by ward", async () => {
       // A trust with 1 hospital and 2 wards
       const { trustId } = await setupTrust();

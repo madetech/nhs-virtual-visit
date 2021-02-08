@@ -36,7 +36,7 @@ describe("/performance", () => {
         validate: jest.fn(() => ({ type: "trustAdmin" })),
       };
       const container = {
-        getRetrieveWardVisitTotals: () => wardVisitTotalSpy,
+        getRetrieveDepartmentVisitTotals: () => wardVisitTotalSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };

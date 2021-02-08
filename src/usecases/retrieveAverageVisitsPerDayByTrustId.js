@@ -1,12 +1,14 @@
-const retrieveAverageVisitsPerDay = ({
+const retrieveAverageVisitsPerDay = (/*{
   getRetrieveAverageVisitsPerDayGateway,
-}) => async (trustId, endDate) => {
+}*/) => async (
+  trustId /*, endDate*/
+) => {
   if (!trustId) return { error: "A trustId must be provided." };
 
-  const average = await getRetrieveAverageVisitsPerDayGateway()(
+  const average = 1; /*await getRetrieveAverageVisitsPerDayGateway()(
     trustId,
     endDate
-  );
+  );*/
 
   return {
     averageVisitsPerDay: average,

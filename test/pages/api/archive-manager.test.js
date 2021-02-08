@@ -25,7 +25,7 @@ describe("archive-manager", () => {
       getUpdateManagerStatusByUuid: jest.fn().mockReturnValue(() => {
         return { error: null };
       }),
-      getTrustAdminIsAuthenticated: jest
+      getOrganisationAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue(
           (cookie) => cookie === "token=valid.token.value" && { trustId: "1" }
@@ -56,7 +56,8 @@ describe("archive-manager", () => {
       {
         container: {
           ...container,
-          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
+          getOrganisationAdminIsAuthenticated: () =>
+            trustAdminIsAuthenticatedSpy,
         },
       }
     );

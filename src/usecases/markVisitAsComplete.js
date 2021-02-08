@@ -1,7 +1,8 @@
-const markVisitAsComplete = ({ getMarkVisitAsCompleteGateway }) => async ({
-  id,
-  wardId,
-}) => {
+import { statusToId, COMPLETED } from "../helpers/visitStatus";
+
+const markVisitAsComplete = ({
+  getUpdateVisitStatusByCallIdGateway,
+}) => async ({ id, wardId }) => {
   if (!id) {
     return { id: null, error: "An id must be provided." };
   }
@@ -9,7 +10,11 @@ const markVisitAsComplete = ({ getMarkVisitAsCompleteGateway }) => async ({
     return { id: null, error: "A wardId must be provided." };
   }
 
-  return await getMarkVisitAsCompleteGateway()({ id, wardId });
+  return await getUpdateVisitStatusByCallIdGateway()({
+    id,
+    wardId,
+    status: statusToId(COMPLETED),
+  });
 };
 
 export default markVisitAsComplete;

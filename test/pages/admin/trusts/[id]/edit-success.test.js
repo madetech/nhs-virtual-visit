@@ -45,7 +45,7 @@ describe("/admin/admin/trusts/[id]/edit-success", () => {
       });
 
       const container = {
-        getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getRetrieveOrganisationById: () => retrieveTrustByIdSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
@@ -73,7 +73,7 @@ describe("/admin/admin/trusts/[id]/edit-success", () => {
       });
 
       const container = {
-        getRetrieveTrustById: () => retrieveTrustByIdSpy,
+        getRetrieveOrganisationById: () => retrieveTrustByIdSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };

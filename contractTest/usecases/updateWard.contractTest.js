@@ -2,7 +2,7 @@ import updateWard from "../../src/usecases/updateWard";
 import AppContainer from "../../src/containers/AppContainer";
 import { setupTrust } from "../../test/testUtils/factories";
 
-describe("updateWard contract tests", () => {
+describe.skip("updateWard contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("updates a ward in the db when valid", async () => {

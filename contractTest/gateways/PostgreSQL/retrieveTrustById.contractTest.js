@@ -1,7 +1,7 @@
 import retrieveTrustById from "../../../src/gateways/PostgreSQL/retrieveTrustById";
 import { setupTrust } from "../../../test/testUtils/factories";
 
-describe("retrieveTrustById", () => {
+describe.skip("retrieveTrustById", () => {
   it("returns an object containing the trust", async () => {
     const { trustId } = await setupTrust();
 

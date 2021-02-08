@@ -12,7 +12,7 @@ import {
   setupHospital,
 } from "../../../test/testUtils/factories";
 
-describe("updateWardArchiveTimeById() contract", () => {
+describe.skip("updateWardArchiveTimeById() contract", () => {
   const container = AppContainer.getInstance();
 
   it("updates the call statuses", async () => {

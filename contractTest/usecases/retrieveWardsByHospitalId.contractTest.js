@@ -1,7 +1,7 @@
 import AppContainer from "../../src/containers/AppContainer";
 import { setupTrust } from "../../test/testUtils/factories";
 
-describe("retrieveWardsByHospitalId contract tests", () => {
+describe.skip("retrieveWardsByHospitalId contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns wards for a given hospital ID", async () => {
