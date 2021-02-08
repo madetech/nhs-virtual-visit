@@ -1,19 +1,13 @@
-<<<<<<< HEAD
-import retrieveOrderedActiveCallsByDepartmentId from "../../../src/gateways/MsSQL/retrieveOrderedActiveCallsByDepartmentId";
-import { setupOrganisationFacilityDepartmentAndManager, setupVisitMsSQL } from "../../../test/testUtils/factories";
-import AppContainer from "../../../src/containers/AppContainer";
-=======
 // import retrieveOrderedActiveCallsByDepartmentId from "../../../src/gateways/MsSQL/retrieveOrderedActiveCallsByDepartmentId";
 import {
   setupOrganisationFacilityDepartmentAndManager,
   setUpScheduledCall,
 } from "../../../test/testUtils/factories";
 // import AppContainer from "../../../src/containers/AppContainer";
->>>>>>> change setupVisitMsSQL to setUpScheduledCall
 
 describe("retrieveOrderedActiveCallsByDepartmentId", () => {
   // Arrange
-  const container = AppContainer.getInstance();
+  //const container = AppContainer.getInstance();
   it("returns an object containing the active calls", async () => {
     const {
       departmentId,
