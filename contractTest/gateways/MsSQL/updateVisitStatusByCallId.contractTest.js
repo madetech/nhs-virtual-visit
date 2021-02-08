@@ -26,7 +26,6 @@ describe("updateVisitStatusByCallIdGateway", () => {
       departmentId,
       status: statusToId(COMPLETE),
     });
-    console.log(visit);
     // Assert
     expect(visit.status).toEqual(statusToId(COMPLETE));
     expect(error).toBeNull();

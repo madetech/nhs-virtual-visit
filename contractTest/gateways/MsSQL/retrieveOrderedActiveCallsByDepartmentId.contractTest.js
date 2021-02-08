@@ -1,24 +1,93 @@
-// import retrieveOrderedActiveCallsByDepartmentId from "../../../src/gateways/MsSQL/retrieveOrderedActiveCallsByDepartmentId";
+import retrieveOrderedActiveCallsByDepartmentIdGateway from "../../../src/gateways/MsSQL/retrieveOrderedActiveCallsByDepartmentId";
 import {
   setupOrganisationFacilityDepartmentAndManager,
   setUpScheduledCall,
 } from "../../../test/testUtils/factories";
-// import AppContainer from "../../../src/containers/AppContainer";
+import {
+  CANCELLED,
+  SCHEDULED,
+  COMPLETE,
+  statusToId,
+} from "../../../src/helpers/visitStatus";
+import AppContainer from "../../../src/containers/AppContainer";
 
-describe("retrieveOrderedActiveCallsByDepartmentId", () => {
-  // Arrange
-  //const container = AppContainer.getInstance();
-  it("returns an object containing the active calls", async () => {
+describe("retrieveOrderedActiveCallsByDepartmentIdGateway", () => {
+  const container = AppContainer.getInstance();
+  xit("returns an object containing the active calls ordered in order of call time", async () => {
+    // Arrange
     const {
       departmentId,
-      userId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    const { visitId } = await setUpScheduledCall({ departmentId });
-
-    console.log(visitId);
-    console.log(userId);
-    //create a few more calls, not just one, including some that aren't active
-    //then test to make sure we've only recieved the active ones  and to make sure
-    //they're in order
+    const callTimeOne = new Date(2021, 11, 27, 13, 37, 0, 0);
+    const callOne = {
+      patientName: "Patient One",
+      recipientEmail: "patientOne@testemail.com",
+      recipientName: "Recipient One Name",
+      recipientNumber: "07123456567",
+      callTime: callTimeOne.toISOString(),
+    };
+    const callTimeTwo = new Date(2021, 11, 18, 13, 37, 0, 0);
+    const callTwo = {
+      patientName: "Patient Two",
+      recipientEmail: "patientTwo@testemail.com",
+      recipientName: "Recipient One Name",
+      recipientNumber: "07123456567",
+      callTime: callTimeTwo.toISOString(),
+    };
+    const callTimeThree = new Date(2021, 11, 18, 13, 37, 0, 0);
+    const callThree = {
+      patientName: "Patient Three",
+      recipientEmail: "patientThree@testemail.com",
+      recipientName: "Recipient One Name",
+      recipientNumber: "07123456567",
+      callTime: callTimeThree.toISOString(),
+    };
+    const { id: callOneId } = await setUpScheduledCall({
+      ...callOne,
+      departmentId,
+    });
+    const { id: callTwoId } = await setUpScheduledCall({
+      ...callTwo,
+      departmentId,
+    });
+    const { id: callThreeId } = await setUpScheduledCall({
+      ...callThree,
+      departmentId,
+    });
+    await container.getUpdateVisitStatusByCallIdGateway()({
+      id: callThreeId,
+      departmentId,
+      status: statusToId(CANCELLED),
+    });
+    await container.getUpdateVisitStatusByCallIdGateway()({
+      id: callTwoId,
+      departmentId,
+      status: statusToId(COMPLETE),
+    });
+    // Act
+    const {
+      scheduledCalls,
+      error,
+    } = await retrieveOrderedActiveCallsByDepartmentIdGateway(container)(
+      departmentId
+    );
+    // Assert
+    expect(scheduledCalls).toEqual([
+      { id: callTwoId, status: statusToId(COMPLETE), ...callTwo },
+      { id: callOneId, status: statusToId(SCHEDULED), ...callOne },
+    ]);
+    expect(error).toBeNull();
+  });
+  xit("returns an empty array if departmentId is undefined", async () => {
+    // Act
+    const {
+      scheduledCalls,
+      error,
+    } = await retrieveOrderedActiveCallsByDepartmentIdGateway(container)(
+      undefined
+    );
+    // Assert
+    expect(scheduledCalls).toEqual([]);
+    expect(error).toBeNull();
   });
 });

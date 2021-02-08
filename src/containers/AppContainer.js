@@ -109,6 +109,7 @@ import updateOrganisationGateway from "../gateways/MsSQL/updateOrganisation";
 import insertScheduledCallGateway from "../gateways/MsSQL/insertVisit";
 import deleteVisitByCallIdGateway from "../gateways/MsSQL/deleteVisitByCallId";
 import retrieveActiveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveActiveManagersByOrgId";
+import updateVisitStatusByCallIdGateway from "../gateways/MsSQL/updateVisitStatusByCallId";
 
 /* GW Imports */
 import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
@@ -687,6 +688,10 @@ class AppContainer {
 
   getUpdateFacilityByIdGateway = () => {
     return updateFacilityByIdGateway(this);
+  };
+
+  getUpdateVisitStatusByCallIdGateway = () => {
+    return updateVisitStatusByCallIdGateway(this);
   };
 
   getVerifyUserLogin = () => {
