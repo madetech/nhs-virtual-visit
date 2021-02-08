@@ -28,7 +28,7 @@ describe("create-trust", () => {
       body: jest.fn(),
     };
     container = {
-      getCreateTrust: jest.fn().mockReturnValue(() => {
+      getCreateOrganisation: jest.fn().mockReturnValue(() => {
         return { trustId: 1, error: null };
       }),
       getAdminIsAuthenticated: jest
@@ -77,7 +77,7 @@ describe("create-trust", () => {
     await createTrust(validRequest, response, {
       container: {
         ...container,
-        getCreateTrust: () => createTrustSpy,
+        getCreateOrganisation: () => createTrustSpy,
       },
     });
 
@@ -99,7 +99,7 @@ describe("create-trust", () => {
     await createTrust(validRequest, response, {
       container: {
         ...container,
-        getCreateTrust: () => createTrustStub,
+        getCreateOrganisation: () => createTrustStub,
       },
     });
 

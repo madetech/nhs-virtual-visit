@@ -36,6 +36,8 @@ exports.up = function (db) {
   });
 };
 
+exports.down = () => new Promise((resolve, reject) => resolve("foo"));
+
 exports._meta = {
   version: 1,
 };

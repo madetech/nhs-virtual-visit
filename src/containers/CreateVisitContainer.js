@@ -1,14 +1,14 @@
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
-import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
-import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
+import retrieveDepartmentById from "../gateways/MsSQL/retrieveDepartmentById";
+import retrieveOrganisationById from "../gateways/MsSQL/retrieveOrganisationById";
 import createVisit from "../usecases/createVisit";
 import CallIdProvider from "../providers/CallIdProvider";
 import RandomIdProvider from "../providers/RandomIdProvider";
 
 export {
   createVisit,
-  retrieveWardById,
-  retrieveTrustById,
+  retrieveDepartmentById,
+  retrieveOrganisationById,
   userIsAuthenticated,
   CallIdProvider,
   RandomIdProvider,

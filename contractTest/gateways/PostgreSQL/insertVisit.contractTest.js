@@ -3,7 +3,7 @@ import insertVisit from "../../../src/gateways/PostgreSQL/insertVisit";
 import Database from "../../../src/gateways/Database";
 import { setupTrust, setupWard } from "../../../test/testUtils/factories";
 
-describe("insertVisit contract tests", () => {
+describe.skip("insertVisit contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("inserts visit into the db", async () => {

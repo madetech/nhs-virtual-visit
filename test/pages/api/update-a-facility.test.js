@@ -29,8 +29,8 @@ describe("update-a-facility", () => {
       end: jest.fn(),
       body: jest.fn(),
     };
-    mockAppContainer.getTrustAdminIsAuthenticated.mockImplementation(() =>
-      jest.fn(() => true)
+    mockAppContainer.getOrganisationAdminIsAuthenticated.mockImplementation(
+      () => jest.fn(() => true)
     );
     mockAppContainer.getTokenProvider.mockImplementation(
       jest.fn({ type: TRUST_ADMIN, trustId: 1 })
@@ -57,7 +57,7 @@ describe("update-a-facility", () => {
   it("returns a 401 if no token provided", async () => {
     // Arrange
     const trustAdminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
-    mockAppContainer.getTrustAdminIsAuthenticated.mockImplementationOnce(
+    mockAppContainer.getOrganisationAdminIsAuthenticated.mockImplementationOnce(
       () => trustAdminIsAuthenticatedSpy
     );
     // Act

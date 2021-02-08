@@ -222,7 +222,8 @@ describe("login", () => {
   it("redirects to trust-admin page if there is a trust-admin token", async () => {
     const container = {
       getUserIsAuthenticated: () => jest.fn(),
-      getTrustAdminIsAuthenticated: () => jest.fn(async () => "trusttoken"),
+      getOrganisationAdminIsAuthenticated: () =>
+        jest.fn(async () => "trusttoken"),
       getAdminIsAuthenticated: () => jest.fn(),
     };
 
@@ -236,7 +237,7 @@ describe("login", () => {
   it("redirects to admin page if there is a admin token", async () => {
     const container = {
       getUserIsAuthenticated: () => jest.fn(),
-      getTrustAdminIsAuthenticated: () => jest.fn(),
+      getOrganisationAdminIsAuthenticated: () => jest.fn(),
       getAdminIsAuthenticated: () => jest.fn(async () => "admintoken"),
     };
 
@@ -251,7 +252,7 @@ describe("login", () => {
     const container = {
       getUserIsAuthenticated: () =>
         jest.fn().mockResolvedValue({ ward: "my-test-ward" }),
-      getTrustAdminIsAuthenticated: () => jest.fn(),
+      getOrganisationAdminIsAuthenticated: () => jest.fn(),
       getAdminIsAuthenticated: () => jest.fn(),
     };
 
@@ -267,7 +268,7 @@ describe("login", () => {
   it("returns the correlationId as props if there is no token", async () => {
     const container = {
       getUserIsAuthenticated: () => jest.fn(),
-      getTrustAdminIsAuthenticated: () => jest.fn(),
+      getOrganisationAdminIsAuthenticated: () => jest.fn(),
       getAdminIsAuthenticated: () => jest.fn(),
     };
 

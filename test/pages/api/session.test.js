@@ -28,13 +28,13 @@ describe("api/session", () => {
 
         const response = { statusCode: 0, end: jest.fn() };
         const verifyWardCodeSpy = jest.fn(async () => ({
-          validWardCode: false,
+          validDepartmentCode: false,
         }));
         const verifyUserLoginSpy = jest.fn(async () => ({
           validUser: false,
         }));
         const container = {
-          getVerifyWardCode: () => verifyWardCodeSpy,
+          getRetrieveDepartmentByCode: () => verifyWardCodeSpy,
           getVerifyUserLogin: () => verifyUserLoginSpy,
         };
 
@@ -76,7 +76,7 @@ describe("api/session", () => {
           getTokenProvider: jest.fn(() => ({
             generate: tokenGeneratorSpy,
           })),
-          getVerifyWardCode: () => verifyWardCodeSpy,
+          getRetrieveDepartmentByCode: () => verifyWardCodeSpy,
           getVerifyUserLogin: () => verifyUserLoginSpy,
         };
 
@@ -133,7 +133,7 @@ describe("api/session", () => {
           getTokenProvider: jest.fn(() => ({
             generate: tokenGeneratorSpy,
           })),
-          getVerifyWardCode: () => verifyWardCodeSpy,
+          getRetrieveDepartmentByCode: () => verifyWardCodeSpy,
           getVerifyUserLogin: () => () =>
             jest.fn().mockReturnValue({ validUser: false }),
           getLogEventGateway: () => logEventSpy,
@@ -173,7 +173,7 @@ describe("api/session", () => {
         };
 
         const verifyWardCodeSpy = jest.fn(async () => ({
-          validWardCode: true,
+          validDepartmentCode: true,
           ward: { id: 10, code: "MEOW", trustId: 1 },
         }));
 
@@ -188,7 +188,7 @@ describe("api/session", () => {
           getTokenProvider: jest.fn(() => ({
             generate: tokenGeneratorSpy,
           })),
-          getVerifyWardCode: () => verifyWardCodeSpy,
+          getRetrieveDepartmentByCode: () => verifyWardCodeSpy,
           getVerifyUserLogin: () => () =>
             jest.fn().mockReturnValue({ validUser: false }),
           getLogEventGateway: () => logEventSpy,
@@ -218,7 +218,7 @@ describe("api/session", () => {
         };
 
         const verifyWardCodeSpy = jest.fn(async () => ({
-          validWardCode: false,
+          validDepartmentCode: false,
           ward: {},
         }));
 
@@ -235,7 +235,7 @@ describe("api/session", () => {
           getTokenProvider: jest.fn(() => ({
             generate: tokenGeneratorSpy,
           })),
-          getVerifyWardCode: () => verifyWardCodeSpy,
+          getRetrieveDepartmentByCode: () => verifyWardCodeSpy,
           getVerifyUserLogin: () => verifyUserLoginSpy,
         };
 
@@ -291,9 +291,9 @@ describe("api/session", () => {
           getTokenProvider: jest.fn(() => ({
             generate: tokenGeneratorSpy,
           })),
-          getVerifyWardCode: () =>
+          getRetrieveDepartmentByCode: () =>
             jest.fn(async () => ({
-              validWardCode: false,
+              validDepartmentCode: false,
             })),
           getVerifyUserLogin: () => verifyUserLoginSpy,
         };

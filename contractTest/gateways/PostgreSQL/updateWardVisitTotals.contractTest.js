@@ -1,7 +1,7 @@
 import AppContainer from "../../../src/containers/AppContainer";
 import { setupTrust, setupWard } from "../../../test/testUtils/factories";
 
-describe("updateWardVisitTotals contract tests", () => {
+describe.skip("updateWardVisitTotals contract tests", () => {
   const container = AppContainer.getInstance();
   const dateToInsert = "2020-05-05T10:10:10";
 

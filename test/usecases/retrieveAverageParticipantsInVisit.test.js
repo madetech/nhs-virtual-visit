@@ -1,6 +1,6 @@
 import retrieveAverageParticipantsInVisit from "../../src/usecases/retrieveAverageParticipantsInVisit";
 
-describe("retrieveAverageParticipantsInVisit", () => {
+describe.skip("retrieveAverageParticipantsInVisit", () => {
   const trustId = 1;
 
   let gwAnySpy;

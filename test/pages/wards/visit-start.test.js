@@ -23,7 +23,8 @@ describe("visit-start", () => {
     };
     container = {
       getTokenProvider: () => tokenProvider,
-      getRetrieveWardById: () => jest.fn().mockReturnValue({ error: null }),
+      getRetrieveDepartmentById: () =>
+        jest.fn().mockReturnValue({ error: null }),
     };
   });
 

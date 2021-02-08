@@ -8,7 +8,7 @@ export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     validateHttpMethod("POST", method, res);
 
-    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getOrganisationAdminIsAuthenticated();
 
     checkIfAuthorised(trustAdminIsAuthenticated(headers.cookie), res);
 
@@ -26,7 +26,7 @@ export default withContainer(
 
     res.setHeader("Content-Type", "application/json");
 
-    const createHospital = container.getCreateHospital();
+    const createHospital = container.getCreateFacility();
 
     const { hospitalId, error } = await createHospital({
       name: body.name,

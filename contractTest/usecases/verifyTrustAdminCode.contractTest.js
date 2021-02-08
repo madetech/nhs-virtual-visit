@@ -2,7 +2,7 @@ import verifyTrustAdminCode from "../../src/usecases/verifyTrustAdminCode";
 import AppContainer from "../../src/containers/AppContainer";
 import { setupTrust } from "../../test/testUtils/factories";
 
-describe("verifyTrustAdminCode contract tests", () => {
+describe.skip("verifyTrustAdminCode contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("verifies if a admin code and password match an existing trust", async () => {

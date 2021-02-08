@@ -115,7 +115,7 @@ export const getServerSideProps = propsWithContainer(
     const userIsAuthenticated = container.getUserIsAuthenticated();
     const userToken = await userIsAuthenticated(headers.cookie);
 
-    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getOrganisationAdminIsAuthenticated();
     const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
 
     const adminIsAuthenticated = container.getAdminIsAuthenticated();

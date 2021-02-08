@@ -4,7 +4,7 @@ import {
   setupWardWithinHospitalAndTrust,
 } from "../../test/testUtils/factories";
 
-describe("retrieveWardVisitTotalsStartDateByTrustId contract tests", () => {
+describe.skip("retrieveWardVisitTotalsStartDateByTrustId contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns the date of when reporting started for a trust", async () => {

@@ -27,10 +27,10 @@ describe("create-ward", () => {
       body: jest.fn(),
     };
     container = {
-      getCreateWard: jest.fn().mockReturnValue(() => {
+      getCreateDepartment: jest.fn().mockReturnValue(() => {
         return { wardId: 1, error: null };
       }),
-      getTrustAdminIsAuthenticated: jest
+      getOrganisationAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue(
           (cookie) => cookie === "token=valid.token.value" && { trustId: 1 }
@@ -61,7 +61,8 @@ describe("create-ward", () => {
       {
         container: {
           ...container,
-          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
+          getOrganisationAdminIsAuthenticated: () =>
+            trustAdminIsAuthenticatedSpy,
         },
       }
     );
@@ -78,7 +79,7 @@ describe("create-ward", () => {
     await createWard(validRequest, response, {
       container: {
         ...container,
-        getCreateWard: () => createWardSpy,
+        getCreateDepartment: () => createWardSpy,
       },
     });
 
@@ -102,7 +103,7 @@ describe("create-ward", () => {
     await createWard(validRequest, response, {
       container: {
         ...container,
-        getCreateWard: () => createWardStub,
+        getCreateDepartment: () => createWardStub,
       },
     });
 

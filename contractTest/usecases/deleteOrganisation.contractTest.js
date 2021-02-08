@@ -1,7 +1,7 @@
 import AppContainer from "../../src/containers/AppContainer";
 import { setUpManager } from "../../test/testUtils/factories";
 
-describe("deleteOrganisation contract tests", () => {
+describe.skip("deleteOrganisation contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("deletes an organisation", async () => {

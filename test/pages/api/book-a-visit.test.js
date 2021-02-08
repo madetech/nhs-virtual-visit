@@ -2,8 +2,8 @@ import bookAVisit from "../../../pages/api/book-a-visit";
 import moment from "moment";
 import {
   createVisit,
-  retrieveWardById,
-  retrieveTrustById,
+  retrieveDepartmentById,
+  retrieveOrganisationById,
   CallIdProvider,
   RandomIdProvider,
 } from "../../../src/containers/CreateVisitContainer";
@@ -12,8 +12,8 @@ import createVisitUnitOfWork from "../../../src/gateways/UnitsOfWork/createVisit
 
 jest.mock("../../../src/containers/CreateVisitContainer", () => ({
   createVisit: jest.fn(),
-  retrieveTrustById: jest.fn(),
-  retrieveWardById: jest.fn(),
+  retrieveOrganisationById: jest.fn(),
+  retrieveDepartmentById: jest.fn(),
   CallIdProvider: jest.fn(),
   RandomIdProvider: jest.fn(),
 }));
@@ -70,8 +70,8 @@ describe("/api/book-a-visit", () => {
   it("calls createVisit with the correct arguments", async () => {
     const trust = { id: 1, videoProvider: "testVideoProvider" };
     const ward = { id: 10, name: "wardName", hospitalName: "hospitalName" };
-    retrieveTrustById.mockResolvedValue({ trust, error: "" });
-    retrieveWardById.mockResolvedValue({ ward, error: "" });
+    retrieveOrganisationById.mockResolvedValue({ trust, error: "" });
+    retrieveDepartmentById.mockResolvedValue({ ward, error: "" });
 
     const createVisitSpy = jest
       .fn()
@@ -189,8 +189,8 @@ describe("/api/book-a-visit", () => {
       name: "anotherWardName",
       hospitalName: "anotherHospitalName",
     };
-    retrieveTrustById.mockResolvedValue({ trust, error: "" });
-    retrieveWardById.mockResolvedValue({ ward, error: "" });
+    retrieveOrganisationById.mockResolvedValue({ trust, error: "" });
+    retrieveDepartmentById.mockResolvedValue({ ward, error: "" });
 
     const createVisitSpy = jest
       .fn()
@@ -231,8 +231,8 @@ describe("/api/book-a-visit", () => {
       name: "anotherWardName",
       hospitalName: "anotherHospitalName",
     };
-    retrieveTrustById.mockResolvedValue({ trust, error: "" });
-    retrieveWardById.mockResolvedValue({ ward, error: "" });
+    retrieveOrganisationById.mockResolvedValue({ trust, error: "" });
+    retrieveDepartmentById.mockResolvedValue({ ward, error: "" });
 
     const createVisitSpy = jest.fn().mockImplementation(() => {
       throw "Some error!";

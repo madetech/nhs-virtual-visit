@@ -259,7 +259,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => true,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => () => {
         return { success: true, errors: null };
       },
@@ -316,7 +316,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => true,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => () => {
         return { success: true, errors: null };
       },
@@ -381,7 +381,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => userAuthResult,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 
@@ -437,7 +437,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => userAuthResult,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 
@@ -494,7 +494,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => userAuthResult,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 
@@ -552,7 +552,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => userAuthResult,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 
@@ -617,7 +617,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => userAuthResult,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 
@@ -682,7 +682,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => userAuthResult,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 
@@ -750,7 +750,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => userAuthResult,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 
@@ -825,7 +825,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => userAuthResult,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 
@@ -900,7 +900,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => userAuthResult,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 
@@ -977,7 +977,7 @@ describe("/api/update-a-visit", () => {
       getUserIsAuthenticated: () => () => userAuthResult,
       getUpdateVisitById: () => updateVisitSpy,
       getRetrieveVisitById: () => () => callResult,
-      getRetrieveWardById: () => () => wardResult,
+      getRetrieveDepartmentById: () => () => wardResult,
       getSendBookingNotification: () => sendBookingNotificationSpy,
     };
 

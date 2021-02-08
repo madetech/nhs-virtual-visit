@@ -26,10 +26,10 @@ describe("create-hospital", () => {
       body: jest.fn(),
     };
     container = {
-      getCreateHospital: jest.fn().mockReturnValue(() => {
+      getCreateFacility: jest.fn().mockReturnValue(() => {
         return { hospitalId: 1, error: null };
       }),
-      getTrustAdminIsAuthenticated: jest
+      getOrganisationAdminIsAuthenticated: jest
         .fn()
         .mockReturnValue((cookie) => cookie === "token=valid.token.value"),
     };
@@ -58,7 +58,8 @@ describe("create-hospital", () => {
       {
         container: {
           ...container,
-          getTrustAdminIsAuthenticated: () => trustAdminIsAuthenticatedSpy,
+          getOrganisationAdminIsAuthenticated: () =>
+            trustAdminIsAuthenticatedSpy,
         },
       }
     );
@@ -75,7 +76,7 @@ describe("create-hospital", () => {
     await createHospital(validRequest, response, {
       container: {
         ...container,
-        getCreateHospital: () => createHospitalSpy,
+        getCreateFacility: () => createHospitalSpy,
       },
     });
 
@@ -103,7 +104,7 @@ describe("create-hospital", () => {
     await createHospital(validRequest, response, {
       container: {
         ...container,
-        getCreateHospital: () => createHospitalSpy,
+        getCreateFacility: () => createHospitalSpy,
       },
     });
 
@@ -132,7 +133,7 @@ describe("create-hospital", () => {
     await createHospital(validRequest, response, {
       container: {
         ...container,
-        getCreateHospital: () => createHospitalSpy,
+        getCreateFacility: () => createHospitalSpy,
       },
     });
 
@@ -155,7 +156,7 @@ describe("create-hospital", () => {
     await createHospital(validRequest, response, {
       container: {
         ...container,
-        getCreateHospital: () => createHospitalStub,
+        getCreateFacility: () => createHospitalStub,
       },
     });
 

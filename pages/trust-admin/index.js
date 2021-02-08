@@ -168,9 +168,11 @@ const TrustAdmin = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyTrustAdminToken(async ({ container, authenticationToken }) => {
-    const { wards, error: wardError } = await container.getRetrieveWards()(
-      authenticationToken.trustId
-    );
+    const {
+      departments,
+      error: wardError,
+    } = await container.getRetrieveDepartments()(authenticationToken.trustId);
+    console.log(departments);
     const {
       facilities,
       error: facilitiesError,
@@ -185,11 +187,11 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId
     );
 
-    const retrieveHospitalVisitTotals = await container.getRetrieveHospitalVisitTotals()(
+    const retrieveHospitalVisitTotals = await container.getRetrieveFacilityVisitTotals()(
       authenticationToken.trustId
     );
 
-    const retrieveWardVisitTotals = await container.getRetrieveWardVisitTotals()(
+    const retrieveWardVisitTotals = await container.getRetrieveDepartmentVisitTotals()(
       authenticationToken.trustId
     );
 
@@ -203,28 +205,28 @@ export const getServerSideProps = propsWithContainer(
     const {
       startDate: wardVisitTotalsStartDate,
       error: wardVisitTotalsStartDateError,
-    } = await container.getRetrieveWardVisitTotalsStartDateByTrustId()(
+    } = await container.getRetrieveDepartmentVisitTotalsStartDateByOrganisationId()(
       authenticationToken.trustId
     );
 
     const {
       startDate: reportingStartDate,
       error: reportingStartDateError,
-    } = await container.getRetrieveReportingStartDateByTrustId()(
+    } = await container.getRetrieveReportingStartDateByOrganisationId()(
       authenticationToken.trustId
     );
 
     const {
       averageVisitTime,
       error: averageVisitTimeSecondsError,
-    } = await container.getRetrieveAverageVisitTimeByTrustId()(
+    } = await container.getRetrieveAverageVisitTimeByOrganisationId()(
       authenticationToken.trustId
     );
 
     const {
       averageVisitsPerDay,
       error: averageVisitsPerDayError,
-    } = await container.getRetrieveAverageVisitsPerDayByTrustId()(
+    } = await container.getRetrieveAverageVisitsPerDayByOrganisationId()(
       authenticationToken.trustId
     );
 
@@ -240,7 +242,7 @@ export const getServerSideProps = propsWithContainer(
 
     return {
       props: {
-        wards: wards,
+        wards: departments,
         hospitals: facilities,
         leastVisited: retrieveHospitalVisitTotals.leastVisited,
         mostVisited: retrieveHospitalVisitTotals.mostVisited,

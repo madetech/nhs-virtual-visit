@@ -24,7 +24,8 @@ describe("verifyToken", () => {
     const container = {
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
-      getRetrieveWardById: () => jest.fn().mockReturnValue({ error: null }),
+      getRetrieveDepartmentById: () =>
+        jest.fn().mockReturnValue({ error: null }),
     };
 
     const result = await verifyToken(callback)({ req, res, container });
@@ -44,7 +45,8 @@ describe("verifyToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
-      getRetrieveWardById: () => jest.fn().mockReturnValue({ error: null }),
+      getRetrieveDepartmentById: () =>
+        jest.fn().mockReturnValue({ error: null }),
     };
 
     await verifyToken(callback)({ req, res, container });
@@ -60,7 +62,8 @@ describe("verifyToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
-      getRetrieveWardById: () => jest.fn().mockReturnValue({ error: null }),
+      getRetrieveDepartmentById: () =>
+        jest.fn().mockReturnValue({ error: null }),
     };
     req.headers.cookie = "";
 
@@ -102,7 +105,8 @@ describe("verifyToken", () => {
     const container = {
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => regenerateTokenSpy,
-      getRetrieveWardById: () => jest.fn().mockReturnValue({ error: null }),
+      getRetrieveDepartmentById: () =>
+        jest.fn().mockReturnValue({ error: null }),
     };
 
     await verifyToken(callback)({

@@ -1,7 +1,7 @@
 import retrieveWardById from "../../../src/gateways/PostgreSQL/retrieveWardById";
 import { setupWardWithinHospitalAndTrust } from "../../../test/testUtils/factories";
 
-describe("retrieveWardById", () => {
+describe.skip("retrieveWardById", () => {
   it("returns the ward", async () => {
     const {
       wardId,

@@ -7,7 +7,7 @@ import Notify from "../../src/gateways/GovNotify";
 
 import { setupWardWithinHospitalAndTrust } from "../../test/testUtils/factories";
 
-describe("createVisit contract tests", () => {
+describe.skip("createVisit contract tests", () => {
   it("creates a visit", async () => {
     const getNotifyClient = () => {
       return Notify.getInstance();

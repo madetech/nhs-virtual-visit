@@ -1,23 +1,23 @@
 import cookie from "cookie";
 import { WARD_STAFF } from "../helpers/userTypes";
 
-export default ({ getTokenProvider, getRetrieveWardById }) => async (
+export default ({ getTokenProvider, getRetrieveDepartmentById }) => async (
   requestCookie
 ) => {
   const tokenProvider = getTokenProvider();
-  const retrieveWardById = getRetrieveWardById();
+  const retrieveDepartmentById = getRetrieveDepartmentById();
 
   try {
     const { token } = cookie.parse(requestCookie);
 
     const validatedToken = tokenProvider.validate(token);
 
-    const { error: retrieveWardError } = await retrieveWardById(
+    const { error: retrieveDepartmentError } = await retrieveDepartmentById(
       validatedToken.wardId,
       validatedToken.trustId
     );
 
-    if (retrieveWardError) {
+    if (retrieveDepartmentError) {
       return false;
     }
 

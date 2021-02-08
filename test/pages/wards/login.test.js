@@ -19,7 +19,7 @@ describe("login", () => {
     it("does not redirect if not logged in", async () => {
       const container = {
         getUserIsAuthenticated: () => jest.fn().mockResolvedValue(false),
-        getTrustAdminIsAuthenticated: () => () => false,
+        getOrganisationAdminIsAuthenticated: () => () => false,
         getAdminIsAuthenticated: () => () => false,
       };
 
@@ -32,7 +32,7 @@ describe("login", () => {
       const container = {
         getUserIsAuthenticated: () =>
           jest.fn().mockResolvedValue({ ward: "my-test-ward" }),
-        getTrustAdminIsAuthenticated: () => () => false,
+        getOrganisationAdminIsAuthenticated: () => () => false,
         getAdminIsAuthenticated: () => () => false,
       };
 
@@ -47,7 +47,9 @@ describe("login", () => {
     it("redirects to the trust admin index page if trust admin logged in", async () => {
       const container = {
         getUserIsAuthenticated: () => jest.fn().mockResolvedValue(false),
-        getTrustAdminIsAuthenticated: () => () => ({ type: "trustAdmin" }),
+        getOrganisationAdminIsAuthenticated: () => () => ({
+          type: "trustAdmin",
+        }),
         getAdminIsAuthenticated: () => () => false,
       };
 
@@ -62,7 +64,7 @@ describe("login", () => {
     it("redirects to the admin index page if admin logged in", async () => {
       const container = {
         getUserIsAuthenticated: () => jest.fn().mockResolvedValue(false),
-        getTrustAdminIsAuthenticated: () => () => false,
+        getOrganisationAdminIsAuthenticated: () => () => false,
         getAdminIsAuthenticated: () => () => ({ type: "admin" }),
       };
 

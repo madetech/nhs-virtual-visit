@@ -21,7 +21,7 @@ describe("As a trust admin, I want to add, edit and delete  a ward so that ward 
   before(() => {
     // reset and seed the database
     cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
     );
     cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });

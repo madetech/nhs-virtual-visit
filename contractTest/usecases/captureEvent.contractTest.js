@@ -5,7 +5,7 @@ import {
   setupVisitPostgres,
 } from "../../test/testUtils/factories";
 
-describe("captureEvent contract tests", () => {
+describe.skip("captureEvent contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns an error when the event data is invalid", async () => {

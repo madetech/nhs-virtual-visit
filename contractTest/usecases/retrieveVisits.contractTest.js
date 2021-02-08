@@ -30,7 +30,7 @@ xdescribe("retrieveVisits contract tests", () => {
 
     let pastDate = new Date();
     pastDate.setDate(pastDate.getDate() + 1);
-    const pastVisit = await container.getInsertVisitGW()(
+    const pastVisit = await container.getInsertVisitGateway()(
       db,
       {
         provider: "whereby",
@@ -46,7 +46,7 @@ xdescribe("retrieveVisits contract tests", () => {
 
     let futureDate = new Date();
     futureDate.setDate(futureDate.getDate() + 1);
-    const futureVisit = await container.getInsertVisitGW()(
+    const futureVisit = await container.getInsertVisitGateway()(
       db,
       {
         provider: "test",
@@ -62,7 +62,7 @@ xdescribe("retrieveVisits contract tests", () => {
     );
 
     // Cancelled visits are not returned
-    await container.getInsertVisitGW()(
+    await container.getInsertVisitGateway()(
       db,
       {
         provider: "test",
@@ -79,7 +79,7 @@ xdescribe("retrieveVisits contract tests", () => {
     await deleteVisitByCallId(container)("cancelledVisit");
 
     // Visits from other wards are not returned
-    await container.getInsertVisitGW()(
+    await container.getInsertVisitGateway()(
       db,
       {
         provider: "test",

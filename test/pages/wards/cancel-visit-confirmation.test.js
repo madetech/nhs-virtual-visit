@@ -39,7 +39,7 @@ describe("ward/cancel-visit-confirmation", () => {
         }),
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
-        getRetrieveWardById: () => jest.fn().mockReturnValue({}),
+        getRetrieveDepartmentById: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({
@@ -70,7 +70,7 @@ describe("ward/cancel-visit-confirmation", () => {
           }),
           getTokenProvider: () => tokenProvider,
           getRegenerateToken: () => jest.fn().mockReturnValue({}),
-          getRetrieveWardById: () => jest.fn().mockReturnValue({}),
+          getRetrieveDepartmentById: () => jest.fn().mockReturnValue({}),
         };
 
         const { props } = await getServerSideProps({

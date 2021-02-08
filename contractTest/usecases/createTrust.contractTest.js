@@ -1,6 +1,6 @@
 import AppContainer from "../../src/containers/AppContainer";
 
-describe("createTrust contract tests", () => {
+describe.skip("createTrust contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("creates a trust in the db when valid", async () => {

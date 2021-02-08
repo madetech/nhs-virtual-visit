@@ -8,7 +8,7 @@ import {
 } from "../../test/testUtils/factories";
 import { v4 as uuidv4 } from "uuid";
 
-describe("retrieveAverageVisitsPerDay contract tests", () => {
+describe.skip("retrieveAverageVisitsPerDay contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("returns the average number of visits per day for a trust", async () => {

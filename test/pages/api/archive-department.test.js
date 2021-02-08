@@ -26,8 +26,8 @@ describe("archive-department", () => {
       end: jest.fn(),
       body: jest.fn(),
     };
-    mockAppContainer.getTrustAdminIsAuthenticated.mockImplementation(() =>
-      jest.fn(() => ({ type: TRUST_ADMIN, trustId: 1, userId: 10 }))
+    mockAppContainer.getOrganisationAdminIsAuthenticated.mockImplementation(
+      () => jest.fn(() => ({ type: TRUST_ADMIN, trustId: 1, userId: 10 }))
     );
     mockAppContainer.getRetrieveDepartmentByUuid.mockImplementation(
       () => retrieveDepartmentByUuidSpy
@@ -48,7 +48,7 @@ describe("archive-department", () => {
   it("returns a 401 if not a trust admin", async () => {
     // Arrange
     const trustAdminIsAuthenticatedSpy = jest.fn().mockReturnValue(false);
-    mockAppContainer.getTrustAdminIsAuthenticated.mockImplementationOnce(
+    mockAppContainer.getOrganisationAdminIsAuthenticated.mockImplementationOnce(
       () => trustAdminIsAuthenticatedSpy
     );
     await archiveDepartment(
@@ -86,12 +86,10 @@ describe("archive-department", () => {
   });
 
   it("returns a 404 status if the department to be archived does not exist", async () => {
-    const retrieveDepartmentStub = jest
-      .fn()
-      .mockResolvedValue({
-        department: null,
-        error: "Error on retrieving department",
-      });
+    const retrieveDepartmentStub = jest.fn().mockResolvedValue({
+      department: null,
+      error: "Error on retrieving department",
+    });
     mockAppContainer.getRetrieveDepartmentByUuid.mockImplementationOnce(
       () => retrieveDepartmentStub
     );

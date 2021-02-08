@@ -40,7 +40,7 @@ describe("wards/visits/[id]/edit", () => {
 
       const container = {
         getUserIsAuthenticated: () => jest.fn().mockResolvedValue({ wardId }),
-        getRetrieveWardById: () => () => ({ error: null }),
+        getRetrieveDepartmentById: () => () => ({ error: null }),
         getTokenProvider: () => ({
           validate: jest.fn(() => ({
             type: "wardStaff",
@@ -98,7 +98,7 @@ describe("wards/visits/[id]/edit", () => {
 
       const container = {
         getUserIsAuthenticated: () => jest.fn().mockResolvedValue({ wardId }),
-        getRetrieveWardById: () => () => ({ error: null }),
+        getRetrieveDepartmentById: () => () => ({ error: null }),
         getTokenProvider: () => ({
           validate: jest.fn(() => ({
             type: "wardStaff",

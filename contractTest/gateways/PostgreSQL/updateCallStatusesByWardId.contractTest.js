@@ -12,7 +12,7 @@ import {
   setupVisitPostgres,
 } from "../../../test/testUtils/factories";
 
-describe("updateCallStatusesByWardId() contract", () => {
+describe.skip("updateCallStatusesByWardId() contract", () => {
   const container = AppContainer.getInstance();
 
   it("updates the call statuses", async () => {

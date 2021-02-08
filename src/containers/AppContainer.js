@@ -1,4 +1,4 @@
-import Database from "../gateways/Database";
+//import Database from "../gateways/Database";
 import GovNotify from "../gateways/GovNotify";
 import logEvent from "../gateways/logEvent";
 import CallIdProvider from "../providers/CallIdProvider";
@@ -6,42 +6,21 @@ import RandomIdProvider from "../providers/RandomIdProvider";
 
 /* Usecases  */
 import deleteVisitByCallId from "../usecases/deleteVisitByCallId";
-import createWard from "../usecases/createWard";
 import sendTextMessage from "../usecases/sendTextMessage";
 import sendEmail from "../usecases/sendEmail";
 import userIsAuthenticated from "../usecases/userIsAuthenticated";
-import trustAdminIsAuthenticated from "../usecases/trustAdminIsAuthenticated";
 import adminIsAuthenticated from "../usecases/adminIsAuthenticated";
+import organisationAdminIsAuthenticated from "../usecases/organisationIsAuthenticated";
 import TokenProvider from "../providers/TokenProvider";
-import verifyWardCode from "../usecases/verifyWardCode";
-import verifyTrustAdminCode from "../usecases/verifyTrustAdminCode";
 import verifyAdminCode from "../usecases/verifyAdminCode";
 import retrieveVisits from "../usecases/retrieveVisits";
 import retrieveVisitByCallId from "../usecases/retrieveVisitByCallId";
 import verifyCallPassword from "../usecases/verifyCallPassword";
-import retrieveWards from "../usecases/retrieveWards";
-import updateWardVisitTotalsDb from "../usecases/updateWardVisitTotals";
-import retrieveWardVisitTotals from "../usecases/retrieveWardVisitTotals";
-import updateWard from "../usecases/updateWard";
-import createHospital from "../usecases/createHospital";
-import updateHospital from "../usecases/updateHospital";
-import retrieveHospitalsByTrustId from "../usecases/retrieveHospitalsByTrustId";
-import retrieveHospitalById from "../usecases/retrieveHospitalById";
-import archiveWard from "../usecases/archiveWard";
 import validateEmailAddress from "../usecases/validateEmailAddress";
 import validateMobileNumber from "../usecases/validateMobileNumber";
-import createTrust from "../usecases/createTrust";
-import retrieveTrusts from "../usecases/retrieveTrusts";
 import regenerateToken from "../usecases/regenerateToken";
-import retrieveWardsByHospitalId from "../usecases/retrieveWardsByHospitalId";
-import retrieveHospitalVisitTotals from "../usecases/retrieveHospitalVisitTotals";
-import retrieveHospitalWardVisitTotals from "../usecases/retrieveHospitalWardVisitTotals";
 import captureEvent from "../usecases/captureEvent";
 import retrieveAverageParticipantsInVisit from "../usecases/retrieveAverageParticipantsInVisit";
-import retrieveAverageVisitTimeByTrustId from "../usecases/retrieveAverageVisitTimeByTrustId";
-import retrieveWardVisitTotalsStartDateByTrustId from "../usecases/retrieveWardVisitTotalsStartDateByTrustId";
-import retrieveAverageVisitsPerDayByTrustId from "../usecases/retrieveAverageVisitsPerDayByTrustId";
-import retrieveReportingStartDateByTrustId from "../usecases/retrieveReportingStartDateByTrustId";
 import updateVisitById from "../usecases/updateVisitById";
 import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
@@ -70,11 +49,15 @@ import updateDepartmentById from "../usecases/updateDepartmentById";
 import archiveDepartmentById from "../usecases/archiveDepartmentById";
 import createManager from "../usecases/createManager";
 import verifyUserLogin from "../usecases/verifyUserLogin";
+import retrieveDepartmentById from "../usecases/retrieveDepartmentById";
 import retrieveActiveManagersByOrgId from "../usecases/retrieveActiveManagersByOrgId";
 import resetPassword from "../usecases/resetPassword";
 import verifyResetPasswordLink from "../usecases/verifyResetPasswordLink";
 import retrieveEmailAndHashedPassword from "../usecases/retrieveEmailAndHashedPassword";
-/* GW MSSQL*/
+import retrieveActiveDepartmentsByOrganisationId from "../usecases/retrieveActiveDepartmentsByOrganisationId";
+import retrieveDepartmentByCode from "../usecases/retrieveDepartmentByCode";
+
+/* Gateways */
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
 import retrieveEmailAndHashedPasswordGateway from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
@@ -92,7 +75,7 @@ import insertManagerGateway from "../gateways/MsSQL/insertManager";
 import verifySignUpLinkGateway from "../gateways/MsSQL/verifySignUpLink";
 import updateLinkStatusByHashGateway from "../gateways/MsSQL/updateLinkStatusByHash";
 import retrieveManagerByEmailGateway from "../gateways/MsSQL/retrieveManagerByEmail";
-import retrieveFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveFacilitiesByOrgId";
+import retrieveFacilitiesByOrgIdGateway from "../gateways/MsSQL/retrieveFacilitiesByOrgId";
 import createFacilityGateway from "../gateways/MsSQL/createFacility";
 import retrieveFacilityByIdGateway from "../gateways/MsSQL/retrieveFacilityById";
 import retrieveFacilityByUuidGateway from "../gateways/MsSQL/retrieveFacilityByUuid";
@@ -107,50 +90,16 @@ import verifyAdminCodeGateway from "../gateways/MsSQL/verifyAdminCode";
 import retrieveActiveDepartmentsByOrganisationIdGateway from "../gateways/MsSQL/retrieveActiveDepartmentsByOrganisationId";
 import updateDepartmentStatusByIdGateway from "../gateways/MsSQL/updateDepartmentStatusById";
 import updateOrganisationGateway from "../gateways/MsSQL/updateOrganisation";
-import insertScheduledCallGateway from "../gateways/MsSQL/insertVisit";
 import deleteVisitByCallIdGateway from "../gateways/MsSQL/deleteVisitByCallId";
 import retrieveActiveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveActiveManagersByOrgId";
 import updateVisitStatusByCallIdGateway from "../gateways/MsSQL/updateVisitStatusByCallId";
-
-/* GW Imports */
-import findWardByCode from "../gateways/PostgreSQL/findWardByCode";
-import insertVisit from "../gateways/PostgreSQL/insertVisit";
-import updateCallStatusesByWardId from "../gateways/PostgreSQL/updateCallStatusesByWardId";
-import updateWardArchiveTimeById from "../gateways/PostgreSQL/updateWardArchiveTimeById";
-import updateWardVisitTotals from "../gateways/PostgreSQL/updateWardVisitTotals";
-import retrieveWardById from "../gateways/PostgreSQL/retrieveWardById";
-import retrieveTrustById from "../gateways/PostgreSQL/retrieveTrustById";
-import retrieveOrganizationById from "../gateways/PostgreSQL/retrieveOrganizationById";
-import retrieveOrganizationsGW from "../gateways/PostgreSQL/retrieveOrganizations";
-import retrieveVisitByIdGW from "../gateways/PostgreSQL/retrieveVisitById";
-import retrieveActiveWardsByTrustIdGW from "../gateways/PostgreSQL/retrieveActiveWardsByTrustId";
-import captureEventGW from "../gateways/PostgreSQL/captureEvent";
-import retrieveReportingStartDateByTrustIdGW from "../gateways/PostgreSQL/retrieveReportingStartDateByTrustId";
-import retrieveAverageParticipantsInVisitGW from "../gateways/PostgreSQL/retrieveAverageParticipantsInVisit";
-import retrieveHospitalVisitTotalsGW from "../gateways/PostgreSQL/retrieveHospitalVisitTotals";
-import retrieveWardsByHospitalIdGW from "../gateways/PostgreSQL/retrieveWardsByHospitalId";
-import markVisitAsCompleteGW from "../gateways/PostgreSQL/markVisitAsComplete";
-import createTrustGW from "../gateways/PostgreSQL/createTrust";
-import createWardGW from "../gateways/PostgreSQL/createWard";
-import updateTrustGW from "../gateways/PostgreSQL/updateTrust";
-import updateWardGW from "../gateways/PostgreSQL/updateWard";
-import updateHospitalGW from "../gateways/PostgreSQL/updateHospital";
-import retrieveHospitalByIdGW from "../gateways/PostgreSQL/retrieveHospitalById";
-import retrieveHospitalsByTrustIdGW from "../gateways/PostgreSQL/retrieveHospitalsByTrustId";
-import insertHospitalGW from "../gateways/PostgreSQL/insertHospital";
-import deleteVisitByCallIdGW from "../gateways/PostgreSQL/deleteVisitByCallId";
-import createOrganisationGW from "../gateways/PostgreSQL/createOrganization";
-import retrieveWardVisitTotalsGateway from "../gateways/PostgreSQL/retrieveWardVisitTotals";
-import retrieveHospitalWardVisitTotalsGateway from "../gateways/PostgreSQL/retrieveHospitalWardVisitTotals";
-import retrieveAverageVisitTimeByTrustIdGateway from "../gateways/PostgreSQL/retrieveAverageVisitTimeByTrustId";
-import retrieveAverageVisitsPerDayGateway from "../gateways/PostgreSQL/retrieveAverageVisitsPerDayByTrustId";
-import retrieveTrustsGateway from "../gateways/PostgreSQL/retrieveTrusts";
-import retrieveVisitByCallIdGateway from "../gateways/PostgreSQL/retrieveVisitByCallId";
-import retrieveVisitsGateway from "../gateways/PostgreSQL/retrieveVisits";
-import retrieveWardVisitTotalsStartDateByTrustIdGateway from "../gateways/PostgreSQL/retrieveWardVisitTotalsStartDateByTrustId";
-import updateVisitByIdGateway from "../gateways/PostgreSQL/updateVisitById";
-import verifyAdminCodeGW from "../gateways/PostgreSQL/verifyAdminCode";
-import verifyTrustAdminCodeGateway from "../gateways/PostgreSQL/verifyTrustAdminCode";
+import insertVisitGateway from "../gateways/MsSQL/insertVisit";
+import retrieveDepartmentByIdGateway from "../gateways/MsSQL/retrieveDepartmentById";
+import retrieveVisitByIdGateway from "../gateways/MsSQL/retrieveScheduledCallById";
+import captureEventGateway from "../gateways/MsSQL/captureEvent";
+import retrieveVisitByCallIdGateway from "../gateways/MsSQL/retrieveScheduledCallByUuid";
+import retrieveVisitsGateway from "../gateways/MsSQL/retrieveVisits";
+import updateVisitByIdGateway from "../gateways/MsSQL/updateVisitById";
 import verifySignUpLink from "../usecases/verifySignUpLink";
 import activateManagerAndOrganisation from "../usecases/activateManagerAndOrganisation";
 import activateManagerAndOrganisationGateway from "../gateways/MsSQL/activateManagerAndOrganisation";
@@ -159,10 +108,11 @@ import activateOrganisationGateway from "../gateways/MsSQL/activateOrganisation"
 import addToUserVerificationTable from "../usecases/addToUserVerificationTable";
 import addToUserVerificationTableGateway from "../gateways/MsSQL/addToUserVerificationTable";
 import updateVisitStatusByDepartmentId from "../gateways/MsSQL/updateVisitStatusByDepartmentId";
+import updateVisitStatusByCallId from "../gateways/MsSQL/updateVisitStatusByCallId";
 
 class AppContainer {
   getDb = () => {
-    return Database.getInstance();
+    //return Database.getInstance();
   };
 
   getMsSqlConnPool = () => {
@@ -184,14 +134,6 @@ class AppContainer {
     return deleteVisitByCallId(this);
   };
 
-  getCreateWard = () => {
-    return createWard(this);
-  };
-
-  getRetrieveWardById = () => {
-    return retrieveWardById;
-  };
-
   getTokenProvider = () => {
     return new TokenProvider(process.env.JWT_SIGNING_KEY);
   };
@@ -200,12 +142,12 @@ class AppContainer {
     return userIsAuthenticated(this);
   };
 
-  getTrustAdminIsAuthenticated = () => {
-    return trustAdminIsAuthenticated(this);
-  };
-
   getAdminIsAuthenticated = () => {
     return adminIsAuthenticated(this);
+  };
+
+  getOrganisationAdminIsAuthenticated = () => {
+    return organisationAdminIsAuthenticated(this);
   };
 
   getSendTextMessage = () => {
@@ -214,14 +156,6 @@ class AppContainer {
 
   getSendEmail = () => {
     return sendEmail(this);
-  };
-
-  getVerifyWardCode = () => {
-    return verifyWardCode(this);
-  };
-
-  getVerifyTrustAdminCode = () => {
-    return verifyTrustAdminCode(this);
   };
 
   getVerifyAdminCode = () => {
@@ -240,52 +174,12 @@ class AppContainer {
     return verifyCallPassword(this);
   };
 
-  getRetrieveWards = () => {
-    return retrieveWards(this);
-  };
-
-  getUpdateWardVisitTotals = () => {
-    return updateWardVisitTotalsDb(this);
-  };
-
-  getRetrieveWardVisitTotals = () => {
-    return retrieveWardVisitTotals(this);
-  };
-
-  getUpdateWard = () => {
-    return updateWard(this);
-  };
-
-  getCreateHospital = () => {
-    return createHospital(this);
-  };
-
   getCreateFacility = () => {
     return createFacility(this);
   };
 
-  getUpdateHospital = () => {
-    return updateHospital(this);
-  };
-
-  getRetrieveHospitalsByTrustId = () => {
-    return retrieveHospitalsByTrustId(this);
-  };
-
   getRetrieveFacilitiesByOrgId = () => {
     return retrieveFacilitiesByOrgId(this);
-  };
-
-  getRetrieveTrustById = () => {
-    return retrieveTrustById;
-  };
-
-  getRetrieveHospitalById = () => {
-    return retrieveHospitalById(this);
-  };
-
-  getArchiveWard = () => {
-    return archiveWard(this);
   };
 
   getValidateEmailAddress = () => {
@@ -295,29 +189,8 @@ class AppContainer {
   getValidateMobileNumber = () => {
     return validateMobileNumber(this);
   };
-
-  getCreateTrust = () => {
-    return createTrust(this);
-  };
-
-  getRetrieveTrusts = () => {
-    return retrieveTrusts(this);
-  };
-
   getRegenerateToken = () => {
     return regenerateToken(this);
-  };
-
-  getRetrieveWardsByHospitalId = () => {
-    return retrieveWardsByHospitalId(this);
-  };
-
-  getRetrieveHospitalVisitTotals = () => {
-    return retrieveHospitalVisitTotals(this);
-  };
-
-  getRetrieveHospitalWardVisitTotals = () => {
-    return retrieveHospitalWardVisitTotals(this);
   };
 
   getCaptureEvent = () => {
@@ -326,22 +199,6 @@ class AppContainer {
 
   getRetrieveAverageParticipantsInVisit = () => {
     return retrieveAverageParticipantsInVisit(this);
-  };
-
-  getRetrieveAverageVisitTimeByTrustId = () => {
-    return retrieveAverageVisitTimeByTrustId(this);
-  };
-
-  getRetrieveWardVisitTotalsStartDateByTrustId = () => {
-    return retrieveWardVisitTotalsStartDateByTrustId(this);
-  };
-
-  getRetrieveAverageVisitsPerDayByTrustId = () => {
-    return retrieveAverageVisitsPerDayByTrustId(this);
-  };
-
-  getRetrieveReportingStartDateByTrustId = () => {
-    return retrieveReportingStartDateByTrustId(this);
   };
 
   getUpdateVisitById = () => {
@@ -375,6 +232,7 @@ class AppContainer {
   getRetrieveFacilityByUuid = () => {
     return retrieveFacilityByUuid(this);
   };
+
   getUpdateFacilityById = () => {
     return updateFacilityById(this);
   };
@@ -405,6 +263,7 @@ class AppContainer {
   getInsertManagerGateway = () => {
     return insertManagerGateway(this);
   };
+
   getCreateManager = () => {
     return createManager(this);
   };
@@ -413,12 +272,28 @@ class AppContainer {
     return retrieveActiveDepartmentsByFacilityId(this);
   };
 
+  getRetrieveActiveDepartmentsByOrganisationId = () => {
+    return retrieveActiveDepartmentsByOrganisationId(this);
+  };
+
+  getRetrieveDepartments = () => {
+    return retrieveActiveDepartmentsByOrganisationId(this);
+  };
+
   getCreateDepartment = () => {
     return createDepartment(this);
   };
 
+  getRetrieveDepartmentById = () => {
+    return retrieveDepartmentById(this);
+  };
+
   getRetrieveDepartmentByUuid = () => {
     return retrieveDepartmentByUuid(this);
+  };
+
+  getRetrieveDepartmentByCode = () => {
+    return retrieveDepartmentByCode(this);
   };
 
   getUpdateDepartmentById = () => {
@@ -439,119 +314,28 @@ class AppContainer {
 
   /* These are the Gateway */
 
-  getFindWardByCodeGateway = () => {
-    return findWardByCode(this);
-  };
-
   getCaptureEventGateway = () => {
-    return captureEventGW(this);
+    return captureEventGateway(this);
   };
 
   getRetrieveVisitByIdGateway = () => {
-    return retrieveVisitByIdGW(this);
+    return retrieveVisitByIdGateway(this);
   };
 
-  getRetrieveOrganizations = () => {
-    return retrieveOrganizationsGW(this);
-  };
-
-  getUpdateCallStatusesByWardIdGateway = () => {
-    return updateCallStatusesByWardId(this);
-  };
-
-  getUpdateWardArchiveTimeByIdGateway = () => {
-    return updateWardArchiveTimeById(this);
-  };
-
-  getRetrieveActiveWardsByTrustIdGW = () =>
-    retrieveActiveWardsByTrustIdGW(this);
-
-  getRetrieveHospitalVisitTotalsGateway = () => {
-    return retrieveHospitalVisitTotalsGW(this);
-  };
-
-  getRetrieveAverageParticipantsInVisitGateway = () => {
-    return retrieveAverageParticipantsInVisitGW(this);
-  };
-
-  getRetrieveWardsByHospitalIdGateway = () => {
-    return retrieveWardsByHospitalIdGW(this);
-  };
-
-  getMarkVisitAsCompleteGateway = () => {
-    return markVisitAsCompleteGW(this);
-  };
-
-  getDeleteVisitByCallIdGW = () => {
-    return deleteVisitByCallIdGW(this);
-  };
-
-  getCreateOrganizationGateway = () => {
-    return createOrganisationGW(this);
+  getDeleteVisitByCallIdGateway = () => {
+    return deleteVisitByCallIdGateway(this);
   };
 
   getInsertVisitGateway = () => {
-    return insertVisit;
+    return insertVisitGateway(this);
   };
 
   getUpdateVisitStatusByDepartmentIdGateway = () => {
     return updateVisitStatusByDepartmentId(this);
   };
 
-  getUpdateHospitalGateway = () => {
-    return updateHospitalGW(this);
-  };
-
-  getRetrieveHospitalByIdGateway = () => {
-    return retrieveHospitalByIdGW(this);
-  };
-
-  getRetrieveHospitalsByTrustIdGateway = () => {
-    return retrieveHospitalsByTrustIdGW(this);
-  };
-
-  getRetrieveWardVisitTotalsGateway = () => {
-    return retrieveWardVisitTotalsGateway(this);
-  };
-
-  getRetrieveAverageVisitTimeByTrustIdGateway = () => {
-    return retrieveAverageVisitTimeByTrustIdGateway(this);
-  };
-
-  getInsertHospitalGateway = () => {
-    return insertHospitalGW(this);
-  };
-
-  getCreateTrustGateway = () => {
-    return createTrustGW(this);
-  };
-
-  getCreateWardGateway = () => {
-    return createWardGW(this);
-  };
-
-  getUpdateTrustGateway = () => {
-    return updateTrustGW(this);
-  };
-
-  getUpdateWardGateway = () => {
-    return updateWardGW(this);
-  };
-
-  getUpdateWardVisitTotalsGateway = () => {
-    return updateWardVisitTotals;
-  };
-
-  getRetrieveHospitalWardVisitTotalsGateway = () => {
-    return retrieveHospitalWardVisitTotalsGateway(this);
-  };
-
-  getRetrieveAverageVisitsPerDayGateway = () => {
-    return retrieveAverageVisitsPerDayGateway(this);
-  };
-
-  getRetrieveTrustsGateway = () => {
-    return retrieveTrustsGateway(this);
+  getUpdateVisitStatusByCallIdGateway = () => {
+    return updateVisitStatusByCallId(this);
   };
 
   getRetrieveVisitByCallIdGateway = () => {
@@ -562,20 +346,12 @@ class AppContainer {
     return retrieveVisitsGateway(this);
   };
 
-  getRetrieveWardVisitTotalsStartDateByTrustIdGateway = () => {
-    return retrieveWardVisitTotalsStartDateByTrustIdGateway(this);
-  };
-
   getUpdateVisitByIdGateway = () => {
     return updateVisitByIdGateway(this);
   };
 
-  getVerifyAdminCodeGW = () => {
-    return verifyAdminCodeGW(this);
-  };
-
-  getVerifyTrustAdminCodeGateway = () => {
-    return verifyTrustAdminCodeGateway(this);
+  getVerifyAdminCodeGateway = () => {
+    return verifyAdminCodeGateway(this);
   };
 
   getRetrieveActiveOrganisations = () => {
@@ -600,6 +376,10 @@ class AppContainer {
 
   getCreateDepartmentGateway = () => {
     return createDepartmentGateway(this);
+  };
+
+  getRetrieveDepartmentByIdGateway = () => {
+    return retrieveDepartmentByIdGateway(this);
   };
 
   getRetrieveDepartmentByUuidGateway = () => {
@@ -635,7 +415,7 @@ class AppContainer {
   };
 
   getCreateScheduledCallGateway = () => {
-    return insertScheduledCallGateway(this);
+    return insertVisitGateway(this);
   };
 
   getRetrieveActiveManagersByOrgIdGateway = () => {
@@ -647,10 +427,6 @@ class AppContainer {
       process.env.AZURE_FUNCTION_KEY,
       process.env.AZURE_FUNCTION_URL
     );
-  };
-
-  getRetrieveOrganizationById = () => {
-    return retrieveOrganizationById;
   };
 
   /* These uses the MsSQL DB */
@@ -673,10 +449,6 @@ class AppContainer {
 
   getRetrieveFacilityByIdGateway = () => {
     return retrieveFacilityByIdGateway(this);
-  };
-
-  getRetrieveReportingStartDateByTrustIdGateway = () => {
-    return retrieveReportingStartDateByTrustIdGW(this);
   };
 
   getUpdateManagerStatusByUuid = () => {
@@ -787,7 +559,7 @@ class AppContainer {
   };
 
   getRetrieveFacilitiesByOrgIdGateway = () => {
-    return retrieveFacilitiesByOrgIdGW(this);
+    return retrieveFacilitiesByOrgIdGateway(this);
   };
   getCreateFacilityGateway = () => {
     return createFacilityGateway(this);
@@ -811,6 +583,50 @@ class AppContainer {
   getUpdateVisitStatusByCallIdGateway = () => {
     return updateVisitStatusByCallIdGateway(this);
   };
+
+  getRetrieveFacilityVisitTotals = () => () => ({
+    error: null,
+    leastVisited: [],
+    mostVisited: [],
+    hospitals: [],
+  });
+
+  getRetrieveDepartmentVisitTotals = () => () => ({
+    error: null,
+    total: 1,
+  });
+
+  getRetrieveDepartmentVisitTotalsStartDateByOrganisationId = () => () => ({
+    error: null,
+    startDate: 1,
+  });
+
+  getRetrieveReportingStartDateByOrganisationId = () => () => ({
+    error: null,
+    startDate: 1,
+  });
+
+  getRetrieveAverageVisitTimeByOrganisationId = () => () => ({
+    error: null,
+    averageVisitTime: 1,
+  });
+
+  getRetrieveAverageVisitsPerDayByOrganisationId = () => () => ({
+    error: null,
+    averageVisitsPerDay: 1,
+  });
+
+  getRetrieveFacilityDepartmentVisitTotals = () => () => ({
+    wards: [],
+    mostVisited: {
+      wardName: "Nothing",
+      totalVisits: 0,
+    },
+    leastVisited: {
+      wardName: "Nothing",
+      totalVisits: 0,
+    },
+  });
 }
 
 export default (() => {

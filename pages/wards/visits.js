@@ -42,7 +42,10 @@ export const getServerSideProps = propsWithContainer(
       wardId,
     });
     let ward;
-    ({ ward, error } = await container.getRetrieveWardById()(wardId, trustId));
+    ({ ward, error } = await container.getRetrieveDepartmentById()(
+      wardId,
+      trustId
+    ));
 
     return {
       props: { scheduledCalls, ward, error },

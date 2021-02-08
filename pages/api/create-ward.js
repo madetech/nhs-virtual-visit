@@ -8,7 +8,7 @@ export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     validateHttpMethod("POST", method, res);
 
-    const trustAdminIsAuthenticated = container.getTrustAdminIsAuthenticated();
+    const trustAdminIsAuthenticated = container.getOrganisationAdminIsAuthenticated();
 
     const trustAdminAuthenticatedToken = trustAdminIsAuthenticated(
       headers.cookie
@@ -30,7 +30,7 @@ export default withContainer(
 
     res.setHeader("Content-Type", "application/json");
 
-    const createWard = container.getCreateWard();
+    const createWard = container.getCreateDepartment();
 
     const { wardId, error } = await createWard({
       name: body.name,

@@ -24,7 +24,7 @@ export default withContainer(async (req, res, { container }) => {
     return res.status(400).end();
   }
 
-  const updateTrust = container.getUpdateTrust();
+  const updateTrust = container.getUpdateOrganisation();
 
   const { id: updateTrustId, error } = await updateTrust({ id, videoProvider });
 

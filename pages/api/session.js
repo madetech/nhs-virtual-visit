@@ -13,7 +13,7 @@ export default withContainer(async (req, res, { container }) => {
     const sessionId = uuidv4();
     let verifyWardCodeResponse = {};
     if (password === undefined) {
-      const verifyWardCode = container.getVerifyWardCode();
+      const verifyWardCode = container.getRetrieveDepartmentByCode();
       verifyWardCodeResponse = await verifyWardCode(code);
     }
 
@@ -54,7 +54,7 @@ export default withContainer(async (req, res, { container }) => {
         type: ADMIN,
       });
     } else {
-      const { ward } = verifyWardCodeResponse;
+      const { department: ward } = verifyWardCodeResponse;
       token = tokens.generate({
         userId: undefined,
         wardId: ward.id,

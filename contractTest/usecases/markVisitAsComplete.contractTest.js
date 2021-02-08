@@ -5,7 +5,7 @@ import {
 } from "../../test/testUtils/factories";
 import { COMPLETE } from "../../src/helpers/visitStatus";
 
-describe("markVisitAsComplete contract tests", () => {
+describe.skip("markVisitAsComplete contract tests", () => {
   const container = AppContainer.getInstance();
 
   it("retrieves a visit by id", async () => {

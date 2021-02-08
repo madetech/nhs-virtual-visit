@@ -17,7 +17,8 @@ describe("/api/update-a-trust", () => {
 
     const container = {
       getAdminIsAuthenticated: () => jest.fn().mockReturnValue(true),
-      getUpdateTrust: () => jest.fn().mockResolvedValue({ id: 5, error: null }),
+      getUpdateOrganisation: () =>
+        jest.fn().mockResolvedValue({ id: 5, error: null }),
     };
 
     await updateATrust(req, response, { container });
@@ -155,7 +156,7 @@ describe("/api/update-a-trust", () => {
 
     const container = {
       getAdminIsAuthenticated: () => jest.fn().mockReturnValue(true),
-      getUpdateTrust: () => updateTrustStub,
+      getUpdateOrganisation: () => updateTrustStub,
     };
 
     const req = { headers: { cookie: "token" }, body, method: "PATCH" };
@@ -185,7 +186,7 @@ describe("/api/update-a-trust", () => {
 
     const container = {
       getAdminIsAuthenticated: () => jest.fn().mockReturnValue(true),
-      getUpdateTrust: () => updateTrustStub,
+      getUpdateOrganisation: () => updateTrustStub,
     };
 
     const req = { headers: { cookie: "token" }, body, method: "PATCH" };

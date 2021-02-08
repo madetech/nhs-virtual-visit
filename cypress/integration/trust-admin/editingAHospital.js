@@ -5,7 +5,7 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
   before(() => {
     // reset and seed the database
     cy.exec(
-      "npm run dbmigratetest reset && npm run dbmigratetest up && npm run db:seed"
+      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
     );
     cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });

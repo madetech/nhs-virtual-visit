@@ -82,20 +82,20 @@ describe("trust-admin", () => {
   });
 
   const container = {
-    getRetrieveWards: () => getRetrieveWardsSpy,
+    getRetrieveDepartments: () => getRetrieveWardsSpy,
     getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
     getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgId,
-    getRetrieveWardVisitTotals: () => retrieveWardVisitTotalsSpy,
-    getRetrieveHospitalVisitTotals: () => retrieveHospitalVisitTotals,
+    getRetrieveDepartmentVisitTotals: () => retrieveWardVisitTotalsSpy,
+    getRetrieveFacilityVisitTotals: () => retrieveHospitalVisitTotals,
     getRetrieveAverageParticipantsInVisit: () =>
       retrieveAverageParticipantsInVisit,
-    getRetrieveAverageVisitTimeByTrustId: () =>
+    getRetrieveAverageVisitTimeByOrganisationId: () =>
       retrieveAverageVisitTimeByTrustId,
-    getRetrieveWardVisitTotalsStartDateByTrustId: () =>
+    getRetrieveDepartmentVisitTotalsStartDateByOrganisationId: () =>
       retrieveWardVisitTotalsStartDateByTrustId,
-    getRetrieveReportingStartDateByTrustId: () =>
+    getRetrieveReportingStartDateByOrganisationId: () =>
       retrieveReportingStartDateByTrustId,
-    getRetrieveAverageVisitsPerDayByTrustId: () =>
+    getRetrieveAverageVisitsPerDayByOrganisationId: () =>
       retrieveAverageVisitsPerDayByTrustId,
     getTokenProvider: () => tokenProvider,
     getRegenerateToken: () => jest.fn().mockReturnValue({}),
@@ -193,7 +193,7 @@ describe("trust-admin", () => {
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveHospitalVisitTotals: () =>
+          getRetrieveFacilityVisitTotals: () =>
             jest.fn().mockReturnValue(threeHospitals),
         }),
       });
@@ -214,7 +214,7 @@ describe("trust-admin", () => {
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveWards: () => getRetrieveWardsSpyError,
+          getRetrieveDepartments: () => getRetrieveWardsSpyError,
         }),
       });
 
@@ -332,7 +332,7 @@ describe("trust-admin", () => {
         res,
         container: {
           ...container,
-          getRetrieveWardVisitTotalsStartDateByTrustId: () =>
+          getRetrieveDepartmentVisitTotalsStartDateByOrganisationId: () =>
             retrieveWardVisitTotalsStartDateByTrustIdError,
         },
       });
@@ -363,7 +363,7 @@ describe("trust-admin", () => {
         res,
         container: {
           ...container,
-          getRetrieveReportingStartDateByTrustId: () =>
+          getRetrieveReportingStartDateByOrganisationId: () =>
             retrieveReportingStartDateByTrustIdError,
         },
       });
