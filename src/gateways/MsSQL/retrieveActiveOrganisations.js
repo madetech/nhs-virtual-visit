@@ -1,4 +1,5 @@
 import logger from "../../../logger";
+import { statusToId, ACTIVE } from "../../helpers/statusTypes";
 
 const retrieveActiveOrganisationsGateway = ({
   getMsSqlConnPool,
@@ -9,7 +10,7 @@ const retrieveActiveOrganisationsGateway = ({
     const db = await getMsSqlConnPool();
     const response = await db
       .request()
-      .input("status", 1)
+      .input("status", statusToId(ACTIVE))
       .query("SELECT * FROM dbo.[organisation] WHERE STATUS = @status");
 
     return {
