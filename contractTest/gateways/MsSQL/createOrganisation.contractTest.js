@@ -5,10 +5,10 @@ import AppContainer from "../../../src/containers/AppContainer";
 describe("createOrganisationGateway", () => {
   // Arrange
   const container = AppContainer.getInstance();
-  let newOrganisation, adminId;
+  let newOrganisation;
   beforeEach(async () => {
     const { user } = await setUpAdmin();
-    adminId = user.id;
+    const adminId = user.id;
     newOrganisation = {
       name: "Organisation One",
       type: "trust",
