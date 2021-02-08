@@ -4,11 +4,16 @@ import mssql from "mssql";
 export default ({ getMsSqlConnPool }) => async (organisationId) => {
   try {
     const db = await getMsSqlConnPool();
-    await db
+    const res = await db
       .request()
       .input("organisationId", mssql.Int, organisationId)
-      .query("DELETE FROM dbo.[organisation] WHERE id = @organisationId");
+      .query(
+        "DELETE FROM dbo.[organisation] OUTPUT deleted.* WHERE id = @organisationId"
+      );
 
+    if (!res.recordset[0]) {
+      throw "Error deleting organisation with id";
+    }
     return {
       error: null,
     };
