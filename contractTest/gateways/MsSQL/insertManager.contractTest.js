@@ -16,7 +16,7 @@ describe("insertManagerGateway", () => {
     const { orgId } = await setupOrganization({ createdBy: adminId });
     const newManager = {
       email: "test@nhs.co.uk",
-      password: "hashed password",
+      password: "password",
       organisationId: orgId,
       type: "manager",
     };
@@ -27,7 +27,6 @@ describe("insertManagerGateway", () => {
     expect(user.email).toEqual(newManager.email);
     expect(user.organisationId).toEqual(newManager.organisationId);
     expect(user.type).toEqual(newManager.type);
-    expect(user.password).toEqual(newManager.password);
     expect(user.status).toEqual(statusToId(DISABLED));
     expect(error).toBeNull();
   });
@@ -38,7 +37,7 @@ describe("insertManagerGateway", () => {
     } = await setUpAdmin();
     const { orgId } = await setupOrganization({ createdBy: adminId });
     const newManager = {
-      password: "hashed password",
+      password: "password",
       organisationId: orgId,
       type: "manager",
     };
