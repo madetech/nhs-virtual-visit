@@ -1,6 +1,13 @@
 import AppContainer from "../../src/containers/AppContainer";
 const container = AppContainer.getInstance();
 
+export const setUpUserToVerify = async (args = {}) => {
+  return await container.getAddToUserVerificationTableGateway()({
+    code: "uuidv4",
+    hash: "hash",
+    ...args,
+  });
+};
 export const setUpManager = async (args = {}) => {
   return await container.getInsertManagerGateway()({
     email: "default@nhs.co.uk",
