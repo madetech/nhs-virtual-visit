@@ -1,48 +1,30 @@
 import logger from "../../../logger";
-import MsSQL from "./";
 
-const retrieveEmailAndHashedPassword = async (email) => {
-  const db = await MsSQL.getConnectionPool();
-  if (!email) {
-    return {
-      emailAddress: "",
-      hashedPassword: "",
-      error: "email is not defined",
-    };
-  }
-
+export default ({ getMsSqlConnPool }) => async (email) => {
+  logger.info(`Retrieving hashedPassword for email ${email}`);
   try {
-    const dbResponse = await db
+    const db = await getMsSqlConnPool();
+    const res = await db
       .request()
       .input("email", email)
       .query(
         `SELECT password AS hashedPassword, email AS emailAddress FROM dbo.[user] WHERE email = @email`
       );
 
-    if (dbResponse.recordset.length > 0) {
-      const { emailAddress, hashedPassword } = dbResponse.recordset[0];
-
-      return {
-        emailAddress,
-        hashedPassword,
-        error: null,
-      };
-    } else {
-      return {
-        emailAddress: "",
-        hashedPassword: "",
-        error: "Email could not be found in database",
-      };
+    if (!res.recordset[0]) {
+      throw "Error retrieving hashedPassword";
     }
-  } catch (error) {
-    logger.error(error);
 
     return {
-      emailAddress: "",
-      hashedPassword: "",
+      user: res.recordset[0],
+      error: null,
+    };
+  } catch (error) {
+    logger.error(`Error retrieving hashedPassword from email ${email}`);
+
+    return {
+      user: null,
       error: error.toString(),
     };
   }
 };
-
-export default retrieveEmailAndHashedPassword;
