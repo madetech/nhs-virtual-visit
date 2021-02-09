@@ -20,9 +20,11 @@ const activateManagerAndOrganisationGateway = ({ getMsSqlConnPool }) => async ({
         `BEGIN TRY
           BEGIN TRANSACTION; 
             UPDATE dbo.[user] SET status = @status 
+              OUTPUT inserted.*
               WHERE id = @userId;
             UPDATE dbo.[user_verification] 
               SET verified = @verified 
+              OUTPUT inserted.*
               WHERE user_id = @userId
             UPDATE dbo.[organisation]
               SET status = @status
@@ -34,9 +36,15 @@ const activateManagerAndOrganisationGateway = ({ getMsSqlConnPool }) => async ({
           ROLLBACK
         END CATCH`
       );
-
+    if (
+      !response.recordsets[0][0] ||
+      !response.recordsets[1][0] ||
+      !response.recordsets[2][0]
+    ) {
+      throw "Error activating organisation and manager";
+    }
     return {
-      organisation: response.recordset[0],
+      organisation: response.recordsets[2][0],
       error: null,
     };
   } catch (error) {
