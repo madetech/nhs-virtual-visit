@@ -15,7 +15,9 @@ const updateLinkStatusByHashGateway = ({ getMsSqlConnPool }) => async ({
       .query(
         `UPDATE dbo.[user_verification] SET verified = @verified OUTPUT inserted.* WHERE hash = @hash`
       );
-
+    if (!response.recordset[0]) {
+      throw "Error updating verified field in user verification table";
+    }
     return {
       userVerification: response.recordset[0],
       error: null,
