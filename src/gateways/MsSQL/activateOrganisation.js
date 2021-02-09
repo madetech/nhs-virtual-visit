@@ -17,6 +17,9 @@ const activateOrganisationGateway = ({ getMsSqlConnPool }) => async ({
           OUTPUT inserted.*
           WHERE id = @organisationId`
       );
+    if (!response.recordset[0]) {
+      throw "Error activating organisation";
+    }
     return {
       organisation: response.recordset[0],
       error: null,
