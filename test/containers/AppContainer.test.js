@@ -393,4 +393,8 @@ describe("AppContainer", () => {
   it("returns getRetrieveActiveManagersByOrgId", () => {
     expect(container.getRetrieveActiveManagersByOrgId()).toBeDefined();
   });
+
+  it("returns getRetrieveEmailAndHashedPasswordGateway", () => {
+    expect(container.getRetrieveEmailAndHashedPasswordGateway()).toBeDefined();
+  });
 });

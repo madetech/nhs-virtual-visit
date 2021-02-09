@@ -71,11 +71,11 @@ import archiveDepartmentById from "../usecases/archiveDepartmentById";
 import createManager from "../usecases/createManager";
 import verifyUserLogin from "../usecases/verifyUserLogin";
 import retrieveActiveManagersByOrgId from "../usecases/retrieveActiveManagersByOrgId";
-
+import retrieveEmailAndHashedPassword from "../usecases/retrieveEmailAndHashedPassword";
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
-import retrieveEmailAndHashedPassword from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
+import retrieveEmailAndHashedPasswordGateway from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
 import resetPassword from "../gateways/MsSQL/resetPassword";
 import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
 import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
@@ -699,7 +699,11 @@ class AppContainer {
   };
 
   getRetrieveEmailAndHashedPassword = () => {
-    return retrieveEmailAndHashedPassword;
+    return retrieveEmailAndHashedPassword(this);
+  };
+
+  getRetrieveEmailAndHashedPasswordGateway = () => {
+    return retrieveEmailAndHashedPasswordGateway(this);
   };
 
   getResetPassword = () => {
