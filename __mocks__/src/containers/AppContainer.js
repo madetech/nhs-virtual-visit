@@ -32,4 +32,7 @@ export default {
   getArchiveDepartmentByIdGateway: jest.fn(() => () => Promise.resolve({})),
   getArchiveDepartmentById: jest.fn(() => () => Promise.resolve({})),
   getTrustAdminIsAuthenticated: jest.fn(() => () => true),
+  getRetrieveEmailAndHashedPasswordGateway: jest.fn(() => () =>
+    Promise.resolve({})
+  ),
 };
