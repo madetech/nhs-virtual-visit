@@ -1,22 +1,22 @@
 import retrieveEmailAndHashedPassword from "../../src/usecases/retrieveEmailAndHashedPassword";
 import mockAppContainer from "src/containers/AppContainer";
 describe("retrieveEmailAndHashedPassword", () => {
-  it("returns the email address and hashed password with valid email", async () => {
-    // Arrange
-    const expectedEmail = "nhs-admin@nhs.co.uk";
-    const expectedHashedPassword = "hashed password";
-    const getRetrieveEmailAndHashedPasswordGatewaySpy = jest.fn(() =>
-      Promise.resolve({
-        user: {
-          emailAddress: expectedEmail,
-          hashedPassword: expectedHashedPassword,
-        },
-        error: null,
-      })
-    );
+  const expectedEmail = "nhs-admin@nhs.co.uk";
+  const expectedHashedPassword = "hashed password";
+  let getRetrieveEmailAndHashedPasswordGatewaySpy;
+  beforeEach(async () => {
+    getRetrieveEmailAndHashedPasswordGatewaySpy = jest.fn().mockResolvedValue({
+      user: {
+        emailAddress: expectedEmail,
+        hashedPassword: expectedHashedPassword,
+      },
+      error: null,
+    });
     mockAppContainer.getRetrieveEmailAndHashedPasswordGateway.mockImplementationOnce(
       () => getRetrieveEmailAndHashedPasswordGatewaySpy
     );
+  });
+  it("returns the email address and hashed password with valid email", async () => {
     // Act
     const {
       emailAddress,
@@ -48,15 +48,10 @@ describe("retrieveEmailAndHashedPassword", () => {
   it("returns [] if no record found", async () => {
     // Arrange
     const expectedEmail = "invalid-email@nhs.co.uk";
-    const getRetrieveEmailAndHashedPasswordGatewaySpy = jest.fn(() =>
-      Promise.resolve({
-        user: [],
-        error: null,
-      })
-    );
-    mockAppContainer.getRetrieveEmailAndHashedPasswordGateway.mockImplementationOnce(
-      () => getRetrieveEmailAndHashedPasswordGatewaySpy
-    );
+    getRetrieveEmailAndHashedPasswordGatewaySpy = jest.fn().mockResolvedValue({
+      user: [],
+      error: null,
+    });
     // Act
     const {
       emailAddress,
