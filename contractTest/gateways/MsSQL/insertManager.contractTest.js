@@ -5,6 +5,7 @@ import {
   setUpAdmin,
 } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
+import bcrypt from "bcryptjs";
 
 describe("insertManagerGateway", () => {
   const container = AppContainer.getInstance();
@@ -28,6 +29,9 @@ describe("insertManagerGateway", () => {
     expect(user.organisationId).toEqual(newManager.organisationId);
     expect(user.type).toEqual(newManager.type);
     expect(user.status).toEqual(statusToId(DISABLED));
+    expect(bcrypt.compareSync(newManager.password, user.password)).toEqual(
+      true
+    );
     expect(error).toBeNull();
   });
   it("returns an error if email is undefined", async () => {
