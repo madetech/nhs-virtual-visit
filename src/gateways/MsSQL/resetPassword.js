@@ -1,29 +1,14 @@
 import bcrypt from "bcryptjs";
 import logger from "../../../logger";
-import MsSQL from "./";
 
-const resetPassword = async ({ password, email }) => {
-  const db = await MsSQL.getConnectionPool();
-
-  if (!password) {
-    return {
-      resetSuccess: false,
-      error: "password is not defined",
-    };
-  }
-
-  if (!email) {
-    return {
-      resetSuccess: false,
-      error: "email is not defined",
-    };
-  }
-
+export default ({ getMsSqlConnPool }) => async ({ password, email }) => {
   try {
     var salt = bcrypt.genSaltSync(10);
     var hashedPassword = bcrypt.hashSync(password, salt);
 
-    const dbResponse = await db
+    logger.info(`Resetting password for email: ${email}`);
+    const db = await getMsSqlConnPool();
+    const res = await db
       .request()
       .input("email", email)
       .input("password", hashedPassword)
@@ -31,19 +16,15 @@ const resetPassword = async ({ password, email }) => {
         `UPDATE dbo.[user] SET password = @password OUTPUT inserted.email WHERE email = @email`
       );
 
-    if (dbResponse.recordset.length > 0) {
-      return {
-        resetSuccess: true,
-        error: null,
-      };
-    } else {
-      return {
-        resetSuccess: false,
-        error: "User email doesn't exist",
-      };
+    if (!res.recordset[0]) {
+      throw `Error resetting password for email ${email}`;
     }
+    return {
+      resetSuccess: true,
+      error: null,
+    };
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error resetting password for email: ${email} ${error}`);
 
     return {
       resetSuccess: false,
@@ -51,5 +32,3 @@ const resetPassword = async ({ password, email }) => {
     };
   }
 };
-
-export default resetPassword;
