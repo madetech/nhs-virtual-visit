@@ -8,9 +8,9 @@ export default ({ getRetrieveEmailAndHashedPasswordGateway }) => async (
       error: "email is not defined",
     };
   }
-  const { user, error } = await getRetrieveEmailAndHashedPasswordGateway()(
-    email
-  );
+  const { user, error } = await getRetrieveEmailAndHashedPasswordGateway()({
+    email,
+  });
   return {
     emailAddress: user?.emailAddress,
     hashedPassword: user?.hashedPassword,

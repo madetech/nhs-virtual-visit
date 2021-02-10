@@ -27,9 +27,9 @@ describe("retrieveEmailAndHashedPassword", () => {
     expect(emailAddress).toEqual(expectedEmail);
     expect(hashedPassword).toEqual(expectedHashedPassword);
     expect(error).toBeNull();
-    expect(getRetrieveEmailAndHashedPasswordGatewaySpy).toHaveBeenCalledWith(
-      expectedEmail
-    );
+    expect(getRetrieveEmailAndHashedPasswordGatewaySpy).toHaveBeenCalledWith({
+      email: expectedEmail,
+    });
   });
   it("errors if no email is present", async () => {
     // Arrange
