@@ -72,11 +72,12 @@ import createManager from "../usecases/createManager";
 import verifyUserLogin from "../usecases/verifyUserLogin";
 import retrieveActiveManagersByOrgId from "../usecases/retrieveActiveManagersByOrgId";
 import retrieveEmailAndHashedPassword from "../usecases/retrieveEmailAndHashedPassword";
+import resetPassword from "../usecases/resetPassword";
 /* GW MSSQL*/
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
 import retrieveEmailAndHashedPasswordGateway from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
-import resetPassword from "../gateways/MsSQL/resetPassword";
+import resetPasswordGateway from "../gateways/MsSQL/resetPassword";
 import verifyResetPasswordLink from "../gateways/MsSQL/verifyResetPasswordLink";
 import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
 import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
@@ -432,6 +433,10 @@ class AppContainer {
     return retrieveActiveManagersByOrgId(this);
   };
 
+  getResetPassword = () => {
+    return resetPassword(this);
+  };
+
   /* These are the Gateway */
 
   getFindWardByCodeGateway = () => {
@@ -706,8 +711,8 @@ class AppContainer {
     return retrieveEmailAndHashedPasswordGateway(this);
   };
 
-  getResetPassword = () => {
-    return resetPassword;
+  getResetPasswordGateway = () => {
+    return resetPasswordGateway(this);
   };
 
   getVerifyResetPasswordLink = () => {
