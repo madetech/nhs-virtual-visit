@@ -107,7 +107,9 @@ const Login = ({ correlationId }) => {
               />
             </FormGroup>
             <p>
-              <AnchorLink href="/reset-password">Reset password</AnchorLink>
+              <AnchorLink href="/reset-password" data-cy="reset-password-link">
+                Reset Password
+              </AnchorLink>
             </p>
             <p>
               <AnchorLink href="/sign-up">Manager Sign Up</AnchorLink>

@@ -38,7 +38,7 @@ const ResetPassword = () => {
         },
         body,
       });
-
+      console.log(response.status);
       if (response.status === 201) {
         Router.push({
           pathname: "reset-password/send-email-success",
@@ -46,9 +46,10 @@ const ResetPassword = () => {
         });
         return true;
       } else {
+        const { error } = await response.json();
         onSubmitErrors.push({
           id: "email-invalid-error",
-          message: "The email you entered was not recognised",
+          message: error,
         });
       }
     }
@@ -78,6 +79,7 @@ const ResetPassword = () => {
                 errorMessage={errorMessage(errors, "email")}
                 className="nhsuk-input--width-20"
                 name="email"
+                data-cy="email-input"
               />
             </FormGroup>
             <Button className="nhsuk-u-margin-top-5" type="submit">

@@ -19,7 +19,11 @@ const ErrorSummary = ({ errors }) => {
       tabIndex="0"
       ref={thisRef}
     >
-      <h2 className="nhsuk-error-summary__title" id="error-summary-title">
+      <h2
+        className="nhsuk-error-summary__title"
+        id="error-summary-title"
+        data-cy="error-summary"
+      >
         There is a problem
       </h2>
       <div className="nhsuk-error-summary__body">

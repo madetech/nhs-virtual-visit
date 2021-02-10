@@ -9,7 +9,7 @@ export default withContainer(
 
     if (!body.email) {
       res.status(400);
-      res.end(JSON.stringify({ err: "email must be present" }));
+      res.end(JSON.stringify({ error: "email must be present" }));
       return;
     }
 
@@ -19,12 +19,12 @@ export default withContainer(
     const {
       emailAddress,
       hashedPassword,
-      error,
+      error: retrieveError,
     } = await retrieveEmailAndHashedPassword(body.email);
 
-    if (error || !emailAddress) {
+    if (retrieveError || !emailAddress) {
       res.status(400);
-      res.end(JSON.stringify({ err: "Email does not exist" }));
+      res.end(JSON.stringify({ error: "Email does not exist" }));
       return;
     }
 
@@ -34,13 +34,13 @@ export default withContainer(
     const expirationTime = "2h";
     const urlPath = "reset-password";
 
-    const { link, linkError } = createTimeSensitiveLink(
+    const { link, linkError } = createTimeSensitiveLink({
       headers,
       emailAddress,
       expirationTime,
       urlPath,
-      hashedPassword
-    );
+      hashedPassword,
+    });
 
     if (linkError) {
       res.status(401);
@@ -61,7 +61,7 @@ export default withContainer(
 
     if (emailError) {
       res.status(401);
-      res.end(JSON.stringify({ err: "GovNotify error occured" }));
+      res.end(JSON.stringify({ error: "GovNotify error occured" }));
     } else {
       res.status(201);
       res.end(JSON.stringify({ success }));
