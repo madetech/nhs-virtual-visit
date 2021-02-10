@@ -1,6 +1,6 @@
 import logger from "../../../logger";
 
-export default ({ getMsSqlConnPool }) => async (email) => {
+export default ({ getMsSqlConnPool }) => async ({ email }) => {
   logger.info(`Retrieving hashedPassword for email ${email}`);
   try {
     const db = await getMsSqlConnPool();
