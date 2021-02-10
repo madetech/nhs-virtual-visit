@@ -397,4 +397,12 @@ describe("AppContainer", () => {
   it("returns getRetrieveEmailAndHashedPasswordGateway", () => {
     expect(container.getRetrieveEmailAndHashedPasswordGateway()).toBeDefined();
   });
+
+  it("returns getResetPassword", () => {
+    expect(container.getResetPassword()).toBeDefined();
+  });
+
+  it("returns getResetPasswordGateway", () => {
+    expect(container.getResetPasswordGateway()).toBeDefined();
+  });
 });
