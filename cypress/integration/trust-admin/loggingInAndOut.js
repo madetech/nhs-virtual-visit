@@ -64,8 +64,10 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   function GivenIAmATrustAdmin() {}
 
   function AndIEnterAValidTrustAdminEmailAndPassword() {
-    cy.get("input[name=email]").type(Cypress.env("validTrustAdminCode"));
-    cy.get("input[name=password]").type(Cypress.env("validTrustAdminPassword"));
+    cy.get("input[name=email]").type(Cypress.env("validTrustManagerEmail"));
+    cy.get("input[name=password]").type(
+      Cypress.env("validTrustManagerPassword")
+    );
   }
 
   function ThenISeeTheTrustAdminHomePage() {
@@ -85,12 +87,14 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   // Displays an error for an invalid code
   function AndIEnterAnInvalidCode() {
     cy.get("input[name=email]").type("wrong@email.com");
-    cy.get("input[name=password]").type(Cypress.env("validTrustAdminPassword"));
+    cy.get("input[name=password]").type(
+      Cypress.env("validTrustManagerPassword")
+    );
   }
 
-  // Displays an error for an invalid code
+  // Displays an error for an invalid password
   function AndIEnterAnInvalidPassword() {
-    cy.get("input[name=email]").type(Cypress.env("validTrustAdminCode"));
+    cy.get("input[name=email]").type(Cypress.env("validTrustManagerEmail"));
     cy.get("input[name=password]").type("wrong");
   }
 

@@ -1,6 +1,7 @@
-import retrieveEmailAndHashedPassword from "./retrieveEmailAndHashedPassword";
-
-export default ({ getTokenProvider }) => async (token) => {
+export default ({
+  getTokenProvider,
+  getRetrieveEmailAndHashedPasswordGateway,
+}) => async (token) => {
   const tokenProvider = getTokenProvider();
   const { emailAddress } = tokenProvider.retrieveEmailFromToken(token);
 
@@ -10,14 +11,13 @@ export default ({ getTokenProvider }) => async (token) => {
       error: "Email address does not exist",
     };
   }
-
-  const { hashedPassword } = await retrieveEmailAndHashedPassword(emailAddress);
-
+  const {
+    user: { hashedPassword },
+  } = await getRetrieveEmailAndHashedPasswordGateway()({ email: emailAddress });
   const { decryptedToken, errorToken } = tokenProvider.verifyTokenFromLink(
     token,
     hashedPassword
   );
-
   let error = null;
   if (errorToken) {
     error = "Link is incorrect or expired. Please reset password again";

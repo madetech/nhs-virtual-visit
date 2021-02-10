@@ -3,7 +3,6 @@ import { NotifyClient as FakeNotifyClient } from "../../../__mocks__/notificatio
 
 export default (() => {
   let instance;
-
   return {
     getInstance: async () => {
       if (!instance) {
