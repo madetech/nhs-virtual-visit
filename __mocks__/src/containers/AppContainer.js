@@ -35,4 +35,5 @@ export default {
   getRetrieveEmailAndHashedPasswordGateway: jest.fn(() => () =>
     Promise.resolve({})
   ),
+  getResetPasswordGateway: jest.fn(() => () => Promise.resolve({})),
 };
