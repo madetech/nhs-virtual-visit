@@ -106,7 +106,7 @@ describe("send-reset-password-email", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "email must be present" })
+      JSON.stringify({ error: "email must be present" })
     );
   });
 
@@ -131,7 +131,7 @@ describe("send-reset-password-email", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "password must be present" })
+      JSON.stringify({ error: "password must be present" })
     );
   });
 
@@ -152,7 +152,7 @@ describe("send-reset-password-email", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "organisation must be present" })
+      JSON.stringify({ error: "organisation must be present" })
     );
   });
 
@@ -171,7 +171,7 @@ describe("send-reset-password-email", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "There was an error" })
+      JSON.stringify({ error: "There was an error" })
     );
   });
 
@@ -190,7 +190,7 @@ describe("send-reset-password-email", () => {
 
       expect(response.status).toHaveBeenCalledWith(400);
       expect(response.end).toHaveBeenCalledWith(
-        JSON.stringify({ err: "There was a verificationError" })
+        JSON.stringify({ error: "There was a verificationError" })
       );
     });
 
@@ -250,7 +250,7 @@ describe("send-reset-password-email", () => {
 
       expect(response.status).toHaveBeenCalledWith(401);
       expect(response.end).toHaveBeenCalledWith(
-        JSON.stringify({ err: "GovNotify error occurred" })
+        JSON.stringify({ error: "GovNotify error occurred" })
       );
     });
   });
@@ -305,7 +305,7 @@ describe("send-reset-password-email", () => {
 
       expect(response.status).toHaveBeenCalledWith(400);
       expect(response.end).toHaveBeenCalledWith(
-        JSON.stringify({ err: "There was an error" })
+        JSON.stringify({ error: "There was an error" })
       );
     });
 
@@ -342,13 +342,13 @@ describe("send-reset-password-email", () => {
         type: "authoriseUser",
       });
 
-      expect(createTimeSensitiveLink).toHaveBeenCalledWith(
-        { cookie: "" },
-        "uuid",
-        "hashedUuid",
-        "48h",
-        "authorise-user"
-      );
+      expect(createTimeSensitiveLink).toHaveBeenCalledWith({
+        headers: { cookie: "" },
+        uuid: "uuid",
+        hash: "hashedUuid",
+        expirationTime: "48h",
+        urlPath: "authorise-user",
+      });
       expect(sendEmailSpy).toHaveBeenCalledWith(
         requestTemplateId,
         managerEmail,
