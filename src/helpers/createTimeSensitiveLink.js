@@ -1,7 +1,7 @@
 import TokenProvider from "../providers/TokenProvider";
 export default ({
   headers,
-  id,
+  uuid,
   hash,
   expirationTime,
   urlPath,
@@ -11,7 +11,7 @@ export default ({
   const tokenProvider = new TokenProvider(process.env.JWT_SIGNING_KEY);
   try {
     const token = tokenProvider.generateTokenForLink(
-      id,
+      uuid,
       hash,
       expirationTime,
       hashedPassword,

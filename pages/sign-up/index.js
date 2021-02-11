@@ -109,9 +109,10 @@ const SignUp = ({ organisations, error }) => {
         });
         return true;
       } else {
+        const { error } = await response.json();
         onSubmitErrors.push({
           id: "email-invalid-error",
-          message: "The email you entered was not recognised",
+          message: error,
         });
       }
     }
