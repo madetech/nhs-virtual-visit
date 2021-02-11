@@ -1,16 +1,6 @@
 import withContainer from "../../src/middleware/withContainer";
-import {
-  createVisit,
-  retrieveDepartmentById,
-  retrieveOrganisationById,
-  CallIdProvider,
-  RandomIdProvider,
-} from "../../src/containers/CreateVisitContainer";
-import sendTextMessage from "../../src/usecases/sendTextMessage";
-import sendEmail from "../../src/usecases/sendEmail";
-import sendBookingNotification from "../../src/usecases/sendBookingNotification";
-import createVisitUnitOfWork from "../../src/gateways/UnitsOfWork/createVisitUnitOfWork";
-import GovNotify from "../../src/gateways/GovNotify";
+import CallIdProvider from "../../src/providers/CallIdProvider";
+import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import {
   validateHttpMethod,
   checkIfAuthorised,
@@ -41,7 +31,14 @@ export default withContainer(
 
     res.setHeader("Content-Type", "application/json");
 
-    const { trust, error: trustErr } = await retrieveOrganisationById(trustId);
+    const {
+      organisation: trust,
+      error: trustErr,
+    } = await container.getRetrieveOrganisationById()(trustId);
+
+    console.log(trustId);
+    console.log(trustErr);
+    console.log(trust);
 
     if (trustErr) {
       res.status(400);
@@ -49,10 +46,10 @@ export default withContainer(
       return;
     }
 
-    const { ward, error: wardErr } = await retrieveDepartmentById(
-      wardId,
-      trustId
-    );
+    const {
+      department: ward,
+      error: wardErr,
+    } = await container.getRetrieveDepartmentById()(wardId, trustId);
     if (wardErr) {
       res.status(400);
       res.end(JSON.stringify({ wardErr }));
@@ -63,35 +60,16 @@ export default withContainer(
     const callPassword = randomIdProvider.generate(10);
     const provider = new CallIdProvider(trust.videoProvider, body.callTime);
     const callId = await provider.generate();
-
-    const getNotifyClient = () => {
-      return GovNotify.getInstance();
-    };
-    const getSendTextMessage = () => {
-      return sendTextMessage({ getNotifyClient });
-    };
-    const getSendEmail = () => {
-      return sendEmail({ getNotifyClient });
-    };
-
-    const sendBookingNotificationInstance = sendBookingNotification({
-      getSendTextMessage,
-      getSendEmail,
-    });
-
-    const createVisitUnitOfWorkInstance = createVisitUnitOfWork(
-      sendBookingNotificationInstance
-    );
-    const createVisitInstance = createVisit(createVisitUnitOfWorkInstance);
+    const callTime = new Date(body.callTime);
 
     try {
-      const { success, err } = await createVisitInstance(
+      const { success, err } = await container.getCreateVisit()(
         {
           patientName: body.patientName,
           contactEmail: body.contactEmail,
           contactNumber: body.contactNumber,
           contactName: body.contactName,
-          callTime: body.callTime,
+          callTime: callTime,
           callTimeLocal: body.callTimeLocal,
         },
         ward,

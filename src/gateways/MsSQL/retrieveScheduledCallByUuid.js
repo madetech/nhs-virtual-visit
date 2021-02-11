@@ -18,6 +18,8 @@ export default ({ getMsSqlConnPool }) => async (callUuid) => {
         "SELECT * FROM dbo.[scheduled_call] WHERE [uuid] = @uuid AND pii_cleared_out IS NULL AND status = @scheduled OR status = @complete"
       );
 
+    console.log(res.recordset[0]);
+
     const {
       patient_name,
       recipient_email,

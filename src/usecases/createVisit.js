@@ -1,13 +1,11 @@
 import validateVisit from "../../src/helpers/validateVisit";
 import logger from "../../logger";
 
-const createVisit = (createVisitUnitOfWork) => async (
-  visit,
-  ward,
-  callId,
-  callPassword,
-  videoProvider
-) => {
+const createVisit = ({
+  getInsertVisitGateway,
+  getSendBookingNotification,
+  getRetrieveFacilityById,
+}) => async (visit, ward, callId, callPassword, videoProvider) => {
   const { validVisit, errors } = validateVisit(visit);
 
   if (!validVisit) {
@@ -22,16 +20,44 @@ const createVisit = (createVisitUnitOfWork) => async (
   });
 
   try {
-    const { success, error } = await createVisitUnitOfWork(
+    console.log(ward);
+    console.log(populatedVisit);
+
+    const { error: insertVisitError } = await getInsertVisitGateway()(
       populatedVisit,
-      ward
+      ward.id
     );
 
-    if (!success) {
-      return { success: false, err: error };
+    if (insertVisitError) {
+      return { success: false, err: insertVisitError };
     }
 
-    return { success: true, err: undefined };
+    const {
+      facility,
+      error: retrieveFacilityError,
+    } = await getRetrieveFacilityById()(ward.facilityId);
+
+    if (retrieveFacilityError) {
+      return { success: false, err: retrieveFacilityError };
+    }
+
+    console.log(facility);
+
+    const {
+      errors: bookingNotificationErrors,
+    } = await getSendBookingNotification()({
+      mobileNumber: visit.contactNumber,
+      emailAddress: visit.contactEmail,
+      wardName: ward.name,
+      hospitalName: facility.name,
+      visitDateAndTime: visit.callTime,
+    });
+
+    if (bookingNotificationErrors) {
+      return { success: false, err: bookingNotificationErrors };
+    }
+
+    return { success: true, err: null };
   } catch (err) {
     logger.error("failed to create visit", err);
     return { success: false, err: err };

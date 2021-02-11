@@ -42,7 +42,7 @@ export const getServerSideProps = propsWithContainer(
       wardId,
     });
     let ward;
-    ({ ward, error } = await container.getRetrieveDepartmentById()(
+    ({ department: ward, error } = await container.getRetrieveDepartmentById()(
       wardId,
       trustId
     ));

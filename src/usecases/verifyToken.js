@@ -8,6 +8,8 @@ export default function (callback) {
       req.headers.cookie
     );
 
+    console.log(authenticationToken);
+
     if (authenticationToken) {
       const {
         regeneratedToken,

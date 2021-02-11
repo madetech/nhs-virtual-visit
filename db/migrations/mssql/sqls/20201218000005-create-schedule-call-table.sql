@@ -3,6 +3,7 @@ CREATE TABLE dbo.[scheduled_call] (
   [patient_name] nvarchar(255),
   [call_time] datetime,
   [pii_cleared_out] datetime,
+  [call_password] nvarchar(255),
   [recipient_name] nvarchar(255),
   [recipient_number] nvarchar(255),
   [recipient_email] nvarchar(255),
