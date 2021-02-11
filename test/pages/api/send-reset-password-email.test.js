@@ -78,7 +78,7 @@ describe("send-reset-password-email", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "email must be present" })
+      JSON.stringify({ error: "email must be present" })
     );
   });
 
@@ -99,7 +99,7 @@ describe("send-reset-password-email", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "Email does not exist" })
+      JSON.stringify({ error: "Email does not exist" })
     );
   });
 
@@ -120,7 +120,7 @@ describe("send-reset-password-email", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "Email does not exist" })
+      JSON.stringify({ error: "Email does not exist" })
     );
   });
 
@@ -182,7 +182,7 @@ describe("send-reset-password-email", () => {
 
     expect(response.status).toHaveBeenCalledWith(401);
     expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ err: "GovNotify error occured" })
+      JSON.stringify({ error: "GovNotify error occured" })
     );
   });
 });

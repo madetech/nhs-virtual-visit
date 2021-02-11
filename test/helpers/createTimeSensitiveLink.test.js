@@ -16,14 +16,14 @@ describe("createTimeSensitiveLink", () => {
       return { generateTokenForLink: jest.fn().mockReturnValue("token") };
     });
 
-    const { link, linkError } = createTimeSensitiveLink(
+    const { link, linkError } = createTimeSensitiveLink({
       headers,
       id,
       hash,
       expirationTime,
       urlPath,
-      hashedPassword
-    );
+      hashedPassword,
+    });
 
     expect(linkError).toBe(null);
     expect(link).toEqual("http://rootUrl/urlPath/token");
@@ -43,13 +43,13 @@ describe("createTimeSensitiveLink", () => {
       return { generateTokenForLink: generateTokenForLinkStub };
     });
 
-    const { link, linkError } = createTimeSensitiveLink(
+    const { link, linkError } = createTimeSensitiveLink({
       headers,
       emailAddress,
       hashedPassword,
       expirationTime,
-      urlPath
-    );
+      urlPath,
+    });
 
     expect(linkError.message).toBe("Error");
     expect(link).toBeNull();
