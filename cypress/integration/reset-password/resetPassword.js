@@ -52,8 +52,11 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   }
 
   function GivenIVisitAValidResetPasswordLink() {
+    expect(Cypress.env("jwtPrivateKey")).to.equal(
+      "cypress/fixtures/hashedPassword.txt"
+    );
     cy.task("generateToken", {
-      privateKey: Cypress.env("jwtPrivate"),
+      privateKey: Cypress.env("jwtPrivateKey"),
       algo: "HS256",
       expires: "2h",
       claims: {
