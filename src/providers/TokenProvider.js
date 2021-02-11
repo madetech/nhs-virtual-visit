@@ -38,11 +38,11 @@ class TokenProvider {
     return decryptedToken;
   }
 
-  generateTokenForLink(uuid, hash, expirationTime, secret) {
+  generateTokenForLink(uuid, hash, expirationTime, secret, email) {
     let tokenObj = { uuid, hash, version };
 
     if (secret !== this.signingKey) {
-      tokenObj = { ...tokenObj, hashedPassword: secret };
+      tokenObj = { ...tokenObj, hashedPassword: secret, emailAddress: email };
     }
 
     return jwt.sign(tokenObj, secret, {

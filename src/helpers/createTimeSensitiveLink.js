@@ -1,12 +1,12 @@
 import TokenProvider from "../providers/TokenProvider";
-
-const createTimeSensitiveLink = ({
+export default ({
   headers,
   id,
   hash,
   expirationTime,
   urlPath,
   hashedPassword = process.env.JWT_SIGNING_KEY,
+  emailAddress,
 }) => {
   const tokenProvider = new TokenProvider(process.env.JWT_SIGNING_KEY);
   try {
@@ -14,7 +14,8 @@ const createTimeSensitiveLink = ({
       id,
       hash,
       expirationTime,
-      hashedPassword
+      hashedPassword,
+      emailAddress
     );
     const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
     const host = headers.host;
@@ -32,5 +33,3 @@ const createTimeSensitiveLink = ({
     };
   }
 };
-
-export default createTimeSensitiveLink;
