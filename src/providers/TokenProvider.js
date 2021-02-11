@@ -46,7 +46,7 @@ class TokenProvider {
     }
 
     return jwt.sign(tokenObj, secret, {
-      algorithm: "HS256",
+      algorithm: ["HS256"],
       expiresIn: expirationTime,
     });
   }
