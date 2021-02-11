@@ -44,7 +44,9 @@ describe("As a patient's key contact, I want to attend a virtual visit so that I
   function GivenIAmAKeyContact() {}
 
   function WhenIVisitTheAttendAVirtualVisitPageWithACallPassword() {
-    cy.visit("http://localhost:3001/visitors/123/start?callPassword=password");
+    cy.visit(
+      "http://localhost:3001/visitors/3611b934-e574-4192-b443-e05753660cc5/start?callPassword=password"
+    );
   }
 
   function ThenISeeTheAttendAVirtualStartPage() {

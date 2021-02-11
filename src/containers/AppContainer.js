@@ -56,6 +56,7 @@ import verifyResetPasswordLink from "../usecases/verifyResetPasswordLink";
 import retrieveEmailAndHashedPassword from "../usecases/retrieveEmailAndHashedPassword";
 import retrieveActiveDepartmentsByOrganisationId from "../usecases/retrieveActiveDepartmentsByOrganisationId";
 import retrieveDepartmentByCode from "../usecases/retrieveDepartmentByCode";
+import createVisit from "../usecases/createVisit";
 
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
@@ -160,6 +161,10 @@ class AppContainer {
 
   getVerifyAdminCode = () => {
     return verifyAdminCode(this);
+  };
+
+  getCreateVisit = () => {
+    return createVisit(this);
   };
 
   getRetrieveVisits = () => {

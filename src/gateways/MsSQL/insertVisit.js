@@ -27,7 +27,7 @@ export default ({ getMsSqlConnPool }) => async (visit, departmentId) => {
       error: null,
     };
   } catch (error) {
-    logger.error(`Error creating visit ${visit}, ${error}`);
+    logger.error(`Error creating visit ${error}`);
     return {
       id: null,
       uuid: null,
