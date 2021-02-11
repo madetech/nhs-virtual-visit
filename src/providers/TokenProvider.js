@@ -70,9 +70,10 @@ class TokenProvider {
   }
 
   verifyTokenFromLink(token, secret = this.signingKey) {
+    console.log(secret);
     try {
       const decryptedToken = jwt.verify(token, secret, {
-        algorithms: ["HS256"],
+        algorithms: "HS256",
       });
 
       if (decryptedToken.version !== version) {
@@ -83,6 +84,7 @@ class TokenProvider {
         errorToken: "",
       };
     } catch (error) {
+      console.log(error, secret);
       return {
         decryptedToken: null,
         errorToken: "Error verifying token",

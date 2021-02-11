@@ -94,6 +94,7 @@ const ResetPassword = ({ email, tokenError }) => {
                     errorMessage={errorMessage(errors, "password")}
                     className="nhsuk-input--width-20"
                     name="password"
+                    data-cy="password-input"
                   />
                 </FormGroup>
                 <FormGroup>
@@ -106,6 +107,7 @@ const ResetPassword = ({ email, tokenError }) => {
                     errorMessage={errorMessage(errors, "confirmPassword")}
                     className="nhsuk-input--width-20"
                     name="confirmPassword"
+                    data-cy="confirm-password-input"
                     autoComplete="off"
                   />
                   <br />

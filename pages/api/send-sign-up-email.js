@@ -9,19 +9,19 @@ export default withContainer(
 
     if (!body.email) {
       res.status(400);
-      res.end(JSON.stringify({ err: "email must be present" }));
+      res.end(JSON.stringify({ error: "email must be present" }));
       return;
     }
 
     if (!body.password) {
       res.status(400);
-      res.end(JSON.stringify({ err: "password must be present" }));
+      res.end(JSON.stringify({ error: "password must be present" }));
       return;
     }
 
     if (!body.organisation) {
       res.status(400);
-      res.end(JSON.stringify({ err: "organisation must be present" }));
+      res.end(JSON.stringify({ error: "organisation must be present" }));
       return;
     }
 
@@ -33,11 +33,10 @@ export default withContainer(
       organisationId: body.organisation.id,
     };
     const createManager = container.getCreateManager();
-    const { user, error } = await createManager(managerObj);
-
-    if (error) {
+    const { user, error: createManagerError } = await createManager(managerObj);
+    if (createManagerError) {
       res.status(400);
-      res.end(JSON.stringify({ err: error }));
+      res.end(JSON.stringify({ error: createManagerError }));
       return;
     }
 
@@ -52,7 +51,7 @@ export default withContainer(
 
       if (retrieveManagerError) {
         res.status(400);
-        res.end(JSON.stringify({ err: retrieveManagerError }));
+        res.end(JSON.stringify({ error: retrieveManagerError }));
         return;
       }
       manager = managers[0];
@@ -69,7 +68,7 @@ export default withContainer(
 
     if (verificationError) {
       res.status(400);
-      res.end(JSON.stringify({ err: verificationError }));
+      res.end(JSON.stringify({ error: verificationError }));
       return;
     }
 
@@ -82,13 +81,13 @@ export default withContainer(
     const expirationTime = "48h";
     const urlPath = manager ? "authorise-user" : "activate-account";
 
-    const { link, linkError } = createTimeSensitiveLink(
+    const { link, linkError } = createTimeSensitiveLink({
       headers,
       uuid,
       hash,
       expirationTime,
-      urlPath
-    );
+      urlPath,
+    });
 
     if (linkError) {
       res.status(401);
@@ -119,7 +118,7 @@ export default withContainer(
 
     if (emailError) {
       res.status(401);
-      res.end(JSON.stringify({ err: "GovNotify error occurred" }));
+      res.end(JSON.stringify({ error: "GovNotify error occurred" }));
     } else {
       res.status(201);
       res.end(JSON.stringify({ email: emailAddress }));

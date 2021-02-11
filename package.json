@@ -37,6 +37,7 @@
     "postinstall": "test -n \"$NONPMPOSTINSTALL\" || npm run build"
   },
   "dependencies": {
+    "@jc21/cypress-jwt-creation": "0.0.4",
     "@sentry/browser": "^5.30.0",
     "@sentry/node": "^5.30.0",
     "@sentry/webpack-plugin": "^1.11.1",
