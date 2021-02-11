@@ -28,7 +28,7 @@ const createTimeSensitiveLink = ({
   } catch (error) {
     return {
       link: null,
-      linkError: error.toString(),
+      linkError: error,
     };
   }
 };
