@@ -17,7 +17,7 @@ const verifySignUpLinkGateway = ({ getMsSqlConnPool }) => async ({
           FROM dbo.[user_verification], dbo.[user] 
           WHERE hash = @hash AND uuid = @uuid`
       );
-    console.log(hash, uuid);
+
     if (!response.recordset[0]) {
       throw "Error verifying sign up link";
     }

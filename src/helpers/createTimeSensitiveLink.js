@@ -27,7 +27,6 @@ export default ({
       linkError: null,
     };
   } catch (error) {
-    console.log(error);
     return {
       link: null,
       linkError: error,

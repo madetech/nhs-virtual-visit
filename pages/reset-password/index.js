@@ -38,7 +38,7 @@ const ResetPassword = () => {
         },
         body,
       });
-      console.log(response.status);
+
       if (response.status === 201) {
         Router.push({
           pathname: "reset-password/send-email-success",
