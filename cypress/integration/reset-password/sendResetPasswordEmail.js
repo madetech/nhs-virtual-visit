@@ -1,4 +1,4 @@
-describe("As a trust manager or admin, I want to reset my password if I forget it", () => {
+describe.skip("As a trust manager or admin, I want to reset my password if I forget it", () => {
   it("sends an email with reset password link, when I fill in a valid email", () => {
     GivenIAmOnTheLoginPage();
     WhenIClickTheResetPasswordLink();
@@ -6,12 +6,10 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     cy.audit();
 
     WhenIFillOutTheResetPasswordFormOnTheResetPasswordPage(
-      Cypress.env("TrustAdminEmailToResetPassword")
+      Cypress.env("validTrustAdminCode")
     );
     AndISubmitTheForm();
-    ThenISeeTheResetPasswordSuccessPage(
-      Cypress.env("TrustAdminEmailToResetPassword")
-    );
+    ThenISeeTheResetPasswordSuccessPage(Cypress.env("validTrustAdminCode"));
   });
   it("gives an error to reset password, when I fill in an invalid email", () => {
     const invalidEmail = "invalid-email@nhs.co.uk";

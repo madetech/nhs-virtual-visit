@@ -10,7 +10,7 @@
     "validAdminPassword": "P@55w0rd",
     "fakeWard": "FAKENHS",
     "baseUrl": "http://localhost:3001",
-    "jwtPrivateKey": "cypress/fixtures/hashedPassword.js",
+    "jwtPrivateKey": "cypress/fixtures/hashedPassword.txt",
     "tokenVersion": "3"
 
   },
