@@ -12,7 +12,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     WhenIFillOutTheResetPasswordFormWithTheSamePassword();
     AndISubmitTheForm();
     ThenISeeTheResetPasswordSuccessPage(
-      Cypress.env("TrustAdminEmailToResetPassword")
+      Cypress.env("trustManagerEmailToResetPassword")
     );
   });
 
@@ -27,7 +27,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   function ThenISeeTheEnterNewPasswordPage() {
     cy.get("[data-cy=page-heading]").should(
       "contain",
-      "Reset Password for " + Cypress.env("TrustAdminEmailToResetPassword")
+      "Reset Password for " + Cypress.env("trustManagerEmailToResetPassword")
     );
   }
 
@@ -52,15 +52,11 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   }
 
   function GivenIVisitAValidResetPasswordLink() {
-    expect(Cypress.env("jwtPrivateKey")).to.equal(
-      "cypress/fixtures/hashedPassword.txt"
-    );
     cy.task("generateToken", {
-      privateKey: Cypress.env("jwtPrivateKey"),
       algo: "HS256",
       expires: "2h",
       claims: {
-        emailAddress: Cypress.env("TrustAdminEmailToResetPassword"),
+        emailAddress: Cypress.env("trustManagerEmailToResetPassword"),
         version: Cypress.env("tokenVersion"),
       },
     }).then((result) => {

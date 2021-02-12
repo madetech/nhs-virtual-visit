@@ -5,7 +5,7 @@ import {
   ThenISeeTheTrustManagersList,
 } from "./trustAdminCommonSteps";
 
-describe("As an admin, I want to delete a trust manager so that I can remove a trust manager from the system.", () => {
+describe("As an trust admin, I want to delete a trust manager so that I can remove a trust manager from the system.", () => {
   before(() => {
     // reset and seed the database: need to edit this to run MSSQL test DB and reseed
     cy.exec(
@@ -14,7 +14,7 @@ describe("As an admin, I want to delete a trust manager so that I can remove a t
     cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
-  it("allows admin to delete a trust manager", () => {
+  it("allows trust manager to delete a trust manager", () => {
     GivenIAmLoggedInAsATrustAdmin();
     WhenIClickOnTrustManagersOnTheNavigationBar();
     ThenISeeTheTrustManagersList();

@@ -6,10 +6,10 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     cy.audit();
 
     WhenIFillOutTheResetPasswordFormOnTheResetPasswordPage(
-      Cypress.env("validTrustAdminCode")
+      Cypress.env("validTrustManagerEmail")
     );
     AndISubmitTheForm();
-    ThenISeeTheResetPasswordSuccessPage(Cypress.env("validTrustAdminCode"));
+    ThenISeeTheResetPasswordSuccessPage(Cypress.env("validTrustManagerEmail"));
   });
   it("gives an error to reset password, when I fill in an invalid email", () => {
     const invalidEmail = "invalid-email@nhs.co.uk";

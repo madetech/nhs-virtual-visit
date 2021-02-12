@@ -1,8 +1,8 @@
 const GivenIAmLoggedInAsATrustAdmin = () => {
   cy.visit(Cypress.env("baseUrl") + "/login");
 
-  cy.get("input[name=email]").type(Cypress.env("validTrustAdminCode"));
-  cy.get("input[name=password]").type(Cypress.env("validTrustAdminPassword"));
+  cy.get("input[name=email]").type(Cypress.env("validTrustManagerEmail"));
+  cy.get("input[name=password]").type(Cypress.env("validTrustManagerPassword"));
 
   cy.get("button").contains("Log in").click();
 };

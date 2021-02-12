@@ -46,7 +46,7 @@ class TokenProvider {
     }
 
     return jwt.sign(tokenObj, secret, {
-      algorithm: ["HS256"],
+      algorithm: "HS256",
       expiresIn: expirationTime,
     });
   }
@@ -72,7 +72,7 @@ class TokenProvider {
   verifyTokenFromLink(token, secret = this.signingKey) {
     try {
       const decryptedToken = jwt.verify(token, secret, {
-        algorithms: "HS256",
+        algorithms: ["HS256"],
       });
 
       if (decryptedToken.version !== version) {
