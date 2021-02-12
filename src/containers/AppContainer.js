@@ -81,7 +81,6 @@ import retrieveEmailAndHashedPasswordGateway from "../gateways/MsSQL/retrieveEma
 import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
 import resetPasswordGateway from "../gateways/MsSQL/resetPassword";
 import retrieveEmailAndHashedPasswordGateway from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
-import resetPassword from "../gateways/MsSQL/resetPassword";
 import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
 import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
 import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
