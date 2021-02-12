@@ -61,14 +61,17 @@ const deleteVisitSuccess = ({
 
 export const getServerSideProps = propsWithContainer(
   verifyToken(async ({ query, container }) => {
+    console.log(`cancel-visit-success: ${JSON.stringify(query)}`);
+
     const { callId } = query;
-    let { scheduledCall, error } = await retrieveVisitByCallId(container)(
-      callId
-    );
+    let { visit: scheduledCall, error } = await retrieveVisitByCallId(
+      container
+    )(callId);
+
+    console.log(scheduledCall);
     if (error && !scheduledCall) {
       scheduledCall = {
         patientName: "",
-        callTime: "",
       };
     }
 
@@ -78,7 +81,7 @@ export const getServerSideProps = propsWithContainer(
     return {
       props: {
         patientName: scheduledCall.patientName,
-        callDateAndTime: scheduledCall.callTime,
+        callDateAndTime: scheduledCall.callTime?.toISOString() || "",
         error,
         deleteError,
       },

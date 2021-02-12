@@ -1,4 +1,4 @@
-import { statusToId, COMPLETED } from "../helpers/visitStatus";
+import { statusToId, COMPLETE } from "../helpers/visitStatus";
 
 const markVisitAsComplete = ({
   getUpdateVisitStatusByCallIdGateway,
@@ -10,10 +10,12 @@ const markVisitAsComplete = ({
     return { id: null, error: "A wardId must be provided." };
   }
 
+  console.log(`markVisitAsComplete: ${id}`);
+
   return await getUpdateVisitStatusByCallIdGateway()({
     id,
     wardId,
-    status: statusToId(COMPLETED),
+    status: statusToId(COMPLETE),
   });
 };
 

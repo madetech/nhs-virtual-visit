@@ -59,9 +59,9 @@ export default withContainer(
       return;
     }
 
-    const { scheduledCall } = await container.getRetrieveVisitById()({
+    const { visit: scheduledCall } = await container.getRetrieveVisitById()({
       id: body.id,
-      wardId: userIsAuthenticatedResponse.wardId,
+      departmentId: userIsAuthenticatedResponse.wardId,
     });
     if (!scheduledCall) {
       respond(404, { err: "call does not exist" });
@@ -69,13 +69,15 @@ export default withContainer(
     }
 
     const updatedCall = {
-      id: body.id,
+      callId: body.id,
       patientName: body.patientName,
       recipientName: body.contactName,
       recipientEmail: body.contactEmail,
       recipientNumber: body.contactNumber,
       callTime: body.callTime,
     };
+
+    console.log(`updatedCall: ${JSON.stringify(updatedCall)}`);
 
     try {
       await container.getUpdateVisitById()(updatedCall);

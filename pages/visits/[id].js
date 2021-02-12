@@ -85,7 +85,9 @@ export const getServerSideProps = propsWithContainer(
     const authenticationToken = await userIsAuthenticated(headers.cookie);
 
     if (validCallPassword || authenticationToken) {
-      const { scheduledCall, error } = await retrieveVisitByCallId(callId);
+      const { visit: scheduledCall, error } = await retrieveVisitByCallId(
+        callId
+      );
       const callSessionId = uuidv4();
       const visitId = scheduledCall.id;
 

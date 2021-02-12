@@ -20,7 +20,7 @@ export default ({ getMsSqlConnPool }) => async ({
       .input("id", id)
       .input("status", status)
       .query(
-        `UPDATE dbo.[scheduled_call] SET status = @status OUTPUT inserted.* WHERE id = @id`
+        `UPDATE dbo.[scheduled_call] SET status = @status OUTPUT inserted.* WHERE uuid = @id`
       );
     if (res.recordset[0]) {
       return {

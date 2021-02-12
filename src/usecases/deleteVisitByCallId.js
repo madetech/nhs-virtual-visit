@@ -1,4 +1,4 @@
-const deleteVisitByCallId = ({ getDeleteVisitByCallIdGW }) => async (
+const deleteVisitByCallId = ({ getDeleteVisitByCallIdGateway }) => async (
   callId
 ) => {
   if (!callId) {
@@ -8,7 +8,7 @@ const deleteVisitByCallId = ({ getDeleteVisitByCallIdGW }) => async (
     };
   }
 
-  const { success, error } = await getDeleteVisitByCallIdGW()(callId);
+  const { success, error } = await getDeleteVisitByCallIdGateway()(callId);
 
   return { success, error };
 };

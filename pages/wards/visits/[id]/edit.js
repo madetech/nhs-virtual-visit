@@ -112,7 +112,15 @@ export const getServerSideProps = propsWithContainer(
 
       const retrieveVisitById = container.getRetrieveVisitById();
 
-      const { scheduledCall } = await retrieveVisitById({ id, wardId });
+      console.log(wardId);
+      console.log(id);
+
+      const { visit: scheduledCall, error } = await retrieveVisitById({
+        id,
+        departmentId: wardId,
+      });
+
+      console.log(error);
 
       const callTime = new Date(scheduledCall.callTime);
 
