@@ -15,7 +15,6 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-require("dotenv").config();
 const { lighthouse, pa11y, prepareAudit } = require("cypress-audit");
 const { JwtCreation } = require("@jc21/cypress-jwt-creation");
 
@@ -28,6 +27,5 @@ module.exports = (on, config) => {
     lighthouse: lighthouse(), // calling the function is important
     pa11y: pa11y(), // calling the function is important
   });
-  config.env = process.env;
   return config;
 };

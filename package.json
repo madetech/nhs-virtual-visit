@@ -50,7 +50,6 @@
     "db-migrate": "^0.11.12",
     "db-migrate-mssql": "^2.1.0",
     "db-migrate-pg": "^1.2.1",
-    "dotenv": "^8.2.0",
     "dotenv-load": "^2.0.0",
     "express": "^4.17.1",
     "google-libphonenumber": "^3.2.16",
