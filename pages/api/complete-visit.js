@@ -21,20 +21,8 @@ export default withContainer(
       return;
     }
 
-    const {
-      scheduledCall,
-      error: retrieveVisitError,
-    } = await container.getRetrieveVisitByCallId()(body.callId);
-
-    if (retrieveVisitError) {
-      console.error(retrieveVisitError);
-      res.status(401);
-      res.end(JSON.stringify({ err: "Visit not found" }));
-      return;
-    }
-
     const { error } = await container.getMarkVisitAsComplete()({
-      id: scheduledCall.id,
+      id: body.callId,
       wardId: userIsAuthenticatedResponse.wardId,
     });
 

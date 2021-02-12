@@ -22,10 +22,10 @@ const retrieveScheduledCallByIdGateway = ({ getMsSqlConnPool }) => async ({
       .query(
         `SELECT * from dbo.[scheduled_call] 
           WHERE id = @id AND department_id = @departmentId
-          AND pii_cleared_out IS NULL
-          AND status = @scheduled
-          OR status = @complete`
+          AND pii_cleared_out IS NULL`
       );
+
+    console.log(response.recordset);
 
     const {
       patient_name,

@@ -34,10 +34,23 @@ export default withContainer(async (req, res, { container }) => {
   const secondEmailTemplateId = TemplateStore().secondEmail.templateId;
 
   try {
-    const { ward, error } = await container.getRetrieveDepartmentById()(
+    const {
+      department: ward,
+      error: retrieveDepartmentError,
+    } = await container.getRetrieveDepartmentById()(
       authenticationToken.wardId,
       authenticationToken.trustId
     );
+
+    console.log(`retrieveDepartmentError: ${retrieveDepartmentError}`);
+
+    const {
+      facility,
+      error: retrieveFacilityError,
+    } = await container.getRetrieveFacilityById()(ward.facilityId);
+
+    const error = retrieveDepartmentError | retrieveFacilityError;
+
     if (error) {
       throw error;
     }
@@ -50,13 +63,14 @@ export default withContainer(async (req, res, { container }) => {
         {
           call_url: visitorsUrl,
           ward_name: ward.name,
-          hospital_name: ward.hospitalName,
+          hospital_name: facility.name,
         },
         null
       );
     }
 
     let sendEmailResponse;
+    console.log(contactEmail);
     if (contactEmail) {
       sendEmailResponse = await sendEmail(
         secondEmailTemplateId,
@@ -64,7 +78,7 @@ export default withContainer(async (req, res, { container }) => {
         {
           call_url: visitorsUrl,
           ward_name: ward.name,
-          hospital_name: ward.hospitalName,
+          hospital_name: facility.name,
         },
         null
       );
@@ -80,6 +94,8 @@ export default withContainer(async (req, res, { container }) => {
       res.status(201);
       res.end(JSON.stringify({ id: callId, callUrl: visitsUrl }));
     } else {
+      console.log(sendTextMessageResponse);
+      console.log(sendEmailResponse);
       res.status(400);
       res.end(
         JSON.stringify({ err: "Failed to send visit ready notification" })

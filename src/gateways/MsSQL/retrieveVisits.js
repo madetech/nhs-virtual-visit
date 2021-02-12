@@ -32,6 +32,7 @@ export default ({ getMsSqlConnPool }) => async (departmentId) => {
           ? scheduledCall.call_time.toISOString()
           : null,
         status: scheduledCall.status,
+        callId: scheduledCall.uuid,
       })),
       error: null,
     };

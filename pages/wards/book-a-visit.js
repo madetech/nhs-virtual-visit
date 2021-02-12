@@ -95,7 +95,9 @@ export const getServerSideProps = propsWithContainer(
       };
     } else if (query.rebookCallId) {
       const retrieveVisitByCallId = container.getRetrieveVisitByCallId();
-      const { scheduledCall } = await retrieveVisitByCallId(query.rebookCallId);
+      const { visit: scheduledCall } = await retrieveVisitByCallId(
+        query.rebookCallId
+      );
 
       let proposedCallDateTime = new Date(scheduledCall.callTime);
       proposedCallDateTime.setDate(proposedCallDateTime.getDate() + 1);

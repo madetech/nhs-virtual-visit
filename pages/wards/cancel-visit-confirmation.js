@@ -76,9 +76,11 @@ export const getServerSideProps = propsWithContainer(
   verifyToken(async ({ query, container }) => {
     const { callId } = query;
 
-    let { scheduledCall, error } = await retrieveVisitByCallId(container)(
-      callId
-    );
+    console.log(callId);
+
+    let { visit: scheduledCall, error } = await retrieveVisitByCallId(
+      container
+    )(callId);
     if (error && !scheduledCall) {
       scheduledCall = {
         patientName: "",
@@ -88,13 +90,15 @@ export const getServerSideProps = propsWithContainer(
       };
     }
 
+    console.log(scheduledCall);
+
     return {
       props: {
         patientName: scheduledCall.patientName,
         contactName: scheduledCall.recipientName,
-        contactNumber: scheduledCall.recipientNumber,
-        contactEmail: scheduledCall.recipientEmail,
-        callDateAndTime: scheduledCall.callTime,
+        contactNumber: scheduledCall.recipientNumber || "",
+        contactEmail: scheduledCall.recipientEmail || "",
+        callDateAndTime: scheduledCall.callTime.toISOString(),
         callId,
         error,
       },
