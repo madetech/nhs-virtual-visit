@@ -78,9 +78,7 @@ import retrieveEmailAndHashedPassword from "../usecases/retrieveEmailAndHashedPa
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
 import retrieveEmailAndHashedPasswordGateway from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
-import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
 import resetPasswordGateway from "../gateways/MsSQL/resetPassword";
-import retrieveEmailAndHashedPasswordGateway from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
 import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
 import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
 import retrieveManagerByUuidGateway from "../gateways/MsSQL/retrieveManagerByUuid";
