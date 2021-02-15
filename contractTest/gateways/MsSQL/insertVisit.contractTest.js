@@ -34,7 +34,7 @@ describe("insertVisit contract tests", () => {
 
     let { error } = await insertVisit(container)(visit, departmentId);
     expect(error).toEqual(
-      "TypeError: Cannot read property 'patientName' of null"
+      "TypeError: Cannot read property 'recipientName' of null"
     );
   });
 });

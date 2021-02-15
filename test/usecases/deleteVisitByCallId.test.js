@@ -5,7 +5,7 @@ describe("deleteVisitByCallId", () => {
     const callId = "";
 
     const container = {
-      getDeleteVisitByCallIdGW: () =>
+      getDeleteVisitByCallIdGateway: () =>
         jest.fn().mockReturnValue({
           success: true,
           error: null,
@@ -20,7 +20,7 @@ describe("deleteVisitByCallId", () => {
 
   it("returns a json object containing the result", async () => {
     const container = {
-      getDeleteVisitByCallIdGW: () =>
+      getDeleteVisitByCallIdGateway: () =>
         jest.fn().mockReturnValue({
           success: true,
           error: null,
@@ -37,7 +37,7 @@ describe("deleteVisitByCallId", () => {
 
   it("returns an error object on db exception", async () => {
     const container = {
-      getDeleteVisitByCallIdGW: () =>
+      getDeleteVisitByCallIdGateway: () =>
         jest.fn().mockReturnValue({
           success: false,
           error: "Error: DB Error!",

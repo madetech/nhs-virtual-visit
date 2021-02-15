@@ -82,23 +82,18 @@ export const getServerSideProps = propsWithContainer(
       container
     )(callId);
     if (error && !scheduledCall) {
-      scheduledCall = {
-        patientName: "",
-        recipientName: "",
-        recipientNumber: "",
-        callTime: "",
-      };
+      scheduledCall = {};
     }
 
     console.log(scheduledCall);
 
     return {
       props: {
-        patientName: scheduledCall.patientName,
-        contactName: scheduledCall.recipientName,
+        patientName: scheduledCall.patientName || "",
+        contactName: scheduledCall.recipientName || "",
         contactNumber: scheduledCall.recipientNumber || "",
         contactEmail: scheduledCall.recipientEmail || "",
-        callDateAndTime: scheduledCall.callTime.toISOString(),
+        callDateAndTime: scheduledCall.callTime?.toISOString() || "",
         callId,
         error,
       },

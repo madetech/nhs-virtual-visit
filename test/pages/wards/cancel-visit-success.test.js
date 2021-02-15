@@ -40,7 +40,7 @@ describe("ward/cancel-visit-success", () => {
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
         getRetrieveDepartmentById: () => jest.fn().mockReturnValue({}),
-        getDeleteVisitByCallIdGW: () => jest.fn().mockReturnValue({}),
+        getDeleteVisitByCallIdGateway: () => jest.fn().mockReturnValue({}),
       };
 
       const { props } = await getServerSideProps({
@@ -57,12 +57,12 @@ describe("ward/cancel-visit-success", () => {
       it("provides the visit record from the database", async () => {
         const container = {
           getRetrieveVisitByCallIdGateway: () => async () => ({
-            scheduledCall: {
+            visit: {
               id: 1,
               patientName: "Fred Bloggs",
               recipientName: "John Doe",
               recipientNumber: "07700900900",
-              callTime: "2020-04-15T23:00:00.000Z",
+              callTime: new Date("2020-04-15T23:00:00.000Z"),
               callId: "Test-Call-Id",
               provider: "Test",
             },
@@ -71,7 +71,7 @@ describe("ward/cancel-visit-success", () => {
           getTokenProvider: () => tokenProvider,
           getRegenerateToken: () => jest.fn().mockReturnValue({}),
           getRetrieveDepartmentById: () => jest.fn().mockReturnValue({}),
-          getDeleteVisitByCallIdGW: () => jest.fn().mockReturnValue({}),
+          getDeleteVisitByCallIdGateway: () => jest.fn().mockReturnValue({}),
         };
 
         const { props } = await getServerSideProps({

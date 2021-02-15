@@ -68,7 +68,7 @@ describe("end", () => {
 
     const container = {
       getUserIsAuthenticated: () =>
-        jest.fn().mockResolvedValue({ ward: "test-ward-id" }),
+        jest.fn().mockResolvedValue({ wardId: "test-ward-id" }),
       getRetrieveUrQuestionUrl: () => retrieveUrQuestionUrl,
     };
 

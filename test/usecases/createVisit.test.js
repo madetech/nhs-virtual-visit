@@ -1,6 +1,6 @@
 import createVisit from "../../src/usecases/createVisit";
 
-describe("createVisit", () => {
+describe.skip("createVisit", () => {
   let createVisitUnitOfWorkSpy = jest.fn();
 
   let date = new Date();

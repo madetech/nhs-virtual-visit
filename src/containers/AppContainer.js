@@ -589,6 +589,14 @@ class AppContainer {
     return updateVisitStatusByCallIdGateway(this);
   };
 
+  getRandomIdProvider = () => {
+    return new RandomIdProvider();
+  };
+
+  getCallIdProvider = (provider, callTime = null) => {
+    return new CallIdProvider(provider, callTime);
+  };
+
   getRetrieveFacilityVisitTotals = () => () => ({
     error: null,
     leastVisited: [],

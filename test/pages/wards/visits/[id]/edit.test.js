@@ -26,7 +26,7 @@ describe("wards/visits/[id]/edit", () => {
       const callTime = new Date(2020, 1, 1, 15, 0);
 
       const retrieveVisitById = jest.fn().mockResolvedValue({
-        scheduledCall: {
+        visit: {
           id: "1",
           patientName: "Bob Smith",
           recipientName: "John Smith",
@@ -75,7 +75,7 @@ describe("wards/visits/[id]/edit", () => {
           minute: 0,
         },
       });
-      expect(retrieveVisitById).toBeCalledWith({ id, wardId });
+      expect(retrieveVisitById).toBeCalledWith({ id, departmentId: wardId });
     });
 
     it("sets props using the query parameters if provided", async () => {
@@ -84,7 +84,7 @@ describe("wards/visits/[id]/edit", () => {
       const callTime = new Date(2020, 1, 1, 15, 0);
 
       const retrieveVisitById = jest.fn().mockResolvedValue({
-        scheduledCall: {
+        visit: {
           id: "1",
           patientName: "Bob Smith",
           recipientName: "John Smith",

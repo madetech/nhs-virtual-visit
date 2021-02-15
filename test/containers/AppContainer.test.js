@@ -22,10 +22,6 @@ describe("AppContainer", () => {
     expect(instance).toEqual(secondInstance);
   });
 
-  it("returns getDb", async () => {
-    expect(await container.getDb()).toBeDefined();
-  });
-
   it("returns getTokenProvider", () => {
     expect(container.getTokenProvider()).toBeDefined();
   });

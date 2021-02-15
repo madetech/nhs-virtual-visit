@@ -56,13 +56,13 @@ describe("ward/cancel-visit-confirmation", () => {
       it("provides the visit record from the database", async () => {
         const container = {
           getRetrieveVisitByCallIdGateway: () => async () => ({
-            scheduledCall: {
+            visit: {
               id: 1,
               patientName: "Fred Bloggs",
               recipientName: "John Doe",
               recipientNumber: "07700900900",
               recipientEmail: "john@example.com",
-              callTime: "2020-04-15T23:00:00.000Z",
+              callTime: new Date("2020-04-15T23:00:00.000Z"),
               callId: "Test-Call-Id",
               provider: "Test",
             },

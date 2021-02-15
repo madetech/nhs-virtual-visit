@@ -42,25 +42,25 @@ describe("retrieveOrderedActiveCallsByDepartmentIdGateway", () => {
       recipientNumber: "07123456567",
       callTime: callTimeThree.toISOString(),
     };
-    const { id: callOneId } = await setUpScheduledCall({
+    const { uuid: callOneCallId, id: callOneId } = await setUpScheduledCall({
       ...callOne,
       departmentId,
     });
-    const { id: callTwoId } = await setUpScheduledCall({
+    const { uuid: callTwoCallId, id: callTwoId } = await setUpScheduledCall({
       ...callTwo,
       departmentId,
     });
-    const { id: callThreeId } = await setUpScheduledCall({
+    const { uuid: callThreeCallId } = await setUpScheduledCall({
       ...callThree,
       departmentId,
     });
     await container.getUpdateVisitStatusByCallIdGateway()({
-      id: callThreeId,
+      id: callThreeCallId,
       departmentId,
       status: statusToId(CANCELLED),
     });
     await container.getUpdateVisitStatusByCallIdGateway()({
-      id: callTwoId,
+      id: callTwoCallId,
       departmentId,
       status: statusToId(COMPLETE),
     });
@@ -70,8 +70,18 @@ describe("retrieveOrderedActiveCallsByDepartmentIdGateway", () => {
     );
     // Assert
     expect(scheduledCalls).toEqual([
-      { id: callTwoId, status: statusToId(COMPLETE), ...callTwo },
-      { id: callOneId, status: statusToId(SCHEDULED), ...callOne },
+      {
+        id: callTwoId,
+        callId: callTwoCallId,
+        status: statusToId(COMPLETE),
+        ...callTwo,
+      },
+      {
+        id: callOneId,
+        callId: callOneCallId,
+        status: statusToId(SCHEDULED),
+        ...callOne,
+      },
     ]);
     expect(error).toBeNull();
   });

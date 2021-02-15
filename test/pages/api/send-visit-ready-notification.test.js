@@ -13,10 +13,17 @@ describe("send-visit-ready-notification", () => {
     trustId: 1,
   });
   const retrieveWardByIdSpy = jest.fn(() => ({
-    ward: {
+    department: {
       id: 1,
       name: "Defoe Ward",
-      hospitalName: "Northwick Park Hospital",
+      facilityId: 1,
+    },
+    error: null,
+  }));
+  const retrieveFacilityByIdSpy = jest.fn(() => ({
+    facility: {
+      id: 1,
+      name: "Northwick Park Hospital",
     },
     error: null,
   }));
@@ -33,6 +40,7 @@ describe("send-visit-ready-notification", () => {
       getSendTextMessage: () => sendTextMessageSpy,
       getSendEmail: () => sendEmailSpy,
       getRetrieveDepartmentById: () => retrieveWardByIdSpy,
+      getRetrieveFacilityById: () => retrieveFacilityByIdSpy,
     };
   });
 

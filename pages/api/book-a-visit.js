@@ -1,6 +1,4 @@
 import withContainer from "../../src/middleware/withContainer";
-import CallIdProvider from "../../src/providers/CallIdProvider";
-import RandomIdProvider from "../../src/providers/RandomIdProvider";
 import {
   validateHttpMethod,
   checkIfAuthorised,
@@ -56,9 +54,11 @@ export default withContainer(
       return;
     }
 
-    const randomIdProvider = new RandomIdProvider();
-    const callPassword = randomIdProvider.generate(10);
-    const provider = new CallIdProvider(trust.videoProvider, body.callTime);
+    const callPassword = container.getRandomIdProvider().generate(10);
+    const provider = container.getCallIdProvider(
+      trust.videoProvider,
+      body.callTime
+    );
     const callId = await provider.generate();
     const callTime = new Date(body.callTime);
 
