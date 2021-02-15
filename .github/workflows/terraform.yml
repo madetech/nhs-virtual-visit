@@ -28,7 +28,7 @@ jobs:
       - name: Terraform Workspace
         id: workspace
         working-directory: terraform
-        run: terraform workspace use dev
+        run: terraform workspace select dev
 
       - name: Terraform Init
         id: init
