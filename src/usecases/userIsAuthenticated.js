@@ -19,7 +19,7 @@ export default ({ getTokenProvider, getRetrieveDepartmentById }) => async (
       validatedToken.trustId
     );
 
-    console.log(retrieveDepartmentError);
+    console.log(`retrieveDepartmentError: ${retrieveDepartmentError}`);
 
     if (retrieveDepartmentError) {
       return false;
