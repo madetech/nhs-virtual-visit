@@ -3,8 +3,6 @@ export default ({ getRetrieveVisitByCallId }) => async (callId, password) => {
 
   const { visit, error } = await retrieveVisitByCallId(callId);
 
-  console.log(visit);
-
   if (error) {
     return {
       validCallPassword: false,

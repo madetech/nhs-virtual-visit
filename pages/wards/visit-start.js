@@ -104,14 +104,9 @@ export const getServerSideProps = propsWithContainer(
   verifyToken(async ({ query, container }) => {
     const { callId } = query;
 
-    console.log(callId);
-
     const { visit: scheduledCall, error } = await retrieveVisitByCallId(
       container
     )(callId);
-
-    console.log(error);
-    console.log(scheduledCall);
 
     const callTime = formatTime(scheduledCall.callTime, "HH:mm");
     const callDate = formatDate(scheduledCall.callTime);
