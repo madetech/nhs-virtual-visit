@@ -65,7 +65,7 @@ describe("api/session", () => {
 
         const verifyWardCodeSpy = jest.fn(async () => ({
           validWardCode: true,
-          ward: { id: 10, code: "MEOW", trustId: 1 },
+          department: { id: 10, code: "MEOW", trustId: 1 },
         }));
         const verifyUserLoginSpy = jest.fn(async () => ({
           validUser: false,
@@ -84,6 +84,7 @@ describe("api/session", () => {
 
         expect(verifyWardCodeSpy).toHaveBeenCalledWith("MEOW");
         expect(tokenGeneratorSpy).toHaveBeenCalledWith({
+          userId: undefined,
           wardId: 10,
           wardCode: "MEOW",
           trustId: 1,
@@ -119,7 +120,7 @@ describe("api/session", () => {
 
         const verifyWardCodeSpy = jest.fn(async () => ({
           validWardCode: true,
-          ward: { id: 10, code: "MEOW", trustId: 1 },
+          department: { id: 10, code: "MEOW", trustId: 1 },
         }));
 
         const tokenGeneratorSpy = jest.fn(() => "generatedToken");
@@ -174,7 +175,7 @@ describe("api/session", () => {
 
         const verifyWardCodeSpy = jest.fn(async () => ({
           validDepartmentCode: true,
-          ward: { id: 10, code: "MEOW", trustId: 1 },
+          department: { id: 10, code: "MEOW", trustId: 1 },
         }));
 
         const tokenGeneratorSpy = jest.fn(() => "generatedToken");
@@ -219,7 +220,7 @@ describe("api/session", () => {
 
         const verifyWardCodeSpy = jest.fn(async () => ({
           validDepartmentCode: false,
-          ward: {},
+          department: {},
         }));
 
         const verifyUserLoginSpy = jest.fn(async () => ({

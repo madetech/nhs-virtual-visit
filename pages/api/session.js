@@ -58,7 +58,7 @@ export default withContainer(async (req, res, { container }) => {
       console.log(ward);
       token = tokens.generate({
         userId: undefined,
-        wardId: ward.wardId,
+        wardId: ward.id,
         wardCode: ward.code,
         trustId: ward.trustId,
         type: WARD_STAFF,

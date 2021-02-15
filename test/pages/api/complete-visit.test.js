@@ -60,28 +60,6 @@ describe("/api/complete-visit", () => {
     expect(response.status).toHaveBeenCalledWith(400);
   });
 
-  it("returns a 401 if invalid callId", async () => {
-    await completeVisit(
-      {
-        method: "POST",
-        body: { callId: "123" },
-      },
-      response,
-      {
-        container: {
-          getRetrieveVisitByCallId: () =>
-            jest.fn().mockResolvedValue({
-              scheduledCall: null,
-              error: "failed to retrieve visit",
-            }),
-          getUserIsAuthenticated: () => validUserIsAuthenticatedSpy,
-        },
-      }
-    );
-
-    expect(response.status).toHaveBeenCalledWith(401);
-  });
-
   it("returns 500 if mark visit complete failed", async () => {
     await completeVisit(
       {
@@ -131,9 +109,8 @@ describe("/api/complete-visit", () => {
       }
     );
 
-    expect(retrieveVisitByCallIdSpy).toHaveBeenCalledWith("123");
     expect(markVisitAsCompleteSpy).toHaveBeenCalledWith({
-      id: 456,
+      id: "123",
       wardId: 10,
     });
 

@@ -1,31 +1,6 @@
 import bookAVisit from "../../../pages/api/book-a-visit";
-import moment from "moment";
-import {
-  createVisit,
-  retrieveDepartmentById,
-  retrieveOrganisationById,
-  CallIdProvider,
-  RandomIdProvider,
-} from "../../../src/containers/CreateVisitContainer";
-import sendBookingNotification from "../../../src/usecases/sendBookingNotification";
-import createVisitUnitOfWork from "../../../src/gateways/UnitsOfWork/createVisitUnitOfWork";
 
-jest.mock("../../../src/containers/CreateVisitContainer", () => ({
-  createVisit: jest.fn(),
-  retrieveOrganisationById: jest.fn(),
-  retrieveDepartmentById: jest.fn(),
-  CallIdProvider: jest.fn(),
-  RandomIdProvider: jest.fn(),
-}));
-jest.mock("../../../src/usecases/sendTextMessage", () => jest.fn());
-jest.mock("../../../src/usecases/sendEmail", () => jest.fn());
-jest.mock("../../../src/usecases/sendBookingNotification", () => jest.fn());
-jest.mock("../../../src/gateways/UnitsOfWork/createVisitUnitOfWork", () =>
-  jest.fn()
-);
-jest.mock("../../../src/gateways/GovNotify", () => jest.fn());
-
-const frozenTime = moment();
+const frozenTime = new Date();
 
 describe("/api/book-a-visit", () => {
   let request;
@@ -69,20 +44,30 @@ describe("/api/book-a-visit", () => {
 
   it("calls createVisit with the correct arguments", async () => {
     const trust = { id: 1, videoProvider: "testVideoProvider" };
-    const ward = { id: 10, name: "wardName", hospitalName: "hospitalName" };
-    retrieveOrganisationById.mockResolvedValue({ trust, error: "" });
-    retrieveDepartmentById.mockResolvedValue({ ward, error: "" });
+    const ward = { id: 10, name: "wardName", trustId: 1 };
 
     const createVisitSpy = jest
       .fn()
       .mockResolvedValue({ success: true, err: "" });
-    createVisit.mockReturnValue(createVisitSpy);
 
-    RandomIdProvider.mockImplementation(() => {
-      return { generate: jest.fn().mockReturnValue("callPassword") };
+    container.getCreateVisit = () => createVisitSpy;
+
+    container.getRetrieveOrganisationById = () => () => ({
+      organisation: trust,
+      error: null,
     });
-    CallIdProvider.mockImplementation(() => {
-      return { generate: jest.fn().mockReturnValue("callId") };
+
+    container.getRetrieveDepartmentById = () => () => ({
+      department: ward,
+      error: null,
+    });
+
+    container.getRandomIdProvider = () => ({
+      generate: () => "callPassword",
+    });
+
+    container.getCallIdProvider = () => ({
+      generate: () => "callId",
     });
 
     await bookAVisit(request, response, { container });
@@ -102,21 +87,6 @@ describe("/api/book-a-visit", () => {
       "callPassword",
       trust.videoProvider
     );
-    expect(response.status).toHaveBeenCalledWith(201);
-  });
-
-  it("sets up unitOfWork and createVisit correctly", async () => {
-    const sendBookingNotificationDouble = jest.fn();
-    sendBookingNotification.mockReturnValue(sendBookingNotificationDouble);
-    const createVisitUnitOfWorkDouble = jest.fn();
-    createVisitUnitOfWork.mockReturnValue(createVisitUnitOfWorkDouble);
-
-    await bookAVisit(request, response, { container });
-
-    expect(createVisitUnitOfWork).toHaveBeenCalledWith(
-      sendBookingNotificationDouble
-    );
-    expect(createVisit).toHaveBeenCalledWith(createVisitUnitOfWorkDouble);
     expect(response.status).toHaveBeenCalledWith(201);
   });
 
@@ -173,6 +143,27 @@ describe("/api/book-a-visit", () => {
   it("returns a 405 when method is not POST", async () => {
     request.method = "GET";
 
+    const trust = { id: 1, videoProvider: "testVideoProvider" };
+    const ward = { id: 10, name: "wardName", trustId: 1 };
+
+    container.getRetrieveOrganisationById = () => () => ({
+      organisation: trust,
+      error: null,
+    });
+
+    container.getRetrieveDepartmentById = () => () => ({
+      department: ward,
+      error: null,
+    });
+
+    container.getRandomIdProvider = () => ({
+      generate: () => "callPassword",
+    });
+
+    container.getCallIdProvider = () => ({
+      generate: () => "callId",
+    });
+
     await bookAVisit(request, response, {
       container: {
         ...container,
@@ -189,19 +180,29 @@ describe("/api/book-a-visit", () => {
       name: "anotherWardName",
       hospitalName: "anotherHospitalName",
     };
-    retrieveOrganisationById.mockResolvedValue({ trust, error: "" });
-    retrieveDepartmentById.mockResolvedValue({ ward, error: "" });
+
+    container.getRetrieveOrganisationById = () => () => ({
+      organisation: trust,
+      error: null,
+    });
+
+    container.getRetrieveDepartmentById = () => () => ({
+      department: ward,
+      error: null,
+    });
 
     const createVisitSpy = jest
       .fn()
       .mockResolvedValue({ success: false, err: "Some error!" });
-    createVisit.mockReturnValue(createVisitSpy);
 
-    RandomIdProvider.mockImplementation(() => {
-      return { generate: jest.fn().mockReturnValue("anotherCallPassword") };
+    container.getCreateVisit = () => createVisitSpy;
+
+    container.getRandomIdProvider = () => ({
+      generate: () => "anotherCallPassword",
     });
-    CallIdProvider.mockImplementation(() => {
-      return { generate: jest.fn().mockReturnValue("anotherCallId") };
+
+    container.getCallIdProvider = () => ({
+      generate: () => "anotherCallId",
     });
 
     await bookAVisit(request, response, { container });
@@ -231,19 +232,29 @@ describe("/api/book-a-visit", () => {
       name: "anotherWardName",
       hospitalName: "anotherHospitalName",
     };
-    retrieveOrganisationById.mockResolvedValue({ trust, error: "" });
-    retrieveDepartmentById.mockResolvedValue({ ward, error: "" });
+
+    container.getRetrieveOrganisationById = () => () => ({
+      organisation: trust,
+      error: null,
+    });
+
+    container.getRetrieveDepartmentById = () => () => ({
+      department: ward,
+      error: null,
+    });
 
     const createVisitSpy = jest.fn().mockImplementation(() => {
       throw "Some error!";
     });
-    createVisit.mockReturnValue(createVisitSpy);
 
-    RandomIdProvider.mockImplementation(() => {
-      return { generate: jest.fn().mockReturnValue("anotherCallPassword") };
+    container.getCreateVisit = () => createVisitSpy;
+
+    container.getRandomIdProvider = () => ({
+      generate: () => "anotherCallPassword",
     });
-    CallIdProvider.mockImplementation(() => {
-      return { generate: jest.fn().mockReturnValue("anotherCallId") };
+
+    container.getCallIdProvider = () => ({
+      generate: () => "anotherCallId",
     });
 
     await bookAVisit(request, response, { container });

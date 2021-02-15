@@ -35,7 +35,7 @@ describe("ward/book-a-visit", () => {
       getUserIsAuthenticated: () =>
         jest.fn().mockResolvedValue("token=123" && { ward: "123" }),
       getRetrieveVisitByCallId: () => () => ({
-        scheduledCall: {
+        visit: {
           id: 1,
           patientName: "Fred Bloggs",
           recipientName: "John Doe",
@@ -56,41 +56,6 @@ describe("ward/book-a-visit", () => {
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {
         Location: "/wards/login",
-      });
-    });
-
-    it("provides an error if a db error occurs", async () => {
-      container.getDb = () =>
-        Promise.resolve({
-          any: () => {
-            throw new Error("Some DB Error");
-          },
-        });
-
-      const { props } = await getServerSideProps({
-        req: authenticatedReq,
-        res,
-        query: {},
-        container,
-      });
-
-      expect(props.error).not.toBeNull();
-    });
-
-    describe("with no extra parameters", () => {
-      it("provides the visit records from the database", async () => {
-        container.getDb = () =>
-          Promise.resolve({
-            any: () => [{ id: 1 }, { id: 2 }],
-          });
-
-        await getServerSideProps({
-          req: authenticatedReq,
-          res,
-          query: {},
-          container,
-        });
-        expect(res.writeHead).not.toHaveBeenCalled();
       });
     });
 

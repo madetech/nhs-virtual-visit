@@ -155,7 +155,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const retrieveVisitByIdSpy = jest.fn().mockResolvedValue({
-      scheduledCall: null,
+      visit: null,
       error: "error",
     });
     const container = {
@@ -171,7 +171,7 @@ describe("/api/update-a-visit", () => {
     expect(response.end).toHaveBeenCalledWith('{"err":"call does not exist"}');
     expect(retrieveVisitByIdSpy).toHaveBeenCalledWith({
       id: "1",
-      wardId: "123",
+      departmentId: "123",
     });
     expect(updateVisitSpy).not.toHaveBeenCalled();
   });
@@ -195,7 +195,7 @@ describe("/api/update-a-visit", () => {
     };
 
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "John Smith",
@@ -241,7 +241,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "John Smith",
@@ -270,7 +270,7 @@ describe("/api/update-a-visit", () => {
     expect(response.status).toHaveBeenCalledWith(200);
     expect(updateVisitSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        id: "1",
+        callId: "1",
         patientName: "Bob Smith",
         recipientNumber: "07123456789",
         recipientName: "John Smith",
@@ -298,7 +298,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "John Smith",
@@ -327,7 +327,7 @@ describe("/api/update-a-visit", () => {
     expect(response.status).toHaveBeenCalledWith(200);
     expect(updateVisitSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        id: "1",
+        callId: "1",
         patientName: "Bob Smith",
         recipientEmail: "john.smith@madetech.com",
         recipientName: "John Smith",
@@ -358,8 +358,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
-        id: "1",
+      visit: {
         patientName: "Bob Smith",
         recipientName: "John Smith",
         recipientEmail: "john.smith@madetech.com",
@@ -415,7 +414,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Alice Smith",
         recipientName: "John Smith",
@@ -471,7 +470,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "Alice Smith",
@@ -529,7 +528,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "John Smith",
@@ -594,7 +593,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "Alice Smith",
@@ -659,7 +658,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "John Smith",
@@ -726,7 +725,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "John Smith",
@@ -802,7 +801,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "John Smith",
@@ -877,7 +876,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "John Smith",
@@ -951,7 +950,7 @@ describe("/api/update-a-visit", () => {
 
     const updateVisitSpy = jest.fn();
     const callResult = {
-      scheduledCall: {
+      visit: {
         id: "1",
         patientName: "Bob Smith",
         recipientName: "John Smith",

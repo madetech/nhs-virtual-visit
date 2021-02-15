@@ -39,7 +39,7 @@ describe("ward/visits", () => {
         error: null,
       }));
       const wardSpy = jest.fn(async () => ({
-        ward: { id: 1, trustId: 1 },
+        department: { id: 1, trustId: 1 },
         error: null,
       }));
       const container = {

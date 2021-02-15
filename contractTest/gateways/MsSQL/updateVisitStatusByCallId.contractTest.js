@@ -19,7 +19,7 @@ describe("updateVisitStatusByCallIdGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    const { id } = await setUpScheduledCall({ departmentId });
+    const { uuid: id } = await setUpScheduledCall({ departmentId });
     // Act
     const { error, visit } = await updateVisitStatusByCallIdGateway(container)({
       id,
@@ -36,7 +36,7 @@ describe("updateVisitStatusByCallIdGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    const { id } = await setUpScheduledCall({ departmentId });
+    const { uuid: id } = await setUpScheduledCall({ departmentId });
     // Act
     const { error, visit } = await updateVisitStatusByCallIdGateway(container)({
       id,
@@ -52,7 +52,7 @@ describe("updateVisitStatusByCallIdGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    const { id } = await setUpScheduledCall({ departmentId });
+    const { uuid: id } = await setUpScheduledCall({ departmentId });
     // Act
     const { error, visit } = await updateVisitStatusByCallIdGateway(container)({
       id,
@@ -68,7 +68,7 @@ describe("updateVisitStatusByCallIdGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    const { id } = await setUpScheduledCall({ departmentId });
+    const { uuid: id } = await setUpScheduledCall({ departmentId });
     // Act
     const { error, visit } = await updateVisitStatusByCallIdGateway(container)({
       id,

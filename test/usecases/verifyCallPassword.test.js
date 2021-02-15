@@ -5,7 +5,7 @@ describe("verifyCallPassword", () => {
     getRetrieveVisitByCallId: () => (callId) => {
       if (callId === 1) {
         return {
-          scheduledCall: {
+          visit: {
             callId: 1,
             callPassword: "securePassword",
           },
@@ -13,7 +13,7 @@ describe("verifyCallPassword", () => {
         };
       } else if (callId === 2) {
         return {
-          scheduledCall: {
+          visit: {
             callId: 2,
             callPassword: "",
           },
@@ -21,7 +21,7 @@ describe("verifyCallPassword", () => {
         };
       } else {
         return {
-          scheduledCall: null,
+          visit: null,
           error: "No call exists by that id",
         };
       }

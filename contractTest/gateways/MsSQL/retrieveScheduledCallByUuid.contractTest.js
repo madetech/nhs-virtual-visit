@@ -16,6 +16,7 @@ describe("retrieveScheduledCallByUuidGateway", () => {
       recipientEmail: "newtest@testemail.com",
       recipientName: "New Recipient Name",
       recipientNumber: "07123456567",
+      callPassword: "foo",
       callTime,
     };
     const {

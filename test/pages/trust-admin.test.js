@@ -42,7 +42,7 @@ describe("trust-admin", () => {
   };
 
   const getRetrieveWardsSpy = jest.fn(async () => ({
-    wards: wards,
+    departments: wards,
     error: null,
   }));
 

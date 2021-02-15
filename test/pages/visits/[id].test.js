@@ -28,7 +28,7 @@ describe("call", () => {
         getVerifyCallPassword: () => getVerifyCallPasswordSpy,
         getUserIsAuthenticated: () => getUserIsAuthenticatedSpy,
         getRetrieveVisitByCallId: () => () => ({
-          scheduledCall: { id: 1, provider: "whereby" },
+          visit: { id: 1, provider: "whereby" },
         }),
       };
       res = {
