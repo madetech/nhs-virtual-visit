@@ -39,3 +39,7 @@ cypress/screenshots
 
 #docker db files
 /db/docker-data
+
+# terraform
+terraform/.terraform
+terraform/.terraform.lock.hcl
