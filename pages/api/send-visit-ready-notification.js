@@ -42,8 +42,6 @@ export default withContainer(async (req, res, { container }) => {
       authenticationToken.trustId
     );
 
-    console.log(`retrieveDepartmentError: ${retrieveDepartmentError}`);
-
     const {
       facility,
       error: retrieveFacilityError,
@@ -70,7 +68,6 @@ export default withContainer(async (req, res, { container }) => {
     }
 
     let sendEmailResponse;
-    console.log(contactEmail);
     if (contactEmail) {
       sendEmailResponse = await sendEmail(
         secondEmailTemplateId,
@@ -94,8 +91,6 @@ export default withContainer(async (req, res, { container }) => {
       res.status(201);
       res.end(JSON.stringify({ id: callId, callUrl: visitsUrl }));
     } else {
-      console.log(sendTextMessageResponse);
-      console.log(sendEmailResponse);
       res.status(400);
       res.end(
         JSON.stringify({ err: "Failed to send visit ready notification" })

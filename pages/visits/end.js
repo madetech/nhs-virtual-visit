@@ -76,7 +76,6 @@ export const getServerSideProps = propsWithContainer(
     //What if we stuck another part into the workflow between the end and this page?
 
     const token = await userIsAuthenticated(headers.cookie);
-    console.log(token);
     const correlationId = `${uuidv4()}-visit-ended`;
 
     return {

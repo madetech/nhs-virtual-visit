@@ -34,10 +34,6 @@ export default withContainer(
       error: trustErr,
     } = await container.getRetrieveOrganisationById()(trustId);
 
-    console.log(trustId);
-    console.log(trustErr);
-    console.log(trust);
-
     if (trustErr) {
       res.status(400);
       res.end(JSON.stringify({ trustErr }));

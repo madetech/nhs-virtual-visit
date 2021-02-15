@@ -8,7 +8,6 @@ export default ({ getMsSqlConnPool }) => async (visit, departmentId) => {
     visit.recipientName = visit.recipientName || visit.contactName;
     visit.recipientEmail = visit.recipientEmail || visit.contactEmail;
     visit.recipientNumber = visit.recipientNumber || visit.contactNumber;
-    console.log(visit);
     const result = await db
       .request()
       .input("patient_name", visit.patientName)

@@ -20,9 +20,6 @@ const createVisit = ({
   });
 
   try {
-    console.log(ward);
-    console.log(populatedVisit);
-
     const { error: insertVisitError } = await getInsertVisitGateway()(
       populatedVisit,
       ward.id
@@ -40,8 +37,6 @@ const createVisit = ({
     if (retrieveFacilityError) {
       return { success: false, err: retrieveFacilityError };
     }
-
-    console.log(facility);
 
     const {
       errors: bookingNotificationErrors,

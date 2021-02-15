@@ -26,8 +26,6 @@ const retrieveScheduledCallByIdGateway = ({ getMsSqlConnPool }) => async ({
           AND status = @scheduled OR status = @complete`
       );
 
-    console.log(response.recordset);
-
     const {
       patient_name,
       recipient_email,

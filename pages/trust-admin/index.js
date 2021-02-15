@@ -172,7 +172,6 @@ export const getServerSideProps = propsWithContainer(
       departments,
       error: wardError,
     } = await container.getRetrieveDepartments()(authenticationToken.trustId);
-    console.log(departments);
     const {
       facilities,
       error: facilitiesError,

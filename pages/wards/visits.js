@@ -42,8 +42,6 @@ export const getServerSideProps = propsWithContainer(
       wardId,
     });
 
-    console.log(scheduledCalls);
-
     let ward;
     ({ department: ward, error } = await container.getRetrieveDepartmentById()(
       wardId,

@@ -77,8 +77,6 @@ export default withContainer(
       callTime: body.callTime,
     };
 
-    console.log(`updatedCall: ${JSON.stringify(updatedCall)}`);
-
     try {
       await container.getUpdateVisitById()(updatedCall);
       respond(200, { success: true });

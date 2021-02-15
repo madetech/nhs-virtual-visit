@@ -10,8 +10,6 @@ const markVisitAsComplete = ({
     return { id: null, error: "A wardId must be provided." };
   }
 
-  console.log(`markVisitAsComplete: ${id}`);
-
   return await getUpdateVisitStatusByCallIdGateway()({
     id,
     wardId,
