@@ -28,23 +28,6 @@ jobs:
   contract-tests:
     runs-on: ubuntu-latest
 
-    services:
-      # Remove after migration to MSSQL
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: nhs-virtual-visit-test
-        ports:
-          - 5432:5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     if: (github.repository == 'madetech/nhs-virtual-visit')
     steps:
       - uses: actions/checkout@v2
@@ -76,10 +59,6 @@ jobs:
           EMAIL_SIGN_UP_TEMPLATE_ID: ${{ secrets.EMAIL_SIGN_UP_TEMPLATE_ID }}
         run: bin/write_environment.sh
 
-      # Remove after migration to MSSQL
-      - name: run pg data migration
-        run: npm run dbmigratetest up
-
       - name: start mssql container
         run: bin/setup_test_mssql_docker.sh
         env:
@@ -98,23 +77,6 @@ jobs:
 
   e2e-tests:
     runs-on: ubuntu-latest
-
-    services:
-      # Remove after migration to MSSQL
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: nhs-virtual-visit-test
-        ports:
-          - 5432:5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
     steps:
@@ -180,7 +142,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          build: npm run dbmigratetest up
           start: npm run test:server
         env:
           APP_ENV: test,test-mssql
@@ -198,23 +159,6 @@ jobs:
 
   migration-tests:
     runs-on: ubuntu-latest
-
-    services:
-      # Remove after migration to MSSQL
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: nhs-virtual-visit-test
-        ports:
-          - 5432:5432
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
     steps:
@@ -240,10 +184,6 @@ jobs:
           MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
           MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
         run: bin/write_environment.sh
-
-      # Remove after migration to MSSQL
-      - name: run pg data migration
-        run: npm run dbmigratetest up
 
       - name: start mssql container
         run: bin/setup_test_mssql_docker.sh
