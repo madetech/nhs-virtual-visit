@@ -14,3 +14,11 @@ variable "image_version" {
 
 variable "app_service_sku_tier" {}
 variable "app_service_sku_size" {}
+
+variable "azure_sql_username" {
+  default = "virtualvisits"
+}
+
+variable "azure_sql_password" {
+  default = "P@ssw0rd"
+}
