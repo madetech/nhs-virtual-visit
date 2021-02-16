@@ -20,4 +20,10 @@ resource "azurerm_app_service" "app_service" {
   site_config {
     linux_fx_version = "DOCKER|${var.image_name}:${var.image_version}"
   }
+
+  app_settings = {
+    "MSQL_DB_SERVER" = azurerm_sql_server.sql.fully_qualified_domain_name
+    "MSQL_DB_USER" = var.azure_sql_username
+    "MSQL_DB_PASSWORD" = var.azure_sql_password
+  }
 }

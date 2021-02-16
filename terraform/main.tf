@@ -23,5 +23,5 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg" {
   location = var.location
-  name     = "nhs-virtual-visit-${var.environment}"
+  name     = "nhs-virtual-visits-${var.environment}"
 }
