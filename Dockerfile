@@ -6,12 +6,15 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # copy source files
-COPY . /usr/src/app
+COPY package.json /usr/src/app
 
 # insall dependencies
-RUN npm install
+RUN npm install --only=prod
+
+COPY . /usr/src/app
 
 # start app
-RUN npm build
+ENV NODE_ENV production
+RUN npm run build
 EXPOSE 3000
 CMD npm start
