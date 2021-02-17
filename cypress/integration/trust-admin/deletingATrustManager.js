@@ -11,7 +11,6 @@ describe("As an trust admin, I want to delete a trust manager so that I can remo
     cy.exec(
       "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
     );
-    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   it("allows trust manager to delete a trust manager", () => {

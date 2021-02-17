@@ -15,7 +15,6 @@ describe("As a trust admin, I want to add a ward so that ward staff can book vir
     cy.exec(
       "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
     );
-    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   it("displays errors when fields have been left blank", () => {
