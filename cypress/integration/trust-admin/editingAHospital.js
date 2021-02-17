@@ -7,7 +7,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     cy.exec(
       "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
     );
-    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   function WhenIClickOnHospitals() {

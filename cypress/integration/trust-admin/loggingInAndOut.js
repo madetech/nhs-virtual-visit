@@ -4,7 +4,6 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     cy.exec(
       "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
     );
-    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   it("allows a trust admin to log in and out", () => {

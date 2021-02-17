@@ -23,7 +23,6 @@ describe("As a trust admin, I want to add, edit and delete  a ward so that ward 
     cy.exec(
       "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
     );
-    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   it("allows a trust admin to add, edit and delete a ward", () => {

@@ -14,7 +14,6 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     cy.exec(
       "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
     );
-    cy.exec("npm run dbmigrate-test-mssql up:mssql");
   });
 
   it("allows a trust admin to add and edit a hospital", () => {
