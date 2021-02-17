@@ -1,5 +1,5 @@
 {
-  "development-mssql": {
+  "development": {
     "driver": {
       "ENV": "MSQL_DB_DRIVER"
     },
@@ -32,7 +32,7 @@
       "idleTimeoutMillis": 30000
     } 
   },
-  "test-mssql": {
+  "test": {
     "driver": {
       "ENV": "MSQL_DB_DRIVER"
     },
@@ -64,7 +64,7 @@
       "idleTimeoutMillis": 30000
     }
   },
-  "production-mssql": {
+  "production": {
     "driver": {
       "ENV": "MSQL_DB_DRIVER"
     },
@@ -99,24 +99,5 @@
     "ssl": {
       "rejectUnauthorized": false
     }
-  },
-  "test": {
-    "url": {
-      "ENV": "PG_TEST_DB_URL"
-    }
-  },
-  "development": {
-    "url": {
-      "ENV": "PG_DB_URL"
-    }
-  },
-  "production": {
-    "url": {
-      "ENV": "PG_DB_URL"
-    },
-    "ssl": {
-      "rejectUnauthorized": false
-    }
-  },
-  "sql-file": true
+  }
 }

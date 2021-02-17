@@ -43,3 +43,5 @@ cypress/screenshots
 # terraform
 terraform/.terraform
 terraform/.terraform.lock.hcl
+terraform/central/.terraform
+terraform/central/.terraform.lock.hcl
