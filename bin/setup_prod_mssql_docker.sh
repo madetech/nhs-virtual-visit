@@ -16,8 +16,8 @@ fi
 ## See section Customize build automation 										##
 ##################################################################################
 
-echo "Running dbmigrate-prod-mssql.sh project script"
+echo "Running dbmigrateprod.sh project script"
 
 # Before running the script check if server is paused
 # Run create / update tables scripts.
-for i in $(seq 1 5); do [ $i -gt 1 ] && sleep 15; npm run dbmigrate-prod-mssql up:mssql && s=0 && break || s=$?; done; (exit $s)
+for i in $(seq 1 5); do [ $i -gt 1 ] && sleep 15; npm run dbmigrateprod up:mssql && s=0 && break || s=$?; done; (exit $s)

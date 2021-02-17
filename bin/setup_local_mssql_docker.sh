@@ -18,5 +18,5 @@ sleep $wait_time
 echo database started...
 
 # Run create tables scripts.
-npm run dbmigrate-dev-mssql up:mssql
-npm run dbmigrate-test-mssql up:mssql
+npm run dbmigratedev up:mssql
+npm run dbmigratetest up:mssql
