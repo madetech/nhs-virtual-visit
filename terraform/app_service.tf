@@ -27,6 +27,8 @@ resource "azurerm_app_service" "app_service" {
     "DOCKER_REGISTRY_SERVER_PASSWORD"   = data.azurerm_container_registry.acr.admin_password
     "DOCKER_REGISTRY_SERVER_URL"        = "https://virtualvisits.azurecr.io"
     "NODE_ENV"                          = "production"
+    "ENV"                               = var.environment
+    "DATADOG_API_KEY"                   = var.datadog_api_key
     "MSQL_DB_SERVER"                    = azurerm_sql_server.sql.fully_qualified_domain_name
     "MSQL_DB_USER"                      = var.azure_sql_username
     "MSQL_DB_PASSWORD"                  = var.azure_sql_password

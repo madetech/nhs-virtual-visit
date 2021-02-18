@@ -6,6 +6,23 @@ const logger = winston.createLogger({
   defaultMeta: { service: "nhs-virtual-visit" },
 });
 
+const datadog_api_key = process.env.DATADOG_API_KEY;
+const env = process.env.ENV || "dev";
+
+if (datadog_api_key !== undefined) {
+  logger.add(
+    new winston.transports.Http({
+      host: 'http-intake.logs.datadoghq.eu',
+      path: `/v1/input/${datadog_api_key}?ddsource=nodejs&service=virtualvisits-${env}`,
+      ssl: true,
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.json()
+      ),
+    }),
+  );
+}
+
 const localFormat = winston.format.printf(({ level, message, timestamp }) => {
   return `[${level}] [${timestamp}]: ${message}`;
 });
