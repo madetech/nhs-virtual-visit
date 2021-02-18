@@ -4,13 +4,16 @@ const ALPHANUMERIC =
 
 const validateSignUpEmailAddress = (email) => {
     const emailDomain = process.env.NODE_ENV === "production" ? process.env.SIGN_UP_EMAIL_DOMAIN_PROD: process.env.SIGN_UP_EMAIL_DOMAIN_DEV
+    const emailDomainArray = emailDomain.split(',');
+    const EMAIL_DOMAIN_REGEX_STRING = `${emailDomainArray[0].toUpperCase()} || ${emailDomainArray[1].toUpperCase()}`;
+    console.log(EMAIL_DOMAIN_REGEX_STRING)
     const EMAIL_VALIDATION_STRING =
     `^[${ALPHANUMERIC}.!#$%&'*+/=?^_\`{|}~-]` + 
-    `+@${emailDomain.toUpperCase()}`
+    `+@${EMAIL_DOMAIN_REGEX_STRING}`
 
     const EMAIL_VALIDATION_REGEX = new RegExp(EMAIL_VALIDATION_STRING);
-    console.log(process.env.SIGN_UP_EMAIL_DOMAIN_PROD);
-    console.log(emailDomain);
+    // console.log(process.env.SIGN_UP_EMAIL_DOMAIN_PROD);
+    // console.log(emailDomain);
     return EMAIL_VALIDATION_REGEX.test(email.toUpperCase());
 };
 

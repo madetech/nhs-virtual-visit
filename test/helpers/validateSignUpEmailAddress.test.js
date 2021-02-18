@@ -1,7 +1,7 @@
 import validateSignUpEmailAddress from "../../src/helpers/validateSignUpEmailAddress";
 
 const validSignUpEmailAddresses = [
-    "email@madetech.com",
+  /*  "email@madetech.com",
     "email@madetech.COM",
     "firstname.lastname@madetech.com",
     "firstname.o'lastname@madetech.com",
@@ -14,6 +14,9 @@ const validSignUpEmailAddresses = [
     "info@madetech.com",
     "info@MADETECH.com",
     "japanese-info@madetech.com",
+    */
+   "email@nhs.net",
+   "email@nhs.uk"
 ];
 
 const invalidSignUpEmailAddresses = [
