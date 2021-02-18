@@ -37,7 +37,7 @@ const SignUp = ({ organisations, error }) => {
     setOrganisation(selectedOrganisation);
   };
 
-  const verifyEmail = (email) => email.match(/@madetech\.com/);
+  const verifyEmail = (email) => email.match(/@nhs\.co\.uk/);
 
   const onSubmit = async () => {
     const onSubmitErrors = [];
