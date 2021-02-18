@@ -38,9 +38,10 @@ const AuthoriseUser = ({ email, organisationName, error }) => {
       });
       return true;
     } else {
+      const { err } = await response.json(); 
       onSubmitErrors.push({
         id: "authorisation-error",
-        message: "There was a problem authorising this request",
+        message: err,
       });
     }
 
