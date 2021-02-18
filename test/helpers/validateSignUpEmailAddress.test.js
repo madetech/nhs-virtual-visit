@@ -8,6 +8,7 @@ const validFrontEmail = [
     "1234567890",
     "_______",
     "firstname-lastname",
+    "bam_bam_özgur"
 ]
 
 const invalidSignUpEmailAddresses = [
@@ -44,11 +45,8 @@ const createValidEmailArray = (emailDomainString) =>{
 }
 
 describe("validateSignUpEmailAddress", () => {
-    describe("checks for valid email domain when NODE_ENV==='test'",()=> {
-        beforeEach(()=>{
-            process.env.NEXT_PUBLIC_ENV="test";
-        })
-        const emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN_DEV;
+    describe("checks for valid email domain",()=> {
+        const emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN;
         const validSignUpEmailAddresses = createValidEmailArray(emailDomainString);
         validSignUpEmailAddresses.forEach((email_address) => {
             it(`accepts a valid email address: ${email_address}`, () => {
@@ -61,40 +59,6 @@ describe("validateSignUpEmailAddress", () => {
             });
         });
     });
-    describe("checks for valid email domain when NODE_ENV==='development'",()=> {
-        beforeEach(()=>{
-            process.env.NEXT_PUBLIC_ENV="development";
-        })
-        const emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN_DEV;
-        const validSignUpEmailAddresses = createValidEmailArray(emailDomainString);
-        validSignUpEmailAddresses.forEach((email_address) => {
-            it(`accepts a valid email address: ${email_address}`, () => {
-              expect(validateSignUpEmailAddress(email_address)).toEqual(true);
-            });
-        });
-        invalidSignUpEmailAddresses.forEach((email_address) => {
-            it(`rejects an invalid email address: ${email_address}`, () => {
-                expect(validateSignUpEmailAddress(email_address)).toEqual(false);
-            });
-        });
-    });
-    describe("checks for valid email domain when NODE_ENV==='production",()=>{
-        beforeEach(()=>{
-            process.env.NEXT_PUBLIC_ENV="production";
-        })
-        const emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN_PROD;
-        const validSignUpEmailAddresses = createValidEmailArray(emailDomainString);
-        validSignUpEmailAddresses.forEach((email_address) => {
-            it(`accepts a valid email address: ${email_address}`, () => {
-              expect(validateSignUpEmailAddress(email_address)).toEqual(true);
-            });
-        });
-        invalidSignUpEmailAddresses.forEach((email_address) => {
-            it(`rejects an invalid email address: ${email_address}`, () => {
-                expect(validateSignUpEmailAddress(email_address)).toEqual(false);
-            });
-        });
-    })
 });
 
 describe("createEmailDomainString",()=>{
