@@ -1,4 +1,4 @@
-import { validateSignUpEmailAddress, createEmailDomainString } from "../../src/helpers/validateSignUpEmailAddress";
+import validateSignUpEmailAddress from "../../src/helpers/validateSignUpEmailAddress";
 
 const validFrontEmail = [
     "firstname.lastname",
@@ -39,8 +39,9 @@ const invalidSignUpEmailAddresses = [
   "domain-starts-with-a-dot@.domain.com",
   "brackets(in)local@domain.com",
 ];
-const createValidEmailArray = (emailDomainString) =>{
-    const emailDomainArray = emailDomainString.split(',')
+
+const createValidEmailArray = (emailDomainString, validFrontEmail) =>{
+    const emailDomainArray = emailDomainString ? emailDomainString.split(',') : []
     return emailDomainArray.map(domain=> validFrontEmail.map(frontEmail=>`${frontEmail}@${domain}`)).flat();
 }
 
@@ -48,7 +49,7 @@ describe("validateSignUpEmailAddress", () => {
     describe("checks for valid email domain",()=> {
         process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN="madetech.com,nhs.co.uk";
         const emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN;
-        const validSignUpEmailAddresses = createValidEmailArray(emailDomainString);
+        const validSignUpEmailAddresses = createValidEmailArray(emailDomainString, validFrontEmail);
         validSignUpEmailAddresses.forEach((email_address) => {
             it(`accepts a valid email address: ${email_address}`, () => {
               expect(validateSignUpEmailAddress(email_address)).toEqual(true);
@@ -62,17 +63,21 @@ describe("validateSignUpEmailAddress", () => {
     });
 });
 
-describe("createEmailDomainString",()=>{
-    it("returns empty string when accepts an empty array",()=>{
-        expect(createEmailDomainString([])).toEqual('');
+describe("createValidEmailArray",()=>{
+    it("returns empty array when given empty string and an empty array",()=>{
+        expect(createValidEmailArray('', [])).toEqual([]);
     })
-    it("returns string when accepts array of length 1",()=>{
-        expect(createEmailDomainString(['day.net'])).toEqual('day.net');
+    it("returns empty array when given empty string and an array of length 1",()=>{
+        expect(createValidEmailArray('', ['abc_345'])).toEqual([]);
     })
-    it("returns correct string when accepts array of length 2",()=>{
-        expect(createEmailDomainString(['day.net', 'night.net'])).toEqual('day.net|night.net');
+    it("returns correct array when given a string with no commas and an array of length 1",()=>{
+        expect(createValidEmailArray('nhs.com', ['hello'])).toEqual(['hello@nhs.com']);
     })
-    it("returns correct string when accepts array of length greater than 2",()=>{
-        expect(createEmailDomainString(['day.net', 'night.net','evening.com', 'afternoon.uk'])).toEqual('day.net|night.net|evening.com|afternoon.uk');
+    it("returns empty array when given empty string and an array of length 1",()=>{
+        expect(createValidEmailArray('', ['abc_345'])).toEqual([]);
     })
-})
+    it("returns correct array when given a string with commas and an array of length more than 2",()=>{
+        expect(createValidEmailArray('nhs.com,madetech.com', ['hello','abd.123','*(@£abc'])).toEqual(['hello@nhs.com', 'abd.123@nhs.com','*(@£abc@nhs.com','hello@madetech.com', 'abd.123@madetech.com','*(@£abc@madetech.com',]);
+    })
+
+});

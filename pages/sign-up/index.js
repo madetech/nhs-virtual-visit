@@ -13,7 +13,7 @@ import Select from "../../src/components/Select";
 import AnchorLink from "../../src/components/AnchorLink";
 import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
 import Router from "next/router";
-import { validateSignUpEmailAddress } from "../../src/helpers/validateSignUpEmailAddress";
+import validateSignUpEmailAddress from "../../src/helpers/validateSignUpEmailAddress";
 
 const SignUp = ({ organisations, error }) => {
   const [errors, setErrors] = useState([]);
