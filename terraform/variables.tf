@@ -68,3 +68,5 @@ variable "sentry_project" {
 variable "sentry_auth_token" {
   default = ""
 }
+
+variable "datadog_api_key" {}
