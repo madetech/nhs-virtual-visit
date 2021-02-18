@@ -1,6 +1,6 @@
 # 4. Setting up CI on Github Actions
 
-There is a GitHub Actions [workflow](../../.github/workflows/gha-ci.yml) to run the tests when code is pushed to any branch in the GitHub repository, and when pull requests are created. The results of these test runs appear as status checks against commits on GitHub.
+There is a GitHub Actions [workflow](../../.github/workflows/test.yml) to run the tests when code is pushed to any branch in the GitHub repository, and when pull requests are created. The results of these test runs appear as status checks against commits on GitHub.
 
 The following GOV.UK Notify template IDs need to be set as GitHub secrets in the GitHub repository where the tests are to be run:
 

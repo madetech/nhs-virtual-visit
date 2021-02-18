@@ -1,13 +1,11 @@
-name: Virtual Visits CI
+name: Test
 
 on:
   pull_request:
-    paths-ignore:
-      - "README.md"
-      - "docs/**"
 
 jobs:
-  build-and-unit-tests:
+  unit-tests:
+    name: Unit Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -26,6 +24,7 @@ jobs:
         run: npm run test
 
   contract-tests:
+    name: Contract Tests
     runs-on: ubuntu-latest
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
@@ -40,8 +39,7 @@ jobs:
 
       - name: Create .env file
         env:
-          APP_ENV: test,test-mssql
-          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
+          APP_ENV: test
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
           MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
@@ -76,6 +74,7 @@ jobs:
         run: npm run test:contract
 
   e2e-tests:
+    name: End-To-End Tests
     runs-on: ubuntu-latest
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
@@ -90,8 +89,7 @@ jobs:
 
       - name: Create .env file
         env:
-          APP_ENV: test,test-mssql
-          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
+          APP_ENV: test
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
           MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
@@ -144,8 +142,7 @@ jobs:
         with:
           start: npm run test:server
         env:
-          APP_ENV: test,test-mssql
-          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
+          APP_ENV: test
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
           SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
           SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
@@ -158,6 +155,7 @@ jobs:
           EVENT_LOGGING: ${{ secrets.ENABLE_EVENT_LOGGING_IN_TESTS }}
 
   migration-tests:
+    name: Migration Tests
     runs-on: ubuntu-latest
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
@@ -200,3 +198,38 @@ jobs:
 
       - name: run migration tests
         run: npm run test:migration
+
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          # terraform_version: 0.13.0:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Format
+        id: fmt
+        env:
+          TF_WORKSPACE: dev
+        working-directory: terraform
+        run: terraform fmt -check
+
+      - name: Terraform Init
+        id: init
+        env:
+          TF_WORKSPACE: dev
+        working-directory: terraform
+        run: terraform init
+
+      - name: Terraform Plan
+        id: plan
+        env:
+          TF_WORKSPACE: dev
+        working-directory: terraform
+        run: terraform plan -no-color
+
