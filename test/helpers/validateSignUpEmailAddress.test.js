@@ -1,23 +1,14 @@
-import validateSignUpEmailAddress from "../../src/helpers/validateSignUpEmailAddress";
+import { validateSignUpEmailAddress, createEmailDomainString } from "../../src/helpers/validateSignUpEmailAddress";
 
-const validSignUpEmailAddresses = [
-  /*  "email@madetech.com",
-    "email@madetech.COM",
-    "firstname.lastname@madetech.com",
-    "firstname.o'lastname@madetech.com",
-    "email@MADETECH.COM",
-    "firstname+lastname@madetech.com",
-    "1234567890@madetech.com",
-    "email@madetech.com",
-    "_______@madetech.com",
-    "firstname-lastname@madetech.com",
-    "info@madetech.com",
-    "info@MADETECH.com",
-    "japanese-info@madetech.com",
-    */
-   "email@nhs.net",
-   "email@nhs.uk"
-];
+const validFrontEmail = [
+    "firstname.lastname",
+    "firstname.o'lastname",
+    "email",
+    "firstname+lastname",
+    "1234567890",
+    "_______",
+    "firstname-lastname",
+]
 
 const invalidSignUpEmailAddresses = [
   "email@[123.123.123.123]",
@@ -47,10 +38,18 @@ const invalidSignUpEmailAddresses = [
   "domain-starts-with-a-dot@.domain.com",
   "brackets(in)local@domain.com",
 ];
+const createValidEmailArray = (emailDomainString) =>{
+    const emailDomainArray = emailDomainString.split(',')
+    return emailDomainArray.map(domain=> validFrontEmail.map(frontEmail=>`${frontEmail}@${domain}`)).flat();
+}
 
 describe("validateSignUpEmailAddress", () => {
-    describe.skip("checks for valid email domain when NODE_ENV==='test'",()=> {
-        process.env.NODE_ENV="test";
+    describe("checks for valid email domain when NODE_ENV==='test'",()=> {
+        beforeEach(()=>{
+            process.env.NEXT_PUBLIC_ENV="test";
+        })
+        const emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN_DEV;
+        const validSignUpEmailAddresses = createValidEmailArray(emailDomainString);
         validSignUpEmailAddresses.forEach((email_address) => {
             it(`accepts a valid email address: ${email_address}`, () => {
               expect(validateSignUpEmailAddress(email_address)).toEqual(true);
@@ -62,8 +61,12 @@ describe("validateSignUpEmailAddress", () => {
             });
         });
     });
-    describe.skip("checks for valid email domain when NODE_ENV==='development'",()=> {
-        process.env.NODE_ENV="development";
+    describe("checks for valid email domain when NODE_ENV==='development'",()=> {
+        beforeEach(()=>{
+            process.env.NEXT_PUBLIC_ENV="development";
+        })
+        const emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN_DEV;
+        const validSignUpEmailAddresses = createValidEmailArray(emailDomainString);
         validSignUpEmailAddresses.forEach((email_address) => {
             it(`accepts a valid email address: ${email_address}`, () => {
               expect(validateSignUpEmailAddress(email_address)).toEqual(true);
@@ -76,7 +79,11 @@ describe("validateSignUpEmailAddress", () => {
         });
     });
     describe("checks for valid email domain when NODE_ENV==='production",()=>{
-        process.env.NODE_ENV="production";
+        beforeEach(()=>{
+            process.env.NEXT_PUBLIC_ENV="production";
+        })
+        const emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN_PROD;
+        const validSignUpEmailAddresses = createValidEmailArray(emailDomainString);
         validSignUpEmailAddresses.forEach((email_address) => {
             it(`accepts a valid email address: ${email_address}`, () => {
               expect(validateSignUpEmailAddress(email_address)).toEqual(true);
@@ -88,15 +95,19 @@ describe("validateSignUpEmailAddress", () => {
             });
         });
     })
-//   validSignUpEmailAddresses.forEach((email_address) => {
-//     it(`accepts a valid email address: ${email_address}`, () => {
-//       expect(validateSignUpEmailAddress(email_address)).toEqual(true);
-//     });
-//   });
-
-//   invalidSignUpEmailAddresses.forEach((email_address) => {
-//     it(`rejects an invalid email address: ${email_address}`, () => {
-//       expect(validateSignUpEmailAddress(email_address)).toEqual(false);
-//     });
-//   });
 });
+
+describe("createEmailDomainString",()=>{
+    it("returns empty string when accepts an empty array",()=>{
+        expect(createEmailDomainString([])).toEqual('');
+    })
+    it("returns string when accepts array of length 1",()=>{
+        expect(createEmailDomainString(['day.net'])).toEqual('day.net');
+    })
+    it("returns correct string when accepts array of length 2",()=>{
+        expect(createEmailDomainString(['day.net', 'night.net'])).toEqual('day.net|night.net');
+    })
+    it("returns correct string when accepts array of length greater than 2",()=>{
+        expect(createEmailDomainString(['day.net', 'night.net','evening.com', 'afternoon.uk'])).toEqual('day.net|night.net|evening.com|afternoon.uk');
+    })
+})
