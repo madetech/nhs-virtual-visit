@@ -1,4 +1,5 @@
 import validateSignUpEmailAddress from "../../src/helpers/validateSignUpEmailAddress";
+import { invalidEmailAddresses } from "./validateEmailAddress.test";
 
 const validFrontEmail = [
     "firstname.lastname",
@@ -10,35 +11,6 @@ const validFrontEmail = [
     "firstname-lastname",
     "bam_bam_özgur"
 ]
-
-const invalidSignUpEmailAddresses = [
-  "email@[123.123.123.123]",
-  "plainaddress",
-  "@no-local-part.com",
-  "Outlook Contact <outlook-contact@domain.com>",
-  "no-at.domain.com",
-  "no-tld@domain",
-  ";beginning-semicolon@domain.co.uk",
-  "middle-semicolon@domain.co;uk",
-  "trailing-semicolon@domain.com;",
-  '"email+leading-quotes@domain.com',
-  'email+middle"-quotes@domain.com',
-  '"quoted-local-part"@domain.com',
-  '"quoted@domain.com"',
-  "lots-of-dots@domain..gov..uk",
-  "multiple@domains@domain.com",
-  "spaces in local@domain.com",
-  "spaces-in-domain@dom ain.com",
-  "underscores-in-domain@dom_ain.com",
-  "pipe-in-domain@example.com|gov.uk",
-  "comma,in-local@gov.uk",
-  "comma-in-domain@domain,gov.uk",
-  "pound-sign-in-local£@domain.com",
-  "local-with-’-apostrophe@domain.com",
-  "local-with-”-quotes@domain.com",
-  "domain-starts-with-a-dot@.domain.com",
-  "brackets(in)local@domain.com",
-];
 
 const createValidEmailArray = (emailDomainString, validFrontEmail) =>{
     const emailDomainArray = emailDomainString ? emailDomainString.split(',') : []
@@ -55,7 +27,7 @@ describe("validateSignUpEmailAddress", () => {
               expect(validateSignUpEmailAddress(email_address)).toEqual(true);
             });
         });
-        invalidSignUpEmailAddresses.forEach((email_address) => {
+        invalidEmailAddresses.forEach((email_address) => {
             it(`rejects an invalid email address: ${email_address}`, () => {
                 expect(validateSignUpEmailAddress(email_address)).toEqual(false);
             });
@@ -79,5 +51,4 @@ describe("createValidEmailArray",()=>{
     it("returns correct array when given a string with commas and an array of length more than 2",()=>{
         expect(createValidEmailArray('nhs.com,madetech.com', ['hello','abd.123','*(@£abc'])).toEqual(['hello@nhs.com', 'abd.123@nhs.com','*(@£abc@nhs.com','hello@madetech.com', 'abd.123@madetech.com','*(@£abc@madetech.com',]);
     })
-
 });
