@@ -19,7 +19,7 @@ const validEmailAddresses = [
   "japanese-info@例え.テスト",
 ];
 
-const invalidEmailAddresses = [
+export const invalidEmailAddresses = [
   "email@[123.123.123.123]",
   "plainaddress",
   "@no-local-part.com",
