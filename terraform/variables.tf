@@ -70,3 +70,7 @@ variable "sentry_auth_token" {
 }
 
 variable "datadog_api_key" {}
+
+variable "valid_email_domains" {
+  default = "nhs.uk,nhs.net"
+}
