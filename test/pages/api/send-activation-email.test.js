@@ -147,7 +147,7 @@ describe("send-reset-password-email", () => {
     expect(response.status).toHaveBeenCalledWith(401);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({
-        error: "There was an error creating link to sign up",
+        err: "There was an error creating link to sign up",
       })
     );
   });
@@ -187,6 +187,22 @@ describe("send-reset-password-email", () => {
     expect(response.status).toHaveBeenCalledWith(401);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ err: "GovNotify error occurred" })
+    );
+  });
+
+  it("returns a 500 if the sendEmail throws an error", async () => {
+    const sendEmailStub = jest.fn(() => {throw Error('Error')});
+
+    await sendActivationEmail(validRequest, response, {
+      container: {
+        ...container,
+        getSendEmail: () => sendEmailStub,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(500);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ err: "There has been an internal server error" })
     );
   });
 });
