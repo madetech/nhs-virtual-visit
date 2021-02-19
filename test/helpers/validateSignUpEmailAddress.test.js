@@ -20,7 +20,7 @@ const createValidEmailArray = (emailDomainString, validFrontEmail) =>{
 
 describe("validateSignUpEmailAddress", () => {
     describe("checks for valid email domain",()=> {
-        process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN="madetech.com,nhs.co.uk";
+        process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN="madetech.com,nhs.uk";
         const emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN;
         const validSignUpEmailAddresses = createValidEmailArray(emailDomainString, validFrontEmail);
         validSignUpEmailAddresses.forEach((email_address) => {
@@ -44,12 +44,12 @@ describe("createValidEmailArray",()=>{
         expect(createValidEmailArray('', ['abc_345@'])).toEqual([]);
     })
     it("returns correct array when given a string with no commas and an array of length 1",()=>{
-        expect(createValidEmailArray('nhs.com', ['hello@'])).toEqual(['hello@nhs.com']);
+        expect(createValidEmailArray('nhs.uk', ['hello@'])).toEqual(['hello@nhs.uk']);
     })
     it("returns empty array when given empty string and an array of length 1",()=>{
         expect(createValidEmailArray('', ['abc_345@'])).toEqual([]);
     })
     it("returns correct array when given a string with commas and an array of length more than 2",()=>{
-        expect(createValidEmailArray('nhs.com,madetech.com', ['hello@','abd.123@','abc_ijo@'])).toEqual(['hello@nhs.com', 'abd.123@nhs.com','abc_ijo@nhs.com','hello@madetech.com', 'abd.123@madetech.com','abc_ijo@madetech.com',]);
+        expect(createValidEmailArray('nhs.uk,madetech.com', ['hello@','abd.123@','abc_ijo@'])).toEqual(['hello@nhs.uk', 'abd.123@nhs.uk','abc_ijo@nhs.uk','hello@madetech.com', 'abd.123@madetech.com','abc_ijo@madetech.com',]);
     })
 });
