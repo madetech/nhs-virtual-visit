@@ -1,4 +1,4 @@
-const REGEX = /^(?:(?:[^<>()\[\]\\.,;:\s@"]+(?:\.[^<>()\[\]\\.,;:\s@"]+)*)|(?:".+"))@(?:[A-Za-z0-9\-]+\.)*(\w+\.\w+)$/;
+const REGEX = /^(?:(?:[^<>()[\]\\.,;:\s@"]+(?:\.[^<>()[\]\\.,;:\s@"]+)*)|(?:".+"))@(?:[A-Za-z0-9-]+\.)*(\w+\.\w+)$/;
 
 export default (email) => {
     if(process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN === undefined)
