@@ -1,3 +1,4 @@
+process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN="madetech.com,nhs.co.uk";
 import validateSignUpEmailAddress from "../../src/helpers/validateSignUpEmailAddress";
 import { invalidEmailAddresses } from "./validateEmailAddress.test";
 
@@ -22,10 +23,9 @@ describe("validateSignUpEmailAddress", () => {
     describe("checks for valid email domain",()=> {
         let emailDomainString;
         beforeEach(()=>{
-            process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN="madetech.com,nhs.co.uk";
             emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN;
         })
-     
+
         const validSignUpEmailAddresses = createValidEmailArray(emailDomainString, validFrontEmail);
         validSignUpEmailAddresses.forEach((email_address) => {
             it(`accepts a valid email address: ${email_address}`, () => {
