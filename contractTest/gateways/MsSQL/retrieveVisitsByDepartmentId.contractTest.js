@@ -1,7 +1,6 @@
 import retrieveVisitsByDepartmentId from "../../../src/gateways/MsSQL/retrieveVisitsByDepartmentId";
-import { setupOrganisationFacilityDepartmentAndManager } from "../../../test/testUtils/factories";
+import { setUpScheduledCall, setupOrganisationFacilityDepartmentAndManager } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
-import insertVisit from "../../../src/gateways/MsSQL/insertVisit";
 
 describe("retrieveVisitsByDepartmentId", () => {
   const container = AppContainer.getInstance();
@@ -16,7 +15,7 @@ describe("retrieveVisitsByDepartmentId", () => {
       departmentArgs: { code: departmentCreated.code },
     });
 
-    await insertVisit(container)({}, departmentId);
+    await setUpScheduledCall({departmentId});
 
     // Act
     const { error, visits } = await retrieveVisitsByDepartmentId(container)(
