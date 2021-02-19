@@ -18,11 +18,12 @@ export default ({ getMsSqlConnPool }) => async (visit, departmentId) => {
       .input("call_password", visit.callPassword)
       .input("department_id", departmentId)
       .input("status", statusToId(SCHEDULED))
+      .input("call_id", visit.callId)
       .query(
         `insert into dbo.[scheduled_call]
-          ([patient_name], [call_time], [recipient_name], [recipient_number], [recipient_email], [call_password], [department_id], [status])
+          ([patient_name], [call_time], [recipient_name], [recipient_number], [recipient_email], [call_password], [department_id], [status], [uuid])
           output inserted.*
-          values (@patient_name, @call_time, @recipient_name, @recipient_number, @recipient_email, @call_password, @department_id, @status)`
+          values (@patient_name, @call_time, @recipient_name, @recipient_number, @recipient_email, @call_password, @department_id, @status, @call_id)`
       );
 
     return {
