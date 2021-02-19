@@ -47,7 +47,6 @@ export const invalidEmailAddresses = [
   "domain-starts-with-a-dot@.domain.com",
   "brackets(in)local@domain.com",
   "emaill@.trust.nhs.uk",
-  "example@example.org"
 ];
 
 describe("validateEmailAddress", () => {
