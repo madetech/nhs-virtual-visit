@@ -1,6 +1,7 @@
 import AppContainer from "../../../src/containers/AppContainer";
 import insertVisit from "../../../src/gateways/MsSQL/insertVisit";
 import { setupOrganisationFacilityDepartmentAndManager } from "../../../test/testUtils/factories";
+import { v4 as uuidv4 } from 'uuid'
 
 describe("insertVisit contract tests", () => {
   const container = AppContainer.getInstance();
@@ -15,15 +16,16 @@ describe("insertVisit contract tests", () => {
       contactName: "Contact Test",
       contactNumber: "07123456789",
       callTime: new Date(2021, 0, 27, 13, 37, 0, 0),
+      callId: uuidv4()
     };
 
     const { id, uuid, error } = await insertVisit(container)(
       visit,
       departmentId
     );
+    expect(error).toBeNull();
     expect(id).toBeGreaterThan(0);
     expect(uuid).toBeTruthy();
-    expect(error).toBeNull();
   });
 
   it("catches errors", async () => {

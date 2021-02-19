@@ -1,5 +1,6 @@
 import AppContainer from "../../src/containers/AppContainer";
 const container = AppContainer.getInstance();
+import { v4 as uuidv4 } from "uuid";
 
 export const setUpUserToVerify = async (args = {}) => {
   return await container.getAddToUserVerificationTableGateway()({
@@ -243,6 +244,7 @@ export const setUpScheduledCall = async (args = {}) => {
     recipientName: "Contact Test",
     recipientNumber: "07123456789",
     callTime: new Date(2021, 0, 27, 13, 37, 0, 0),
+    callId: uuidv4(),
     ...args,
   };
   return await container.getCreateScheduledCallGateway()(
@@ -258,6 +260,7 @@ export const setupVisit = async (args = {}) => {
     contactName: "Contact Name",
     callTime: new Date("2020-06-01 13:00"),
     contactNumber: "01234578912",
+    callId: uuidv4(),
     ...args,
   };
   return await container.getCreateScheduledCallGateway(container)(
