@@ -1,8 +1,9 @@
 import logger from "../../logger";
 
-export default ({ getRetrieveDepartmentByCodeGateway }) => async (wardCode) => {
+export default ({ getRetrieveDepartmentByCodeGateway }) => async (wardCode, pin) => {
   try {
-    const department = await getRetrieveDepartmentByCodeGateway()(wardCode);
+    logger.info(`Verify ward login for wardcode ${wardCode}`);
+    const department = await getRetrieveDepartmentByCodeGateway()(wardCode, pin);
 
     if (department) {
       return {
@@ -15,7 +16,6 @@ export default ({ getRetrieveDepartmentByCodeGateway }) => async (wardCode) => {
     }
   } catch (error) {
     logger.error(JSON.stringify(error));
-
     return {
       validWardCode: false,
       error: error.toString(),

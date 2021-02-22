@@ -5,7 +5,7 @@ import logger from "../../logger";
 import featureIsEnabled from "../../src/helpers/featureFlag";
 
 export default withContainer(async (req, res, { container }) => {
-  const { code, password } = req.body;
+  const { code, password, pin } = req.body;
 
   const method = req.method;
 
@@ -14,7 +14,7 @@ export default withContainer(async (req, res, { container }) => {
     let verifyWardCodeResponse = {};
     if (password === undefined) {
       const verifyWardCode = container.getRetrieveDepartmentByCode();
-      verifyWardCodeResponse = await verifyWardCode(code);
+      verifyWardCodeResponse = await verifyWardCode(code, pin);
     }
 
     const verifyUserLogin = container.getVerifyUserLogin();
