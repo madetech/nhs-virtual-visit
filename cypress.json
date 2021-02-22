@@ -2,7 +2,8 @@
   "env": {
     "patientName": "Test Patient",
     "contactNumber": "07123456789",
-    "validWard": "TEST1",
+    "validWardCode": "TEST1",
+    "validWardPin": "1234",
     "validTrustManagerEmail": "nhs-manager14@nhs.co.uk",
     "validTrustManagerPassword": "P@55w0rd",
     "trustManagerEmailToResetPassword": "nhs-manager13@nhs.co.uk",

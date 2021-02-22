@@ -1,3 +1,4 @@
+import { GivenIAmLoggedInAsAWardStaff } from "./wardCommonSteps";
 describe("As a ward staff, I want to edit a visit from the list screen so that I can change the details of a visit.", () => {
   before(() => {
     // reset and seed the database
@@ -35,12 +36,6 @@ describe("As a ward staff, I want to edit a visit from the list screen so that I
     ThenISeeErrors();
   });
 
-  // Allows a ward staff to edit a virtual visit
-  function GivenIAmLoggedInAsAWardStaff() {
-    cy.visit(Cypress.env("baseUrl"));
-    cy.get("input").type(Cypress.env("validWard"));
-    cy.get("button").contains("Log in").click();
-  }
 
   function WhenIClickOnAVirtualVisit() {
     cy.get("summary.nhsuk-details__summary").contains("Alice").click();
