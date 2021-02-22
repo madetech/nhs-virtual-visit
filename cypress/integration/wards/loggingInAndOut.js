@@ -10,7 +10,7 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
     GivenIAmAWardStaff();
     WhenIVisitTheLogInPage();
     cy.audit();
-    AndIEnterAValidWardCode();
+    AndIEnterAValidWardCodeAndPin();
     AndISubmitTheForm();
     ThenISeeTheWardHomePage();
 
@@ -25,6 +25,12 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
     AndISubmitTheForm();
     ThenISeeAnError();
   });
+  it("displays an error if an invalid pin is entered", () => {
+    WhenIVisitTheLogInPage();
+    AndIEnterAnInvalidPin();
+    AndISubmitTheForm();
+    ThenISeeAnError();
+  });
 
   // Allows a ward staff to log in and out
   function GivenIAmAWardStaff() {}
@@ -34,8 +40,9 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
     cy.audit();
   }
 
-  function AndIEnterAValidWardCode() {
-    cy.get("input").type(Cypress.env("validWard"));
+  function AndIEnterAValidWardCodeAndPin() {
+    cy.get("input[name=code]").type(Cypress.env("validWardCode"));
+    cy.get("input[name=pin]").type(Cypress.env("validWardPin"));
   }
 
   function AndISubmitTheForm() {
@@ -57,11 +64,17 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
 
   // Displays an error for an invalid code
   function AndIEnterAnInvalidCode() {
-    cy.get("input").type(Cypress.env("fakeWard"));
+    cy.get("input[name=code]").type(Cypress.env("fakeWard"));
+    cy.get("input[name=pin]").type(Cypress.env("validWardPin"));
+  }
+
+  function AndIEnterAnInvalidPin() {
+    cy.get("input[name=code]").type(Cypress.env("validWardPin"));
+    cy.get("input[name=pin]").type("invalid pin");
   }
 
   function ThenISeeAnError() {
-    cy.contains("There is a problem").should("be.visible");
-    cy.contains("The code you entered was not recognised").should("be.visible");
+    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
+    cy.get('[data-cy=error-description]').should("contain", "The code or pin you entered was not recognised");
   }
 });

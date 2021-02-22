@@ -27,7 +27,7 @@ const ErrorSummary = ({ errors }) => {
         There is a problem
       </h2>
       <div className="nhsuk-error-summary__body">
-        <ul className="nhsuk-list nhsuk-error-summary__list">
+        <ul className="nhsuk-list nhsuk-error-summary__list" data-cy="error-description">
           {errors.map((error) => (
             <li key={error.id}>
               <a href={`#${error.id}`}>{error.message}</a>
