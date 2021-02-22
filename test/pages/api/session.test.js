@@ -20,6 +20,7 @@ describe("api/session", () => {
           method: "POST",
           body: {
             code: "WOOF",
+            pin: "1234"
           },
           headers: {
             "x-correlation-id": "correlationId",
@@ -40,7 +41,7 @@ describe("api/session", () => {
 
         await session(invalidRequest, response, { container });
 
-        expect(verifyWardCodeSpy).toHaveBeenCalledWith("WOOF");
+        expect(verifyWardCodeSpy).toHaveBeenCalledWith("WOOF", "1234");
         expect(response.statusCode).toEqual(401);
         expect(response.end).toHaveBeenCalled();
       });
@@ -52,6 +53,7 @@ describe("api/session", () => {
           method: "POST",
           body: {
             code: "MEOW",
+            pin: "1234"
           },
           headers: {
             "x-correlation-id": "correlationId",
@@ -82,7 +84,7 @@ describe("api/session", () => {
 
         await session(validRequest, response, { container });
 
-        expect(verifyWardCodeSpy).toHaveBeenCalledWith("MEOW");
+        expect(verifyWardCodeSpy).toHaveBeenCalledWith("MEOW", "1234");
         expect(tokenGeneratorSpy).toHaveBeenCalledWith({
           userId: undefined,
           wardId: 10,
