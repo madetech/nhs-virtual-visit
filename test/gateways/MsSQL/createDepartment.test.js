@@ -1,7 +1,11 @@
 import createDepartment from "../../../src/gateways/MsSQL/createDepartment";
 import mockAppContainer from "src/containers/AppContainer";
+import bcrypt from "bcryptjs";
 
+jest.mock("bcryptjs");
 describe("createDepartment", () => {
+  bcrypt.genSalt = jest.fn();
+  bcrypt.hashSync.mockReturnValue("hashedPin");
   const expectedDepartmentUuid = "uuid";
   const expectedArgs = {
     name: "Defoe Ward",
@@ -47,7 +51,7 @@ describe("createDepartment", () => {
       4,
       "pin",
       expect.anything(),
-      expectedArgs.pin
+      "hashedPin"
     );
     expect(mockAppContainer.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
       5,

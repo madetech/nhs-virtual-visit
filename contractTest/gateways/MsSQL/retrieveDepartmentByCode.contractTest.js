@@ -3,12 +3,13 @@ import { setupOrganisationFacilityDepartmentAndManager } from "../../../test/tes
 import { statusToId, ACTIVE } from "../../../src/helpers/statusTypes";
 import AppContainer from "../../../src/containers/AppContainer";
 
-describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
+describe("retrieveDepartmentByCodeGateway", () => {
   const container = AppContainer.getInstance();
   it("retrieves department returning object containing trustId, wardId and wardCode", async () => {
     // Arrange
     const departmentCreated = {
       code: "WardCodeOne",
+      pin: "1234"
     };
     const {
       orgId,
@@ -19,7 +20,8 @@ describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
     });
     // Act
     const department = await retrieveDepartmentByCodeGateway(container)(
-      departmentCreated.code
+      departmentCreated.code,
+      departmentCreated.pin
     );
     // Assert
     expect(department).toEqual({
@@ -33,7 +35,8 @@ describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
   it("returns department as undefined if wardcode doesn't exist", async () => {
     // Act
     const department = await retrieveDepartmentByCodeGateway(container)(
-      "ABCDEFGHI"
+      "ABCDEFGHI",
+      "1234"
     );
     // Assert
     expect(department).toBeUndefined();
