@@ -99,7 +99,7 @@ jobs:
           MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
           MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
           MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
-          API_KEY: ${{ secrets.API_KEY }}
+          GOVNOTIFY_API_KEY: ${{ secrets.GOVNOTIFY_API_KEY }}
           EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
           EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
           EMAIL_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.EMAIL_UPDATED_VISIT_TEMPLATE_ID }}

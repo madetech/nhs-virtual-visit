@@ -4,12 +4,12 @@ describe("AppContainer", () => {
   let container;
 
   beforeEach(() => {
-    process.env.API_KEY = "notify-api-key-meow";
+    process.env.GOVNOTIFY_API_KEY = "notify-api-key-meow";
     container = AppContainer.getInstance();
   });
 
   afterEach(() => {
-    process.env.API_KEY = undefined;
+    process.env.GOVNOTIFY_API_KEY = undefined;
   });
 
   it("provides a singleton", () => {
