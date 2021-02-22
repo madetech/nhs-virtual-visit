@@ -10,7 +10,6 @@ export default (() => {
           instance = new FakeNotifyClient();
         } else {
           const apiKey = process.env.GOVNOTIFY_API_KEY;
-          console.log("APIKey", apiKey);
           instance = new NotifyClient(apiKey);
         }
 

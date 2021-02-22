@@ -26,10 +26,18 @@ describe("send-reset-password-email", () => {
       body: jest.fn(),
     };
     container = {
-      getRetrieveEmailAndHashedPassword: jest.fn().mockReturnValue(() => {
+      getAddToUserVerificationTable: jest.fn().mockReturnValue(() => {
         return {
-          emailAddress: "nhs-admin@nhs.co.uk",
-          hashedPassword: "hashedPassword",
+          verifyUser: { hash: "hashedUuid" },
+          error: null,
+        };
+      }),
+      getRetrieveManagerByEmail: jest.fn().mockReturnValue(() => {
+        return {
+          manager: {
+            email: "nhs-admin@nhs.co.uk",
+            uuid: "uuid",
+          },
           error: null,
         };
       }),
@@ -82,18 +90,20 @@ describe("send-reset-password-email", () => {
     );
   });
 
-  it("returns a 400 if there is an error returned from database call", async () => {
-    const getRetrieveEmailAndHashedPasswordSpy = jest.fn().mockReturnValue({
-      email: "nhs-admin@nhs.co.uk",
-      hashedPassword: "password",
+  it("returns a 400 if there is an error returned from retrieveManagerByEmail", async () => {
+    const getRetrieveManagerByEmailSpy = jest.fn().mockReturnValue({
+      manager: {
+        email: "nhs-admin@nhs.co.uk",
+        uuid: "uuid",
+      },
       error: "Email could not be found in database",
     });
 
     await sendResetPasswordEmail(validRequest, response, {
       container: {
         ...container,
-        getRetrieveEmailAndHashedPassword: () =>
-          getRetrieveEmailAndHashedPasswordSpy,
+        getRetrieveManagerByEmail: () =>
+        getRetrieveManagerByEmailSpy,
       },
     });
 
@@ -103,24 +113,43 @@ describe("send-reset-password-email", () => {
     );
   });
 
-  it("returns a 400 if there is no email returned from database call", async () => {
-    const getRetrieveEmailAndHashedPasswordSpy = jest.fn().mockReturnValue({
-      email: "",
-      hashedPassword: "password",
+  it("returns a 400 if there is no manager is returned from database call", async () => {
+    const getRetrieveManagerByEmailSpy = jest.fn().mockReturnValue({
+      manager: null,
       error: null,
     });
 
     await sendResetPasswordEmail(validRequest, response, {
       container: {
         ...container,
-        getRetrieveEmailAndHashedPassword: () =>
-          getRetrieveEmailAndHashedPasswordSpy,
+        getRetrieveManagerByEmail: () =>
+          getRetrieveManagerByEmailSpy,
       },
     });
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ error: "Email does not exist" })
+    );
+  });
+
+  it("returns a 400 if there is an error returned from addToUserVerificationTable", async () => {
+    const getAddToUserVerificationTableSpy = jest.fn().mockReturnValue({
+      verifyUser: { hash: "" },
+      error: "There was a verification error",
+    });
+
+    await sendResetPasswordEmail(validRequest, response, {
+      container: {
+        ...container,
+        getAddToUserVerificationTable: () =>
+        getAddToUserVerificationTableSpy,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(400);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ error: "There was a verification error" })
     );
   });
 

@@ -21,8 +21,6 @@ export default withContainer(
       error: retrieveError, 
     } = await retrieveManagerByEmail(body.email);
 
-    console.log("[send-reset-password-email.js] ***************");
-    console.log(user);
     if (retrieveError || !user) {
       res.status(400);
       res.end(JSON.stringify({ error: "Email does not exist" }));
