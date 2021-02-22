@@ -38,14 +38,11 @@ class TokenProvider {
     return decryptedToken;
   }
 
-  generateTokenForLink(uuid, hash, expirationTime, secret, email) {
-    let tokenObj = { uuid, hash, version };
+  // used for reset password and sign up links
+  generateTokenForLink(uuid, hash, expirationTime) {
+    const tokenObj = { uuid, hash, version };
 
-    if (secret !== this.signingKey) {
-      tokenObj = { ...tokenObj, hashedPassword: secret, emailAddress: email };
-    }
-
-    return jwt.sign(tokenObj, secret, {
+    return jwt.sign(tokenObj, this.signingKey, {
       algorithm: "HS256",
       expiresIn: expirationTime,
     });
