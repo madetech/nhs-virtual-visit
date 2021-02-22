@@ -15,19 +15,37 @@ export default withContainer(
 
     res.setHeader("Content-Type", "application/json");
 
-    const retrieveEmailAndHashedPassword = container.getRetrieveEmailAndHashedPassword();
-    const {
-      emailAddress,
-      hashedPassword,
-      error: retrieveError,
-    } = await retrieveEmailAndHashedPassword(body.email);
+    const retrieveManagerByEmail = container.getRetrieveManagerByEmail();
+    const { 
+      manager: user,
+      error: retrieveError, 
+    } = await retrieveManagerByEmail(body.email);
 
-    if (retrieveError || !emailAddress) {
+    console.log("[send-reset-password-email.js] ***************");
+    console.log(user);
+    if (retrieveError || !user) {
       res.status(400);
       res.end(JSON.stringify({ error: "Email does not exist" }));
       return;
     }
 
+    const addToUserVerificationTable = container.getAddToUserVerificationTable();
+    const { 
+      verifyUser,
+      error: verificationError,
+    } = await addToUserVerificationTable({
+      user_id: user.id,
+      type: "resetPassword",
+    });
+
+    if (verificationError) {
+      res.status(400);
+      res.end(JSON.stringify({ error: verificationError }));
+      return;
+    }
+
+    const uuid = user.uuid;
+    const hash = verifyUser.hash;
     const sendEmail = container.getSendEmail();
     const resetPasswordEmailTemplateId = TemplateStore().resetPasswordEmail
       .templateId;
@@ -36,10 +54,10 @@ export default withContainer(
 
     const { link, linkError } = createTimeSensitiveLink({
       headers,
-      emailAddress,
+      uuid,
+      hash,
       expirationTime,
       urlPath,
-      hashedPassword,
     });
 
     if (linkError) {
@@ -54,7 +72,7 @@ export default withContainer(
 
     const { success, error: emailError } = await sendEmail(
       resetPasswordEmailTemplateId,
-      emailAddress,
+      user.email,
       { link: link },
       null
     );

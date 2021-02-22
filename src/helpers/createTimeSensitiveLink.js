@@ -5,17 +5,14 @@ export default ({
   hash,
   expirationTime,
   urlPath,
-  hashedPassword = process.env.JWT_SIGNING_KEY,
-  emailAddress,
 }) => {
   const tokenProvider = new TokenProvider(process.env.JWT_SIGNING_KEY);
+
   try {
     const token = tokenProvider.generateTokenForLink(
       uuid,
       hash,
       expirationTime,
-      hashedPassword,
-      emailAddress
     );
     const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
     const host = headers.host;
