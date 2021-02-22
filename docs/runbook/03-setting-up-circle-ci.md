@@ -11,7 +11,7 @@ Once you have set up a new CircleCI plan:
 
 ## Required environment variables
 
-- API_KEY
+- GOVNOTIFY_API_KEY
   - GOV.UK Notify test key
   - It's important to use a [test key](https://docs.notifications.service.gov.uk/rest-api.html#test) so that so that the service only pretends to send out messages
 

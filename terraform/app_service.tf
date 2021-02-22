@@ -39,7 +39,7 @@ resource "azurerm_app_service" "app_service" {
     "MSQL_DB_POOL_IDLE_TIMEOUT"         = 30000
     "MSQL_DB_NAME"                      = "virtualvisits"
     "ORIGIN"                            = "https://nhs-virtual-visits-${var.environment}.azurewebsites.net"
-    "API_KEY"                           = var.gov_notify_api_key
+    "GOVNOTIFY_API_KEY"                 = var.gov_notify_api_key
     "SMS_INITIAL_TEMPLATE_ID"           = var.sms_initial_template_id
     "SMS_JOIN_TEMPLATE_ID"              = var.sms_join_template_id
     "EMAIL_INITIAL_TEMPLATE_ID"         = var.email_initial_template_id

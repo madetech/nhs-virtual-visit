@@ -27,7 +27,7 @@ In order to run this app locally you will need to create a `.env` file in the ro
 
 ```bash
 # GOV.UK Notify API Key
-API_KEY=
+GOVNOTIFY_API_KEY=
 # Postgres Connection String
 PG_DB_URL=
 # Postgres Connection String for the test database
