@@ -17,17 +17,20 @@ const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
   let onSubmitErrors = [];
 
   const submitAnswers = async () => {
+    let payload = {
+      uuid: ward.uuid,
+      name: wardName,
+    }
+    if (wardPin !== ward.pin) {
+      payload = { ...payload, pin: wardPin }
+    }
     try {
       const response = await fetch("/api/update-a-department", {
         method: "PATCH",
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({
-          uuid: ward.uuid,
-          name: wardName,
-          pin: wardPin !== ward.pin ? wardPin : undefined,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (response.status == 201) {

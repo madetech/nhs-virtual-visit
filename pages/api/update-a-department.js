@@ -22,7 +22,7 @@ export default withContainer(
       return;
     }
     try {
-      const { uuid, name, pin } = body;
+      const { uuid, name } = body;
       const {
         department,
         error: departmentError,
@@ -37,14 +37,17 @@ export default withContainer(
         );
         return;
       }
+      let args = {
+        id: department.id,
+        name,
+      }
+      if (body.pin) {
+        args = { ...args, pin: body.pin}
+      }
       const {
         uuid: departmentUuid,
         error,
-      } = await container.getUpdateDepartmentById()({
-        id: department.id,
-        name,
-        pin
-      });
+      } = await container.getUpdateDepartmentById()(args);
 
       if (error) {
         res.status(400);
