@@ -77,7 +77,7 @@ const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
         id: "ward-pin-error",
         message: "A pin is required",
       })
-    } else if (wardPin!== ward.pin && wardPin.length > 4 ) {
+    } else if (wardPin!== ward.pin && wardPin.length != 4 ) {
       onSubmitErrors.push({
         id: "ward-pin-length-error",
         message: "Ward pin is only 4 characters",
@@ -89,7 +89,7 @@ const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
         id: "ward-pin-confirmation-error",
         message: "A confirmation pin is required"
       })
-    } else if (wardPinConfirmation !== ward.pin && wardPinConfirmation.length > 4 ) {
+    } else if (wardPinConfirmation !== ward.pin && wardPinConfirmation.length != 4 ) {
       onSubmitErrors.push({
         id: "ward-pin-confirmation-length-error",
         message: "Confirmation pin is only 4 characters",
