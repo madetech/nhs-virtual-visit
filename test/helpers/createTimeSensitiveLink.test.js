@@ -6,11 +6,10 @@ jest.mock("../../src/providers/TokenProvider");
 describe("createTimeSensitiveLink", () => {
   it("returns a link with a time sensitive token", () => {
     const headers = { host: "rootUrl" };
-    const id = 1;
+    const uuid = "uuid";
     const hash = "hashedUuid";
     const expirationTime = "2h";
     const urlPath = "urlPath";
-    const hashedPassword = "hashedPassword";
 
     TokenProvider.mockImplementation(() => {
       return { generateTokenForLink: jest.fn().mockReturnValue("token") };
@@ -18,11 +17,10 @@ describe("createTimeSensitiveLink", () => {
 
     const { link, linkError } = createTimeSensitiveLink({
       headers,
-      id,
+      uuid,
       hash,
       expirationTime,
-      urlPath,
-      hashedPassword,
+      urlPath
     });
 
     expect(linkError).toBe(null);
@@ -31,8 +29,8 @@ describe("createTimeSensitiveLink", () => {
 
   it("returns an error if the token isn't signed", () => {
     const headers = { host: "rootUrl" };
-    const emailAddress = "test@email.com";
-    const hashedPassword = "hashedPassword";
+    const uuid = "uuid";
+    const hash = "hashedUuid";
     const expirationTime = "2h";
     const urlPath = "urlPath";
 
@@ -45,10 +43,10 @@ describe("createTimeSensitiveLink", () => {
 
     const { link, linkError } = createTimeSensitiveLink({
       headers,
-      emailAddress,
-      hashedPassword,
+      uuid,
+      hash,
       expirationTime,
-      urlPath,
+      urlPath
     });
 
     expect(linkError.message).toBe("Error");
