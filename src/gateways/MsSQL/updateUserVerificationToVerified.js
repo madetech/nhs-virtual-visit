@@ -8,16 +8,26 @@ const updateUserVerificationToVerifiedGateway = ({ getMsSqlConnPool }) => async 
 
   try {
     const db = await getMsSqlConnPool();
-    await db
+    const response = await db
       .request()
       .input("userId", userId)
       .input("verified", verified)
       .query(
-        `UPDATE dbo.[user_verification] SET verified = @verified WHERE user_id = @userId`
+        `UPDATE dbo.[user_verification] SET verified = @verified OUTPUT inserted.id WHERE user_id = @userId`
       );
+
+    if (response.recordset.length > 0) {
+      logger.info(`Verified column for ${userId} has been updated in user_verification table`);
+      return {
+        success: true,
+        error: null,
+      };
+    }
+
+    logger.error(`Error: ${userId} could not be found in the user_verification table`);
     return {
-      success: true,
-      error: null,
+      success: false,
+      error: "The userId could not be found in the user_verification table",
     };
   } catch (error) {
     logger.error(`Error updating user verification table row to verified: ${error}`);
