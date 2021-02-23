@@ -17,7 +17,7 @@ const verifySignUpLink = ({
   if (errorToken) {
     return {
       user: null,
-      error: "Link is incorrect or expired. Please sign up again",
+      error: "Link is incorrect or expired.",
     };
   }
 
