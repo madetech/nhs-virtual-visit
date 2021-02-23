@@ -33,6 +33,7 @@ describe("createDepartment", () => {
       uuid: departmentUuid,
       status: 1,
       facilityId,
+      pin: expect.anything()
     });
   });
   describe("throws an error", () => {

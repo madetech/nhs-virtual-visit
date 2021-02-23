@@ -33,9 +33,14 @@ describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
     const currentDepartmentOne = await container.getRetrieveDepartmentByUuidGateway()(
       departmentOneUuid
     );
+    
     const currentDepartmentTwo = await container.getRetrieveDepartmentByUuidGateway()(
       departmentTwoUuid
     );
+
+    delete currentDepartmentOne["pin"];
+    delete currentDepartmentTwo["pin"];
+
     // Act
     const departments = await retrieveActiveDepartmentsByFacilityIdGateway(
       container
