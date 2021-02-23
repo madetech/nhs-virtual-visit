@@ -18,8 +18,10 @@ export default withContainer(async ({ body, method }, res, { container }) => {
 
   res.setHeader("Content-Type", "application/json");
 
+  const email = body.email
+  const password = body.password;
   const resetPassword = container.getResetPassword();
-  const { resetSuccess, error } = await resetPassword(body);
+  const { resetSuccess, error } = await resetPassword({ email, password });
 
   if (error) {
     res.status(400);

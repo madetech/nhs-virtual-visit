@@ -26,7 +26,7 @@ const verifySignUpLinkGateway = ({ getMsSqlConnPool }) => async ({
       error: null,
     };
   } catch (error) {
-    logger.error(`Error verifying sign up link ${error}`);
+    logger.error(`Error verifying sign up link: ${error}`);
     return {
       user: null,
       error: error.toString(),
