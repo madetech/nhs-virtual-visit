@@ -132,8 +132,9 @@ export const getServerSideProps = propsWithContainer(
 
     const verifySignUpLink = container.getVerifySignUpLink();
     const { user, error: linkError } = await verifySignUpLink(token);
-
+    
     if (linkError) {
+      console.log("here")
       return {
         props: {
           email: null,
@@ -149,7 +150,7 @@ export const getServerSideProps = propsWithContainer(
     
     return {
       props: {
-        email: success && user.email,
+        email: success ? user.email : null,
         error: error,
       },
     };
