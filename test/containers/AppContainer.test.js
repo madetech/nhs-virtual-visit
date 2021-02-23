@@ -110,16 +110,8 @@ describe("AppContainer", () => {
     expect(container.getVerifyUserLogin()).toBeDefined();
   });
 
-  it("returns getRetrieveEmailAndHashedPassword", () => {
-    expect(container.getRetrieveEmailAndHashedPassword()).toBeDefined();
-  });
-
   it("returns getResetPassword", () => {
     expect(container.getResetPassword()).toBeDefined();
-  });
-
-  it("returns getVerifyResetPasswordLink", () => {
-    expect(container.getVerifyResetPasswordLink()).toBeDefined();
   });
 
   it("returns getArchiveManagerByUuidGateway", () => {
@@ -254,10 +246,6 @@ describe("AppContainer", () => {
     expect(container.getRetrieveActiveManagersByOrgId()).toBeDefined();
   });
 
-  it("returns getRetrieveEmailAndHashedPasswordGateway", () => {
-    expect(container.getRetrieveEmailAndHashedPasswordGateway()).toBeDefined();
-  });
-
   it("returns getResetPassword", () => {
     expect(container.getResetPassword()).toBeDefined();
   });
@@ -265,8 +253,5 @@ describe("AppContainer", () => {
   it("returns getResetPasswordGateway", () => {
     expect(container.getResetPasswordGateway()).toBeDefined();
   });
-  
-  it("returns getRetrieveEmailAndHashedPasswordGateway", () => {
-    expect(container.getRetrieveEmailAndHashedPasswordGateway()).toBeDefined();
-  });
+
 });

@@ -52,8 +52,6 @@ import verifyUserLogin from "../usecases/verifyUserLogin";
 import retrieveDepartmentById from "../usecases/retrieveDepartmentById";
 import retrieveActiveManagersByOrgId from "../usecases/retrieveActiveManagersByOrgId";
 import resetPassword from "../usecases/resetPassword";
-import verifyResetPasswordLink from "../usecases/verifyResetPasswordLink";
-import retrieveEmailAndHashedPassword from "../usecases/retrieveEmailAndHashedPassword";
 import retrieveActiveDepartmentsByOrganisationId from "../usecases/retrieveActiveDepartmentsByOrganisationId";
 import retrieveDepartmentByCode from "../usecases/retrieveDepartmentByCode";
 import createVisit from "../usecases/createVisit";
@@ -62,7 +60,6 @@ import updateUserVerificationToVerified from "../usecases/updateUserVerification
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
-import retrieveEmailAndHashedPasswordGateway from "../gateways/MsSQL/retrieveEmailAndHashedPassword";
 import resetPasswordGateway from "../gateways/MsSQL/resetPassword";
 import updateManagerStatusByUuidGateway from "../gateways/MsSQL/updateManagerStatusByUuid";
 import retrieveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveManagersByOrgId";
@@ -482,21 +479,21 @@ class AppContainer {
     return verifyUserLoginGateway(this);
   };
 
-  getRetrieveEmailAndHashedPassword = () => {
-    return retrieveEmailAndHashedPassword(this);
-  };
+  // getRetrieveEmailAndHashedPassword = () => {
+  //   return retrieveEmailAndHashedPassword(this);
+  // };
 
-  getRetrieveEmailAndHashedPasswordGateway = () => {
-    return retrieveEmailAndHashedPasswordGateway(this);
-  };
+  // getRetrieveEmailAndHashedPasswordGateway = () => {
+  //   return retrieveEmailAndHashedPasswordGateway(this);
+  // };
 
   getResetPasswordGateway = () => {
     return resetPasswordGateway(this);
   };
 
-  getVerifyResetPasswordLink = () => {
-    return verifyResetPasswordLink(this);
-  };
+  // getVerifyResetPasswordLink = () => {
+  //   return verifyResetPasswordLink(this);
+  // };
 
   getArchiveManagerByUuidGateway = () => {
     return archiveManagerByUuidGateway(this);
