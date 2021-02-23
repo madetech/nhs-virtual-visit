@@ -97,7 +97,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
     }
 
     if (isPresent(wardPin)) {
-      if (wardPin.length > 4) {
+      if (wardPin.length != 4) {
         setWardPinLengthError(onSubmitErrors);
       }
     } else {
