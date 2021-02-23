@@ -22,7 +22,7 @@ export default withContainer(
       return;
     }
     try {
-      const { uuid, name } = body;
+      const { uuid, name, pin } = body;
       const {
         department,
         error: departmentError,
@@ -43,6 +43,7 @@ export default withContainer(
       } = await container.getUpdateDepartmentById()({
         id: department.id,
         name,
+        pin
       });
 
       if (error) {

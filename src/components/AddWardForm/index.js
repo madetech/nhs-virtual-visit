@@ -214,7 +214,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
           </Label>
           <Input
             id="ward-pin"
-            type="text"
+            type="password"
             hasError={hasError(errors, "ward-pin")}
             errorMessage={errorMessage(errors, "ward-pin")}
             className="nhsuk-input--width-10"
@@ -230,7 +230,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
           </Label>
           <Input
             id="ward-pin-confirmation"
-            type="text"
+            type="password"
             hasError={hasError(errors, "ward-pin-confirmation")}
             errorMessage={errorMessage(errors, "ward-pin-confirmation")}
             className="nhsuk-input--width-10"
