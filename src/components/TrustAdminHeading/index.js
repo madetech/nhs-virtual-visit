@@ -6,7 +6,7 @@ const TrustAdminHeading = ({ trustName, subHeading }) => (
   <GridRow>
     <GridColumn width="two-thirds">
       <Heading>
-        <span className="nhsuk-caption-l">
+        <span className="nhsuk-caption-l" data-cy="trust-name">
           {trustName}
           <span className="nhsuk-u-visually-hidden">-</span>
         </span>

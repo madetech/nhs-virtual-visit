@@ -35,8 +35,8 @@ function WhenIFillOutTheAddWardForm(name) {
   cy.get("input[name=ward-name]").type(name);
   cy.get("input[name=ward-code]").type("glimmercode");
   cy.get("input[name=ward-code-confirmation]").type("glimmercode");
-  cy.get("#ward-pin").type("1234");
-  cy.get("#ward-pin-confirmation").type("1234");
+  cy.get("input[name=ward-pin]").type("1234");
+  cy.get("input[name=ward-pin-confirmation]").type("1234");
 }
 
 function AndISubmitTheAddWardForm() {
@@ -44,7 +44,7 @@ function AndISubmitTheAddWardForm() {
 }
 
 function ThenISeeTheAddAWardForm() {
-  cy.get("h2").should("contain", "Add a ward");
+  cy.get("[data-cy=form-heading]").should("contain", "Add a ward");
 }
 
 function WhenIClickToEditAWard(name) {
@@ -52,7 +52,7 @@ function WhenIClickToEditAWard(name) {
 }
 
 function ThenISeeTheEditAWardForm() {
-  cy.get("h2").should("contain", "Edit a ward");
+  cy.get("[data-cy=form-heading]").should("contain", "Edit a ward");
 }
 
 function AndISubmitTheEditWardForm() {
@@ -65,7 +65,7 @@ function WhenIClickToDeleteAWard(name) {
 }
 
 function ThenISeeTheWardIsDeleted(name) {
-  cy.get("h1").should("contain", `${name} has been deleted`);
+  cy.get("[data-cy=panel-success-header]").should("contain", `${name} has been deleted`);
 }
 
 function WhenIClickOnTrustManagersOnTheNavigationBar() {

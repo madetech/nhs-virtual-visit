@@ -40,6 +40,6 @@ describe("As a trust admin, I want to add a ward so that ward staff can book vir
   }
 
   function ThenISeeErrors() {
-    cy.contains("There is a problem").should("be.visible");
+    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
   }
 });

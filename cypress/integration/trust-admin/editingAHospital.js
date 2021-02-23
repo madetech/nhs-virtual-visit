@@ -31,7 +31,7 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
   }
 
   function ThenISeeErrors() {
-    cy.get(".nhsuk-error-summary").should("be.visible");
+    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
   }
 
   it("displays errors when fields have been left blank", () => {
