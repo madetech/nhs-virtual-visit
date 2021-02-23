@@ -10,13 +10,15 @@ describe("insertVisit contract tests", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
+    const callId = uuidv4();
+
     const visit = {
       patientName: "Patient Test",
       contactEmail: "test1@testemail.com",
       contactName: "Contact Test",
       contactNumber: "07123456789",
       callTime: new Date(2021, 0, 27, 13, 37, 0, 0),
-      callId: uuidv4()
+      callId
     };
 
     const { id, uuid, error } = await insertVisit(container)(
@@ -25,7 +27,7 @@ describe("insertVisit contract tests", () => {
     );
     expect(error).toBeNull();
     expect(id).toBeGreaterThan(0);
-    expect(uuid).toBeTruthy();
+    expect(uuid).toEqual(callId.toUpperCase());
   });
 
   it("catches errors", async () => {
