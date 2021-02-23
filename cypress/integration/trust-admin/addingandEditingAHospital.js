@@ -101,7 +101,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
   }
 
   function ThenISeeErrors() {
-    cy.contains("There is a problem").should("be.visible");
+    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
   }
 
   function WhenIClickOnTheEditLink(name) {

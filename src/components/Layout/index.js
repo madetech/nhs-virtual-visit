@@ -24,7 +24,7 @@ const Layout = ({
   return (
     <>
       <Head>
-        <title>
+        <title data-cy="layout-title">
           {hasErrors ? "Error: " : ""} {title} |{" "}
           {isBookService ? "Book" : "Attend"} a virtual visit
         </title>

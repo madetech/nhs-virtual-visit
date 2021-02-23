@@ -70,9 +70,8 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   }
 
   function ThenISeeTheTrustAdminHomePage() {
-    cy.contains("There is a problem").should("not.exist");
-    cy.contains("Airedale NHS Foundation Trust").should("be.visible");
-    cy.contains("Dashboard").should("be.visible");
+    cy.get('[data-cy=trust-name]').should("contain", "Airedale NHS Foundation Trust");
+    cy.get('[data-cy=layout-title]').should("contain", "Dashboard");
   }
 
   function WhenIClickLogOut() {
@@ -98,10 +97,7 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   }
 
   function ThenISeeAnError() {
-    cy.get(".nhsuk-error-summary").should("exist");
-    cy.get("#error-summary-title").contains("There is a problem");
-    cy.get("li > a").contains(
-      "The email or password you entered was not recognised"
-    );
+    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
+    cy.get('[data-cy=error-description]').should("contain", "The email or password you entered was not recognised");
   }
 });

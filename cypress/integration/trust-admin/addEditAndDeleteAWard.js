@@ -57,7 +57,7 @@ describe("As a trust admin, I want to add, edit and delete  a ward so that ward 
     cy.audit();
     let newWardName = "new Name";
     cy.log("when I edit the ward and submit");
-    WhenIFillOutTheForm(newWardName);
+    WhenIFillOutTheEditWardForm(newWardName);
     AndISubmitTheEditWardForm();
     cy.log("then I expect to see the updated ward");
     ThenISeeTheWardIsUpdated(newWardName);
@@ -94,16 +94,21 @@ function ThenISeeTheDeleteAWardConfirmationPage() {
 }
 
 function ThenISeeTheWardIsUpdated(name) {
-  cy.get("h1").should("contain", `${name} has been updated`);
+  cy.get("[data-cy=panel-success-header]").should("contain", `${name} has been updated`);
 }
 
-function WhenIFillOutTheForm(newName) {
+function WhenIFillOutTheEditWardForm(newName) {
   cy.get("input[name=ward-name]").clear();
   cy.get("input[name=ward-name]").type(newName);
+  cy.get("input[name=ward-pin]").clear();
+  cy.get("input[name=ward-pin]").type("5432");
+  cy.get("input[name=ward-pin-confirmation]").clear();
+  cy.get("input[name=ward-pin-confirmation]").type("5432");
+  cy.get("button").contains("Edit ward").click();
 }
 
 function ThenISeeTheWardIsAdded(name) {
-  cy.get(".nhsuk-panel__title").contains(`${name} has been added`);
+  cy.get("[data-cy=panel-success-header]").should("contain", `${name} has been added`);
 }
 
 function AndISeeTheAddedWard(name) {
