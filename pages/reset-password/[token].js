@@ -12,12 +12,12 @@ import Form from "../../src/components/Form";
 import Router from "next/router";
 import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
 
-const ResetPassword = ({ email, tokenError }) => {
+const ResetPassword = ({ email, error }) => {
   const [errors, setErrors] = useState([]);
-  if (tokenError) {
+  if (error) {
     errors.push({
       id: "token-error",
-      message: tokenError,
+      message: error,
     });
   }
 
@@ -80,7 +80,7 @@ const ResetPassword = ({ email, tokenError }) => {
       <GridRow>
         <GridColumn>
           <ErrorSummary errors={errors} />
-          {!tokenError && (
+          {!error && (
             <>
               <Heading>Reset Password for {email}</Heading>
               <Form onSubmit={onSubmit}>
@@ -130,13 +130,27 @@ export const getServerSideProps = propsWithContainer(
   async ({ query, container }) => {
     const token = query.token;
 
-    const verifyResetPasswordLink = container.getVerifyResetPasswordLink();
-    const { email, error } = await verifyResetPasswordLink(token);
+    const verifySignUpLink = container.getVerifySignUpLink();
+    const { user, error: linkError } = await verifySignUpLink(token);
 
+    if (linkError) {
+      return {
+        props: {
+          email: null,
+          error: linkError,
+        },
+      };
+    }
+
+    const updateUserVerificationToVerified = container.getUpdateUserVerificationToVerified();
+    const { success, error } = await updateUserVerificationToVerified({
+      userId: user.user_id 
+    });
+    
     return {
       props: {
-        email,
-        tokenError: error,
+        email: success && user.email,
+        error: error,
       },
     };
   }

@@ -24,9 +24,10 @@ const verifySignUpLink = ({
   const hash = decryptedToken.hash;
   const uuid = decryptedToken.uuid;
 
-  const { user, error } = await getVerifySignUpLinkGateway()({ hash, uuid });
+  const verifySignUpLinkGateway = getVerifySignUpLinkGateway();
+  const { user, error } = await verifySignUpLinkGateway({ hash, uuid });
 
-  if (user && (user.verified || user.status !== 0)) {
+  if (user && (user.verified || (user.type !== "resetPassword" && user.status !== 0))) {
     let errorMessage;
     user.verified
       ? (errorMessage = "Link is invalid. Please sign up again")
