@@ -502,10 +502,6 @@ class AppContainer {
     return archiveManagerByUuidGateway(this);
   };
 
-  // getResetPassword = () => {
-  //   return resetPassword;
-  // };
-
   getCreateManager = () => {
     return createManager(this);
   };
