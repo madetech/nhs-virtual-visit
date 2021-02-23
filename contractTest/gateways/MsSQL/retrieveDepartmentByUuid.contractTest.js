@@ -28,6 +28,7 @@ describe("retrieveDepartmentByUuid", () => {
       uuid: departmentUuid,
       status: 1,
       facilityId,
+      pin: expect.anything()
     });
   });
 
