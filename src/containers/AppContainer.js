@@ -57,6 +57,7 @@ import retrieveEmailAndHashedPassword from "../usecases/retrieveEmailAndHashedPa
 import retrieveActiveDepartmentsByOrganisationId from "../usecases/retrieveActiveDepartmentsByOrganisationId";
 import retrieveDepartmentByCode from "../usecases/retrieveDepartmentByCode";
 import createVisit from "../usecases/createVisit";
+import updateUserVerificationToVerified from "../usecases/updateUserVerificationToVerified";
 
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
@@ -110,6 +111,7 @@ import addToUserVerificationTable from "../usecases/addToUserVerificationTable";
 import addToUserVerificationTableGateway from "../gateways/MsSQL/addToUserVerificationTable";
 import updateVisitStatusByDepartmentId from "../gateways/MsSQL/updateVisitStatusByDepartmentId";
 import updateVisitStatusByCallId from "../gateways/MsSQL/updateVisitStatusByCallId";
+import updateUserVerificationToVerifiedGateway from "../gateways/MsSQL/updateUserVerificationToVerified";
 
 class AppContainer {
   getDb = () => {
@@ -587,6 +589,14 @@ class AppContainer {
 
   getUpdateVisitStatusByCallIdGateway = () => {
     return updateVisitStatusByCallIdGateway(this);
+  };
+
+  getUpdateUserVerificationToVerified = () => {
+    return updateUserVerificationToVerified(this);
+  };
+
+  getUpdateUserVerificationToVerifiedGateway = () => {
+    return updateUserVerificationToVerifiedGateway(this);
   };
 
   getRandomIdProvider = () => {
