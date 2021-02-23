@@ -12,6 +12,8 @@ import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 
 const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
   const [wardName, setWardName] = useState(ward.name);
+  const [wardPin, setWardPin] = useState(ward.pin);
+  const [wardPinConfirmation, setWardPinConfirmation] = useState(ward.pin);
   let onSubmitErrors = [];
 
   const submitAnswers = async () => {
@@ -24,6 +26,7 @@ const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
         body: JSON.stringify({
           uuid: ward.uuid,
           name: wardName,
+          pin: wardPin !== ward.pin ? wardPin : undefined,
         }),
       });
 
@@ -65,6 +68,38 @@ const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
     if (!isPresent(wardName)) {
       setWardNameError(onSubmitErrors);
     }
+
+    if(!wardPin) {
+      onSubmitErrors.push({
+        id: "ward-pin-error",
+        message: "A pin is required",
+      })
+    } else if (wardPin!== ward.pin && wardPin.length > 4 ) {
+      onSubmitErrors.push({
+        id: "ward-pin-length-error",
+        message: "Ward pin is only 4 characters",
+      })
+    }
+
+    if (!wardPinConfirmation) {
+      onSubmitErrors.push({
+        id: "ward-pin-confirmation-error",
+        message: "A confirmation pin is required"
+      })
+    } else if (wardPinConfirmation !== ward.pin && wardPinConfirmation.length > 4 ) {
+      onSubmitErrors.push({
+        id: "ward-pin-confirmation-length-error",
+        message: "Confirmation pin is only 4 characters",
+      })
+    }
+
+    if (wardPin !== wardPinConfirmation) {
+      onSubmitErrors.push({
+        id: "ward-pin-mismatch-error",
+        message: "Ward pin and pin cofirmation does not match"
+      })
+    }
+
     if (onSubmitErrors.length === 0) {
       await submitAnswers();
     }
@@ -78,7 +113,7 @@ const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
         <FormHeading>Edit a ward</FormHeading>
         <FormGroup>
           <Label htmlFor="ward-name" className="nhsuk-label--m">
-            What is the ward name?
+            Edit a ward name
           </Label>
           <Input
             id="ward-name"
@@ -90,6 +125,38 @@ const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
             name="ward-name"
             autoComplete="off"
             value={wardName || ""}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="ward-pin" className="nhsuk-label--m">
+            Edit a ward pin
+          </Label>
+          <Input
+            id="ward-pin"
+            type="password"
+            hasError={hasError(errors, "ward-pin")}
+            errorMessage={errorMessage(errors, "ward-pin")}
+            className="nhsuk-input--width-10"
+            onChange={(event) => setWardPin(event.target.value)}
+            name="ward-pin"
+            autoComplete="off"
+            value={wardPin || ""}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="ward-pin-confirmation" className="nhsuk-label--m">
+            Confirm the ward pin
+          </Label>
+          <Input
+            id="ward-pin-confirmation"
+            type="password"
+            hasError={hasError(errors, "ward-pin-confirmation")}
+            errorMessage={errorMessage(errors, "ward-pin-confirmation")}
+            className="nhsuk-input--width-10"
+            onChange={(event) => setWardPinConfirmation(event.target.value)}
+            name="ward-pin-confirmation"
+            autoComplete="off"
+            value={wardPinConfirmation || ""}
           />
         </FormGroup>
         <Button data-testid="edit-ward-button" className="nhsuk-u-margin-top-5">

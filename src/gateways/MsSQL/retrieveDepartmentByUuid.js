@@ -6,7 +6,7 @@ export default ({ getMsSqlConnPool }) => async (uuid) => {
     .request()
     .input("uuid", mssql.UniqueIdentifier, uuid)
     .query(
-      "SELECT id, uuid, name, code, status, facility_id AS facilityId FROM dbo.[department] WHERE uuid = @uuid"
+      "SELECT pin, id, uuid, name, code, status, facility_id AS facilityId FROM dbo.[department] WHERE uuid = @uuid"
     );
   return res.recordset[0];
 };

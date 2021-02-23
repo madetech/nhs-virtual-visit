@@ -1,6 +1,6 @@
 import logger from "../../logger";
 
-export default ({ getUpdateDepartmentByIdGateway }) => async ({ id, name }) => {
+export default ({ getUpdateDepartmentByIdGateway }) => async ({ id, name, pin }) => {
   if (id === undefined) {
     return { uuid: null, error: "id must be provided." };
   }
@@ -13,6 +13,7 @@ export default ({ getUpdateDepartmentByIdGateway }) => async ({ id, name }) => {
     const returnedUuid = await getUpdateDepartmentByIdGateway()({
       id,
       name,
+      pin
     });
     return { uuid: returnedUuid, error: null };
   } catch (error) {
