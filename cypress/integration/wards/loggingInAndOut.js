@@ -1,3 +1,5 @@
+import { WhenIVisitTheLandingPage } from "../commonSteps";
+
 describe("As a ward staff, I want to log in so that I can access the service.", () => {
   before(() => {
     // reset and seed the database
@@ -8,9 +10,11 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
 
   it("allows a ward staff to log in and out", () => {
     GivenIAmAWardStaff();
-    WhenIVisitTheLogInPage();
-    cy.audit();
-    AndIEnterAValidWardCodeAndPin();
+    WhenIVisitTheLandingPage();
+    AndIClickTheLinkToBookAVisitLoginPage();
+    ThenISeeTheWardStaffLogInPage();
+
+    WhenIEnterAValidWardCodeAndPin();
     AndISubmitTheForm();
     ThenISeeTheWardHomePage();
 
@@ -35,12 +39,7 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
   // Allows a ward staff to log in and out
   function GivenIAmAWardStaff() {}
 
-  function WhenIVisitTheLogInPage() {
-    cy.visit(`${Cypress.env("baseUrl")}/wards/login`);
-    cy.audit();
-  }
-
-  function AndIEnterAValidWardCodeAndPin() {
+  function WhenIEnterAValidWardCodeAndPin() {
     cy.get("input[name=code]").type(Cypress.env("validWardCode"));
     cy.get("input[name=pin]").type(Cypress.env("validWardPin"));
   }
@@ -61,7 +60,9 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
   function ThenISeeTheWardStaffLogInPage() {
     cy.get("h1").should("contain", "Log in to book a virtual visit");
   }
-
+  function WhenIVisitTheLogInPage() {
+    cy.get("h1").should("contain", "Log in to book a virtual visit");
+  }
   // Displays an error for an invalid code
   function AndIEnterAnInvalidCode() {
     cy.get("input[name=code]").type(Cypress.env("fakeWard"));
@@ -71,6 +72,10 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
   function AndIEnterAnInvalidPin() {
     cy.get("input[name=code]").type(Cypress.env("validWardPin"));
     cy.get("input[name=pin]").type("invalid pin");
+  }
+
+  function AndIClickTheLinkToBookAVisitLoginPage(){
+    cy.get('[data-cy=ward-book-a-visit-link] > .nhsuk-link').click();
   }
 
   function ThenISeeAnError() {

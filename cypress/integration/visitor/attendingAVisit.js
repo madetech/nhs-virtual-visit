@@ -1,3 +1,4 @@
+import { ThenISeeAnError } from "../commonSteps";
 describe("As a patient's key contact, I want to attend a virtual visit so that I can speak with my loved one.", () => {
   before(() => {
     // reset and seed the database
@@ -93,9 +94,5 @@ describe("As a patient's key contact, I want to attend a virtual visit so that I
   // Displays errors when fields have been left blank
   function WhenISubmitFormWithoutFillingAnythingOut() {
     cy.get("button").contains("Attend visit").click();
-  }
-
-  function ThenISeeAnError() {
-    cy.contains("There is a problem").should("be.visible");
   }
 });

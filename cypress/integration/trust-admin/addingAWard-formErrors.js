@@ -1,4 +1,4 @@
-import { thenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut, ThenISeeAnError } from "../commonSteps";
 import {
   GivenIAmLoggedInAsATrustAdmin,
   ThenISeeTheAddAWardForm,
@@ -29,7 +29,7 @@ describe("As a trust admin, I want to add a ward so that ward staff can book vir
     ThenISeeTheAddAWardForm();
 
     WhenISubmitFormWithoutFillingAnythingOut();
-    ThenISeeErrors();
+    ThenISeeAnError();
 
     thenIClickLogOut();
   });
@@ -37,9 +37,5 @@ describe("As a trust admin, I want to add a ward so that ward staff can book vir
   // Displays errors when fields have been left blank
   function WhenISubmitFormWithoutFillingAnythingOut() {
     cy.get("button").contains("Add ward").click();
-  }
-
-  function ThenISeeErrors() {
-    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
   }
 });
