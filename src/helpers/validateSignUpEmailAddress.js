@@ -7,7 +7,7 @@ export default (email, emailDomains) => {
         emailDomains = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN.split(",");
     }
     const matches = email.match(REGEX)
-    console.dir(matches)
+
     if(!matches)
         return false
     return emailDomains.includes(matches[1])

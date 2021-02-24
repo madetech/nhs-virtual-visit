@@ -51,6 +51,13 @@ const ResetPassword = ({ email, error }) => {
       });
     }
 
+    if (password.length < 8) {
+      onSubmitErrors.push({
+        id: "validate-password-error",
+        message: "Password should be 8 characters or more",
+      })
+    }
+
     if (onSubmitErrors.length === 0) {
       const body = JSON.stringify({ email, password });
       const response = await fetch("/api/reset-password", {
