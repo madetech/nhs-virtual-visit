@@ -1,4 +1,4 @@
-import verifySignUpLinkGateway from "../../../src/gateways/MsSQL/verifySignUpLink";
+import verifyTimeSensitiveLinkGateway from "../../../src/gateways/MsSQL/verifyTimeSensitiveLink";
 import AppContainer from "../../../src/containers/AppContainer";
 import {
   setupAdminAndOrganisation,
@@ -34,7 +34,7 @@ describe("verifySignUpLinkGateway", () => {
       email: manager.email,
     };
     // Act
-    const { user, error } = await verifySignUpLinkGateway(container)({
+    const { user, error } = await verifyTimeSensitiveLinkGateway(container)({
       hash: verifyUser.hash,
       uuid: manager.uuid,
     });
@@ -46,7 +46,7 @@ describe("verifySignUpLinkGateway", () => {
     // Arrange
     const { verifyUser } = await setUpUserToVerify(newUserToVerify);
     // Act
-    const { user, error } = await verifySignUpLinkGateway(container)({
+    const { user, error } = await verifyTimeSensitiveLinkGateway(container)({
       hash: verifyUser.hash,
       uuid: "uuid does not exist",
     });
@@ -58,7 +58,7 @@ describe("verifySignUpLinkGateway", () => {
     // Arrange
     const { verifyUser } = await setUpUserToVerify(newUserToVerify);
     // Act
-    const { user, error } = await verifySignUpLinkGateway(container)({
+    const { user, error } = await verifyTimeSensitiveLinkGateway(container)({
       hash: verifyUser.hash,
       uuid: undefined,
     });
@@ -71,7 +71,7 @@ describe("verifySignUpLinkGateway", () => {
     // Arrange
     const { verifyUser } = await setUpUserToVerify(newUserToVerify);
     // Act
-    const { user, error } = await verifySignUpLinkGateway(container)({
+    const { user, error } = await verifyTimeSensitiveLinkGateway(container)({
       hash: verifyUser.hash,
       uuid: "uuid does not exist",
     });

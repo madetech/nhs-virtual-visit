@@ -19,7 +19,7 @@ describe("/activate-account/[token]", () => {
     });
 
     it("returns the user email address as a props", async () => {
-      const verifySignUpLinkSpy = jest.fn(async () => {
+      const verifyTimeSensitiveLinkSpy = jest.fn(async () => {
         return { user, error: null };
       });
 
@@ -28,7 +28,7 @@ describe("/activate-account/[token]", () => {
       });
 
       const container = {
-        getVerifySignUpLink: () => verifySignUpLinkSpy,
+        getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLinkSpy,
         getActivateManagerAndOrganisation: () => activateManagerAndOrganisation,
       };
 
@@ -41,11 +41,11 @@ describe("/activate-account/[token]", () => {
 
       expect(props.email).toEqual("test@email.com");
       expect(props.error).toBeNull();
-      expect(verifySignUpLinkSpy).toHaveBeenCalledWith("valid token");
+      expect(verifyTimeSensitiveLinkSpy).toHaveBeenCalledWith("valid token");
     });
 
     it("returns the organisation name address as a props", async () => {
-      const verifySignUpLink = jest.fn(async () => {
+      const verifyTimeSensitiveLink = jest.fn(async () => {
         return { user, error: null };
       });
 
@@ -54,7 +54,7 @@ describe("/activate-account/[token]", () => {
       });
 
       const container = {
-        getVerifySignUpLink: () => verifySignUpLink,
+        getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLink,
         getActivateManagerAndOrganisation: () =>
           activateManagerAndOrganisationSpy,
       };
@@ -75,12 +75,12 @@ describe("/activate-account/[token]", () => {
     });
 
     it("returns an error as props if there is an error verifying link", async () => {
-      const verifySignUpLink = jest.fn(async () => {
+      const verifyTimeSensitiveLink = jest.fn(async () => {
         return { user: null, error: "There is a link error" };
       });
 
       const container = {
-        getVerifySignUpLink: () => verifySignUpLink,
+        getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLink,
         getActivateManagerAndOrganisation: jest.fn(),
       };
 
@@ -97,7 +97,7 @@ describe("/activate-account/[token]", () => {
     });
 
     it("returns an error as props if there is an error activating account", async () => {
-      const verifySignUpLink = jest.fn(async () => {
+      const verifyTimeSensitiveLink = jest.fn(async () => {
         return { user, error: null };
       });
 
@@ -106,7 +106,7 @@ describe("/activate-account/[token]", () => {
       });
 
       const container = {
-        getVerifySignUpLink: () => verifySignUpLink,
+        getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLink,
         getActivateManagerAndOrganisation: () =>
           activateManagerAndOrganisationSpy,
       };

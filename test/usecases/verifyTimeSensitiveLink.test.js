@@ -1,12 +1,12 @@
-import verifySignUpLink from "../../src/usecases/verifySignUpLink";
+import verifyTimeSensitiveLink from "../../src/usecases/verifyTimeSensitiveLink";
 
-describe("verifySignUpLink", () => {
-  let getVerifySignUpLinkGateway;
+describe("verifyTimeSensitiveLink", () => {
+  let getVerifyTimeSensitiveLinkGateway;
   let getTokenProvider;
   let token;
 
   beforeEach(() => {
-    getVerifySignUpLinkGateway = jest.fn(() => {
+    getVerifyTimeSensitiveLinkGateway = jest.fn(() => {
       return jest.fn().mockReturnValue({
         user: {
           id: 1,
@@ -34,8 +34,8 @@ describe("verifySignUpLink", () => {
   it("returns an error if no token is passed in", async () => {
     token = "";
 
-    const { user, error } = await verifySignUpLink({
-      getVerifySignUpLinkGateway,
+    const { user, error } = await verifyTimeSensitiveLink({
+      getVerifyTimeSensitiveLinkGateway,
       getTokenProvider,
     })(token);
 
@@ -55,8 +55,8 @@ describe("verifySignUpLink", () => {
       };
     });
 
-    const { user, error } = await verifySignUpLink({
-      getVerifySignUpLinkGateway,
+    const { user, error } = await verifyTimeSensitiveLink({
+      getVerifyTimeSensitiveLinkGateway,
       getTokenProvider,
     })(token);
 
@@ -66,7 +66,7 @@ describe("verifySignUpLink", () => {
 
   describe("verifySignUpLink when the type is 'authoriseUser'", () => {
     it("returns a user if the link hasn't been verified, and the user status is 0 for authoriseUser", async () => {
-      const getVerifySignUpLinkGatewaySpy = jest.fn().mockReturnValue({
+      const getVerifyTimeSensitiveLinkGatewaySpy = jest.fn().mockReturnValue({
         user: {
           id: 1,
           verified: false,
@@ -76,12 +76,12 @@ describe("verifySignUpLink", () => {
         error: null,
       });
   
-      getVerifySignUpLinkGateway = jest.fn(() => {
-        return getVerifySignUpLinkGatewaySpy;
+      getVerifyTimeSensitiveLinkGateway = jest.fn(() => {
+        return getVerifyTimeSensitiveLinkGatewaySpy;
       });
   
-      const { user, error } = await verifySignUpLink({
-        getVerifySignUpLinkGateway,
+      const { user, error } = await verifyTimeSensitiveLink({
+        getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
       })(token);
   
@@ -89,14 +89,14 @@ describe("verifySignUpLink", () => {
   
       expect(user).toEqual(expectedResponse);
       expect(error).toBeNull();
-      expect(getVerifySignUpLinkGatewaySpy).toHaveBeenCalledWith({
+      expect(getVerifyTimeSensitiveLinkGatewaySpy).toHaveBeenCalledWith({
         hash: "hash",
         uuid: "uuid",
       });
     });
 
     it("returns an error if the link has already been verified for authoriseUser", async () => {
-      getVerifySignUpLinkGateway = jest.fn(() => {
+      getVerifyTimeSensitiveLinkGateway = jest.fn(() => {
         return jest.fn().mockReturnValue({
           user: {
             id: 1,
@@ -108,8 +108,8 @@ describe("verifySignUpLink", () => {
         });
       });
   
-      const { user, error } = await verifySignUpLink({
-        getVerifySignUpLinkGateway,
+      const { user, error } = await verifyTimeSensitiveLink({
+        getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
       })(token);
   
@@ -118,7 +118,7 @@ describe("verifySignUpLink", () => {
     });
     
     it("returns an error if the user status is already active for authoriseUser", async () => {
-      getVerifySignUpLinkGateway = jest.fn(() => {
+      getVerifyTimeSensitiveLinkGateway = jest.fn(() => {
         return jest.fn().mockReturnValue({
           user: {
             id: 1,
@@ -130,8 +130,8 @@ describe("verifySignUpLink", () => {
         });
       });
   
-      const { user, error } = await verifySignUpLink({
-        getVerifySignUpLinkGateway,
+      const { user, error } = await verifyTimeSensitiveLink({
+        getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
       })(token);
   
@@ -142,7 +142,7 @@ describe("verifySignUpLink", () => {
 
   describe("verifySignUpLink when the type is 'confirmRegistration'", () => {
     it("returns a user if the link hasn't been verified, and the user status is 0 for confirmRegistration", async () => {
-      const getVerifySignUpLinkGatewaySpy = jest.fn().mockReturnValue({
+      const getVerifyTimeSensitiveLinkGatewaySpy = jest.fn().mockReturnValue({
         user: {
           id: 1,
           verified: false,
@@ -152,12 +152,12 @@ describe("verifySignUpLink", () => {
         error: null,
       });
   
-      getVerifySignUpLinkGateway = jest.fn(() => {
-        return getVerifySignUpLinkGatewaySpy;
+      getVerifyTimeSensitiveLinkGateway = jest.fn(() => {
+        return getVerifyTimeSensitiveLinkGatewaySpy;
       });
   
-      const { user, error } = await verifySignUpLink({
-        getVerifySignUpLinkGateway,
+      const { user, error } = await verifyTimeSensitiveLink({
+        getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
       })(token);
   
@@ -165,14 +165,14 @@ describe("verifySignUpLink", () => {
   
       expect(user).toEqual(expectedResponse);
       expect(error).toBeNull();
-      expect(getVerifySignUpLinkGatewaySpy).toHaveBeenCalledWith({
+      expect(getVerifyTimeSensitiveLinkGatewaySpy).toHaveBeenCalledWith({
         hash: "hash",
         uuid: "uuid",
       });
     });
 
     it("returns an error if the link has already been verified for confirmRegistration", async () => {
-      getVerifySignUpLinkGateway = jest.fn(() => {
+      getVerifyTimeSensitiveLinkGateway = jest.fn(() => {
         return jest.fn().mockReturnValue({
           user: {
             id: 1,
@@ -184,8 +184,8 @@ describe("verifySignUpLink", () => {
         });
       });
   
-      const { user, error } = await verifySignUpLink({
-        getVerifySignUpLinkGateway,
+      const { user, error } = await verifyTimeSensitiveLink({
+        getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
       })(token);
   
@@ -194,7 +194,7 @@ describe("verifySignUpLink", () => {
     });
 
     it("returns an error if the user status is already active for confirmRegistration", async () => {
-      getVerifySignUpLinkGateway = jest.fn(() => {
+      getVerifyTimeSensitiveLinkGateway = jest.fn(() => {
         return jest.fn().mockReturnValue({
           user: {
             id: 1,
@@ -206,8 +206,8 @@ describe("verifySignUpLink", () => {
         });
       });
   
-      const { user, error } = await verifySignUpLink({
-        getVerifySignUpLinkGateway,
+      const { user, error } = await verifyTimeSensitiveLink({
+        getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
       })(token);
   
@@ -218,7 +218,7 @@ describe("verifySignUpLink", () => {
 
   describe("verifySignUpLink when the type is 'resetPassword'", () => {
     it("returns a user if the link hasn't been verified for resetPassword", async () => {
-      const getVerifySignUpLinkGatewaySpy = jest.fn().mockReturnValue({
+      const getVerifyTimeSensitiveLinkGatewaySpy = jest.fn().mockReturnValue({
         user: {
           id: 1,
           verified: false,
@@ -228,12 +228,12 @@ describe("verifySignUpLink", () => {
         error: null,
       });
   
-      getVerifySignUpLinkGateway = jest.fn(() => {
-        return getVerifySignUpLinkGatewaySpy;
+      getVerifyTimeSensitiveLinkGateway = jest.fn(() => {
+        return getVerifyTimeSensitiveLinkGatewaySpy;
       });
   
-      const { user, error } = await verifySignUpLink({
-        getVerifySignUpLinkGateway,
+      const { user, error } = await verifyTimeSensitiveLink({
+        getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
       })(token);
   
@@ -241,14 +241,14 @@ describe("verifySignUpLink", () => {
   
       expect(user).toEqual(expectedResponse);
       expect(error).toBeNull();
-      expect(getVerifySignUpLinkGatewaySpy).toHaveBeenCalledWith({
+      expect(getVerifyTimeSensitiveLinkGatewaySpy).toHaveBeenCalledWith({
         hash: "hash",
         uuid: "uuid",
       });
     });
 
     it("returns an error if the link has already been verified for resetPassword", async () => {
-      getVerifySignUpLinkGateway = jest.fn(() => {
+      getVerifyTimeSensitiveLinkGateway = jest.fn(() => {
         return jest.fn().mockReturnValue({
           user: {
             id: 1,
@@ -260,8 +260,8 @@ describe("verifySignUpLink", () => {
         });
       });
   
-      const { user, error } = await verifySignUpLink({
-        getVerifySignUpLinkGateway,
+      const { user, error } = await verifyTimeSensitiveLink({
+        getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
       })(token);
   
@@ -272,15 +272,15 @@ describe("verifySignUpLink", () => {
   
 
   it("returns an error if there is problem with the database call", async () => {
-    getVerifySignUpLinkGateway = jest.fn(() => {
+    getVerifyTimeSensitiveLinkGateway = jest.fn(() => {
       return jest.fn().mockReturnValue({
         user: null,
         error: "error",
       });
     });
 
-    const { user, error } = await verifySignUpLink({
-      getVerifySignUpLinkGateway,
+    const { user, error } = await verifyTimeSensitiveLink({
+      getVerifyTimeSensitiveLinkGateway,
       getTokenProvider,
     })(token);
 

@@ -1,10 +1,10 @@
 import logger from "../../../logger";
 
-const verifySignUpLinkGateway = ({ getMsSqlConnPool }) => async ({
+const verifyTimeSensitiveLinkGateway = ({ getMsSqlConnPool }) => async ({
   hash,
   uuid,
 }) => {
-  logger.info("Verifying sign up link");
+  logger.info("Verifying time sensitive link");
 
   try {
     const db = await getMsSqlConnPool();
@@ -19,14 +19,14 @@ const verifySignUpLinkGateway = ({ getMsSqlConnPool }) => async ({
       );
 
     if (!response.recordset[0]) {
-      throw "Error verifying sign up link";
+      throw "Error verifying time sensitive link";
     }
     return {
       user: response.recordset[0],
       error: null,
     };
   } catch (error) {
-    logger.error(`Error verifying sign up link: ${error}`);
+    logger.error(`Error verifying time sensitive link: ${error}`);
     return {
       user: null,
       error: error.toString(),
@@ -34,4 +34,4 @@ const verifySignUpLinkGateway = ({ getMsSqlConnPool }) => async ({
   }
 };
 
-export default verifySignUpLinkGateway;
+export default verifyTimeSensitiveLinkGateway;
