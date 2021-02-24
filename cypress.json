@@ -12,8 +12,9 @@
     "fakeWard": "FAKENHS",
     "baseUrl": "http://localhost:3001",
     "jwtPrivateKey": "cypress/fixtures/trustManagerHashedPassword.txt",
-    "tokenVersion": "3"
-
+    "tokenVersion": "3",
+    "uuid": "",
+    "hash": ""
   },
   "video": false,
   "lighthouse": {

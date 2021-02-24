@@ -41,9 +41,9 @@ export default withContainer(
       res.end(JSON.stringify({ error: verificationError }));
       return;
     }
-
+    
     const uuid = user.uuid;
-    const hash = verifyUser.hash;
+    const hash = verifyUser.hash;    
     const sendEmail = container.getSendEmail();
     const resetPasswordEmailTemplateId = TemplateStore().resetPasswordEmail
       .templateId;
@@ -57,7 +57,7 @@ export default withContainer(
       expirationTime,
       urlPath,
     });
-
+  
     if (linkError) {
       res.status(401);
       res.end(

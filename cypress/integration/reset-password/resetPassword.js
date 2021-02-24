@@ -5,7 +5,20 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     cy.audit();
   });
 
-  it("given a valid reset password link, visits a reset password page", () => {
+  xit("given a valid reset password link, visits a reset password page", () => {
+    GivenIAmOnTheLoginPage();
+    WhenIClickTheResetPasswordLink();
+    ThenISeeTheResetPasswordPage();
+    cy.audit()
+
+    WhenIFillOutTheResetPasswordFormOnTheResetPasswordPage(
+      Cypress.env("validTrustManagerEmail")
+    );
+    AndISubmitTheForm2();
+    ThenISeeTheResetPasswordSuccessPage2(Cypress.env("validTrustManagerEmail"));
+    
+    // ************************
+
     GivenIVisitAValidResetPasswordLink();
     ThenISeeTheEnterNewPasswordPage();
 
@@ -63,5 +76,29 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
       const token = result;
       cy.visit(Cypress.env("baseUrl") + "/reset-password/" + token);
     });
+  }
+
+  // Common functions with sendResetPasswordEmail.js
+
+  function GivenIAmOnTheLoginPage() {
+    cy.visit(Cypress.env("baseUrl") + "/login");
+  }
+  function WhenIClickTheResetPasswordLink() {
+    cy.get("[data-cy=reset-password-link]").contains("Reset Password").click();
+  }
+  function ThenISeeTheResetPasswordPage() {
+    cy.get("[data-cy=page-heading]").should("contain", "Reset Password");
+  }
+  function WhenIFillOutTheResetPasswordFormOnTheResetPasswordPage(email) {
+    cy.get("[data-cy=email-input]").clear().type(email);
+  }
+  function ThenISeeTheResetPasswordSuccessPage2(email) {
+    cy.get('[data-cy="panel-success-header"]').should(
+      "contain",
+      `Email has been sent to ${email}`
+    );
+  }
+  function AndISubmitTheForm2() {
+    cy.get("button").contains("Reset Password").click()
   }
 });
