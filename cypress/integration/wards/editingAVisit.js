@@ -1,4 +1,5 @@
 import { GivenIAmLoggedInAsAWardStaff } from "./wardCommonSteps";
+import { ThenISeeAnError } from "../commonSteps";
 describe("As a ward staff, I want to edit a visit from the list screen so that I can change the details of a visit.", () => {
   before(() => {
     // reset and seed the database
@@ -33,9 +34,8 @@ describe("As a ward staff, I want to edit a visit from the list screen so that I
     ThenISeeTheEditAVirtualVisitForm();
 
     WhenISubmitFormWithBlankFields();
-    ThenISeeErrors();
+    ThenISeeAnError();
   });
-
 
   function WhenIClickOnAVirtualVisit() {
     cy.get("summary.nhsuk-details__summary").contains("Alice").click();
@@ -113,9 +113,5 @@ describe("As a ward staff, I want to edit a visit from the list screen so that I
     cy.get("input[name=patient-name]").clear();
     cy.get("input[name=contact-name]").clear();
     cy.get("button").contains("Continue").click();
-  }
-
-  function ThenISeeErrors() {
-    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
   }
 });

@@ -1,4 +1,4 @@
-import { thenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut, ThenISeeAnError } from "../commonSteps";
 import {
   GivenIAmLoggedInAsATrustAdmin,
   ThenISeeTheHospitalsPage,
@@ -57,7 +57,7 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
     ThenISeeTheAddAHospitalForm();
 
     WhenISubmitFormWithoutFillingAnythingOut();
-    ThenISeeErrors();
+    ThenISeeAnError();
 
     thenIClickLogOut();
   });
@@ -98,10 +98,6 @@ describe("As a trust admin, I want to add a hospital so that I can manage virtua
   // Displays errors when fields have been left blank
   function WhenISubmitFormWithoutFillingAnythingOut() {
     cy.get("button").contains("Add hospital").click();
-  }
-
-  function ThenISeeErrors() {
-    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
   }
 
   function WhenIClickOnTheEditLink(name) {

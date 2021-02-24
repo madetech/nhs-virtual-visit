@@ -1,4 +1,4 @@
-import { thenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut, ThenISeeAnError } from "../commonSteps";
 import { GivenIAmLoggedInAsATrustAdmin } from "./trustAdminCommonSteps.js";
 
 describe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
@@ -30,10 +30,6 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     AndIClickTheEditHospitalButton();
   }
 
-  function ThenISeeErrors() {
-    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
-  }
-
   it("displays errors when fields have been left blank", () => {
     GivenIAmLoggedInAsATrustAdmin();
     WhenIClickOnHospitals();
@@ -43,7 +39,7 @@ describe("As an admin, I want to edit a hospital so that I can keep hospital cha
     cy.audit();
 
     WhenISubmitFormEmptyHospitalName();
-    ThenISeeErrors();
+    ThenISeeAnError();
 
     thenIClickLogOut();
   });

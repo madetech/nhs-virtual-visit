@@ -1,4 +1,4 @@
-import { thenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut, ThenISeeAnError } from "../commonSteps";
 
 import {
   GivenIAmLoggedInAsAnAdmin,
@@ -45,7 +45,7 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
     ThenISeeTheAddATrustForm();
 
     WhenISubmitFormWithoutFillingAnythingOut();
-    ThenISeeErrors();
+    ThenISeeAnError();
 
     thenIClickLogOut();
   });
@@ -85,9 +85,5 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
   // Displays errors when fields have been left blank
   function WhenISubmitFormWithoutFillingAnythingOut() {
     cy.get("button").contains("Add trust").click();
-  }
-
-  function ThenISeeErrors() {
-    cy.contains("There is a problem").should("be.visible");
   }
 });

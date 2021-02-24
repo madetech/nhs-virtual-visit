@@ -6,7 +6,7 @@ import {
   WhenIClickHospitalsOnTheNavigationBar,
   WhenIClickOnAHospital,
 } from "./trustAdminCommonSteps";
-import { thenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut, ThenISeeAnError } from "../commonSteps";
 
 describe("As a trust admin, I want to edit a ward so that I can modify the details of a ward.", () => {
   before(() => {
@@ -72,7 +72,7 @@ describe("As a trust admin, I want to edit a ward so that I can modify the detai
     ThenISeeTheEditAWardForm();
 
     WhenISubmitFormWithoutFillingAnythingOut();
-    ThenISeeErrors();
+    ThenISeeAnError();
 
     thenIClickLogOut();
   });
@@ -124,8 +124,5 @@ describe("As a trust admin, I want to edit a ward so that I can modify the detai
   function ThenISeeWardPinMismatchError() {
     cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
     cy.get('[data-cy=error-description]').should("contain", "Ward pin and pin cofirmation does not match");
-  }
-  function ThenISeeErrors() {
-    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
   }
 });

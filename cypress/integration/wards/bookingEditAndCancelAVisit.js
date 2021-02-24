@@ -1,4 +1,4 @@
-import { thenIClickLogOut } from "../commonSteps";
+import { thenIClickLogOut, ThenISeeAnError } from "../commonSteps";
 import {
   AndIClickBookAVirtualVisit,
   GivenIAmLoggedInAsAWardStaff,
@@ -82,7 +82,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     ThenISeeTheBookAVirtualVisitForm();
 
     WhenISubmitFormWithoutFillingAnythingOut();
-    ThenISeeErrors();
+    ThenISeeAnError();
 
     thenIClickLogOut();
   });
@@ -115,7 +115,7 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
     ThenISeeTheEditAVirtualVisitForm();
 
     WhenISubmitFormWithBlankFields();
-    ThenISeeErrors();
+    ThenISeeAnError();
 
     thenIClickLogOut();
   });
@@ -259,9 +259,5 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
   // Displays errors when fields have been left blank
   function WhenISubmitFormWithoutFillingAnythingOut() {
     cy.get("button").contains("Continue").click();
-  }
-
-  function ThenISeeErrors() {
-    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
   }
 });
