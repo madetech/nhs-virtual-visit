@@ -13,7 +13,7 @@ const Manager = ({ managers, organisation, error, currentManagerId }) => {
   if (error) {
     return <Error err={error} />;
   }
-  console.log(managers)
+
   return (
     <Layout
       title={`Trust Managers for ${organisation.name}`}
