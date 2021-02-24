@@ -7,9 +7,6 @@ import AnchorLink from "../src/components/AnchorLink";
 import Router from "next/router";
 
 const LandingPage = () => {
-  const goToSignUpPage = () =>{
-    Router.push("/sign-up");
-  }
   return (
     <Layout title="NHS Virtual Visit">
       <GridRow>
@@ -20,8 +17,6 @@ const LandingPage = () => {
             <li><AnchorLink href="/login"> Manage Your Trust</AnchorLink></li>
             <li><AnchorLink href="/wards/login">Book a Virtual Visit</AnchorLink></li>
           </ul>
-          <p>Registering takes around 5 minutes.</p>
-          <Button onClick={goToSignUpPage}>Start now</Button>
         </GridColumn>
       </GridRow>
     </Layout>
