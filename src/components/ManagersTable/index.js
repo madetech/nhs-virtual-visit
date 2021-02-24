@@ -1,7 +1,7 @@
 import React from "react";
 import AnchorLink from "../AnchorLink";
 
-const ManagersTable = ({ managers }) => (
+const ManagersTable = ({ managers, currentManagerId }) => (
   <div className="nhsuk-table-responsive">
     <table className="nhsuk-table" id="manager-table">
       <caption className="nhsuk-table__caption">List of Managers</caption>
@@ -20,6 +20,7 @@ const ManagersTable = ({ managers }) => (
           <tr key={info.uuid} className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{info.email}</td>
             <td className="nhsuk-table__cell">
+              { info.id !== currentManagerId &&
               <AnchorLink
                 className="nhsuk-link"
                 href={{
@@ -30,7 +31,7 @@ const ManagersTable = ({ managers }) => (
                 data-cy="delete-tm-link"
               >
                 Delete
-              </AnchorLink>
+              </AnchorLink>}
             </td>
           </tr>
         ))}

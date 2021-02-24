@@ -9,11 +9,11 @@ import TrustAdminHeading from "../../../src/components/TrustAdminHeading";
 import ManagersTable from "../../../src/components/ManagersTable";
 import { TRUST_ADMIN } from "../../../src/helpers/userTypes";
 
-const Manager = ({ managers, organisation, error }) => {
+const Manager = ({ managers, organisation, error, currentManagerId }) => {
   if (error) {
     return <Error err={error} />;
   }
-
+  console.log(managers)
   return (
     <Layout
       title={`Trust Managers for ${organisation.name}`}
@@ -27,7 +27,7 @@ const Manager = ({ managers, organisation, error }) => {
       <GridRow>
         <GridColumn width="full">
           {managers.length > 0 ? (
-            <ManagersTable managers={managers} />
+            <ManagersTable managers={managers} currentManagerId={currentManagerId} />
           ) : (
             <Text>There are no managers.</Text>
           )}
@@ -52,15 +52,11 @@ export const getServerSideProps = propsWithContainer(
     } = await container.getRetrieveActiveManagersByOrgId()(
       authenticationToken.trustId
     );
-    let filteredManagers = null;
-    if (!managersError) {
-      filteredManagers = managers.filter(
-        (manager) => manager.id != authenticationToken.userId
-      );
-    }
+
     return {
       props: {
-        managers: filteredManagers,
+        managers,
+        currentManagerId: authenticationToken.userId,
         organisation,
         error: organisationError || managersError,
       },

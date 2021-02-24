@@ -9,6 +9,6 @@ export const statusToId = (status) =>
 
 export const idToStatus = (id) =>
   ({
-    0: ACTIVE,
-    1: DISABLED,
+    1: ACTIVE,
+    0: DISABLED,
   }[id]);
