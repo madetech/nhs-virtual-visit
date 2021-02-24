@@ -1,6 +1,6 @@
-import verifySignUpLinkGateway from "../../../src/gateways/MsSQL/verifySignUpLink";
+import verifyTimeSensitiveLinkGateway from "../../../src/gateways/MsSQL/verifyTimeSensitiveLink";
 
-describe("verifySignUpLinkGateway", () => {
+describe("verifyTimeSensitiveLinkGateway", () => {
   it("verifies that the sign up link is valid", async () => {
     const inputSpy = jest.fn().mockReturnThis();
     const getMsSqlConnPool = jest.fn(() => {
@@ -24,7 +24,7 @@ describe("verifySignUpLinkGateway", () => {
     const hash = "hash";
     const uuid = "uuid";
 
-    const { user, error } = await verifySignUpLinkGateway({
+    const { user, error } = await verifyTimeSensitiveLinkGateway({
       getMsSqlConnPool,
     })({ hash, uuid });
 
@@ -56,7 +56,7 @@ describe("verifySignUpLinkGateway", () => {
     const hash = "hash";
     const uuid = "uuid";
 
-    const { user, error } = await verifySignUpLinkGateway({
+    const { user, error } = await verifyTimeSensitiveLinkGateway({
       getMsSqlConnPool,
     })({ hash, uuid });
 

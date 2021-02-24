@@ -71,7 +71,7 @@ import retrieveActiveOrganisationsGateway from "../gateways/MsSQL/retrieveActive
 import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisations";
 import deleteOrganisationGateway from "../gateways/MsSQL/deleteOrganisation";
 import insertManagerGateway from "../gateways/MsSQL/insertManager";
-import verifySignUpLinkGateway from "../gateways/MsSQL/verifySignUpLink";
+import verifyTimeSensitiveLinkGateway from "../gateways/MsSQL/verifyTimeSensitiveLink";
 import updateLinkStatusByHashGateway from "../gateways/MsSQL/updateLinkStatusByHash";
 import retrieveManagerByEmailGateway from "../gateways/MsSQL/retrieveManagerByEmail";
 import retrieveFacilitiesByOrgIdGateway from "../gateways/MsSQL/retrieveFacilitiesByOrgId";
@@ -99,7 +99,7 @@ import captureEventGateway from "../gateways/MsSQL/captureEvent";
 import retrieveVisitByCallIdGateway from "../gateways/MsSQL/retrieveScheduledCallByUuid";
 import retrieveVisitsGateway from "../gateways/MsSQL/retrieveVisits";
 import updateVisitByIdGateway from "../gateways/MsSQL/updateVisitById";
-import verifySignUpLink from "../usecases/verifySignUpLink";
+import verifyTimeSensitiveLink from "../usecases/verifyTimeSensitiveLink";
 import activateManagerAndOrganisation from "../usecases/activateManagerAndOrganisation";
 import activateManagerAndOrganisationGateway from "../gateways/MsSQL/activateManagerAndOrganisation";
 import activateOrganisation from "../usecases/activateOrganisation";
@@ -511,12 +511,12 @@ class AppContainer {
     return retrieveOrganisations(this);
   };
 
-  getVerifySignUpLinkGateway = () => {
-    return verifySignUpLinkGateway(this);
+  getVerifyTimeSensitiveLinkGateway = () => {
+    return verifyTimeSensitiveLinkGateway(this);
   };
 
-  getVerifySignUpLink = () => {
-    return verifySignUpLink(this);
+  getVerifyTimeSensitiveLink = () => {
+    return verifyTimeSensitiveLink(this);
   };
 
   getActivateManagerAndOrganisationGateway = () => {

@@ -1,6 +1,6 @@
-const verifySignUpLink = ({
+const verifyTimeSensitiveLink = ({
   getTokenProvider,
-  getVerifySignUpLinkGateway,
+  getVerifyTimeSensitiveLinkGateway,
 }) => async (token) => {
   if (!token) {
     return {
@@ -24,8 +24,8 @@ const verifySignUpLink = ({
   const hash = decryptedToken.hash;
   const uuid = decryptedToken.uuid;
 
-  const verifySignUpLinkGateway = getVerifySignUpLinkGateway();
-  const { user, error } = await verifySignUpLinkGateway({ hash, uuid });
+  const verifyTimeSensitiveLinkGateway = getVerifyTimeSensitiveLinkGateway();
+  const { user, error } = await verifyTimeSensitiveLinkGateway({ hash, uuid });
 
   if (user && (user.verified || (user.type !== "resetPassword" && user.status !== 0))) {
     let errorMessage;
@@ -42,4 +42,4 @@ const verifySignUpLink = ({
   return { user, error };
 };
 
-export default verifySignUpLink;
+export default verifyTimeSensitiveLink;

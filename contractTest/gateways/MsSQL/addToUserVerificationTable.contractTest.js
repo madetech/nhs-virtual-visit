@@ -21,7 +21,7 @@ describe("addToUserVerificationTableGateway", () => {
     const { verifyUser, error } = await addToUserVerificationTableGateway(
       container
     )(newUserToVerify);
-    const { user } = await container.getVerifySignUpLinkGateway()({
+    const { user } = await container.getVerifyTimeSensitiveLinkGateway()({
       hash: newUserToVerify.hash,
       uuid: manager.uuid,
     });

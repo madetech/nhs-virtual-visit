@@ -3,7 +3,7 @@ import { getServerSideProps } from "../../../pages/reset-password/[token]";
 describe("/reset-password/[token]", () => {
   describe("getServerSideProps", () => {
     it("returns email and empty tokenError as props", async () => {
-      const verifySignUpLinkSpy = jest.fn(async () => {
+      const verifyTimeSensitiveLinkSpy = jest.fn(async () => {
         return {
           user: {
             user_id: 1,
@@ -21,7 +21,7 @@ describe("/reset-password/[token]", () => {
       });
 
       const container = {
-        getVerifySignUpLink: () => verifySignUpLinkSpy,
+        getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLinkSpy,
         getUpdateUserVerificationToVerified: () => updateUserVerificationToVerified,
       };
 
@@ -36,7 +36,7 @@ describe("/reset-password/[token]", () => {
   });
 
   it("returns an error as props when token is invalid", async () => {
-    const verifySignUpLink = jest.fn(async () => {
+    const verifyTimeSensitiveLink = jest.fn(async () => {
       return {
         user: null,
         error: "Token is invalid.",
@@ -51,7 +51,7 @@ describe("/reset-password/[token]", () => {
     });
 
     const container = {
-      getVerifySignUpLink: () => verifySignUpLink,
+      getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLink,
       getUpdateUserVerificationToVerified: () => updateUserVerificationToVerified,
     };  
     
@@ -65,7 +65,7 @@ describe("/reset-password/[token]", () => {
   });
 
   it("returns empty email and a tokenError as props when token is invalid", async () => {
-    const verifySignUpLink = jest.fn(async () => {
+    const verifyTimeSensitiveLink = jest.fn(async () => {
       return {
         user: {
           user_id: 1,
@@ -83,7 +83,7 @@ describe("/reset-password/[token]", () => {
     });
 
     const container = {
-      getVerifySignUpLink: () => verifySignUpLink,
+      getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLink,
       getUpdateUserVerificationToVerified: () => updateUserVerificationToVerified,
     };  
     
