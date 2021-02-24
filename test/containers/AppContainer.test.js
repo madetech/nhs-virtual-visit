@@ -254,4 +254,19 @@ describe("AppContainer", () => {
     expect(container.getResetPasswordGateway()).toBeDefined();
   });
 
+  it("returns getUpdateUserVerificationToVerified", () => {
+    expect(container.getUpdateUserVerificationToVerified()).toBeDefined();
+  });
+
+  it("returns getUpdateUserVerificationToVerifiedGateway", () => {
+    expect(container.getUpdateUserVerificationToVerifiedGateway()).toBeDefined();
+  });
+
+  it("returns getVerifyTimeSensitiveLink", () => {
+    expect(container.getVerifyTimeSensitiveLink()).toBeDefined();
+  });
+
+  it("returns getVerifyTimeSensitiveLinkGateway", () => {
+    expect(container.getVerifyTimeSensitiveLinkGateway()).toBeDefined();
+  });
 });
