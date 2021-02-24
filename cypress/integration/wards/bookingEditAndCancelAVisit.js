@@ -262,6 +262,6 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
   }
 
   function ThenISeeErrors() {
-    cy.contains("There is a problem").should("be.visible");
+    cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
   }
 });
