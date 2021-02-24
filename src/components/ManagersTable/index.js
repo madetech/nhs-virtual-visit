@@ -16,18 +16,18 @@ const ManagersTable = ({ managers, currentManagerId }) => (
         </tr>
       </thead>
       <tbody className="nhsuk-table__body">
-        {managers?.map((info) => (
-          <tr key={info.uuid} className="nhsuk-table__row">
-            <td className="nhsuk-table__cell">{info.email}</td>
+        {managers?.map((manager) => (
+          <tr key={manager.uuid} className="nhsuk-table__row">
+            <td className="nhsuk-table__cell">{manager.email}</td>
             <td className="nhsuk-table__cell">
-              { info.id !== currentManagerId &&
+              { manager.id !== currentManagerId &&
               <AnchorLink
                 className="nhsuk-link"
                 href={{
                   pathname: `/trust-admin/managers/[uuid]/archive-confirmation`,
-                  query: { uuid: info.uuid },
+                  query: { uuid: manager.uuid },
                 }}
-                as={`/trust-admin/managers/${info.uuid}/archive-confirmation`}
+                as={`/trust-admin/managers/${manager.uuid}/archive-confirmation`}
                 data-cy="delete-tm-link"
               >
                 Delete

@@ -84,11 +84,7 @@ describe("trust-admin/managers", () => {
     expect(retrieveOrganisationByIdSuccessStub).toHaveBeenCalledWith(orgId);
     expect(organisation.name).toEqual(expectedOrganisationName);
     expect(retrieveActiveManagersByOrgIdSuccessSpy).toHaveBeenCalledWith(orgId);
-    expect(managers).toEqual(
-      expectedManagersArray.filter(
-        (manager) => manager.id != currentLoggedInManagerId
-      )
-    );
+    expect(managers).toEqual(expectedManagersArray);
     expect(error).toBeNull();
   });
 });
