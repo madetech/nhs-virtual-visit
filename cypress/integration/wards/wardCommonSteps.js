@@ -30,7 +30,7 @@ function ThenISeeTheVirtualVisitsPage() {
 
 // Allows a ward staff to book a virtual visit
 function GivenIAmLoggedInAsAWardStaff() {
-  cy.visit(Cypress.env("baseUrl"));
+  cy.visit(`${Cypress.env("baseUrl")}/wards/login`);
   cy.get("input[name=code]").type(Cypress.env("validWardCode"));
   cy.get("input[name=pin]").type(Cypress.env("validWardPin"));
   cy.get("button").contains("Log in").click();

@@ -36,7 +36,7 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
   function GivenIAmAWardStaff() {}
 
   function WhenIVisitTheLogInPage() {
-    cy.visit(Cypress.env("baseUrl"));
+    cy.visit(`${Cypress.env("baseUrl")}/wards/login`);
     cy.audit();
   }
 
