@@ -19,6 +19,7 @@ const verifyUserLoginGateway = ({ getMsSqlConnPool }) => async (
     const user = response.recordset[0];
 
     if (!bcrypt.compareSync(password, user.password)) {
+      logger.error(`Incorrect password was entered form ${email}`)
       return {
         validUser: false,
         trust_id: null,
@@ -29,6 +30,7 @@ const verifyUserLoginGateway = ({ getMsSqlConnPool }) => async (
     }
 
     if (idToStatus(user.status) === DISABLED) {
+      logger.error(`The account for ${email} is disabled`);
       return {
         validUser: false,
         trust_id: null,
