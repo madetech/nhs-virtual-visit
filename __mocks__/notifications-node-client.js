@@ -98,6 +98,18 @@ export class NotifyClient {
         message: "email_address Not a valid email address",
       });
     }
+    if (templateId === TemplateStore().resetPasswordEmail.templateId) {
+      const sendmail = require('sendmail')({silent: true, devPort: 1025})
+        sendmail({
+          from: 'no-reply@virtualvisit.com',
+          to: emailAddress,
+          subject: 'Virtual Visit Reset Password Link',
+          text: personalisation.link,
+        }, function(err, reply) {
+          console.log(err && err.stack);
+          console.dir(reply);
+    });
+    }
 
     return Promise.resolve({
       id: "740e5834-3a29-46b4-9a6f-16142fde533a",

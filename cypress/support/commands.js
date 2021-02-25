@@ -25,3 +25,4 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 import "cypress-audit/commands";
+import 'cypress-mailhog';

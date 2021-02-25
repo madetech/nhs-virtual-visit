@@ -15,6 +15,7 @@
     "tokenVersion": "3",
     "uuid": "",
     "hash": ""
+
   },
   "video": false,
   "lighthouse": {
@@ -24,5 +25,6 @@
     "seo": 0,
     "pwa": 0
   },
-  "projectId": "vv"
+  "projectId": "vv",
+  "mailHogUrl": "http://localhost:8025"
 }
