@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import logger from "../../../logger";
+import { idToStatus, DISABLED } from "../../helpers/statusTypes";
 
 const verifyUserLoginGateway = ({ getMsSqlConnPool }) => async (
   email,
@@ -12,7 +13,7 @@ const verifyUserLoginGateway = ({ getMsSqlConnPool }) => async (
       .request()
       .input("email", email)
       .query(
-        `SELECT organisation_id, password, type, id FROM dbo.[user] WHERE email = @email`
+        `SELECT organisation_id, password, type, id, status FROM dbo.[user] WHERE email = @email`
       );
 
     const user = response.recordset[0];
@@ -24,6 +25,16 @@ const verifyUserLoginGateway = ({ getMsSqlConnPool }) => async (
         type: null,
         user_id: null,
         error: "Incorrect email or password",
+      };
+    }
+
+    if (idToStatus(user.status) === DISABLED) {
+      return {
+        validUser: false,
+        trust_id: null,
+        type: null,
+        user_id: null,
+        error: "User is not active",
       };
     }
 

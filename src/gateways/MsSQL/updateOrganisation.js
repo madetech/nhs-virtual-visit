@@ -14,7 +14,7 @@ const updateOrganisationGateway = ({ getMsSqlConnPool }) => async ({
       .input("id", id)
       .input("name", name)
       .query(
-        `UPDATE dbo.[organisation] SET name= @name OUTPUT inserted.id, inserted.name WHERE id = @id`
+        `UPDATE dbo.[organisation] SET name = @name OUTPUT inserted.id, inserted.name WHERE id = @id`
       );
     if (response.recordset.length > 0) {
       logger.info(`${id} has been updated`);
