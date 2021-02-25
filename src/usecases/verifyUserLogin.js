@@ -22,7 +22,22 @@ const verifyUserLogin = ({ getVerifyUserLoginGateway }) => async (
     };
   }
 
-  return await getVerifyUserLoginGateway()(email, password);
+  const verifyUserLoginGateway = getVerifyUserLoginGateway();
+  const { 
+    validUser,
+    trust_id, 
+    type,
+    user_id,
+    error
+  } = await verifyUserLoginGateway(email, password);
+
+  return { 
+    validUser, 
+    trust_id,
+    type, 
+    user_id, 
+    error,
+  };
 };
 
 export default verifyUserLogin;
