@@ -13,7 +13,7 @@ const WardsNavigationBar = () => {
     },
     {
       text: "Log out",
-      href: "#",
+      href: "/wards/login",
       onClick: logout,
     },
   ];
