@@ -253,22 +253,6 @@ export const setUpScheduledCall = async (args = {}) => {
   );
 };
 
-export const setupVisit = async (args = {}) => {
-  const visit = {
-    patientName: "Patient Name",
-    contactEmail: "contact@example.com",
-    contactName: "Contact Name",
-    callTime: new Date("2020-06-01 13:00"),
-    contactNumber: "01234578912",
-    callId: uuidv4(),
-    ...args,
-  };
-  return await container.getCreateScheduledCallGateway(container)(
-    visit,
-    args.wardId
-  );
-};
-
 export const setupVisitPostgres = async (args = {}) => {
   const db = await container.getDb();
   const visit = {
