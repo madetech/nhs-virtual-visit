@@ -5,7 +5,7 @@ const AdminsNavigationBar = () => {
   const links = [
     {
       text: "Home",
-      href: "/",
+      href: "/admin",
     },
     {
       text: "Log out",
