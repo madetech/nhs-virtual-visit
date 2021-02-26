@@ -3,14 +3,14 @@ import Layout from "../../../../src/components/Layout";
 import propsWithContainer from "../../../../src/middleware/propsWithContainer";
 import verifyAdminToken from "../../../../src/usecases/verifyAdminToken";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
-import Heading from "../../../../src/components/Heading";
-// import ActionLink from "../../../src/components/ActionLink";
-// import TrustsTable from "../../../src/components/TrustsTable";
-// import Text from "../../../src/components/Text";
+import Text from "../../../../src/components/Text";
+import ManagersTable from "../../../../src/components/ManagersTable";
+import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
+
 import Error from "next/error";
 import { ADMIN } from "../../../../src/helpers/userTypes";
 
-const Organisation = ({ organisation, error }) => {
+const Organisation = ({ organisation, managers, error }) => {
   if (error) {
     return <Error err={error} />;
   }
@@ -21,16 +21,19 @@ const Organisation = ({ organisation, error }) => {
       showNavigationBarForType={ADMIN}
       showNavigationBar={true}
     >
+      <TrustAdminHeading 
+        trustName={organisation.name}
+        subHeading="Managers"
+      />
       <GridRow>
         <GridColumn width="full">
-          <Heading>{organisation.name}</Heading>
-          {/* <ActionLink href="trusts/add-a-trust">Add a trust</ActionLink> */}
-
-          {/* {organizations.length > 0 ? (
-            <TrustsTable trusts={organizations} />
-          ) : (
-            <Text>There are no trusts</Text>
-          )} */}
+          { 
+            managers && managers.length > 0 ? (
+              <ManagersTable managers={managers} />
+            ) : (
+              <Text>There are no managers.</Text>
+            )
+          }
         </GridColumn>
       </GridRow>
     </Layout>
@@ -40,13 +43,25 @@ const Organisation = ({ organisation, error }) => {
 export const getServerSideProps = propsWithContainer(
   verifyAdminToken(async ({ container, query }) => {
     const { id } = query;
-    const {
-      organisation,
-      error,
-    } = await container.getRetrieveOrganisationById()(id);
 
+    const retrieveOrganisationById = container.getRetrieveOrganisationById();
+    const { 
+      organisation,
+      error: organisationError 
+    } = await retrieveOrganisationById(id);
+
+    const retrieveActiveManagersByOrgId = container.getRetrieveActiveManagersByOrgId();
+    const {
+      managers,
+      error: managersError,
+    } = await retrieveActiveManagersByOrgId(id);
+    
     return {
-      props: { organisation, error },
+      props: { 
+        organisation,
+        managers, 
+        error: organisationError || managersError, 
+      },
     };
   })
 );
