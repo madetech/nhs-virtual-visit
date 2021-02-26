@@ -17,7 +17,7 @@ const TrustAdminsNavigationBar = () => {
     },
     {
       text: "Log out",
-      href: "/trust-admin#",
+      href: "/login",
       onClick: logout,
     },
   ];
