@@ -35,7 +35,7 @@ describe("/admin/admin/trusts/[id]/edit", () => {
     });
 
     it("retrieves a trust by the trustId parameter", async () => {
-      const retrieveTrustByIdSpy = jest.fn().mockReturnValue({
+      const retrieveOrganisationByIdSpy = jest.fn().mockReturnValue({
         trust: {
           id: 1,
           name: "Northwick Park Trust",
@@ -45,7 +45,7 @@ describe("/admin/admin/trusts/[id]/edit", () => {
       });
 
       const container = {
-        getRetrieveOrganisationById: () => retrieveTrustByIdSpy,
+        getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
@@ -59,11 +59,11 @@ describe("/admin/admin/trusts/[id]/edit", () => {
         container,
       });
 
-      expect(retrieveTrustByIdSpy).toHaveBeenCalledWith("1");
+      expect(retrieveOrganisationByIdSpy).toHaveBeenCalledWith("1");
     });
 
     it("set a trust prop based on the retrieved trust", async () => {
-      const retrieveTrustByIdSpy = jest.fn().mockReturnValue({
+      const retrieveOrganisationByIdSpy = jest.fn().mockReturnValue({
         trust: {
           id: 1,
           name: "Northwick Park Trust",
@@ -73,7 +73,7 @@ describe("/admin/admin/trusts/[id]/edit", () => {
       });
 
       const container = {
-        getRetrieveOrganisationById: () => retrieveTrustByIdSpy,
+        getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
