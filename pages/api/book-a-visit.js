@@ -62,9 +62,9 @@ export default withContainer(
       const { success, err } = await container.getCreateVisit()(
         {
           patientName: body.patientName,
-          contactEmail: body.contactEmail,
-          contactNumber: body.contactNumber,
-          contactName: body.contactName,
+          recipientEmail: body.contactEmail,
+          recipientNumber: body.contactNumber,
+          recipientName: body.contactName,
           callTime: callTime,
           callTimeLocal: body.callTimeLocal,
         },

@@ -74,9 +74,9 @@ describe("/api/book-a-visit", () => {
 
     const expectedVisit = {
       patientName: "Patient Name",
-      contactEmail: "contact@test.com",
-      contactNumber: "07123456789",
-      contactName: "Contact Name",
+      recipientEmail: "contact@test.com",
+      recipientNumber: "07123456789",
+      recipientName: "Contact Name",
       callTime: frozenTime,
     };
 
@@ -209,9 +209,9 @@ describe("/api/book-a-visit", () => {
 
     const expectedVisit = {
       patientName: "Patient Name",
-      contactEmail: "contact@test.com",
-      contactNumber: "07123456789",
-      contactName: "Contact Name",
+      recipientEmail: "contact@test.com",
+      recipientNumber: "07123456789",
+      recipientName: "Contact Name",
       callTime: frozenTime,
     };
 
@@ -261,9 +261,9 @@ describe("/api/book-a-visit", () => {
 
     const expectedVisit = {
       patientName: "Patient Name",
-      contactEmail: "contact@test.com",
-      contactNumber: "07123456789",
-      contactName: "Contact Name",
+      recipientEmail: "contact@test.com",
+      recipientNumber: "07123456789",
+      recipientName: "Contact Name",
       callTime: frozenTime,
     };
 

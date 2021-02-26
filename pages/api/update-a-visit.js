@@ -48,9 +48,9 @@ export default withContainer(
 
     const { validVisit, errors } = validateVisit({
       patientName: body.patientName,
-      contactName: body.contactName,
-      contactEmail: body.contactEmail,
-      contactNumber: body.contactNumber,
+      recipientName: body.contactName,
+      recipientEmail: body.contactEmail,
+      recipientNumber: body.contactNumber,
       callTime: body.callTime,
     });
 

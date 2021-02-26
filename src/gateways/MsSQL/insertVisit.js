@@ -5,9 +5,9 @@ export default ({ getMsSqlConnPool }) => async (visit, departmentId) => {
   try {
     //patient name is now part of the same table, as is the recipient name
     const db = await getMsSqlConnPool();
-    visit.recipientName = visit.recipientName || visit.contactName;
-    visit.recipientEmail = visit.recipientEmail || visit.contactEmail;
-    visit.recipientNumber = visit.recipientNumber || visit.contactNumber;
+    // visit.recipientName = visit.recipientName || visit.contactName;
+    // visit.recipientEmail = visit.recipientEmail || visit.contactEmail;
+    // visit.recipientNumber = visit.recipientNumber || visit.contactNumber;
     const result = await db
       .request()
       .input("patient_name", visit.patientName)
