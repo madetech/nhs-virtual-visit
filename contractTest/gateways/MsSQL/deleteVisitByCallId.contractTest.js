@@ -1,6 +1,6 @@
 import deleteVisitByCallIdGateway from "../../../src/gateways/MsSQL/deleteVisitByCallId";
 import {
-  setupVisit,
+  setUpScheduledCall,
   setupOrganisationFacilityDepartmentAndManager,
 } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
@@ -13,7 +13,7 @@ describe("deleteVisitByCallIdGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    const { uuid: callId } = await setupVisit({ wardId: departmentId });
+    const { uuid: callId } = await setUpScheduledCall({ departmentId });
 
     // Act
     const { success, error } = await deleteVisitByCallIdGateway(container)(
@@ -30,7 +30,7 @@ describe("deleteVisitByCallIdGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    await setupVisit({ wardId: departmentId });
+    await setUpScheduledCall({ departmentId });
     const invalidCallId = undefined;
 
     // Act
@@ -48,7 +48,7 @@ describe("deleteVisitByCallIdGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
-    await setupVisit({ wardId: departmentId });
+    await setUpScheduledCall({ departmentId });
     const invalidCallId = "invalidUuid";
 
     // Act
