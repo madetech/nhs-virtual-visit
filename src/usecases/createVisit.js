@@ -41,8 +41,8 @@ const createVisit = ({
     const {
       errors: bookingNotificationErrors,
     } = await getSendBookingNotification()({
-      mobileNumber: visit.contactNumber,
-      emailAddress: visit.contactEmail,
+      mobileNumber: visit.recipientNumber,
+      emailAddress: visit.recipientEmail,
       wardName: ward.name,
       hospitalName: facility.name,
       visitDateAndTime: visit.callTime,

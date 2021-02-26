@@ -5,9 +5,9 @@ import validateDateAndTime from "./validateDateAndTime";
 
 export const validateVisit = ({
   patientName,
-  contactName,
-  contactEmail,
-  contactNumber,
+  recipientName,
+  recipientEmail,
+  recipientNumber,
   callTime,
 }) => {
   let errors = {};
@@ -16,8 +16,8 @@ export const validateVisit = ({
     errors.patientName = "patientName must be present";
   }
 
-  if (!isPresent(contactName)) {
-    errors.contactName = "contactName must be present";
+  if (!isPresent(recipientName)) {
+    errors.recipientName = "recipientName must be present";
   }
 
   if (!isPresent(callTime)) {
@@ -32,15 +32,15 @@ export const validateVisit = ({
     }
   }
 
-  if (!isPresent(contactNumber) && !isPresent(contactEmail)) {
-    errors.contactEmail = "contactNumber or contactEmail must be present";
-    errors.contactNumber = "contactNumber or contactEmail must be present";
+  if (!isPresent(recipientNumber) && !isPresent(recipientEmail)) {
+    errors.recipientEmail = "recipientNumber or recipientEmail must be present";
+    errors.recipientNumber = "recipientNumber or recipientEmail must be present";
   } else {
-    if (contactEmail && !validateEmailAddress(contactEmail)) {
-      errors.contactEmail = "contactEmail must be a valid email address";
+    if (recipientEmail && !validateEmailAddress(recipientEmail)) {
+      errors.recipientEmail = "recipientEmail must be a valid email address";
     }
-    if (contactNumber && !validateMobileNumber(contactNumber)) {
-      errors.contactNumber = "contactNumber must be a valid mobile number";
+    if (recipientNumber && !validateMobileNumber(recipientNumber)) {
+      errors.recipientNumber = "recipientNumber must be a valid mobile number";
     }
   }
 

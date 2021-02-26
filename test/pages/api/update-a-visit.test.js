@@ -98,7 +98,7 @@ describe("/api/update-a-visit", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      '{"err":{"contactNumber":"contactNumber must be a valid mobile number"}}'
+      '{"err":{"recipientNumber":"recipientNumber must be a valid mobile number"}}'
     );
     expect(updateVisitSpy).not.toHaveBeenCalled();
   });
@@ -130,7 +130,7 @@ describe("/api/update-a-visit", () => {
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
-      '{"err":{"contactEmail":"contactNumber or contactEmail must be present","contactNumber":"contactNumber or contactEmail must be present"}}'
+      '{"err":{"recipientEmail":"recipientNumber or recipientEmail must be present","recipientNumber":"recipientNumber or recipientEmail must be present"}}'
     );
     expect(updateVisitSpy).not.toHaveBeenCalled();
   });
