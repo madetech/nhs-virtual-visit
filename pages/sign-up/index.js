@@ -13,7 +13,6 @@ import Select from "../../src/components/Select";
 import AnchorLink from "../../src/components/AnchorLink";
 import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
 import Router from "next/router";
-import validateSignUpEmailAddress from "../../src/helpers/validateSignUpEmailAddress";
 
 const SignUp = ({ organisations, error }) => {
   const [errors, setErrors] = useState([]);
@@ -56,13 +55,6 @@ const SignUp = ({ organisations, error }) => {
       onSubmitErrors.push({
         id: "email-error",
         message: "Enter an email",
-      });
-    }
-
-    if (!validateSignUpEmailAddress(email)) {
-      onSubmitErrors.push({
-        id: "verify-email-error",
-        message: "You must have an NHS email to be able to sign up",
       });
     }
 

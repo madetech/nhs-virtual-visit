@@ -14,7 +14,7 @@ describe("send-reset-password-email", () => {
     validRequest = {
       method: "POST",
       body: {
-        email: "nhs-manager@nhs.co.uk",
+        email: "nhs-manager@nhs.uk",
         password: "password",
         organisation: {
           id: 1,
@@ -38,7 +38,7 @@ describe("send-reset-password-email", () => {
         return {
           user: {
             id: 1,
-            email: "nhs-manager@nhs.co.uk",
+            email: "nhs-manager@nhs.uk",
             password: "hashedpassword",
             type: "manager",
             organisationId: 1,
@@ -114,7 +114,7 @@ describe("send-reset-password-email", () => {
     const invalidRequest = {
       method: "POST",
       body: {
-        email: "nhs-manager@nhs.co.uk",
+        email: "nhs-manager@nhs.uk",
         password: "",
         organisation: {
           id: 1,
@@ -139,7 +139,7 @@ describe("send-reset-password-email", () => {
     const invalidRequest = {
       method: "POST",
       body: {
-        email: "nhs-manager@nhs.co.uk",
+        email: "nhs-manager@nhs.uk",
         password: "password",
         organisation: null,
       },
@@ -226,11 +226,11 @@ describe("send-reset-password-email", () => {
 
       expect(response.status).toHaveBeenCalledWith(201);
       expect(response.end).toHaveBeenCalledWith(
-        JSON.stringify({ email: "nhs-manager@nhs.co.uk" })
+        JSON.stringify({ email: "nhs-manager@nhs.uk" })
       );
       expect(sendEmailSpy).toHaveBeenCalledWith(
         "templateId",
-        "nhs-manager@nhs.co.uk",
+        "nhs-manager@nhs.uk",
         { link: "validLink" },
         null
       );
@@ -260,7 +260,7 @@ describe("send-reset-password-email", () => {
       validRequest = {
         ...validRequest,
         body: {
-          email: "nhs-manager@nhs.co.uk",
+          email: "nhs-manager@nhs.uk",
           password: "password",
           organisation: {
             id: 1,
@@ -325,7 +325,7 @@ describe("send-reset-password-email", () => {
 
       const personalisationKeys = {
         link: "validLink",
-        email: "nhs-manager@nhs.co.uk",
+        email: "nhs-manager@nhs.uk",
         organisation_name: "Test trust",
       };
       const managerEmail = "nhs-manager1@nhs.co.uk";
@@ -354,6 +354,28 @@ describe("send-reset-password-email", () => {
         managerEmail,
         personalisationKeys,
         null
+      );
+    });
+
+    it("returns a 500 if use case call throws an error", async () => {
+      // Arrange
+      const retrieveManagersByOrgIdSpy = jest.fn(async () => {
+        throw new Error("ERROR!");
+      });
+      // Act
+      await sendSignUpEmail(validRequest, response, {
+        container: {
+          ...container,
+          getRetrieveManagersByOrgId: () => retrieveManagersByOrgIdSpy,
+        },
+      });
+
+      // Assert
+      expect(response.status).toHaveBeenCalledWith(500);
+      expect(response.end).toHaveBeenCalledWith(
+        JSON.stringify({
+          error: "Internal server error occurred",
+        })
       );
     });
   });
