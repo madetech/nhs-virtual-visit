@@ -58,6 +58,6 @@ resource "azurerm_app_service" "app_service" {
     "SENTRY_PROJECT"                    = var.sentry_project
     "SENTRY_AUTH_TOKEN"                 = var.sentry_auth_token
     "ENABLE_SENTRY"                     = "no"
-    "NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN"  = var.valid_email_domains
+    "SIGN_UP_EMAIL_DOMAINS"             = var.valid_email_domains
   }
 }
