@@ -5,7 +5,7 @@ import verifyAdminToken from "../../../../src/usecases/verifyAdminToken";
 import { GridRow, GridColumn } from "../../../../src/components/Grid";
 import Text from "../../../../src/components/Text";
 import ManagersTable from "../../../../src/components/ManagersTable";
-import TrustAdminHeading from "../../../../src/components/TrustAdminHeading";
+import AdminHeading from "../../../../src/components/AdminHeading";
 
 import Error from "next/error";
 import { ADMIN } from "../../../../src/helpers/userTypes";
@@ -21,15 +21,18 @@ const Organisation = ({ organisation, managers, error }) => {
       showNavigationBarForType={ADMIN}
       showNavigationBar={true}
     >
-      <TrustAdminHeading 
+      <AdminHeading 
         trustName={organisation.name}
         subHeading="Managers"
       />
       <GridRow>
         <GridColumn width="full">
           { 
-            managers && managers.length > 0 ? (
-              <ManagersTable managers={managers} />
+            managers?.length > 0 ? (
+              <ManagersTable 
+                managers={managers} 
+                url={organisation.id}
+              />
             ) : (
               <Text>There are no managers.</Text>
             )

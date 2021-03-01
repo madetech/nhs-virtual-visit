@@ -20,7 +20,7 @@ const ManagersTable = ({ managers, currentManagerId }) => (
           <tr key={manager.uuid} className="nhsuk-table__row">
             <td className="nhsuk-table__cell">{manager.email}</td>
             <td className="nhsuk-table__cell">
-              { manager.id !== currentManagerId &&
+              { manager.id !== currentManagerId && currentManagerId &&
               <AnchorLink
                 className="nhsuk-link"
                 href={{
