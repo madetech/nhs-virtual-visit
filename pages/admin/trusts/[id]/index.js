@@ -31,7 +31,6 @@ const Organisation = ({ organisation, managers, error }) => {
             managers?.length > 0 ? (
               <ManagersTable 
                 managers={managers} 
-                url={organisation.id}
               />
             ) : (
               <Text>There are no managers.</Text>
