@@ -57,6 +57,7 @@ jobs:
         working-directory: terraform
         run: |
           terraform apply -auto-approve
+          terraform output -raw app_service_id
           echo "::set-output name=app_service_id::$(terraform output -raw app_service_id)"
 
       - name: Azure Login
@@ -68,4 +69,5 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
+            echo ${{ steps.apply.outputs.app_service_id }}
             az webapp restart --ids ${{ steps.apply.outputs.app_service_id }}
