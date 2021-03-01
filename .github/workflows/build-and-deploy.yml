@@ -51,7 +51,21 @@ jobs:
         run: terraform init
 
       - name: Terraform Apply
+        id: apply
         env:
           TF_WORKSPACE: dev
         working-directory: terraform
-        run: terraform apply -auto-approve
+        run: |
+          terraform apply -auto-approve
+          echo "::set-output name=app_service_id::$(terraform output -raw app_service_id)"
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Restart App Service
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az webapp restart --ids ${{ steps.apply.outputs.app_service_id }}

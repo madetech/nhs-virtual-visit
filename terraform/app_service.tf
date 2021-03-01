@@ -61,3 +61,7 @@ resource "azurerm_app_service" "app_service" {
     "SIGN_UP_EMAIL_DOMAINS"             = var.valid_email_domains
   }
 }
+
+output "app_service_id" {
+  value = azurerm_app_service.app_service.id
+}
