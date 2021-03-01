@@ -1,7 +1,7 @@
 import logger from "../../../logger";
 
 const updateUserVerificationToVerifiedGateway = ({ getMsSqlConnPool }) => async ({
-  userId,
+  hash,
   verified
 }) => {
   logger.info("Updating user verification table row to verfied");
@@ -10,24 +10,24 @@ const updateUserVerificationToVerifiedGateway = ({ getMsSqlConnPool }) => async 
     const db = await getMsSqlConnPool();
     const response = await db
       .request()
-      .input("userId", userId)
+      .input("hash", hash)
       .input("verified", verified)
       .query(
-        `UPDATE dbo.[user_verification] SET verified = @verified OUTPUT inserted.id WHERE user_id = @userId`
+        `UPDATE dbo.[user_verification] SET verified = @verified OUTPUT inserted.id WHERE hash = @hash`
       );
 
     if (response.recordset.length > 0) {
-      logger.info(`Verified column for ${userId} has been updated in user_verification table`);
+      logger.info(`Verified column for entry with hash ${hash} has been updated in user_verification table`);
       return {
         success: true,
         error: null,
       };
     }
 
-    logger.error(`Error: ${userId} could not be found in the user_verification table`);
+    logger.error(`Error: Hash ${hash} could not be found in the user_verification table`);
     return {
       success: false,
-      error: "The userId could not be found in the user_verification table",
+      error: "The hash could not be found in the user_verification table",
     };
   } catch (error) {
     logger.error(`Error updating user verification table row to verified: ${error}`);

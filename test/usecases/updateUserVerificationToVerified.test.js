@@ -2,11 +2,11 @@ import updateUserVerificationToVerified from "../../src/usecases/updateUserVerif
 
 describe("updateUserVerificationToVerified", () => {
 
-  let userId;
+  let hash;
   let getUpdateUserVerificationToVerifiedGateway;
   
   beforeEach(() => {
-    userId = 1;
+    hash = "hash";
     getUpdateUserVerificationToVerifiedGateway = jest.fn(() => {
       return jest.fn().mockReturnValue({
         success: true,
@@ -15,15 +15,15 @@ describe("updateUserVerificationToVerified", () => {
     });
   });
 
-  it("returns an error if userId is not defined", async () => {
-    userId = "";
+  it("returns an error if hash is not defined", async () => {
+    hash = "";
 
     const { success, error } = await updateUserVerificationToVerified({
       getUpdateUserVerificationToVerifiedGateway,
-    })({ userId });
+    })({ hash });
 
     expect(success).toBeFalsy();
-    expect(error).toEqual("userId is not defined");
+    expect(error).toEqual("hash is not defined");
   });
 
   it("return success if the verified column gets updated by db call", async () => {
@@ -40,12 +40,12 @@ describe("updateUserVerificationToVerified", () => {
     
     const { success, error } = await updateUserVerificationToVerified({
       getUpdateUserVerificationToVerifiedGateway,
-    })({ userId });
+    })({ hash });
 
     expect(success).toBeTruthy();
     expect(error).toBeNull();
     expect(getUpdateUserVerificationToVerifiedGatewaySpy).toHaveBeenCalledWith({
-      userId: 1,
+      hash: "hash",
       verified: true,
     });
   });
@@ -60,7 +60,7 @@ describe("updateUserVerificationToVerified", () => {
 
     const { success, error } = await updateUserVerificationToVerified({
       getUpdateUserVerificationToVerifiedGateway,
-    })({ userId });
+    })({ hash });
 
     expect(success).toBeFalsy();
     expect(error).toEqual("error");
