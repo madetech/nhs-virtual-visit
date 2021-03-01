@@ -19,18 +19,18 @@ describe("/authorise-user/[token]", () => {
     });
 
     it("returns the user email address as a props", async () => {
-      const verifySignUpLinkSpy = jest.fn(async () => {
+      const verifyTimeSensitiveLinkSpy = jest.fn(async () => {
         return { user, error: null };
       });
-      const updateLinkStatusByHashSpy = jest.fn();
+      const updateUserVerificationToVerifiedSpy = jest.fn();
 
       const retrieveOrganisationById = jest.fn(async () => {
         return { organisation, error: null };
       });
 
       const container = {
-        getVerifySignUpLink: () => verifySignUpLinkSpy,
-        getUpdateLinkStatusByHash: () => updateLinkStatusByHashSpy,
+        getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLinkSpy,
+        getUpdateUserVerificationToVerified: () => updateUserVerificationToVerifiedSpy,
         getRetrieveOrganisationById: () => retrieveOrganisationById,
       };
 
@@ -43,24 +43,24 @@ describe("/authorise-user/[token]", () => {
 
       expect(props.email).toEqual("test@email.com");
       expect(props.error).toBeNull();
-      expect(verifySignUpLinkSpy).toHaveBeenCalledWith("valid token");
-      expect(updateLinkStatusByHashSpy).toHaveBeenCalledWith({ hash: "hash" });
+      expect(verifyTimeSensitiveLinkSpy).toHaveBeenCalledWith("valid token");
+      expect(updateUserVerificationToVerifiedSpy).toHaveBeenCalledWith({ hash: "hash" });
     });
 
     it("returns the organisation name address as a props", async () => {
-      const verifySignUpLink = jest.fn(async () => {
+      const verifyTimeSensitiveLink = jest.fn(async () => {
         return { user, error: null };
       });
 
-      const updateLinkStatusByHash = jest.fn();
+      const updateUserVerificationToVerified = jest.fn();
 
       const retrieveOrganisationByIdSpy = jest.fn(async () => {
         return { organisation, error: null };
       });
 
       const container = {
-        getVerifySignUpLink: () => verifySignUpLink,
-        getUpdateLinkStatusByHash: () => updateLinkStatusByHash,
+        getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLink,
+        getUpdateUserVerificationToVerified: () => updateUserVerificationToVerified,
         getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
       };
 
@@ -77,19 +77,19 @@ describe("/authorise-user/[token]", () => {
     });
 
     it("returns an error as props if there is an error verifying link", async () => {
-      const verifySignUpLink = jest.fn(async () => {
+      const verifyTimeSensitiveLink = jest.fn(async () => {
         return { user: null, error: "There is a link error" };
       });
 
-      const updateLinkStatusByHash = jest.fn();
+      const updateUserVerificationToVerified = jest.fn();
 
       const retrieveOrganisationById = jest.fn(async () => {
         return { organisation, error: null };
       });
 
       const container = {
-        getVerifySignUpLink: () => verifySignUpLink,
-        getUpdateLinkStatusByHash: () => updateLinkStatusByHash,
+        getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLink,
+        getUpdateUserVerificationToVerified: () => updateUserVerificationToVerified,
         getRetrieveOrganisationById: () => retrieveOrganisationById,
       };
 
@@ -106,19 +106,19 @@ describe("/authorise-user/[token]", () => {
     });
 
     it("if there is an error retrieving organisation, it returns an organisationName of undefined", async () => {
-      const verifySignUpLink = jest.fn(async () => {
+      const verifyTimeSensitiveLink = jest.fn(async () => {
         return { user, error: null };
       });
 
-      const updateLinkStatusByHash = jest.fn();
+      const updateUserVerificationToVerified = jest.fn();
 
       const retrieveOrganisationById = jest.fn(async () => {
         return { organisation: undefined, error: "There is an error" };
       });
 
       const container = {
-        getVerifySignUpLink: () => verifySignUpLink,
-        getUpdateLinkStatusByHash: () => updateLinkStatusByHash,
+        getVerifyTimeSensitiveLink: () => verifyTimeSensitiveLink,
+        getUpdateUserVerificationToVerified: () => updateUserVerificationToVerified,
         getRetrieveOrganisationById: () => retrieveOrganisationById,
       };
 

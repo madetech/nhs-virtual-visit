@@ -12,36 +12,58 @@ describe("updateUserVerificationToVerified", () => {
     admin = result.user;
     newUserToVerify = {
       user_id: admin.id,
+      code: "uuidv4",
+      hash: "hash",
       type: "resetPassword",      
     };
-    await setUpUserToVerify(newUserToVerify);
   })
 
   it("updates a user verification row to verified", async () => {
     // Arrange
+    const { verifyUser } = await setUpUserToVerify(newUserToVerify);
     const verified = true;
-    const userId = admin.id;
 
     // Act
     const updateUserVerificationToVerified = updateUserVerificationToVerifiedGateway(container);
-    const { success, error } = await updateUserVerificationToVerified({ userId, verified });
+    const { success, error } = await updateUserVerificationToVerified({ 
+      hash: verifyUser.hash, 
+      verified,
+    });
 
     // Assert
     expect(error).toBeNull();
     expect(success).toBeTruthy();
   });
 
-  it("returns an error if userId is not in the database", async () => {
+    it("returns an error if verified is not a boolean", async () => {
+      // Arrange
+      const { verifyUser } = await setUpUserToVerify(newUserToVerify);
+      const verified = "yes";
+
+      // Act
+      const updateUserVerificationToVerified = updateUserVerificationToVerifiedGateway(container);
+      const { success, error } = await updateUserVerificationToVerified({ 
+        hash: verifyUser.hash, 
+        verified,
+      });
+
+      // Assert
+      expect(error).toBeTruthy();
+      expect(success).toBeFalsy();
+    });
+
+  it("returns an error if hash is not in the database", async () => {
     // Arrange
+    await setUpUserToVerify(newUserToVerify);
     const verified = true;
-    const userId = 100000;
+    const hash = "";
 
     // Act
     const updateUserVerificationToVerified = updateUserVerificationToVerifiedGateway(container);
-    const { success, error } = await updateUserVerificationToVerified({ userId, verified });
+    const { success, error } = await updateUserVerificationToVerified({ hash, verified });
 
     // Assert
     expect(success).toBeFalsy();
-    expect(error).toBeTruthy();
+    expect(error).toEqual("The hash could not be found in the user_verification table");
   });
 });

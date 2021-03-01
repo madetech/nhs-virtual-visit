@@ -1,10 +1,10 @@
 const updateUserVerificationToVerified = ({
   getUpdateUserVerificationToVerifiedGateway
-}) => async ({ userId }) => {
-  if (!userId) {
+}) => async ({ hash }) => {
+  if (!hash) {
     return {
       success: false,
-      error: "userId is not defined",
+      error: "hash is not defined",
     };
   }
 
@@ -13,7 +13,7 @@ const updateUserVerificationToVerified = ({
     success, 
     error, 
   } = await updateVerifiedUserVerificationToVerifiedGateway({
-    userId,
+    hash,
     verified: true,
   });
   

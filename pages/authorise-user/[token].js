@@ -79,8 +79,8 @@ export default AuthoriseUser;
 export const getServerSideProps = propsWithContainer(
   async ({ query, container }) => {
     const token = query.token;
-    const verifySignUpLink = container.getVerifySignUpLink();
-    const { user, error: linkError } = await verifySignUpLink(token);
+    const verifyTimeSensitiveLink = container.getVerifyTimeSensitiveLink();
+    const { user, error: linkError } = await verifyTimeSensitiveLink(token);
 
     if (linkError) {
       return {
@@ -92,8 +92,8 @@ export const getServerSideProps = propsWithContainer(
       };
     }
 
-    const updateLinkStatusByHash = container.getUpdateLinkStatusByHash();
-    await updateLinkStatusByHash({ hash: user.hash });
+    const updateUserVerificationToVerified = container.getUpdateUserVerificationToVerified();
+    await updateUserVerificationToVerified({ hash: user.hash });
 
     const retrieveOrganisationById = container.getRetrieveOrganisationById();
     const { organisation } = await retrieveOrganisationById(

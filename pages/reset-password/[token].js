@@ -151,7 +151,7 @@ export const getServerSideProps = propsWithContainer(
 
     const updateUserVerificationToVerified = container.getUpdateUserVerificationToVerified();
     const { success, error } = await updateUserVerificationToVerified({
-      userId: user.user_id 
+      hash: user.hash 
     });
     
     return {
