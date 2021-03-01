@@ -35,7 +35,6 @@ import updateManagerStatusByUuid from "../usecases/updateManagerStatusByUuid";
 import retrieveOrganisationById from "../usecases/retrieveOrganisationById";
 import retrieveActiveOrganisations from "../usecases/retrieveActiveOrganisations";
 import deleteOrganisation from "../usecases/deleteOrganisation";
-import updateLinkStatusByHash from "../usecases/updateLinkStatusByHash";
 import retrieveManagerByEmail from "../usecases/retrieveManagerByEmail";
 import retrieveFacilitiesByOrgId from "../usecases/retrieveFacilitiesByOrgId";
 import createFacility from "../usecases/createFacility";
@@ -72,7 +71,6 @@ import retrieveOrganisationsGateway from "../gateways/MsSQL/retrieveOrganisation
 import deleteOrganisationGateway from "../gateways/MsSQL/deleteOrganisation";
 import insertManagerGateway from "../gateways/MsSQL/insertManager";
 import verifyTimeSensitiveLinkGateway from "../gateways/MsSQL/verifyTimeSensitiveLink";
-import updateLinkStatusByHashGateway from "../gateways/MsSQL/updateLinkStatusByHash";
 import retrieveManagerByEmailGateway from "../gateways/MsSQL/retrieveManagerByEmail";
 import retrieveFacilitiesByOrgIdGateway from "../gateways/MsSQL/retrieveFacilitiesByOrgId";
 import createFacilityGateway from "../gateways/MsSQL/createFacility";
@@ -540,14 +538,6 @@ class AppContainer {
 
   getAddToUserVerificationTableGateway = () => {
     return addToUserVerificationTableGateway(this);
-  };
-
-  getUpdateLinkStatusByHash = () => {
-    return updateLinkStatusByHash(this);
-  };
-
-  getUpdateLinkStatusByHashGateway = () => {
-    return updateLinkStatusByHashGateway(this);
   };
 
   getRetrieveManagerByEmail = () => {
