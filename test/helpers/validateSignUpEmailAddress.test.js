@@ -52,8 +52,8 @@ const createValidEmailArray = (emailDomainString, validFrontEmail) =>{
 
 describe("validateSignUpEmailAddress", () => {
     describe("checks for valid email domain",()=> {
-        process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN="madetech.com,nhs.uk";
-        const emailDomainString = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN;
+        process.env.SIGN_UP_EMAIL_DOMAINS="madetech.com,nhs.uk";
+        const emailDomainString = process.env.SIGN_UP_EMAIL_DOMAINS;
         const validSignUpEmailAddresses = createValidEmailArray(emailDomainString, validFrontEmail);
         validSignUpEmailAddresses.forEach((email_address) => {
             it(`accepts a valid email address: ${email_address}`, () => {
