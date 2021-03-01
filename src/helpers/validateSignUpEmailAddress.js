@@ -2,8 +2,8 @@ const REGEX = /^(?:(?:[^<>()[\]\\.,;:\s@"]+(?:\.[^<>()[\]\\.,;:\s@"]+)*)|(?:".+"
 
 const validateSignUpEmailAddress = (email, emailDomains) => {
     if(emailDomains === undefined) {
-        if (process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN === undefined)
-            return true;
+        // if (process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN === undefined)
+        //     return true;
         emailDomains = process.env.NEXT_PUBLIC_SIGN_UP_EMAIL_DOMAIN.split(",");
     }
     const matches = email.match(REGEX)
