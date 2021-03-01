@@ -27,7 +27,11 @@ const Manager = ({ managers, organisation, error, currentManagerId }) => {
       <GridRow>
         <GridColumn width="full">
           {managers.length > 0 ? (
-            <ManagersTable managers={managers} currentManagerId={currentManagerId} />
+            <ManagersTable 
+              managers={managers}
+              currentManagerId={currentManagerId}
+              url={"/trust-admin/managers"} 
+            />
           ) : (
             <Text>There are no managers.</Text>
           )}
