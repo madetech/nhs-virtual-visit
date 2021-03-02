@@ -14,8 +14,12 @@
     "jwtPrivateKey": "cypress/fixtures/trustManagerHashedPassword.txt",
     "tokenVersion": "3",
     "uuid": "",
-    "hash": ""
-  },
+    "hash": "",
+    "codeCoverage": {
+      "url": "/api/__coverage__"
+    }
+
+},
   "video": false,
   "lighthouse": {
     "performance": 15,
