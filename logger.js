@@ -27,7 +27,7 @@ const localFormat = winston.format.printf(({ level, message, timestamp }) => {
   return `[${level}] [${timestamp}]: ${message}`;
 });
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV !== "production") {
   logger.add(
     new winston.transports.Console({
       format: winston.format.combine(
