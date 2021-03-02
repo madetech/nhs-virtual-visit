@@ -57,6 +57,7 @@ export default withContainer(
       expirationTime,
       urlPath,
     });
+    console.log(link);
   
     if (linkError) {
       res.status(401);
