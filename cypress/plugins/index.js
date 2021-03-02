@@ -19,6 +19,7 @@ const { lighthouse, pa11y, prepareAudit } = require("cypress-audit");
 const { JwtCreation } = require("@jc21/cypress-jwt-creation");
 
 module.exports = (on, config) => {
+  require('@cypress/code-coverage/task')(on, config)
   on("before:browser:launch", (browser = {}, launchOptions) => {
     prepareAudit(launchOptions);
   });
