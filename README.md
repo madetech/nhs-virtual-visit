@@ -43,8 +43,8 @@ Please read our separate [Development Guide](./docs/development/README.md).
 ## Technology
 
 The web application is built using [Next.js](https://nextjs.org/) with a
-[PostgreSQL](https://www.postgresql.org) database and hosted on
-[Heroku](https://www.heroku.com).
+[Azure SQL](https://azure.microsoft.com/en-us/services/sql-database/) database and hosted on
+[Azure](https://azure.microsoft.com/).
 
 To notify visitors via text message and/or email, it uses [GOV.UK
 Notify](https://www.notifications.service.gov.uk) which is used widely by
@@ -55,7 +55,7 @@ providers are currently supported:
 
 - [Whereby](https://whereby.com/information/product-api/)
 
-For error monitoring and logging, [Sentry](https://sentry.io) is used.
+For error monitoring and logging, [DataDog](https://www.datadoghq.com/) is used.
 
 ## Contributing
 

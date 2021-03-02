@@ -4,19 +4,19 @@
 
 NHS Book a virtual visit is a web application that connects patients to their
 loved ones via video call. It's built using [Next.js](https://nextjs.org/) with
-a [PostgreSQL](https://www.postgresql.org) database.
+a [Azure SQL](https://azure.microsoft.com/en-us/services/sql-database/) database.
 
 Current NHS trusts using the service have been set up with a fork of this
 repository to enable their own feature development and the ability to receive
 updates from Made Tech. This consists of the following dependencies:
 
-- [Heroku](https://www.heroku.com) - to build and host the application
-- [CircleCI](https://circleci.com/) - to run automated tests on a pull request
+- [Microsoft Azure](https://azure.microsoft.com/) - to build and host the application
+- [GitHub Actions](https://github.com/features/actions) - to run automated tests on a pull request
 - [GOV.UK Notify](https://www.notifications.service.gov.uk) - to send text
   messages and emails
 - [Whereby](https://whereby.com/information/product-api/) - to enable video
   calls
-- [Sentry](https://sentry.io) - to log and monitor uncaught errors and
+- [DataDog](https://www.datadoghq.com/) - to log and monitor uncaught errors and
   exceptions
 
 ## Purpose
