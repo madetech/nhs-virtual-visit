@@ -5,7 +5,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     cy.audit();
   });
 
-  xit("given a valid reset password link, visits a reset password page", () => {
+  it("given a valid reset password link, visits a reset password page", () => {
     GivenIAmOnTheLoginPage();
     WhenIClickTheResetPasswordLink();
     ThenISeeTheResetPasswordPage();
