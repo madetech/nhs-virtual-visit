@@ -6,19 +6,6 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   });
 
   it("given a valid reset password link, visits a reset password page", () => {
-    GivenIAmOnTheLoginPage();
-    WhenIClickTheResetPasswordLink();
-    ThenISeeTheResetPasswordPage();
-    cy.audit()
-
-    WhenIFillOutTheResetPasswordFormOnTheResetPasswordPage(
-      Cypress.env("validTrustManagerEmail")
-    );
-    AndISubmitTheForm2();
-    ThenISeeTheResetPasswordSuccessPage2(Cypress.env("validTrustManagerEmail"));
-    
-    // ************************
-
     GivenIVisitAValidResetPasswordLink();
     ThenISeeTheEnterNewPasswordPage();
 
@@ -28,6 +15,12 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
       Cypress.env("trustManagerEmailToResetPassword")
     );
   });
+
+  it("given a valid reset passowrd link, a user can only use the link once", () => {
+    GivenIVisitAValidResetPasswordLinkTwice();
+    ThenISeeErrors();
+    cy.audit();
+  })
 
   function GivenIVisitInvalidResetPasswordLink() {
     cy.visit(
@@ -65,40 +58,19 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   }
 
   function GivenIVisitAValidResetPasswordLink() {
-    cy.task("generateToken", {
-      algo: "HS256",
-      expires: "2h",
-      claims: {
-        emailAddress: Cypress.env("trustManagerEmailToResetPassword"),
-        version: Cypress.env("tokenVersion"),
-      },
-    }).then((result) => {
-      const token = result;
-      cy.visit(Cypress.env("baseUrl") + "/reset-password/" + token);
-    });
+    cy.request("POST", "/api/test-send-email", { email: Cypress.env("trustManagerEmailToResetPassword") })
+      .then((res) => {
+        const link = res.body.link;
+        cy.visit(link);
+      });
   }
 
-  // Common functions with sendResetPasswordEmail.js
-
-  function GivenIAmOnTheLoginPage() {
-    cy.visit(Cypress.env("baseUrl") + "/login");
-  }
-  function WhenIClickTheResetPasswordLink() {
-    cy.get("[data-cy=reset-password-link]").contains("Reset Password").click();
-  }
-  function ThenISeeTheResetPasswordPage() {
-    cy.get("[data-cy=page-heading]").should("contain", "Reset Password");
-  }
-  function WhenIFillOutTheResetPasswordFormOnTheResetPasswordPage(email) {
-    cy.get("[data-cy=email-input]").clear().type(email);
-  }
-  function ThenISeeTheResetPasswordSuccessPage2(email) {
-    cy.get('[data-cy="panel-success-header"]').should(
-      "contain",
-      `Email has been sent to ${email}`
-    );
-  }
-  function AndISubmitTheForm2() {
-    cy.get("button").contains("Reset Password").click()
+  function GivenIVisitAValidResetPasswordLinkTwice() {
+    cy.request("POST", "/api/test-send-email", { email: Cypress.env("trustManagerEmailToResetPassword") })
+      .then((res) => {
+        const link = res.body.link;
+        cy.visit(link);
+        cy.visit(link);
+      });
   }
 });
