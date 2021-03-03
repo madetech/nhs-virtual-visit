@@ -138,6 +138,7 @@ const SignUp = ({ organisations, error }) => {
                   onChange={organisationChangeHandler}
                   hasError={hasError(errors, "organisation")}
                   errorMessage={errorMessage(errors, "organisation")}
+                  data-cy="organisation-input"
                 />
                 {organisation && organisation.status === 1 && (
                   <p style={{ paddingTop: "10px" }}>
@@ -158,6 +159,7 @@ const SignUp = ({ organisations, error }) => {
                     errorMessage={errorMessage(errors, "email")}
                     className="nhsuk-input--width-20"
                     name="email"
+                    data-cy="email-input"
                   />
                 </FormGroup>
                 <FormGroup>
@@ -171,6 +173,7 @@ const SignUp = ({ organisations, error }) => {
                     className="nhsuk-input--width-20"
                     name="password"
                     autoComplete="off"
+                    data-cy="password-input"
                   />
                 </FormGroup>
                 <FormGroup>
@@ -184,6 +187,7 @@ const SignUp = ({ organisations, error }) => {
                     className="nhsuk-input--width-20"
                     name="confirm-password"
                     autoComplete="off"
+                    data-cy="confirm-password-input"
                   />
                 </FormGroup>
                 <Button className="nhsuk-u-margin-top-2" type="submit">

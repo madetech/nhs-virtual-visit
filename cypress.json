@@ -17,9 +17,12 @@
     "hash": "",
     "codeCoverage": {
       "url": "/api/__coverage__"
-    }
-
-},
+    },
+    "signUpManagerEmail": "nhs-person@nhs.co.uk",
+    "signUpPassword": "password",
+    "signUpNewOrganisation": "Alder Hey Children's NHS Foundation Trust",
+    "signUpExistingOrganisation": "Airedale NHS Foundation Trust"
+  },
   "video": false,
   "lighthouse": {
     "performance": 15,
