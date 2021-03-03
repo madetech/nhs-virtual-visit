@@ -112,7 +112,9 @@ const Login = ({ correlationId }) => {
               </AnchorLink>
             </p>
             <p>
-              <AnchorLink href="/sign-up">Manager Sign Up</AnchorLink>
+              <AnchorLink href="/sign-up" data-cy="sign-up-link">
+                Manager Sign Up
+              </AnchorLink>
             </p>
             <Button className="nhsuk-u-margin-top-5" type="submit">
               Log in
