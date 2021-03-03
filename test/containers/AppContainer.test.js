@@ -269,4 +269,12 @@ describe("AppContainer", () => {
   it("returns getVerifyTimeSensitiveLinkGateway", () => {
     expect(container.getVerifyTimeSensitiveLinkGateway()).toBeDefined();
   });
+
+  it("returns getRetrieveUserVerificationByUserId", () => {
+    expect(container.getRetrieveUserVerificationByUserId()).toBeDefined();
+  });
+
+  it("returns getRetrieveUserVerificationByUserIdGateway", () => {
+    expect(container.getRetrieveUserVerificationByUserIdGateway()).toBeDefined();
+  });
 });

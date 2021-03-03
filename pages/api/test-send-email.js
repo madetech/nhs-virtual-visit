@@ -80,7 +80,7 @@ export default withContainer(
       res.end(JSON.stringify({ error: "GovNotify error occured" }));
     } else {
       res.status(201);
-      res.end(JSON.stringify({ success }));
+      res.end(JSON.stringify({ success, link }));
     }
   }
 );
