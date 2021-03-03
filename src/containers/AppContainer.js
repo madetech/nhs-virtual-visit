@@ -60,6 +60,7 @@ import retrieveTotalBookedVisitsByFacilityId from "../usecases/retrieveTotalBook
 import retrieveTotalBookedVisitsForDepartmentsByFacilityId from "../usecases/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 import retrieveTotalBookedVisitsForFacilitiesByOrgId from "../usecases/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 import deleteRecipientInformationForPii from "../usecases/deleteRecipientInformationForPii";
+import retrieveUserVerificationByUserId from "../usecases/retrieveUserVerificationByUserId";
 
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
