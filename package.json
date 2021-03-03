@@ -114,6 +114,10 @@
       ".next/*"
     ],
     "report-dir": "coverage/cypress",
-    "reporter": ["text", "json", "html"]
+    "reporter": [
+      "text",
+      "json",
+      "html"
+    ]
   }
 }
