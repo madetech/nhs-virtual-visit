@@ -23,8 +23,23 @@ describe("As an nhs employee, I can sign up to a trust", () => {
       Cypress.env("signUpPassword"),
       Cypress.env("signUpPassword")
     );
-    AndISubmitTheForm();
+    AndISubmitTheSignUpForm();
     ThenISeeTheSignUpSuccessPage(Cypress.env("signUpManagerEmail"));
+  });
+
+  it("sends an email to existing trust manager, when form is filled out and submitted for a trust that is already active", () => {
+    WhenIVisitTheLandingPage();
+    ThenIVisitTheManageYourTrustLoginPage();
+    WhenIClickTheManagerSignUpLink();
+    ThenISeeTheSignUpPage();
+    WhenIFillOutTheSignUpForm(
+      Cypress.env("signUpExistingOrganisation"), 
+      "nhs-person2@nhs.co.uk",
+      Cypress.env("signUpPassword"),
+      Cypress.env("signUpPassword")
+    );
+    AndISubmitTheSendRequestForm();
+    ThenISeeTheSendRequestSuccessPage();
   });
 
   it("gives an error when there isn't an organisation selected", () => {
@@ -38,7 +53,7 @@ describe("As an nhs employee, I can sign up to a trust", () => {
       Cypress.env("signUpPassword"),
       Cypress.env("signUpPassword")
     );
-    AndISubmitTheForm();
+    AndISubmitTheSignUpForm();
     ThenISeeAnError();
   });
 
@@ -54,7 +69,7 @@ describe("As an nhs employee, I can sign up to a trust", () => {
       Cypress.env("signUpPassword"),
       Cypress.env("signUpPassword")
     );
-    AndISubmitTheForm();
+    AndISubmitTheSignUpForm();
     ThenISeeAnError();
   });
 
@@ -70,7 +85,7 @@ describe("As an nhs employee, I can sign up to a trust", () => {
       Cypress.env("signUpPassword"),
       invalidConfirmPassword
     );
-    AndISubmitTheForm();
+    AndISubmitTheSignUpForm();
     ThenISeeAnError();
   });
 
@@ -86,7 +101,7 @@ describe("As an nhs employee, I can sign up to a trust", () => {
       shortPassword,
       shortPassword
     );
-    AndISubmitTheForm();
+    AndISubmitTheSignUpForm();
     ThenISeeAnError();
   });
 
@@ -99,20 +114,31 @@ describe("As an nhs employee, I can sign up to a trust", () => {
   }
 
   function WhenIFillOutTheSignUpForm(organisation, email, password, confirmPassword) {
-    organisation && cy.get("[data-cy=organisation-input").select(organisation);
-    email && cy.get("[data-cy=email-input").clear().type(email);
+    organisation && cy.get("[data-cy=organisation-input]").select(organisation);
+    email && cy.get("[data-cy=email-input]").clear().type(email);
     password && cy.get("[data-cy=password-input]").clear().type(password);
     confirmPassword && cy.get("[data-cy=confirm-password-input]").clear().type(confirmPassword);
   }
 
-  function AndISubmitTheForm() {
+  function AndISubmitTheSignUpForm() {
     cy.get("button").contains("Sign Up").click()
+  }
+  
+  function AndISubmitTheSendRequestForm() {
+    cy.get("button").contains("Send Request").click()
   }
 
   function ThenISeeTheSignUpSuccessPage(email) {
     cy.get("[data-cy=panel-success-header]").should(
       "contain",
       `Email has been sent to ${email}`
+    );
+  }
+
+  function ThenISeeTheSendRequestSuccessPage() {
+    cy.get("[data-cy=panel-success-header]").should(
+      "contain",
+      "Email has been sent to a trust manager to authorise access"
     );
   }
 });
