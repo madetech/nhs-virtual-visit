@@ -30,7 +30,7 @@ describe("/admin/admin/trusts/[id]", () => {
       await getServerSideProps({ req: anonymousReq, res });
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/admin/login",
+        Location: "/login",
       });
     });
 

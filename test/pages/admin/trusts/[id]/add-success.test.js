@@ -30,7 +30,7 @@ describe("/admin/trusts/[id]/add-success", () => {
       await getServerSideProps({ req: anonymousReq, res });
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/admin/login",
+        Location: "/login",
       });
     });
 
@@ -62,9 +62,9 @@ describe("/admin/trusts/[id]/add-success", () => {
         expect(retrieveOrganisationByIdSpy).toHaveBeenCalledWith("trust ID");
       });
 
-      xit("set a organisation prop based on the retrieved organization", async () => {
+      it("set a organisation prop based on the retrieved organization", async () => {
         const retrieveOrganisationByIdSpy = jest.fn().mockReturnValue({
-          organization: {
+          organisation: {
             id: 1,
             name: "Northwick Park Trust",
           },
