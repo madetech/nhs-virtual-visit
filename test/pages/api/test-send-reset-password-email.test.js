@@ -1,4 +1,4 @@
-import testSendEmail from "../../../pages/api/test-send-email";
+import testSendResetPasswordEmail from "../../../pages/api/test-endpoints/test-send-reset-password-email";
 import createTimeSensitiveLink from "../../../src/helpers/createTimeSensitiveLink";
 import TemplateStore from "../../../src/gateways/GovNotify/TemplateStore";
 
@@ -60,7 +60,7 @@ describe("sendTestEmail", () => {
   it("returns 405 if not POST method", async () => {
     validRequest.method = "GET";
 
-    await testSendEmail(validRequest, response, {
+    await testSendResetPasswordEmail(validRequest, response, {
       container: container,
     });
 
@@ -78,7 +78,7 @@ describe("sendTestEmail", () => {
       },
     };
 
-    await testSendEmail(invalidRequest, response, {
+    await testSendResetPasswordEmail(invalidRequest, response, {
       container: {
         ...container,
       },
@@ -99,7 +99,7 @@ describe("sendTestEmail", () => {
       error: "Email could not be found in database",
     });
 
-    await testSendEmail(validRequest, response, {
+    await testSendResetPasswordEmail(validRequest, response, {
       container: {
         ...container,
         getRetrieveManagerByEmail: () =>
@@ -119,7 +119,7 @@ describe("sendTestEmail", () => {
       error: null,
     });
 
-    await testSendEmail(validRequest, response, {
+    await testSendResetPasswordEmail(validRequest, response, {
       container: {
         ...container,
         getRetrieveManagerByEmail: () =>
@@ -139,7 +139,7 @@ describe("sendTestEmail", () => {
       error: "There was a verification error",
     });
 
-    await testSendEmail(validRequest, response, {
+    await testSendResetPasswordEmail(validRequest, response, {
       container: {
         ...container,
         getAddToUserVerificationTable: () =>
@@ -159,7 +159,7 @@ describe("sendTestEmail", () => {
       linkError: "link error!",
     });
 
-    await testSendEmail(validRequest, response, {
+    await testSendResetPasswordEmail(validRequest, response, {
       container: {
         ...container,
       },
@@ -178,7 +178,7 @@ describe("sendTestEmail", () => {
       .fn()
       .mockReturnValue({ success: true, error: null });
 
-    await testSendEmail(validRequest, response, {
+    await testSendResetPasswordEmail(validRequest, response, {
       container: {
         ...container,
         getSendEmail: () => getSendEmailSpy,
@@ -202,7 +202,7 @@ describe("sendTestEmail", () => {
       .fn()
       .mockReturnValue({ success: false, error: "Error message" });
 
-    await testSendEmail(validRequest, response, {
+    await testSendResetPasswordEmail(validRequest, response, {
       container: {
         ...container,
         getSendEmail: () => getSendEmailStub,

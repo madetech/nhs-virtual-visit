@@ -24,7 +24,9 @@ const ActivateAccount = ({ email, organisationName, error }) => {
               <Heading>Account Activation Success</Heading>
               <p>{`${organisationName} is now active`}</p>
               <p>{`Account has been activated for email address ${email}`}</p>
-              <ActionLink href={`/login`}>Go to Login page</ActionLink>
+              <ActionLink href="/login">
+                Go to Login page
+              </ActionLink>
             </>
           )}
         </GridColumn>
