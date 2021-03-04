@@ -27,14 +27,14 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   });
 
   it("displays an error for an invalid code", () => {
-    WhenIVisitTheLandingPage();
+    WhenIVisitTheTrustAdminLogInPage();
     AndIEnterAnInvalidEmail();
     AndISubmitTheForm();
     ThenISeeAnError();
   });
 
   it("displays an error for an invalid password", () => {
-    WhenIVisitTheLandingPage();
+    WhenIVisitTheTrustAdminLogInPage();
     AndIEnterAnInvalidPassword();
     AndISubmitTheForm();
     ThenISeeAnError();
@@ -46,6 +46,10 @@ describe("As a trust admin, I want to log in so that I can access the service.",
 
   function GivenIAmATrustAdmin() {}
 
+  function WhenIVisitTheTrustAdminLogInPage() {
+    cy.visit(Cypress.env("baseUrl") + "/login");
+  }
+  
   function WhenIEnterAValidTrustAdminEmailAndPassword() {
     cy.get("input[name=email]").type(Cypress.env("validTrustManagerEmail"));
     cy.get("input[name=password]").type(

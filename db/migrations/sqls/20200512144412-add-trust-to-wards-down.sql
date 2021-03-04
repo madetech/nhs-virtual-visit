@@ -1,1 +1,0 @@
-ALTER TABLE wards DROP COLUMN trust_id;

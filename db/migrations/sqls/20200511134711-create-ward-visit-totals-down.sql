@@ -1,1 +1,0 @@
-DROP TABLE ward_visit_totals;
