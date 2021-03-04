@@ -19,7 +19,6 @@
     "test:coverage": "jest --silent --coverage",
     "test:ci": "npm run format:check && npm run test:contract -- --runInBand && npm run test -- --runInBand",
     "test:migrate": "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql",
-    "test:e2e2:open": "npm run test:e2e:open",
     "test:migration": "APP_ENV=test jest --config ./jest.migrations.config.js --runInBand",
     "build": "next build",
     "dev": "NODE_ENV=development node server.js",
