@@ -21,7 +21,9 @@
     "signUpManagerEmail": "nhs-person@nhs.co.uk",
     "signUpPassword": "password",
     "signUpNewOrganisation": "Alder Hey Children's NHS Foundation Trust",
-    "signUpExistingOrganisation": "Airedale NHS Foundation Trust"
+    "signUpNewOrganisationId": 2,
+    "signUpExistingOrganisation": "Airedale NHS Foundation Trust",
+    "signUpExistingOrganisationId": 1
   },
   "video": false,
   "lighthouse": {

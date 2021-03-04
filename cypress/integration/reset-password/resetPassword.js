@@ -1,11 +1,18 @@
 describe("As a trust manager or admin, I want to reset my password if I forget it", () => {
+  before(() => {
+    // reset and seed the database
+    cy.exec(
+      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
+    );
+  });
+
   it("given a invalid reset password link, shows an error", () => {
-    GivenIVisitInvalidResetPasswordLink();
+    GivenIVisitAnInvalidResetPasswordLink();
     ThenISeeErrors();
     cy.audit();
   });
 
-  it("given a valid reset password link, visits a reset password page", () => {
+  it("given a valid reset password link, visits a reset password page and resets password", () => {
     GivenIVisitAValidResetPasswordLink();
     ThenISeeTheEnterNewPasswordPage();
 
@@ -16,13 +23,13 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     );
   });
 
-  it("given a valid reset passowrd link, a user can only use the link once", () => {
+  it("given a valid reset password link, a user can only use the link once", () => {
     GivenIVisitAValidResetPasswordLinkTwice();
     ThenISeeErrors();
     cy.audit();
-  })
+  });
 
-  function GivenIVisitInvalidResetPasswordLink() {
+  function GivenIVisitAnInvalidResetPasswordLink() {
     cy.visit(
       Cypress.env("baseUrl") +
         "/reset-password/" +
@@ -58,7 +65,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   }
 
   function GivenIVisitAValidResetPasswordLink() {
-    cy.request("POST", "/api/test-send-email", { email: Cypress.env("trustManagerEmailToResetPassword") })
+    cy.request("POST", "/api/test-endpoints/test-send-reset-password-email", { email: Cypress.env("trustManagerEmailToResetPassword") })
       .then((res) => {
         const link = res.body.link;
         cy.visit(link);
@@ -66,7 +73,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   }
 
   function GivenIVisitAValidResetPasswordLinkTwice() {
-    cy.request("POST", "/api/test-send-email", { email: Cypress.env("trustManagerEmailToResetPassword") })
+    cy.request("POST", "/api/test-endpoints/test-send-reset-password-email", { email: Cypress.env("trustManagerEmailToResetPassword") })
       .then((res) => {
         const link = res.body.link;
         cy.visit(link);

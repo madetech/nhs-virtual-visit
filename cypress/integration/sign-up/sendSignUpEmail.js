@@ -4,7 +4,7 @@ import {
   ThenISeeAnError,
 } from "../commonSteps";
 
-describe("As an nhs employee, I can sign up to a trust", () => {
+describe("As an nhs manager, I can sign up to a trust", () => {
   before(() => {
     // reset and seed the database
     cy.exec(

@@ -1,4 +1,4 @@
-import sendSignUpEmail from "../../../pages/api/send-sign-up-email";
+import testSendSignUpEmail from "../../../pages/api/test-endpoints/test-send-sign-up-email";
 import createTimeSensitiveLink from "../../../src/helpers/createTimeSensitiveLink";
 import TemplateStore from "../../../src/gateways/GovNotify/TemplateStore";
 import bcrypt from "bcryptjs";
@@ -7,7 +7,7 @@ jest.mock("../../../src/helpers/createTimeSensitiveLink");
 jest.mock("../../../src/gateways/GovNotify/TemplateStore");
 jest.mock("bcryptjs");
 
-describe("send-sign-up-email", () => {
+describe("test-send-sign-up-email", () => {
   let validRequest, response, container;
 
   beforeEach(() => {
@@ -80,7 +80,7 @@ describe("send-sign-up-email", () => {
   it("returns 405 if not POST method", async () => {
     validRequest.method = "GET";
 
-    await sendSignUpEmail(validRequest, response, { container: container });
+    await testSendSignUpEmail(validRequest, response, { container: container });
 
     expect(response.status).toHaveBeenCalledWith(405);
   });
@@ -102,7 +102,7 @@ describe("send-sign-up-email", () => {
       },
     };
 
-    await sendSignUpEmail(invalidRequest, response, { container });
+    await testSendSignUpEmail(invalidRequest, response, { container });
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
@@ -127,7 +127,7 @@ describe("send-sign-up-email", () => {
       },
     };
 
-    await sendSignUpEmail(invalidRequest, response, { container });
+    await testSendSignUpEmail(invalidRequest, response, { container });
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
@@ -148,7 +148,7 @@ describe("send-sign-up-email", () => {
       },
     };
 
-    await sendSignUpEmail(invalidRequest, response, { container });
+    await testSendSignUpEmail(invalidRequest, response, { container });
 
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.end).toHaveBeenCalledWith(
@@ -162,7 +162,7 @@ describe("send-sign-up-email", () => {
       error: "There was an error",
     });
 
-    await sendSignUpEmail(validRequest, response, {
+    await testSendSignUpEmail(validRequest, response, {
       container: {
         ...container,
         getCreateManager: () => createManagerSpy,
@@ -181,7 +181,7 @@ describe("send-sign-up-email", () => {
         error: "There was a verificationError",
       });
 
-      await sendSignUpEmail(validRequest, response, {
+      await testSendSignUpEmail(validRequest, response, {
         container: {
           ...container,
           getAddToUserVerificationTable: () => addToUserVerificationTableSpy,
@@ -200,7 +200,7 @@ describe("send-sign-up-email", () => {
         linkError: "link error!",
       });
 
-      await sendSignUpEmail(validRequest, response, {
+      await testSendSignUpEmail(validRequest, response, {
         container: {
           ...container,
         },
@@ -217,7 +217,7 @@ describe("send-sign-up-email", () => {
     it("returns a 201 if the sendEmail is successful", async () => {
       const sendEmailSpy = jest.fn().mockReturnValue({ error: null });
 
-      await sendSignUpEmail(validRequest, response, {
+      await testSendSignUpEmail(validRequest, response, {
         container: {
           ...container,
           getSendEmail: () => sendEmailSpy,
@@ -226,7 +226,7 @@ describe("send-sign-up-email", () => {
 
       expect(response.status).toHaveBeenCalledWith(201);
       expect(response.end).toHaveBeenCalledWith(
-        JSON.stringify({ email: "nhs-manager@nhs.uk" })
+        JSON.stringify({ email: "nhs-manager@nhs.uk", link: "validLink" })
       );
       expect(sendEmailSpy).toHaveBeenCalledWith(
         "templateId",
@@ -241,7 +241,7 @@ describe("send-sign-up-email", () => {
         .fn()
         .mockReturnValue({ error: "Error message" });
 
-      await sendSignUpEmail(validRequest, response, {
+      await testSendSignUpEmail(validRequest, response, {
         container: {
           ...container,
           getSendEmail: () => sendEmailStub,
@@ -296,7 +296,7 @@ describe("send-sign-up-email", () => {
         error: "There was an error",
       });
 
-      await sendSignUpEmail(validRequest, response, {
+      await testSendSignUpEmail(validRequest, response, {
         container: {
           ...container,
           getRetrieveManagersByOrgId: () => retrieveManagersByOrgIdSpy,
@@ -315,7 +315,7 @@ describe("send-sign-up-email", () => {
         verifyUser: { hash: "hashedUuid" },
         error: null,
       });
-      await sendSignUpEmail(validRequest, response, {
+      await testSendSignUpEmail(validRequest, response, {
         container: {
           ...container,
           getSendEmail: () => sendEmailSpy,
@@ -334,7 +334,7 @@ describe("send-sign-up-email", () => {
 
       expect(response.status).toHaveBeenCalledWith(201);
       expect(response.end).toHaveBeenCalledWith(
-        JSON.stringify({ email: managerEmail })
+        JSON.stringify({ email: managerEmail, link: "validLink" })
       );
 
       expect(addToUserVerificationTableSpy).toHaveBeenCalledWith({
@@ -363,7 +363,7 @@ describe("send-sign-up-email", () => {
         throw new Error("ERROR!");
       });
       // Act
-      await sendSignUpEmail(validRequest, response, {
+      await testSendSignUpEmail(validRequest, response, {
         container: {
           ...container,
           getRetrieveManagersByOrgId: () => retrieveManagersByOrgIdSpy,
