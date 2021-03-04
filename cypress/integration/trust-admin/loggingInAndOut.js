@@ -26,7 +26,7 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     ThenISeeTheManageYourTrustLoginPage();
   });
 
-  it("displays an error for an invalid code", () => {
+  it("displays an error for an invalid email", () => {
     WhenIVisitTheTrustAdminLogInPage();
     AndIEnterAnInvalidEmail();
     AndISubmitTheForm();
@@ -40,10 +40,17 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     ThenISeeAnError();
   });
 
+  function GivenTheSameWardCodeAsAdminCode() {}
+
+  function WhenIVisitTheTrustAdminLogInPage() {
+    cy.visit(Cypress.env("baseUrl") + "/login");
+  }
+ 
   function AndISubmitTheForm() {
     cy.get("button").contains("Log in").click();
   }
 
+  // Allows a trust admin to log in and out
   function GivenIAmATrustAdmin() {}
 
   function WhenIVisitTheTrustAdminLogInPage() {
@@ -63,7 +70,7 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   function WhenIClickLogOut() {
     cy.get("a.nhsuk-header__navigation-link").contains("Log out").click();
   }
-  // Displays an error for an invalid email
+  // Displays an error for an invalid code
   function AndIEnterAnInvalidEmail() {
     cy.get("input[name=email]").type("wrong@email.com");
     cy.get("input[name=password]").type(
