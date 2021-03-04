@@ -26,26 +26,11 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     ThenISeeTheManageYourTrustLoginPage();
   });
 
-  it("displays an error for an invalid code", () => {
+  it("displays an error for an invalid email", () => {
     WhenIVisitTheTrustAdminLogInPage();
-    AndIEnterAnInvalidCode();
+    AndIEnterAnInvalidEmail();
     AndISubmitTheForm();
     ThenISeeAnError();
-  });
-
-  it("allows a trust admin to log in and out when the ward code and trust admin code are the same", () => {
-    GivenTheSameWardCodeAsAdminCode();
-    GivenIAmATrustAdmin();
-    WhenIVisitTheTrustAdminLogInPage();
-    cy.audit();
-
-    AndIEnterAValidTrustAdminEmailAndPassword();
-    AndISubmitTheForm();
-    ThenISeeTheTrustAdminHomePage();
-    cy.audit();
-
-    WhenIClickLogOut();
-    ThenISeeTheManageYourTrustLoginPage();
   });
 
   it("displays an error for an invalid password", () => {
@@ -54,8 +39,6 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     AndISubmitTheForm();
     ThenISeeAnError();
   });
-
-  function GivenTheSameWardCodeAsAdminCode() {}
 
   function WhenIVisitTheTrustAdminLogInPage() {
     cy.visit(Cypress.env("baseUrl") + "/login");
@@ -74,9 +57,6 @@ describe("As a trust admin, I want to log in so that I can access the service.",
       Cypress.env("validTrustManagerPassword")
     );
   }
-  function AndIEnterAValidTrustAdminEmailAndPassword() {
-    WhenIEnterAValidTrustAdminEmailAndPassword();
-  }
   function ThenISeeTheTrustAdminHomePage() {
     cy.get('[data-cy=trust-name]').should("contain", "Airedale NHS Foundation Trust");
     cy.get('[data-cy=layout-title]').should("contain", "Dashboard");
@@ -85,7 +65,7 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     cy.get("a.nhsuk-header__navigation-link").contains("Log out").click();
   }
   // Displays an error for an invalid code
-  function AndIEnterAnInvalidCode() {
+  function AndIEnterAnInvalidEmail() {
     cy.get("input[name=email]").type("wrong@email.com");
     cy.get("input[name=password]").type(
       Cypress.env("validTrustManagerPassword")
