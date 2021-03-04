@@ -35,15 +35,16 @@ Please read our separate [Development Guide](./docs/development/README.md).
 
 <!-- To update the screenshots, please see the overview slide deck https://docs.google.com/presentation/d/1KaHYSZzcdFJ1oOCZdiPfZCXv9uAEOeE8EvkIjD-mId8/edit -->
 
-| ![Trust Admin can add new hospitals and wards](docs/images/TrustAdmin_01_AddNew.png)                         | ![Trust Admin can edit and delete hospitals and wards](docs/images/TrustAdmin_02_ManageExisting.png) |
+| ![Trust Manager can sign up for an account to manage a trust](docs/images/TrustManager_01_SelfSignUp.png) | ![Trust Manager can add new hospitals and wards](docs/images/TrustManager_02_AddNew.png)                         |
 | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| ![Ward Staff can book a virtual visit via email and/or text message](docs/images/WardStaff_01_BookVisit.png) | ![Ward Staff can start a virtual visit](docs/images/WardStaff_02_StartVisit.png)                     |
-| ![Key Contact can join a virtual visit](docs/images/KeyContact_01_JoinVisit.png)                             | ![Ward Staff can reschedule a virtual visit](docs/images/WardStaff_03_RebookVisit.png)               |
+| ![Trust Admin can edit and delete hospitals and wards](docs/images/TrustManager_03_ManageExisting.png)    | ![Ward Staff can book a virtual visit via email and/or text message](docs/images/WardStaff_01_BookVisit.png)            | 
+| ![Ward Staff can start a virtual visit](docs/images/WardStaff_02_StartVisit.png)                          | ![Key Contact can join a virtual visit](docs/images/KeyContact_01_JoinVisit.png)                        |
+| ![Ward Staff can reschedule a virtual visit](docs/images/WardStaff_03_RebookVisit.png)                    |
 
 ## Technology
 
-The web application is built using [Next.js](https://nextjs.org/) with a
-[Azure SQL](https://azure.microsoft.com/en-us/services/sql-database/) database and hosted on
+The web application is built using [Next.js](https://nextjs.org/) with
+[Microsoft SQL Server](https://www.microsoft.com/sql-server) and hosted on
 [Azure](https://azure.microsoft.com/).
 
 To notify visitors via text message and/or email, it uses [GOV.UK
@@ -55,7 +56,7 @@ providers are currently supported:
 
 - [Whereby](https://whereby.com/information/product-api/)
 
-For error monitoring and logging, [DataDog](https://www.datadoghq.com/) is used.
+For error monitoring and logging, [DataDog](https://www.datadoghq.com/) and [Sentry](https://sentry.io) is used.
 
 ## Contributing
 
@@ -85,6 +86,15 @@ Please take a look at our separate [Contributing Guide](./CONTRIBUTING.md).
 - **Shaun Wild** - Software Engineer at [Made Tech](https://www.madetech.com) (shaun.wild@madetech.com)
 - **Pete Craven** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (pete.craven@madetech.com)
 - **John Nicholas** - Senior Software Engineer at [Made Tech](https://www.madetech.com) (john.nicholas@madetech.com)
+- **Azlina Yeo** -Academy Engineer at [Made Tech](https://www.madetech.com) (azlina.yeo@madetech.com)
+- **Richard Pentecost** - Academy Engineer at [Made Tech](https://www.madetech.com) (richard.pentecost@madetech.com)
+- **Faissal Bensefia** - Full Stack Engineer at [Made Tech](https://www.madetech.com) (faissal@madetech.com)
+- **Miranda Hawkes** - Senior Engineer at [Made Tech](https://www.madetech.com) (miranda.hawkes@madetech.com)
+- **Joe Roberts** - Software Engineer at [Made Tech](https://www.madetech.com) (joe.roberts@madetech.com)
+- **Paulo Lanção** - Lead Engineer at [Made Tech](https://www.madetech.com) (paulo.lancao@madetech.com)
+- **James McDowall** - Delivery Manager at [Made Tech](https://www.madetech.com) (james.mcdowall@madetech.com)
+- **Derek Aning** - Junior Delivery Manager at [Made Tech](https://www.madetech.com) (derek.aning@madetech.com)
+- **David Watkin** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (david.watkin@madetech.com)
 
 ## License
 

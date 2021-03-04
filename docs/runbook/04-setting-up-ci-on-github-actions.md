@@ -10,5 +10,8 @@ The following GOV.UK Notify template IDs need to be set as GitHub secrets in the
 - EMAIL_JOIN_TEMPLATE_ID
 - SMS_UPDATED_VISIT_TEMPLATE_ID
 - EMAIL_UPDATED_VISIT_TEMPLATE_ID
+- EMAIL_RESET_PASSWORD_TEMPLATE_ID
+- EMAIL_SIGN_UP_TEMPLATE_ID
+- EMAIL_SIGN_UP_REQUEST_TEMPLATE_ID
 
 The contract tests and E2E tests need the above IDs to be set in order to run properly. Therefore, there is a condition in the workflow around the contract tests and E2E tests such that they'll only run in the `made-tech/nhs-virtual-visit` GitHub repository. This condition can easily be extended to include other repositories (e.g. forked repositories) once that repository has the above IDs set as GitHub secrets.

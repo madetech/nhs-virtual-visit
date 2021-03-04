@@ -1,4 +1,4 @@
-# 5. Setting up Whereby
+# 6. Setting up Whereby
 
 [Whereby](https://whereby.com/) is used to to facilitate video calling functionality,
 you'll need to contact their sales team and get an account with them.
