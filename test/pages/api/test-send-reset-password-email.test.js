@@ -8,6 +8,7 @@ describe("sendTestEmail", () => {
 
   beforeEach(() => {
     process.env.APP_ENV = "test";
+    
     validRequest = {
       method: "POST",
       headers: {
