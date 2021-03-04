@@ -68,6 +68,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     cy.request("POST", "/api/test-endpoints/test-send-reset-password-email", { email: Cypress.env("trustManagerEmailToResetPassword") })
       .then((res) => {
         const link = res.body.link;
+        cy.log(res.status)
         cy.visit(link);
       });
   }
