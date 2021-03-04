@@ -85,7 +85,6 @@ import archiveDepartmentByIdGateway from "../gateways/MsSQL/archiveDepartmentByI
 import retrieveDepartmentByCodeGateway from "../gateways/MsSQL/retrieveDepartmentByCode";
 import verifyAdminCodeGateway from "../gateways/MsSQL/verifyAdminCode";
 import retrieveActiveDepartmentsByOrganisationIdGateway from "../gateways/MsSQL/retrieveActiveDepartmentsByOrganisationId";
-import updateDepartmentStatusByIdGateway from "../gateways/MsSQL/updateDepartmentStatusById";
 import updateOrganisationGateway from "../gateways/MsSQL/updateOrganisation";
 import deleteVisitByCallIdGateway from "../gateways/MsSQL/deleteVisitByCallId";
 import retrieveActiveManagersByOrgIdGateway from "../gateways/MsSQL/retrieveActiveManagersByOrgId";
@@ -404,16 +403,9 @@ class AppContainer {
     return retrieveActiveDepartmentsByOrganisationIdGateway(this);
   };
 
-  getUpdateDepartmentStatusByIdGateway = () => {
-    return updateDepartmentStatusByIdGateway(this);
-  };
 
   getRetrieveActiveDepartmentsByOrganisationIdGateway = () => {
     return retrieveActiveDepartmentsByOrganisationIdGateway(this);
-  };
-
-  getUpdateDepartmentStatusByIdGateway = () => {
-    return updateDepartmentStatusByIdGateway(this);
   };
 
   getCreateScheduledCallGateway = () => {

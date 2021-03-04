@@ -230,10 +230,6 @@ describe("AppContainer", () => {
     ).toBeDefined();
   });
 
-  it("returns getUpdateDepartmentStatusByIdGateway", () => {
-    expect(container.getUpdateDepartmentStatusByIdGateway()).toBeDefined();
-  });
-
   it("returns getCreateScheduledCallGateway", () => {
     expect(container.getCreateScheduledCallGateway()).toBeDefined();
   });
