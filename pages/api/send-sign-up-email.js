@@ -131,8 +131,8 @@ export default withContainer(
         res.end(JSON.stringify({ email: emailAddress }));
       }
     } catch(error){
-        res.status(500);
-        res.end(JSON.stringify({ error: "Internal server error occurred" }));
+      res.status(500);
+      res.end(JSON.stringify({ error: "Internal server error occurred" }));
     }   
   }
 );
