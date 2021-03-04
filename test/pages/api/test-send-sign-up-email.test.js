@@ -179,7 +179,6 @@ describe("test-send-sign-up-email", () => {
         }),
       };
     });
-
     it("returns a 400 if there is an error returned from retrieveManagerByOrgId database call", async () => {
       const retrieveManagersByOrgIdSpy = jest.fn().mockReturnValue({
         managers: null,
