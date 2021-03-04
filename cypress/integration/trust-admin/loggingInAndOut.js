@@ -27,45 +27,23 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   });
 
   it("displays an error for an invalid code", () => {
-    WhenIVisitTheTrustAdminLogInPage();
-    AndIEnterAnInvalidCode();
+    WhenIVisitTheLandingPage();
+    AndIEnterAnInvalidEmail();
     AndISubmitTheForm();
     ThenISeeAnError();
   });
 
-  it("allows a trust admin to log in and out when the ward code and trust admin code are the same", () => {
-    GivenTheSameWardCodeAsAdminCode();
-    GivenIAmATrustAdmin();
-    WhenIVisitTheTrustAdminLogInPage();
-    cy.audit();
-
-    AndIEnterAValidTrustAdminEmailAndPassword();
-    AndISubmitTheForm();
-    ThenISeeTheTrustAdminHomePage();
-    cy.audit();
-
-    WhenIClickLogOut();
-    ThenISeeTheManageYourTrustLoginPage();
-  });
-
   it("displays an error for an invalid password", () => {
-    WhenIVisitTheTrustAdminLogInPage();
+    WhenIVisitTheLandingPage();
     AndIEnterAnInvalidPassword();
     AndISubmitTheForm();
     ThenISeeAnError();
   });
 
-  function GivenTheSameWardCodeAsAdminCode() {}
-
-  function WhenIVisitTheTrustAdminLogInPage() {
-    cy.visit(Cypress.env("baseUrl") + "/login");
-  }
- 
   function AndISubmitTheForm() {
     cy.get("button").contains("Log in").click();
   }
 
-  // Allows a trust admin to log in and out
   function GivenIAmATrustAdmin() {}
 
   function WhenIEnterAValidTrustAdminEmailAndPassword() {
@@ -74,9 +52,6 @@ describe("As a trust admin, I want to log in so that I can access the service.",
       Cypress.env("validTrustManagerPassword")
     );
   }
-  function AndIEnterAValidTrustAdminEmailAndPassword() {
-    WhenIEnterAValidTrustAdminEmailAndPassword();
-  }
   function ThenISeeTheTrustAdminHomePage() {
     cy.get('[data-cy=trust-name]').should("contain", "Airedale NHS Foundation Trust");
     cy.get('[data-cy=layout-title]').should("contain", "Dashboard");
@@ -84,8 +59,8 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   function WhenIClickLogOut() {
     cy.get("a.nhsuk-header__navigation-link").contains("Log out").click();
   }
-  // Displays an error for an invalid code
-  function AndIEnterAnInvalidCode() {
+  // Displays an error for an invalid email
+  function AndIEnterAnInvalidEmail() {
     cy.get("input[name=email]").type("wrong@email.com");
     cy.get("input[name=password]").type(
       Cypress.env("validTrustManagerPassword")
