@@ -3,7 +3,7 @@ import {
   ThenISeeTheManageYourTrustLoginPage,
 } from "../commonSteps";
 
-describe("As an nhs manager, I can sign up to a trust", () => {
+describe("As an nhs manager, once I've signed up I can activate my account", () => {
   before(() => {
     // reset and seed the database
     cy.exec(

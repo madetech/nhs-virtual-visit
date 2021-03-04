@@ -116,13 +116,15 @@ export default withContainer(
   
       const emailAddress = manager ? manager.email : body.email;
   
-      const { success, error: emailError } = await sendEmail(
+      const { error: emailError } = await sendEmail(
         emailTemplateId,
         emailAddress,
         personalisationKeys,
         null
       );
       console.log("*************")
+      console.log(manager);
+      console.log(emailTemplateId);
       console.log(emailError);
       if (emailError) {
         res.status(401);
