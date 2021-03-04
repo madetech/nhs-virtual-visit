@@ -171,6 +171,7 @@ jobs:
       - name: Create .env file
         env:
           APP_ENV: test,test-mssql
+          PG_TEST_DB_URL: ${{ secrets.PG_TEST_DB_URL }}
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
           MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
