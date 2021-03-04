@@ -10,7 +10,7 @@ describe("As manager of a trust, I can authorise another manager to gain access 
     );
   });
 
-  it("given a invalid authorisation link, shows an error", () => {
+  it("given an invalid authorisation link, shows an error", () => {
     GivenIVisitAnInvalidAuthorisationLink();
     ThenISeeAnError();
     cy.audit();

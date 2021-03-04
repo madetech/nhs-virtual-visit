@@ -96,7 +96,6 @@ export default withContainer(
         urlPath,
       });
       
-      console.log(link);
       if (linkError) {
         res.status(401);
         res.end(
@@ -117,13 +116,14 @@ export default withContainer(
   
       const emailAddress = manager ? manager.email : body.email;
   
-      const { error: emailError } = await sendEmail(
+      const { success, error: emailError } = await sendEmail(
         emailTemplateId,
         emailAddress,
         personalisationKeys,
         null
       );
-  
+      console.log("*************")
+      console.log(emailError);
       if (emailError) {
         res.status(401);
         res.end(JSON.stringify({ error: "GovNotify error occurred" }));
