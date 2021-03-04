@@ -1,1 +1,0 @@
-ALTER TABLE scheduled_calls_table ADD CONSTRAINT call_id_unique UNIQUE (call_id);
