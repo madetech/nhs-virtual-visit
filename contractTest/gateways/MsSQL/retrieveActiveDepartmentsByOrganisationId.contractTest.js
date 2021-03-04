@@ -5,7 +5,7 @@ import {
   setupOrganisationAndFacility,
 } from "../../../test/testUtils/factories";
 import AppContainer from "../../../src/containers/AppContainer";
-import { statusToId, DISABLED } from "../../../src/helpers/statusTypes";
+import disableDepartment from "../../../test/testUtils/disableDepartment";
 
 describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
   const container = AppContainer.getInstance();
@@ -64,9 +64,8 @@ describe("retrieveActiveDepartmentsByOrganisationIdGateway", () => {
     const currentDepartmentThree = await container.getRetrieveDepartmentByUuidGateway()(
       departmentThreeUuid
     );
-    await container.getUpdateDepartmentStatusByIdGateway(container)({
-      id: currentDepartmentThree.id,
-      status: statusToId(DISABLED),
+    await disableDepartment(container)({
+      id: currentDepartmentThree.id
     });
     // Act
     const departmentsInOrganisationOne = await retrieveActiveDepartmentsByOrganisationIdGateway(
