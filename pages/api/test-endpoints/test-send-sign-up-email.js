@@ -122,10 +122,7 @@ export default withContainer(
         personalisationKeys,
         null
       );
-      console.log("*************")
-      console.log(manager);
-      console.log(emailTemplateId);
-      console.log(emailError);
+
       if (emailError) {
         res.status(401);
         res.end(JSON.stringify({ error: "GovNotify error occurred" }));
