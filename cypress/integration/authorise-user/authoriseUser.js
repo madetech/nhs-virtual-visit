@@ -3,6 +3,8 @@ import {
 } from "../commonSteps";
 
 describe("As manager of a trust, I can authorise another manager to gain access to the trust", () => {
+  let link; 
+
   before(() => {
     // reset and seed the database
     cy.exec(
@@ -19,13 +21,15 @@ describe("As manager of a trust, I can authorise another manager to gain access 
   it("given a valid authorisation link, a manager visits the authorisation page, and authorises the user", () => {
     GivenIVisitAValidAuthorisationLink();
     ThenISeeAuthorisationPage();
+    cy.audit();
 
     WhenIClickTheAuthorisationButton();
     ThenISeeTheAuthorisationSuccessPage();
+    cy.audit();
   });
 
   it("given a valid authorisation link, a manager can only use the link once", () => {
-    GivenIVisitAValidAuthorisationLinkTwice();
+    GivenIVisitAValidAuthorisationLinkASecondTime();
     ThenISeeAnError();
     cy.audit();
   });
@@ -37,20 +41,11 @@ describe("As manager of a trust, I can authorise another manager to gain access 
   }
 
   function GivenIVisitAValidAuthorisationLink() {
-    const organisation = {
-      id: Cypress.env("signUpExistingOrganisationId"),
-      name: Cypress.env("signUpExistingOrganisation"),
-      status: 1,
-    };
-    cy.request("POST", "/api/test-endpoints/test-send-sign-up-email", {
-      organisation,
-      email: Cypress.env("signUpManagerEmail"),
-      password: Cypress.env("signUpPassword"),
-      confirmPassword: Cypress.env("signUpPassword"),
-    }).then(res => {
-      const link = res.body.link;
-      cy.visit(link);
-    });
+    cy.request("POST", "/api/test-endpoints/test-send-sign-up-email", { type: "authorisation" })
+      .then(res => {
+        link = res.body.link;
+        cy.visit(link);
+      });
   }
 
   function ThenISeeAuthorisationPage() {
@@ -68,21 +63,7 @@ describe("As manager of a trust, I can authorise another manager to gain access 
     );
   }
 
-  function GivenIVisitAValidAuthorisationLinkTwice() {
-    const organisation = {
-      id: Cypress.env("signUpExistingOrganisationId"),
-      name: Cypress.env("signUpExistingOrganisation"),
-      status: 1,
-    };
-    cy.request("POST", "/api/test-endpoints/test-send-sign-up-email", {
-      organisation,
-      email: "nhs-person1@nhs.co.uk",
-      password: Cypress.env("signUpPassword"),
-      confirmPassword: Cypress.env("signUpPassword"),
-    }).then(res => {
-      const link = res.body.link;
-      cy.visit(link);
-      cy.visit(link);
-    });
+  function GivenIVisitAValidAuthorisationLinkASecondTime() {
+    cy.visit(link);
   }
 });
