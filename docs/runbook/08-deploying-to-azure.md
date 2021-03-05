@@ -8,6 +8,8 @@ All deployment is handled by terraform in the build-and-deploy pipeline found in
 
 ## Setting Secrets on Github
 
+To set up secrets on GitHub refer to [Github Documentation - Creating Secrets for a Repository](https://docs.github.com/en/actions/reference/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
+
 The following are required to be set as GitHub secrets in the GitHub repository:
 
 ```
@@ -31,6 +33,12 @@ The above is your Azure credentials value in json format:
     (...)
   }
 ```
+
+```
+ACR_PASSWORD
+```
+
+The above is your Azure Container Registry password.
 
 
 
