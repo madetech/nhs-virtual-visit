@@ -1,5 +1,5 @@
 # Development
-<!-- Architecture Diagram needs to be updated -->
+
 ## Architecture Diagrams
 
 ![virtual visits manually managed cloud architecture diagram](./vv-cloud-architecture.png "Virtual Visits Azure Cloud Architecture Diagram")
@@ -122,7 +122,13 @@ Contract tests can be run with
 npm run test:contract
 ```
 
-Note: A test database is required to run contract tests. You can quickly set one up using `bin/setup_test_db_docker.sh`.
+Note: A test database is required to run contract tests.
+
+Run `./bin/setup_test_mssql_docker.sh` to set up and run the test database.
+
+Notes:
+The script will create the database and populate with an admin user and organisation data.
+Check docker memory allocation, port 1433 isn't used, wait time can be increased to check if the problem is mssql having no time to startup.
 
 ## Running end to end (E2E) tests
 
