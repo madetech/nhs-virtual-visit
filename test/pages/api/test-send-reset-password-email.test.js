@@ -1,9 +1,7 @@
 import testSendResetPasswordEmail from "../../../pages/api/test-endpoints/test-send-reset-password-email";
 import createTimeSensitiveLink from "../../../src/helpers/createTimeSensitiveLink";
-import TemplateStore from "../../../src/gateways/GovNotify/TemplateStore";
 
 jest.mock("../../../src/helpers/createTimeSensitiveLink");
-jest.mock("../../../src/gateways/GovNotify/TemplateStore");
 
 describe("sendTestEmail", () => {
   let validRequest, response, container;
@@ -11,9 +9,6 @@ describe("sendTestEmail", () => {
   beforeEach(() => {
     validRequest = {
       method: "POST",
-      body: {
-        email: "nhs-admin@nhs.co.uk",
-      },
       headers: {
         cookie: "",
       },
@@ -41,19 +36,10 @@ describe("sendTestEmail", () => {
           error: null,
         };
       }),
-      getSendEmail: jest.fn().mockReturnValue(() => {
-        return { success: true, error: null };
-      }),
     };
     createTimeSensitiveLink.mockReturnValue({
       link: "validLink",
       linkError: null,
-    });
-    TemplateStore.mockReturnValue({
-      resetPasswordEmail: {
-        templateId: "templateId",
-        personalisationKeys: "validLink",
-      },
     });
   });
 
@@ -67,34 +53,12 @@ describe("sendTestEmail", () => {
     expect(response.status).toHaveBeenCalledWith(405);
   });
 
-  it("returns a 400 if the email is not present", async () => {
-    const invalidRequest = {
-      method: "POST",
-      body: {
-        email: "",
-      },
-      headers: {
-        cookie: "",
-      },
-    };
-
-    await testSendResetPasswordEmail(invalidRequest, response, {
-      container: {
-        ...container,
-      },
-    });
-
-    expect(response.status).toHaveBeenCalledWith(400);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ error: "email must be present" })
-    );
-  });
-
   it("returns a 400 if there is an error returned from retrieveManagerByEmail", async () => {
     const getRetrieveManagerByEmailSpy = jest.fn().mockReturnValue({
       manager: {
-        email: "nhs-admin@nhs.co.uk",
+        email: "nhs-admin13@nhs.co.uk",
         uuid: "uuid",
+        id: 1,
       },
       error: "Email could not be found in database",
     });
@@ -153,6 +117,24 @@ describe("sendTestEmail", () => {
     );
   });
 
+  it("returns a 201 if the sendEmail is successful", async () => {
+    // const getSendEmailSpy = jest
+    //   .fn()
+    //   .mockReturnValue({ success: true, error: null });
+
+    await testSendResetPasswordEmail(validRequest, response, {
+      container: {
+        ...container,
+        // getSendEmail: () => getSendEmailSpy,
+      },
+    });
+
+    expect(response.status).toHaveBeenCalledWith(201);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ link: "validLink" })
+    );
+  });
+
   it("returns a 401 if there is a linkError", async () => {
     createTimeSensitiveLink.mockReturnValue({
       link: "",
@@ -170,48 +152,6 @@ describe("sendTestEmail", () => {
       JSON.stringify({
         error: "There was an error creating link to reset password",
       })
-    );
-  });
-
-  it("returns a 201 if the sendEmail is successful", async () => {
-    const getSendEmailSpy = jest
-      .fn()
-      .mockReturnValue({ success: true, error: null });
-
-    await testSendResetPasswordEmail(validRequest, response, {
-      container: {
-        ...container,
-        getSendEmail: () => getSendEmailSpy,
-      },
-    });
-
-    expect(response.status).toHaveBeenCalledWith(201);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ success: true, link: "validLink" })
-    );
-    expect(getSendEmailSpy).toHaveBeenCalledWith(
-      "templateId",
-      "nhs-admin@nhs.co.uk",
-      { link: "validLink" },
-      null
-    );
-  });
-
-  it("returns a 401 if the sendEmail is unsuccessful", async () => {
-    const getSendEmailStub = jest
-      .fn()
-      .mockReturnValue({ success: false, error: "Error message" });
-
-    await testSendResetPasswordEmail(validRequest, response, {
-      container: {
-        ...container,
-        getSendEmail: () => getSendEmailStub,
-      },
-    });
-
-    expect(response.status).toHaveBeenCalledWith(401);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ error: "GovNotify error occured" })
     );
   });
 });
