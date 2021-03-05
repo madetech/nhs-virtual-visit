@@ -1,3 +1,8 @@
+import { 
+  ThenISeeAnError,
+  ThenISeeTheManageYourTrustLoginPage, 
+} from "../commonSteps";
+
 describe("As a trust manager or admin, I want to reset my password if I forget it", () => {
   before(() => {
     // reset and seed the database
@@ -8,7 +13,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
 
   it("given a invalid reset password link, shows an error", () => {
     GivenIVisitAnInvalidResetPasswordLink();
-    ThenISeeErrors();
+    ThenISeeAnError();
     cy.audit();
   });
 
@@ -21,11 +26,18 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     ThenISeeTheResetPasswordSuccessPage(
       Cypress.env("trustManagerEmailToResetPassword")
     );
+
+    WhenIClickOnTheLoginLink();
+    ThenISeeTheManageYourTrustLoginPage();
+
+    WhenIEnterTheTrustManagerEmailAndNewPassword();
+    AndISubmitTheLoginForm();
+  ThenISeeTheTrustManagerHomePage();
   });
 
   it("given a valid reset password link, a user can only use the link once", () => {
     GivenIVisitAValidResetPasswordLinkTwice();
-    ThenISeeErrors();
+    ThenISeeAnError();
     cy.audit();
   });
 
@@ -53,6 +65,10 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     cy.get("button").contains("Reset Password").click();
   }
 
+  function AndISubmitTheLoginForm() {
+    cy.get("button").contains("Log in").click();
+  }
+
   function ThenISeeTheResetPasswordSuccessPage() {
     cy.get('[data-cy="panel-success-header"]').should(
       "contain",
@@ -60,12 +76,8 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     );
   }
 
-  function ThenISeeErrors() {
-    cy.get('[data-cy="error-summary"]').should("contain", "There is a problem");
-  }
-
   function GivenIVisitAValidResetPasswordLink() {
-    cy.request("POST", "/api/test-endpoints/test-send-reset-password-email", { email: Cypress.env("trustManagerEmailToResetPassword") })
+    cy.request("POST", "/api/test-endpoints/test-send-reset-password-email")
       .then((res) => {
         const link = res.body.link;
         cy.log(res.status)
@@ -73,8 +85,23 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
       });
   }
 
+  function WhenIClickOnTheLoginLink() {
+    cy.get("a.nhsuk-action-link__link").contains("Return to Login page").click();
+  }
+  
+
+  function WhenIEnterTheTrustManagerEmailAndNewPassword() {
+    cy.get("input[name=email]").type(Cypress.env("trustManagerEmailToResetPassword"));
+    cy.get("input[name=password]").type("newPassword");
+  }
+
+  function ThenISeeTheTrustManagerHomePage() {
+    cy.get('[data-cy=trust-name]').should("contain", "Airedale NHS Foundation Trust");
+    cy.get('[data-cy=layout-title]').should("contain", "Dashboard");
+  }
+
   function GivenIVisitAValidResetPasswordLinkTwice() {
-    cy.request("POST", "/api/test-endpoints/test-send-reset-password-email", { email: Cypress.env("trustManagerEmailToResetPassword") })
+    cy.request("POST", "/api/test-endpoints/test-send-reset-password-email")
       .then((res) => {
         const link = res.body.link;
         cy.visit(link);
