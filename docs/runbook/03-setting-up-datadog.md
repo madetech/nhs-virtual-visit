@@ -33,3 +33,5 @@ datadog_api_key
 ``` 
 1. Enter ***Value*** as your API key that you have created in 'Creating a DataDog Organisation and API Key' section.
 1. Click ***Save variable*** button
+
+Note: The `datadog_api_key` is referred to in the section [Setting Up Terraform ](./07-setting-up-terraform.md)
