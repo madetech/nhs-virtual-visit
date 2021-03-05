@@ -55,7 +55,7 @@ import retrieveActiveDepartmentsByOrganisationId from "../usecases/retrieveActiv
 import retrieveDepartmentByCode from "../usecases/retrieveDepartmentByCode";
 import createVisit from "../usecases/createVisit";
 import updateUserVerificationToVerified from "../usecases/updateUserVerificationToVerified";
-
+import retrieveTotalBookedVisitsByOrgId from "../usecases/retrieveTotalBookedVisitsByOrgId"
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
@@ -106,6 +106,7 @@ import addToUserVerificationTableGateway from "../gateways/MsSQL/addToUserVerifi
 import updateVisitStatusByDepartmentId from "../gateways/MsSQL/updateVisitStatusByDepartmentId";
 import updateVisitStatusByCallId from "../gateways/MsSQL/updateVisitStatusByCallId";
 import updateUserVerificationToVerifiedGateway from "../gateways/MsSQL/updateUserVerificationToVerified";
+import retrieveTotalBookedVisitsByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsByOrgId";
 
 import logger from "../../logger"
 
@@ -418,11 +419,19 @@ class AppContainer {
     return retrieveActiveManagersByOrgIdGateway(this);
   };
 
+  getRetrieveTotalBookedVisitsByOrgIdGateway = () => {
+    return retrieveTotalBookedVisitsByOrgIdGW(this);
+  };
+
   getLogEventGateway = () => {
     return logEvent(
       process.env.AZURE_FUNCTION_KEY,
       process.env.AZURE_FUNCTION_URL
     );
+  };
+
+   getRetrieveTotalBookedVisitsByOrgId = () => {
+    return retrieveTotalBookedVisitsByOrgId(this);
   };
 
   /* These uses the MsSQL DB */
@@ -591,10 +600,9 @@ class AppContainer {
     hospitals: [],
   });
 
-  getRetrieveDepartmentVisitTotals = () => () => ({
-    error: null,
-    total: 1,
-  });
+  getRetrieveTotalBookedVisitsByOrgId = () => {
+    return retrieveTotalBookedVisitsByOrgId(this);
+  };
 
   getRetrieveDepartmentVisitTotalsStartDateByOrganisationId = () => () => ({
     error: null,
