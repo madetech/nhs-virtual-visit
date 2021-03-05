@@ -117,17 +117,9 @@ describe("sendTestEmail", () => {
     );
   });
 
-  it("returns a 201 if the sendEmail is successful", async () => {
-    // const getSendEmailSpy = jest
-    //   .fn()
-    //   .mockReturnValue({ success: true, error: null });
+  it("returns a 201 if the link is created successfully", async () => {
 
-    await testSendResetPasswordEmail(validRequest, response, {
-      container: {
-        ...container,
-        // getSendEmail: () => getSendEmailSpy,
-      },
-    });
+    await testSendResetPasswordEmail(validRequest, response, { container });
 
     expect(response.status).toHaveBeenCalledWith(201);
     expect(response.end).toHaveBeenCalledWith(

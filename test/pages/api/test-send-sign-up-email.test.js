@@ -1,10 +1,8 @@
 import testSendSignUpEmail from "../../../pages/api/test-endpoints/test-send-sign-up-email";
 import createTimeSensitiveLink from "../../../src/helpers/createTimeSensitiveLink";
-import TemplateStore from "../../../src/gateways/GovNotify/TemplateStore";
 import bcrypt from "bcryptjs";
 
 jest.mock("../../../src/helpers/createTimeSensitiveLink");
-jest.mock("../../../src/gateways/GovNotify/TemplateStore");
 jest.mock("bcryptjs");
 
 describe("test-send-sign-up-email", () => {
@@ -14,13 +12,7 @@ describe("test-send-sign-up-email", () => {
     validRequest = {
       method: "POST",
       body: {
-        email: "nhs-manager@nhs.uk",
-        password: "password",
-        organisation: {
-          id: 1,
-          name: "Test trust",
-          status: 0,
-        },
+        type: "activation"
       },
       headers: {
         cookie: "",
@@ -48,9 +40,6 @@ describe("test-send-sign-up-email", () => {
           error: null,
         };
       }),
-      getSendEmail: jest.fn().mockReturnValue(() => {
-        return { success: true, error: null };
-      }),
       getAddToUserVerificationTable: jest.fn().mockReturnValue(() => {
         return {
           verifyUser: {
@@ -65,15 +54,6 @@ describe("test-send-sign-up-email", () => {
       link: "validLink",
       linkError: null,
     });
-    TemplateStore.mockReturnValue({
-      signUpEmail: {
-        templateId: "templateId",
-        personalisationKeys: "validLink",
-      },
-      signUpRequestEmail: {
-        templateId: "requestTemplateId",
-      },
-    });
     bcrypt.hashSync.mockReturnValue("hashedPassword");
   });
 
@@ -83,77 +63,6 @@ describe("test-send-sign-up-email", () => {
     await testSendSignUpEmail(validRequest, response, { container: container });
 
     expect(response.status).toHaveBeenCalledWith(405);
-  });
-
-  it("returns a 400 if the email is not present", async () => {
-    const invalidRequest = {
-      method: "POST",
-      body: {
-        email: "",
-        password: "password",
-        organisation: {
-          id: 1,
-          name: "Test trust",
-          status: 0,
-        },
-      },
-      headers: {
-        cookie: "",
-      },
-    };
-
-    await testSendSignUpEmail(invalidRequest, response, { container });
-
-    expect(response.status).toHaveBeenCalledWith(400);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ error: "email must be present" })
-    );
-  });
-
-  it("returns a 400 if the password is not present", async () => {
-    const invalidRequest = {
-      method: "POST",
-      body: {
-        email: "nhs-manager@nhs.uk",
-        password: "",
-        organisation: {
-          id: 1,
-          name: "Test trust",
-          status: 0,
-        },
-      },
-      headers: {
-        cookie: "",
-      },
-    };
-
-    await testSendSignUpEmail(invalidRequest, response, { container });
-
-    expect(response.status).toHaveBeenCalledWith(400);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ error: "password must be present" })
-    );
-  });
-
-  it("returns a 400 if the organisation is not present", async () => {
-    const invalidRequest = {
-      method: "POST",
-      body: {
-        email: "nhs-manager@nhs.uk",
-        password: "password",
-        organisation: null,
-      },
-      headers: {
-        cookie: "",
-      },
-    };
-
-    await testSendSignUpEmail(invalidRequest, response, { container });
-
-    expect(response.status).toHaveBeenCalledWith(400);
-    expect(response.end).toHaveBeenCalledWith(
-      JSON.stringify({ error: "organisation must be present" })
-    );
   });
 
   it("returns a 400 if there is an error returned from createManager database call", async () => {
@@ -214,43 +123,13 @@ describe("test-send-sign-up-email", () => {
       );
     });
 
-    it("returns a 201 if the sendEmail is successful", async () => {
-      const sendEmailSpy = jest.fn().mockReturnValue({ error: null });
+    it("returns a 201 if the link is created successfully", async () => {
 
-      await testSendSignUpEmail(validRequest, response, {
-        container: {
-          ...container,
-          getSendEmail: () => sendEmailSpy,
-        },
-      });
+      await testSendSignUpEmail(validRequest, response, {container });
 
       expect(response.status).toHaveBeenCalledWith(201);
       expect(response.end).toHaveBeenCalledWith(
-        JSON.stringify({ email: "nhs-manager@nhs.uk", link: "validLink" })
-      );
-      expect(sendEmailSpy).toHaveBeenCalledWith(
-        "templateId",
-        "nhs-manager@nhs.uk",
-        { link: "validLink" },
-        null
-      );
-    });
-
-    it("returns a 401 if the sendEmail is unsuccessful", async () => {
-      const sendEmailStub = jest
-        .fn()
-        .mockReturnValue({ error: "Error message" });
-
-      await testSendSignUpEmail(validRequest, response, {
-        container: {
-          ...container,
-          getSendEmail: () => sendEmailStub,
-        },
-      });
-
-      expect(response.status).toHaveBeenCalledWith(401);
-      expect(response.end).toHaveBeenCalledWith(
-        JSON.stringify({ error: "GovNotify error occurred" })
+        JSON.stringify({ link: "validLink" })
       );
     });
   });
@@ -260,15 +139,9 @@ describe("test-send-sign-up-email", () => {
       validRequest = {
         ...validRequest,
         body: {
-          email: "nhs-manager@nhs.uk",
-          password: "password",
-          organisation: {
-            id: 1,
-            name: "Test trust",
-            status: 1,
+          type: "authorisation"
           },
         },
-      };
       container = {
         ...container,
         getRetrieveManagersByOrgId: jest.fn().mockReturnValue(() => {
@@ -290,6 +163,7 @@ describe("test-send-sign-up-email", () => {
         }),
       };
     });
+
     it("returns a 400 if there is an error returned from retrieveManagerByOrgId database call", async () => {
       const retrieveManagersByOrgIdSpy = jest.fn().mockReturnValue({
         managers: null,
@@ -309,8 +183,7 @@ describe("test-send-sign-up-email", () => {
       );
     });
 
-    it("returns a 201 if the sendEmail is successful for manager authorisation", async () => {
-      const sendEmailSpy = jest.fn().mockReturnValue({ error: null });
+    it("returns a 201 if the link is created successfully for manager authorisation", async () => {
       const addToUserVerificationTableSpy = jest.fn().mockReturnValue({
         verifyUser: { hash: "hashedUuid" },
         error: null,
@@ -318,23 +191,15 @@ describe("test-send-sign-up-email", () => {
       await testSendSignUpEmail(validRequest, response, {
         container: {
           ...container,
-          getSendEmail: () => sendEmailSpy,
           getAddToUserVerificationTable: () => addToUserVerificationTableSpy,
         },
       });
 
-      const personalisationKeys = {
-        link: "validLink",
-        email: "nhs-manager@nhs.uk",
-        organisation_name: "Test trust",
-      };
-      const managerEmail = "nhs-manager1@nhs.co.uk";
-      const requestTemplateId = "requestTemplateId";
       const managerId = 1;
 
       expect(response.status).toHaveBeenCalledWith(201);
       expect(response.end).toHaveBeenCalledWith(
-        JSON.stringify({ email: managerEmail, link: "validLink" })
+        JSON.stringify({ link: "validLink" })
       );
 
       expect(addToUserVerificationTableSpy).toHaveBeenCalledWith({
@@ -349,12 +214,6 @@ describe("test-send-sign-up-email", () => {
         expirationTime: "48h",
         urlPath: "authorise-user",
       });
-      expect(sendEmailSpy).toHaveBeenCalledWith(
-        requestTemplateId,
-        managerEmail,
-        personalisationKeys,
-        null
-      );
     });
 
     it("returns a 500 if use case call throws an error", async () => {
