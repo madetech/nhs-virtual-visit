@@ -115,12 +115,12 @@ export const getServerSideProps = propsWithContainer(
       departments,
       error: departmentsError,
     } = await container.getRetrieveActiveDepartmentsByFacilityId()(facility.id);
-    const visitTotals = await container.getRetrieveFacilityVisitTotals()(orgId);
 
-    const totalBookedVisits =
-      visitTotals.hospitals.find(({ id }) => id === facility.id)?.totalVisits ||
-      0;
-
+    const { 
+      total: totalBookedVisits,
+      error: totalBookedVisitsError
+     } = await container.getRetrieveTotalBookedVisitsByFacilityId()(facility.id);
+    
     const {
       wards: wardVisitTotals,
       mostVisited: mostVisitedWard,
@@ -132,7 +132,7 @@ export const getServerSideProps = propsWithContainer(
         organisation,
         hospital: facility,
         wards: departments,
-        error: facilityError || departmentsError || organisationError,
+        error: facilityError || departmentsError || organisationError || totalBookedVisitsError,
         totalBookedVisits,
         mostVisitedWard,
         leastVisitedWard,

@@ -56,6 +56,7 @@ import retrieveDepartmentByCode from "../usecases/retrieveDepartmentByCode";
 import createVisit from "../usecases/createVisit";
 import updateUserVerificationToVerified from "../usecases/updateUserVerificationToVerified";
 import retrieveTotalBookedVisitsByOrgId from "../usecases/retrieveTotalBookedVisitsByOrgId"
+import retrieveTotalBookedVisitsByFacilityId from "../usecases/retrieveTotalBookedVisitsByFacilityId"
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
@@ -107,6 +108,7 @@ import updateVisitStatusByDepartmentId from "../gateways/MsSQL/updateVisitStatus
 import updateVisitStatusByCallId from "../gateways/MsSQL/updateVisitStatusByCallId";
 import updateUserVerificationToVerifiedGateway from "../gateways/MsSQL/updateUserVerificationToVerified";
 import retrieveTotalBookedVisitsByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsByOrgId";
+import retrieveTotalBookedVisitsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsByFacilityId"
 
 import logger from "../../logger"
 
@@ -423,6 +425,10 @@ class AppContainer {
     return retrieveTotalBookedVisitsByOrgIdGW(this);
   };
 
+  getRetrieveTotalBookedVisitsByFacilityIdGateway = () => {
+    return retrieveTotalBookedVisitsByFacilityIdGW(this);
+  }
+
   getLogEventGateway = () => {
     return logEvent(
       process.env.AZURE_FUNCTION_KEY,
@@ -480,21 +486,9 @@ class AppContainer {
     return verifyUserLoginGateway(this);
   };
 
-  // getRetrieveEmailAndHashedPassword = () => {
-  //   return retrieveEmailAndHashedPassword(this);
-  // };
-
-  // getRetrieveEmailAndHashedPasswordGateway = () => {
-  //   return retrieveEmailAndHashedPasswordGateway(this);
-  // };
-
   getResetPasswordGateway = () => {
     return resetPasswordGateway(this);
   };
-
-  // getVerifyResetPasswordLink = () => {
-  //   return verifyResetPasswordLink(this);
-  // };
 
   getArchiveManagerByUuidGateway = () => {
     return archiveManagerByUuidGateway(this);
@@ -523,6 +517,7 @@ class AppContainer {
   getActivateManagerAndOrganisationGateway = () => {
     return activateManagerAndOrganisationGateway(this);
   };
+
   getActivateManagerAndOrganisation = () => {
     return activateManagerAndOrganisation(this);
   };
@@ -603,6 +598,10 @@ class AppContainer {
   getRetrieveTotalBookedVisitsByOrgId = () => {
     return retrieveTotalBookedVisitsByOrgId(this);
   };
+
+  getRetrieveTotalBookedVisitsByFacilityId = () => {
+    return retrieveTotalBookedVisitsByFacilityId(this);
+  }
 
   getRetrieveDepartmentVisitTotalsStartDateByOrganisationId = () => () => ({
     error: null,
