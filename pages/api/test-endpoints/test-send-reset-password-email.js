@@ -4,6 +4,12 @@ import { validateHttpMethod } from "../../../src/helpers/apiErrorHandler";
 
 export default withContainer(
   async ({ headers, method }, res, { container }) => {
+    if (process.env.APP_ENV === "production") {
+      res.status(400);
+      res.send(JSON.stringify({ error: "Can't access this endpoint from a production environment" }));
+      return;
+    }
+
     validateHttpMethod("POST", method, res);
 
     res.setHeader("Content-Type", "application/json");
