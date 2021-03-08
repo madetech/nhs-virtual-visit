@@ -139,6 +139,11 @@ export const getServerSideProps = propsWithContainer(
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
     const adminToken = adminIsAuthenticated(headers.cookie);
 
+<<<<<<< HEAD
+=======
+    const correlationId = uuidv4();
+
+>>>>>>> remove suffix to correlation-id in manager/admin login
     if (trustAdminToken) {
       res.writeHead(307, { Location: `/trust-admin` }).end();
     } else if (userToken && userToken.ward) {
