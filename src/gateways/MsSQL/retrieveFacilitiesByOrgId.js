@@ -9,7 +9,7 @@ export default ({ getMsSqlConnPool }) => async ({
     .request()
     .input("orgId", mssql.Int, orgId)
     .query(
-      "SELECT name, id, code, status, uuid FROM dbo.[facility] WHERE organisation_id=@orgId"
+      "SELECT name, id, code, status, uuid FROM dbo.[facility] WHERE organisation_id=@orgId ORDER BY name"
     );
   let facilities = res.recordset;
   if (options.withWards) {
@@ -19,7 +19,7 @@ export default ({ getMsSqlConnPool }) => async ({
           .request()
           .input("facility_id", mssql.Int, facility.id)
           .query(
-            "SELECT * FROM dbo.[department] WHERE facility_id = @facility_id"
+            "SELECT * FROM dbo.[department] WHERE facility_id = @facility_id ORDER BY name"
           );
         return {
           id: facility.id,

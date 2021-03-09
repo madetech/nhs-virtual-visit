@@ -15,8 +15,8 @@ const TrustAdmin = ({
   error,
   wards,
   hospitals,
-  leastVisited,
-  mostVisited,
+  leastVisitedList,
+  mostVisitedList,
   organisation,
   averageParticipantsInVisit,
   wardVisitTotalsStartDate,
@@ -100,9 +100,9 @@ const TrustAdmin = ({
             <GridColumn className="nhsuk-u-one-half" width="one-half">
               <div className="nhsuk-panel nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-0">
                 <h3>Most booked visits</h3>
-                {mostVisited.length > 0 ? (
+                {mostVisitedList.length > 0 ? (
                   <ol>
-                    {mostVisited.map((hospital) => (
+                    {mostVisitedList.map((hospital) => (
                       <li key={hospital.id}>
                         <AnchorLink
                           href="/trust-admin/hospitals/[id]"
@@ -114,7 +114,7 @@ const TrustAdmin = ({
                             {hospital.name}
                           </span>
                         </AnchorLink>{" "}
-                        ({hospital.totalVisits})
+                        ({hospital.total})
                       </li>
                     ))}
                   </ol>
@@ -126,9 +126,9 @@ const TrustAdmin = ({
             <GridColumn className="nhsuk-u-one-half" width="one-half">
               <div className="nhsuk-panel nhsuk-u-margin-top-0 nhsuk-u-margin-bottom-0">
                 <h3>Least booked visits</h3>
-                {leastVisited.length > 0 ? (
+                {leastVisitedList.length > 0 ? (
                   <ol>
-                    {leastVisited.map((hospital) => (
+                    {leastVisitedList.map((hospital) => (
                       <li key={hospital.id}>
                         <AnchorLink
                           href={`/trust-admin/hospitals/${hospital.id}`}
@@ -139,7 +139,7 @@ const TrustAdmin = ({
                             {hospital.name}
                           </span>
                         </AnchorLink>{" "}
-                        ({hospital.totalVisits})
+                        ({hospital.total})
                       </li>
                     ))}
                   </ol>
@@ -186,7 +186,11 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId
     );
 
-    const retrieveHospitalVisitTotals = await container.getRetrieveFacilityVisitTotals()(
+    const {
+      mostVisitedList,
+      leastVisitedList,
+      error: mostAndLeastVisitedListError
+     } = await container.getRetrieveFacilitiesBookedVisitTotalsByOrgId()(
       authenticationToken.trustId
     );
 
@@ -240,14 +244,15 @@ export const getServerSideProps = propsWithContainer(
       reportingStartDateError ||
       averageVisitTimeSecondsError ||
       averageVisitsPerDayError ||
+      mostAndLeastVisitedListError ||
       organisationError;
 
     return {
       props: {
         wards: departments,
         hospitals: facilities,
-        leastVisited: retrieveHospitalVisitTotals.leastVisited,
-        mostVisited: retrieveHospitalVisitTotals.mostVisited,
+        leastVisitedList,
+        mostVisitedList,
         organisation,
         wardVisitTotalsStartDate,
         reportingStartDate,

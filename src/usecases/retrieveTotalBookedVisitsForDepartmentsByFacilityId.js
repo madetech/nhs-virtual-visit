@@ -1,29 +1,33 @@
 import logger from "../../logger";
-import setMostAndLeastVisitedDepartments from "../helpers/setMostAndLeastVisitedDepartments";
+import { getMostAndLeastVisited } from "../helpers/getMostAndLeastVisited";
 
 export default ({
   getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway,
 }) => async (facilityId) => {
   if (facilityId === undefined) {
-    return { total: null, error: "facility id must be provided." };
+    return { 
+      departments: null,
+      mostVisited: null,
+      leastVisited: null, 
+      error: "facility id must be provided." };
   }
   
   try {
     logger.info(`Retrieving total booked visits for facility id ${facilityId}`);
     const departments = await getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway()(facilityId);
-    const { mostVisitedDepartment, leastVisitedDepartment } = setMostAndLeastVisitedDepartments(departments);
+    const { mostVisited, leastVisited } = getMostAndLeastVisited(departments);
     return { 
       departments,
-      mostVisitedDepartment,
-      leastVisitedDepartment,
+      mostVisited,
+      leastVisited,
       error:null 
     };
   } catch (error) {
     logger.error(`Error retrieving total booked visits for wards ${error}`);
     return { 
       departments: null, 
-      mostVisitedDepartment: null,
-      leastVisitedDepartment: null,
+      mostVisited: null,
+      leastVisited: null,
       error: error.toString() };
   }
 };

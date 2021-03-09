@@ -53,16 +53,17 @@ export const getServerSideProps = propsWithContainer(
     });
 
     const {
-      hospitals: hospitalVisitTotals,
+      facilities: hospitalVisitTotals,
       error: hospitalsVisitTotalError,
-    } = await container.getRetrieveFacilityVisitTotals()(orgId);
+    } = await container.getRetrieveFacilitiesBookedVisitTotalsByOrgId()(orgId);
 
     const facilitiesWithVisitTotals = facilities?.map((facility) => {
       facility.bookedVisits =
-        hospitalVisitTotals.find(({ id }) => id === facility.id)?.totalVisits ||
+        hospitalVisitTotals.find(({ id }) => id === facility.id)?.total ||
         0;
       return facility;
     });
+
     return {
       props: {
         hospitals: facilitiesWithVisitTotals || null,
