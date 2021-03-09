@@ -55,8 +55,10 @@ import retrieveActiveDepartmentsByOrganisationId from "../usecases/retrieveActiv
 import retrieveDepartmentByCode from "../usecases/retrieveDepartmentByCode";
 import createVisit from "../usecases/createVisit";
 import updateUserVerificationToVerified from "../usecases/updateUserVerificationToVerified";
-import retrieveTotalBookedVisitsByOrgId from "../usecases/retrieveTotalBookedVisitsByOrgId"
-import retrieveTotalBookedVisitsByFacilityId from "../usecases/retrieveTotalBookedVisitsByFacilityId"
+import retrieveTotalBookedVisitsByOrgId from "../usecases/retrieveTotalBookedVisitsByOrgId";
+import retrieveTotalBookedVisitsByFacilityId from "../usecases/retrieveTotalBookedVisitsByFacilityId";
+import retrieveTotalBookedVisitsForDepartmentsByFacilityId from "../usecases/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
+
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
 import verifyUserLoginGateway from "../gateways/MsSQL/verifyUserLogin";
@@ -109,13 +111,11 @@ import updateVisitStatusByCallId from "../gateways/MsSQL/updateVisitStatusByCall
 import updateUserVerificationToVerifiedGateway from "../gateways/MsSQL/updateUserVerificationToVerified";
 import retrieveTotalBookedVisitsByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsByOrgId";
 import retrieveTotalBookedVisitsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsByFacilityId"
+import retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 
 import logger from "../../logger"
 
 class AppContainer {
-  getDb = () => {
-    //return Database.getInstance();
-  };
 
   getMsSqlConnPool = () => {
     return MsSQL.getConnectionPool();
@@ -623,17 +623,13 @@ class AppContainer {
     averageVisitsPerDay: 1,
   });
 
-  getRetrieveFacilityDepartmentVisitTotals = () => () => ({
-    wards: [],
-    mostVisited: {
-      wardName: "Nothing",
-      totalVisits: 0,
-    },
-    leastVisited: {
-      wardName: "Nothing",
-      totalVisits: 0,
-    },
-  });
+  getRetrieveTotalBookedVisitsForDepartmentsByFacilityId = () => {
+    return retrieveTotalBookedVisitsForDepartmentsByFacilityId(this);
+  }
+
+  getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway = () => {
+    return retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW(this);
+  }
 }
 
 export default (() => {

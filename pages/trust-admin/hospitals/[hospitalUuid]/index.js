@@ -20,7 +20,6 @@ const ShowHospital = ({
   totalBookedVisits,
   mostVisitedWard,
   leastVisitedWard,
-  wardVisitTotals,
 }) => {
   if (error) {
     return <Error err={error} />;
@@ -36,8 +35,7 @@ const ShowHospital = ({
         trustName={organisation.name}
         subHeading={hospital.name}
       />
-
-      <GridRow>
+       <GridRow>
         <GridColumn width="full">
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn
@@ -61,7 +59,9 @@ const ShowHospital = ({
             >
               <Panel
                 title="Most booked visits"
-                body={`${mostVisitedWard.wardName} (${mostVisitedWard.totalVisits})`}
+                body={mostVisitedWard ? 
+                  `${mostVisitedWard.name} (${mostVisitedWard.total})`
+                : `No visits have been booked.`}
               />
             </GridColumn>
             <GridColumn
@@ -70,14 +70,15 @@ const ShowHospital = ({
             >
               <Panel
                 title="Least booked visits"
-                body={`${leastVisitedWard.wardName} (${leastVisitedWard.totalVisits})`}
+                body={leastVisitedWard ? 
+                  `${leastVisitedWard.name} (${leastVisitedWard.total})`
+                : `No visits have been booked.`}
               />
             </GridColumn>
           </GridRow>
 
           <WardsTable
             wards={wards}
-            wardVisitTotals={wardVisitTotals}
             hospital={hospital}
           />
           <Button
@@ -92,7 +93,7 @@ const ShowHospital = ({
             Add a ward
           </Button>
         </GridColumn>
-      </GridRow>
+       </GridRow>
     </Layout>
   );
 };
@@ -111,32 +112,29 @@ export const getServerSideProps = propsWithContainer(
       error: facilityError,
     } = await container.getRetrieveFacilityByUuid()(facilityUuid);
 
-    const {
-      departments,
-      error: departmentsError,
-    } = await container.getRetrieveActiveDepartmentsByFacilityId()(facility.id);
-
     const { 
       total: totalBookedVisits,
       error: totalBookedVisitsError
      } = await container.getRetrieveTotalBookedVisitsByFacilityId()(facility.id);
     
     const {
-      wards: wardVisitTotals,
-      mostVisited: mostVisitedWard,
-      leastVisited: leastVisitedWard,
-    } = await container.getRetrieveFacilityDepartmentVisitTotals()(facility.id);
-
+      departments, 
+      mostVisitedDepartment,
+      leastVisitedDepartment,
+      error: departmentsError
+    } = await container.getRetrieveTotalBookedVisitsForDepartmentsByFacilityId()(facility.id);
+   
+    const error = facilityError || departmentsError || organisationError || totalBookedVisitsError;
+    
     return {
       props: {
         organisation,
         hospital: facility,
         wards: departments,
-        error: facilityError || departmentsError || organisationError || totalBookedVisitsError,
+        error,
         totalBookedVisits,
-        mostVisitedWard,
-        leastVisitedWard,
-        wardVisitTotals,
+        mostVisitedWard: mostVisitedDepartment,
+        leastVisitedWard: leastVisitedDepartment,
       },
     };
   })
