@@ -57,7 +57,7 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
       expectedOrgId
     );
     expect(container.getMsSqlConnPool().query).toHaveBeenCalledWith(
-      "SELECT name, id, code, status, uuid FROM dbo.[facility] WHERE organisation_id=@orgId"
+      "SELECT name, id, code, status, uuid FROM dbo.[facility] WHERE organisation_id=@orgId ORDER BY name"
     );
   });
   it("returns facilities and wards and when options withWards is true", async () => {
@@ -97,7 +97,7 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
     expect(container.getMsSqlConnPool().query).toHaveBeenCalledTimes(3);
     expect(container.getMsSqlConnPool().query).toHaveBeenNthCalledWith(
       1,
-      "SELECT name, id, code, status, uuid FROM dbo.[facility] WHERE organisation_id=@orgId"
+      "SELECT name, id, code, status, uuid FROM dbo.[facility] WHERE organisation_id=@orgId ORDER BY name"
     );
     for (let i = 2; i < 4; i++) {
       expect(container.getMsSqlConnPool().input).toHaveBeenNthCalledWith(
@@ -108,7 +108,7 @@ describe("retrieveGetFacilitiesByOrgIdGateway", () => {
       );
       expect(container.getMsSqlConnPool().query).toHaveBeenNthCalledWith(
         i,
-        "SELECT * FROM dbo.[department] WHERE facility_id = @facility_id"
+        "SELECT * FROM dbo.[department] WHERE facility_id = @facility_id ORDER BY name"
       );
     }
     expect(facilities).toEqual(expectedFacilitiesWithDepartments);
