@@ -59,6 +59,7 @@ import retrieveTotalBookedVisitsByOrgId from "../usecases/retrieveTotalBookedVis
 import retrieveTotalBookedVisitsByFacilityId from "../usecases/retrieveTotalBookedVisitsByFacilityId";
 import retrieveTotalBookedVisitsForDepartmentsByFacilityId from "../usecases/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 import retrieveTotalBookedVisitsForFacilitiesByOrgId from "../usecases/retrieveTotalBookedVisitsForFacilitiesByOrgId";
+import deleteRecipientInformationForPii from "../usecases/deleteRecipientInformationForPii";
 
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
@@ -116,6 +117,7 @@ import retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW from "../gateways/M
 import retrieveTotalBookedVisitsForFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 
 import logger from "../../logger"
+import deleteRecipientInformationForPiiGateway from "../gateways/MsSQL/deleteRecipientInformationForPii";
 
 class AppContainer {
 
@@ -581,6 +583,14 @@ class AppContainer {
   getUpdateUserVerificationToVerifiedGateway = () => {
     return updateUserVerificationToVerifiedGateway(this);
   };
+
+  getDeleteRecipientInformationForPii = () => {
+    return deleteRecipientInformationForPii(this);
+  };
+  
+  getDeleteRecipientInformationForPiiGateway = () => {
+    return deleteRecipientInformationForPiiGateway(this);
+  }
   
   getRandomIdProvider = () => {
     return new RandomIdProvider();
