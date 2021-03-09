@@ -119,8 +119,8 @@ export const getServerSideProps = propsWithContainer(
     
     const {
       departments, 
-      mostVisitedDepartment,
-      leastVisitedDepartment,
+      mostVisited,
+      leastVisited,
       error: departmentsError
     } = await container.getRetrieveTotalBookedVisitsForDepartmentsByFacilityId()(facility.id);
    
@@ -133,8 +133,8 @@ export const getServerSideProps = propsWithContainer(
         wards: departments,
         error,
         totalBookedVisits,
-        mostVisitedWard: mostVisitedDepartment,
-        leastVisitedWard: leastVisitedDepartment,
+        mostVisitedWard: mostVisited,
+        leastVisitedWard: leastVisited,
       },
     };
   })
