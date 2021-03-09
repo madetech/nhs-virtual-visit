@@ -298,4 +298,11 @@ describe("AppContainer", () => {
     expect(container.getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway()).toBeDefined();
   })
 
+  it("returns getDeleteRecipientInformationForPii", () => {
+    expect(container.getDeleteRecipientInformationForPii()).toBeDefined();
+  });
+
+  it("returns getDeleteRecipientInformationForPiiGateway", () => {
+    expect(container.getDeleteRecipientInformationForPiiGateway()).toBeDefined();
+  });
 });
