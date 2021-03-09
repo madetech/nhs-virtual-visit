@@ -9,26 +9,26 @@ describe("trust-admin", () => {
     },
   };
 
-  const hospitals = {
-    hospitals: [
-      { id: 1, name: "Hospital 1", totalVisits: 0 },
-      { id: 2, name: "Hospital 2", totalVisits: 1 },
-      { id: 3, name: "Hospital 3", totalVisits: 10 },
-      { id: 4, name: "Hospital 4", totalVisits: 99 },
+  const facilities = {
+    facilities: [
+      { id: 1, name: "Hospital 1", total: 0 },
+      { id: 2, name: "Hospital 2", total: 1 },
+      { id: 3, name: "Hospital 3", total: 10 },
+      { id: 4, name: "Hospital 4", total: 99 },
     ],
-    mostVisited: [
-      { id: 4, name: "Hospital 4", totalVisits: 99 },
-      { id: 3, name: "Hospital 3", totalVisits: 10 },
-      { id: 2, name: "Hospital 2", totalVisits: 1 },
+    mostVisitedList: [
+      { id: 4, name: "Hospital 4", total: 99 },
+      { id: 3, name: "Hospital 3", total: 10 },
+      { id: 2, name: "Hospital 2", total: 1 },
     ],
-    leastVisited: [
-      { id: 1, name: "Hospital 1", totalVisits: 0 },
-      { id: 2, name: "Hospital 2", totalVisits: 1 },
-      { id: 3, name: "Hospital 3", totalVisits: 10 },
+    leastVisitedList: [
+      { id: 1, name: "Hospital 1", total: 0 },
+      { id: 2, name: "Hospital 2", total: 1 },
+      { id: 3, name: "Hospital 3", total: 10 },
     ],
   };
 
-  const wards = [
+  const departments = [
     { id: 1, name: "Defoe Ward", hospital_id: 1, code: "test_code" },
     { id: 2, name: "Willem Ward", hospital_id: 1, code: "test_code_2" },
   ];
@@ -42,7 +42,7 @@ describe("trust-admin", () => {
   };
 
   const getRetrieveWardsSpy = jest.fn(async () => ({
-    departments: wards,
+    departments: departments,
     error: null,
   }));
 
@@ -58,7 +58,7 @@ describe("trust-admin", () => {
 
   const retrieveWardVisitTotalsSpy = jest.fn().mockReturnValue({ total: 1234 });
 
-  const retrieveHospitalVisitTotals = jest.fn().mockReturnValue(hospitals);
+  const retrieveHospitalVisitTotals = jest.fn().mockReturnValue(facilities);
 
   const retrieveAverageParticipantsInVisit = jest
     .fn()
@@ -85,8 +85,8 @@ describe("trust-admin", () => {
     getRetrieveDepartments: () => getRetrieveWardsSpy,
     getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
     getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgId,
-    getRetrieveDepartmentVisitTotals: () => retrieveWardVisitTotalsSpy,
-    getRetrieveFacilityVisitTotals: () => retrieveHospitalVisitTotals,
+    getRetrieveTotalBookedVisitsByOrgId: () => retrieveWardVisitTotalsSpy,
+    getRetrieveFacilitiesBookedVisitTotalsByOrgId: () => retrieveHospitalVisitTotals,
     getRetrieveAverageParticipantsInVisit: () =>
       retrieveAverageParticipantsInVisit,
     getRetrieveAverageVisitTimeByOrganisationId: () =>
@@ -131,7 +131,7 @@ describe("trust-admin", () => {
       });
 
       expect(getRetrieveWardsSpy).toHaveBeenCalledWith(1);
-      expect(props.wards).toEqual(wards);
+      expect(props.wards).toEqual(departments);
       expect(props.error).toBeNull();
     });
 
@@ -157,7 +157,7 @@ describe("trust-admin", () => {
       });
 
       expect(retrieveWardVisitTotalsSpy).toHaveBeenCalledWith(trustId);
-      expect(props.visitsScheduled).toEqual("1,234");
+      expect(props.totalBookedVisits).toEqual(1234);
     });
 
     it("retrieves usage stats", async () => {
@@ -168,40 +168,40 @@ describe("trust-admin", () => {
       });
 
       expect(retrieveHospitalVisitTotals).toHaveBeenCalledWith(trustId);
-      expect(props.leastVisited.length).toBe(3);
-      expect(props.mostVisited.length).toBe(3);
-      expect(props.leastVisited).toEqual([
-        { id: 1, name: "Hospital 1", totalVisits: 0 },
-        { id: 2, name: "Hospital 2", totalVisits: 1 },
-        { id: 3, name: "Hospital 3", totalVisits: 10 },
+      expect(props.leastVisitedList.length).toBe(3);
+      expect(props.mostVisitedList.length).toBe(3);
+      expect(props.leastVisitedList).toEqual([
+        { id: 1, name: "Hospital 1", total: 0 },
+        { id: 2, name: "Hospital 2", total: 1 },
+        { id: 3, name: "Hospital 3", total: 10 },
       ]);
-      expect(props.mostVisited).toEqual([
-        { id: 4, name: "Hospital 4", totalVisits: 99 },
-        { id: 3, name: "Hospital 3", totalVisits: 10 },
-        { id: 2, name: "Hospital 2", totalVisits: 1 },
+      expect(props.mostVisitedList).toEqual([
+        { id: 4, name: "Hospital 4", total: 99 },
+        { id: 3, name: "Hospital 3", total: 10 },
+        { id: 2, name: "Hospital 2", total: 1 },
       ]);
     });
 
     it("retrieves usage stats when fewer than 3 hospitals", async () => {
       const threeHospitals = {
-        hospitals: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
-        leastVisited: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
-        mostVisited: [{ id: 1, name: "Hospital 1", totalVisits: 5 }],
+        facilities: [{ id: 1, name: "Hospital 1", total: 5 }],
+        leastVisitedList: [{ id: 1, name: "Hospital 1", total: 5 }],
+        mostVisitedList: [{ id: 1, name: "Hospital 1", total: 5 }],
       };
 
       const { props } = await getServerSideProps({
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveFacilityVisitTotals: () =>
+          getRetrieveFacilitiesBookedVisitTotalsByOrgId: () =>
             jest.fn().mockReturnValue(threeHospitals),
         }),
       });
 
-      expect(props.leastVisited.length).toBe(1);
-      expect(props.mostVisited.length).toBe(1);
-      expect(props.leastVisited).toEqual(threeHospitals.leastVisited);
-      expect(props.mostVisited).toEqual(threeHospitals.mostVisited);
+      expect(props.leastVisitedList.length).toBe(1);
+      expect(props.mostVisitedList.length).toBe(1);
+      expect(props.leastVisitedList).toEqual(threeHospitals.leastVisitedList);
+      expect(props.mostVisitedList).toEqual(threeHospitals.mostVisitedList);
     });
 
     it("sets an error in props if ward error", async () => {
@@ -214,7 +214,7 @@ describe("trust-admin", () => {
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveDepartments: () => getRetrieveWardsSpyError,
+          getRetrieveFacilitiesBookedVisitTotalsByOrgId: () => getRetrieveWardsSpyError,
         }),
       });
 
