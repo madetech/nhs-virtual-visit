@@ -265,4 +265,37 @@ describe("AppContainer", () => {
   it("returns getVerifyTimeSensitiveLinkGateway", () => {
     expect(container.getVerifyTimeSensitiveLinkGateway()).toBeDefined();
   });
+
+  it("returns getRetrieveFacilitiesBookedVisitTotalsByOrgId", ()=>{
+    expect(container.getRetrieveFacilitiesBookedVisitTotalsByOrgId()).toBeDefined();
+  })
+
+  it("returns getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway", ()=>{
+    expect(container.getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway()).toBeDefined();
+  })
+
+  it("returns getRetrieveTotalBookedVisitsByOrgId", ()=>{
+    expect(container.getRetrieveTotalBookedVisitsByOrgId()).toBeDefined();
+  })
+
+  it("returns getRetrieveTotalBookedVisitsByOrgIdGateway", ()=>{
+    expect(container.getRetrieveTotalBookedVisitsByOrgIdGateway()).toBeDefined();
+  })
+
+  it("returns getRetrieveTotalBookedVisitsByFacilityId", ()=>{
+    expect(container.getRetrieveTotalBookedVisitsByFacilityId()).toBeDefined();
+  })
+
+  it("returns getRetrieveTotalBookedVisitsByFacilityIdGateway", ()=>{
+    expect(container.getRetrieveTotalBookedVisitsByFacilityIdGateway()).toBeDefined();
+  })
+
+  it("returns getRetrieveTotalBookedVisitsForDepartmentsByFacilityId", ()=>{
+    expect(container.getRetrieveTotalBookedVisitsForDepartmentsByFacilityId()).toBeDefined();
+  })
+
+  it("returns getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway", ()=>{
+    expect(container.getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway()).toBeDefined();
+  })
+
 });
