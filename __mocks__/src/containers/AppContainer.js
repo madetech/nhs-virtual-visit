@@ -39,6 +39,7 @@ export default {
     Promise.resolve({})
   ),
   getResetPasswordGateway: jest.fn(() => () => Promise.resolve({})),
+  getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway: jest.fn(() => () => Promise.resolve({})),
   getAdminIsAuthenticated: jest.fn(() => () => true),
   getOrganisationAdminIsAuthenticated: jest.fn(() => () => true),
 
