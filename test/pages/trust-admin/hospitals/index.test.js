@@ -15,12 +15,12 @@ describe("trust-admin/hospitals", () => {
     { id: 2, name: "2", wards: [{ id: 2, name: "Ward 2" }] },
   ];
   const expectedHospitalVisitObj = {
-    hospitals: [
-      { id: 1, name: "Test Hospital", totalVisits: 5 },
-      { id: 2, name: "Test Hospital", totalVisits: 10 },
+    facilities: [
+      { id: 1, name: "Test Hospital", total: 5 },
+      { id: 2, name: "Test Hospital", total: 10 },
     ],
-    leastVisited: [{ id: 1, name: "Test Hospital", totalVisits: 5 }],
-    mostVisited: [{ id: 2, name: "Test Hospital", totalVisits: 10 }],
+    leastVisited: [{ id: 1, name: "Test Hospital", total: 5 }],
+    mostVisited: [{ id: 2, name: "Test Hospital", total: 10 }],
     error: null,
   };
   const retrieveOrganisationByIdSpy = jest.fn(async () => ({
@@ -41,7 +41,7 @@ describe("trust-admin/hospitals", () => {
     container = {
       getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
       getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgIdSpy,
-      getRetrieveFacilityVisitTotals: () => retrieveHospitalVisitTotalsStub,
+      getRetrieveFacilitiesBookedVisitTotalsByOrgId: () => retrieveHospitalVisitTotalsStub,
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
