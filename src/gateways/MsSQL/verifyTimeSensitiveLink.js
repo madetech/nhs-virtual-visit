@@ -1,6 +1,4 @@
-import logger from "../../../logger";
-
-const verifyTimeSensitiveLinkGateway = ({ getMsSqlConnPool }) => async ({
+const verifyTimeSensitiveLinkGateway = ({ getMsSqlConnPool, logger }) => async ({
   hash,
   uuid,
 }) => {

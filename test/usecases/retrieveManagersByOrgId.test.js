@@ -1,4 +1,6 @@
 import retrieveManagersByOrgId from "../../src/usecases/retrieveManagersByOrgId";
+import logger from "../../logger";
+
 
 describe("retrieveManagersByOrgId", () => {
   let container;
@@ -22,6 +24,7 @@ describe("retrieveManagersByOrgId", () => {
   beforeEach(() => {
     container = {
       getRetrieveManagersByOrgIdGateway: () => retrieveManagersByOrgIdSpy,
+      logger
     };
   });
 

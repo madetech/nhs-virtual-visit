@@ -1,5 +1,6 @@
 import archiveWard from "../../src/usecases/archiveWard";
 import { ARCHIVED } from "../../src/helpers/visitStatus";
+import logger from "../../logger";
 
 describe("archiveWard", () => {
   let container;
@@ -24,6 +25,7 @@ describe("archiveWard", () => {
           error: "Ward does not exist",
         };
       },
+      logger
     };
   });
 

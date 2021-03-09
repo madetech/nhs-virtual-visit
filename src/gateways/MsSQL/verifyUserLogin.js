@@ -1,8 +1,7 @@
 import bcrypt from "bcryptjs";
-import logger from "../../../logger";
 import { idToStatus, DISABLED } from "../../helpers/statusTypes";
 
-const verifyUserLoginGateway = ({ getMsSqlConnPool }) => async (
+const verifyUserLoginGateway = ({ getMsSqlConnPool, logger }) => async (
   email,
   password
 ) => {

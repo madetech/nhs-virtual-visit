@@ -1,4 +1,5 @@
 import updateWard from "../../src/usecases/updateWard";
+import logger from "../../logger";
 
 describe("updateWard", () => {
   let updateWardSpy = jest.fn().mockReturnValue({ wardId: 10, error: null });
@@ -8,6 +9,7 @@ describe("updateWard", () => {
   beforeEach(() => {
     container = {
       getUpdateWardGateway: () => updateWardSpy,
+      logger
     };
   });
 

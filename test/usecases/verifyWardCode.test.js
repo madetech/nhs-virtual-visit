@@ -1,4 +1,5 @@
 import verifyWardCode from "../../src/usecases/verifyWardCode";
+import logger from "../../logger";
 
 describe("verifyWardCode", () => {
   describe("Given a matching ward code", () => {
@@ -10,6 +11,7 @@ describe("verifyWardCode", () => {
       }));
       const container = {
         getFindWardByCodeGateway: () => findWardByCodeGateway,
+        logger
       };
 
       await verifyWardCode(container)("14p+");
@@ -24,6 +26,7 @@ describe("verifyWardCode", () => {
       }));
       const container = {
         getFindWardByCodeGateway: () => findWardByCodeGateway,
+        logger
       };
 
       let response = await verifyWardCode(container)("MEOW");
@@ -42,6 +45,7 @@ describe("verifyWardCode", () => {
         getFindWardByCodeGateway: async () => ({
           any: jest.fn(async () => []),
         }),
+        logger
       };
 
       let response = await verifyWardCode(container)("WOOF");
@@ -55,6 +59,7 @@ describe("verifyWardCode", () => {
         getFindWardByCodeGateway: () => async () => {
           throw new Error("DB Error!");
         },
+        logger
       };
 
       let response = await verifyWardCode(container)("MEOW");

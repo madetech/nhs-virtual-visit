@@ -1,4 +1,5 @@
 import captureEvent from "../../src/usecases/captureEvent";
+import logger from "../../logger";
 
 describe("captureEvent", () => {
   it("rejects a bad event", async () => {
@@ -9,6 +10,7 @@ describe("captureEvent", () => {
 
     const container = {
       getCaptureEventGateway: () => gwSpy,
+      logger
     };
 
     const joinRequest = {
@@ -34,6 +36,7 @@ describe("captureEvent", () => {
 
     const container = {
       getCaptureEventGateway: () => gwSpy,
+      logger
     };
 
     const joinRequest = {

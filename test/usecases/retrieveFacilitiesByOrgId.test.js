@@ -1,4 +1,5 @@
 import retrieveFacilitiesByOrgId from "../../src/usecases/retrieveFacilitiesByOrgId";
+import logger from "../../logger";
 
 describe("retrieveFacilitiesByOrgId", () => {
   // Arrange
@@ -41,6 +42,7 @@ describe("retrieveFacilitiesByOrgId", () => {
   beforeEach(() => {
     container = {
       getRetrieveFacilitiesByOrgIdGateway: () => retrieveFacilitiesByOrgIdSpy,
+      logger
     };
   });
   describe("without withWards option or withWards is false", () => {

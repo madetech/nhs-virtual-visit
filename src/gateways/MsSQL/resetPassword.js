@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
-import logger from "../../../logger";
 
-export default ({ getMsSqlConnPool }) => async ({ password, email }) => {
+export default ({ getMsSqlConnPool, logger }) => async ({ password, email }) => {
   try {
     var salt = bcrypt.genSaltSync(10);
     var hashedPassword = bcrypt.hashSync(password, salt);

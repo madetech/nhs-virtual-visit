@@ -1,7 +1,6 @@
-import logger from "../../../logger";
 import { statusToId, CANCELLED } from "../../helpers/visitStatus";
 
-const deleteScheduledCallByUuidGateway = ({ getMsSqlConnPool }) => async (
+const deleteScheduledCallByUuidGateway = ({ getMsSqlConnPool, logger }) => async (
   uuid
 ) => {
   logger.info(`Cancelling Visit ${uuid}`);

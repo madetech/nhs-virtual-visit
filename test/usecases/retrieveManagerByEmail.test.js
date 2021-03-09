@@ -1,4 +1,5 @@
 import retrieveManagerByEmail from "../../src/usecases/retrieveManagerByEmail";
+import logger from "../../logger";
 
 describe("retrieveManagerByEmail", () => {
   it("returns an error if there is no email", async () => {
@@ -7,6 +8,7 @@ describe("retrieveManagerByEmail", () => {
 
     const { manager, error } = await retrieveManagerByEmail({
       getRetrieveManagerByEmailGateway,
+      logger
     })(email);
 
     expect(manager).toBeNull();
@@ -38,6 +40,7 @@ describe("retrieveManagerByEmail", () => {
 
     const { manager, error } = await retrieveManagerByEmail({
       getRetrieveManagerByEmailGateway,
+      logger
     })(email);
 
     expect(manager).toEqual(expectedResponse);
@@ -58,6 +61,7 @@ describe("retrieveManagerByEmail", () => {
     const email = "nhs-manager@nhs.co.uk";
     const { manager, error } = await retrieveManagerByEmail({
       getRetrieveManagerByEmailGateway,
+      logger
     })(email);
 
     expect(manager).toBeNull();

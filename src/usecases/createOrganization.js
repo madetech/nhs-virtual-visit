@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-const createOrganization = ({ getCreateOrganizationGateway }) => async ({
+const createOrganization = ({ getCreateOrganizationGateway, logger }) => async ({
   name,
   status,
 }) => {

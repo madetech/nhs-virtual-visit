@@ -1,5 +1,6 @@
 import retrieveVisits from "../../src/usecases/retrieveVisits";
 import { SCHEDULED, COMPLETE } from "../../src/helpers/visitStatus";
+import logger from "../../logger";
 
 describe("retrieveVisits", () => {
   it("returns a json object containing the calls", async () => {
@@ -31,6 +32,7 @@ describe("retrieveVisits", () => {
         ],
         error: null,
       }),
+      logger
     };
 
     const { scheduledCalls, error } = await retrieveVisits(container)({
@@ -68,6 +70,7 @@ describe("retrieveVisits", () => {
       getRetrieveVisitsGateway: () => async () => ({
         scheduledCalls: [],
       }),
+      logger
     };
 
     await retrieveVisits(container)({
@@ -80,6 +83,7 @@ describe("retrieveVisits", () => {
       getRetrieveVisitsGateway: () => async () => ({
         error: "foo",
       }),
+      logger
     };
 
     const { error } = await retrieveVisits(container)({ wardId: 1 });

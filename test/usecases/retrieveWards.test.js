@@ -1,4 +1,5 @@
 import retrieveWards from "../../src/usecases/retrieveWards";
+import logger from "../../logger";
 
 describe("retrieveWards", () => {
   it("returns a json object containing the wards", async () => {
@@ -19,6 +20,7 @@ describe("retrieveWards", () => {
 
     const container = {
       getRetrieveActiveWardsByTrustIdGW: () => retrieveActiveWardsByTrustIdSpy,
+      logger
     };
 
     const trustId = 3;
@@ -48,6 +50,7 @@ describe("retrieveWards", () => {
       getRetrieveActiveWardsByTrustIdGW: () => async () => {
         throw new Error("Dummy");
       },
+      logger
     };
 
     const { error } = await retrieveWards(container)();

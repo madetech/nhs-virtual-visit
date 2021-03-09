@@ -1,4 +1,5 @@
 import updateUserVerificationToVerified from "../../src/usecases/updateUserVerificationToVerified";
+import logger from "../../logger";
 
 describe("updateUserVerificationToVerified", () => {
 
@@ -20,6 +21,7 @@ describe("updateUserVerificationToVerified", () => {
 
     const { success, error } = await updateUserVerificationToVerified({
       getUpdateUserVerificationToVerifiedGateway,
+      logger
     })({ hash });
 
     expect(success).toBeFalsy();
@@ -40,6 +42,7 @@ describe("updateUserVerificationToVerified", () => {
     
     const { success, error } = await updateUserVerificationToVerified({
       getUpdateUserVerificationToVerifiedGateway,
+      logger
     })({ hash });
 
     expect(success).toBeTruthy();
@@ -60,6 +63,7 @@ describe("updateUserVerificationToVerified", () => {
 
     const { success, error } = await updateUserVerificationToVerified({
       getUpdateUserVerificationToVerifiedGateway,
+      logger
     })({ hash });
 
     expect(success).toBeFalsy();

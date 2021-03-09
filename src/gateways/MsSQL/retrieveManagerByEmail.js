@@ -1,6 +1,4 @@
-import logger from "../../../logger";
-
-const retrieveManagerByEmailGateway = ({ getMsSqlConnPool }) => async (
+const retrieveManagerByEmailGateway = ({ getMsSqlConnPool, logger }) => async (
   email
 ) => {
   logger.info(`Retrieving Manager with email ${email}`);

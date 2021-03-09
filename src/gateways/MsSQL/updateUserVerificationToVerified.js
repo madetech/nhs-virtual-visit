@@ -1,6 +1,4 @@
-import logger from "../../../logger";
-
-const updateUserVerificationToVerifiedGateway = ({ getMsSqlConnPool }) => async ({
+const updateUserVerificationToVerifiedGateway = ({ getMsSqlConnPool, logger }) => async ({
   hash,
   verified
 }) => {

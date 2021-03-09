@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-const archiveManagerByUuid = ({ getArchiveManagerByUuidGateway }) => async (
+const archiveManagerByUuid = ({ getArchiveManagerByUuidGateway, logger }) => async (
   uuid
 ) => {
   if (uuid === undefined) {

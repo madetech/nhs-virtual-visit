@@ -107,6 +107,8 @@ import updateVisitStatusByDepartmentId from "../gateways/MsSQL/updateVisitStatus
 import updateVisitStatusByCallId from "../gateways/MsSQL/updateVisitStatusByCallId";
 import updateUserVerificationToVerifiedGateway from "../gateways/MsSQL/updateUserVerificationToVerified";
 
+import logger from "../../logger"
+
 class AppContainer {
   getDb = () => {
     //return Database.getInstance();
@@ -637,7 +639,9 @@ export default (() => {
         delete instance.constructor;
       }
 
-      return instance;
+      instance.logger = logger
+
+      return Object.assign(instance);
     },
   };
 })();

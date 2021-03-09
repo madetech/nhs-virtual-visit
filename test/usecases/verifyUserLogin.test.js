@@ -1,4 +1,5 @@
 import verifyUserLogin from "../../src/usecases/verifyUserLogin";
+import logger from "../../logger";
 
 describe("verifyUserLogin", () => {
   describe("Given an email or password is not defined", () => {
@@ -15,7 +16,7 @@ describe("verifyUserLogin", () => {
         type,
         user_id,
         error,
-      } = await verifyUserLogin({ getVerifyUserLoginGateway })(email, password);
+      } = await verifyUserLogin({ getVerifyUserLoginGateway, logger })(email, password);
 
       // Assert
       expect(validUser).toEqual(false);
@@ -38,7 +39,7 @@ describe("verifyUserLogin", () => {
         type,
         user_id,
         error,
-      } = await verifyUserLogin({ getVerifyUserLoginGateway })(email, password);
+      } = await verifyUserLogin({ getVerifyUserLoginGateway, logger })(email, password);
 
       // Assert
       expect(validUser).toEqual(false);
@@ -73,7 +74,7 @@ describe("verifyUserLogin", () => {
         type,
         user_id,
         error,
-      } = await verifyUserLogin({ getVerifyUserLoginGateway })(email, password);
+      } = await verifyUserLogin({ getVerifyUserLoginGateway, logger })(email, password);
 
       // Assert
       expect(validUser).toEqual(true);
@@ -109,7 +110,7 @@ describe("verifyUserLogin", () => {
         type,
         user_id,
         error,
-      } = await verifyUserLogin({ getVerifyUserLoginGateway })(email, password);
+      } = await verifyUserLogin({ getVerifyUserLoginGateway, logger })(email, password);
 
       // Assert
       expect(validUser).toEqual(false);
@@ -144,7 +145,7 @@ describe("verifyUserLogin", () => {
         type,
         user_id,
         error,
-      } = await verifyUserLogin({ getVerifyUserLoginGateway })(email, password);
+      } = await verifyUserLogin({ getVerifyUserLoginGateway, logger })(email, password);
 
       // Assert
       expect(validUser).toEqual(true);
@@ -180,7 +181,7 @@ describe("verifyUserLogin", () => {
         type,
         user_id,
         error,
-      } = await verifyUserLogin({ getVerifyUserLoginGateway })(email, password);
+      } = await verifyUserLogin({ getVerifyUserLoginGateway, logger })(email, password);
 
       // Assert
       expect(validUser).toEqual(false);

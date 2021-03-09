@@ -1,4 +1,5 @@
 import verifyAdminCode from "../../src/usecases/verifyAdminCode";
+import logger from "../../logger";
 
 describe("verifyAdminCode", () => {
   describe("Given an email isn't defined", () => {
@@ -8,6 +9,7 @@ describe("verifyAdminCode", () => {
       const password = "password";
       const { validAdminCode, error } = await verifyAdminCode({
         getVerifyAdminCodeGateway,
+        logger
       })(email, password);
 
       expect(validAdminCode).toEqual(false);
@@ -22,6 +24,7 @@ describe("verifyAdminCode", () => {
       const password = "";
       const { validAdminCode, error } = await verifyAdminCode({
         getVerifyAdminCodeGateway,
+        logger
       })(email, password);
 
       expect(validAdminCode).toEqual(false);
@@ -36,6 +39,7 @@ describe("verifyAdminCode", () => {
           validAdminCode: true,
           error: null,
         }),
+        logger
       };
 
       let response = await verifyAdminCode(container)(
@@ -54,6 +58,7 @@ describe("verifyAdminCode", () => {
           validAdminCode: false,
           error: null,
         }),
+        logger
       };
 
       let response = await verifyAdminCode(container)(
@@ -71,6 +76,7 @@ describe("verifyAdminCode", () => {
           validAdminCode: false,
           error: "Foo",
         }),
+        logger
       };
 
       let response = await verifyAdminCode(container)(

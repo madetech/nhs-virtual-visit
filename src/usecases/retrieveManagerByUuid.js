@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-const retrieveManagerByUuid = ({ getRetrieveManagerByUuidGateway }) => async (
+const retrieveManagerByUuid = ({ getRetrieveManagerByUuidGateway, logger }) => async (
   uuid
 ) => {
   if (uuid === undefined) {

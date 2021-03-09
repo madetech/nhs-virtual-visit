@@ -1,6 +1,4 @@
-import logger from "../../../logger";
-
-const activateManagerAndOrganisationGateway = ({ getMsSqlConnPool }) => async ({
+const activateManagerAndOrganisationGateway = ({ getMsSqlConnPool, logger }) => async ({
   userId,
   organisationId,
   verified,

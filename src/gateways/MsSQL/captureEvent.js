@@ -1,7 +1,6 @@
 import moment from "moment";
-import logger from "../../../logger";
 
-const captureEvent = ({ getMsSqlConnPool }) => async ({
+const captureEvent = ({ getMsSqlConnPool, logger }) => async ({
   action,
   visitId,
   callSessionId,

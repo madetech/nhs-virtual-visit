@@ -1,5 +1,6 @@
 import retrieveActiveManagersByOrgId from "../../src/usecases/retrieveActiveManagersByOrgId";
 import { statusToId, ACTIVE } from "../../src/helpers/statusTypes";
+import logger from "../../logger";
 
 describe("retrieveActiveManagersByOrgId", () => {
   let container;
@@ -24,6 +25,7 @@ describe("retrieveActiveManagersByOrgId", () => {
     container = {
       getRetrieveActiveManagersByOrgIdGateway: () =>
         retrieveActiveManagersByOrgIdSpy,
+      logger
     };
   });
 

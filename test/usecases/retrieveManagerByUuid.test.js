@@ -1,4 +1,5 @@
 import retrieveManagerByUuid from "../../src/usecases/retrieveManagerByUuid";
+import logger from "../../logger";
 
 describe("retrieveManagerByUuid", () => {
   let container;
@@ -13,6 +14,7 @@ describe("retrieveManagerByUuid", () => {
   beforeEach(() => {
     container = {
       getRetrieveManagerByUuidGateway: () => retrieveManagerByUuidSpy,
+      logger
     };
   });
   it("returns no error if manager can be retrieved", async () => {

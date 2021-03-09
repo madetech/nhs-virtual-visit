@@ -1,5 +1,6 @@
 import archiveManagerByUuidGateway from "../../../src/gateways/MsSQL/archiveManagerByUuid";
 import mockMssql from "src/gateways/MsSQL";
+import logger from "../../../logger";
 
 describe("archiveManagerByUuidGateway", () => {
   const expectedUuid = "abc";
@@ -14,6 +15,7 @@ describe("archiveManagerByUuidGateway", () => {
     );
     const container = {
       getMsSqlConnPool: getConnectionPoolMock,
+      logger
     };
     // Act
     const actualUuid = await archiveManagerByUuidGateway(container)(
@@ -35,6 +37,7 @@ describe("archiveManagerByUuidGateway", () => {
     // Arrange
     const container = {
       getMsSqlConnPool: undefined,
+      logger
     };
     // Act && Assert
     expect(
@@ -52,6 +55,7 @@ describe("archiveManagerByUuidGateway", () => {
     );
     const container = {
       getMsSqlConnPool: getConnectionPoolMock,
+      logger
     };
     // Act && Assert
     expect(

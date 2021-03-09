@@ -1,7 +1,6 @@
-import logger from "../../../logger";
 import { statusToId, CANCELLED } from "../../helpers/visitStatus";
 
-const deleteVisitByCallIdGateway = ({ getMsSqlConnPool }) => async (callId) => {
+const deleteVisitByCallIdGateway = ({ getMsSqlConnPool, logger }) => async (callId) => {
   logger.info(`Cancelling Visit ${callId}`);
 
   try {

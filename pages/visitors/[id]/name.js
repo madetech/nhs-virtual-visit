@@ -13,7 +13,6 @@ import ErrorSummary from "../../../src/components/ErrorSummary";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import Error from "next/error";
 import Form from "../../../src/components/Form";
-import logger from "../../../logger";
 import { v4 as uuidv4 } from "uuid";
 import { hasError } from "../../../src/helpers/pageErrorHandler";
 
@@ -110,6 +109,7 @@ const Name = ({ callId, error, callPassword, correlationId }) => {
 
 export const getServerSideProps = propsWithContainer(
   async ({ query, container }) => {
+    const { logger } = container;
     const { id: callId, callPassword } = query;
 
     const verifyCallPassword = container.getVerifyCallPassword();

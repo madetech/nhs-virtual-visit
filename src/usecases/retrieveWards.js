@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-const retrieveWards = ({ getRetrieveActiveWardsByTrustIdGW }) => async (
+const retrieveWards = ({ getRetrieveActiveWardsByTrustIdGW, logger }) => async (
   trustId
 ) => {
   const retrieveActiveWardsByTrustIdGW = getRetrieveActiveWardsByTrustIdGW();

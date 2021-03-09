@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-export default ({ getRetrieveDepartmentByUuidGateway }) => async (uuid) => {
+export default ({ getRetrieveDepartmentByUuidGateway, logger }) => async (uuid) => {
   if (uuid === undefined) {
     return { department: null, error: "uuid must be provided." };
   }

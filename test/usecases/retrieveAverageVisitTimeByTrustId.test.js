@@ -1,4 +1,5 @@
 import retrieveAverageVisitTimeByTrustId from "../../src/usecases/retrieveAverageVisitTimeByTrustId";
+import logger from "../../logger";
 
 describe.skip("retrieveAverageVisitTimeByTrustId", () => {
   const trustId = 1;
@@ -9,6 +10,7 @@ describe.skip("retrieveAverageVisitTimeByTrustId", () => {
       getRetrieveAverageVisitTimeByTrustIdGateway() {
         return anySpy;
       },
+      logger
     };
 
     const { averageVisitTime } = await retrieveAverageVisitTimeByTrustId(
@@ -25,6 +27,7 @@ describe.skip("retrieveAverageVisitTimeByTrustId", () => {
       getRetrieveAverageVisitTimeByTrustIdGateway() {
         return anySpy;
       },
+      logger
     };
 
     const { averageVisitTime } = await retrieveAverageVisitTimeByTrustId(
@@ -36,7 +39,7 @@ describe.skip("retrieveAverageVisitTimeByTrustId", () => {
 
   it("returns an error if no trustId is provided", async () => {
     const { error } = await retrieveAverageVisitTimeByTrustId({
-      getDb: jest.fn(),
+      logger
     })();
 
     expect(error).toEqual("A trustId must be provided.");

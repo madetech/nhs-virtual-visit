@@ -1,7 +1,6 @@
-import logger from "../../logger";
-
 export default ({
   getRetrieveActiveDepartmentsByOrganisationIdGateway,
+  logger
 }) => async (id) => {
   if (id === undefined) {
     return { departments: null, error: "id must be provided." };

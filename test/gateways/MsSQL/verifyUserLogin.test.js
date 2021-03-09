@@ -1,5 +1,6 @@
 import verifyUserLoginGateway from "../../../src/gateways/MsSQL/verifyUserLogin";
 import bcrypt from "bcryptjs";
+import logger from "../../../logger"
 
 jest.mock("bcryptjs");
 
@@ -35,6 +36,7 @@ describe("verifyUserLogin", () => {
       error,
     } = await verifyUserLoginGateway({
       getMsSqlConnPool,
+      logger
     })(email, password);
 
     expect(validUser).toEqual(true);
@@ -69,6 +71,7 @@ describe("verifyUserLogin", () => {
       error,
     } = await verifyUserLoginGateway({
       getMsSqlConnPool,
+      logger
     })(email, wrongPassword);
 
     expect(validUser).toEqual(false);
@@ -100,6 +103,7 @@ describe("verifyUserLogin", () => {
       error,
     } = await verifyUserLoginGateway({
       getMsSqlConnPool,
+      logger
     })(email, password);
 
     expect(validUser).toEqual(false);
@@ -131,6 +135,7 @@ describe("verifyUserLogin", () => {
       error,
     } = await verifyUserLoginGateway({
       getMsSqlConnPool,
+      logger
     })(email, password);
 
     expect(validUser).toEqual(false);

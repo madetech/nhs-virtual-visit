@@ -1,5 +1,6 @@
 import regenerateToken from "../../src/usecases/regenerateToken";
 import moment from "moment";
+import logger from "../../logger";
 
 describe("regenerateToken", () => {
   it("doesn't refresh the token when now is before the expiry window", () => {
@@ -14,6 +15,7 @@ describe("regenerateToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      logger
     };
     const {
       regeneratedToken,
@@ -38,6 +40,7 @@ describe("regenerateToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      logger
     };
     const {
       regeneratedToken,
@@ -62,6 +65,7 @@ describe("regenerateToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      logger
     };
     const {
       regeneratedToken,

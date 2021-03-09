@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-const retrieveTrusts = ({ getRetrieveTrustsGateway }) => async () => {
+const retrieveTrusts = ({ getRetrieveTrustsGateway, logger }) => async () => {
   try {
     const trusts = await getRetrieveTrustsGateway()();
 

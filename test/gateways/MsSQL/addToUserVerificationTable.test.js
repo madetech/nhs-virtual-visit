@@ -1,4 +1,5 @@
 import addToUserVerificationTableGateway from "../../../src/gateways/MsSQL/addToUserVerificationTable";
+import logger from "../../../logger"
 
 describe("addToUserVerificationTableGateway", () => {
   let newUser;
@@ -36,6 +37,7 @@ describe("addToUserVerificationTableGateway", () => {
 
     const { verifyUser, error } = await addToUserVerificationTableGateway({
       getMsSqlConnPool,
+      logger
     })(newUser);
 
     const expectedResponse = {
@@ -69,6 +71,7 @@ describe("addToUserVerificationTableGateway", () => {
 
     const { verifyUser, error } = await addToUserVerificationTableGateway({
       getMsSqlConnPool,
+      logger
     })(newUser);
 
     expect(verifyUser).toBeNull();

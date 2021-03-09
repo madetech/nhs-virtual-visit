@@ -1,7 +1,6 @@
-import logger from "../../logger";
-
 const updateManagerStatusByUuid = ({
   getUpdateManagerStatusByUuidGateway,
+  logger
 }) => async ({ uuid, status }) => {
   if (uuid === undefined) {
     return { uuid: null, error: "uuid must be provided." };

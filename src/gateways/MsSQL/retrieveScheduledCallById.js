@@ -1,11 +1,10 @@
-import logger from "../../../logger";
 import {
   statusToId,
   SCHEDULED,
   COMPLETE,
-} from "../../../src/helpers/visitStatus";
+} from "../../helpers/visitStatus";
 
-const retrieveScheduledCallByIdGateway = ({ getMsSqlConnPool }) => async ({
+const retrieveScheduledCallByIdGateway = ({ getMsSqlConnPool, logger }) => async ({
   callId,
   departmentId,
 }) => {

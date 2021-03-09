@@ -1,5 +1,4 @@
-import logger from "../../logger";
-export default ({ getRetrieveFacilityByUuidGateway }) => async (uuid) => {
+export default ({ getRetrieveFacilityByUuidGateway, logger }) => async (uuid) => {
   if (uuid == undefined) {
     return { facility: null, error: "uuid must be present." };
   }

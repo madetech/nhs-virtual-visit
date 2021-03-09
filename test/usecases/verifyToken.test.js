@@ -1,4 +1,5 @@
 import verifyToken from "../../src/usecases/verifyToken";
+import logger from "../../logger";
 
 describe("verifyToken", () => {
   const req = {
@@ -26,6 +27,7 @@ describe("verifyToken", () => {
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
       getRetrieveDepartmentById: () =>
         jest.fn().mockReturnValue({ error: null }),
+      logger
     };
 
     const result = await verifyToken(callback)({ req, res, container });
@@ -47,6 +49,7 @@ describe("verifyToken", () => {
       getTokenProvider: () => tokenProvider,
       getRetrieveDepartmentById: () =>
         jest.fn().mockReturnValue({ error: null }),
+      logger
     };
 
     await verifyToken(callback)({ req, res, container });
@@ -64,6 +67,7 @@ describe("verifyToken", () => {
       getTokenProvider: () => tokenProvider,
       getRetrieveDepartmentById: () =>
         jest.fn().mockReturnValue({ error: null }),
+      logger
     };
     req.headers.cookie = "";
 
@@ -107,6 +111,7 @@ describe("verifyToken", () => {
       getRegenerateToken: () => regenerateTokenSpy,
       getRetrieveDepartmentById: () =>
         jest.fn().mockReturnValue({ error: null }),
+      logger
     };
 
     await verifyToken(callback)({

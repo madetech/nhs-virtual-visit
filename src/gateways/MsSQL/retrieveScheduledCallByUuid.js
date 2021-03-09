@@ -1,11 +1,10 @@
-import logger from "../../../logger";
 import {
   statusToId,
   SCHEDULED,
   COMPLETE,
-} from "../../../src/helpers/visitStatus";
+} from "../../helpers/visitStatus";
 
-export default ({ getMsSqlConnPool }) => async (callUuid) => {
+export default ({ getMsSqlConnPool, logger }) => async (callUuid) => {
   const db = await getMsSqlConnPool();
   try {
     logger.info(`Retrieving scheduled call with uuid ${callUuid}`);

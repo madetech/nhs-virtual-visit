@@ -1,4 +1,5 @@
 import deleteVisitByCallId from "../../src/usecases/deleteVisitByCallId";
+import logger from "../../logger";
 
 describe("deleteVisitByCallId", () => {
   it("returns an error if there is no callId", async () => {
@@ -10,6 +11,7 @@ describe("deleteVisitByCallId", () => {
           success: true,
           error: null,
         }),
+      logger
     };
 
     const { success, error } = await deleteVisitByCallId(container)(callId);
@@ -25,6 +27,7 @@ describe("deleteVisitByCallId", () => {
           success: true,
           error: null,
         }),
+      logger
     };
 
     const { success, error } = await deleteVisitByCallId(container)(
@@ -42,6 +45,7 @@ describe("deleteVisitByCallId", () => {
           success: false,
           error: "Error: DB Error!",
         }),
+      logger
     };
 
     const { success, error } = await deleteVisitByCallId(container)(

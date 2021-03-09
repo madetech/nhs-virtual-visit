@@ -1,6 +1,4 @@
-import logger from "../../../logger";
-
-const retrieveOrganisationsGateway = ({ getMsSqlConnPool }) => async ({
+const retrieveOrganisationsGateway = ({ getMsSqlConnPool, logger }) => async ({
   page,
   limit,
 }) => {

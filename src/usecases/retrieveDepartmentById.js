@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-export default ({ getRetrieveDepartmentByIdGateway }) => async (id) => {
+export default ({ getRetrieveDepartmentByIdGateway, logger }) => async (id) => {
   if (id === undefined) {
     return { department: null, error: "id must be provided." };
   }

@@ -1,4 +1,5 @@
 import archiveManagerByUuid from "../../src/usecases/archiveManagerByUuid";
+import logger from "../../logger";
 
 describe("archiveManagerByUuid", () => {
   let container;
@@ -7,6 +8,7 @@ describe("archiveManagerByUuid", () => {
   beforeEach(() => {
     container = {
       getArchiveManagerByUuidGateway: () => archiveManagerByUuidSpy,
+      logger
     };
   });
   it("returns no error if manager can be deleted", async () => {

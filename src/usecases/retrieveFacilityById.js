@@ -1,5 +1,4 @@
-import logger from "../../logger";
-export default ({ getRetrieveFacilityByIdGateway }) => async (facilityId) => {
+export default ({ getRetrieveFacilityByIdGateway, logger }) => async (facilityId) => {
   if (facilityId == undefined) {
     return { facility: null, error: "facility id must be present." };
   }

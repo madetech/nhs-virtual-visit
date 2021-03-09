@@ -1,7 +1,6 @@
-import logger from "../../../logger";
 import { idToStatus } from "../../helpers/visitStatus";
 
-export default ({ getMsSqlConnPool }) => async ({
+export default ({ getMsSqlConnPool, logger }) => async ({
   id,
   departmentId,
   status,

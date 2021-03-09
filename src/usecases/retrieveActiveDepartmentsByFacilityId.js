@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-export default ({ getRetrieveActiveDepartmentsByFacilityIdGateway }) => async (
+export default ({ getRetrieveActiveDepartmentsByFacilityIdGateway, logger }) => async (
   id
 ) => {
   if (id === undefined) {

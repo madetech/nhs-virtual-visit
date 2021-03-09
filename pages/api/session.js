@@ -1,10 +1,10 @@
 import withContainer from "../../src/middleware/withContainer";
 import { WARD_STAFF, TRUST_ADMIN, ADMIN } from "../../src/helpers/userTypes";
 import { v4 as uuidv4 } from "uuid";
-import logger from "../../logger";
 import featureIsEnabled from "../../src/helpers/featureFlag";
 
 export default withContainer(async (req, res, { container }) => {
+  const { logger } = container;
   const { code, password, pin } = req.body;
 
   const method = req.method;

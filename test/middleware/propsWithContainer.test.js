@@ -1,7 +1,7 @@
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 
 jest.mock("../../src/containers/AppContainer", () => ({
-  getInstance: () => "mockedAppContainerInstance",
+  getInstance: () => ({}),
 }));
 
 describe("propsWithContainer", () => {

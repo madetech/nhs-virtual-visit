@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-export default ({ getUpdateWardGateway }) => async (ward) => {
+export default ({ getUpdateWardGateway, logger }) => async (ward) => {
   logger.info(`Creating ward for ${JSON.stringify(ward)}`, ward);
 
   const { wardId, error } = await getUpdateWardGateway()({

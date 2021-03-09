@@ -1,7 +1,6 @@
-import logger from "../../../logger";
 import bcrypt from "bcryptjs";
 
-const verifyAdminCodeGateway = ({ getMsSqlConnPool }) => async (
+const verifyAdminCodeGateway = ({ getMsSqlConnPool, logger }) => async (
   email,
   password
 ) => {

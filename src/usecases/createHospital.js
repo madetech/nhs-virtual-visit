@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-const createHospital = ({ getInsertHospitalGateway }) => async ({
+const createHospital = ({ getInsertHospitalGateway, logger }) => async ({
   name,
   trustId,
   code,

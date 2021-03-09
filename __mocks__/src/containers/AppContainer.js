@@ -1,5 +1,6 @@
 import mockMssql from "src/gateways/MsSQL";
 import mockTokenProvider from "src/providers/TokenProvider";
+import logger from "../../../logger"
 
 export default {
   getMsSqlConnPool: jest.fn(() => mockMssql.getConnectionPool()),
@@ -40,4 +41,6 @@ export default {
   getResetPasswordGateway: jest.fn(() => () => Promise.resolve({})),
   getAdminIsAuthenticated: jest.fn(() => () => true),
   getOrganisationAdminIsAuthenticated: jest.fn(() => () => true),
+
+  logger
 };

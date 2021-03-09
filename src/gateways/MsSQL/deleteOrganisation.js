@@ -1,7 +1,6 @@
-import logger from "../../../logger";
 import mssql from "mssql";
 
-export default ({ getMsSqlConnPool }) => async (organisationId) => {
+export default ({ getMsSqlConnPool, logger }) => async (organisationId) => {
   try {
     const db = await getMsSqlConnPool();
     const res = await db

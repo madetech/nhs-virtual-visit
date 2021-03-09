@@ -1,5 +1,6 @@
 import retrieveManagerByUuidGateway from "../../../src/gateways/MsSQL/retrieveManagerByUuid";
 import mockMssql from "src/gateways/MsSQL";
+import logger from "../../../logger"
 
 describe("retrieveManagerByUuidGateway", () => {
   const expectedUuid = "12SD";
@@ -39,6 +40,7 @@ describe("retrieveManagerByUuidGateway", () => {
     // Arrange
     const container = {
       getMsSqlConnPool: undefined,
+      logger
     };
     // Act && Assert
     expect(
@@ -55,6 +57,7 @@ describe("retrieveManagerByUuidGateway", () => {
     );
     const container = {
       getMsSqlConnPool: getConnectionPoolMock,
+      logger
     };
     const undefinedUuid = undefined;
     // Act && Assert

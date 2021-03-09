@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-export default ({ getUpdateDepartmentByIdGateway }) => async ({ id, name, pin }) => {
+export default ({ getUpdateDepartmentByIdGateway, logger }) => async ({ id, name, pin }) => {
   if (id === undefined) {
     return { uuid: null, error: "id must be provided." };
   }

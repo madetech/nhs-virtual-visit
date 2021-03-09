@@ -1,4 +1,5 @@
 import trustAdminIsAuthenticated from "../../src/usecases/trustAdminIsAuthenticated";
+import logger from "../../logger";
 
 describe("trustAdminIsAuthenticated", () => {
   let tokenProvider;
@@ -11,6 +12,7 @@ describe("trustAdminIsAuthenticated", () => {
       };
       container = {
         getTokenProvider: () => tokenProvider,
+        logger
       };
     });
 
@@ -30,6 +32,7 @@ describe("trustAdminIsAuthenticated", () => {
       };
       container = {
         getTokenProvider: () => tokenProvider,
+        logger
       };
     });
 
@@ -47,6 +50,7 @@ describe("trustAdminIsAuthenticated", () => {
       };
       container = {
         getTokenProvider: () => tokenProvider,
+        logger
       };
     });
 

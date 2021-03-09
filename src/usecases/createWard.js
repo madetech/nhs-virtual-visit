@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-const createWard = ({ getCreateWardGateway }) => async (ward) => {
+const createWard = ({ getCreateWardGateway, logger }) => async (ward) => {
   logger.info(`Creating ward for ${JSON.stringify(ward)}`, ward);
 
   const { wardId, error } = await getCreateWardGateway()({

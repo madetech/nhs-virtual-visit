@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-export default ({ getCreateDepartmentGateway }) => async (department) => {
+export default ({ getCreateDepartmentGateway, logger }) => async (department) => {
   const { name, code, facilityId, pin, createdBy } = department;
   if (name === undefined) {
     return { uuid: null, error: "name must be provided." };

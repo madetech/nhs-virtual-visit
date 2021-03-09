@@ -1,4 +1,5 @@
 import adminIsAuthenticated from "../../src/usecases/adminIsAuthenticated";
+import logger from "../../logger";
 
 describe("adminIsAuthenticated", () => {
   let tokenProvider;
@@ -11,6 +12,7 @@ describe("adminIsAuthenticated", () => {
       };
       container = {
         getTokenProvider: () => tokenProvider,
+        logger
       };
     });
 
@@ -28,6 +30,7 @@ describe("adminIsAuthenticated", () => {
       };
       container = {
         getTokenProvider: () => tokenProvider,
+        logger
       };
     });
 
@@ -45,6 +48,7 @@ describe("adminIsAuthenticated", () => {
       };
       container = {
         getTokenProvider: () => tokenProvider,
+        logger
       };
     });
 
@@ -62,6 +66,7 @@ describe("adminIsAuthenticated", () => {
       };
       container = {
         getTokenProvider: () => tokenProvider,
+        logger
       };
     });
 

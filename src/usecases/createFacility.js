@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-export default ({ getCreateFacilityGateway }) => async ({
+export default ({ getCreateFacilityGateway, logger }) => async ({
   name,
   orgId,
   code,
