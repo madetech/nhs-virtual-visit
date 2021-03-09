@@ -52,24 +52,19 @@ describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () =>
         error: null,
       }));
       const visitTotalsSpy = jest.fn().mockReturnValue({
-        hospitals: [
-          { id: 1, name: "Test Hospital", totalVisits: 10 },
-          { id: 2, name: "Test Hospital", totalVisits: 3 },
-        ],
-        leastVisited: [{ id: 2, name: "Test Hospital", totalVisits: 3 }],
-        mostVisited: [{ id: 1, name: "Test Hospital", totalVisits: 10 }],
+        total: 15,
+        error: null
       });
       const hospitalWardTotalsSpy = jest.fn().mockReturnValue({
-        wards: { 1: 10, 2: 5 },
-        mostVisited: { wardName: "Most Visited", total_visits: 10 },
-        leastVisited: { wardName: "Least Visited", total_visits: 5 },
+        departments: [{ name: "Most Visited", total: 10, name: "Least Visited", total: 5  }],
+        mostVisited: { name: "Most Visited", total: 10 },
+        leastVisited: { name: "Least Visited", total: 5 },
       });
       const container = {
         getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
-        getRetrieveActiveDepartmentsByFacilityId: () => departmentsSpy,
         getRetrieveFacilityByUuid: () => facilitySpy,
-        getRetrieveFacilityVisitTotals: () => visitTotalsSpy,
-        getRetrieveFacilityDepartmentVisitTotals: () => hospitalWardTotalsSpy,
+        getRetrieveTotalBookedVisitsByFacilityId: () => visitTotalsSpy,
+        getRetrieveTotalBookedVisitsForDepartmentsByFacilityId: () => hospitalWardTotalsSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
       };
@@ -83,24 +78,22 @@ describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () =>
       // Assert
       expect(retrieveOrganisationByIdSpy).toHaveBeenCalledWith(orgId);
       expect(facilitySpy).toHaveBeenCalledWith(expectedFacilityUuid);
-      expect(departmentsSpy).toHaveBeenCalledWith(expectedFacilityId);
       expect(visitTotalsSpy).toHaveBeenCalledWith(orgId);
       expect(hospitalWardTotalsSpy).toHaveBeenCalledWith(expectedFacilityId);
-      expect(props.wards).toEqual([{ id: 1 }, { id: 2 }]);
+      expect(props.wards).toEqual([{ name: "Most Visited", total: 10, name: "Least Visited", total: 5  }]);
       expect(props.hospital).toEqual({
         id: expectedFacilityId,
         name: "Test Hospital",
       });
-      expect(props.totalBookedVisits).toEqual(10);
+      expect(props.totalBookedVisits).toEqual(15);
       expect(props.mostVisitedWard).toEqual({
-        wardName: "Most Visited",
-        total_visits: 10,
+        name: "Most Visited",
+        total: 10,
       });
       expect(props.leastVisitedWard).toEqual({
-        wardName: "Least Visited",
-        total_visits: 5,
+        name: "Least Visited",
+        total: 5,
       });
-      expect(props.wardVisitTotals).toEqual({ 1: 10, 2: 5 });
       expect(props.error).toBeNull();
     });
   });
