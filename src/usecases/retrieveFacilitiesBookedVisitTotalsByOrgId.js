@@ -14,7 +14,8 @@ export default ({
       }
       logger.info(`Retrieving total booked visits for facilities by orgaisation id ${orgId}`);
       var facilities = await getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway()(orgId);
-      const { mostVisitedList, leastVisitedList} = getMostAndLeastVisitedList(facilities, 3)
+      const { mostVisitedList, leastVisitedList} = getMostAndLeastVisitedList(facilities, 3);
+      console.log(facilities)
       return { facilities, mostVisitedList, leastVisitedList, error: null };
      
     } catch (error) {
@@ -22,7 +23,7 @@ export default ({
         facilities: null,
         mostVisitedList: null,
         leastVisitedList: null,
-        error: "There has been error retrieving hospital visit totals",
+        error: "There has been error retrieving total booked visits for facilities.",
       };
     }
   };
