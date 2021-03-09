@@ -1,5 +1,6 @@
 import insertManagerGateway from "../../../src/gateways/MsSQL/insertManager";
 import bcrypt from "bcryptjs";
+import logger from "../../../logger"
 
 jest.mock("bcryptjs");
 
@@ -43,6 +44,7 @@ describe("insertManagerGateway", () => {
 
     const { user, error } = await insertManagerGateway({
       getMsSqlConnPool,
+      logger
     })(newManager);
 
     const expectedResponse = {
@@ -78,6 +80,7 @@ describe("insertManagerGateway", () => {
 
     const { user, error } = await insertManagerGateway({
       getMsSqlConnPool,
+      logger
     })(newManager);
 
     expect(user).toBeNull();

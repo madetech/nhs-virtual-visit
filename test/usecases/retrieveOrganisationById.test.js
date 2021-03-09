@@ -1,4 +1,6 @@
 import retrieveOrganisationById from "../../src/usecases/retrieveOrganisationById";
+import logger from "../../logger";
+
 
 describe("retrieveOrganisationById", () => {
   it("returns a trust with the given Id", async () => {
@@ -12,6 +14,7 @@ describe("retrieveOrganisationById", () => {
     const organisationId = 1;
     const { organisation, error } = await retrieveOrganisationById({
       getRetrieveOrganisationByIdGateway,
+      logger
     })(organisationId);
     expect(organisation.name).toEqual("Test Trust");
     expect(error).toBeNull();
@@ -28,6 +31,7 @@ describe("retrieveOrganisationById", () => {
     const organisationId = 1;
     const { organisation, error } = await retrieveOrganisationById({
       getRetrieveOrganisationByIdGateway,
+      logger
     })(organisationId);
 
     expect(organisation).toBeFalsy();

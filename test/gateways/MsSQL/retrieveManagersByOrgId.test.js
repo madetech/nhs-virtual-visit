@@ -1,5 +1,6 @@
 import retrieveManagersByOrgIdGateway from "../../../src/gateways/MsSQL/retrieveManagersByOrgId";
 import mockMssql from "src/gateways/MsSQL";
+import logger from "../../../logger";
 
 describe("retrieveManagersByOrgIdGateway", () => {
   const expectedOrgId = 1;
@@ -24,6 +25,7 @@ describe("retrieveManagersByOrgIdGateway", () => {
     );
     const container = {
       getMsSqlConnPool: getConnectionPoolMock,
+      logger
     };
     // Act
     const { managers, error } = await retrieveManagersByOrgIdGateway(container)(
@@ -47,6 +49,7 @@ describe("retrieveManagersByOrgIdGateway", () => {
     // Arrange
     const container = {
       getMsSqlConnPool: undefined,
+      logger
     };
     // Act && Assert
     expect(
@@ -64,6 +67,7 @@ describe("retrieveManagersByOrgIdGateway", () => {
     );
     const container = {
       getMsSqlConnPool: getConnectionPoolMock,
+      logger
     };
     // Act
     const { managers, error } = await retrieveManagersByOrgIdGateway(container)(

@@ -1,7 +1,6 @@
 import { statusToId, SCHEDULED } from "../../helpers/visitStatus";
-import logger from "../../../logger";
 
-export default ({ getMsSqlConnPool }) => async (visit, departmentId) => {
+export default ({ getMsSqlConnPool, logger }) => async (visit, departmentId) => {
   try {
     //patient name is now part of the same table, as is the recipient name
     const db = await getMsSqlConnPool();

@@ -1,4 +1,5 @@
 import retrieveManagerByEmailGateway from "../../../src/gateways/MsSQL/retrieveManagerByEmail";
+import logger from "../../../logger"
 
 describe("retrieveManagerByEmailGateway", () => {
   it("retrieves manager for a given email", async () => {
@@ -23,6 +24,7 @@ describe("retrieveManagerByEmailGateway", () => {
     const email = "nhs-manager@nhs.co.uk";
     const { manager, error } = await retrieveManagerByEmailGateway({
       getMsSqlConnPool,
+      logger
     })(email);
 
     const expectedResponse = {
@@ -50,6 +52,7 @@ describe("retrieveManagerByEmailGateway", () => {
 
     const { manager, error } = await retrieveManagerByEmailGateway({
       getMsSqlConnPool,
+      logger
     })();
 
     expect(manager).toBeNull();

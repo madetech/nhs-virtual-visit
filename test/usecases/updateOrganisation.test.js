@@ -1,4 +1,5 @@
 import updateOrganisation from "../../src/usecases/updateOrganisation";
+import logger from "../../logger";
 
 describe("updateTrust", () => {
   let updateOrganisationGatewaySpy = jest.fn().mockReturnValue({
@@ -14,6 +15,7 @@ describe("updateTrust", () => {
   beforeEach(() => {
     container = {
       getUpdateOrganisationGateway: () => updateOrganisationGatewaySpy,
+      logger
     };
   });
 

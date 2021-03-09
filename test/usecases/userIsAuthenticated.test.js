@@ -1,4 +1,5 @@
 import userIsAuthenticated from "../../src/usecases/userIsAuthenticated";
+import logger from "../../logger";
 
 describe("userIsAuthenticated", () => {
   let tokenProvider;
@@ -13,6 +14,7 @@ describe("userIsAuthenticated", () => {
         getTokenProvider: () => tokenProvider,
         getRetrieveDepartmentById: () =>
           jest.fn().mockReturnValue({ error: null }),
+        logger
       };
     });
     it("returns the payload of the token when it is valid", async () => {
@@ -31,6 +33,7 @@ describe("userIsAuthenticated", () => {
         getTokenProvider: () => tokenProvider,
         getRetrieveDepartmentById: () =>
           jest.fn().mockReturnValue({ error: null }),
+        logger
       };
     });
     it("returns false when the token is invalid", async () => {
@@ -41,6 +44,7 @@ describe("userIsAuthenticated", () => {
   });
 
   it("returns false when the ward is not present", async () => {
+    container.logger = logger;
     container.getRetrieveDepartmentById = () =>
       jest.fn().mockReturnValue({ error: "ERROR!" });
     expect(await userIsAuthenticated(container)("token=valid.token")).toEqual(
@@ -49,6 +53,7 @@ describe("userIsAuthenticated", () => {
   });
 
   it("returns false when the ward is not present", async () => {
+    container.logger = logger;
     container.getRetrieveDepartmentById = () =>
       jest.fn().mockReturnValue({ error: "ERROR!" });
     expect(await userIsAuthenticated(container)("token=valid.token")).toEqual(

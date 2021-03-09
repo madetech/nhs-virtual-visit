@@ -1,6 +1,7 @@
 import updateDepartmentByIdGateway from "../../../src/gateways/MsSQL/updateDepartmentById";
 import mockAppContainer from "src/containers/AppContainer";
 import bcrypt from "bcryptjs";
+
 jest.mock("bcryptjs");
 describe("updateDepartmentByIdGateway", () => {
   bcrypt.genSalt = jest.fn();

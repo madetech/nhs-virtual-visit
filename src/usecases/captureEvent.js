@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-const captureEvent = ({ getCaptureEventGateway }) => async ({
+const captureEvent = ({ getCaptureEventGateway, logger }) => async ({
   action,
   visitId,
   callSessionId,

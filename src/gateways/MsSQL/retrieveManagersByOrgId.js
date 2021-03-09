@@ -1,7 +1,6 @@
 import mssql from "mssql";
-import logger from "../../../logger";
 
-const retrieveManagersByOrgIdGateway = ({ getMsSqlConnPool }) => async (
+const retrieveManagersByOrgIdGateway = ({ getMsSqlConnPool, logger }) => async (
   orgId
 ) => {
   logger.info(`Retrieving Managers for organisation ${orgId}`);

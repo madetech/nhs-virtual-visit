@@ -1,4 +1,5 @@
 import retrieveAverageParticipantsInVisit from "../../src/usecases/retrieveAverageParticipantsInVisit";
+import logger from "../../logger";
 
 describe.skip("retrieveAverageParticipantsInVisit", () => {
   const trustId = 1;
@@ -13,7 +14,9 @@ describe.skip("retrieveAverageParticipantsInVisit", () => {
   });
 
   it("returns an error if a trustId is not provided", async () => {
-    const container = {};
+    const container = {
+      logger
+    };
 
     const { error } = await retrieveAverageParticipantsInVisit(container)();
 
@@ -23,6 +26,7 @@ describe.skip("retrieveAverageParticipantsInVisit", () => {
   it("retrieves events from the database with the trustId", async () => {
     const container = {
       getRetrieveAverageParticipantsInVisitGateway: () => gwAnySpy,
+      logger
     };
 
     await retrieveAverageParticipantsInVisit(container)(trustId);
@@ -33,6 +37,7 @@ describe.skip("retrieveAverageParticipantsInVisit", () => {
   it("returns the average number of participants in a visit", async () => {
     const container = {
       getRetrieveAverageParticipantsInVisitGateway: () => gwAnySpy,
+      logger
     };
 
     const {

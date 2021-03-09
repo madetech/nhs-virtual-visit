@@ -1,4 +1,5 @@
 import retrieveActiveOrganisations from "../../src/usecases/retrieveActiveOrganisations";
+import logger from "../../logger";
 
 describe("retrieveActiveOrganisations", () => {
   it("returns a list of organsiations that have and active status", async () => {
@@ -18,6 +19,7 @@ describe("retrieveActiveOrganisations", () => {
     ];
     const { organisations, error } = await retrieveActiveOrganisations({
       getRetrieveActiveOrganisationsGateway,
+      logger
     })();
 
     expect(organisations).toHaveLength(2);
@@ -35,6 +37,7 @@ describe("retrieveActiveOrganisations", () => {
 
     const { organisations, error } = await retrieveActiveOrganisations({
       getRetrieveActiveOrganisationsGateway,
+      logger
     })();
 
     expect(organisations).toEqual([]);

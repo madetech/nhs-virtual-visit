@@ -1,5 +1,6 @@
 import updateManagerStatusByUuidGateway from "../../../src/gateways/MsSQL/updateManagerStatusByUuid";
 import mockMssql from "src/gateways/MsSQL";
+import logger from "../../../logger"
 
 describe("updateManagerStatusByUuidGateway", () => {
   const expectedUuid = "abc";
@@ -15,6 +16,7 @@ describe("updateManagerStatusByUuidGateway", () => {
     );
     const container = {
       getMsSqlConnPool: getConnectionPoolMock,
+      logger
     };
     // Act
     const actualUuid = await updateManagerStatusByUuidGateway(container)(
@@ -44,6 +46,7 @@ describe("updateManagerStatusByUuidGateway", () => {
     // Arrange
     const container = {
       getMsSqlConnPool: undefined,
+      logger
     };
     // Act && Assert
     expect(
@@ -65,6 +68,7 @@ describe("updateManagerStatusByUuidGateway", () => {
     );
     const container = {
       getMsSqlConnPool: getConnectionPoolMock,
+      logger
     };
     // Act && Assert
     expect(
@@ -86,6 +90,7 @@ describe("updateManagerStatusByUuidGateway", () => {
     );
     const container = {
       getMsSqlConnPool: getConnectionPoolMock,
+      logger
     };
     // Act && Assert
     expect(

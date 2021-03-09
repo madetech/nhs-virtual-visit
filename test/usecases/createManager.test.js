@@ -1,4 +1,5 @@
 import createManager from "../../src/usecases/createManager";
+import logger from "../../logger";
 
 describe("createManager", () => {
   let newManager;
@@ -36,6 +37,7 @@ describe("createManager", () => {
 
     const { user, error } = await createManager({
       getInsertManagerGateway,
+      logger
     })(newManager);
 
     expect(user).toBeNull();
@@ -50,6 +52,7 @@ describe("createManager", () => {
 
     const { user, error } = await createManager({
       getInsertManagerGateway,
+      logger
     })(newManager);
 
     expect(user).toBeNull();
@@ -64,6 +67,7 @@ describe("createManager", () => {
 
     const { user, error } = await createManager({
       getInsertManagerGateway,
+      logger
     })(newManager);
 
     expect(user).toBeNull();
@@ -73,6 +77,7 @@ describe("createManager", () => {
   it("creates an new manager and returns it", async () => {
     const { user, error } = await createManager({
       getInsertManagerGateway,
+      logger
     })(newManager);
 
     const expectedResponse = {
@@ -100,6 +105,7 @@ describe("createManager", () => {
 
     const { user, error } = await createManager({
       getInsertManagerGateway,
+      logger
     })(newManager);
 
     expect(user).toBeNull();

@@ -1,4 +1,5 @@
 import verifyTimeSensitiveLinkGateway from "../../../src/gateways/MsSQL/verifyTimeSensitiveLink";
+import logger from "../../../logger"
 
 describe("verifyTimeSensitiveLinkGateway", () => {
   it("verifies that the sign up link is valid", async () => {
@@ -26,6 +27,7 @@ describe("verifyTimeSensitiveLinkGateway", () => {
 
     const { user, error } = await verifyTimeSensitiveLinkGateway({
       getMsSqlConnPool,
+      logger
     })({ hash, uuid });
 
     const expectedResponse = {
@@ -58,6 +60,7 @@ describe("verifyTimeSensitiveLinkGateway", () => {
 
     const { user, error } = await verifyTimeSensitiveLinkGateway({
       getMsSqlConnPool,
+      logger
     })({ hash, uuid });
 
     expect(user).toBeNull();

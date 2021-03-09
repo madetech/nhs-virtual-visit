@@ -276,6 +276,6 @@ describe("login", () => {
 
     const { props } = await getServerSideProps({ req, res, container });
 
-    expect(props.correlationId).toEqual("uuidv4-admin-login");
+    expect(props.correlationId).toEqual("uuidv4-unauthenticated");
   });
 });

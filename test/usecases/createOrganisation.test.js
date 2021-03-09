@@ -1,4 +1,5 @@
 import createOrganisation from "../../src/usecases/createOrganisation";
+import logger from "../../logger";
 
 describe("createOrganisation", () => {
   let newOrganisation;
@@ -32,6 +33,7 @@ describe("createOrganisation", () => {
 
     const { organisationId, error } = await createOrganisation({
       getCreateOrganisationGateway,
+      logger
     })(newOrganisation);
 
     expect(organisationId).toBeNull();
@@ -46,6 +48,7 @@ describe("createOrganisation", () => {
 
     const { organisationId, error } = await createOrganisation({
       getCreateOrganisationGateway,
+      logger
     })(newOrganisation);
 
     expect(organisationId).toBeNull();
@@ -55,6 +58,7 @@ describe("createOrganisation", () => {
   it("creates an new organisation and returns it", async () => {
     const { organisationId, error } = await createOrganisation({
       getCreateOrganisationGateway,
+      logger
     })(newOrganisation);
 
     expect(organisationId).toEqual(1);
@@ -71,6 +75,7 @@ describe("createOrganisation", () => {
 
     const { organisationId, error } = await createOrganisation({
       getCreateOrganisationGateway,
+      logger
     })(newOrganisation);
 
     expect(organisationId).toBeFalsy();

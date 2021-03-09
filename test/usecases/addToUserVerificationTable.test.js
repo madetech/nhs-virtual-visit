@@ -1,4 +1,5 @@
 import addToUserVerificationTable from "../../src/usecases/addToUserVerificationTable";
+import logger from "../../logger";
 
 describe("addToUserVerificationTable", () => {
   let newUser;
@@ -34,6 +35,7 @@ describe("addToUserVerificationTable", () => {
 
     const { verifyUser, error } = await addToUserVerificationTable({
       getAddToUserVerificationTableGateway,
+      logger
     })(newUser);
 
     expect(verifyUser).toBeNull();
@@ -48,6 +50,7 @@ describe("addToUserVerificationTable", () => {
 
     const { verifyUser, error } = await addToUserVerificationTable({
       getAddToUserVerificationTableGateway,
+      logger
     })(newUser);
 
     expect(verifyUser).toBeNull();
@@ -57,6 +60,7 @@ describe("addToUserVerificationTable", () => {
   it("creates an new user in the user verification table and returns it", async () => {
     const { verifyUser, error } = await addToUserVerificationTable({
       getAddToUserVerificationTableGateway,
+      logger
     })(newUser);
 
     const expectedResponse = {
@@ -83,6 +87,7 @@ describe("addToUserVerificationTable", () => {
 
     const { verifyUser, error } = await addToUserVerificationTable({
       getAddToUserVerificationTableGateway,
+      logger
     })(newUser);
 
     expect(verifyUser).toBeNull();

@@ -8,7 +8,6 @@ import Text from "../../../src/components/Text";
 import Button from "../../../src/components/Button";
 import propsWithContainer from "../../../src/middleware/propsWithContainer";
 import Error from "next/error";
-import logger from "../../../logger";
 
 const Start = ({ callId, error, callPassword }) => {
   const router = useRouter();
@@ -61,6 +60,7 @@ const Start = ({ callId, error, callPassword }) => {
 
 export const getServerSideProps = propsWithContainer(
   async ({ query, container }) => {
+    const { logger } = container;
     const { id: callId, callPassword } = query;
 
     const verifyCallPassword = container.getVerifyCallPassword();

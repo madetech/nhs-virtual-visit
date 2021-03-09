@@ -1,4 +1,5 @@
 import activateManagerAndOrganisation from "../../src/usecases/activateManagerAndOrganisation";
+import logger from "../../logger";
 
 describe("activateManagerAndOrganisation", () => {
   let userId;
@@ -21,6 +22,7 @@ describe("activateManagerAndOrganisation", () => {
 
     const { organisation, error } = await activateManagerAndOrganisation({
       getActivateManagerAndOrganisationGateway,
+      logger
     })({ userId, organisationId });
 
     expect(organisation).toBeNull();
@@ -32,6 +34,7 @@ describe("activateManagerAndOrganisation", () => {
 
     const { organisation, error } = await activateManagerAndOrganisation({
       getActivateManagerAndOrganisationGateway,
+      logger
     })({ userId, organisationId });
 
     expect(organisation).toBeNull();
@@ -52,6 +55,7 @@ describe("activateManagerAndOrganisation", () => {
 
     const { organisation, error } = await activateManagerAndOrganisation({
       getActivateManagerAndOrganisationGateway,
+      logger
     })({ userId, organisationId });
 
     const expectedResponse = "test organisation";
@@ -76,6 +80,7 @@ describe("activateManagerAndOrganisation", () => {
 
     const { organisation, error } = await activateManagerAndOrganisation({
       getActivateManagerAndOrganisationGateway,
+      logger
     })({ userId, organisationId });
 
     expect(organisation).toBeNull();

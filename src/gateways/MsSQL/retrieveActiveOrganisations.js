@@ -1,8 +1,8 @@
-import logger from "../../../logger";
 import { statusToId, ACTIVE } from "../../helpers/statusTypes";
 
 const retrieveActiveOrganisationsGateway = ({
   getMsSqlConnPool,
+  logger
 }) => async () => {
   logger.info("Retrieving active organisations");
 

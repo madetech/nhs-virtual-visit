@@ -1,4 +1,5 @@
 import retreiveHospitalsByTrustId from "../../src/usecases/retrieveHospitalsByTrustId";
+import logger from "../../logger";
 
 describe("retreiveHospitalsByTrustId", () => {
   let retrieveHospitalsSpy = jest.fn().mockReturnValue({
@@ -19,6 +20,7 @@ describe("retreiveHospitalsByTrustId", () => {
   beforeEach(() => {
     container = {
       getRetrieveHospitalsByTrustIdGateway: () => retrieveHospitalsSpy,
+      logger
     };
   });
 

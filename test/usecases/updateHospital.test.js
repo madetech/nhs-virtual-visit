@@ -1,4 +1,5 @@
 import updateHospital from "../../src/usecases/updateHospital";
+import logger from "../../logger";
 
 describe("updateHospital", () => {
   let updateHospitalSpy = jest
@@ -9,6 +10,7 @@ describe("updateHospital", () => {
   beforeEach(() => {
     container = {
       getUpdateHospitalGateway: () => updateHospitalSpy,
+      logger
     };
   });
 

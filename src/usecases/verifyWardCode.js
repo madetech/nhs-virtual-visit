@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-const verifyWardCode = ({ getFindWardByCodeGateway }) => async (wardCode) => {
+const verifyWardCode = ({ getFindWardByCodeGateway, logger }) => async (wardCode) => {
   const findWardByCodeGateway = await getFindWardByCodeGateway();
   try {
     const ward = await findWardByCodeGateway(wardCode);

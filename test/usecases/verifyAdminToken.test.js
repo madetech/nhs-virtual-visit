@@ -1,4 +1,5 @@
 import verifyAdminToken from "../../src/usecases/verifyAdminToken";
+import logger from "../../logger";
 
 describe("verifyAdminToken", () => {
   const res = {
@@ -24,6 +25,7 @@ describe("verifyAdminToken", () => {
     const container = {
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
+      logger
     };
 
     const result = verifyAdminToken(callback)({ req, res, container });
@@ -44,6 +46,7 @@ describe("verifyAdminToken", () => {
     const container = {
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
+      logger
     };
 
     verifyAdminToken(callback)({ req, res, container });
@@ -66,6 +69,7 @@ describe("verifyAdminToken", () => {
     const container = {
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
+      logger
     };
 
     verifyAdminToken(callback)({ req: noCookieReq, res, container });
@@ -93,6 +97,7 @@ describe("verifyAdminToken", () => {
           regeneratedEncodedToken: "encodedToken",
           regeneratedToken: regeneratedToken,
         }),
+      logger
     };
 
     verifyAdminToken(callback)({ req, res, container });

@@ -1,4 +1,5 @@
 import retrieveVisitByCallId from "../../src/usecases/retrieveVisitByCallId";
+import logger from "../../logger";
 
 describe("retrieveVisitByCallId", () => {
   it("returns a json object containing the call", async () => {
@@ -17,6 +18,7 @@ describe("retrieveVisitByCallId", () => {
         },
         error: null,
       }),
+      logger
     };
 
     const { scheduledCall, error } = await retrieveVisitByCallId(container)(
@@ -42,6 +44,7 @@ describe("retrieveVisitByCallId", () => {
       getRetrieveVisitByCallIdGateway: () => async () => ({
         error: "Foo",
       }),
+      logger
     };
 
     const { error } = await retrieveVisitByCallId(container)("cb238rfv23cuv3");

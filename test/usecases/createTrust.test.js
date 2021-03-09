@@ -1,4 +1,5 @@
 import createTrust from "../../src/usecases/createTrust";
+import logger from "../../logger";
 
 describe("createTrust", () => {
   let createTrustSpy = jest.fn().mockReturnValue({ trustId: 1, error: null });
@@ -8,6 +9,7 @@ describe("createTrust", () => {
   beforeEach(() => {
     container = {
       getCreateTrustGateway: () => createTrustSpy,
+      logger
     };
   });
 

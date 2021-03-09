@@ -1,4 +1,5 @@
 import updateManagerStatusByUuid from "../../src/usecases/updateManagerStatusByUuid";
+import logger from "../../logger";
 
 describe("updateManagerStatusByUuid", () => {
   let container;
@@ -9,6 +10,7 @@ describe("updateManagerStatusByUuid", () => {
   beforeEach(() => {
     container = {
       getUpdateManagerStatusByUuidGateway: () => updateManagerStatusByUuidSpy,
+      logger
     };
   });
 

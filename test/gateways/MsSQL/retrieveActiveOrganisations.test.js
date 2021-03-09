@@ -1,4 +1,5 @@
 import retrieveActiveOrganisationsGateway from "../../../src/gateways/MsSQL/retrieveActiveOrganisations";
+import logger from "../../../logger"
 
 describe("retrieveActiveOrganisationsGateway", () => {
   it("retrieves all active organisations", async () => {
@@ -25,6 +26,7 @@ describe("retrieveActiveOrganisationsGateway", () => {
 
     const { organisations, error } = await retrieveActiveOrganisationsGateway({
       getMsSqlConnPool,
+      logger
     })();
 
     expect(error).toBeNull();
@@ -51,6 +53,7 @@ describe("retrieveActiveOrganisationsGateway", () => {
 
     const { organisations, error } = await retrieveActiveOrganisationsGateway({
       getMsSqlConnPool,
+      logger
     })();
 
     expect(organisations).toBeNull();

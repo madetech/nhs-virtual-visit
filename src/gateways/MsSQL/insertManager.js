@@ -1,7 +1,6 @@
-import logger from "../../../logger";
 import bcrypt from "bcryptjs";
 
-const insertManagerGateway = ({ getMsSqlConnPool }) => async ({
+const insertManagerGateway = ({ getMsSqlConnPool, logger }) => async ({
   email,
   password,
   organisationId,

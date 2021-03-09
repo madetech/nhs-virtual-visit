@@ -1,7 +1,6 @@
-import logger from "../../../logger";
 import { SCHEDULED, COMPLETE, statusToId } from "../../helpers/visitStatus";
 
-export default ({ getMsSqlConnPool }) => async (departmentId) => {
+export default ({ getMsSqlConnPool, logger }) => async (departmentId) => {
   const db = await getMsSqlConnPool();
   try {
     //the more complex SELECT clauses are no longer needed because the necessary

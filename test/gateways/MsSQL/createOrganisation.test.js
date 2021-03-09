@@ -1,4 +1,5 @@
 import createOrganisationGateway from "../../../src/gateways/MsSQL/createOrganisation";
+import logger from "../../../logger";
 
 describe("createOrganisationsGateway", () => {
   it("adds a new organisation to the database", async () => {
@@ -28,6 +29,7 @@ describe("createOrganisationsGateway", () => {
     };
     const { organisation, error } = await createOrganisationGateway({
       getMsSqlConnPool,
+      logger
     })(newOrganisation);
 
     expect(error).toBeNull();
@@ -60,6 +62,7 @@ describe("createOrganisationsGateway", () => {
 
     const { organisation, error } = await createOrganisationGateway({
       getMsSqlConnPool,
+      logger
     })(newOrganisation);
 
     expect(organisation).toBeNull();

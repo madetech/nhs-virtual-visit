@@ -1,4 +1,5 @@
 import createWard from "../../src/usecases/createWard";
+import logger from "../../logger";
 
 describe("createWard", () => {
   let createWardSpy = jest.fn().mockReturnValue({ wardId: 10, error: null });
@@ -7,6 +8,7 @@ describe("createWard", () => {
   beforeEach(() => {
     container = {
       getCreateWardGateway: () => createWardSpy,
+      logger
     };
   });
 

@@ -4,7 +4,6 @@ import {
   NEW_NOTIFICATION,
   UPDATED_NOTIFICATION,
 } from "../../src/usecases/sendBookingNotification";
-import logger from "../../logger";
 
 const determineNotificationType = (
   sideACallTime,
@@ -21,6 +20,7 @@ const determineNotificationType = (
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
+    const { logger } = container;
     const respond = (status, response) => {
       res.status(status);
       response ? res.end(JSON.stringify(response)) : res.end();

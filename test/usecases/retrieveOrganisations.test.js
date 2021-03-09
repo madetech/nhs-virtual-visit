@@ -1,4 +1,5 @@
 import retrieveOrganisations from "../../src/usecases/retrieveOrganisations";
+import logger from "../../logger";
 
 describe("retrieveOrganisations", () => {
   it("returns a list of organsiations", async () => {
@@ -18,6 +19,7 @@ describe("retrieveOrganisations", () => {
     ];
     const { organisations, error } = await retrieveOrganisations({
       getRetrieveOrganisationsGateway,
+      logger
     })({});
     expect(organisations).toHaveLength(2);
     expect(organisations).toEqual(expectedResponse);
@@ -34,6 +36,7 @@ describe("retrieveOrganisations", () => {
 
     const { organisations, error } = await retrieveOrganisations({
       getRetrieveOrganisationsGateway,
+      logger
     })({});
 
     expect(organisations).toEqual([]);

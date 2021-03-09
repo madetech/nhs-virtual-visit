@@ -1,5 +1,6 @@
 import retrieveHospitalById from "../../src/usecases/retrieveHospitalById";
 
+import logger from "../../logger";
 describe("retrieveHospitalById", () => {
   let retrieveHospitalSpy = jest.fn().mockReturnValue({
     hospital: {
@@ -15,6 +16,7 @@ describe("retrieveHospitalById", () => {
   beforeEach(() => {
     container = {
       getRetrieveHospitalByIdGateway: () => retrieveHospitalSpy,
+      logger
     };
   });
 

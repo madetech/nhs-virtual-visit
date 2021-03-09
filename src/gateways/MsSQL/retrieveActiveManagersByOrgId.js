@@ -1,8 +1,7 @@
 import mssql from "mssql";
-import logger from "../../../logger";
 import { statusToId, ACTIVE } from "../../helpers/statusTypes";
 
-export default ({ getMsSqlConnPool }) => async (orgId) => {
+export default ({ getMsSqlConnPool, logger }) => async (orgId) => {
   logger.info(`Retrieving Active Managers for organisation ${orgId}`);
 
   try {

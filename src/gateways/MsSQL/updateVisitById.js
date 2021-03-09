@@ -1,5 +1,4 @@
-import logger from "../../../logger";
-export default ({ getMsSqlConnPool }) => async ({
+export default ({ getMsSqlConnPool, logger }) => async ({
   callId,
   patientName,
   recipientName,

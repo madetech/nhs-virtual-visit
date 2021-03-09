@@ -1,10 +1,10 @@
 import validateVisit from "../../src/helpers/validateVisit";
-import logger from "../../logger";
 
 const createVisit = ({
   getInsertVisitGateway,
   getSendBookingNotification,
   getRetrieveFacilityById,
+  logger
 }) => async (visit, ward, callId, callPassword, videoProvider) => {
   const { validVisit, errors } = validateVisit(visit);
 

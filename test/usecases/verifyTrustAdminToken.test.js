@@ -1,4 +1,5 @@
 import verifyTrustAdminToken from "../../src/usecases/verifyTrustAdminToken";
+import logger from "../../logger";
 
 describe("verifyTrustAdminToken", () => {
   const res = {
@@ -25,6 +26,7 @@ describe("verifyTrustAdminToken", () => {
     const container = {
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
+      logger
     };
 
     const result = verifyTrustAdminToken(callback)({ req, res, container });
@@ -44,6 +46,7 @@ describe("verifyTrustAdminToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      logger
     };
 
     verifyTrustAdminToken(callback)({ req, res, container });
@@ -59,6 +62,7 @@ describe("verifyTrustAdminToken", () => {
     };
     const container = {
       getTokenProvider: () => tokenProvider,
+      logger
     };
     req.headers.cookie = "";
 
@@ -99,6 +103,7 @@ describe("verifyTrustAdminToken", () => {
     const container = {
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => regenerateTokenSpy,
+      logger
     };
 
     verifyTrustAdminToken(callback)({

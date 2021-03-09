@@ -1,11 +1,11 @@
 import moment from "moment";
-import { ARCHIVED } from "../../src/helpers/visitStatus";
-import logger from "../../logger";
+import { ARCHIVED } from "../helpers/visitStatus";
 
 const archiveWard = ({
   getRetrieveWardById,
   getUpdateWardArchiveTimeByIdGateway,
   getUpdateCallStatusesByWardIdGateway,
+  logger
 }) => async (wardId, trustId) => {
   const retrieveWardById = getRetrieveWardById();
   const updateCallStatusesByWardIdGateway = getUpdateCallStatusesByWardIdGateway();

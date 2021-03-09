@@ -1,6 +1,4 @@
-import logger from "../../logger";
-
-export default ({ getUpdateFacilityByIdGateway }) => async ({ id, name }) => {
+export default ({ getUpdateFacilityByIdGateway, logger }) => async ({ id, name }) => {
   if (id === undefined) {
     return { uuid: null, error: "id must be provided." };
   }

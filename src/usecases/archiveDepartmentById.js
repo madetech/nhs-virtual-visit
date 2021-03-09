@@ -1,9 +1,9 @@
-import logger from "../../logger";
 import { statusToId, ARCHIVED } from "../helpers/visitStatus";
 
 export default ({
   getArchiveDepartmentByIdGateway,
   getUpdateVisitStatusByDepartmentIdGateway,
+  logger
 }) => async (id) => {
   if (id === undefined) {
     return { uuid: null, error: "id must be provided." };

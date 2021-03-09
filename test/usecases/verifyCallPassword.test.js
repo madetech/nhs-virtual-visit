@@ -1,4 +1,5 @@
 import verifyCallPassword from "../../src/usecases/verifyCallPassword";
+import logger from "../../logger";
 
 describe("verifyCallPassword", () => {
   const container = {
@@ -26,6 +27,7 @@ describe("verifyCallPassword", () => {
         };
       }
     },
+    logger
   };
   it("returns true when password matches call db password", async () => {
     const input = "securePassword";

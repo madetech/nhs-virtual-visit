@@ -1,4 +1,5 @@
 import verifyTimeSensitiveLink from "../../src/usecases/verifyTimeSensitiveLink";
+import logger from "../../logger";
 
 describe("verifyTimeSensitiveLink", () => {
   let getVerifyTimeSensitiveLinkGateway;
@@ -37,6 +38,7 @@ describe("verifyTimeSensitiveLink", () => {
     const { user, error } = await verifyTimeSensitiveLink({
       getVerifyTimeSensitiveLinkGateway,
       getTokenProvider,
+      logger
     })(token);
 
     expect(user).toBeNull();
@@ -58,6 +60,7 @@ describe("verifyTimeSensitiveLink", () => {
     const { user, error } = await verifyTimeSensitiveLink({
       getVerifyTimeSensitiveLinkGateway,
       getTokenProvider,
+      logger
     })(token);
 
     expect(user).toBeNull();
@@ -83,6 +86,7 @@ describe("verifyTimeSensitiveLink", () => {
       const { user, error } = await verifyTimeSensitiveLink({
         getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
+        logger
       })(token);
   
       const expectedResponse = { id: 1, status: 0, verified: false, type: "authoriseUser" };
@@ -111,6 +115,7 @@ describe("verifyTimeSensitiveLink", () => {
       const { user, error } = await verifyTimeSensitiveLink({
         getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
+        logger
       })(token);
   
       expect(user).toBeNull();
@@ -133,6 +138,7 @@ describe("verifyTimeSensitiveLink", () => {
       const { user, error } = await verifyTimeSensitiveLink({
         getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
+        logger
       })(token);
   
       expect(user).toBeNull();
@@ -159,6 +165,7 @@ describe("verifyTimeSensitiveLink", () => {
       const { user, error } = await verifyTimeSensitiveLink({
         getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
+        logger
       })(token);
   
       const expectedResponse = { id: 1, status: 0, verified: false, type: "confirmRegistration" };
@@ -187,6 +194,7 @@ describe("verifyTimeSensitiveLink", () => {
       const { user, error } = await verifyTimeSensitiveLink({
         getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
+        logger
       })(token);
   
       expect(user).toBeNull();
@@ -209,6 +217,7 @@ describe("verifyTimeSensitiveLink", () => {
       const { user, error } = await verifyTimeSensitiveLink({
         getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
+        logger
       })(token);
   
       expect(user).toBeNull();
@@ -235,6 +244,7 @@ describe("verifyTimeSensitiveLink", () => {
       const { user, error } = await verifyTimeSensitiveLink({
         getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
+        logger
       })(token);
   
       const expectedResponse = { id: 1, status: 1, verified: false, type: "resetPassword" };
@@ -263,6 +273,7 @@ describe("verifyTimeSensitiveLink", () => {
       const { user, error } = await verifyTimeSensitiveLink({
         getVerifyTimeSensitiveLinkGateway,
         getTokenProvider,
+        logger
       })(token);
   
       expect(user).toBeNull();
@@ -282,6 +293,7 @@ describe("verifyTimeSensitiveLink", () => {
     const { user, error } = await verifyTimeSensitiveLink({
       getVerifyTimeSensitiveLinkGateway,
       getTokenProvider,
+      logger
     })(token);
 
     expect(user).toBeNull();

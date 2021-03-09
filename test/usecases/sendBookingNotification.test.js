@@ -1,5 +1,6 @@
 import sendBookingNotification from "../../src/usecases/sendBookingNotification";
 import TemplateStore from "../../src/gateways/GovNotify/TemplateStore";
+import logger from "../../logger";
 
 describe("sendBookingNotification", () => {
   const mobileNumber = "07123456789";
@@ -31,6 +32,7 @@ describe("sendBookingNotification", () => {
     container = {
       getSendTextMessage: () => sendTextMessage,
       getSendEmail: () => sendEmail,
+      logger
     };
 
     process.env.SMS_INITIAL_TEMPLATE_ID = "1";

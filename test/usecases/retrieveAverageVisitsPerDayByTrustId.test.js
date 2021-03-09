@@ -1,4 +1,5 @@
 import retrieveAverageVisitsPerDayByTrustId from "../../src/usecases/retrieveAverageVisitsPerDayByTrustId";
+import logger from "../../logger";
 
 describe.skip("retrieveAverageVisitsPerDay", () => {
   const trustId = 1;
@@ -18,6 +19,7 @@ describe.skip("retrieveAverageVisitsPerDay", () => {
       getRetrieveAverageVisitsPerDayGateway() {
         return dbAnySpy;
       },
+      logger
     };
 
     const { error } = await retrieveAverageVisitsPerDayByTrustId(container)();
@@ -30,6 +32,7 @@ describe.skip("retrieveAverageVisitsPerDay", () => {
       getRetrieveAverageVisitsPerDayGateway() {
         return dbAnySpy;
       },
+      logger
     };
 
     const date = new Date();
@@ -46,6 +49,7 @@ describe.skip("retrieveAverageVisitsPerDay", () => {
           return 2;
         };
       },
+      logger
     };
 
     const {
