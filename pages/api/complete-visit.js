@@ -15,14 +15,14 @@ export default withContainer(
 
     checkIfAuthorised(userIsAuthenticatedResponse, res);
 
-    if (!body.callId) {
+    if (!body.callUuid) {
       res.status(400);
       res.end(JSON.stringify({ err: "callId must be present" }));
       return;
     }
 
     const { error } = await container.getMarkVisitAsComplete()({
-      id: body.callId,
+      id: body.callUuid,
       wardId: userIsAuthenticatedResponse.wardId,
     });
 
