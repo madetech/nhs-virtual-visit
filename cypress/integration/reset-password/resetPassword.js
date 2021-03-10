@@ -4,6 +4,8 @@ import {
 } from "../commonSteps";
 
 describe("As a trust manager or admin, I want to reset my password if I forget it", () => {
+  let link;
+
   before(() => {
     // reset and seed the database
     cy.exec(
@@ -20,19 +22,21 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   it("given a valid reset password link, visits a reset password page and resets password", () => {
     GivenIVisitAValidResetPasswordLink();
     ThenISeeTheEnterNewPasswordPage();
+    cy.audit();
 
     WhenIFillOutTheResetPasswordFormWithTheSamePassword();
     AndISubmitTheForm();
     ThenISeeTheResetPasswordSuccessPage(
       Cypress.env("trustManagerEmailToResetPassword")
     );
+    cy.audit();
 
     WhenIClickOnTheLoginLink();
     ThenISeeTheManageYourTrustLoginPage();
-
     WhenIEnterTheTrustManagerEmailAndNewPassword();
     AndISubmitTheLoginForm();
-  ThenISeeTheTrustManagerHomePage();
+    ThenISeeTheTrustManagerHomePage();
+    cy.audit()
   });
 
   it("given a valid reset password link, a user can only use the link once", () => {
@@ -79,8 +83,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   function GivenIVisitAValidResetPasswordLink() {
     cy.request("POST", "/api/test-endpoints/test-send-reset-password-email")
       .then((res) => {
-        const link = res.body.link;
-        cy.log(res.status)
+        link = res.body.link;
         cy.visit(link);
       });
   }
@@ -101,11 +104,6 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   }
 
   function GivenIVisitAValidResetPasswordLinkTwice() {
-    cy.request("POST", "/api/test-endpoints/test-send-reset-password-email")
-      .then((res) => {
-        const link = res.body.link;
-        cy.visit(link);
-        cy.visit(link);
-      });
+    cy.visit(link);
   }
 });
