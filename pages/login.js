@@ -139,20 +139,15 @@ export const getServerSideProps = propsWithContainer(
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
     const adminToken = adminIsAuthenticated(headers.cookie);
 
-    let userType = 'unauthenticated';
-
     if (trustAdminToken) {
       res.writeHead(307, { Location: `/trust-admin` }).end();
-      userType = 'trust-admin';
     } else if (userToken && userToken.ward) {
       res.writeHead(307, { Location: `/wards/visits` }).end();
-      userType = 'ward-staff'
     } else if (adminToken) {
       res.writeHead(307, { Location: `/admin` }).end();
-      userType = 'admin'
     }
 
-    const correlationId = `${uuidv4()}-${userType}`;
+    const correlationId = uuidv4();
 
     return { props: { correlationId } };
   }
