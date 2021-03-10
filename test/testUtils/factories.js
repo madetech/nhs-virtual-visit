@@ -28,30 +28,11 @@ export const setUpAdmin = async (args = {}) => {
   });
 };
 
-export const setupTrust = async (args = {}) => {
-  return await container.getCreateTrust()({
-    name: "Test Trust",
-    adminCode: "TESTCODE",
-    password: "TESTPASSWORD",
-    videoProvider: "whereby",
-    ...args,
-  });
-};
-
 export const setupOrganization = async (args = {}) => {
   return await container.getCreateOrganisationGateway()({
     name: "Test Trust",
     status: 0,
     type: "trust",
-    ...args,
-  });
-};
-
-export const setupHospital = async (args = {}) => {
-  return await container.getCreateHospital()({
-    name: "Test Hospital",
-    supportUrl: "https://www.support.example.com",
-    surveyUrl: "https://www.survey.example.com",
     ...args,
   });
 };
@@ -67,14 +48,6 @@ export const setUpFacility = async (args = {}) => {
     uuid: facilityUuid,
   } = await container.getRetrieveFacilityByUuidGateway()(uuid);
   return { facilityId, facilityUuid };
-};
-
-export const setupWard = async (args = {}) => {
-  return await container.getCreateWard()({
-    name: "Test Ward",
-    code: "wardCode",
-    ...args,
-  });
 };
 
 export const setUpDepartment = async (args = {}) => {
@@ -147,16 +120,11 @@ export const setupOrganisationAndFacility = async (
     ...args.organisationArgs,
   });
 
-  const uuid = await setUpFacility({
+  const { facilityId, facilityUuid } = await setUpFacility({
     orgId,
     createdBy: args.organisationArgs.createdBy,
     ...args.facilityArgs,
   });
-
-  const {
-    id: facilityId,
-    uuid: facilityUuid,
-  } = await container.getRetrieveFacilityByUuidGateway()(uuid);
 
   return { orgId, facilityId, facilityUuid };
 };
@@ -172,16 +140,11 @@ export const setupOrganisationFacilityAndManager = async (
     userArgs: args.userArgs,
     organisationArgs: args.organisationArgs,
   });
-  const uuid = await setUpFacility({
+  const { facilityId, facilityUuid } = await setUpFacility({
     orgId,
     createdBy: userId,
     ...args.facilityArgs,
   });
-
-  const {
-    id: facilityId,
-    uuid: facilityUuid,
-  } = await container.getRetrieveFacilityByUuidGateway()(uuid);
 
   return { userId, orgId, facilityId, facilityUuid };
 };
@@ -205,15 +168,11 @@ export const setupOrganisationFacilityDepartmentAndManager = async (
     facilityArgs: args.facilityArgs,
   });
 
-  const uuid = await setUpDepartment({
+  const { departmentId, departmentUuid } = await setUpDepartment({
     facilityId,
     createdBy: userId,
     ...args.departmentArgs,
   });
-  const {
-    id: departmentId,
-    uuid: departmentUuid,
-  } = await container.getRetrieveDepartmentByUuidGateway()(uuid);
 
   return {
     userId,
@@ -223,29 +182,6 @@ export const setupOrganisationFacilityDepartmentAndManager = async (
     departmentUuid,
     departmentId,
   };
-};
-
-export const setupWardWithinHospitalAndTrust = async (
-  args = {
-    index: 1,
-    trustArgs: {},
-    hospitalArgs: {},
-    wardArgs: {},
-  }
-) => {
-  const { trustId } = await setupTrust({
-    adminCode: `TESTCODE${args.index}`,
-    ...args.trustArgs,
-  });
-  const { hospitalId } = await setupHospital({ trustId, ...args.hospitalArgs });
-  const { wardId } = await setupWard({
-    code: `wardCode${args.index}`,
-    trustId,
-    hospitalId,
-    ...args.wardArgs,
-  });
-
-  return { wardId, hospitalId, trustId };
 };
 
 export const setUpScheduledCall = async (args = {}) => {
@@ -262,19 +198,4 @@ export const setUpScheduledCall = async (args = {}) => {
     visit,
     args.departmentId
   );
-};
-
-export const setupVisitPostgres = async (args = {}) => {
-  const db = await container.getDb();
-  const visit = {
-    patientName: "Patient Name",
-    contactEmail: "contact@example.com",
-    contactName: "Contact Name",
-    callTime: new Date("2020-06-01 13:00"),
-    callId: "TESTCALLID",
-    provider: "whereby",
-    callPassword: "TESTCALLPASSWORD",
-    ...args,
-  };
-  return await container.getInsertVisitGateway()(db, visit, args.wardId);
 };
