@@ -18,14 +18,14 @@ export default withContainer(async (req, res, { container }) => {
   validateHttpMethod("POST", method, res);
   checkIfAuthorised(authenticationToken, res);
 
-  let { callId, contactNumber, contactEmail, callPassword } = body;
+  let { callUuid, contactNumber, contactEmail, callPassword } = body;
 
   const protocol = process.env.NODE_ENV === "production" ? "https" : "http";
   const host = req.headers.host;
   const origin = `${protocol}://${host}`;
 
-  const visitorsUrl = `${origin}/visitors/${callId}/start?callPassword=${callPassword}`;
-  const visitsUrl = `${origin}/visits/${callId}?name=Ward`;
+  const visitorsUrl = `${origin}/visitors/${callUuid}/start?callPassword=${callPassword}`;
+  const visitsUrl = `${origin}/visits/${callUuid}?name=Ward`;
 
   const sendTextMessage = container.getSendTextMessage();
   const secondTextTemplateId = TemplateStore().secondText.templateId;
@@ -50,6 +50,11 @@ export default withContainer(async (req, res, { container }) => {
     const error = retrieveDepartmentError | retrieveFacilityError;
 
     if (error) {
+      throw error;
+    }
+ 
+    const { error: updateStartTimeError } = await container.getUpdateScheduledCallStartTimeByCallUuid()(callUuid);
+    if (updateStartTimeError) {
       throw error;
     }
 
@@ -89,7 +94,7 @@ export default withContainer(async (req, res, { container }) => {
       notifier.notify(visitorsUrl);
 
       res.status(201);
-      res.end(JSON.stringify({ id: callId, callUrl: visitsUrl }));
+      res.end(JSON.stringify({ id: callUuid, callUrl: visitsUrl }));
     } else {
       res.status(400);
       res.end(

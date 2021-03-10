@@ -26,7 +26,7 @@ const VisitStart = ({
 
   const startCall = async () => {
     const body = JSON.stringify({
-      callId,
+      callUuid: callId,
       contactNumber,
       contactEmail,
       callPassword,

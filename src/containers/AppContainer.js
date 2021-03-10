@@ -59,6 +59,7 @@ import retrieveTotalVisitsByStatusAndFacilityId from "../usecases/retrieveTotalV
 import retrieveTotalBookedVisitsForDepartmentsByFacilityId from "../usecases/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 import retrieveTotalBookedVisitsForFacilitiesByOrgId from "../usecases/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 import deleteRecipientInformationForPii from "../usecases/deleteRecipientInformationForPii";
+import updateScheduledCallStartTimeByCallUuid from "../usecases/updateScheduledCallStartTimeByCallUuid";
 
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
@@ -114,6 +115,7 @@ import retrieveTotalVisitsByStatusAndOrgIdGW from "../gateways/MsSQL/retrieveTot
 import retrieveTotalVisitsByStatusAndFacilityIdGW from "../gateways/MsSQL/retrieveTotalVisitsByStatusAndFacilityId"
 import retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 import retrieveTotalBookedVisitsForFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForFacilitiesByOrgId";
+import updateScheduledCallStartTimeByCallUuidGW from "../gateways/MsSQL/updateScheduledCallStartTimeByCallUuid";
 
 import logger from "../../logger"
 import deleteRecipientInformationForPiiGateway from "../gateways/MsSQL/deleteRecipientInformationForPii";
@@ -317,6 +319,10 @@ class AppContainer {
     return resetPassword(this);
   };
 
+  getUpdateScheduledCallStartTimeByCallUuid = () => {
+    return updateScheduledCallStartTimeByCallUuid(this);
+  }
+
   /* These are the Gateway */
 
   getCaptureEventGateway = () => {
@@ -426,6 +432,10 @@ class AppContainer {
 
   getRetrieveTotalVisitsByStatusAndFacilityIdGateway = () => {
     return retrieveTotalVisitsByStatusAndFacilityIdGW(this);
+  }
+  
+  getUpdateScheduledCallStartTimeByCallUuidGateway = () => {
+    return updateScheduledCallStartTimeByCallUuidGW(this);
   }
 
   getLogEventGateway = () => {
