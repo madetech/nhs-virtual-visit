@@ -15,6 +15,9 @@ export default ({
   try {
     logger.info(`Retrieving total booked visits for facility id ${facilityId}`);
     const departments = await getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway()(facilityId);
+    if (departments === undefined) {
+      throw("RequestError: Cannot retrieve departments!");
+    }
     const { mostVisited, leastVisited } = getMostAndLeastVisited(departments);
     return { 
       departments,
