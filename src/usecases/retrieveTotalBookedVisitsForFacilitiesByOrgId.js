@@ -14,7 +14,6 @@ export default ({
       }
       logger.info(`Retrieving total booked visits for facilities by orgaisation id ${orgId}`);
       const facilities = await getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway()(orgId);
-      console.log(facilities)
       if (facilities === undefined) {
         throw("RequestError: Cannot retrieve facilities!");
       }
