@@ -39,7 +39,7 @@ export default {
     Promise.resolve({})
   ),
   getResetPasswordGateway: jest.fn(() => () => Promise.resolve({})),
-  getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway: jest.fn(() => () => Promise.resolve({})),
+  getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveTotalBookedVisitsByFacilityIdGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveTotalBookedVisitsByOrgIdGateway: jest.fn().mockResolvedValue({}),
   getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway: jest.fn().mockResolvedValue({}),

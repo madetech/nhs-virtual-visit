@@ -190,7 +190,7 @@ export const getServerSideProps = propsWithContainer(
       mostVisitedList,
       leastVisitedList,
       error: mostAndLeastVisitedListError
-     } = await container.getRetrieveFacilitiesBookedVisitTotalsByOrgId()(
+     } = await container.getRetrieveTotalBookedVisitsForFacilitiesByOrgId()(
       authenticationToken.trustId
     );
 

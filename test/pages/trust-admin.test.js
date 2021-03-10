@@ -86,7 +86,7 @@ describe("trust-admin", () => {
     getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
     getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgId,
     getRetrieveTotalBookedVisitsByOrgId: () => retrieveWardVisitTotalsSpy,
-    getRetrieveFacilitiesBookedVisitTotalsByOrgId: () => retrieveHospitalVisitTotals,
+    getRetrieveTotalBookedVisitsForFacilitiesByOrgId: () => retrieveHospitalVisitTotals,
     getRetrieveAverageParticipantsInVisit: () =>
       retrieveAverageParticipantsInVisit,
     getRetrieveAverageVisitTimeByOrganisationId: () =>
@@ -193,7 +193,7 @@ describe("trust-admin", () => {
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveFacilitiesBookedVisitTotalsByOrgId: () =>
+          getRetrieveTotalBookedVisitsForFacilitiesByOrgId: () =>
             jest.fn().mockReturnValue(threeHospitals),
         }),
       });
@@ -214,7 +214,7 @@ describe("trust-admin", () => {
         req: authenticatedReq,
         res,
         container: Object.assign({}, container, {
-          getRetrieveFacilitiesBookedVisitTotalsByOrgId: () => getRetrieveWardsSpyError,
+          getRetrieveTotalBookedVisitsForFacilitiesByOrgId: () => getRetrieveWardsSpyError,
         }),
       });
 

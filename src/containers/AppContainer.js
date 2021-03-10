@@ -58,7 +58,7 @@ import updateUserVerificationToVerified from "../usecases/updateUserVerification
 import retrieveTotalBookedVisitsByOrgId from "../usecases/retrieveTotalBookedVisitsByOrgId";
 import retrieveTotalBookedVisitsByFacilityId from "../usecases/retrieveTotalBookedVisitsByFacilityId";
 import retrieveTotalBookedVisitsForDepartmentsByFacilityId from "../usecases/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
-import retrieveFacilitiesBookedVisitTotalsByOrgId from "../usecases/retrieveFacilitiesBookedVisitTotalsByOrgId";
+import retrieveTotalBookedVisitsForFacilitiesByOrgId from "../usecases/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
@@ -113,7 +113,7 @@ import updateUserVerificationToVerifiedGateway from "../gateways/MsSQL/updateUse
 import retrieveTotalBookedVisitsByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsByOrgId";
 import retrieveTotalBookedVisitsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsByFacilityId"
 import retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
-import retrieveFacilitiesBookedVisitTotalsByOrgIdGW from "../gateways/MsSQL/retrieveFacilitiesBookedVisitTotalsByOrgId";
+import retrieveTotalBookedVisitsForFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 
 import logger from "../../logger"
 
@@ -590,12 +590,12 @@ class AppContainer {
     return new CallIdProvider(provider, callTime);
   };
 
-  getRetrieveFacilitiesBookedVisitTotalsByOrgId = () => {
-    return retrieveFacilitiesBookedVisitTotalsByOrgId(this);
+  getRetrieveTotalBookedVisitsForFacilitiesByOrgId = () => {
+    return retrieveTotalBookedVisitsForFacilitiesByOrgId(this);
   };
 
-  getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway = () => {
-    return retrieveFacilitiesBookedVisitTotalsByOrgIdGW(this);
+  getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway = () => {
+    return retrieveTotalBookedVisitsForFacilitiesByOrgIdGW(this);
   };
 
   getRetrieveTotalBookedVisitsByOrgId = () => {

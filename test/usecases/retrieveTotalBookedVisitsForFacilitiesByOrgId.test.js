@@ -1,7 +1,7 @@
-import retrieveFacilitiesBookedVisitTotalsByOrgId from "../../src/usecases/retrieveFacilitiesBookedVisitTotalsByOrgId";
+import retrieveTotalBookedVisitsForFacilitiesByOrgId from "../../src/usecases/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 import container from "src/containers/AppContainer";
 
-describe("retrieveFacilitiesBookedVisitTotalsByOrgId", () => {
+describe("retrieveTotalBookedVisitsForFacilitiesByOrgId", () => {
     // Arrange
     const expectedOrgId = 1;
     const expectedFacilities = [
@@ -10,16 +10,16 @@ describe("retrieveFacilitiesBookedVisitTotalsByOrgId", () => {
         { id: 3, name: "Hospital 3", total: 7  },
         { id: 4, name: "Hospital 4", total: 9  }
     ];
-    const getRetrieveFacilitiesBookedVisitTotalsByOrgIdSpy = jest.fn().mockResolvedValue(expectedFacilities);
-    container.getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway.mockImplementation(
-        () => getRetrieveFacilitiesBookedVisitTotalsByOrgIdSpy
+    const getRetrieveTotalBookedVisitsForFacilitiesByOrgIdSpy = jest.fn().mockResolvedValue(expectedFacilities);
+    container.getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway.mockImplementation(
+        () => getRetrieveTotalBookedVisitsForFacilitiesByOrgIdSpy
     );
 
     it("returns the correct object", async () => {
-        const { facilities, mostVisitedList, leastVisitedList, error } = await retrieveFacilitiesBookedVisitTotalsByOrgId(container)(
+        const { facilities, mostVisitedList, leastVisitedList, error } = await retrieveTotalBookedVisitsForFacilitiesByOrgId(container)(
         expectedOrgId
         );
-        expect(getRetrieveFacilitiesBookedVisitTotalsByOrgIdSpy).toBeCalledWith(expectedOrgId);
+        expect(getRetrieveTotalBookedVisitsForFacilitiesByOrgIdSpy).toBeCalledWith(expectedOrgId);
         expect(facilities).toEqual(expectedFacilities);
         expect(mostVisitedList).toEqual([expectedFacilities[0], expectedFacilities[3], expectedFacilities[2]]);
         expect(leastVisitedList).toEqual([expectedFacilities[1], expectedFacilities[2], expectedFacilities[3]]);
@@ -28,19 +28,19 @@ describe("retrieveFacilitiesBookedVisitTotalsByOrgId", () => {
  
     it("returns an error object if orgId is undefined", async () => {
         // Act
-        const { facilities, error } = await retrieveFacilitiesBookedVisitTotalsByOrgId(container)();
+        const { facilities, error } = await retrieveTotalBookedVisitsForFacilitiesByOrgId(container)();
         // Assert
         expect(error).toEqual("organisation id must be provided.");
         expect(facilities).toBeNull();
     });
     it("returns error if gateway db throws an error", async () => {
         // Act
-        container.getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway.mockImplementationOnce(
+        container.getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway.mockImplementationOnce(
             () => jest.fn(async () => { throw new Error("error"); })
         );
         
         // Act
-        const { facilities, error } = await retrieveFacilitiesBookedVisitTotalsByOrgId(container)(
+        const { facilities, error } = await retrieveTotalBookedVisitsForFacilitiesByOrgId(container)(
             expectedOrgId
         );
         // Assert

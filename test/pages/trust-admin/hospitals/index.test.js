@@ -41,7 +41,7 @@ describe("trust-admin/hospitals", () => {
     container = {
       getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
       getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgIdSpy,
-      getRetrieveFacilitiesBookedVisitTotalsByOrgId: () => retrieveHospitalVisitTotalsStub,
+      getRetrieveTotalBookedVisitsForFacilitiesByOrgId: () => retrieveHospitalVisitTotalsStub,
       getTokenProvider: () => tokenProvider,
       getRegenerateToken: () => jest.fn().mockReturnValue({}),
     };
