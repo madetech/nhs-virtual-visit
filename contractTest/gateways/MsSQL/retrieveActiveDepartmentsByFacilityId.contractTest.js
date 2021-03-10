@@ -19,12 +19,12 @@ describe("retrieveActiveDepartmentsByFacilityIdGateway", () => {
       name: "Department Two",
       code: "DET",
     };
-    const departmentOneUuid = await setUpDepartment({
+    const { departmentUuid: departmentOneUuid } = await setUpDepartment({
       ...departmentOne,
       createdBy: userId,
       facilityId,
     });
-    const departmentTwoUuid = await setUpDepartment({
+    const { departmentUuid: departmentTwoUuid } = await setUpDepartment({
       ...departmentTwo,
       createdBy: userId,
       facilityId,

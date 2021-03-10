@@ -22,12 +22,12 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
 
     const { userId, orgId } = await setupOrganisationAndManager();
 
-    const facilityOneUuid = await setUpFacility({
+    const {facilityUuid: facilityOneUuid } = await setUpFacility({
       ...facilityOne,
       createdBy: userId,
       orgId,
     });
-    const facilityTwoUuid = await setUpFacility({
+    const { facilityUuid: facilityTwoUuid } = await setUpFacility({
       ...facilityTwo,
       createdBy: userId,
       orgId,
@@ -59,12 +59,12 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
 
     const { userId, orgId } = await setupOrganisationAndManager();
 
-    const facilityOneUuid = await setUpFacility({
+    const { facilityUuid: facilityOneUuid } = await setUpFacility({
       ...facilityOne,
       createdBy: userId,
       orgId,
     });
-    const facilityTwoUuid = await setUpFacility({
+    const { facilityUuid: facilityTwoUuid } = await setUpFacility({
       ...facilityTwo,
       createdBy: userId,
       orgId,
@@ -84,13 +84,13 @@ describe("retrieveFacilitiesByOrgIdGateWay", () => {
       name: "Department Two",
       code: "DP2",
     };
-    const departmentOneUuid = await setUpDepartment({
+    const { departmentUuid: departmentOneUuid } = await setUpDepartment({
       ...departmentOne,
       facilityId: currentFacilityOne.id,
       createdBy: userId,
     });
 
-    const departmentTwoUuid = await setUpDepartment({
+    const { departmentUuid: departmentTwoUuid } = await setUpDepartment({
       ...departmentTwo,
       facilityId: currentFacilityTwo.id,
       createdBy: userId,
