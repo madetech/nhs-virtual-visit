@@ -29,6 +29,18 @@ describe("retrieveTotalBookedVisitsByFacilityIdGateway", () => {
     // Assert
     expect(total).toEqual(3);
   });
+  it ("returns 0 when no visits exist", async ()=>{
+      // Arrange
+      const { adminId, orgId } = await setupAdminAndOrganisation();
+      const { facilityId } = await setUpFacility({ createdBy: adminId, orgId });
+      await setUpDepartment({ createdBy: adminId, facilityId: facilityId });
+     // Act
+     const total = await retrieveTotalBookedVisitsByFacilityIdGateway(container)(
+      facilityId
+    );
+    // Assert
+    expect(total).toEqual(0);
+  })
   it("returns undefined when given invalid facility id", async () => {
     // Arrange
     const idDoesNotExist = 111111111;
@@ -40,6 +52,7 @@ describe("retrieveTotalBookedVisitsByFacilityIdGateway", () => {
     // Assert
     expect(total).toBeDefined();
   });
+
   it("throws an error when facility id is not an integer", async () => {
     // Arrange
     const invalidId = "invalid";
