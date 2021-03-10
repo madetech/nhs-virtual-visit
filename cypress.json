@@ -11,7 +11,6 @@
     "validAdminPassword": "P@55w0rd",
     "fakeWard": "FAKENHS",
     "baseUrl": "http://localhost:3001",
-    "jwtPrivateKey": "cypress/fixtures/trustManagerHashedPassword.txt",
     "tokenVersion": "3",
     "uuid": "",
     "hash": "",
