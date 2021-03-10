@@ -13,9 +13,12 @@ export default ({
           error: "organisation id must be provided." };
       }
       logger.info(`Retrieving total booked visits for facilities by orgaisation id ${orgId}`);
-      var facilities = await getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway()(orgId);
-      const { mostVisitedList, leastVisitedList} = getMostAndLeastVisitedList(facilities, 3);
+      const facilities = await getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway()(orgId);
       console.log(facilities)
+      if (facilities === undefined) {
+        throw("RequestError: Cannot retrieve facilities!");
+      }
+      const { mostVisitedList, leastVisitedList } = getMostAndLeastVisitedList(facilities, 3);
       return { facilities, mostVisitedList, leastVisitedList, error: null };
      
     } catch (error) {
@@ -23,7 +26,7 @@ export default ({
         facilities: null,
         mostVisitedList: null,
         leastVisitedList: null,
-        error: "There has been error retrieving total booked visits for facilities.",
+        error: `There has been error retrieving total booked visits for facilities: ${error.toString()}`,
       };
     }
   };

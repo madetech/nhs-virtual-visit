@@ -35,13 +35,12 @@ describe("retrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway", () => {
     const departmentArray = await retrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway(container)(
       facilityOneId
     );
-    console.log(departmentArray)
     // Assert
     expect(departmentArray.length).toEqual(2);
     expect(departmentArray.find(department => department.name === "Department One").total).toEqual(2);
     expect(departmentArray.find(department => department.name === "Department Two").total).toEqual(1);
   });
-  it ("returns 0 when no visits exist", async ()=>{
+  it ("returns an array with total visit 0 when no visits exist", async ()=>{
       // Arrange
       const { adminId, orgId } = await setupAdminAndOrganisation();
       const { facilityId } = await setUpFacility({ createdBy: adminId, orgId });
@@ -54,6 +53,17 @@ describe("retrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway", () => {
     expect(departmentArray.length).toEqual(1);
     expect(departmentArray[0].total).toEqual(0);
   })
+  it ("returns an empty array when no departments exist", async ()=>{
+    // Arrange
+    const { adminId, orgId } = await setupAdminAndOrganisation();
+    const { facilityId } = await setUpFacility({ createdBy: adminId, orgId });
+   // Act
+   const departmentArray = await retrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway(container)(
+    facilityId
+  );
+  // Assert
+  expect(departmentArray.length).toEqual(0);
+})
   it("returns undefined when given invalid facility id", async () => {
     // Arrange
     const idDoesNotExist = 111111111;

@@ -28,6 +28,17 @@ describe("retrieveTotalBookedVisitsForDepartmentsByFacilityId", () => {
         expect(leastVisited).toEqual(expectedDepartments[1]);
         expect(error).toBeNull();
     });
+    it("returns an error if department array is undefined", async () => {
+        // Arrange
+        const expectedDepartments = undefined;
+        getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdSpy = jest.fn().mockResolvedValue(expectedDepartments);
+        // Act
+        const { error } = await retrieveTotalBookedVisitsForDepartmentsByFacilityId(container)(
+        expectedFacilityId
+        );
+        expect(getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdSpy).toBeCalledWith(expectedFacilityId);
+        expect(error).toEqual("RequestError: Cannot retrieve departments!");
+    });
  
     it("returns an error object if facilityId is undefined", async () => {
         // Act
