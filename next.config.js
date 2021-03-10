@@ -26,7 +26,8 @@ module.exports = withNextEnv(
     withSourceMaps({
       env: {
         SENTRY_DSN,
-        SIGN_UP_EMAIL_DOMAINS
+        SIGN_UP_EMAIL_DOMAINS,
+        NENV: NODE_ENV
       },
       webpack: (config, options) => {
         // In `pages/_app.js`, Sentry is imported from @sentry/node. While
