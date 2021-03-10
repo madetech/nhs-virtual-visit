@@ -57,11 +57,16 @@ export const setupHospital = async (args = {}) => {
 };
 
 export const setUpFacility = async (args = {}) => {
-  return await container.getCreateFacilityGateway()({
+  const uuid = await container.getCreateFacilityGateway()({
     name: "Test Facility One",
     code: "TF1",
     ...args,
   });
+  const {
+    id: facilityId,
+    uuid: facilityUuid,
+  } = await container.getRetrieveFacilityByUuidGateway()(uuid);
+  return { facilityId, facilityUuid };
 };
 
 export const setupWard = async (args = {}) => {
@@ -73,12 +78,18 @@ export const setupWard = async (args = {}) => {
 };
 
 export const setUpDepartment = async (args = {}) => {
-  return await container.getCreateDepartmentGateway()({
+  const uuid = await container.getCreateDepartmentGateway()({
     name: "Test Department",
     code: "departmentCode",
     pin: "1234",
     ...args,
   });
+  const {
+    id: departmentId,
+    uuid: departmentUuid,
+  } = await container.getRetrieveDepartmentByUuidGateway()(uuid);
+  return { departmentId, departmentUuid };
+
 };
 export const setupOrganisationAndManager = async (
   args = {

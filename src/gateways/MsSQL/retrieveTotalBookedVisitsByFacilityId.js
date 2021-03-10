@@ -9,6 +9,6 @@ export default ({ getMsSqlConnPool }) => async (facilityId) => {
         JOIN dbo.[scheduled_call] ON department_id = department.id
         WHERE facility_id = @facilityId`
       );
-    return res.recordset[0].total;
+      return res.recordset[0].total;
   };
   
