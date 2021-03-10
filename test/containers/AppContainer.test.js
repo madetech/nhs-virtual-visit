@@ -266,12 +266,12 @@ describe("AppContainer", () => {
     expect(container.getVerifyTimeSensitiveLinkGateway()).toBeDefined();
   });
 
-  it("returns getRetrieveFacilitiesBookedVisitTotalsByOrgId", ()=>{
-    expect(container.getRetrieveFacilitiesBookedVisitTotalsByOrgId()).toBeDefined();
+  it("returns getRetrieveTotalBookedVisitsForFacilitiesByOrgId", ()=>{
+    expect(container.getRetrieveTotalBookedVisitsForFacilitiesByOrgId()).toBeDefined();
   })
 
-  it("returns getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway", ()=>{
-    expect(container.getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway()).toBeDefined();
+  it("returns getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway", ()=>{
+    expect(container.getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway()).toBeDefined();
   })
 
   it("returns getRetrieveTotalBookedVisitsByOrgId", ()=>{

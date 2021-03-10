@@ -2,7 +2,7 @@ import logger from "../../logger";
 import { getMostAndLeastVisitedList } from "../helpers/getMostAndLeastVisited";
 
 export default ({
-  getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway,
+  getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway,
   }) => async (orgId) => {
     try {
       if (orgId === undefined) {
@@ -13,7 +13,7 @@ export default ({
           error: "organisation id must be provided." };
       }
       logger.info(`Retrieving total booked visits for facilities by orgaisation id ${orgId}`);
-      var facilities = await getRetrieveFacilitiesBookedVisitTotalsByOrgIdGateway()(orgId);
+      var facilities = await getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway()(orgId);
       const { mostVisitedList, leastVisitedList} = getMostAndLeastVisitedList(facilities, 3);
       console.log(facilities)
       return { facilities, mostVisitedList, leastVisitedList, error: null };
