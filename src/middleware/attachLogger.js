@@ -12,7 +12,7 @@ function jsonFormat(tokens, req, res) {
     statusCode: tokens['status'](req, res),
     contentLength: tokens['res'](req, res, 'content-length'),
     referrer: tokens['referrer'](req, res),
-    responseTime: tokens['response-time'](req, res),
+    responseTime: parseFloat(tokens['response-time'](req, res)) || null,
     userAgent: tokens['user-agent'](req, res),
   });
 }
