@@ -5,9 +5,9 @@ import { statusToId, ACTIVE, DISABLED } from "../../../src/helpers/statusTypes";
 
 export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
-    if (process.env.NENV !== "e2e") {
+    if (process.env.APP_ENV !== "test") {
       res.status(403);
-      res.send(JSON.stringify({ error: "Can't access this endpoint from a production environment" }));
+      res.end(JSON.stringify({ error: "Can't access this endpoint from a production environment" }));
       return;
     }
 

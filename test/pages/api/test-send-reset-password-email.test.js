@@ -7,6 +7,7 @@ describe("sendTestEmail", () => {
   let validRequest, response, container;
 
   beforeEach(() => {
+    process.env.APP_ENV = "test";
     validRequest = {
       method: "POST",
       headers: {
@@ -43,6 +44,20 @@ describe("sendTestEmail", () => {
     });
   });
 
+  afterEach(() => {
+    process.env.APP_ENV = "";
+  });
+
+  it("returns 403 if the endpoint isn't called from a test environment", async () => {
+    process.env.APP_ENV = "production"
+
+    await testSendResetPasswordEmail(validRequest, response, { container: container });
+
+    expect(response.status).toHaveBeenCalledWith(403);
+    expect(response.end).toHaveBeenCalledWith(
+      JSON.stringify({ error: "Can't access this endpoint from a production environment" })
+    );
+  });
   it("returns 405 if not POST method", async () => {
     validRequest.method = "GET";
 
