@@ -1,4 +1,4 @@
-import retrieveTotalBookedVisitsByOrgIdGateway from "../../../src/gateways/MsSQL/retrieveTotalBookedVisitsByOrgId";
+import retrieveTotalBookedVisitsByOrgIdGateway from "../../../src/gateways/MsSQL/retrieveTotalVisitsByStatusAndOrgId.js";
 import {
   setupAdminAndOrganisation,
   setUpFacility,

@@ -1,4 +1,4 @@
-import retrieveAverageParticipantsInVisit from "../../src/usecases/retrieveAverageParticipantsInVisit";
+import retrieveAverageParticipantsInVisit from "../../src/usecases/retrieveAverageParticipantsInVisit(remove)";
 import logger from "../../logger";
 
 describe.skip("retrieveAverageParticipantsInVisit", () => {
