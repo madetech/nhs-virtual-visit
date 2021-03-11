@@ -1,4 +1,5 @@
 import { getServerSideProps } from "../../pages/trust-admin";
+import { COMPLETE } from "../../src/helpers/visitStatus";
 
 describe("trust-admin", () => {
   let res;
@@ -85,7 +86,7 @@ describe("trust-admin", () => {
     getRetrieveDepartments: () => getRetrieveWardsSpy,
     getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
     getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgId,
-    getRetrieveTotalBookedVisitsByOrgId: () => retrieveWardVisitTotalsSpy,
+    getRetrieveTotalVisitsByStatusAndOrgId: () => retrieveWardVisitTotalsSpy,
     getRetrieveTotalBookedVisitsForFacilitiesByOrgId: () => retrieveHospitalVisitTotals,
     getRetrieveAverageParticipantsInVisit: () =>
       retrieveAverageParticipantsInVisit,
@@ -249,36 +250,18 @@ describe("trust-admin", () => {
 
       expect(props.error).toEqual("Error!");
     });
-
-    it("retrieves the average number of participants in a visit", async () => {
-      const { props } = await getServerSideProps({
+    
+    it("retrieves the total number of completed visits", async () => {
+      const {props: { totalCompletedVisits, error } } = await getServerSideProps({
         req: authenticatedReq,
         res,
         container,
       });
-
-      expect(retrieveAverageParticipantsInVisit).toHaveBeenCalledWith(trustId);
-      expect(props.averageParticipantsInVisit).toEqual(3);
-      expect(props.error).toBeNull();
-    });
-
-    it("sets an error in props if average participants in visit error", async () => {
-      const retrieveAverageParticipantsInVisitError = jest.fn(async () => ({
-        error: "Error!",
-      }));
-
-      const { props } = await getServerSideProps({
-        req: authenticatedReq,
-        res,
-        container: Object.assign({}, container, {
-          getRetrieveAverageParticipantsInVisit: () =>
-            retrieveAverageParticipantsInVisitError,
-        }),
-      });
-
-      expect(props.error).toEqual("Error!");
-    });
-
+      expect(retrieveWardVisitTotalsSpy).toHaveBeenCalledWith(trustId, COMPLETE );
+      expect(totalCompletedVisits).toEqual(1234);
+      expect(error).toBeNull();
+    })
+  
     it("retrieves the average visit duration", async () => {
       const { props } = await getServerSideProps({
         req: authenticatedReq,

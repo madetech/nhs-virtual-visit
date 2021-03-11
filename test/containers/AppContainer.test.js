@@ -62,10 +62,6 @@ describe("AppContainer", () => {
     expect(container.getCaptureEvent()).toBeDefined();
   });
 
-  it("returns getRetrieveAverageParticipantsInVisit", () => {
-    expect(container.getRetrieveAverageParticipantsInVisit()).toBeDefined();
-  });
-
   it("returns getUpdateVisitById", () => {
     expect(container.getUpdateVisitById()).toBeDefined();
   });
@@ -274,12 +270,12 @@ describe("AppContainer", () => {
     expect(container.getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway()).toBeDefined();
   })
 
-  it("returns getRetrieveTotalBookedVisitsByOrgId", ()=>{
-    expect(container.getRetrieveTotalBookedVisitsByOrgId()).toBeDefined();
+  it("returns getRetrieveTotalVisitsByStatusAndOrgId", ()=>{
+    expect(container.getRetrieveTotalVisitsByStatusAndOrgId()).toBeDefined();
   })
 
-  it("returns getRetrieveTotalBookedVisitsByOrgIdGateway", ()=>{
-    expect(container.getRetrieveTotalBookedVisitsByOrgIdGateway()).toBeDefined();
+  it("returns getRetrieveTotalVisitsByStatusAndOrgIdGateway", ()=>{
+    expect(container.getRetrieveTotalVisitsByStatusAndOrgIdGateway()).toBeDefined();
   })
 
   it("returns getRetrieveTotalBookedVisitsByFacilityId", ()=>{
