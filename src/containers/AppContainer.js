@@ -207,10 +207,6 @@ class AppContainer {
     return captureEvent(this);
   };
 
-  // getRetrieveAverageParticipantsInVisit = () => {
-  //   return retrieveAverageParticipantsInVisit(this);
-  // };
-
   getUpdateVisitById = () => {
     return updateVisitById(this);
   };

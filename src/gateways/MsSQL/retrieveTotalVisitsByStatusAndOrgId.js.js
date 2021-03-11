@@ -16,4 +16,3 @@ export default ({ getMsSqlConnPool }) => async ({ orgId, status }) => {
       .query(queryString);
     return res.recordset[0].total;
   };
-  
