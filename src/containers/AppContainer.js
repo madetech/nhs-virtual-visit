@@ -20,7 +20,7 @@ import validateEmailAddress from "../usecases/validateEmailAddress";
 import validateMobileNumber from "../usecases/validateMobileNumber";
 import regenerateToken from "../usecases/regenerateToken";
 import captureEvent from "../usecases/captureEvent";
-import retrieveAverageParticipantsInVisit from "../usecases/retrieveAverageParticipantsInVisit";
+// import retrieveAverageParticipantsInVisit from "../usecases/retrieveAverageParticipantsInVisit";
 import updateVisitById from "../usecases/updateVisitById";
 import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";
@@ -55,12 +55,11 @@ import retrieveActiveDepartmentsByOrganisationId from "../usecases/retrieveActiv
 import retrieveDepartmentByCode from "../usecases/retrieveDepartmentByCode";
 import createVisit from "../usecases/createVisit";
 import updateUserVerificationToVerified from "../usecases/updateUserVerificationToVerified";
-import retrieveTotalBookedVisitsByOrgId from "../usecases/retrieveTotalBookedVisitsByOrgId";
+import retrieveTotalVisitsByStatusAndOrgId from "../usecases/retrieveTotalVisitsByStatusAndOrgId";
 import retrieveTotalBookedVisitsByFacilityId from "../usecases/retrieveTotalBookedVisitsByFacilityId";
 import retrieveTotalBookedVisitsForDepartmentsByFacilityId from "../usecases/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 import retrieveTotalBookedVisitsForFacilitiesByOrgId from "../usecases/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 import deleteRecipientInformationForPii from "../usecases/deleteRecipientInformationForPii";
-import retrieveUserVerificationByUserId from "../usecases/retrieveUserVerificationByUserId";
 
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
@@ -112,7 +111,7 @@ import addToUserVerificationTableGateway from "../gateways/MsSQL/addToUserVerifi
 import updateVisitStatusByDepartmentId from "../gateways/MsSQL/updateVisitStatusByDepartmentId";
 import updateVisitStatusByCallId from "../gateways/MsSQL/updateVisitStatusByCallId";
 import updateUserVerificationToVerifiedGateway from "../gateways/MsSQL/updateUserVerificationToVerified";
-import retrieveTotalBookedVisitsByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsByOrgId";
+import retrieveTotalVisitsByStatusAndOrgIdGW from "../gateways/MsSQL/retrieveTotalVisitsByStatusAndOrgId.js";
 import retrieveTotalBookedVisitsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsByFacilityId"
 import retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 import retrieveTotalBookedVisitsForFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForFacilitiesByOrgId";
@@ -208,9 +207,9 @@ class AppContainer {
     return captureEvent(this);
   };
 
-  getRetrieveAverageParticipantsInVisit = () => {
-    return retrieveAverageParticipantsInVisit(this);
-  };
+  // getRetrieveAverageParticipantsInVisit = () => {
+  //   return retrieveAverageParticipantsInVisit(this);
+  // };
 
   getUpdateVisitById = () => {
     return updateVisitById(this);
@@ -427,7 +426,7 @@ class AppContainer {
   };
 
   getRetrieveTotalBookedVisitsByOrgIdGateway = () => {
-    return retrieveTotalBookedVisitsByOrgIdGW(this);
+    return retrieveTotalVisitsByStatusAndOrgIdGW(this);
   };
 
   getRetrieveTotalBookedVisitsByFacilityIdGateway = () => {
@@ -441,8 +440,8 @@ class AppContainer {
     );
   };
 
-   getRetrieveTotalBookedVisitsByOrgId = () => {
-    return retrieveTotalBookedVisitsByOrgId(this);
+   getRetrieveTotalVisitsByStatusAndOrgId = () => {
+    return retrieveTotalVisitsByStatusAndOrgId(this);
   };
 
   /* These uses the MsSQL DB */
@@ -609,8 +608,8 @@ class AppContainer {
     return retrieveTotalBookedVisitsForFacilitiesByOrgIdGW(this);
   };
 
-  getRetrieveTotalBookedVisitsByOrgId = () => {
-    return retrieveTotalBookedVisitsByOrgId(this);
+  getRetrieveTotalVisitsByStatusAndOrgIdGateway = () => {
+    return retrieveTotalVisitsByStatusAndOrgIdGW(this);
   };
 
   getRetrieveTotalBookedVisitsByFacilityId = () => {

@@ -10,6 +10,7 @@ import Text from "../../src/components/Text";
 import AnchorLink from "../../src/components/AnchorLink";
 import ReviewDate from "../../src/components/ReviewDate";
 import { TRUST_ADMIN } from "../../src/helpers/userTypes";
+import { COMPLETE, SCHEDULED } from "../../src/helpers/visitStatus";
 
 const TrustAdmin = ({
   error,
@@ -18,7 +19,7 @@ const TrustAdmin = ({
   leastVisitedList,
   mostVisitedList,
   organisation,
-  averageParticipantsInVisit,
+  totalCompletedVisits,
   wardVisitTotalsStartDate,
   reportingStartDate,
   totalBookedVisits,
@@ -50,8 +51,8 @@ const TrustAdmin = ({
               width="one-third"
             >
               <NumberTile
-                number={averageParticipantsInVisit}
-                label="average participants in a visit"
+                number={totalCompletedVisits}
+                label="completed visits"
               />
             </GridColumn>
           </GridRow>
@@ -196,15 +197,19 @@ export const getServerSideProps = propsWithContainer(
 
     const { 
       total: totalBookedVisits, 
-      error: totalBookedVisitsError } = await container.getRetrieveTotalBookedVisitsByOrgId()(
-      authenticationToken.trustId
+      error: totalBookedVisitsError } = await container.getRetrieveTotalVisitsByStatusAndOrgId()(
+      authenticationToken.trustId,
     );
 
-    const {
-      averageParticipantsInVisit,
-      error: averageParticipantsInVisitError,
-    } = await container.getRetrieveAverageParticipantsInVisit()(
-      authenticationToken.trustId
+    // const {
+    //   averageParticipantsInVisit,
+    //   error: averageParticipantsInVisitError,
+    // } = await container.getRetrieveAverageParticipantsInVisit()(
+    //   authenticationToken.trustId
+    // );
+    const { total: totalCompletedVisits, error: totalCompletedVisitsError } = await container.getRetrieveTotalVisitsByStatusAndOrgId()(
+      authenticationToken.trustId,
+      COMPLETE
     );
 
     const {
@@ -239,7 +244,7 @@ export const getServerSideProps = propsWithContainer(
       wardError ||
       facilitiesError ||
       totalBookedVisitsError ||
-      averageParticipantsInVisitError ||
+      totalCompletedVisitsError ||
       wardVisitTotalsStartDateError ||
       reportingStartDateError ||
       averageVisitTimeSecondsError ||
@@ -256,7 +261,7 @@ export const getServerSideProps = propsWithContainer(
         organisation,
         wardVisitTotalsStartDate,
         reportingStartDate,
-        averageParticipantsInVisit,
+        totalCompletedVisits,
         totalBookedVisits,
         averageVisitTime,
         averageVisitsPerDay: averageVisitsPerDay.toFixed(1),
