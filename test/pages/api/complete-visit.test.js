@@ -43,7 +43,7 @@ describe("/api/complete-visit", () => {
     expect(response.status).toHaveBeenCalledWith(401);
   });
 
-  it("returns a 400 if no callId provided", async () => {
+  it("returns a 400 if no callUUid provided", async () => {
     await completeVisit(
       {
         method: "POST",
@@ -64,7 +64,7 @@ describe("/api/complete-visit", () => {
     await completeVisit(
       {
         method: "POST",
-        body: { callId: "123" },
+        body: {callUuid: "123" },
       },
       response,
       {
@@ -86,7 +86,7 @@ describe("/api/complete-visit", () => {
 
   it("returns 201 when a visit is marked as complete successfully", async () => {
     const retrieveVisitByCallIdSpy = jest.fn().mockResolvedValue({
-      scheduledCall: { id: 456 },
+      visit: { id: 456 },
       error: null,
     });
 
@@ -97,7 +97,7 @@ describe("/api/complete-visit", () => {
     await completeVisit(
       {
         method: "POST",
-        body: { callId: "123" },
+        body: { callUuid: "123" },
       },
       response,
       {

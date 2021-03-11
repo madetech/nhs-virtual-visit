@@ -47,7 +47,7 @@ export default withContainer(async (req, res, { container }) => {
       error: retrieveFacilityError,
     } = await container.getRetrieveFacilityById()(ward.facilityId);
 
-    const error = retrieveDepartmentError | retrieveFacilityError;
+    const error = retrieveDepartmentError || retrieveFacilityError;
 
     if (error) {
       throw error;
@@ -102,8 +102,7 @@ export default withContainer(async (req, res, { container }) => {
       );
     }
   } catch (err) {
-    console.error(err);
-    res.statusCode = 500;
+    res.status(500);
     res.end(JSON.stringify({ err: "Failed to send visit ready notification" }));
   }
 });
