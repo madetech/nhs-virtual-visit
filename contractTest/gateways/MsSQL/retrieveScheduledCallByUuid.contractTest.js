@@ -22,6 +22,7 @@ describe("retrieveScheduledCallByUuidGateway", () => {
     const {
       departmentId,
     } = await setupOrganisationFacilityDepartmentAndManager();
+    await setUpScheduledCall({ departmentId });
     const { id, uuid } = await setUpScheduledCall({
       ...newVisit,
       departmentId,
