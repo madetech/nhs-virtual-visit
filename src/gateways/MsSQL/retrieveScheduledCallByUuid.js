@@ -14,7 +14,7 @@ export default ({ getMsSqlConnPool, logger }) => async (callUuid) => {
       .input("scheduled", statusToId(SCHEDULED))
       .input("complete", statusToId(COMPLETE))
       .query(
-        "SELECT * FROM dbo.[scheduled_call] WHERE [uuid] = @uuid AND pii_cleared_out IS NULL AND status = @scheduled OR status = @complete"
+        "SELECT * FROM dbo.[scheduled_call] WHERE uuid = @uuid AND pii_cleared_out IS NULL AND (status = @scheduled OR status = @complete)"
       );
 
     const {
