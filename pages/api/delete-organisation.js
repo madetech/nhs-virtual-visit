@@ -5,8 +5,6 @@ export default withContainer(
   async ({ headers, body, method }, res, { container }) => {
     validateHttpMethod("DELETE", method, res);
 
-    console.log(JSON.stringify(body));
-
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
 
     if (!adminIsAuthenticated(headers.cookie)) {

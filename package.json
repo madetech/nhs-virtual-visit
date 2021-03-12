@@ -61,6 +61,7 @@
     "next-absolute-url": "^1.2.2",
     "next-env": "^1.1.1",
     "nhsuk-frontend": "^3.1.0",
+    "node-cron": "^3.0.0",
     "node-sass": "^4.14.0",
     "nookies": "^2.5.2",
     "notifications-node-client": "^4.7.3",

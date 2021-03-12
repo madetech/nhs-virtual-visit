@@ -2,27 +2,29 @@ import deleteRecipientInformationForPii from "../../src/usecases/deleteRecipient
 
 describe("deleteRecipientInformationForPii", () => {
   
-  it("it returns an error if callId is not defined", async () => {
-    const callId = "";
+  it("it returns an error if clearOutTime is not defined", async () => {
+    const clearOutTime = "";
 
     const getDeleteRecipientInformationForPiiGateway = jest.fn();
 
     const deleteRecipientInformation = deleteRecipientInformationForPii({ 
       getDeleteRecipientInformationForPiiGateway
     });
-    const { success, error } = await deleteRecipientInformation({ callId })
+    const { success, message, error } = await deleteRecipientInformation({ clearOutTime })
 
     expect(success).toBeFalsy();
-    expect(error).toEqual("callId is not defined");
+    expect(message).toBeNull();
+    expect(error).toEqual("clearOutTime is not defined");
   });
 
-  it("deletes the recipients data if the callId is valid", async () => {
-    const callId = 1;
+  it("deletes the recipients data if the clearOutTime is valid", async () => {
+    const clearOutTime = new Date(2020, 11, 31);
 
     const getDeleteRecipientInformationForPiiGatewaySpy = jest
       .fn()
       .mockReturnValue({
         success: true,
+        message: "Recipient data cleared",
         error: null,
       });
 
@@ -33,19 +35,21 @@ describe("deleteRecipientInformationForPii", () => {
     const deleteRecipientInformation = deleteRecipientInformationForPii({ 
       getDeleteRecipientInformationForPiiGateway
     });
-    const { success, error } = await deleteRecipientInformation({ callId })
+    const { success, message, error } = await deleteRecipientInformation({ clearOutTime })
 
     expect(success).toBeTruthy();
+    expect(message).toEqual("Recipient data cleared");
     expect(error).toBeNull();
-    expect(getDeleteRecipientInformationForPiiGatewaySpy).toBeCalledWith({ callId: 1})
+    expect(getDeleteRecipientInformationForPiiGatewaySpy).toBeCalledWith({ clearOutTime: new Date(2020, 11, 31) });
   });
 
   it("returns an error if there is a problem with the database call", async () => {
-    const callId = 1;
+    const clearOutTime = new Date(2020, 11, 31);
 
     const getDeleteRecipientInformationForPiiGateway = jest.fn(() => {
       return jest.fn().mockReturnValue({
         success: false,
+        message: "No recipient data was deleted",
         error: "Error with DB call",
       });
     });
@@ -53,9 +57,10 @@ describe("deleteRecipientInformationForPii", () => {
     const deleteRecipientInformation = deleteRecipientInformationForPii({
       getDeleteRecipientInformationForPiiGateway
     });
-    const { success, error } = await deleteRecipientInformation({ callId });
+    const { success, message, error } = await deleteRecipientInformation({ clearOutTime });
 
     expect(success).toBeFalsy();
+    expect(message).toEqual("No recipient data was deleted");
     expect(error).toEqual("Error with DB call");
   });
 });

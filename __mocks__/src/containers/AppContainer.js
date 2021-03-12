@@ -45,6 +45,7 @@ export default {
   getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway: jest.fn().mockResolvedValue({}),
   getAdminIsAuthenticated: jest.fn(() => () => true),
   getOrganisationAdminIsAuthenticated: jest.fn(() => () => true),
+  getDeleteRecipientInformationForPii: jest.fn(() => () => Promise.resolve({})),
 
   logger
 };
