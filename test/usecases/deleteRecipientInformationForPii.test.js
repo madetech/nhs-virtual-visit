@@ -13,8 +13,8 @@ describe("deleteRecipientInformationForPii", () => {
     const { success, message, error } = await deleteRecipientInformation({ clearOutTime })
 
     expect(success).toBeFalsy();
-    expect(message).toBeNull();
-    expect(error).toEqual("clearOutTime is not defined");
+    expect(message).toEqual("clearOutTime is not defined");
+    expect(error).toBe(true);
   });
 
   it("deletes the recipients data if the clearOutTime is valid", async () => {
