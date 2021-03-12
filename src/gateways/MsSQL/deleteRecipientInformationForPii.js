@@ -36,19 +36,22 @@ const deleteRecipientInformationForPiiGateway = ({ getMsSqlConnPool}) => async (
       return {
         success: true,
         message: `${scheduledCallMessage} had recipient data cleared`,
+        error: null
       };
     }
 
     logger.info(`There were no calls that required recipient data clearing`);
     return {
       success: true,
-      message: "There were no calls that required recipient data clearing"
+      message: "There were no calls that required recipient data clearing",
+      error: null,
     };
   } catch (error) {
-    logger.error(`There was an error clearing recipient data for calls}`);
+    logger.error(`There was an error clearing recipient data for calls`);
     return {
       success: false,
-      message: error.toString(),
+      message: "There was an error clearing recipient data for calls",
+      error: error.toString(),
     };
   }
 };

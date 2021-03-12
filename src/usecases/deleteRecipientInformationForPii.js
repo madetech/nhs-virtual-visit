@@ -1,17 +1,18 @@
 const deleteRecipientInformationForPii = ({ getDeleteRecipientInformationForPiiGateway }) => async ({
-  callId
+  clearOutTime
 }) => {
-  if (!callId) {
+  if (!clearOutTime) {
     return {
       success: false,
-      error: "callId is not defined",
+      message: "clearOutTime is not defined",
+      error: true,
     };
   }
 
   const deleteRecipientInformationForPiiGateway = getDeleteRecipientInformationForPiiGateway();
-  const { success, error } = await deleteRecipientInformationForPiiGateway({ callId });
-
-  return { success, error };
+  const { success, message, error } = await deleteRecipientInformationForPiiGateway({ clearOutTime });
+  
+  return { success, message, error };
 }
 
 export default deleteRecipientInformationForPii;

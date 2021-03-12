@@ -43,7 +43,7 @@ describe("deleteRecipientInformationForPiiGateway", () => {
 
     // Act
     const deleteRecipientInformationForPii = deleteRecipientInformationForPiiGateway(container);
-    const { success, message } = await deleteRecipientInformationForPii({ clearOutTime });
+    const { success, message, error } = await deleteRecipientInformationForPii({ clearOutTime });
 
     const retrieveScheduledCalls = retrieveScheduledCallsGateway(container);
     const { calls } = await retrieveScheduledCalls();
@@ -51,6 +51,7 @@ describe("deleteRecipientInformationForPiiGateway", () => {
     // Assert
     expect(success).toBe(true);
     expect(message).toEqual("2 scheduled calls have had recipient data cleared");
+    expect(error).toBeNull();
 
     expect(calls[0].patient_name).toBeNull();
     expect(calls[0].recipient_email).toBeNull();
@@ -85,7 +86,7 @@ describe("deleteRecipientInformationForPiiGateway", () => {
 
     // Act
     const deleteRecipientInformationForPii = deleteRecipientInformationForPiiGateway(container);
-    const { success, message } = await deleteRecipientInformationForPii({ clearOutTime });
+    const { success, message, error } = await deleteRecipientInformationForPii({ clearOutTime });
 
     const retrieveScheduledCalls = retrieveScheduledCallsGateway(container);
     const { calls } = await retrieveScheduledCalls();
@@ -93,7 +94,8 @@ describe("deleteRecipientInformationForPiiGateway", () => {
     // Assert
     expect(success).toBe(true);
     expect(message).toEqual("1 scheduled call has had recipient data cleared");
-
+    expect(error).toBeNull();
+    
     expect(calls[0].patient_name).toBeNull();
     expect(calls[0].recipient_email).toBeNull();
     expect(calls[0].recipient_name).toBeNull();
@@ -117,13 +119,14 @@ describe("deleteRecipientInformationForPiiGateway", () => {
 
     // Act
     const deleteRecipientInformationForPii = deleteRecipientInformationForPiiGateway(container);
-    const { success, message } = await deleteRecipientInformationForPii({ clearOutTime });
+    const { success, message, error } = await deleteRecipientInformationForPii({ clearOutTime });
     const retrieveScheduledCalls = retrieveScheduledCallsGateway(container);
     const { calls } = await retrieveScheduledCalls();
 
     // Assert
     expect(success).toBe(true);
     expect(message).toEqual("1 scheduled call has had recipient data cleared");
+    expect(error).toBeNull();
 
     expect(calls[0].patient_name).toBeNull();
     expect(calls[0].recipient_email).toBeNull();
@@ -138,16 +141,17 @@ describe("deleteRecipientInformationForPiiGateway", () => {
     newVisit = { ...newVisit, recipientName: null };
     const { departmentId } = await setupOrganisationFacilityDepartmentAndManager();
     await setUpScheduledCall({ ...newVisit, departmentId });
-
+    
     // Act
     const deleteRecipientInformationForPii = deleteRecipientInformationForPiiGateway(container);
-    const { success, message } = await deleteRecipientInformationForPii({ clearOutTime });
+    const { success, message, error } = await deleteRecipientInformationForPii({ clearOutTime });
     const retrieveScheduledCalls = retrieveScheduledCallsGateway(container);
     const { calls } = await retrieveScheduledCalls();
 
     // Assert
     expect(success).toBe(true);
     expect(message).toEqual("1 scheduled call has had recipient data cleared");
+    expect(error).toBeNull();
 
     expect(calls[0].patient_name).toBeNull();
     expect(calls[0].recipient_email).toBeNull();
@@ -165,13 +169,14 @@ describe("deleteRecipientInformationForPiiGateway", () => {
 
     // Act
     const deleteRecipientInformationForPii = deleteRecipientInformationForPiiGateway(container);
-    const { success, message } = await deleteRecipientInformationForPii({ clearOutTime });
+    const { success, message, error } = await deleteRecipientInformationForPii({ clearOutTime });
     const retrieveScheduledCalls = retrieveScheduledCallsGateway(container);
     const { calls } = await retrieveScheduledCalls();
 
     // Assert
     expect(success).toBe(true);
     expect(message).toEqual("1 scheduled call has had recipient data cleared");
+    expect(error).toBeNull();
 
     expect(calls[0].patient_name).toBeNull();
     expect(calls[0].recipient_email).toBeNull();
@@ -189,13 +194,14 @@ describe("deleteRecipientInformationForPiiGateway", () => {
 
     // Act
     const deleteRecipientInformationForPii = deleteRecipientInformationForPiiGateway(container);
-    const { success, message } = await deleteRecipientInformationForPii({ clearOutTime });
+    const { success, message, error } = await deleteRecipientInformationForPii({ clearOutTime });
     const retrieveScheduledCalls = retrieveScheduledCallsGateway(container);
     const { calls } = await retrieveScheduledCalls();
 
     // Assert
     expect(success).toBe(true);
     expect(message).toEqual("1 scheduled call has had recipient data cleared");
+    expect(error).toBeNull();
 
     expect(calls[0].patient_name).toBeNull();
     expect(calls[0].recipient_email).toBeNull();
@@ -204,8 +210,6 @@ describe("deleteRecipientInformationForPiiGateway", () => {
     expect(calls[0].pii_cleared_out).toEqual(clearOutTime);
     expect(calls[0].status).toEqual(statusToId(ARCHIVED));
   });
-
-
 
   it("returns a message if there were no calls that required clearing", async () => {
     // Arrange
@@ -225,11 +229,12 @@ describe("deleteRecipientInformationForPiiGateway", () => {
 
     // Act
     const deleteRecipientInformationForPii = deleteRecipientInformationForPiiGateway(container);
-    const { success, message } = await deleteRecipientInformationForPii({ clearOutTime });
+    const { success, message, error } = await deleteRecipientInformationForPii({ clearOutTime });
 
     // Assert
     expect(success).toBe(true);
     expect(message).toEqual("There were no calls that required recipient data clearing");
+    expect(error).toBeNull();
   });
 
   it("catches errors",  async () => {
@@ -240,11 +245,12 @@ describe("deleteRecipientInformationForPiiGateway", () => {
 
     // Act
     const deleteRecipientInformationForPii = deleteRecipientInformationForPiiGateway(container);
-    const { success, message } = await deleteRecipientInformationForPii({ clearOutTime: invalidClearOutTime });
+    const { success, message, error } = await deleteRecipientInformationForPii({ clearOutTime: invalidClearOutTime });
     
     // Assert
     expect(success).toBe(false);
-    expect(message).toEqual(
+    expect(message).toEqual("There was an error clearing recipient data for calls");
+    expect(error).toEqual(
       "RequestError: Conversion failed when converting date and/or time from character string."
     );
   });

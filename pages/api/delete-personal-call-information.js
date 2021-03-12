@@ -1,29 +1,29 @@
 import withContainer from "../../src/middleware/withContainer";
 import {
-  validHttpMethod
+  validateHttpMethod
 } from "../../src/helpers/apiErrorHandler";
-import { reset } from "cypress/types/sinon";
 
 export default withContainer(
-  async ({ headers, body, method }, res, { container }) => {
-    validHttpMethod("DELETE", method, res);
+  async ({ body, method }, res, { container }) => {
+    validateHttpMethod("PATCH", method, res);
+
+    if (!body.clearOutTime) {
+      res.status(401);
+      res.end(JSON.stringify({ err: "clearOutTime must be present" }));
+      return;
+    }
 
     res.setHeader("Content-Type", "application/json");
-
-    try {
-      const scheduledCalls = container.getScheduledCalls();
-      const { calls, error: callsError} = await scheduledCalls();
   
-      if (callsError) {
-        res.status(400);
-        res.end(JSON.stringify({ error: "error retrieving scheduled calls" }));
-        return;
-      }
-    } catch (error) {
-      res.status(500);
-      res.end(JSON.stringify({
-        error: "500 (Internal Server Error). Please try again later.",
-      }));
+    const deleteRecipientInformationForPii = container.getDeleteRecipientInformationForPii();
+    const { message, error } = await deleteRecipientInformationForPii({ clearOutTime: body.clearOutTime });
+
+    if (error) {
+      res.status(401);
+      res.end(JSON.stringify({ err: message }));
+    } else {
+      res.status(201)
+      res.end(JSON.stringify({ message }));
     }
   }
 );
