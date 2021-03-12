@@ -57,7 +57,7 @@ describe("deletePersonalCallInformation", () => {
     expect(response.end).toHaveBeenCalledWith(
       JSON.stringify({ message: "Recipient call information deleted" })
     );
-    expect(deleteRecipientInformationForPiiSpy).toHaveBeenCalledWith(validRequest.body.clearOutTime)
+    expect(deleteRecipientInformationForPiiSpy).toHaveBeenCalledWith({ "clearOutTime": validRequest.body.clearOutTime });
   });
 
   it("returns 401 if the delete call is unsuccessful", async () => {

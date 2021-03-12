@@ -46,6 +46,9 @@ export default {
   getAdminIsAuthenticated: jest.fn(() => () => true),
   getOrganisationAdminIsAuthenticated: jest.fn(() => () => true),
   getDeleteRecipientInformationForPii: jest.fn(() => () => Promise.resolve({})),
+<<<<<<< HEAD
 
+=======
+>>>>>>> fix mockAppContainer logger to make unit tests pass
   logger
 };
