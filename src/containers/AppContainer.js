@@ -20,7 +20,6 @@ import validateEmailAddress from "../usecases/validateEmailAddress";
 import validateMobileNumber from "../usecases/validateMobileNumber";
 import regenerateToken from "../usecases/regenerateToken";
 import captureEvent from "../usecases/captureEvent";
-// import retrieveAverageParticipantsInVisit from "../usecases/retrieveAverageParticipantsInVisit";
 import updateVisitById from "../usecases/updateVisitById";
 import sendBookingNotification from "../usecases/sendBookingNotification";
 import retrieveVisitById from "../usecases/retrieveVisitById";

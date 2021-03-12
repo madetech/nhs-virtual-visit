@@ -200,13 +200,7 @@ export const getServerSideProps = propsWithContainer(
       error: totalBookedVisitsError } = await container.getRetrieveTotalVisitsByStatusAndOrgId()(
       authenticationToken.trustId,
     );
-
-    // const {
-    //   averageParticipantsInVisit,
-    //   error: averageParticipantsInVisitError,
-    // } = await container.getRetrieveAverageParticipantsInVisit()(
-    //   authenticationToken.trustId
-    // );
+    
     const { total: totalCompletedVisits, error: totalCompletedVisitsError } = await container.getRetrieveTotalVisitsByStatusAndOrgId()(
       authenticationToken.trustId,
       COMPLETE
