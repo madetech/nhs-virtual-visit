@@ -50,15 +50,17 @@ const ShowHospital = ({
               className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
               width="one-half"
             >
-              <NumberTile number={wards.length} label="wards" />
+              <NumberTile number={totalCompletedVisits} label="completed visits" />
             </GridColumn>
+           
           </GridRow>
           <GridRow className="nhsuk-u-padding-bottom-3">
             <GridColumn
               className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
               width="one-half"
             >
-              <NumberTile number={totalCompletedVisits} label="completed visits" />
+              {/* this is a dummy tile for now */}
+              <NumberTile number={550} label="total visit time in minutes" />
             </GridColumn>
             <GridColumn
               className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
