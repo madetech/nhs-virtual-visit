@@ -278,12 +278,12 @@ describe("AppContainer", () => {
     expect(container.getRetrieveTotalVisitsByStatusAndOrgIdGateway()).toBeDefined();
   })
 
-  it("returns getRetrieveTotalBookedVisitsByFacilityId", ()=>{
-    expect(container.getRetrieveTotalBookedVisitsByFacilityId()).toBeDefined();
+  it("returns getRetrieveTotalVisitsByStatusAndFacilityId", ()=>{
+    expect(container.getRetrieveTotalVisitsByStatusAndFacilityId()).toBeDefined();
   })
 
-  it("returns getRetrieveTotalBookedVisitsByFacilityIdGateway", ()=>{
-    expect(container.getRetrieveTotalBookedVisitsByFacilityIdGateway()).toBeDefined();
+  it("returns getRetrieveTotalVisitsByStatusAndFacilityIdGateway", ()=>{
+    expect(container.getRetrieveTotalVisitsByStatusAndFacilityIdGateway()).toBeDefined();
   })
 
   it("returns getRetrieveTotalBookedVisitsForDepartmentsByFacilityId", ()=>{
