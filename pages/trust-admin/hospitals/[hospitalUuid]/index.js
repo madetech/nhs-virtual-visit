@@ -11,6 +11,7 @@ import WardsTable from "../../../../src/components/WardsTable";
 import NumberTile from "../../../../src/components/NumberTile";
 import Panel from "../../../../src/components/Panel";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
+import { COMPLETE } from "../../../../src/helpers/visitStatus";
 
 const ShowHospital = ({
   organisation,
@@ -18,6 +19,7 @@ const ShowHospital = ({
   wards,
   error,
   totalBookedVisits,
+  totalCompletedVisits,
   mostVisitedWard,
   leastVisitedWard,
 }) => {
@@ -43,6 +45,20 @@ const ShowHospital = ({
               width="one-half"
             >
               <NumberTile number={totalBookedVisits} label="booked visits" />
+            </GridColumn>
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
+              <NumberTile number={wards.length} label="wards" />
+            </GridColumn>
+          </GridRow>
+          <GridRow className="nhsuk-u-padding-bottom-3">
+            <GridColumn
+              className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
+              width="one-half"
+            >
+              <NumberTile number={totalCompletedVisits} label="completed visits" />
             </GridColumn>
             <GridColumn
               className="nhsuk-u-padding-bottom-3 nhsuk-u-one-half"
@@ -115,7 +131,12 @@ export const getServerSideProps = propsWithContainer(
     const { 
       total: totalBookedVisits,
       error: totalBookedVisitsError
-     } = await container.getRetrieveTotalBookedVisitsByFacilityId()(facility.id);
+     } = await container.getRetrieveTotalVisitsByStatusAndFacilityId()(facility.id);
+
+    const { 
+      total: totalCompletedVisits,
+      error: totalCompletedVisitsError
+    } = await container.getRetrieveTotalVisitsByStatusAndFacilityId()(facility.id, COMPLETE);
     
     const {
       departments, 
@@ -124,7 +145,7 @@ export const getServerSideProps = propsWithContainer(
       error: departmentsError
     } = await container.getRetrieveTotalBookedVisitsForDepartmentsByFacilityId()(facility.id);
    
-    const error = facilityError || departmentsError || organisationError || totalBookedVisitsError;
+    const error = facilityError || departmentsError || organisationError || totalBookedVisitsError || totalCompletedVisitsError;
     
     return {
       props: {
@@ -133,6 +154,7 @@ export const getServerSideProps = propsWithContainer(
         wards: departments,
         error,
         totalBookedVisits,
+        totalCompletedVisits,
         mostVisitedWard: mostVisited,
         leastVisitedWard: leastVisited,
       },

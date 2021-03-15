@@ -1,4 +1,4 @@
-import retrieveTotalBookedVisitsByFacilityId from "../../src/usecases/retrieveTotalBookedVisitsByFacilityId";
+import retrieveTotalBookedVisitsByFacilityId from "../../src/usecases/retrieveTotalVisitsByStatusAndFacilityId";
 import container from "src/containers/AppContainer";
 
 describe("retrieveTotalBookedVisitsByFacilityId", () => {

@@ -10,7 +10,7 @@ import Text from "../../src/components/Text";
 import AnchorLink from "../../src/components/AnchorLink";
 import ReviewDate from "../../src/components/ReviewDate";
 import { TRUST_ADMIN } from "../../src/helpers/userTypes";
-import { COMPLETE, SCHEDULED } from "../../src/helpers/visitStatus";
+import { COMPLETE } from "../../src/helpers/visitStatus";
 
 const TrustAdmin = ({
   error,

@@ -1,4 +1,4 @@
-import retrieveTotalBookedVisitsByFacilityIdGateway from "../../../src/gateways/MsSQL/retrieveTotalBookedVisitsByFacilityId";
+import retrieveTotalBookedVisitsByFacilityIdGateway from "../../../src/gateways/MsSQL/retrieveTotalVisitsByStatusAndFacilityId";
 import {
   setupAdminAndOrganisation,
   setUpFacility,
