@@ -3,9 +3,6 @@ import mockAppContainer from "src/containers/AppContainer";
 
 describe("deletePersonalCallInformation", () => {
   let validRequest, response;
-  // const deleteRecipientInformationForPiiSpy = jest
-  //   .fn()
-  //   .mockResolvedValue({ message: "Recipient call information deleted" });
 
   beforeEach(() => {
     validRequest = {
