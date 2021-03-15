@@ -55,7 +55,7 @@ import retrieveDepartmentByCode from "../usecases/retrieveDepartmentByCode";
 import createVisit from "../usecases/createVisit";
 import updateUserVerificationToVerified from "../usecases/updateUserVerificationToVerified";
 import retrieveTotalVisitsByStatusAndOrgId from "../usecases/retrieveTotalVisitsByStatusAndOrgId";
-import retrieveTotalBookedVisitsByFacilityId from "../usecases/retrieveTotalBookedVisitsByFacilityId";
+import retrieveTotalVisitsByStatusAndFacilityId from "../usecases/retrieveTotalVisitsByStatusAndFacilityId";
 import retrieveTotalBookedVisitsForDepartmentsByFacilityId from "../usecases/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 import retrieveTotalBookedVisitsForFacilitiesByOrgId from "../usecases/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 import deleteRecipientInformationForPii from "../usecases/deleteRecipientInformationForPii";
@@ -111,7 +111,7 @@ import updateVisitStatusByDepartmentId from "../gateways/MsSQL/updateVisitStatus
 import updateVisitStatusByCallId from "../gateways/MsSQL/updateVisitStatusByCallId";
 import updateUserVerificationToVerifiedGateway from "../gateways/MsSQL/updateUserVerificationToVerified";
 import retrieveTotalVisitsByStatusAndOrgIdGW from "../gateways/MsSQL/retrieveTotalVisitsByStatusAndOrgId.js";
-import retrieveTotalBookedVisitsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsByFacilityId"
+import retrieveTotalVisitsByStatusAndFacilityIdGW from "../gateways/MsSQL/retrieveTotalVisitsByStatusAndFacilityId"
 import retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 import retrieveTotalBookedVisitsForFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 
@@ -424,8 +424,8 @@ class AppContainer {
     return retrieveTotalVisitsByStatusAndOrgIdGW(this);
   };
 
-  getRetrieveTotalBookedVisitsByFacilityIdGateway = () => {
-    return retrieveTotalBookedVisitsByFacilityIdGW(this);
+  getRetrieveTotalVisitsByStatusAndFacilityIdGateway = () => {
+    return retrieveTotalVisitsByStatusAndFacilityIdGW(this);
   }
 
   getLogEventGateway = () => {
@@ -607,8 +607,8 @@ class AppContainer {
     return retrieveTotalVisitsByStatusAndOrgIdGW(this);
   };
 
-  getRetrieveTotalBookedVisitsByFacilityId = () => {
-    return retrieveTotalBookedVisitsByFacilityId(this);
+  getRetrieveTotalVisitsByStatusAndFacilityId = () => {
+    return retrieveTotalVisitsByStatusAndFacilityId(this);
   }
 
   getRetrieveDepartmentVisitTotalsStartDateByOrganisationId = () => () => ({
