@@ -10,26 +10,6 @@ import { COMPLETE, statusToId } from "../../../src/helpers/visitStatus";
 
 describe("retrieveTotalVisitsByStatusAndFacilityIdGateway", () => {
   const container = AppContainer.getInstance();
-  it("retrieves scheduled call when given a valid facility id", async () => {
-    // Arrange
-    const { adminId, orgId } = await setupAdminAndOrganisation();
-    const { facilityId: facilityOneId } = await setUpFacility({ createdBy: adminId, orgId });
-    const { facilityId: facilityTwoId } = await setUpFacility({ createdBy: adminId, orgId });
-    const { departmentId: departmentOneId } = await setUpDepartment({ createdBy: adminId, facilityId: facilityOneId });
-    const { departmentId: departmentTwoId } = await setUpDepartment({ createdBy: adminId, facilityId: facilityOneId });
-    const { departmentId: departmentThreeId } = await setUpDepartment({ createdBy: adminId, facilityId: facilityTwoId });
-  
-    await setUpScheduledCall({ departmentId: departmentOneId });
-    await setUpScheduledCall({ departmentId: departmentOneId });
-    await setUpScheduledCall({ departmentId: departmentTwoId });
-    await setUpScheduledCall({ departmentId: departmentThreeId });
-    // Act
-    const total = await retrieveTotalVisitsByStatusAndFacilityIdGateway(container)({
-      facilityId: facilityOneId
-    });
-    // Assert
-    expect(total).toEqual(3);
-  });
 
   it("retrieves scheduled call when given a valid facility id with no status passed", async () => {
     // Arrange
