@@ -23,7 +23,7 @@ app
       log.info(`Ready on http://localhost:${port}`);
     });
 
-    cron.schedule("* * 0 * * *", async () => {
+    cron.schedule("0 0 * * *", async () => {
       log.info("Clearing pii data");
       const response = await fetch(`http://localhost:${port}/api/delete-personal-call-information`, {
         method: "PATCH",
