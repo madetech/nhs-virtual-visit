@@ -8,9 +8,9 @@ resource "azurerm_sql_server" "sql" {
 }
 
 resource "azurerm_mssql_database" "sql" {
-  name      = "virtualvisits"
-  server_id = azurerm_sql_server.sql.id
-  sku_name  = var.azure_sql_sku_name
+  name        = "virtualvisits"
+  server_id   = azurerm_sql_server.sql.id
+  sku_name    = var.azure_sql_sku_name
   max_size_gb = var.azure_sql_max_size_gb
 
   long_term_retention_policy {
