@@ -74,3 +74,31 @@ variable "datadog_api_key" {}
 variable "valid_email_domains" {
   default = "nhs.uk,nhs.net"
 }
+
+variable "azure_sql_weekly_retention" {
+  default = "P4W"
+}
+
+variable "azure_sql_monthly_retention" {
+  default = "P12M"
+}
+
+variable "azure_sql_yearly_retention" {
+  default = "P5Y"
+}
+
+variable "azure_sql_week_of_year" {
+  default = "13"
+}
+
+variable "azure_sql_retention_days" {
+  default = 7
+}
+
+variable "azure_sql_sku_name" {
+  default = "Basic"
+}
+
+variable "azure_sql_max_size_gb" {
+  default = 2
+}
