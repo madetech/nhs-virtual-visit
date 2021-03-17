@@ -106,8 +106,7 @@ const TrustAdmin = ({
                     {mostVisitedList.map((hospital) => (
                       <li key={hospital.id}>
                         <AnchorLink
-                          href="/trust-admin/hospitals/[id]"
-                          as={`/trust-admin/hospitals/${hospital.id}`}
+                          href={`/trust-admin/hospitals/${hospital.uuid}`}
                         >
                           {hospital.name}
                           <span className="nhsuk-u-visually-hidden">
@@ -132,7 +131,7 @@ const TrustAdmin = ({
                     {leastVisitedList.map((hospital) => (
                       <li key={hospital.id}>
                         <AnchorLink
-                          href={`/trust-admin/hospitals/${hospital.id}`}
+                          href={`/trust-admin/hospitals/${hospital.uuid}`}
                         >
                           {hospital.name}
                           <span className="nhsuk-u-visually-hidden">
@@ -233,7 +232,7 @@ export const getServerSideProps = propsWithContainer(
     } = await container.getRetrieveAverageVisitsPerDayByOrganisationId()(
       authenticationToken.trustId
     );
-
+    
     const error =
       wardError ||
       facilitiesError ||
