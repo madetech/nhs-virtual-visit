@@ -2,47 +2,44 @@ import React from "react";
 import classnames from "classnames";
 import ErrorMessage from "../ErrorMessage";
 
-const DEFAULT_VALUE = "DEFAULT";
-
-const Select = ({
+const SearchInput = ({
   id,
   className,
-  prompt,
   options,
   hasError,
   errorMessage,
-  defaultValue,
+  organisation,
   ...props
 }) => {
   return (
     <>
       {hasError && errorMessage ? (
         <ErrorMessage id={`${id}-error`}>{errorMessage}</ErrorMessage>
-      ) : null}
-      <select
-        defaultValue={defaultValue || DEFAULT_VALUE}
+      ) : null }
+      <input 
+        type="text"
+        list="options"
         id="nhs-dropdown-menu"
         className={classnames(
-          {
-            "nhsuk-select--error": hasError,
-          },
-          "nhsuk-select",
+          { "nhsuk-select--error": hasError },
+          "nhsuk-input",
           className
         )}
-        {...props}
-      >
-        <option value="DEFAULT">{prompt}</option>
-        {options.map((option) => (
+        value={organisation?.name}
+        { ...props }
+      />
+      <datalist id="options">
+        {options.map(option => (
           <option
             key={option.id}
-            value={option.id}
+            valud={option.id}
           >
             {option.name}
           </option>
         ))}
-      </select>
+      </datalist>
     </>
-  );
+  )
 };
 
-export default Select;
+export default SearchInput;
