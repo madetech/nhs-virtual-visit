@@ -1,4 +1,7 @@
-import { WhenIVisitTheLandingPage } from "../commonSteps";
+import { 
+  WhenIVisitTheLandingPage,
+  ThenISeeTheLandingPage, 
+} from "../commonSteps";
 
 describe("As a ward staff, I want to log in so that I can access the service.", () => {
   before(() => {
@@ -19,7 +22,7 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
     ThenISeeTheWardHomePage();
 
     WhenIClickLogOut();
-    ThenISeeTheWardStaffLogInPage();
+    ThenISeeTheLandingPage();
     cy.audit();
   });
 
@@ -61,7 +64,7 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
     cy.get("h1").should("contain", "Log in to book a virtual visit");
   }
   function WhenIVisitTheLogInPage() {
-    cy.get("h1").should("contain", "Log in to book a virtual visit");
+    cy.visit(Cypress.env("baseUrl") + "/wards/login");
   }
   // Displays an error for an invalid code
   function AndIEnterAnInvalidCode() {
