@@ -22,11 +22,11 @@ describe("/performance", () => {
   });
 
   describe("getServerSideProps", () => {
-    it("Redirects to the login page if not authenticated", async () => {
+    it("Redirects to the root page if not authenticated", async () => {
       await getServerSideProps({ req: anonymousReq, res });
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/login",
+        Location: "/"
       });
     });
 

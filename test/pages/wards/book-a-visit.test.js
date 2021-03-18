@@ -51,11 +51,11 @@ describe("ward/book-a-visit", () => {
   });
 
   describe("getServerSideProps", () => {
-    it("redirects to login page if not authenticated", async () => {
+    it("redirects to root page if not authenticated", async () => {
       await getServerSideProps({ req: anonymousReq, res });
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/wards/login",
+        Location: "/",
       });
     });
 

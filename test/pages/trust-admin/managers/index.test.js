@@ -10,7 +10,7 @@ describe("trust-admin/managers", () => {
     };
   });
 
-  it("redirects to login page if not authenticated", async () => {
+  it("redirects to root page if not authenticated", async () => {
     // Arrange
     const anonymousReq = {
       headers: {
@@ -22,7 +22,7 @@ describe("trust-admin/managers", () => {
 
     // Assert
     expect(res.writeHead).toHaveBeenCalledWith(302, {
-      Location: "/login",
+      Location: "/",
     });
   });
 
