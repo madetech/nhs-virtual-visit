@@ -22,6 +22,10 @@ function ThenISeeTheManageYourTrustLoginPage() {
   cy.get('[data-cy=page-heading]').should("contain", "Log in to manage your site");
 }
 
+function ThenISeeTheLandingPage() {
+  cy.get('[data-cy=page-heading]').should("contain", "NHS Virtual Visit");
+}
+
 function ThenISeeAnError() {
   cy.get('[data-cy=error-summary]').should("contain", "There is a problem");
 }
@@ -33,5 +37,6 @@ module.exports = {
   ThenIVisitTheManageYourTrustLoginPage,
   WhenIVisitTheManageYourTrustLoginPage,
   ThenISeeTheManageYourTrustLoginPage,
+  ThenISeeTheLandingPage,
   ThenISeeAnError,
 };

@@ -2,9 +2,9 @@ import {
   thenIClickLogOut, 
   WhenIVisitTheLandingPage, 
   AndIClickTheLinkToManageYourTrustPage,
-  ThenIVisitTheManageYourTrustLoginPage,
   WhenIVisitTheManageYourTrustLoginPage,
   ThenISeeTheManageYourTrustLoginPage,
+  ThenISeeTheLandingPage,
   ThenISeeAnError
 } from "../commonSteps";
 
@@ -20,8 +20,8 @@ describe("As an admin, I want to log in so that I can access the service.", () =
     GivenIAmAnAdmin();
     WhenIVisitTheLandingPage();
     AndIClickTheLinkToManageYourTrustPage();
-    ThenIVisitTheManageYourTrustLoginPage();
-
+    // ThenIVisitTheManageYourTrustLoginPage();
+    ThenISeeTheManageYourTrustLoginPage();
     cy.audit();
 
     WhenIEnterAValidAdminEmailAndPassword();
@@ -31,11 +31,11 @@ describe("As an admin, I want to log in so that I can access the service.", () =
     cy.audit();
 
     thenIClickLogOut();
-    ThenISeeTheManageYourTrustLoginPage();
+    ThenISeeTheLandingPage();
   });
 
   it("displays an error for an invalid email", () => {
-    WhenIVisitTheManageYourTrustLoginPage;
+    WhenIVisitTheManageYourTrustLoginPage();
     AndIEnterAnInvalidEmail();
     AndISubmitTheForm();
     ThenISeeAnError();
