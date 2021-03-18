@@ -31,7 +31,7 @@ export default function (callback) {
         }
       );
     } else {
-      res.writeHead(302, { Location: "/login" }).end();
+      res.writeHead(302, { Location: "/" }).end();
       return { props: {} };
     }
   };
