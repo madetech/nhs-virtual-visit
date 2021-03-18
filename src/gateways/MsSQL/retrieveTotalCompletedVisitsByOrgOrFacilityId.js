@@ -3,14 +3,14 @@ import { statusToId, COMPLETE, ARCHIVED } from "../../helpers/visitStatus";
 export default ({ getMsSqlConnPool }) => async ({ id }) => {
     let idNum, columnName;
 
-    if (id.orgId) {
+    if (id?.orgId) {
         idNum = id.orgId;
         columnName = "organisation_id";
-    } else if (id.facilityId) {
+    } else if (id?.facilityId) {
         idNum = id.facilityId;
         columnName = "facility_id";
     } else {
-      throw("Invalid id type");
+      throw("Invalid id type!");
     }
 
     const db = await getMsSqlConnPool();

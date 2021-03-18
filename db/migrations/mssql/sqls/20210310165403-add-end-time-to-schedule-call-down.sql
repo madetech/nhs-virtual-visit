@@ -1,1 +1,1 @@
-ALTER TABLE scheduled_call DROP COLUMN end_time;
+/* Replace with your SQL commands */
