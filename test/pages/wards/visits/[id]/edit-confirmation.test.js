@@ -2,7 +2,7 @@ import { getServerSideProps } from "../../../../../pages/wards/visits/[id]/edit-
 
 describe("wards/visits/[id]/edit-confirmation", () => {
   describe("getServerSideProps", () => {
-    it("redirects to login page if not authenticated", async () => {
+    it("redirects to root page if not authenticated", async () => {
       const anonymousReq = {
         headers: {
           cookie: "",
@@ -16,7 +16,7 @@ describe("wards/visits/[id]/edit-confirmation", () => {
       await getServerSideProps({ req: anonymousReq, res });
 
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/wards/login",
+        Location: "/",
       });
     });
   });

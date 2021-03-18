@@ -54,7 +54,7 @@ describe("verifyToken", () => {
 
     await verifyToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
-      Location: "/wards/login",
+      Location: "/",
     });
   });
 
@@ -73,7 +73,7 @@ describe("verifyToken", () => {
 
     await verifyToken(callback)({ req, res, container });
     expect(res.writeHead).toHaveBeenCalledWith(302, {
-      Location: "/wards/login",
+      Location: "/",
     });
   });
 

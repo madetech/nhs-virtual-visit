@@ -9,7 +9,7 @@ describe("/trust-admin/wards/[id]/archive-confirmation", () => {
   });
 
   describe("getServerSideProps", () => {
-    it("redirects to login page if not authenticated", async () => {
+    it("redirects to root page if not authenticated", async () => {
       // Arrange
       const anonymousReq = {
         headers: {
@@ -20,7 +20,7 @@ describe("/trust-admin/wards/[id]/archive-confirmation", () => {
       await getServerSideProps({ req: anonymousReq, res });
       // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/login",
+        Location: "/",
       });
     });
     it("returns error, id, name hospitalName organisation and hospitalId as props", async () => {
