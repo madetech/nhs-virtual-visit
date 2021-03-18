@@ -201,9 +201,10 @@ export const getServerSideProps = propsWithContainer(
       authenticationToken.trustId,
     );
     
-    const { total: totalCompletedVisits, error: totalCompletedVisitsError } = await container.getRetrieveTotalVisitsByStatusAndOrgId()(
+    const { 
+      total: totalCompletedVisits, 
+      error: totalCompletedVisitsError } = await container.getRetrieveTotalCompletedVisitsByOrgId()(
       authenticationToken.trustId,
-      COMPLETE
     );
 
     const {
