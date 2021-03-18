@@ -114,7 +114,7 @@ describe("As an nhs manager, I can sign up to a trust", () => {
   }
 
   function WhenIFillOutTheSignUpForm(organisation, email, password, confirmPassword) {
-    organisation && cy.get("[data-cy=organisation-input]").select(organisation);
+    organisation && cy.get("[data-cy=organisation-input]").type(organisation);
     email && cy.get("[data-cy=email-input]").clear().type(email);
     password && cy.get("[data-cy=password-input]").clear().type(password);
     confirmPassword && cy.get("[data-cy=confirm-password-input]").clear().type(confirmPassword);
