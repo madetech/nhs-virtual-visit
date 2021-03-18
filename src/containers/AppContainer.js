@@ -60,7 +60,7 @@ import retrieveTotalBookedVisitsForDepartmentsByFacilityId from "../usecases/ret
 import retrieveTotalBookedVisitsForFacilitiesByOrgId from "../usecases/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 import deleteRecipientInformationForPii from "../usecases/deleteRecipientInformationForPii";
 import updateScheduledCallStartTimeByCallUuid from "../usecases/updateScheduledCallStartTimeByCallUuid";
-import retrieveTotalCompletedVisitsByOrgId from "../usecases/retrieveTotalCompletedVisitsByOrgId";
+import retrieveTotalCompletedVisitsByOrgOrFacilityId from "../usecases/retrieveTotalCompletedVisitsByOrgOrFacilityId";
 
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
@@ -117,7 +117,7 @@ import retrieveTotalVisitsByStatusAndFacilityIdGW from "../gateways/MsSQL/retrie
 import retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 import retrieveTotalBookedVisitsForFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 import updateScheduledCallStartTimeByCallUuidGW from "../gateways/MsSQL/updateScheduledCallStartTimeByCallUuid";
-import retrieveTotalCompletedVisitsByOrgIdGW from "../gateways/MsSQL/retrieveTotalCompletedVisitsByOrgId";
+import retrieveTotalCompletedVisitsByOrgOrFacilityIdGW from "../gateways/MsSQL/retrieveTotalCompletedVisitsByOrgOrFacilityId";
 
 import logger from "../../logger"
 import deleteRecipientInformationForPiiGateway from "../gateways/MsSQL/deleteRecipientInformationForPii";
@@ -651,12 +651,12 @@ class AppContainer {
     return retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW(this);
   }
 
-  getRetrieveTotalCompletedVisitsByOrgId = () => {
-    return retrieveTotalCompletedVisitsByOrgId(this);
+  getRetrieveTotalCompletedVisitsByOrgOrFacilityId = () => {
+    return retrieveTotalCompletedVisitsByOrgOrFacilityId(this);
   };
 
-  getRetrieveTotalCompletedVisitsByOrgIdGateway = () => {
-    return retrieveTotalCompletedVisitsByOrgIdGW(this);
+  getRetrieveTotalCompletedVisitsByOrgOrFacilityIdGateway = () => {
+    return retrieveTotalCompletedVisitsByOrgOrFacilityIdGW(this);
   };
 }
 

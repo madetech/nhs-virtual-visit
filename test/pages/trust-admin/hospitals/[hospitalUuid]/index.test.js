@@ -43,16 +43,20 @@ describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () =>
         organisation: { name: "Doggo Trust" },
         error: null,
       }));
-      const departmentsSpy = jest.fn(async () => ({
-        departments: [{ id: 1 }, { id: 2 }],
-        error: null,
-      }));
+      // const departmentsSpy = jest.fn(async () => ({
+      //   departments: [{ id: 1 }, { id: 2 }],
+      //   error: null,
+      // }));
       const facilitySpy = jest.fn(async () => ({
         facility: { id: expectedFacilityId, name: "Test Hospital" },
         error: null,
       }));
       const visitTotalsSpy = jest.fn().mockReturnValue({
         total: 15,
+        error: null
+      });
+      const bookedVisitsTotalSpy = jest.fn().mockReturnValue({
+        total: 20,
         error: null
       });
       const hospitalWardTotalsSpy = jest.fn().mockReturnValue({
@@ -63,7 +67,8 @@ describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () =>
       const container = {
         getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
         getRetrieveFacilityByUuid: () => facilitySpy,
-        getRetrieveTotalVisitsByStatusAndFacilityId: () => visitTotalsSpy,
+        getRetrieveTotalVisitsByStatusAndFacilityId: () => bookedVisitsTotalSpy,
+        getRetrieveTotalCompletedVisitsByOrgOrFacilityId: () => visitTotalsSpy,
         getRetrieveTotalBookedVisitsForDepartmentsByFacilityId: () => hospitalWardTotalsSpy,
         getTokenProvider: () => tokenProvider,
         getRegenerateToken: () => jest.fn().mockReturnValue({}),
@@ -78,14 +83,14 @@ describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () =>
       // Assert
       expect(retrieveOrganisationByIdSpy).toHaveBeenCalledWith(orgId);
       expect(facilitySpy).toHaveBeenCalledWith(expectedFacilityUuid);
-      expect(visitTotalsSpy).toHaveBeenCalledWith(orgId);
+      expect(visitTotalsSpy).toHaveBeenCalledWith({ facilityId: expectedFacilityId });
       expect(hospitalWardTotalsSpy).toHaveBeenCalledWith(expectedFacilityId);
       expect(props.wards).toEqual([{ name: "Most Visited", total: 10, name: "Least Visited", total: 5  }]);
       expect(props.hospital).toEqual({
         id: expectedFacilityId,
         name: "Test Hospital",
       });
-      expect(props.totalBookedVisits).toEqual(15);
+      expect(props.totalBookedVisits).toEqual(20);
       expect(props.mostVisitedWard).toEqual({
         name: "Most Visited",
         total: 10,

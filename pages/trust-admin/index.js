@@ -10,7 +10,6 @@ import Text from "../../src/components/Text";
 import AnchorLink from "../../src/components/AnchorLink";
 import ReviewDate from "../../src/components/ReviewDate";
 import { TRUST_ADMIN } from "../../src/helpers/userTypes";
-import { COMPLETE } from "../../src/helpers/visitStatus";
 
 const TrustAdmin = ({
   error,
@@ -203,8 +202,8 @@ export const getServerSideProps = propsWithContainer(
     
     const { 
       total: totalCompletedVisits, 
-      error: totalCompletedVisitsError } = await container.getRetrieveTotalCompletedVisitsByOrgId()(
-      authenticationToken.trustId,
+      error: totalCompletedVisitsError } = await container.getRetrieveTotalCompletedVisitsByOrgOrFacilityId()(
+      { orgId: authenticationToken.trustId },
     );
 
     const {

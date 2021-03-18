@@ -302,12 +302,12 @@ describe("AppContainer", () => {
     expect(container.getDeleteRecipientInformationForPiiGateway()).toBeDefined();
   });
 
-  it("returns getRetrieveTotalCompletedVisitsByOrgId", ()=>{
-    expect(container.getRetrieveTotalVisitsByStatusAndOrgId()).toBeDefined();
+  it("returns getRetrieveTotalCompletedVisitsByOrgOrFacilityId", ()=>{
+    expect(container.getRetrieveTotalCompletedVisitsByOrgOrFacilityId()).toBeDefined();
   })
 
-  it("returns getRetrieveTotalCompletedVisitsByOrgIdGateway", ()=>{
-    expect(container.getRetrieveTotalVisitsByStatusAndOrgIdGateway()).toBeDefined();
+  it("returns getRetrieveTotalCompletedVisitsByOrgOrFacilityIdGateway", ()=>{
+    expect(container.getRetrieveTotalCompletedVisitsByOrgOrFacilityIdGateway()).toBeDefined();
   })
   
 });

@@ -1,4 +1,4 @@
-import retrieveTotalCompletedVisitsByOrgIdGateway from "../../../src/gateways/MsSQL/retrieveTotalCompletedVisitsByOrgId.js";
+import retrieveTotalCompletedVisitsByOrgOrFacilityIdGateway from "../../../src/gateways/MsSQL/retrieveTotalCompletedVisitsByOrgOrFacilityId.js";
 import {
   setupAdminAndOrganisation,
   setUpFacility,
@@ -9,7 +9,7 @@ import {
 import AppContainer from "../../../src/containers/AppContainer";
 import { statusToId, COMPLETE, ARCHIVED } from "../../../src/helpers/visitStatus";
 
-describe("retrieveTotalCompletedVisitsByOrgIdGateway", () => {
+describe("retrieveTotalCompletedVisitsByOrgOrFacilityIdGateway", () => {
   const container = AppContainer.getInstance();
   describe("retrieves scheduled call total when given a valid org Id", async () => {
     it("retrieves total when scheduled_call table has entries with COMPLETE status OR SCHEDULED status", async ()=>{
@@ -40,7 +40,7 @@ describe("retrieveTotalCompletedVisitsByOrgIdGateway", () => {
         });
 
         // Act
-        const total = await retrieveTotalCompletedVisitsByOrgIdGateway(container)({
+        const total = await retrieveTotalCompletedVisitsByOrgOrFacilityIdGateway(container)({
         orgId: orgOneId
         });
         // Assert
@@ -80,7 +80,7 @@ describe("retrieveTotalCompletedVisitsByOrgIdGateway", () => {
         });
 
         // Act
-        const total = await retrieveTotalCompletedVisitsByOrgIdGateway(container)({
+        const total = await retrieveTotalCompletedVisitsByOrgOrFacilityIdGateway(container)({
         orgId: orgOneId
         });
         // Assert
@@ -125,7 +125,7 @@ describe("retrieveTotalCompletedVisitsByOrgIdGateway", () => {
         });
 
         // Act
-        const total = await retrieveTotalCompletedVisitsByOrgIdGateway(container)({
+        const total = await retrieveTotalCompletedVisitsByOrgOrFacilityIdGateway(container)({
         orgId: orgOneId
         });
         // Assert
@@ -137,7 +137,7 @@ describe("retrieveTotalCompletedVisitsByOrgIdGateway", () => {
         const { facilityId } = await setUpFacility({ createdBy: adminId, orgId });
         await setUpDepartment({ createdBy: adminId, facilityId: facilityId });
         // Act
-        const total = await retrieveTotalCompletedVisitsByOrgIdGateway(container)({
+        const total = await retrieveTotalCompletedVisitsByOrgOrFacilityIdGateway(container)({
         orgId
         });
         // Assert
@@ -150,7 +150,7 @@ describe("retrieveTotalCompletedVisitsByOrgIdGateway", () => {
     const idDoesNotExist = 111111111;
     
     // Act
-    const total = await retrieveTotalCompletedVisitsByOrgIdGateway(container)({
+    const total = await retrieveTotalCompletedVisitsByOrgOrFacilityIdGateway(container)({
         orgId: idDoesNotExist
     });
     // Assert
@@ -161,7 +161,7 @@ describe("retrieveTotalCompletedVisitsByOrgIdGateway", () => {
     // Arrange
     const invalidId = "invalid";
     // Act && Assert
-    expect( async() => await retrieveTotalCompletedVisitsByOrgIdGateway(container)({ orgId: invalidId }) ).rejects.toThrowError();
+    expect( async() => await retrieveTotalCompletedVisitsByOrgOrFacilityIdGateway(container)({ orgId: invalidId }) ).rejects.toThrowError();
   });
 
 });

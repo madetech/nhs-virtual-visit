@@ -87,7 +87,7 @@ describe("trust-admin", () => {
     getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
     getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgId,
     getRetrieveTotalVisitsByStatusAndOrgId: () => retrieveWardVisitTotalsSpy,
-    getRetrieveTotalCompletedVisitsByOrgId: () => retrieveTotalCompletedVisitsByOrgIdSpy,
+    getRetrieveTotalCompletedVisitsByOrgOrFacilityId: () => retrieveTotalCompletedVisitsByOrgIdSpy,
     getRetrieveTotalBookedVisitsForFacilitiesByOrgId: () => retrieveHospitalVisitTotals,
     getRetrieveAverageVisitTimeByOrganisationId: () =>
       retrieveAverageVisitTimeByTrustId,
@@ -256,7 +256,7 @@ describe("trust-admin", () => {
         res,
         container,
       });
-      expect(retrieveTotalCompletedVisitsByOrgIdSpy).toHaveBeenCalledWith(trustId);
+      expect(retrieveTotalCompletedVisitsByOrgIdSpy).toHaveBeenCalledWith({orgId: trustId });
       expect(totalCompletedVisits).toEqual(2);
       expect(error).toBeNull();
     })
