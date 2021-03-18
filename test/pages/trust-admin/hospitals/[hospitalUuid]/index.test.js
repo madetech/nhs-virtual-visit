@@ -43,10 +43,7 @@ describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () =>
         organisation: { name: "Doggo Trust" },
         error: null,
       }));
-      // const departmentsSpy = jest.fn(async () => ({
-      //   departments: [{ id: 1 }, { id: 2 }],
-      //   error: null,
-      // }));
+
       const facilitySpy = jest.fn(async () => ({
         facility: { id: expectedFacilityId, name: "Test Hospital" },
         error: null,
