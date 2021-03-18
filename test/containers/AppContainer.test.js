@@ -301,4 +301,13 @@ describe("AppContainer", () => {
   it("returns getDeleteRecipientInformationForPiiGateway", () => {
     expect(container.getDeleteRecipientInformationForPiiGateway()).toBeDefined();
   });
+
+  it("returns getRetrieveTotalCompletedVisitsByOrgId", ()=>{
+    expect(container.getRetrieveTotalVisitsByStatusAndOrgId()).toBeDefined();
+  })
+
+  it("returns getRetrieveTotalCompletedVisitsByOrgIdGateway", ()=>{
+    expect(container.getRetrieveTotalVisitsByStatusAndOrgIdGateway()).toBeDefined();
+  })
+  
 });

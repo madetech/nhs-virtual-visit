@@ -60,6 +60,7 @@ import retrieveTotalBookedVisitsForDepartmentsByFacilityId from "../usecases/ret
 import retrieveTotalBookedVisitsForFacilitiesByOrgId from "../usecases/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 import deleteRecipientInformationForPii from "../usecases/deleteRecipientInformationForPii";
 import updateScheduledCallStartTimeByCallUuid from "../usecases/updateScheduledCallStartTimeByCallUuid";
+import retrieveTotalCompletedVisitsByOrgId from "../usecases/retrieveTotalCompletedVisitsByOrgId";
 
 /* Gateways */
 import MsSQL from "../gateways/MsSQL";
@@ -116,6 +117,7 @@ import retrieveTotalVisitsByStatusAndFacilityIdGW from "../gateways/MsSQL/retrie
 import retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForDepartmentsByFacilityId";
 import retrieveTotalBookedVisitsForFacilitiesByOrgIdGW from "../gateways/MsSQL/retrieveTotalBookedVisitsForFacilitiesByOrgId";
 import updateScheduledCallStartTimeByCallUuidGW from "../gateways/MsSQL/updateScheduledCallStartTimeByCallUuid";
+import retrieveTotalCompletedVisitsByOrgIdGW from "../gateways/MsSQL/retrieveTotalCompletedVisitsByOrgId";
 
 import logger from "../../logger"
 import deleteRecipientInformationForPiiGateway from "../gateways/MsSQL/deleteRecipientInformationForPii";
@@ -648,6 +650,14 @@ class AppContainer {
   getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway = () => {
     return retrieveTotalBookedVisitsForDepartmentsByFacilityIdGW(this);
   }
+
+  getRetrieveTotalCompletedVisitsByOrgId = () => {
+    return retrieveTotalCompletedVisitsByOrgId(this);
+  };
+
+  getRetrieveTotalCompletedVisitsByOrgIdGateway = () => {
+    return retrieveTotalCompletedVisitsByOrgIdGW(this);
+  };
 }
 
 export default (() => {
