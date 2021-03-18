@@ -22,9 +22,9 @@ describe("retrieveTotalCompletedVisitsByOrgOrFacilityId", () => {
  
     it("returns an error object if orgId is undefined", async () => {
         // Act
-        const { total, error } = await retrieveTotalCompletedVisitsByOrgOrFacilityId(container)();
+        const { total, error } = await retrieveTotalCompletedVisitsByOrgOrFacilityId(container)({id: { orgId: undefined }});
         // Assert
-        expect(error).toEqual("TypeError: Cannot read property 'orgId' of undefined");
+        expect(error).toEqual("Id type is invalid or undefined!");
         expect(total).toBeNull();
     });
     it("returns error if gateway db throws an error", async () => {

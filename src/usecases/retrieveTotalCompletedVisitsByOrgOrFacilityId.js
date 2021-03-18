@@ -4,12 +4,12 @@ export default ({
   getRetrieveTotalCompletedVisitsByOrgOrFacilityIdGateway,
 }) => async (id) => {
   try {
-    if (id.orgId) {
+    if (id?.orgId) {
       logger.info(`Retrieving total completed visits for organisation id: ${id.orgId}`);
-    } else if (id.facilityId) {
+    } else if (id?.facilityId) {
       logger.info(`Retrieving total completed visits for facility id: ${id.facilityId}`);
     } else {
-      throw("Id type is invalid");
+      throw("Id type is invalid or undefined!");
     }
 
     const total = await getRetrieveTotalCompletedVisitsByOrgOrFacilityIdGateway()({ id: id });
