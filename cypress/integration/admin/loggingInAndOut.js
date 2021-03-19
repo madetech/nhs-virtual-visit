@@ -20,7 +20,6 @@ describe("As an admin, I want to log in so that I can access the service.", () =
     GivenIAmAnAdmin();
     WhenIVisitTheLandingPage();
     AndIClickTheLinkToManageYourTrustPage();
-    // ThenIVisitTheManageYourTrustLoginPage();
     ThenISeeTheManageYourTrustLoginPage();
     cy.audit();
 
