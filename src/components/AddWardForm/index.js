@@ -5,6 +5,7 @@ import FormHeading from "../FormHeading";
 import Input from "../Input";
 import ErrorSummary from "../ErrorSummary";
 import Label from "../Label";
+import HintText from "../Hint";
 import Router from "next/router";
 import Form from "../../components/Form";
 import isPresent from "../../helpers/isPresent";
@@ -13,7 +14,7 @@ import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 const AddWardForm = ({ errors, setErrors, hospital }) => {
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
-  const [wardCodeConfirmation, setWardCodeConfirmation] = useState("");
+  // const [wardCodeConfirmation, setWardCodeConfirmation] = useState("");
   const [wardPin, setWardPin] = useState("");
   const [wardPinConfirmation, setWardPinConfirmation] = useState("");
 
@@ -31,20 +32,6 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
       errors.push({
         id: "ward-code-error",
         message: "Enter a ward code",
-      });
-    };
-
-    const setWardCodeConfirmationError = (errors) => {
-      errors.push({
-        id: "ward-code-confirmation-error",
-        message: "Confirm the ward code",
-      });
-    };
-
-    const setWardCodeConfirmationMismatchError = (errors) => {
-      errors.push({
-        id: "ward-code-confirmation-error",
-        message: "Ward code confirmation does not match",
       });
     };
 
@@ -88,13 +75,6 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
     if (!isPresent(wardCode)) {
       setWardCodeError(onSubmitErrors);
     }
-    if (isPresent(wardCodeConfirmation)) {
-      if (wardCode !== wardCodeConfirmation) {
-        setWardCodeConfirmationMismatchError(onSubmitErrors);
-      }
-    } else {
-      setWardCodeConfirmationError(onSubmitErrors);
-    }
 
     if (isPresent(wardPin)) {
       if (wardPin.length != 4) {
@@ -113,10 +93,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
     }
 
     if (onSubmitErrors.length === 0) {
-      const submitAnswers = async ({ wardName, wardCode, wardPin }) => {
-        let name = wardName;
-        let code = wardCode;
-        let pin = wardPin;
+      const submitAnswers = async ({ wardName: name, wardCode: code, wardPin: pin }) => {
 
         const response = await fetch("/api/create-department", {
           method: "POST",
@@ -177,9 +154,10 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="ward-code" className="nhsuk-label--m">
+          <Label htmlFor="ward-code" className="nhsuk-label--m" style={{ marginBottom: "0px" }}>
             Create a ward code
           </Label>
+          <HintText>The ward code should be a unique identifier for your ward, and a mixture of letters and numbers, e.g FAX11</HintText>
           <Input
             id="ward-code"
             type="text"
@@ -193,25 +171,10 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
           />
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="ward-code-confirmation" className="nhsuk-label--m">
-            Confirm the ward code
-          </Label>
-          <Input
-            id="ward-code-confirmation"
-            type="text"
-            hasError={hasError(errors, "ward-code-confirmation")}
-            errorMessage={errorMessage(errors, "ward-code-confirmation")}
-            className="nhsuk-input--width-10"
-            onChange={(event) => setWardCodeConfirmation(event.target.value)}
-            name="ward-code-confirmation"
-            autoComplete="off"
-            value={wardCodeConfirmation || ""}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Label htmlFor="ward-pin" className="nhsuk-label--m">
+          <Label htmlFor="ward-pin" className="nhsuk-label--m" style={{ marginBottom: "0px" }}>
             Create a ward pin
           </Label>
+          <HintText>The ward pin should be a 4 digit number, e.g. 0000</HintText>
           <Input
             id="ward-pin"
             type="password"
