@@ -47,5 +47,6 @@ export default {
   getAdminIsAuthenticated: jest.fn(() => () => true),
   getOrganisationAdminIsAuthenticated: jest.fn(() => () => true),
   getDeleteRecipientInformationForPii: jest.fn(() => () => Promise.resolve({})),
+  getUpdateScheduledCallStartTimeByCallUuidGateway: jest.fn(() => () => Promise.resolve({})),
   logger
 };
