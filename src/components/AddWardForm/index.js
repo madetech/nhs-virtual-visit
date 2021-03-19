@@ -14,7 +14,6 @@ import { hasError, errorMessage } from "../../helpers/pageErrorHandler";
 const AddWardForm = ({ errors, setErrors, hospital }) => {
   const [wardName, setWardName] = useState("");
   const [wardCode, setWardCode] = useState("");
-  // const [wardCodeConfirmation, setWardCodeConfirmation] = useState("");
   const [wardPin, setWardPin] = useState("");
   const [wardPinConfirmation, setWardPinConfirmation] = useState("");
 
@@ -94,7 +93,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
 
     if (onSubmitErrors.length === 0) {
       const submitAnswers = async ({ wardName: name, wardCode: code, wardPin: pin }) => {
-
+        const completeCode = `${hospital.code}-${code}`;
         const response = await fetch("/api/create-department", {
           method: "POST",
           headers: {
@@ -102,7 +101,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
           },
           body: JSON.stringify({
             name,
-            code,
+            code:  completeCode,
             pin,
             facilityId: hospital.id,
           }),
@@ -169,6 +168,7 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
             autoComplete="off"
             value={wardCode || ""}
           />
+          <HintText>Ward Code: {hospital.code}-{wardCode}</HintText>
         </FormGroup>
         <FormGroup>
           <Label htmlFor="ward-pin" className="nhsuk-label--m" style={{ marginBottom: "0px" }}>
