@@ -17,7 +17,7 @@ export default withContainer(
 
     if (!body.callUuid) {
       res.status(400);
-      res.end(JSON.stringify({ err: "callId must be present" }));
+      res.end(JSON.stringify({ err: "callUuid must be present" }));
       return;
     }
 
@@ -27,7 +27,6 @@ export default withContainer(
     });
 
     if (error) {
-      console.error(error);
       res.status(500);
       res.end(JSON.stringify({ err: "Unable to mark visit as complete" }));
     } else {
