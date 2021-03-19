@@ -16,7 +16,7 @@ export default ({ getMsSqlConnPool, logger }) => async ({
     let queryString = `UPDATE dbo.[scheduled_call] SET status = @status OUTPUT inserted.* WHERE uuid = @id`
 
     if (idToStatus(status) === COMPLETE) {
-      queryString = `UPDATE dbo.[scheduled_call] SET status = @status, end_time = (CONVERT(time, GETDATE())) OUTPUT inserted.* WHERE uuid = @id`
+      queryString = `UPDATE dbo.[scheduled_call] SET status = @status, end_time = GETDATE() OUTPUT inserted.* WHERE uuid = @id`
     }
 
     const db = await getMsSqlConnPool();
