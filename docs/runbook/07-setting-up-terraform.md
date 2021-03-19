@@ -4,6 +4,8 @@ To build, manage and deploy infrastructure to Azure, we use [Terraform Cloud](ht
 
 It is possible that you have already existing Terraform projects and have a build process for them. In that case, there's nothing special about the Terraform, though the backend may require extra configuration.
 
+These instructions assume you have an already existing Azure account and subscription created. If this is not the case, you may need to go through that setup or liase with your ops team to get that.
+
 ## Creating a Terraform organisation 
 
 You need to create a terraform organisation before you can set the required Terraform variables and environment variables on your Terraform app.
@@ -13,12 +15,19 @@ You need to create a terraform organisation before you can set the required Terr
 
 ## Create a Workspace for the App
 
-1. If you are in the development stage create a workspace `nhs-virtual-visit-dev` 
-1. If you are in production stage create a workspace `nhs-virtual-visit-production`
+You will need to create a Workspace in Terraform Cloud to store configuration and state.
+
+The backend configuration expects this to be named like "nhs-virtual-visit-dev" but this is just nomenclature.
 
 See [Creating Workspaces](https://www.terraform.io/docs/cloud/workspaces/creating.html) on how to create a workspace.
 
 ### Terraform Variables
+
+The following are all variables that currently exist for the service.
+
+Which ones you will need to set will depend on your requirements.
+
+At minimum, you will need to set variables which do not have a default set.
 
 **Variable Name**|**Default**|**Notes**
 :-----:|:-----:|:-----:
@@ -56,7 +65,7 @@ azure\_sql\_max\_size\_gb|2|Maximum size of the database
 
 ### Terraform environment variables
 
-For Terraform to deply to Azure, extra environment variables will need to be set, these are:
+For Terraform to deploy to Azure, extra environment variables will need to be set, these are:
 
 - `ARM_CLIENT_ID`
 - `ARM_CLIENT_SECRET`
