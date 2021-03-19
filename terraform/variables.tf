@@ -4,6 +4,10 @@ variable "location" {
   default = "UK South"
 }
 
+variable "subscription_id" {
+  default = "9d247a76-6114-4d06-8bd2-2be4bd6a0cdc"
+}
+
 variable "image_name" {
   default = "virtualvisits.azurecr.io/virtualvisits"
 }
