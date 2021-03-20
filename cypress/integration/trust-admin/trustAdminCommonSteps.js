@@ -34,7 +34,6 @@ function WhenIClickOnAddAWard() {
 function WhenIFillOutTheAddWardForm(name) {
   cy.get("input[name=ward-name]").type(name);
   cy.get("input[name=ward-code]").type("glimmercode");
-  cy.get("input[name=ward-code-confirmation]").type("glimmercode");
   cy.get("input[name=ward-pin]").type("1234");
   cy.get("input[name=ward-pin-confirmation]").type("1234");
 }
