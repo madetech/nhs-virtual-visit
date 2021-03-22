@@ -21,7 +21,7 @@ describe("updateScheduledCallStartTimeByCallUuidGateway", () => {
         // Act
         const visit = await updateScheduledCallStartTimeByCallUuidGateway(container)(uuid);
         // Assert
-        expect(moment(visit.start_time).isSameOrAfter(moment(startTime))).toBeTruthy();
+        expect(moment(visit.start_time).isSameOrAfter(moment(startTime), "s")).toBeTruthy();
         expect(visit.uuid).toEqual(uuid);
     });
     it("returns undefined if scheduled_call table is empty", async() => {
