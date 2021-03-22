@@ -1,6 +1,7 @@
 import { 
   WhenIVisitTheLandingPage,
   ThenISeeTheManageYourTrustLoginPage,
+  ThenISeeTheLandingPage,
   AndIClickTheLinkToManageYourTrustPage
 } from "../commonSteps";
 describe("As a trust admin, I want to log in so that I can access the service.", () => {
@@ -23,7 +24,7 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     cy.audit();
 
     WhenIClickLogOut();
-    ThenISeeTheManageYourTrustLoginPage();
+    ThenISeeTheLandingPage();
   });
 
   it("displays an error for an invalid email", () => {
@@ -43,7 +44,7 @@ describe("As a trust admin, I want to log in so that I can access the service.",
   function WhenIVisitTheTrustAdminLogInPage() {
     cy.visit(Cypress.env("baseUrl") + "/login");
   }
- 
+
   function AndISubmitTheForm() {
     cy.get("button").contains("Log in").click();
   }

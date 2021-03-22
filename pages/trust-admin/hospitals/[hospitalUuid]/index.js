@@ -11,7 +11,6 @@ import WardsTable from "../../../../src/components/WardsTable";
 import NumberTile from "../../../../src/components/NumberTile";
 import Panel from "../../../../src/components/Panel";
 import { TRUST_ADMIN } from "../../../../src/helpers/userTypes";
-import { COMPLETE } from "../../../../src/helpers/visitStatus";
 
 const ShowHospital = ({
   organisation,
@@ -138,7 +137,7 @@ export const getServerSideProps = propsWithContainer(
     const { 
       total: totalCompletedVisits,
       error: totalCompletedVisitsError
-    } = await container.getRetrieveTotalVisitsByStatusAndFacilityId()(facility.id, COMPLETE);
+    } = await container.getRetrieveTotalCompletedVisitsByOrgOrFacilityId()({ facilityId: facility.id });
     
     const {
       departments, 

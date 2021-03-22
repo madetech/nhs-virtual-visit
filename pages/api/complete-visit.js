@@ -15,19 +15,18 @@ export default withContainer(
 
     checkIfAuthorised(userIsAuthenticatedResponse, res);
 
-    if (!body.callId) {
+    if (!body.callUuid) {
       res.status(400);
-      res.end(JSON.stringify({ err: "callId must be present" }));
+      res.end(JSON.stringify({ err: "callUuid must be present" }));
       return;
     }
 
     const { error } = await container.getMarkVisitAsComplete()({
-      id: body.callId,
+      id: body.callUuid,
       wardId: userIsAuthenticatedResponse.wardId,
     });
 
     if (error) {
-      console.error(error);
       res.status(500);
       res.end(JSON.stringify({ err: "Unable to mark visit as complete" }));
     } else {

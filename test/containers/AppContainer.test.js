@@ -301,4 +301,21 @@ describe("AppContainer", () => {
   it("returns getDeleteRecipientInformationForPiiGateway", () => {
     expect(container.getDeleteRecipientInformationForPiiGateway()).toBeDefined();
   });
+
+  it("returns getRetrieveTotalCompletedVisitsByOrgOrFacilityId", ()=>{
+    expect(container.getRetrieveTotalCompletedVisitsByOrgOrFacilityId()).toBeDefined();
+  });
+
+  it("returns getRetrieveTotalCompletedVisitsByOrgOrFacilityIdGateway", ()=>{
+    expect(container.getRetrieveTotalCompletedVisitsByOrgOrFacilityIdGateway()).toBeDefined();
+  });
+
+  it("returns getUpdateScheduledCallStartTimeByCallUuid", ()=>{
+    expect(container.getUpdateScheduledCallStartTimeByCallUuid()).toBeDefined();
+  });
+
+  it("returns getUpdateScheduledCallStartTimeByCallUuidGateway", ()=>{
+    expect(container.getUpdateScheduledCallStartTimeByCallUuidGateway()).toBeDefined();
+  });
+  
 });

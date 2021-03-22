@@ -131,19 +131,19 @@ export default Login;
 export const getServerSideProps = propsWithContainer(
   async ({ req: { headers }, res, container }) => {
     const userIsAuthenticated = container.getUserIsAuthenticated();
-    const userToken = await userIsAuthenticated(headers.cookie);
+    const user = await userIsAuthenticated(headers.cookie);
 
     const trustAdminIsAuthenticated = container.getOrganisationAdminIsAuthenticated();
-    const trustAdminToken = trustAdminIsAuthenticated(headers.cookie);
+    const trustAdmin = trustAdminIsAuthenticated(headers.cookie);
 
     const adminIsAuthenticated = container.getAdminIsAuthenticated();
-    const adminToken = adminIsAuthenticated(headers.cookie);
+    const admin = adminIsAuthenticated(headers.cookie);
 
-    if (trustAdminToken) {
+    if (trustAdmin) {
       res.writeHead(307, { Location: `/trust-admin` }).end();
-    } else if (userToken && userToken.ward) {
+    } else if (user && user.ward) {
       res.writeHead(307, { Location: `/wards/visits` }).end();
-    } else if (adminToken) {
+    } else if (admin) {
       res.writeHead(307, { Location: `/admin` }).end();
     }
 

@@ -27,7 +27,9 @@ describe("send-visit-ready-notification", () => {
     },
     error: null,
   }));
-
+  const updateScheduledCallStartTimeByCallUuidSpy = jest.fn(() => ({
+    error: null,
+  }))
   let container;
   let sendTextMessageSpy;
   let sendEmailSpy;
@@ -41,6 +43,7 @@ describe("send-visit-ready-notification", () => {
       getSendEmail: () => sendEmailSpy,
       getRetrieveDepartmentById: () => retrieveWardByIdSpy,
       getRetrieveFacilityById: () => retrieveFacilityByIdSpy,
+      getUpdateScheduledCallStartTimeByCallUuid: () => updateScheduledCallStartTimeByCallUuidSpy,
     };
   });
 
@@ -49,7 +52,7 @@ describe("send-visit-ready-notification", () => {
       const requestWithoutToken = {
         method: "POST",
         body: {
-          callId: "much-wow",
+          callUuid: "much-wow",
           contactNumber: "07123456789",
         },
         headers: {},
@@ -73,7 +76,7 @@ describe("send-visit-ready-notification", () => {
       requestWithToken = {
         method: "POST",
         body: {
-          callId: "much-wow",
+          callUuid: "much-wow",
           contactNumber: "07123456789",
           contactEmail: "leslie@knope.com",
           callPassword: "securePassword",
@@ -93,10 +96,30 @@ describe("send-visit-ready-notification", () => {
       expect(response.status).toHaveBeenCalledWith(405);
     });
 
+    it ("updates the start time of the call in the database when a valid callUuid is given", async () => {
+      await sendVisitReadyNotification(requestWithToken, response, {
+        container
+      });
+
+      expect(updateScheduledCallStartTimeByCallUuidSpy).toBeCalledWith(requestWithToken.body.callUuid);
+      expect(response.status).toHaveBeenCalledWith(201)
+    })
+    it ("returns status 500 when fails to updated start time in database ", async () => {
+      const updateScheduledCallStartTimeByCallUuidErrorSpy = jest.fn().mockResolvedValueOnce({error: "Error!"});
+      await sendVisitReadyNotification(requestWithToken, response, {
+        container: {
+          ...container,
+          getUpdateScheduledCallStartTimeByCallUuid: () => updateScheduledCallStartTimeByCallUuidErrorSpy
+        }
+      });
+
+      expect(updateScheduledCallStartTimeByCallUuidErrorSpy).toBeCalledWith(requestWithToken.body.callUuid);
+      expect(response.status).toHaveBeenCalledWith(500)
+    })
     describe("when a phone number is provided", () => {
       beforeEach(() => {
         requestWithToken.body = {
-          callId: "much-wow",
+          callUuid: "much-wow",
           contactNumber: "07123456789",
           callPassword: "securePassword",
         };
@@ -161,7 +184,7 @@ describe("send-visit-ready-notification", () => {
     describe("when an email address is provided", () => {
       beforeEach(() => {
         requestWithToken.body = {
-          callId: "much-wow",
+          callUuid: "much-wow",
           contactEmail: "leslie@knope.com",
           callPassword: "securePassword",
         };

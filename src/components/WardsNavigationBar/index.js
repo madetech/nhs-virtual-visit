@@ -13,7 +13,7 @@ const WardsNavigationBar = () => {
     },
     {
       text: "Log out",
-      href: "/wards/login",
+      href: "/",
       onClick: logout,
     },
   ];
@@ -24,7 +24,7 @@ const WardsNavigationBar = () => {
 const logout = async () => {
   await fetch("/api/session", { method: "DELETE" });
 
-  window.location.href = "/wards/login";
+  window.location.href = "/";
 };
 
 export default WardsNavigationBar;

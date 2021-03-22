@@ -44,7 +44,7 @@ describe("/hospitals/[hospitalUuid]/add-hospital-success", () => {
   });
 
   describe("getServerSideProps", () => {
-    it("redirects to login page if not authenticated", async () => {
+    it("redirects to root page if not authenticated", async () => {
       // Arrange
       const anonymousReq = {
         headers: {
@@ -55,7 +55,7 @@ describe("/hospitals/[hospitalUuid]/add-hospital-success", () => {
       await getServerSideProps({ req: anonymousReq, res });
       // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/login",
+        Location: "/",
       });
     });
 

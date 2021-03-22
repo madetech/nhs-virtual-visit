@@ -11,7 +11,7 @@ describe("/trust-admin/hospitals/[hospitalUuid]/edit-hospital", () => {
     };
   });
   describe("getServerSideProps", () => {
-    it("redirects to login page if not authenticated", async () => {
+    it("redirects to root page if not authenticated", async () => {
       // Arrange
       const anonymousReq = {
         headers: {
@@ -22,7 +22,7 @@ describe("/trust-admin/hospitals/[hospitalUuid]/edit-hospital", () => {
       await getServerSideProps({ req: anonymousReq, res });
       // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/login",
+        Location: "/",
       });
     });
     it("retrieves the facility by id", async () => {

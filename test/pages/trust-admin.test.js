@@ -1,5 +1,4 @@
 import { getServerSideProps } from "../../pages/trust-admin";
-import { COMPLETE } from "../../src/helpers/visitStatus";
 
 describe("trust-admin", () => {
   let res;
@@ -61,10 +60,6 @@ describe("trust-admin", () => {
 
   const retrieveHospitalVisitTotals = jest.fn().mockReturnValue(facilities);
 
-  const retrieveAverageParticipantsInVisit = jest
-    .fn()
-    .mockReturnValue({ averageParticipantsInVisit: 3, error: null });
-
   const retrieveAverageVisitTimeByTrustId = jest
     .fn()
     .mockReturnValue({ averageVisitTime: "1hr, 10mins", error: null });
@@ -82,14 +77,18 @@ describe("trust-admin", () => {
     error: null,
   });
 
+  const retrieveTotalCompletedVisitsByOrgIdSpy = jest.fn().mockReturnValue({
+    total: 2,
+    error: null
+  })
+
   const container = {
     getRetrieveDepartments: () => getRetrieveWardsSpy,
     getRetrieveOrganisationById: () => retrieveOrganisationByIdSpy,
     getRetrieveFacilitiesByOrgId: () => retrieveFacilitiesByOrgId,
     getRetrieveTotalVisitsByStatusAndOrgId: () => retrieveWardVisitTotalsSpy,
+    getRetrieveTotalCompletedVisitsByOrgOrFacilityId: () => retrieveTotalCompletedVisitsByOrgIdSpy,
     getRetrieveTotalBookedVisitsForFacilitiesByOrgId: () => retrieveHospitalVisitTotals,
-    getRetrieveAverageParticipantsInVisit: () =>
-      retrieveAverageParticipantsInVisit,
     getRetrieveAverageVisitTimeByOrganisationId: () =>
       retrieveAverageVisitTimeByTrustId,
     getRetrieveDepartmentVisitTotalsStartDateByOrganisationId: () =>
@@ -109,7 +108,7 @@ describe("trust-admin", () => {
   });
 
   describe("getServerSideProps", () => {
-    it("redirects to login page if not authenticated", async () => {
+    it("redirects to root page if not authenticated", async () => {
       // Arrange
       const anonymousReq = {
         headers: {
@@ -120,7 +119,7 @@ describe("trust-admin", () => {
       await getServerSideProps({ req: anonymousReq, res });
       // Assert
       expect(res.writeHead).toHaveBeenCalledWith(302, {
-        Location: "/login",
+        Location: "/",
       });
     });
 
@@ -257,8 +256,8 @@ describe("trust-admin", () => {
         res,
         container,
       });
-      expect(retrieveWardVisitTotalsSpy).toHaveBeenCalledWith(trustId, COMPLETE );
-      expect(totalCompletedVisits).toEqual(1234);
+      expect(retrieveTotalCompletedVisitsByOrgIdSpy).toHaveBeenCalledWith({orgId: trustId });
+      expect(totalCompletedVisits).toEqual(2);
       expect(error).toBeNull();
     })
   

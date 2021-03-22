@@ -8,7 +8,7 @@ describe("trust-admin/managers/[uuid]/archive-confirmation", () => {
       writeHead: jest.fn().mockReturnValue({ end: () => {} }),
     };
   });
-  it("redirects to login page if not authenticated", async () => {
+  it("redirects to root page if not authenticated", async () => {
     // Arrange
     const anonymousReq = {
       headers: {
@@ -19,7 +19,7 @@ describe("trust-admin/managers/[uuid]/archive-confirmation", () => {
     await getServerSideProps({ req: anonymousReq, res });
     // Assert
     expect(res.writeHead).toHaveBeenCalledWith(302, {
-      Location: "/login",
+      Location: "/",
     });
   });
   it("retrieves trust, manager and error (from props) if authenticated", async () => {

@@ -1,4 +1,4 @@
-import { idToStatus } from "../../helpers/visitStatus";
+import { idToStatus , COMPLETE } from "../../helpers/visitStatus";
 
 export default ({ getMsSqlConnPool, logger }) => async ({
   id,
@@ -13,14 +13,19 @@ export default ({ getMsSqlConnPool, logger }) => async ({
     departmentId
   );
   try {
+    let queryString = `UPDATE dbo.[scheduled_call] SET status = @status OUTPUT inserted.* WHERE uuid = @id`
+
+    if (idToStatus(status) === COMPLETE) {
+      queryString = `UPDATE dbo.[scheduled_call] SET status = @status, end_time = GETDATE() OUTPUT inserted.* WHERE uuid = @id`
+    }
+
     const db = await getMsSqlConnPool();
     const res = await db
       .request()
       .input("id", id)
       .input("status", status)
-      .query(
-        `UPDATE dbo.[scheduled_call] SET status = @status OUTPUT inserted.* WHERE uuid = @id`
-      );
+      .query(queryString);
+
     if (res.recordset[0]) {
       return {
         visit: res.recordset[0],
@@ -32,8 +37,6 @@ export default ({ getMsSqlConnPool, logger }) => async ({
       error: "Error retrieving recordset",
     };
   } catch (error) {
-    console.log(error);
-
     logger.error(error);
     return {
       visit: null,

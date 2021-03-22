@@ -1,0 +1,1 @@
+ALTER TABLE scheduled_call ADD [start_time] datetime DEFAULT NULL;

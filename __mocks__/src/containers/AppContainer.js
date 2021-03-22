@@ -40,11 +40,13 @@ export default {
   ),
   getResetPasswordGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveTotalBookedVisitsForFacilitiesByOrgIdGateway: jest.fn(() => () => Promise.resolve({})),
+  getRetrieveTotalCompletedVisitsByOrgOrFacilityIdGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveTotalVisitsByStatusAndFacilityIdGateway: jest.fn(() => () => Promise.resolve({})),
   getRetrieveTotalVisitsByStatusAndOrgIdGateway: jest.fn().mockResolvedValue({}),
   getRetrieveTotalBookedVisitsForDepartmentsByFacilityIdGateway: jest.fn().mockResolvedValue({}),
   getAdminIsAuthenticated: jest.fn(() => () => true),
   getOrganisationAdminIsAuthenticated: jest.fn(() => () => true),
   getDeleteRecipientInformationForPii: jest.fn(() => () => Promise.resolve({})),
+  getUpdateScheduledCallStartTimeByCallUuidGateway: jest.fn(() => () => Promise.resolve({})),
   logger
 };

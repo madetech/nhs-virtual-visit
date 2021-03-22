@@ -9,8 +9,8 @@ import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
 import propsWithContainer from "../../src/middleware/propsWithContainer";
 import Form from "../../src/components/Form";
-import Select from "../../src/components/Select";
 import AnchorLink from "../../src/components/AnchorLink";
+import SearchInput from "../../src/components/SearchInput";
 import { hasError, errorMessage } from "../../src/helpers/pageErrorHandler";
 import Router from "next/router";
 
@@ -29,10 +29,10 @@ const SignUp = ({ organisations, error }) => {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
-  const organisationChangeHandler = async (event) => {
-    const organisationId = event.target.value;
+  const organisationChangeHandler = (event) => {
+    const organisationName = event.target.value;
     const selectedOrganisation = organisations.find(
-      (org) => org.id.toString() === organisationId
+      org => org.name.toString() === organisationName
     );
     setOrganisation(selectedOrganisation);
   };
@@ -128,27 +128,27 @@ const SignUp = ({ organisations, error }) => {
           {!error && (
             <>
               <Heading>Sign up to access your site</Heading>
-              <FormGroup>
-                <Label htmlFor="organisation-id">Organisations</Label>
-                <Select
-                  id="organisation-id"
-                  className="nhsuk-input--width-10 nhsuk-u-width-one-half"
-                  prompt="Choose an organisation"
-                  options={organisations}
-                  onChange={organisationChangeHandler}
-                  hasError={hasError(errors, "organisation")}
-                  errorMessage={errorMessage(errors, "organisation")}
-                  data-cy="organisation-input"
-                />
-                {organisation && organisation.status === 1 && (
-                  <p style={{ paddingTop: "10px" }}>
-                    This organisation has already been activated. An email will
-                    be sent to a current manager to allow you access on form
-                    completion.
-                  </p>
-                )}
-              </FormGroup>
               <Form onSubmit={onSubmit}>
+                <FormGroup>
+                  <Label htmlFor="organisation-id">Organisations</Label>
+                  <SearchInput 
+                    id="organisation_id"
+                    className="nhsuk-input--width-20"
+                    options={organisations}
+                    hasError={hasError(errors, "organisation")}
+                    errorMessage={errorMessage(errors, "organisation")}
+                    organisation={organisation}
+                    onChange={organisationChangeHandler}
+                    data-cy="organisation-input"
+                    />  
+                  {organisation && organisation.status === 1 && (
+                    <p style={{ paddingTop: "10px" }}>
+                      This organisation has already been activated. An email will
+                      be sent to a current manager to allow you access on form
+                      completion.
+                    </p>
+                  )}
+                </FormGroup> 
                 <FormGroup>
                   <Label htmlFor="email">Email</Label>
                   <Input

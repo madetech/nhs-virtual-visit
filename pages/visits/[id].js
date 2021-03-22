@@ -44,7 +44,7 @@ const Call = ({
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ callId }),
+      body: JSON.stringify({ callUuid: callId }),
     });
   };
 
