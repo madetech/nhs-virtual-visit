@@ -23,7 +23,7 @@ describe("retrieveTotalBookedVisitsForFacilitiesByOrgIdGateway", () => {
         createdBy: adminId, 
         orgId: orgOneId,
         name: "Hospital Two",
- });
+    });
     const { facilityId: facilityThreeId } = await setUpFacility({ createdBy: adminId, orgId: orgTwoId });
     const { departmentId: departmentOneId } = await setUpDepartment({ createdBy: adminId, facilityId: facilityOneId });
     const { departmentId: departmentTwoId } = await setUpDepartment({ createdBy: adminId, facilityId: facilityOneId });
@@ -49,8 +49,8 @@ describe("retrieveTotalBookedVisitsForFacilitiesByOrgIdGateway", () => {
       const { adminId, orgId } = await setupAdminAndOrganisation();
       const { facilityId } = await setUpFacility({ createdBy: adminId, orgId });
       await setUpDepartment({ createdBy: adminId, facilityId: facilityId });
-     // Act
-     const facilityArray = await retrieveTotalBookedVisitsForFacilitiesByOrgIdGateway(container)(
+      // Act
+      const facilityArray = await retrieveTotalBookedVisitsForFacilitiesByOrgIdGateway(container)(
       orgId
     );
     // Assert
