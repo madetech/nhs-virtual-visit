@@ -1,0 +1,35 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    timezone: Europe/London
+  open-pull-requests-limit: 99
+  allow:
+  - dependency-type: development
+  ignore:
+  - dependency-name: cypress
+    versions:
+    - 6.7.1
+    - 7.0.0
+    - 7.0.1
+    - 7.1.0
+  - dependency-name: eslint
+    versions:
+    - 7.23.0
+    - 7.24.0
+  - dependency-name: "@cypress/code-coverage"
+    versions:
+    - 3.9.3
+    - 3.9.4
+  - dependency-name: "@testing-library/jest-dom"
+    versions:
+    - 5.11.10
+  - dependency-name: eslint-plugin-react
+    versions:
+    - 7.23.0
+    - 7.23.1
+  - dependency-name: husky
+    versions:
+    - 5.1.0
