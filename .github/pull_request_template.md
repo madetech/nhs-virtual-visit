@@ -1,7 +1,0 @@
-# What
-
-# Why
-
-# Screenshots
-
-# Notes
