@@ -1,0 +1,193 @@
+name: Test
+
+on:
+  pull_request:
+
+jobs:
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: npm install ci
+        run: npm ci
+
+      - name: build
+        run: npm run build
+
+      - name: run unit tests
+        run: npm run test
+
+  contract-tests:
+    name: Contract Tests
+    runs-on: ubuntu-latest
+
+    if: (github.repository == 'madetech/nhs-virtual-visit')
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: npm install ci
+        run: npm ci
+
+      - name: Create .env file
+        env:
+          APP_ENV: test
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+          SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
+          SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
+          EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
+          EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
+          EMAIL_RESET_PASSWORD_TEMPLATE_ID: ${{ secrets.EMAIL_RESET_PASSWORD_TEMPLATE_ID }}
+          EMAIL_SIGN_UP_TEMPLATE_ID: ${{ secrets.EMAIL_SIGN_UP_TEMPLATE_ID }}
+          EMAIL_SIGN_UP_REQUEST_TEMPLATE_ID: ${{ secrets.EMAIL_SIGN_UP_REQUEST_TEMPLATE_ID }}
+        run: bin/write_environment.sh
+
+      - name: start mssql container
+        run: bin/setup_test_mssql_docker.sh
+        env:
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+
+      - name: run contract tests
+        run: npm run test:contract
+
+  e2e-tests:
+    name: End-To-End Tests
+    runs-on: ubuntu-latest
+
+    if: (github.repository == 'madetech/nhs-virtual-visit')
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: npm install ci
+        run: npm ci
+
+      - name: Create .env file
+        env:
+          APP_ENV: test
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+          GOVNOTIFY_API_KEY: ${{ secrets.GOVNOTIFY_API_KEY }}
+          EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
+          EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
+          EMAIL_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.EMAIL_UPDATED_VISIT_TEMPLATE_ID }}
+          EMAIL_RESET_PASSWORD_TEMPLATE_ID: ${{ secrets.EMAIL_RESET_PASSWORD_TEMPLATE_ID }}
+          EMAIL_SIGN_UP_TEMPLATE_ID: ${{ secrets.EMAIL_SIGN_UP_TEMPLATE_ID }}
+          EMAIL_SIGN_UP_REQUEST_TEMPLATE_ID: ${{ secrets.EMAIL_SIGN_UP_REQUEST_TEMPLATE_ID }}
+          SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
+          SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
+          SMS_UPDATED_VISIT_TEMPLATE_ID: ${{ secrets.SMS_UPDATED_VISIT_TEMPLATE_ID }}
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+          WHEREBY_API_KEY: ${{ secrets.WHEREBY_API_KEY }}
+          WHEREBY_SUBDOMAIN: ${{ secrets.WHEREBY_SUBDOMAIN }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          ENABLE_SENTRY: ${{ secrets.ENABLE_SENTRY }}
+          ENABLE_UR_QUESTION: ${{ secrets.ENABLE_UR_QUESTION }}
+        run: bin/write_environment.sh
+
+      - name: start mssql container
+        run: bin/setup_test_mssql_docker.sh
+        env:
+          MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
+          MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
+          MSQL_DB_POOL_MAX: ${{ secrets.MSQL_DB_POOL_MAX }}
+          MSQL_DB_POOL_MIN: ${{ secrets.MSQL_DB_POOL_MIN }}
+          MSQL_DB_POOL_IDLE_TIMEOUT: ${{ secrets.MSQL_DB_POOL_IDLE_TIMEOUT }}
+          MSQL_TEST_DB_USER: ${{ secrets.MSQL_TEST_DB_USER }}
+          MSQL_TEST_DB_PASSWORD: ${{ secrets.MSQL_TEST_DB_PASSWORD }}
+          MSQL_TEST_DB_SERVER: ${{ secrets.MSQL_TEST_DB_SERVER }}
+          MSQL_TEST_DB_NAME: ${{ secrets.MSQL_TEST_DB_NAME }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          start: npm run test:server
+        env:
+          APP_ENV: test
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+          SMS_INITIAL_TEMPLATE_ID: ${{ secrets.SMS_INITIAL_TEMPLATE_ID }}
+          SMS_JOIN_TEMPLATE_ID: ${{ secrets.SMS_JOIN_TEMPLATE_ID }}
+          EMAIL_INITIAL_TEMPLATE_ID: ${{ secrets.EMAIL_INITIAL_TEMPLATE_ID }}
+          EMAIL_JOIN_TEMPLATE_ID: ${{ secrets.EMAIL_JOIN_TEMPLATE_ID }}
+          EMAIL_RESET_PASSWORD_TEMPLATE_ID: ${{ secrets.EMAIL_RESET_PASSWORD_TEMPLATE_ID }}
+          EMAIL_SIGN_UP_TEMPLATE_ID: ${{ secrets.EMAIL_SIGN_UP_TEMPLATE_ID }}
+          EMAIL_SIGN_UP_REQUEST_TEMPLATE_ID: ${{ secrets.EMAIL_SIGN_UP_REQUEST_TEMPLATE_ID }}
+          AZURE_FUNCTION_KEY: ${{ secrets.AZURE_FUNCTION_KEY }}
+          AZURE_FUNCTION_URL: ${{ secrets.AZURE_FUNCTION_URL }}
+          EVENT_LOGGING: ${{ secrets.ENABLE_EVENT_LOGGING_IN_TESTS }}
+
+  terraform:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          # terraform_version: 0.13.0:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Format
+        id: fmt
+        env:
+          TF_WORKSPACE: dev
+        working-directory: terraform
+        run: terraform fmt -check
+
+      - name: Terraform Init
+        id: init
+        env:
+          TF_WORKSPACE: dev
+        working-directory: terraform
+        run: terraform init
+
+      - name: Terraform Plan
+        id: plan
+        env:
+          TF_WORKSPACE: dev
+        working-directory: terraform
+        run: terraform plan -no-color
+

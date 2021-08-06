@@ -1,0 +1,73 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get Variables
+        id: vars
+        run: |
+          echo "image_version=\"$(git describe --tags)\"" >> terraform/terraform.auto.tfvars
+          echo "::set-output name=version::$(git describe --tags)"
+
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          registry: virtualvisits.azurecr.io
+          username: virtualvisits
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Pull latest
+        run: docker pull virtualvisits.azurecr.io/virtualvisits:latest || true
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: virtualvisits.azurecr.io/virtualvisits:latest,virtualvisits.azurecr.io/virtualvisits:${{ steps.vars.outputs.version }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          # terraform_version: 0.13.0
+          terraform_wrapper: false
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        env:
+          TF_WORKSPACE: dev
+        working-directory: terraform
+        run: terraform init
+
+      - name: Terraform Apply
+        id: apply
+        env:
+          TF_WORKSPACE: dev
+        working-directory: terraform
+        run: |
+          terraform apply -auto-approve
+          echo "::set-output name=app_service_id::$(terraform output -raw app_service_id)"
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Restart App Service
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            echo ${{ steps.apply.outputs.app_service_id }}
+            az webapp restart --ids ${{ steps.apply.outputs.app_service_id }}
