@@ -74,7 +74,7 @@ jobs:
       - name: run contract tests
         run: npm run test:contract
 
-   e2e-tests:
+  e2e-tests:
     name: End-To-End Tests
     runs-on: ubuntu-latest
 
@@ -83,7 +83,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: 14
 
       - name: npm install ci
         run: npm ci
