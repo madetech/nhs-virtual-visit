@@ -75,7 +75,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.9.2",
+    "@cypress/code-coverage": "^3.9.10",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "babel-eslint": "^10.1.0",
