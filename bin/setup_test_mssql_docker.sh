@@ -26,7 +26,7 @@ sleep $wait_time
 echo database started...
 
 # Create Databases
-bin/createDatabaseInDocker.sh ${containerName} ${MSQL_TEST_DB_NAME} ${MSQL_TEST_DB_USER} ${MSQL_TEST_DB_PASSWORD}
+bin/createDatabaseInDocker.sh ${containerName} ${MSQL_TEST_DB_NAME} ${testDBUsername} ${testDBPassword}
 
 # Run create tables scripts.
 npm run dbmigratetest up:mssql
