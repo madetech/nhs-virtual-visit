@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 containerName="${1}"
 databaseName="${2}"
 username="${3}"
