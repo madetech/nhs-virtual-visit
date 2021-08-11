@@ -29,6 +29,7 @@ sleep $wait_time
 echo database started...
 
 # Create Databases
+echo "Database name: ${MSQL_TEST_DB_NAME}"
 bin/createDatabaseInDocker.sh ${containerName} $MSQL_TEST_DB_NAME ${testDBUsername} ${testDBPassword}
 
 # Run create tables scripts.
