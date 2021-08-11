@@ -10,6 +10,9 @@ fi
 containerName="nhs-virtual-visit-test"
 testDBPassword="P@55w0rd"
 testDBUsername="sa"
+if [ -f .env ]; then
+  export $(cat .env | sed 's/#.*//g' | xargs)
+fi
 
 # Build images from Dockerfile
 docker build -t mssql-test:2017-GA-ubuntu docker/mssql/test
