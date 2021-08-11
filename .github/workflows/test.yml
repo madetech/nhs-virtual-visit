@@ -57,9 +57,11 @@ jobs:
           EMAIL_SIGN_UP_TEMPLATE_ID: ${{ secrets.EMAIL_SIGN_UP_TEMPLATE_ID }}
           EMAIL_SIGN_UP_REQUEST_TEMPLATE_ID: ${{ secrets.EMAIL_SIGN_UP_REQUEST_TEMPLATE_ID }}
         run: bin/write_environment.sh
+        shell: bash
 
       - name: start mssql container
         run: bin/setup_test_mssql_docker.sh
+        shell: bash
         env:
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
@@ -120,9 +122,11 @@ jobs:
           ENABLE_SENTRY: ${{ secrets.ENABLE_SENTRY }}
           ENABLE_UR_QUESTION: ${{ secrets.ENABLE_UR_QUESTION }}
         run: bin/write_environment.sh
+        shell: bash
 
       - name: start mssql container
         run: bin/setup_test_mssql_docker.sh
+        shell: bash
         env:
           MSQL_DB_DRIVER: ${{ secrets.MSQL_DB_DRIVER }}
           MSQL_DB_PORT: ${{ secrets.MSQL_DB_PORT }}
