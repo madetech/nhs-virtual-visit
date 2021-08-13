@@ -57,7 +57,7 @@
     "morgan": "^1.10.0",
     "mssql": "^6.3.1",
     "nanoid": "^3.1.20",
-    "next": "^10.0.8",
+    "next": "^11.1.0",
     "next-absolute-url": "^1.2.2",
     "next-env": "^1.1.1",
     "nhsuk-frontend": "^3.1.0",
