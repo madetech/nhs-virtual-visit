@@ -18,8 +18,10 @@ jobs:
         run: npm --version && node --version
       - name: Log npm config
         run: npm config ls -l
-      # - name: npm install ci
-      #   run: npm ci
+      - name: npm install ci
+        run: npm ci
+      - name: ls node_modules
+        run: ls -la node_modules
 
       # - name: build
       #   run: npm run build
