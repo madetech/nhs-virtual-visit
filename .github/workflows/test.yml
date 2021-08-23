@@ -14,20 +14,14 @@ jobs:
         with:
           node-version: 12
 
-      - name: log helpful information
-        run: npm --version && node --version
-      - name: Log npm config
-        run: npm config ls -l
       - name: npm install ci
         run: npm ci
-      - name: ls node_modules
-        run: ls -la node_modules
 
-      # - name: build
-      #   run: npm run build
+      - name: build
+        run: npm run build
 
-      # - name: run unit tests
-      #   run: npm run test
+      - name: run unit tests
+        run: npm run test
 
   # contract-tests:
   #   name: Contract Tests

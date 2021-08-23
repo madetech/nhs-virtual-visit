@@ -47,6 +47,8 @@ module.exports = withNextEnv(
           config.resolve.alias["@sentry/node"] = "@sentry/browser";
         }
 
+        config.resolve.alias["react/jsx-runtime"] = require.resolve('react/jsx-runtime');
+
         // When all the Sentry configuration env variables are available/configured
         // The Sentry webpack plugin gets pushed to the webpack plugins to build
         // and upload the source maps to sentry.
