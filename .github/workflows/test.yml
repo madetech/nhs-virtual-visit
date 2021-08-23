@@ -16,6 +16,8 @@ jobs:
 
       - name: log helpful information
         run: npm --version && node --version
+      - name: Log npm config
+        run: npm config ls -l
       # - name: npm install ci
       #   run: npm ci
 
