@@ -2,7 +2,6 @@ name: Test
 
 on:
   pull_request:
-  push:
 
 jobs:
   unit-tests:
@@ -16,7 +15,7 @@ jobs:
           node-version: 12
 
       - name: log helpful information
-      #   run: npm --version && node --version
+        run: npm --version && node --version
       # - name: npm install ci
       #   run: npm ci
 
