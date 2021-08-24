@@ -61,8 +61,8 @@ const EditWardForm = ({ errors, setErrors, hospital, ward }) => {
 
   const onSubmit = async () => {
     onSubmitErrors = [];
-    const setWardNameError = (errors) => {
-      errors.push({
+    const setWardNameError = (submitErrors) => {
+      submitErrors.push({
         id: "ward-name-error",
         message: "Enter a ward name",
       });
