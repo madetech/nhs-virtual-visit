@@ -29,7 +29,6 @@ module.exports = withNextEnv(
         SIGN_UP_EMAIL_DOMAINS
       },
       webpack: (config, options) => {
-        console.log(options);
         // In `pages/_app.js`, Sentry is imported from @sentry/node. While
         // @sentry/browser will run in a Node.js environment, @sentry/node will use
         // Node.js-only APIs to catch even more unhandled exceptions.
