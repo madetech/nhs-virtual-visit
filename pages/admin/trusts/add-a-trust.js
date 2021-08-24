@@ -40,14 +40,14 @@ const AddATrust = () => {
     }
 
     if (onSubmitErrors.length === 0) {
-      const submitTrust = async (trustName) => {
+      const submitTrust = async () => {
         const response = await fetch("/api/create-organisation", {
           method: "POST",
           headers: {
             "content-type": "application/json",
           },
           body: JSON.stringify({
-            trustName,
+            name,
           }),
         });
 
@@ -75,7 +75,7 @@ const AddATrust = () => {
         setErrors(onSubmitErrors);
         return false;
       };
-      return await submitTrust(name);
+      return await submitTrust();
     }
     setErrors(onSubmitErrors);
   };
