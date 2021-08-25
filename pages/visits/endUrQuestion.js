@@ -141,7 +141,7 @@ export const getServerSidePropsConstructor = ({
 
   if (token?.ward || null) {
     res.writeHead(302, { Location: `/visits/end?callId=${callId}` }).end();
-    return {};
+    return { props: {} };
   } else {
     res.status(200);
     return { props: { correlationId, callId, protocol, host } };
