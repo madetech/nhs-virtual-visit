@@ -143,6 +143,8 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           start: npm run test:server
+          browser: chrome
+          headless: true
         env:
           APP_ENV: test
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
