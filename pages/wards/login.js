@@ -22,24 +22,24 @@ const Login = ({ correlationId }) => {
   const pinRef = useRef();
  
   const onSubmit = async () => {
-    const errors = [];
+    const userEntryErrors = [];
     const pin = pinRef.current.value;
 
     if (!code) {
-      errors.push({
+      userEntryErrors.push({
         id: "code-error",
         message: "The code you entered was not recognised",
       });
     }
 
     if (!pin) {
-      errors.push({
+      userEntryErrors.push({
         id: "pin-error",
         message: "A pin is required",
       });
     }
 
-    if (errors.length === 0) {
+    if (userEntryErrors.length === 0) {
       const body = JSON.stringify({ code, pin });
       const response = await fetchEndpointWithCorrelationId(
         "POST",
@@ -52,14 +52,14 @@ const Login = ({ correlationId }) => {
         window.location.href = `/wards/visits`;
         return true;
       } else {
-        errors.push({
+        userEntryErrors.push({
           id: "verification-error",
           message: "The code or pin you entered was not recognised",
         });
       }
     }
 
-    setErrors(errors);
+    setErrors(userEntryErrors);
     return false;
   };
 

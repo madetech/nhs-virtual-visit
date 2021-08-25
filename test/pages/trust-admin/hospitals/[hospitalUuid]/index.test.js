@@ -57,7 +57,7 @@ describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () =>
         error: null
       });
       const hospitalWardTotalsSpy = jest.fn().mockReturnValue({
-        departments: [{ name: "Most Visited", total: 10, name: "Least Visited", total: 5  }],
+        departments: [{ name: "Most Visited", total: 10 }, { name: "Least Visited", total: 5 }],
         mostVisited: { name: "Most Visited", total: 10 },
         leastVisited: { name: "Least Visited", total: 5 },
       });
@@ -82,7 +82,7 @@ describe("/trust-admin/hospitals/[hospitalUuid]rust-admin/hospitals/[id]", () =>
       expect(facilitySpy).toHaveBeenCalledWith(expectedFacilityUuid);
       expect(visitTotalsSpy).toHaveBeenCalledWith({ facilityId: expectedFacilityId });
       expect(hospitalWardTotalsSpy).toHaveBeenCalledWith(expectedFacilityId);
-      expect(props.wards).toEqual([{ name: "Most Visited", total: 10, name: "Least Visited", total: 5  }]);
+      expect(props.wards).toEqual([{ name: "Most Visited", total: 10 }, { name: "Least Visited", total: 5 }]);
       expect(props.hospital).toEqual({
         id: expectedFacilityId,
         name: "Test Hospital",

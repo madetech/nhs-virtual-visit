@@ -86,12 +86,12 @@ describe("/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/add-ward-succes
       });
       it("returns an error if ward name cannot be retrieved", async () => {
         // Arrange
-        const retrieveDepartmentByUuidSpy = jest.fn().mockResolvedValue({
+        const retrieveDepartmentByUuidErrorSpy = jest.fn().mockResolvedValue({
           department: null,
           error: "ward name Error!",
         });
         mockAppContainer.getRetrieveDepartmentByUuid.mockImplementationOnce(
-          () => retrieveDepartmentByUuidSpy
+          () => retrieveDepartmentByUuidErrorSpy
         );
         const {
           props: { name, error },
@@ -111,12 +111,12 @@ describe("/trust-admin/hospitals/[hospitalUuid]/wards/[wardUuid]/add-ward-succes
       });
       it("returns an error if organisation cannot be retrieved", async () => {
         // Arrange
-        const retrieveOrganisationByIdSpy = jest.fn().mockResolvedValue({
+        const retrieveOrganisationByIdErrorSpy = jest.fn().mockResolvedValue({
           organisation: null,
           error: "organisation name Error!",
         });
         mockAppContainer.getRetrieveOrganisationById.mockImplementationOnce(
-          () => retrieveOrganisationByIdSpy
+          () => retrieveOrganisationByIdErrorSpy
         );
         const {
           props: { organisation, error },

@@ -6,13 +6,13 @@ jest.mock("../../src/containers/AppContainer", () => ({
 
 describe("propsWithContainer", () => {
   it("creates and inserts an app container into the context", (done) => {
-    const context = {};
+    const appContext = {};
 
     const foo = propsWithContainer((context) => {
       expect(context.container).toBeDefined();
       done();
     });
 
-    foo(context);
+    foo(appContext);
   });
 });

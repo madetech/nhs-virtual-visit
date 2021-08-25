@@ -10,7 +10,7 @@ const validFrontEmail = [
     "firstname-lastname@",
     "bam_bam_özgur@",
     "test@trust."
-]
+];
 
 const invalidEmailAddresses = [
   "email@[123.123.123.123]",
@@ -45,9 +45,9 @@ const invalidEmailAddresses = [
   "example@example.com",
 ];
 
-const createValidEmailArray = (emailDomainString, validFrontEmail) =>{
+const createValidEmailArray = (emailDomainString, validEmail) => {
     const emailDomainArray = emailDomainString ? emailDomainString.split(',') : []
-    return emailDomainArray.map(domain=> validFrontEmail.map(frontEmail=>`${frontEmail}${domain}`)).flat();
+    return emailDomainArray.map(domain => validEmail.map(frontEmail => `${frontEmail}${domain}`)).flat();
 }
 
 describe("validateSignUpEmailAddress", () => {
@@ -55,11 +55,13 @@ describe("validateSignUpEmailAddress", () => {
         process.env.SIGN_UP_EMAIL_DOMAINS="madetech.com,nhs.uk";
         const emailDomainString = process.env.SIGN_UP_EMAIL_DOMAINS;
         const validSignUpEmailAddresses = createValidEmailArray(emailDomainString, validFrontEmail);
+
         validSignUpEmailAddresses.forEach((email_address) => {
             it(`accepts a valid email address: ${email_address}`, () => {
               expect(validateSignUpEmailAddress(email_address)).toEqual(true);
             });
         });
+
         invalidEmailAddresses.forEach((email_address) => {
             it(`rejects an invalid email address: ${email_address}`, () => {
                 expect(validateSignUpEmailAddress(email_address)).toEqual(false);

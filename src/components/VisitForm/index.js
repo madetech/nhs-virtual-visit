@@ -88,20 +88,20 @@ const VisitForm = ({
       });
     }
 
-    const { isValidDate, isValidTime, errorMessage } = validateDateAndTime(
+    const { isValidDate: validDate, isValidTime: validTime, errorMessage: message } = validateDateAndTime(
       callDateTime
     );
 
-    if (!isValidDate) {
+    if (!validDate) {
       validationErrors.push({
         id: "call-date-error",
-        message: errorMessage,
+        message: message,
       });
     }
-    if (!isValidTime) {
+    if (!validTime) {
       validationErrors.push({
         id: "call-time-error",
-        message: errorMessage,
+        message: message,
       });
     }
 

@@ -20,49 +20,49 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
   const onSubmit = async () => {
     const onSubmitErrors = [];
 
-    const setWardNameError = (errors) => {
-      errors.push({
+    const setWardNameError = (errorMessages) => {
+      errorMessages.push({
         id: "ward-name-error",
         message: "Enter a ward name",
       });
     };
 
-    const setWardCodeError = (errors) => {
-      errors.push({
+    const setWardCodeError = (errorMessages) => {
+      errorMessages.push({
         id: "ward-code-error",
         message: "Enter a ward code",
       });
     };
 
-    const setCreateWardApiError = (errors, message) => {
-      errors.push({
+    const setCreateWardApiError = (errorMessages, message) => {
+      errorMessages.push({
         id: "create-department-api-error",
         message,
       });
     };
-    const setWardPinError = (errors) => {
-      errors.push({
+    const setWardPinError = (errorMessages) => {
+      errorMessages.push({
         id: "ward-pin-error",
         message: "Enter a pin code",
       });
     };
 
-    const setWardPinLengthError = (errors) => {
-      errors.push({
+    const setWardPinLengthError = (errorMessages) => {
+      errorMessages.push({
         id: "ward-pin-length-error",
         message: "Ward pin is only 4 characters",
       });
     };
 
-    const setWardPinConfirmationError = (errors) => {
-      errors.push({
+    const setWardPinConfirmationError = (errorMessages) => {
+      errorMessages.push({
         id: "ward-pin-confirmation-error",
         message: "Confirm the ward pin",
       });
     };
 
-    const setWardPinConfirmationMismatchError = (errors) => {
-      errors.push({
+    const setWardPinConfirmationMismatchError = (errorMessages) => {
+      errorMessages.push({
         id: "ward-pin-confirmation-error",
         message: "Ward pin confirmation does not match",
       });
@@ -118,8 +118,8 @@ const AddWardForm = ({ errors, setErrors, hospital }) => {
 
           return true;
         } else {
-          const { error: errorMessage } = await response.json();
-          setCreateWardApiError(onSubmitErrors, errorMessage);
+          const { error: message } = await response.json();
+          setCreateWardApiError(onSubmitErrors, message);
           setErrors(onSubmitErrors);
         }
 
