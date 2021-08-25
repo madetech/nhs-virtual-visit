@@ -131,7 +131,7 @@ export const getServerSidePropsConstructor = ({
 
   if (ENABLE_UR_QUESTION !== "yes") {
     res.writeHead(302, { Location: `/visits/end?callId=${callId}` }).end();
-    return {};
+    return { props: {} };
   }
 
   const userIsAuthenticated = container.getUserIsAuthenticated();
