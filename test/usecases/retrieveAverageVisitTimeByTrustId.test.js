@@ -1,7 +1,7 @@
 import retrieveAverageVisitTimeByTrustId from "../../src/usecases/retrieveAverageVisitTimeByTrustId";
 import logger from "../../logger";
 
-describe.skip("retrieveAverageVisitTimeByTrustId", () => {
+describe("retrieveAverageVisitTimeByTrustId", () => {
   const trustId = 1;
   it("formats the average visit time", async () => {
     const anySpy = jest.fn().mockReturnValue(12300);
