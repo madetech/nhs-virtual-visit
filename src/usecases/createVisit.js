@@ -3,13 +3,11 @@ import validateVisit from "../../src/helpers/validateVisit";
 const createVisit = ({
   getInsertVisitGateway,
   getSendBookingNotification,
-  getRetrieveFacilityById,
-  logger
+  getRetrieveFacilityById
 }) => async (visit, ward, callId, callPassword, videoProvider) => {
   const { validVisit, errors } = validateVisit(visit);
 
   if (!validVisit) {
-    logger.error("invalid visit on create", { visit, errors });
     return { success: false, err: errors };
   }
 
@@ -54,7 +52,6 @@ const createVisit = ({
 
     return { success: true, err: null };
   } catch (err) {
-    logger.error("failed to create visit", err);
     return { success: false, err: err };
   }
 };
