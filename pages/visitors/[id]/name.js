@@ -35,18 +35,18 @@ const Name = ({ callId, error, callPassword, correlationId }) => {
   const [errors, setErrors] = useState([]);
 
   const onSubmit = async () => {
-    const errors = [];
+    const submissionErrors = [];
 
     if (!name) {
-      errors.push({
+      submissionErrors.push({
         id: "name-error",
         message: nameError,
       });
     }
 
-    setErrors(errors);
+    setErrors(submissionErrors);
 
-    if (errors.length === 0) {
+    if (submissionErrors.length === 0) {
       await router.push(
         `/visits/[id]?name=${name}&callPassword=${callPassword}`,
         `/visits/${router.query.id}?name=${name}&callPassword=${callPassword}`

@@ -214,9 +214,6 @@ describe("update-a-facility", () => {
 
   it("updates facility with new name from payload", async () => {
     // Arrange
-    const updateFacilitySpy = jest
-      .fn()
-      .mockResolvedValue({ uuid: expectedUuid, error: null });
     mockAppContainer.getUpdateFacilityById.mockImplementationOnce(
       () => updateFacilitySpy
     );
@@ -237,11 +234,11 @@ describe("update-a-facility", () => {
 
   it("returns a 500 if facility fails to update", async () => {
     // Arrange
-    const updateFacilitySpy = jest.fn(async () => {
+    const updateFacilityErrorSpy = jest.fn(async () => {
       throw new Error("ERROR!");
     });
     mockAppContainer.getUpdateFacilityById.mockImplementationOnce(
-      () => updateFacilitySpy
+      () => updateFacilityErrorSpy
     );
     // Act
     await updateAFacility(validRequest, response, {

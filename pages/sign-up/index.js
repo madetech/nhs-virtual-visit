@@ -107,10 +107,10 @@ const SignUp = ({ organisations, error }) => {
         });
         return true;
       } else {
-        const { error } = await response.json();
+        const { additionalInfo } = await response.json();
         onSubmitErrors.push({
           id: "email-invalid-error",
-          message: error,
+          message: additionalInfo,
         });
       }
     }
