@@ -1,14 +1,14 @@
 import React from "react";
 import Heading from "../Heading";
 import TimeNow from "../TimeNow";
-import "./styles.scss";
+import styles from "./styles.module.scss";
 
 const HeadingWithTime = ({ children }) => (
-  <div className="app-heading-with-time">
-    <div className="app-heading-with-time-text">
+  <div className={styles.heading}>
+    <div className={styles.text}>
       <Heading>{children}</Heading>
     </div>
-    <div className="app-heading-with-time-beside">
+    <div className={styles.beside}>
       <TimeNow />
     </div>
   </div>

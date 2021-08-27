@@ -1,10 +1,10 @@
 import React from "react";
-import "./styles.scss";
+import styles from "./styles.module.scss";
 
 const NumberTitle = ({ number, label, small = false }) => (
-  <div className={small ? "app-number-tile--s" : "app-number-tile"}>
+  <div className={`${styles.tile} ${small ? styles.small : ''}`}>
     {number}
-    <span className="app-number-tile-label"> {label}</span>
+    <span className={styles.label}> {label}</span>
   </div>
 );
 
