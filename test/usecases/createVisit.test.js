@@ -28,7 +28,7 @@ describe("createVisit", () => {
   /* ----------------------- Mock configuration -----------------------*/
   const configureMocks = (simulateInsertVisitError, simulateRetrieveFacilityError, simulateNotificationError) => {
     // eslint-disable-next-line no-unused-vars
-    injectedMockFunctions.getInsertVisitGateway = jest.fn().mockImplementation(() => async(populatedVisit, ward) => {
+    injectedMockFunctions.getInsertVisitGateway = jest.fn().mockImplementation(() => async(populatedVisit, populatedWard) => {
       return {error: simulateInsertVisitError };
     });
     // eslint-disable-next-line no-unused-vars
