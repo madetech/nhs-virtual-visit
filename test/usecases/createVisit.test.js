@@ -1,4 +1,5 @@
 import createVisit from "../../src/usecases/createVisit";
+import logger from "../../logger"
 
 describe("createVisit", () => {
 
@@ -36,6 +37,7 @@ describe("createVisit", () => {
     // eslint-disable-next-line no-empty-pattern
     injectedMockFunctions.getSendBookingNotification = jest.fn(() => async ({}) => {
       return { errors: simulateNotificationError };});
+    injectedMockFunctions.logger = logger;
   };
 
   /* ----------------------- Test cases -----------------------*/
