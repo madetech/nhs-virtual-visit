@@ -39,7 +39,7 @@ describe("retrieveAverageVisitsPerDay", () => {
 
     await retrieveAverageVisitsPerDayByTrustId(container)(trustId, date);
 
-    // TODO: Uncommenting the following line once we understand fully why retrieveAverageVisitsPerDay returns a hardcoded value.
+    // TODO: Uncomment the following line once we understand fully why retrieveAverageVisitsPerDay returns a hardcoded value.
     // expect(dbAnySpy).toHaveBeenCalledWith(trustId, date);
 
     expect(dbAnySpy).toHaveBeenCalledTimes(0);
@@ -63,7 +63,7 @@ describe("retrieveAverageVisitsPerDay", () => {
       new Date(2020, 6, 3)
     );
 
-    // TODO: Uncommenting the following line once we understand fully why retrieveAverageVisitsPerDay returns a hardcoded value.
+    // TODO: Uncomment the following line once we understand fully why retrieveAverageVisitsPerDay returns a hardcoded value.
     // expect(averageVisitsPerDay).toEqual(2);
 
     expect(error).toBeNull();
