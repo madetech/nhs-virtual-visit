@@ -9,8 +9,7 @@ WORKDIR /usr/src/app
 COPY package.json /usr/src/app
 
 # insall dependencies
-#RUN npm install --only=prod
-RUN npm install
+RUN npm install --only=prod
 
 COPY . /usr/src/app
 

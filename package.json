@@ -34,7 +34,6 @@
     "@sentry/browser": "^5.30.0",
     "@sentry/node": "^5.30.0",
     "@sentry/webpack-plugin": "^1.14.1",
-    "@zeit/next-sass": "^1.0.1",
     "@zeit/next-source-maps": "0.0.4-canary.1",
     "babel-jest": "^26.3.0",
     "babel-plugin-istanbul": "^6.0.0",
