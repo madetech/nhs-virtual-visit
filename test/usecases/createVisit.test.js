@@ -1,35 +1,50 @@
 import createVisit from "../../src/usecases/createVisit";
+import logger from "../../logger"
 
-describe.skip("createVisit", () => {
-  let createVisitUnitOfWorkSpy = jest.fn();
+describe("createVisit", () => {
 
+  let injectedMockFunctions = {};
   let date = new Date();
+
   date.setDate(date.getDate() + 1);
 
-  const setupTestDoubles = (success, error) => {
-    createVisitUnitOfWorkSpy.mockReturnValue({
-      success,
-      error,
-    });
+  /* ----------------------- Test data setup -----------------------*/
+  const visit = {
+    patientName: "Patient Name",
+    contactEmail: "contact@example.com",
+    contactName: "Contact Name",
+    callTime: date,
+    recipientName: "The recipient",
+    recipientEmail: "recipient@example.com",
+    recipientNumber: "07777123456"
   };
 
-  it("calls createVisitUnitOfWork with the visit and ward", async () => {
-    const wardId = "wardId";
-    const ward = { id: wardId, name: "wardName", hospitalName: "hospitalName" };
-    const callId = "12ab34cd";
-    const callPassword = "testpassword";
-    const videoProvider = "testProvider";
+  const callId = "789xyz";
+  const callPassword = "anothertestpassword";
+  const videoProvider = "anotherTestProvider";
+  const wardId = "wardId";
+  const ward = { id: wardId, name: "wardName", hospitalName: "hospitalName" };
 
-    setupTestDoubles(true, "");
+  /* ----------------------- Mock configuration -----------------------*/
+  const configureMocks = (simulateInsertVisitError, simulateRetrieveFacilityError, simulateNotificationError) => {
+    // eslint-disable-next-line no-unused-vars
+    injectedMockFunctions.getInsertVisitGateway = jest.fn().mockImplementation(() => async(populatedVisit, populatedWard) => {
+      return {error: simulateInsertVisitError };
+    });
+    // eslint-disable-next-line no-unused-vars
+    injectedMockFunctions.getRetrieveFacilityById = jest.fn(() => async(facilityId) => {
+      return { error: simulateRetrieveFacilityError, facility: { name: "Test" } }; });
+    // eslint-disable-next-line no-empty-pattern
+    injectedMockFunctions.getSendBookingNotification = jest.fn(() => async ({}) => {
+      return { errors: simulateNotificationError };});
+    injectedMockFunctions.logger = logger;
+  };
 
-    const visit = {
-      patientName: "Patient Name",
-      contactEmail: "contact@example.com",
-      contactName: "Contact Name",
-      callTime: date,
-    };
+  /* ----------------------- Test cases -----------------------*/
+  it("returns success when valid arguments are supplied", async () => {
+    configureMocks(false, false, false);
 
-    const response = await createVisit(createVisitUnitOfWorkSpy)(
+    const response = await createVisit(injectedMockFunctions)(
       visit,
       ward,
       callId,
@@ -37,41 +52,13 @@ describe.skip("createVisit", () => {
       videoProvider
     );
 
-    const expectedVisit = {
-      patientName: "Patient Name",
-      contactEmail: "contact@example.com",
-      contactName: "Contact Name",
-      callTime: date,
-      callId: callId,
-      callPassword: callPassword,
-      provider: videoProvider,
-    };
-
-    expect(createVisitUnitOfWorkSpy).toHaveBeenCalledWith(expectedVisit, ward);
-    expect(response).toEqual({ success: true, err: undefined });
+    expect(response.success).toBeTruthy();
   });
 
-  it("throws error if booking notification error", async () => {
-    const wardId = "wardId2";
-    const ward = {
-      id: wardId,
-      name: "wardName2",
-      hospitalName: "hospitalName2",
-    };
-    const callId = "789xyz";
-    const callPassword = "anothertestpassword";
-    const videoProvider = "anotherTestProvider";
+  it("returns error if booking notification error", async () => {
+    configureMocks(false, false, true);
 
-    setupTestDoubles(false, "emailError");
-
-    const visit = {
-      patientName: "Another Patient Name",
-      contactEmail: "anothercontact@example.com",
-      contactName: "Another Contact Name",
-      callTime: date,
-    };
-
-    const response = await createVisit(createVisitUnitOfWorkSpy)(
+    const response = await createVisit(injectedMockFunctions)(
       visit,
       ward,
       callId,
@@ -79,44 +66,13 @@ describe.skip("createVisit", () => {
       videoProvider
     );
 
-    const expectedVisit = {
-      patientName: "Another Patient Name",
-      contactEmail: "anothercontact@example.com",
-      contactName: "Another Contact Name",
-      callTime: date,
-      callId: callId,
-      callPassword: callPassword,
-      provider: videoProvider,
-    };
-
-    expect(createVisitUnitOfWorkSpy).toHaveBeenCalledWith(expectedVisit, ward);
-    expect(response).toEqual({
-      success: false,
-      err: "emailError",
-    });
+    expect(response.success).toBeFalsy();
   });
 
   it("returns error if invalid visit", async () => {
-    const wardId = "wardId3";
-    const ward = {
-      id: wardId,
-      name: "wardName3",
-      hospitalName: "hospitalName3",
-    };
-    const callId = "789xyz";
-    const callPassword = "anothertestpassword";
-    const videoProvider = "anotherTestProvider";
+    configureMocks(true, false, false);
 
-    setupTestDoubles(true, "");
-
-    const visit = {
-      patientName: "",
-      contactEmail: "contact@example.com",
-      contactName: "Contact Name",
-      callTime: date,
-    };
-
-    const response = await createVisit(createVisitUnitOfWorkSpy)(
+    const response = await createVisit(injectedMockFunctions)(
       visit,
       ward,
       callId,
@@ -124,10 +80,20 @@ describe.skip("createVisit", () => {
       videoProvider
     );
 
-    expect(response).toEqual({
-      success: false,
-      err: { patientName: "patientName must be present" },
-    });
-    expect(createVisitUnitOfWorkSpy).toHaveBeenCalledTimes(0);
+    expect(response.success).toBeFalsy();
+  });
+
+  it("returns error if cannot retrieve facility", async() => {
+    configureMocks(false, true, false);
+
+    const response = await createVisit(injectedMockFunctions)(
+      visit,
+      ward,
+      callId,
+      callPassword,
+      videoProvider
+    );
+
+    expect(response.success).toBeFalsy();
   });
 });

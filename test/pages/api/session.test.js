@@ -103,7 +103,7 @@ describe("api/session", () => {
         );
       });
 
-      it.skip("logs a login event when a user has logged in", async () => {
+      it("logs a login event when a user has logged in", async () => {
         process.env.EVENT_LOGGING = true;
 
         const validRequest = {
@@ -122,7 +122,7 @@ describe("api/session", () => {
 
         const verifyWardCodeSpy = jest.fn(async () => ({
           validWardCode: true,
-          department: { wardId: 10, code: "MEOW", trustId: 1 },
+          department: { id: 10, code: "MEOW", trustId: 1 },
         }));
 
         const tokenGeneratorSpy = jest.fn(() => "generatedToken");
