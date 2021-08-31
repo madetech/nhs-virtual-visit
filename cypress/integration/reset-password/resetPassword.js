@@ -3,7 +3,7 @@ import {
   ThenISeeTheManageYourTrustLoginPage, 
 } from "../commonSteps";
 
-describe.skip("As a trust manager or admin, I want to reset my password if I forget it", () => {
+describe("As a trust manager or admin, I want to reset my password if I forget it", () => {
   let link;
 
   before(() => {

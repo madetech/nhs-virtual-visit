@@ -8,7 +8,7 @@ import {
   ThenISeeAnError
 } from "../commonSteps";
 
-describe.skip("As an admin, I want to log in so that I can access the service.", () => {
+describe("As an admin, I want to log in so that I can access the service.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(

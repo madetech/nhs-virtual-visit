@@ -12,7 +12,7 @@ import {
   WhenIClickViewVirtualVisits,
 } from "./wardCommonSteps";
 
-describe.skip("As a ward staff, I want to schedule a virtual visit so that patients can speak with their loved ones.", () => {
+describe("As a ward staff, I want to schedule a virtual visit so that patients can speak with their loved ones.", () => {
   const first = "Adora";
   const newFirstName = "Catra";
 

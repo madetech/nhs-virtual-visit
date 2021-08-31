@@ -1,4 +1,4 @@
-describe.skip("As a trust manager or admin, I want to reset my password if I forget it", () => {
+describe("As a trust manager or admin, I want to reset my password if I forget it", () => {
   it("sends an email with reset password link, when I fill in a valid email", () => {
     GivenIAmOnTheLoginPage();
     WhenIClickTheResetPasswordLink();

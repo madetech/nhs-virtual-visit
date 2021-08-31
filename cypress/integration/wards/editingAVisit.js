@@ -1,6 +1,6 @@
 import { GivenIAmLoggedInAsAWardStaff } from "./wardCommonSteps";
 import { ThenISeeAnError } from "../commonSteps";
-describe.skip("As a ward staff, I want to edit a visit from the list screen so that I can change the details of a visit.", () => {
+describe("As a ward staff, I want to edit a visit from the list screen so that I can change the details of a visit.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(

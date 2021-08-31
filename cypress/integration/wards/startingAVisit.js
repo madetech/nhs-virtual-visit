@@ -1,7 +1,7 @@
 import { GivenIAmLoggedInAsAWardStaff } from "./wardCommonSteps";
 import { thenIClickLogOut } from "../commonSteps";
 
-describe.skip("As a ward staff, I want to start a virtual visit so that patients can speak with their loved ones.", () => {
+describe("As a ward staff, I want to start a virtual visit so that patients can speak with their loved ones.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(
