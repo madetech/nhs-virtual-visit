@@ -26,6 +26,7 @@ jobs:
   contract-tests:
     name: Contract Tests
     runs-on: ubuntu-latest
+    needs: unit-tests
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
     steps:
@@ -77,6 +78,7 @@ jobs:
   e2e-tests:
     name: End-To-End Tests
     runs-on: ubuntu-latest
+    needs: [unit-tests, contract-tests]
 
     if: (github.repository == 'madetech/nhs-virtual-visit')
     steps:
