@@ -2,7 +2,7 @@ import {
   ThenISeeAnError,
 } from "../commonSteps";
 
-describe("As manager of a trust, I can authorise another manager to gain access to the trust", () => {
+describe.skip("As manager of a trust, I can authorise another manager to gain access to the trust", () => {
   let link; 
 
   before(() => {

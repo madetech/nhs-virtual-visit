@@ -1,5 +1,5 @@
 import { ThenISeeAnError } from "../commonSteps";
-describe("As a patient's key contact, I want to attend a virtual visit so that I can speak with my loved one.", () => {
+describe.skip("As a patient's key contact, I want to attend a virtual visit so that I can speak with my loved one.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(

@@ -5,7 +5,7 @@ import {
 } from "./wardCommonSteps";
 import { thenIClickLogOut } from "../commonSteps";
 
-describe("As a ward staff, I want to easily rebook a visit from the list screen so that I can easily book a patient in for another visit.", () => {
+describe.skip("As a ward staff, I want to easily rebook a visit from the list screen so that I can easily book a patient in for another visit.", () => {
   before(() => {
     // reset and seed the database
     cy.exec(

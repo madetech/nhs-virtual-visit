@@ -3,7 +3,7 @@ import {
   ThenISeeTheManageYourTrustLoginPage,
 } from "../commonSteps";
 
-describe("As an nhs manager, once I've signed up I can activate my account", () => {
+describe.skip("As an nhs manager, once I've signed up I can activate my account", () => {
   let link;
   
   before(() => {

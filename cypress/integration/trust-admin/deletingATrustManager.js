@@ -5,7 +5,7 @@ import {
   ThenISeeTheTrustManagersList,
 } from "./trustAdminCommonSteps";
 
-describe("As an trust admin, I want to delete a trust manager so that I can remove a trust manager from the system.", () => {
+describe.skip("As an trust admin, I want to delete a trust manager so that I can remove a trust manager from the system.", () => {
   before(() => {
     // reset and seed the database: need to edit this to run MSSQL test DB and reseed
     cy.exec(
