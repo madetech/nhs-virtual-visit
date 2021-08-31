@@ -1,15 +1,17 @@
-@import "node_modules/nhsuk-frontend/packages/nhsuk";
+@import "node_modules/nhsuk-frontend/packages/core/settings/all";
+@import "node_modules/nhsuk-frontend/packages/core/tools/all";
 
-.app-heading-with-time {
+
+.heading§ {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap-reverse;
 
-  .app-heading-with-time-text {
+  .text{
     width: 50%;
   }
 
-  .app-heading-with-time-beside {
+  .beside {
     @include nhsuk-typography-responsive(32);
     font-weight: $nhsuk-font-bold;
     text-align: right;
@@ -17,11 +19,11 @@
   }
 
   @media screen and (max-width: 641px) {
-    .app-heading-with-time-text {
+    .text{
       width: 100%;
     }
 
-    .app-heading-with-time-beside {
+    .beside {
       @include nhsuk-responsive-margin(4, "bottom");
       text-align: left;
       width: 100%;

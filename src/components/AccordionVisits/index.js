@@ -3,7 +3,6 @@ import filterTodaysVisits from "../../helpers/filterTodaysVisits";
 import filterUpcomingVisits from "../../helpers/filterUpcomingVisits";
 import filterPastVisits from "../../helpers/filterPastVisits";
 import VisitsPanelList from "../VisitsPanelList";
-import "./styles.scss";
 
 const AccordionVisits = ({ visits }) => {
   const [displayedVisits, setDisplayedVisits] = useState(

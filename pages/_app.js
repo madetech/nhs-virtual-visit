@@ -2,6 +2,7 @@ import React from "react";
 import App from "next/app";
 import * as Sentry from "@sentry/node";
 import Head from "next/head";
+import "../src/global.scss";
 
 Sentry.init({
   enabled: process.env.ENABLE_SENTRY === "yes",

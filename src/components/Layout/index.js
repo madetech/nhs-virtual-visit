@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import "./styles.scss";
 import Head from "next/head";
 import NavigationBarForUserType from "../NavigationBarForUserType";
 import HeaderLink from "../HeaderLink";

@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.scss";
+import styles from "./styles.module.scss";
 import Router from "next/router";
 import formatDateAndTime from "../../helpers/formatDatesAndTimes";
 import VisitSummaryList from "../VisitSummaryList";
@@ -21,8 +21,8 @@ const VisitsPanelList = ({ visits, title, showButtons }) => {
         <ul className="nhsuk-list-panel__list nhsuk-list-panel__list--with-label">
           {visits.map((visit) => (
             <li className="nhsuk-list-panel__item" key={visit.callId}>
-              <div className="app-visit-card">
-                <div className="app-visit-card-body">
+              <div className={styles.card}>
+                <div className={styles.body}>
                   <details
                     className="nhsuk-details nhsuk-u-margin-0"
                     data-testid={`details-summary-${visit.patientName}`}
@@ -115,8 +115,8 @@ const VisitsPanelList = ({ visits, title, showButtons }) => {
                     </div>
                   </details>
                 </div>
-                <div className="app-visit-card-beside">
-                  <p>
+                <div className={styles.beside}>
+                  <p className={styles.paragraph}>
                     <b>
                       <TimeFromNow dateAndTime={visit.callTime} />
                     </b>
