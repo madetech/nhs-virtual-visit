@@ -9,9 +9,8 @@ import {
 describe("As an admin, I want to add a trust so that a trust can use the virtual visits service.", () => {
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
 
   it("allows an admin to add a trust", () => {

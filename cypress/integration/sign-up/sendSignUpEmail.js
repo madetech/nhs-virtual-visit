@@ -7,9 +7,8 @@ import {
 describe("As an nhs manager, I can sign up to a trust", () => {
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
 
   it("sends an email with an activation link, when form is filled out and submitted", () => {

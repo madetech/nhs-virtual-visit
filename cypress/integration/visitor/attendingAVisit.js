@@ -2,9 +2,8 @@ import { ThenISeeAnError } from "../commonSteps";
 describe("As a patient's key contact, I want to attend a virtual visit so that I can speak with my loved one.", () => {
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
 
   it("allows a key contact to attend a virtual visit", () => {

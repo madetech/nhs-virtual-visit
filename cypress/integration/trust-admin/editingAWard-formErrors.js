@@ -11,9 +11,8 @@ import { thenIClickLogOut, ThenISeeAnError } from "../commonSteps";
 describe("As a trust admin, I want to edit a ward so that I can modify the details of a ward.", () => {
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
   it("displays errors when information is not entered correctly", () => {
     GivenIAmLoggedInAsATrustAdmin();
