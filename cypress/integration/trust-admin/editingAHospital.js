@@ -4,9 +4,8 @@ import { GivenIAmLoggedInAsATrustAdmin } from "./trustAdminCommonSteps.js";
 describe("As an admin, I want to edit a hospital so that I can keep hospital changes up to date.", () => {
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
 
   function WhenIClickOnHospitals() {

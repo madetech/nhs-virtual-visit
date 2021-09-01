@@ -3,9 +3,8 @@ import { ThenISeeAnError } from "../commonSteps";
 describe("As a ward staff, I want to edit a visit from the list screen so that I can change the details of a visit.", () => {
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
 
   it("allows a ward staff to edit a virtual visit", () => {

@@ -18,9 +18,8 @@ describe("As a ward staff, I want to schedule a virtual visit so that patients c
 
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
 
   it("allows a ward staff to book a virtual visit", () => {

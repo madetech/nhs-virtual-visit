@@ -7,9 +7,8 @@ describe("As manager of a trust, I can authorise another manager to gain access 
 
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
 
   it("given an invalid authorisation link, shows an error", () => {

@@ -8,9 +8,8 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
 
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
 
   it("given a invalid reset password link, shows an error", () => {

@@ -8,9 +8,8 @@ describe("As an nhs manager, once I've signed up I can activate my account", () 
   
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
 
   it("given an invalid activation link, shows an error", () => {

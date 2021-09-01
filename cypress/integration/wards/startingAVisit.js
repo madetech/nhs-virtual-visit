@@ -4,9 +4,8 @@ import { thenIClickLogOut } from "../commonSteps";
 describe("As a ward staff, I want to start a virtual visit so that patients can speak with their loved ones.", () => {
   before(() => {
     // reset and seed the database
-    cy.exec(
-      "npm run dbmigratetest reset:mssql && npm run dbmigratetest up:mssql"
-    );
+    cy.exec("npm run dbmigratetest reset:mssql");
+    cy.exec("npm run dbmigratetest up:mssql");
   });
 
   it("allows a ward staff to start a virtual visit", () => {
