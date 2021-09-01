@@ -13,9 +13,6 @@ describe("As a trust admin, I want to log in so that I can access the service.",
 
   it("allows a trust admin to log in and out", () => {
     GivenIAmATrustAdmin();
-    // WhenIVisitTheLandingPage();
-    // AndIClickTheLinkToManageYourTrustPage();
-    // ThenISeeTheManageYourTrustLoginPage();
     WhenIVisitTheTrustAdminLogInPage();
 
     WhenIEnterAValidTrustAdminEmailAndPassword();
@@ -27,19 +24,19 @@ describe("As a trust admin, I want to log in so that I can access the service.",
     ThenISeeTheLandingPage();
   });
 
-  // it("displays an error for an invalid email", () => {
-  //   WhenIVisitTheTrustAdminLogInPage();
-  //   AndIEnterAnInvalidEmail();
-  //   AndISubmitTheForm();
-  //   ThenISeeAnError();
-  // });
+  it("displays an error for an invalid email", () => {
+    WhenIVisitTheTrustAdminLogInPage();
+    AndIEnterAnInvalidEmail();
+    AndISubmitTheForm();
+    ThenISeeAnError();
+  });
 
-  // it("displays an error for an invalid password", () => {
-  //   WhenIVisitTheTrustAdminLogInPage();
-  //   AndIEnterAnInvalidPassword();
-  //   AndISubmitTheForm();
-  //   ThenISeeAnError();
-  // });
+  it("displays an error for an invalid password", () => {
+    WhenIVisitTheTrustAdminLogInPage();
+    AndIEnterAnInvalidPassword();
+    AndISubmitTheForm();
+    ThenISeeAnError();
+  });
 
   function WhenIVisitTheTrustAdminLogInPage() {
     cy.visit(Cypress.env("baseUrl") + "/login");

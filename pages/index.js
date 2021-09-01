@@ -5,7 +5,6 @@ import Layout from "../src/components/Layout";
 import AnchorLink from "../src/components/AnchorLink";
 
 const LandingPage = () => {
-  console.log("Serving the index page");
   return (
     <Layout title="NHS Virtual Visit">
       <GridRow>

@@ -19,12 +19,7 @@ function ThenIVisitTheManageYourTrustLoginPage() {
 }
 
 function ThenISeeTheManageYourTrustLoginPage() {
-  cy.log("URL:" + cy.url());
-  cy.get('[data-cy="page-heading"]').should(($div) => {
-    cy.log($div.text());
-    $div.text.to.include("Log in to manage your site");
-  });
-  // cy.get('[data-cy=page-heading]').should("contain", "Log in to manage your site");
+  cy.get('[data-cy=page-heading]').should("contain", "Log in to manage your site");
 }
 
 function ThenISeeTheLandingPage() {
