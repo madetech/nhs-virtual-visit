@@ -19,7 +19,7 @@ function ThenIVisitTheManageYourTrustLoginPage() {
 }
 
 function ThenISeeTheManageYourTrustLoginPage() {
-  cy.get('[data-cy="page-haeding"]').should(($div) => {
+  cy.get('[data-cy="page-heading"]').should(($div) => {
     console.log($div.text());
     $div.text.to.include("Log in to manage your site");
   });
