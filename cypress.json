@@ -34,25 +34,11 @@
   },
   "projectId": "vv",
   "testFiles": [
-    "activate-account/activateAccount.js",
-    "admin/addingATrust.js",
-    "admin/loggingInAndOut.js",
-    "authorise-user/authoriseUser.js",
-    "reset-password/resetPassword.js",
-    "reset-password/sendResetPasswordEmail.js",
-    "sign-up/sendSignUpEmail.js",
-    "trust-admin/addEditAndDeleteAWard.js",
-    "trust-admin/addingandEditingAHospital.js",
-    "trust-admin/addingAWard-formErrors.js",
-    "trust-admin/deletingATrustManager.js",
     "trust-admin/editingAHospital.js",
     "trust-admin/editingAWard-formErrors.js",
     "trust-admin/loggingInAndOut.js",
     "visitor/attendingAVisit.js",
     "wards/bookingEditAndCancelAVisit.js",
-    "wards/editingAAVisit.js",
-    "wards/loggingInAndOut.js",
-    "wards/rebookingAVisit.js",
-    "wards/startingAVisit.js"
+    "wards/editingAAVisit.js"
   ]
 }
