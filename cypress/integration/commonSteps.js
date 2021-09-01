@@ -19,6 +19,7 @@ function ThenIVisitTheManageYourTrustLoginPage() {
 }
 
 function ThenISeeTheManageYourTrustLoginPage() {
+  console.log("URL:", cy.url());
   cy.get('[data-cy="page-heading"]').should(($div) => {
     console.log($div.text());
     $div.text.to.include("Log in to manage your site");
