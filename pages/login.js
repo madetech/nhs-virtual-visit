@@ -72,6 +72,8 @@ const Login = ({ correlationId }) => {
     return false;
   };
 
+  console.log("Serving the Login Screen");
+
   return (
     <Layout title="Log in to manage your site" hasErrors={errors.length > 0}>
       <GridRow>
