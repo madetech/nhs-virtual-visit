@@ -40,5 +40,6 @@
     "visitor/attendingAVisit.js",
     "wards/bookingEditAndCancelAVisit.js",
     "wards/editingAAVisit.js"
-  ]
+  ],
+  "retries": 2
 }
