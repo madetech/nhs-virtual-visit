@@ -45,7 +45,7 @@ const createVisit = ({
       emailAddress: visit.recipientEmail,
       wardName: ward.name,
       hospitalName: facility.name,
-      visitDateAndTime: visit.callTime,
+      visitDateAndTime: visit.callTimeLocal,
     });
 
     if (bookingNotificationErrors) {
