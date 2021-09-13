@@ -83,7 +83,7 @@ const ResetPassword = ({ email, error }) => {
   };
 
   return (
-    <Layout title="Log in to manage your trust" hasErrors={errors.length > 0}>
+    <Layout title="Sign in to manage your trust" hasErrors={errors.length > 0}>
       <GridRow>
         <GridColumn>
           <ErrorSummary errors={errors} />

@@ -47,7 +47,7 @@ describe("As an admin, I want to log in so that I can access the service.", () =
   });
 
   function AndISubmitTheForm() {
-    cy.get("button").contains("Log in").click();
+    cy.get("button").contains("Sign in").click();
   }
   // Allows an admin to log in and out
   function GivenIAmAnAdmin() {}

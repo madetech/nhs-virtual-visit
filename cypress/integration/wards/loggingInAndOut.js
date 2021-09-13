@@ -47,7 +47,7 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
   }
 
   function AndISubmitTheForm() {
-    cy.get("button").contains("Log in").click();
+    cy.get("button").contains("Sign in").click();
   }
 
   function ThenISeeTheWardHomePage() {
@@ -60,7 +60,7 @@ describe("As a ward staff, I want to log in so that I can access the service.", 
   }
 
   function ThenISeeTheWardStaffLogInPage() {
-    cy.get("h1").should("contain", "Log in to book a virtual visit");
+    cy.get("h1").should("contain", "Sign in to book a virtual visit");
   }
   function WhenIVisitTheLogInPage() {
     cy.visit(Cypress.env("baseUrl") + "/wards/login");
