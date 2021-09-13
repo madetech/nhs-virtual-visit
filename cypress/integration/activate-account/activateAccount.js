@@ -73,7 +73,7 @@ describe("As an nhs manager, once I've signed up I can activate my account", () 
   }
 
   function AndISubmitTheForm() {
-    cy.get("button").contains("Log in").click();
+    cy.get("button").contains("Sign in").click();
   }
 
   function ThenISeeTheTrustManagerHomePageForActivatedTrust() {

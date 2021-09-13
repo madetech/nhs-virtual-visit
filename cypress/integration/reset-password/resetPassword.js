@@ -69,7 +69,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   }
 
   function AndISubmitTheLoginForm() {
-    cy.get("button").contains("Log in").click();
+    cy.get("button").contains("Sign in").click();
   }
 
   function ThenISeeTheResetPasswordSuccessPage() {

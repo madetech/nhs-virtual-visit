@@ -73,11 +73,11 @@ const Login = ({ correlationId }) => {
   };
 
   return (
-    <Layout title="Log in to manage your site" hasErrors={errors.length > 0}>
+    <Layout title="Sign in to manage your site" hasErrors={errors.length > 0}>
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <Heading>Log in to manage your site</Heading>
+          <Heading>Sign in to manage your site</Heading>
 
           <Form onSubmit={onSubmit}>
             <FormGroup>
@@ -117,7 +117,7 @@ const Login = ({ correlationId }) => {
               </AnchorLink>
             </p>
             <Button className="nhsuk-u-margin-top-5" type="submit">
-              Log in
+              Sign in
             </Button>
           </Form>
         </GridColumn>

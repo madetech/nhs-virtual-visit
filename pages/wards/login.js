@@ -65,13 +65,13 @@ const Login = ({ correlationId }) => {
 
   return (
     <Layout
-      title="Log in to book a virtual visit"
+      title="Sign in to book a virtual visit"
       hasErrors={errors.length > 0}
     >
       <GridRow>
         <GridColumn width="two-thirds">
           <ErrorSummary errors={errors} />
-          <Heading>Log in to book a virtual visit</Heading>
+          <Heading>Sign in to book a virtual visit</Heading>
           <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label htmlFor="code">Ward code</Label>
@@ -100,7 +100,7 @@ const Login = ({ correlationId }) => {
               />
             </FormGroup>
             <Button className="nhsuk-u-margin-top-5" type="submit">
-                Log in
+                Sign in
             </Button>
           </Form>
         </GridColumn>

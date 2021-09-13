@@ -56,7 +56,7 @@ describe("login", () => {
     });
 
     await waitFor(() => {
-      const btnSubmit = screen.getByText("Log in");
+      const btnSubmit = screen.getByText("Sign in");
       var clicked = fireEvent.click(btnSubmit);
 
       expect(clicked).toBeTruthy();
@@ -94,7 +94,7 @@ describe("login", () => {
     });
 
     await waitFor(() => {
-      const btnSubmit = screen.getByText("Log in");
+      const btnSubmit = screen.getByText("Sign in");
       var clicked = fireEvent.click(btnSubmit);
 
       expect(clicked).toBeTruthy();
@@ -131,7 +131,7 @@ describe("login", () => {
     });
 
     await waitFor(() => {
-      const btnSubmit = screen.getByText("Log in");
+      const btnSubmit = screen.getByText("Sign in");
       var clicked = fireEvent.click(btnSubmit);
 
       expect(clicked).toBeTruthy();
@@ -150,7 +150,7 @@ describe("login", () => {
     render(<Login />);
 
     await waitFor(() => {
-      const btnSubmit = screen.getByText("Log in");
+      const btnSubmit = screen.getByText("Sign in");
       var clicked = fireEvent.click(btnSubmit);
 
       expect(clicked).toBeTruthy();
@@ -177,7 +177,7 @@ describe("login", () => {
     });
 
     await waitFor(() => {
-      const btnSubmit = screen.getByText("Log in");
+      const btnSubmit = screen.getByText("Sign in");
       var clicked = fireEvent.click(btnSubmit);
 
       expect(clicked).toBeTruthy();
@@ -204,7 +204,7 @@ describe("login", () => {
     });
 
     await waitFor(() => {
-      const btnSubmit = screen.getByText("Log in");
+      const btnSubmit = screen.getByText("Sign in");
       var clicked = fireEvent.click(btnSubmit);
 
       expect(clicked).toBeTruthy();

@@ -19,7 +19,7 @@ function ThenIVisitTheManageYourTrustLoginPage() {
 }
 
 function ThenISeeTheManageYourTrustLoginPage() {
-  cy.get('[data-cy=page-heading]').should("contain", "Log in to manage your site");
+  cy.get('[data-cy=page-heading]').should("contain", "Sign in to manage your site");
 }
 
 function ThenISeeTheLandingPage() {

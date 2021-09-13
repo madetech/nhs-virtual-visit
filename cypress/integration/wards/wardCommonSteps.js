@@ -33,7 +33,7 @@ function GivenIAmLoggedInAsAWardStaff() {
   cy.visit(`${Cypress.env("baseUrl")}/wards/login`);
   cy.get("input[name=code]").type(Cypress.env("validWardCode"));
   cy.get("input[name=pin]").type(Cypress.env("validWardPin"));
-  cy.get("button").contains("Log in").click();
+  cy.get("button").contains("Sign in").click();
 }
 
 function WhenIClickOnAVirtualVisit(name) {

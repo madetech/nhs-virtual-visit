@@ -4,7 +4,7 @@ const GivenIAmLoggedInAsATrustAdmin = () => {
   cy.get("input[name=email]").type(Cypress.env("validTrustManagerEmail"));
   cy.get("input[name=password]").type(Cypress.env("validTrustManagerPassword"));
 
-  cy.get("button").contains("Log in").click();
+  cy.get("button").contains("Sign in").click();
 };
 
 function WhenIClickHospitalsOnTheNavigationBar() {
