@@ -112,7 +112,7 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="hour">Hour</Label>
             <Input
-              type="tet"
+              type="text"
               hasError={hasTimeError}
               className="nhsuk-input--width-2"
               id="hour"
