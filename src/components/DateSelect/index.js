@@ -48,7 +48,7 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="day">Day</Label>
             <Input
-              type="number"
+              type="text"
               hasError={hasDateError}
               onChange={(event) => {
                 setDate({ ...date, day: parseInt(event.target.value) });
@@ -67,7 +67,7 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="month">Month</Label>
             <Input
-              type="number"
+              type="text"
               hasError={hasDateError}
               className="nhsuk-input nhsuk-date-input__input nhsuk-input--width-2 nhsuk-input--width-10"
               id="month"
@@ -86,7 +86,7 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="year">Year</Label>
             <Input
-              type="number"
+              type="text"
               hasError={hasDateError}
               className="nhsuk-input--width-4 nhsuk-input--width-10"
               id="year"
@@ -112,7 +112,7 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="hour">Hour</Label>
             <Input
-              type="number"
+              type="tet"
               hasError={hasTimeError}
               className="nhsuk-input--width-2"
               id="hour"
@@ -122,6 +122,8 @@ const DateSelect = ({
               }}
               value={date.hour}
               autoComplete="off"
+              pattern="[0-9]*"
+              inputMode="numeric"
             />
           </FormGroup>
         </div>
@@ -129,7 +131,7 @@ const DateSelect = ({
           <FormGroup>
             <Label htmlFor="minute">Minutes</Label>
             <Input
-              type="number"
+              type="text"
               hasError={hasTimeError}
               className="nhsuk-input--width-2"
               id="minute"
@@ -139,6 +141,8 @@ const DateSelect = ({
               }}
               value={date.minute}
               autoComplete="off"
+              pattern="[0-9]*"
+              inputMode="numeric"
             />
           </FormGroup>
         </div>
