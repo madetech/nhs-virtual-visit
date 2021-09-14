@@ -58,6 +58,8 @@ const DateSelect = ({
               name="day"
               value={date.day}
               autoComplete="off"
+              pattern="[0-9]*"
+              inputMode="numeric"
             />
           </FormGroup>
         </div>
@@ -75,6 +77,8 @@ const DateSelect = ({
               }}
               value={Number(date.month) + 1}
               autoComplete="off"
+              pattern="[0-9]*"
+              inputMode="numeric"
             />
           </FormGroup>
         </div>
@@ -92,6 +96,8 @@ const DateSelect = ({
               }}
               value={date.year}
               autoComplete="off"
+              pattern="[0-9]*"
+              inputMode="numeric"
             />
           </FormGroup>
         </div>
