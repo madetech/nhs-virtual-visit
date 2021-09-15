@@ -4,7 +4,6 @@ import ErrorSummary from "../../src/components/ErrorSummary";
 import FormGroup from "../../src/components/FormGroup";
 import { GridRow, GridColumn } from "../../src/components/Grid";
 import Heading from "../../src/components/Heading";
-import Hint from "../../src/components/Hint";
 import Input from "../../src/components/Input";
 import Label from "../../src/components/Label";
 import Layout from "../../src/components/Layout";
@@ -75,7 +74,6 @@ const Login = ({ correlationId }) => {
           <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label htmlFor="code">Ward code</Label>
-              <Hint>You&apos;ll have been given a ward code to use.</Hint>
               <Input
                 id="code"
                 type="text"
