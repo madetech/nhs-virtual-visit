@@ -1,7 +1,6 @@
 import { thenIClickLogOut, ThenISeeAnError } from "../commonSteps";
 
 import {
-  GivenIAmLoggedInAsAnAdmin,
   ThenISeeTheSiteAdministrationPage,
   WhenIClickToReturnToSiteAdministration,
 } from "./adminCommonSteps";
@@ -48,6 +47,16 @@ describe("As an admin, I want to add a trust so that a trust can use the virtual
 
     thenIClickLogOut();
   });
+
+  function GivenIAmLoggedInAsAnAdmin() {
+    const adminEmailAddress = "nhs-admin-01@nhs.co.uk";
+    const adminPassword = "P@55w0rd";
+
+    cy.visit(Cypress.env("baseUrl") + "/login");
+    cy.get("input[name=email]").type(adminEmailAddress);
+    cy.get("input[name=password]").type(adminPassword);
+    cy.get("button").contains("Sign in").click();
+  }
 
   function WhenIClickOnViewAllTrusts() {
     cy.get("a.nhsuk-action-link__link").contains("View all trusts").click();

@@ -6,15 +6,7 @@ function ThenISeeTheSiteAdministrationPage() {
   cy.get("h1").should("contain", "Site administration");
 }
 
-const GivenIAmLoggedInAsAnAdmin = () => {
-  cy.visit(Cypress.env("baseUrl") + "/login");
-  cy.get("input[name=email]").type(Cypress.env("validAdminEmail"));
-  cy.get("input[name=password]").type(Cypress.env("validAdminPassword"));
-  cy.get("button").contains("Sign in").click();
-};
-
 module.exports = {
   WhenIClickToReturnToSiteAdministration,
-  ThenISeeTheSiteAdministrationPage,
-  GivenIAmLoggedInAsAnAdmin,
+  ThenISeeTheSiteAdministrationPage
 };

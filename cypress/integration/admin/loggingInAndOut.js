@@ -15,6 +15,9 @@ describe("As an admin, I want to log in so that I can access the service.", () =
     cy.exec("npm run dbmigratetest up:mssql");
   });
 
+  const adminEmailAddress = "nhs-admin-02@nhs.co.uk";
+  const adminPassword = "P@55w0rd";
+
   it("allows an admin to log in and out", () => {
     GivenIAmAnAdmin();
     WhenIVisitTheLandingPage();
@@ -52,8 +55,8 @@ describe("As an admin, I want to log in so that I can access the service.", () =
   // Allows an admin to log in and out
   function GivenIAmAnAdmin() {}
   function WhenIEnterAValidAdminEmailAndPassword() {
-    cy.get("input[name=email]").type(Cypress.env("validAdminEmail"));
-    cy.get("input[name=password]").type(Cypress.env("validAdminPassword"));
+    cy.get("input[name=email]").type(adminEmailAddress);
+    cy.get("input[name=password]").type(adminPassword);
   }
   function ThenISeeTheAdminHomePage() {
     cy.contains("There is a problem").should("not.exist");
@@ -62,11 +65,11 @@ describe("As an admin, I want to log in so that I can access the service.", () =
   // Displays an error for an invalid email
   function AndIEnterAnInvalidEmail() {
     cy.get("input[name=email]").type("wrong@email.com");
-    cy.get("input[name=password]").type(Cypress.env("validAdminPassword"));
+    cy.get("input[name=password]").type(adminPassword);
   }
   // Displays an error for an invalid password
   function AndIEnterAnInvalidPassword() {
-    cy.get("input[name=email]").type(Cypress.env("validAdminEmail"));
+    cy.get("input[name=email]").type(adminEmailAddress);
     cy.get("input[name=password]").type("wrong");
   }
 });

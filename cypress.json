@@ -7,8 +7,6 @@
     "validTrustManagerEmail": "nhs-manager14@nhs.co.uk",
     "validTrustManagerPassword": "P@55w0rd",
     "trustManagerEmailToResetPassword": "nhs-manager13@nhs.co.uk",
-    "validAdminEmail": "nhs-admin@nhs.co.uk",
-    "validAdminPassword": "P@55w0rd",
     "fakeWard": "FAKENHS",
     "baseUrl": "http://localhost:3001",
     "tokenVersion": "3",
@@ -34,26 +32,8 @@
   },
   "projectId": "vv",
   "testFiles": [
-    "activate-account/activateAccount.js",
     "admin/addingATrust.js",
-    "admin/loggingInAndOut.js",
-    "authorise-user/authoriseUser.js",
-    "reset-password/resetPassword.js",
-    "reset-password/sendResetPasswordEmail.js",
-    "sign-up/sendSignUpEmail.js",
-    "trust-admin/addEditAndDeleteAWard.js",
-    "trust-admin/addingandEditingAHospital.js",
-    "trust-admin/addingAWard-formErrors.js",
-    "trust-admin/deletingATrustManager.js",
-    "trust-admin/editingAHospital.js",
-    "trust-admin/editingAWard-formErrors.js",
-    "trust-admin/loggingInAndOut.js",
-    "visitor/attendingAVisit.js",
-    "wards/bookingEditAndCancelAVisit.js",
-    "wards/editingAAVisit.js",
-    "wards/loggingInAndOut.js",
-    "wards/rebookingAVisit.js",
-    "wards/startingAVisit.js"
+    "admin/loggingInAndOut.js"
   ],
   "retries": 2
 }

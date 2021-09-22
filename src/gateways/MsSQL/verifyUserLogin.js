@@ -18,7 +18,7 @@ const verifyUserLoginGateway = ({ getMsSqlConnPool, logger }) => async (
     const user = response.recordset[0];
 
     if (!bcrypt.compareSync(password, user.password)) {
-      logger.error(`Incorrect password was entered form ${email}`)
+      logger.error(`Incorrect password was entered for ${email}`)
       return {
         validUser: false,
         trust_id: null,
