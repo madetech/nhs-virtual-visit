@@ -6,7 +6,6 @@
     "validWardPin": "1234",
     "validTrustManagerEmail": "nhs-manager14@nhs.co.uk",
     "validTrustManagerPassword": "P@55w0rd",
-    "trustManagerEmailToResetPassword": "nhs-manager13@nhs.co.uk",
     "fakeWard": "FAKENHS",
     "baseUrl": "http://localhost:3001",
     "tokenVersion": "3",
@@ -33,7 +32,10 @@
   "projectId": "vv",
   "testFiles": [
     "admin/addingATrust.js",
-    "admin/loggingInAndOut.js"
+    "admin/loggingInAndOut.js",
+    "authorise-user/authoriseUser.js",
+    "reset-password/resetPassword.js",
+    "reset-password/sendResetPasswordEmail.js"
   ],
   "retries": 2
 }

@@ -12,6 +12,8 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
     cy.exec("npm run dbmigratetest up:mssql");
   });
 
+  const trustManagerEmailToResetPassword = "nhs-manager01@nhs.co.uk";
+
   it("given a invalid reset password link, shows an error", () => {
     GivenIVisitAnInvalidResetPasswordLink();
     ThenISeeAnError();
@@ -25,9 +27,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
 
     WhenIFillOutTheResetPasswordFormWithTheSamePassword();
     AndISubmitTheForm();
-    ThenISeeTheResetPasswordSuccessPage(
-      Cypress.env("trustManagerEmailToResetPassword")
-    );
+    ThenISeeTheResetPasswordSuccessPage(trustManagerEmailToResetPassword);
     cy.audit();
 
     WhenIClickOnTheLoginLink();
@@ -55,7 +55,7 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   function ThenISeeTheEnterNewPasswordPage() {
     cy.get("[data-cy=page-heading]").should(
       "contain",
-      "Reset Password for " + Cypress.env("trustManagerEmailToResetPassword")
+      "Reset Password for " + trustManagerEmailToResetPassword
     );
   }
 
@@ -90,10 +90,9 @@ describe("As a trust manager or admin, I want to reset my password if I forget i
   function WhenIClickOnTheLoginLink() {
     cy.get("a.nhsuk-action-link__link").contains("Return to Login page").click();
   }
-  
 
   function WhenIEnterTheTrustManagerEmailAndNewPassword() {
-    cy.get("input[name=email]").type(Cypress.env("trustManagerEmailToResetPassword"));
+    cy.get("input[name=email]").type(trustManagerEmailToResetPassword);
     cy.get("input[name=password]").type("newPassword");
   }
 

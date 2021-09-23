@@ -3,13 +3,7 @@ import {
 } from "../commonSteps";
 
 describe("As manager of a trust, I can authorise another manager to gain access to the trust", () => {
-  let link; 
-
-  before(() => {
-    // reset and seed the database
-    cy.exec("npm run dbmigratetest reset:mssql");
-    cy.exec("npm run dbmigratetest up:mssql");
-  });
+  let link;
 
   it("given an invalid authorisation link, shows an error", () => {
     GivenIVisitAnInvalidAuthorisationLink();
