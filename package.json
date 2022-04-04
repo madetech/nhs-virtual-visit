@@ -86,7 +86,7 @@
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
     "nock": "^13.0.11",
-    "prettier": "^2.2.1"
+    "prettier": "^2.6.2"
   },
   "husky": {
     "hooks": {
