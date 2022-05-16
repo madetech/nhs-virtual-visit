@@ -51,7 +51,7 @@
     "jest-css-modules-transform": "^4.2.0",
     "jsonwebtoken": "^8.5.1",
     "mockdate": "^2.0.5",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-duration-format": "^2.3.2",
     "morgan": "^1.10.0",
     "mssql": "^6.3.1",
