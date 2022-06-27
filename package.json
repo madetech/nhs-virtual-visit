@@ -84,7 +84,7 @@
     "eslint-plugin-cypress": "^2.11.1",
     "eslint-plugin-react": "^7.25.1",
     "husky": "^7.0.2",
-    "lint-staged": "^11.1.2",
+    "lint-staged": "^13.0.3",
     "nock": "^13.0.11",
     "prettier": "^2.2.1"
   },
