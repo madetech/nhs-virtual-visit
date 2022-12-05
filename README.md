@@ -92,7 +92,6 @@ Please take a look at our separate [Contributing Guide](./CONTRIBUTING.md).
 - **Miranda Hawkes** - Senior Engineer at [Made Tech](https://www.madetech.com) (miranda.hawkes@madetech.com)
 - **Joe Roberts** - Software Engineer at [Made Tech](https://www.madetech.com) (joe.roberts@madetech.com)
 - **Paulo Lanção** - Lead Engineer at [Made Tech](https://www.madetech.com) (paulo.lancao@madetech.com)
-- **James McDowall** - Delivery Manager at [Made Tech](https://www.madetech.com) (james.mcdowall@madetech.com)
 - **Derek Aning** - Junior Delivery Manager at [Made Tech](https://www.madetech.com) (derek.aning@madetech.com)
 - **David Watkin** - Lead Software Engineer at [Made Tech](https://www.madetech.com) (david.watkin@madetech.com)
 
